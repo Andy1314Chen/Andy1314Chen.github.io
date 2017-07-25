@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/07/25/A%20Complete%20Tutorail(1)/</loc>
+    <lastmod>2017-07-25T07:08:26.846Z</lastmod>
+    <data>
+        <display>
+        <title>A Complete Tutorial to Learn Data Science with Python from Scratch(1)</title>
+        <pubTime>2017-07-24T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>机器学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://yoursite.com/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/12/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/</loc>
     <lastmod>2017-07-23T03:58:04.728Z</lastmod>
     <data>
@@ -11,9 +33,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>AI</tag>
-         
         <tag>python</tag>
+         
+        <tag>AI</tag>
          
          
            
@@ -55,11 +77,11 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
+        <tag>Leetcode</tag>
+         
         <tag>C</tag>
          
         <tag>算法</tag>
-         
-        <tag>Leetcode</tag>
          
          
            
