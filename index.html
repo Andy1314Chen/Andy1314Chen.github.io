@@ -299,6 +299,400 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/A Complete Tutorial(3)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/27/A Complete Tutorial(3)/" itemprop="url">A Complete Tutorial to Learn Data Science with Python from Scratch(3)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T00:00:00+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="4-Data-Munging-in-Python-Using-Pandas"><a href="#4-Data-Munging-in-Python-Using-Pandas" class="headerlink" title="4. Data Munging in Python : Using Pandas"></a>4. Data Munging in Python : Using Pandas</h2><p>For those, who have been following, here are your must wear shoes to start running.</p>
+<p>Data munging – recap of the need</p>
+<p>While our exploration of the data, we found a few problems in the data set, which needs to be solved before the data is ready for a good model. This exercise is typically referred as “Data Munging”. Here are the problems, we are already aware of:</p>
+<p>There are missing values in some variables. We should estimate those values wisely depending on the amount of missing values and the expected importance of variables.<br>While looking at the distributions, we saw that ApplicantIncome and LoanAmount seemed to contain extreme values at either end. Though they might make intuitive sense, but should be treated appropriately.<br>In addition to these problems with numerical fields, we should also look at the non-numerical fields i.e. Gender, Property_Area, Married, Education and Dependents to see, if they contain any useful information.</p>
+<p>If you are new to Pandas, I would recommend reading <a href="https://www.analyticsvidhya.com/blog/2016/01/12-pandas-techniques-python-data-manipulation/" target="_blank" rel="external">this article(Pandas的12种奇淫异巧)</a> before moving on. It details some useful techniques of data manipulation.</p>
+<p><strong>数据修复</strong></p>
+<p><img src="http://www.ynfzb.cn/upload/image/201111/20111115141602377484.jpg" alt="数据修复"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">%matplotlib inline</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df=pd.read_csv(<span class="string">"G:/Datahack/Loanprediction/TrainFile/train.csv"</span>) <span class="comment">#读取数据</span></div></pre></td></tr></table></figure>
+<h3 id="Check-missing-values-in-the-dataset"><a href="#Check-missing-values-in-the-dataset" class="headerlink" title="Check missing values in the dataset"></a>Check missing values in the dataset</h3><p>Let us look at missing values in all the variables because most of the models don’t work with missing data and even if they do, imputing them helps more often than not. So, let us check the number of nulls / NaNs in the dataset.<br>(检查一下数据集的缺失值)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.apply(<span class="keyword">lambda</span> x:sum(x.isnull()),axis=<span class="number">0</span>) <span class="comment"># 匿名函数，axis=0表示针对每列应该用，可以看看</span></div><div class="line"><span class="comment">#与 df.apply(lambda x:sum(x.isnull()),axis=1)的区别</span></div></pre></td></tr></table></figure>
+<pre><code>Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount           22
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64
+</code></pre><p>可以看到Gender丢失13个，Married丢失3个，Dependents丢失15个，Self_Employed丢失32个，LoanAmount丢失22个，Loan_Amount_Term丢失14个，Credit_History丢失50个。</p>
+<p>Though the missing values are not very high in number, but many variables have them and each one of these should be estimated and added in the data. Get a detailed view on different imputation techniques through <a href="https://www.analyticsvidhya.com/blog/2016/01/guide-data-exploration/" target="_blank" rel="external">this article(A Comprehensive Guide to Data Exploration)</a>.</p>
+<p>Note: Remember that missing values may not always be NaNs. For instance, if the Loan_Amount_Term is 0, does it makes sense or would you consider that missing? I suppose your answer is missing and you’re right. So we should check for values which are unpractical.(值得注意的是，并非所有丢失值都是NaN,也可能是0或者其他不合理的值)</p>
+<h3 id="How-to-fill-missing-values-in-LoanAmount"><a href="#How-to-fill-missing-values-in-LoanAmount" class="headerlink" title="How to fill missing values in LoanAmount?"></a>How to fill missing values in LoanAmount?</h3><p>如何填充丢失值是一个问题，下面以LoanAmount为例。</p>
+<p>There are numerous ways to fill the missing values of loan amount – the simplest being replacement by mean, which can be done by following code:（最简单的方法，以平均值进行填充）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'LoanAmount'</span>].fillna(df[<span class="string">'LoanAmount'</span>].mean(),inplace=<span class="keyword">True</span>)<span class="comment"># 平均值填充</span></div></pre></td></tr></table></figure>
+<p>The other extreme could be to build a supervised learning model to predict loan amount on the basis of other variables and then use age along with other variables to predict survival.(另一个方法是建立一个有监督学习模型利用其他变量来预测未知值）</p>
+<p>Since, the purpose now is to bring out the steps in data munging, I’ll rather take an approach, which lies some where in between these 2 extremes. A key hypothesis is that the whether a person is educated or self-employed can combine to give a good estimate of loan amount.（但这里只是一个入门教程，采用一种介于上述两种方法之间的手段来填充丢失值）</p>
+<p>First, let’s look at the boxplot to see if a trend exists:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'LoanAmount'</span>,by=[<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>])</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x9d956d8&gt;
+</code></pre><p><img src="http://i.imgur.com/UBSLV9T.png" alt="picture1"></p>
+<p>Thus we see some variations in the median of loan amount for each group and this can be used to impute the values. But first, we have to ensure that each of Self_Employed and Education variables should not have a missing values.(由上面的Boxplot可以看出，不同Education和Self_Employed的组合对LoanAmount的中位数还是有影响的。因此，可以用Education和Self_Employed来进行推断。但在此之前，必须保证Education和Self_Employed是完整的)</p>
+<p>As we say earlier, Self_Employed has some missing values. Let’s look at the frequency table:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Self_Employed'</span>].value_counts()</div></pre></td></tr></table></figure>
+<pre><code>No     500
+Yes     82
+Name: Self_Employed, dtype: int64
+</code></pre><p>Since ~86% values are “No”, it is safe to impute the missing values as “No” as there is a high probability of success. This can be done using the following code:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Self_Employed'</span>].fillna(<span class="string">'No'</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<p>Now, we will create a Pivot table, which provides us median values for all the groups of unique values of Self_Employed and Education features. Next, we define a function, which returns the values of these cells and apply it to fill the missing values of loan amount:<br>(由Education和Self_Employed两列所确定的LoanAmount的中位数来填充LoanAmount的丢失值)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">table = df.pivot_table(values=<span class="string">'LoanAmount'</span>, index=<span class="string">'Self_Employed'</span> ,</div><div class="line">                       columns=<span class="string">'Education'</span>, aggfunc=np.median)</div><div class="line"><span class="comment"># Define function to return value of this pivot_table</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fage</span><span class="params">(x)</span>:</span></div><div class="line"> <span class="keyword">return</span> table.loc[x[<span class="string">'Self_Employed'</span>],x[<span class="string">'Education'</span>]]</div><div class="line"><span class="comment"># Replace missing values</span></div><div class="line">df[<span class="string">'LoanAmount'</span>].fillna(df[df[<span class="string">'LoanAmount'</span>].isnull()].apply(fage, axis=<span class="number">1</span>), inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<h3 id="How-to-treat-for-extreme-values-in-distribution-of-LoanAmount-and-ApplicantIncome"><a href="#How-to-treat-for-extreme-values-in-distribution-of-LoanAmount-and-ApplicantIncome" class="headerlink" title="How to treat for extreme values in distribution of LoanAmount and ApplicantIncome ?"></a>How to treat for extreme values in distribution of LoanAmount and ApplicantIncome ?</h3><p>Let’s analyze LoanAmount first. Since the extreme values are practically possible, i.e. some people might apply for high value loans due to specific needs. So instead of treating them as outliers, let’s try a log transformation to nullify their effect:<br>(使用Log函数消除极端值的影响）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'LoanAmount_log'</span>]=np.log(df[<span class="string">'LoanAmount'</span>])</div><div class="line">df[<span class="string">'LoanAmount_log'</span>].hist(bins=<span class="number">20</span>)</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x9f000f0&gt;
+</code></pre><p><img src="http://i.imgur.com/gBbmlag.png" alt="picture2"></p>
+<p>Now the distribution looks much closer to normal and effect of extreme values has been significantly subsided.</p>
+<p>Coming to ApplicantIncome. One intuition can be that some applicants have lower income but strong support Co-applicants. So it might be a good idea to combine both incomes as total income and take a log transformation of the same.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'TotalIncome'</span>]=df[<span class="string">'ApplicantIncome'</span>]+df[<span class="string">'CoapplicantIncome'</span>]</div><div class="line">df[<span class="string">'TotalIncome_log'</span>]=np.log(df[<span class="string">'TotalIncome'</span>])</div><div class="line">df[<span class="string">'LoanAmount_log'</span>].hist(bins=<span class="number">20</span>)</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0xa007da0&gt;
+</code></pre><p><img src="http://i.imgur.com/IPLEAsM.png" alt="picture3"></p>
+<p>Now we see that the distribution is much better than before. I will leave it upto you to impute the missing values for Gender, Married, Dependents, Loan_Amount_Term, Credit_History. Also, I encourage you to think about possible additional information which can be derived from the data. For example, creating a column for LoanAmount/TotalIncome might make sense as it gives an idea of how well the applicant is suited to pay back his loan.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.apply(<span class="keyword">lambda</span> x:sum(x.isnull()),axis=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<pre><code>Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed         0
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount            0
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+LoanAmount_log        0
+TotalIncome           0
+TotalIncome_log       0
+dtype: int64
+</code></pre><p>丢失的还有Gender,Married,Dependents,Loan_Amount_Term,Credit_History5个。其中Married比较好处理，直接以大多数类别填充，先把它处理啦。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Married'</span>].value_counts()</div></pre></td></tr></table></figure>
+<pre><code>Yes    398
+No     213
+Name: Married, dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Married'</span>].fillna(<span class="string">'Yes'</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<p>接着处理Gender(性别),缺了13个。直观上，先看看Gender和Married、Education、Self_Employed、Property_Area的关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">percConvert</span><span class="params">(ser)</span>:</span></div><div class="line">    <span class="keyword">return</span> ser/float(ser[<span class="number">-1</span>])</div><div class="line"></div><div class="line">pd.crosstab(df[<span class="string">'Married'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Married</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>No</th><br>      <td>0.380952</td><br>      <td>0.619048</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Yes</th><br>      <td>0.081841</td><br>      <td>0.918159</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出已婚人士中，Male占0.918，那假如某人性别未知，只知其已婚，是不是有0.918的概率判断其为男性呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.crosstab(df[<span class="string">'Education'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Education</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>Graduate</th><br>      <td>0.196581</td><br>      <td>0.803419</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Not Graduate</th><br>      <td>0.150376</td><br>      <td>0.849624</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出性别与其Education关系好像并不大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.crosstab(df[<span class="string">'Self_Employed'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Self_Employed</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>No</th><br>      <td>0.185468</td><br>      <td>0.814532</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Yes</th><br>      <td>0.192308</td><br>      <td>0.807692</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出性别与其Self_Employed关系好像也并不大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.crosstab(df[<span class="string">'Dependents'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Dependents</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>0.236686</td><br>      <td>0.763314</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>0.188119</td><br>      <td>0.811881</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>0.070707</td><br>      <td>0.929293</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>3+</th><br>      <td>0.062500</td><br>      <td>0.937500</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186007</td><br>      <td>0.813993</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">coding</span><span class="params">(col,codeDict)</span>:</span></div><div class="line">    colCoded=pd.Series(col,copy=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">for</span> key,value <span class="keyword">in</span> codeDict.items():</div><div class="line">        colCoded.replace(key,value,inplace=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> colCoded</div><div class="line">df[<span class="string">'Gender'</span>]=coding(df[<span class="string">'Gender'</span>],&#123;<span class="string">'Male'</span>:<span class="number">1</span>,<span class="string">'Female'</span>:<span class="number">0</span>&#125;) <span class="comment">#将‘Gender'转换为0,1表示（男士：1，女生：0）</span></div><div class="line">table2=df.pivot_table(values=[<span class="string">'Gender'</span>],index=[<span class="string">'Married'</span>,<span class="string">'Dependents'</span>],aggfunc=np.median)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pd.crosstab(df['Married'],df['Dependents'],margins=True).apply(percConvert,axis=1)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependent</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">if</span> x[<span class="string">'Married'</span>]==<span class="string">'No'</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">'0'</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">'1'</span></div><div class="line">df[<span class="string">'Dependents'</span>].fillna(df[df[<span class="string">'Dependents'</span>].isnull()].apply(dependent,axis=<span class="number">1</span>),inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Define function to return value of this pivot_table</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fage</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">if</span> table2.loc[x[<span class="string">'Married'</span>],x[<span class="string">'Dependents'</span>]].values[<span class="number">0</span>]==<span class="number">1.0</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1.0</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">0.0</span></div><div class="line"><span class="comment"># Replace missing values</span></div><div class="line">df[<span class="string">'Gender'</span>].fillna(df[df[<span class="string">'Gender'</span>].isnull()].apply(fage, axis=<span class="number">1</span>), inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.apply(<span class="keyword">lambda</span> x:sum(x.isnull()),axis=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<pre><code>Loan_ID               0
+Gender                0
+Married               0
+Dependents            0
+Education             0
+Self_Employed         0
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount            0
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+LoanAmount_log        0
+TotalIncome           0
+TotalIncome_log       0
+dtype: int64
+</code></pre><p>可以看到只剩下Loan_Amount_Term和Credit_History没有处理啦，因为Credit_History由前面分析，对于结果来说是非常重要的，那么就放在最后处理好了。现在来对Loan_Amount_Term进行分析，Loan_Amount_Term是数值型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'Loan_Amount_Term'</span>,by=[<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>])</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0xbc43d30&gt;
+</code></pre><p><img src="http://i.imgur.com/GQjJl4e.png" alt="picture5"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">termMedian=df[<span class="string">'Loan_Amount_Term'</span>].median()</div><div class="line">df[<span class="string">'Loan_Amount_Term'</span>].fillna(termMedian,inplace=<span class="keyword">True</span>)<span class="comment">#直接由中位数填充好了……</span></div></pre></td></tr></table></figure>
+<p>按理说，Credit_History应该是根据一个人的性别，婚姻，家属，教育等申请之前的状态有很大关系，而与当前该次申请贷款的数额、期限等业务关系不大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.info()</div></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 614 entries, 0 to 613
+Data columns (total 17 columns):
+Loan_ID                   614 non-null object
+Gender                    614 non-null float64
+Married                   614 non-null object
+Dependents                614 non-null object
+Education                 614 non-null object
+Self_Employed             614 non-null object
+ApplicantIncome           614 non-null int64
+CoapplicantIncome         614 non-null float64
+LoanAmount                614 non-null float64
+Loan_Amount_Term          614 non-null object
+Credit_History            564 non-null float64
+Property_Area             614 non-null object
+Loan_Status               614 non-null object
+LoanAmount_log            614 non-null float64
+TotalIncome               614 non-null float64
+TotalIncome_log           614 non-null float64
+LoanAmount/TotalIncome    614 non-null float64
+dtypes: float64(8), int64(1), object(8)
+memory usage: 81.6+ KB
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</div><div class="line">var_mod=[<span class="string">'Married'</span>,<span class="string">'Dependents'</span>,<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>,<span class="string">'Property_Area'</span>,<span class="string">'Loan_Status'</span>]</div><div class="line">le=LabelEncoder()</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> var_mod:</div><div class="line">    df[i]=le.fit_transform(df[i])</div><div class="line">df.dtypes<span class="comment">#将以上非数值型，转化为数值型量</span></div></pre></td></tr></table></figure>
+<pre><code>Loan_ID                    object
+Gender                    float64
+Married                     int64
+Dependents                  int64
+Education                   int64
+Self_Employed               int64
+ApplicantIncome             int64
+CoapplicantIncome         float64
+LoanAmount                float64
+Loan_Amount_Term           object
+Credit_History            float64
+Property_Area               int64
+Loan_Status                 int64
+LoanAmount_log            float64
+TotalIncome               float64
+TotalIncome_log           float64
+LoanAmount/TotalIncome    float64
+dtype: object
+</code></pre><h2 id="5-Building-a-Predictive-Model-in-Python"><a href="#5-Building-a-Predictive-Model-in-Python" class="headerlink" title="5. Building a Predictive Model in Python"></a>5. Building a Predictive Model in Python</h2><p>After, we have made the data useful for modeling, let’s now look at the python code to create a predictive model on our data set. Skicit-Learn (sklearn) is the most commonly used library in Python for this purpose and we will follow the trail. I encourage you to get a refresher on sklearn through <a href="https://www.analyticsvidhya.com/blog/2015/01/scikit-learn-python-machine-learning-tool/" target="_blank" rel="external">this article</a>.</p>
+<p>Next, we will import the required modules. Then we will define a generic classification function, which takes a model as input and determines the Accuracy and Cross-Validation scores. Since this is an introductory article, I will not go into the details of coding. Please refer to <a href="https://www.analyticsvidhya.com/blog/2015/08/common-machine-learning-algorithms/" target="_blank" rel="external">this article</a> for getting details of the algorithms with R and Python codes. Also, it’ll be good to get a refresher on cross-validation through <a href="https://www.analyticsvidhya.com/blog/2015/11/improve-model-performance-cross-validation-in-python-r/" target="_blank" rel="external">this article</a>, as it is a very important measure of power performance.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Import models from scikit learn module:</span></div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</div><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</div><div class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier, export_graphviz</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Generic function for making a classification model and accessing performance:</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classification_model</span><span class="params">(model,data,predictors,outcome)</span>:</span></div><div class="line">    <span class="comment">#Fit the model:</span></div><div class="line">    model.fit(data[predictors],data[outcome])</div><div class="line">    </div><div class="line">    <span class="comment">#Make predictions on training set:</span></div><div class="line">    predictions=model.predict(data[predictors])</div><div class="line">    </div><div class="line">    <span class="comment">#Print accuracy</span></div><div class="line">    accuracy=metrics.accuracy_score(predictions,data[outcome])</div><div class="line">    print(<span class="string">"Accuracy : %s"</span> % <span class="string">"&#123;0:.3%&#125;"</span>.format(accuracy))</div><div class="line">    </div><div class="line">    <span class="comment">#Perform k-fold cross-validation with 5 folds</span></div><div class="line">    kf=KFold(n_splits=<span class="number">5</span>).split(data)</div><div class="line">    error=[]</div><div class="line">    <span class="keyword">for</span> train,test <span class="keyword">in</span> kf:</div><div class="line">        <span class="comment">#Filter training data</span></div><div class="line">        train_predictors=(data[predictors].iloc[train,:])</div><div class="line">        </div><div class="line">        <span class="comment">#The target we're using to train the algorithm.</span></div><div class="line">        train_target=data[outcome].iloc[train]</div><div class="line">        </div><div class="line">        <span class="comment">#Training the algorithm using the predictors and target.</span></div><div class="line">        model.fit(train_predictors,train_target)</div><div class="line">        </div><div class="line">        <span class="comment">#Record error from each cross-validation run</span></div><div class="line">        error.append(model.score(data[predictors].iloc[test,:],data[outcome].iloc[test]))</div><div class="line">    </div><div class="line">    print(<span class="string">"Cross-Validation Score : %s"</span> % <span class="string">"&#123;0:.3%&#125;"</span>.format(np.mean(error)))</div><div class="line">    </div><div class="line">    <span class="comment">#Fit the model again so that it can be refered outside the function:</span></div><div class="line">    model.fit(data[predictors],data[outcome])</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">creditTrain=df[df[<span class="string">'Credit_History'</span>].notnull()] <span class="comment">#以Credit_History为输出进行预测</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Credit_History'</span></div><div class="line">model=LogisticRegression()<span class="comment">#模型选用普通的线性回归</span></div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>,<span class="string">'TotalIncome'</span>]</div><div class="line">classification_model(model,creditTrain,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 84.220%
+Cross-Validation Score : 84.218%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Credit_History'</span></div><div class="line">model=DecisionTreeClassifier()<span class="comment">#模型改为决策树</span></div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>,<span class="string">'TotalIncome'</span>]</div><div class="line">classification_model(model,creditTrain,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 99.113%
+Cross-Validation Score : 74.651%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Credit_History'</span></div><div class="line">model=RandomForestClassifier(n_estimators=<span class="number">25</span>,min_samples_split=<span class="number">25</span>,max_depth=<span class="number">7</span>,max_features=<span class="number">1</span>)<span class="comment">#模型改为Random Forest</span></div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>,<span class="string">'TotalIncome'</span>]</div><div class="line">classification_model(model,creditTrain,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 84.929%
+Cross-Validation Score : 83.864%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">creditTest=df[df[<span class="string">'Credit_History'</span>].isnull()]<span class="comment">#以Credit_History丢失值作为测试集，进行预测填充丢失值</span></div><div class="line">creditPredictions=model.predict(creditTest[predictor_var])</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.loc[df[<span class="string">'Credit_History'</span>].isnull(),<span class="string">'Credit_History'</span>]=creditPredictions <span class="comment">#以预测值进行填充</span></div></pre></td></tr></table></figure>
+<h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><p>Let’s make our first Logistic Regression model. One way would be to take all the variables into the model but this might result in overfitting (don’t worry if you’re unaware of this terminology yet). In simple words, taking all variables might result in the model understanding complex relations specific to the data and will not generalize well. Read more about <a href="https://www.analyticsvidhya.com/blog/2015/11/beginners-guide-on-logistic-regression-in-r/" target="_blank" rel="external">Logistic Regression</a>.</p>
+<p>We can easily make some intuitive hypothesis to set the ball rolling. The chances of getting a loan will be higher for:</p>
+<ul>
+<li>Applicants having a credit history (remember we observed this in exploration?)</li>
+<li>Applicants with higher applicant and co-applicant incomes</li>
+<li>Applicants with higher education level</li>
+<li>Properties in urban areas with high growth perspectives</li>
+</ul>
+<p>So let’s make our first model with ‘Credit_History’.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Loan_Status'</span></div><div class="line">model=LogisticRegression()</div><div class="line">predictor_var=[<span class="string">'Credit_History'</span>]<span class="comment">#仅仅使用一个特征来预测</span></div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#再加上一些特征</span></div><div class="line">predictor_var=[<span class="string">'Credit_History'</span>,<span class="string">'Education'</span>,<span class="string">'Married'</span>,<span class="string">'Self_Employed'</span>,<span class="string">'Property_Area'</span>,<span class="string">'LoanAmount/TotalIncome'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><p>Generally we expect the accuracy to increase on adding variables. But this is a more challenging case. The accuracy and cross-validation score are not getting impacted by less important variables. Credit_History is dominating the mode. We have two options now:(可以看到使用线性回归方法，在增加更多特征的时候，预测效果并没有很好改变，几乎和原来一样。这时候就需要考虑以下两种方法。）</p>
+<ul>
+<li>Feature Engineering: dereive new information and try to predict those. I will leave this to your creativity.</li>
+<li>Better modeling techniques. Let’s explore this next.</li>
+</ul>
+<h3 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a>Decision Tree</h3><p>Decision tree is another method for making a predictive model. It is known to provide higher accuracy than logistic regression model. Read more about <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="external">Decision Trees</a>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">model=DecisionTreeClassifier()<span class="comment">#换模型</span></div><div class="line">predictor_var=[<span class="string">'Credit_History'</span>,<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><p>Here the model based on categorical variables is unable to have an impact because Credit History is dominating over them. Let’s try a few numerical variables:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predictor_var=[<span class="string">'Credit_History'</span>,<span class="string">'Loan_Amount_Term'</span>,<span class="string">'LoanAmount_log'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 88.925%
+Cross-Validation Score : 69.371%
+</code></pre><p>Here we observed that although the accuracy went up on adding variables, the cross-validation error went down. This is the result of model over-fitting the data. Let’s try an even more sophisticated algorithm and see if it helps:</p>
+<h3 id="Random-Forest"><a href="#Random-Forest" class="headerlink" title="Random Forest"></a>Random Forest</h3><p>Random forest is another algorithm for solving the classification problem. Read more about <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="external">Random Forest</a>.</p>
+<p>An advantage with Random Forest is that we can make it work with all the features and it returns a feature importance matrix which can be used to select features.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">model=RandomForestClassifier(n_estimators=<span class="number">100</span>)</div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Dependents'</span>,<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>,<span class="string">'Loan_Amount_Term'</span>,<span class="string">'Credit_History'</span>,</div><div class="line">              <span class="string">'Property_Area'</span>,<span class="string">'LoanAmount_log'</span>,<span class="string">'TotalIncome_log'</span>,<span class="string">'LoanAmount/TotalIncome'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 100.000%
+Cross-Validation Score : 78.665%
+</code></pre><p>Here we see that the accuracy is 100% for the training set(显然过拟合). This is the ultimate case of overfitting and can be resolved in two ways:</p>
+<ul>
+<li>Reducing the number of predictors</li>
+<li>Tuning the model parameters</li>
+</ul>
+<p>Let’s try both of these. First we see the feature importance matrix from which we’ll take the most important features.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Create a series with feature importances:</span></div><div class="line">featimp=pd.Series(model.feature_importances_,index=predictor_var).sort_values(ascending=<span class="keyword">False</span>)</div><div class="line">print(featimp)</div></pre></td></tr></table></figure>
+<pre><code>Credit_History            0.263870
+LoanAmount/TotalIncome    0.192546
+TotalIncome_log           0.182355
+LoanAmount_log            0.164331
+Property_Area             0.041543
+Dependents                0.041328
+Loan_Amount_Term          0.035326
+Married                   0.023571
+Gender                    0.019269
+Education                 0.018238
+Self_Employed             0.017623
+dtype: float64
+</code></pre><p>Let’s use the top 6 variables for creating a model. Also, we will modify the parameters of random forest model a little bit:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">model=RandomForestClassifier(n_estimators=<span class="number">25</span>,min_samples_split=<span class="number">25</span>,max_depth=<span class="number">7</span>,max_features=<span class="number">1</span>)</div><div class="line">predictor_var=[<span class="string">'TotalIncome_log'</span>,<span class="string">'LoanAmount_log'</span>,<span class="string">'Credit_History'</span>,<span class="string">'LoanAmount/TotalIncome'</span>,<span class="string">'Property_Area'</span>,</div><div class="line">              <span class="string">'Dependents'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 83.550%
+Cross-Validation Score : 80.782%
+</code></pre><p>Notice that although accuracy reduced, but the cross-validation score is improving showing that the model is generalizing well. Remember that random forest models are not exactly repeatable. Different runs will result in slight variations because of randomization. But the output should stay in the ballpark.</p>
+<p>You would have noticed that even after some basic parameter tuning on random forest, we have reached a cross-validation accuracy only slightly better than the original logistic regression model. This exercise gives us some very interesting and unique learning:</p>
+<ol>
+<li>Using a more sophisticated model does not guarantee better results.</li>
+<li>Avoid using complex modeling techniques as a black box without understanding the underlying concepts. Doing so would increase the tendency of overfitting thus making your models less interpretable</li>
+<li>Feature Engineering is the key to success. Everyone can use an Xgboost models but the real art and creativity lies in enhancing your features to better suit the model.</li>
+</ol>
+<p>So are you ready to take on the challenge? Start your data science journey with Loan Prediction Problem.</p>
+<p><a href="https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/" target="_blank" rel="external">参考文章：</a><br><a href="https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/" title="参考链接" target="_blank" rel="external">https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2068,178 +2462,6 @@ return result;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/27/My-First-Blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/27/My-First-Blog/" itemprop="url">要怎样努力，才能成为很厉害的人</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T13:37:43+08:00">
-                2017-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/鸡汤/" itemprop="url" rel="index">
-                    <span itemprop="name">鸡汤</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>#要怎样努力，才能成为很厉害的人</p>
-<p>首先，少年，答应别人的承诺，就一定要兑现。</p>
-<p>我以前啊，和你一样，很想成为一个很厉害很厉害很厉害的人。</p>
-<p>喜欢看热血的东西，幻想自己是屠龙的勇士，登塔的先锋，我左手有剑，右手有光，没头没脑的燃烧自己，敌人的骑军来了，我说你们何人堪与之战，我的女人在等我。</p>
-<p>后来我现实了一点，我觉得我要成为那种说走就走，说日就日的男人，我梳大背头，流浪在欧洲或者新几内亚的，我拍孩子，拍野兽，拍流浪的雏妓，与罗伯特德尼罗握手，说嘿，我给你写了愤怒的公牛2。</p>
-<p>再后来，我觉得我人生的梦想，是在城市中心买上一间顶层公寓，把一整面墙都改造成钢化玻璃，在灯火通明的夜晚，我就要端着酒站在巨大的窗前，看整个城市在呼吸，然后我的朋友叩门，他带来了一打嫩模，我们就玩一些成年人的游戏</p>
-<p>现在，我发现龙并不存在，我不会骑马，不会用单反，家住2楼，我能做的，就是把眼前的事儿做好，赚到足够的钱，这样我可以给我的姑娘一个地球仪，然后用飞镖扎它，扎到哪儿，就去哪儿玩。</p>
-<p>这样看来，虽然我的想法随着生殖器的发育，始终在变，但那个很厉害很厉害的人，一直离我很远，甚至越来越远。</p>
-<p>我心中曾经执剑的少年，此刻也混迹在市井之间。</p>
-<p>血似乎都凉了。</p>
-<p>我也不是没有惶恐过，是不是我这一生，都不能左手持剑，右手握着罗伯特德尼罗，说这里的嫩模随便你玩但是你他妈别从窗户上掉下去。</p>
-<p>这样一看，我逊得不行，我的朋友都是一些凡人，比我还逊，业余生活就是推塔、中单、跪。</p>
-<p>我心想，我是不是这辈子都要做一个逊逼，直到我的坟墓上写好墓志铭，我甚至都想好了：</p>
-<p>###我来，我见，我挂了。<br>最后我给了自己一个否定的答复，我不要。</p>
-<p>我喜欢我的朋友们，喜欢我现在的生活，首先我希望你明白，没有厉害与逊逼得区分，只有血的凉与热，有的人觉得生活就这样吧，我算了，现在没什么不好。</p>
-<p>有的人觉得生活这样挺好，但是我还要更好。</p>
-<p>这种只要剧情稍微热血一点就会热泪盈眶的傻逼，已经不多了，一刻也不要停留。</p>
-<p>所以现在，我和你不一样了，我仍然想成为一个很厉害很厉害很厉害的人，像我们这种剧情稍微热血一点就会热泪盈眶的傻逼，要好好珍惜自己。</p>
-<p>很多人坐下来了，跟你说你不行，说你省点儿心吧，说你请静一静。</p>
-<p>汹涌的人群就把你这样的少年淹没了，人群散去的时候，你也不见了，你那些承诺，谁也听不见，这个世界对于你，就再不可能有什么更有趣更漂亮的女朋友。</p>
-<p>你就失约了，小逼崽子。</p>
-<p>这么跟你说。</p>
-<p>虽然随着年龄的增长，我趋于现实，不能像你那样分分钟冲动的燃烧，然而我每时每刻都有想做的事，有想达成的目标。</p>
-<p>不排除以后的某一年，我会握着罗伯特德尼罗的手，他说这是你写得吗，愤怒的公牛2，只要他还没死。</p>
-<p>故事里拳王拉莫塔忍着伤，他举着铁拳，挥汗如雨，要和命运斗争，他说我怎么能失约呢，我是那个要成为很厉害很厉害的拳王拉莫塔！</p>
-<p>小伙儿，成为很厉害很厉害的人，最重要的，就是要热血，永远也不要让你的血凉下去，你凉下去了，就再也不能找到一个更有趣更漂亮的女友，你就失约了，于是那天她踏梦而来，就成了一个彻头彻尾的笑话。</p>
-<p>当有一天你成为你讨厌的那种人，浑浑噩噩，你走在街上，看见那些更有趣更漂亮的女孩，你会不会想起多年以前，你说我答应你，在一个承诺就是永远的年纪。</p>
-<p>读书，交友，美容，都不如你这一腔狗血，滚烫，灼人，你要燃上大半辈子，才对得起你现在说的这些话。</p>
-<p>我听闻最美的故事，是公主死去了，屠龙的少年还在燃烧。</p>
-<p>火苗再小，你都要反复的点燃。</p>
-<p>所谓热血的少年，青涩的爱恋，死亡与梦之约。</p>
-<p>这么好的故事。</p>
-<p>你可别演砸了。</p>
-<p>最后我给你点个人建议：<br>1.读书，读到倦，网上有很多方法，但你从来沉不下心看。<br>2.学习，学到疼，网上有很多方法，但你从来沉不下心看。<br>3.开口说话，冷场也要说话，脸皮薄也要说话，挨打也要说话。<br>4.如果你现在不知道做什么，至少你还可以先从做一个牛逼的学生开始。<br>5.更漂亮更有趣的女孩，五年以后再找。<br>6.承诺是鞭子，不是兴奋剂。<br>7.年纪大了，也不要说什么心如死灰。<br>改变自己是非常，非常，非常痛苦的，我能看出来你一腔热血的优点，自然知道你孤僻懒散自以为是的缺点，方法很多，不过我不确定你吃不吃得了苦，我和你共勉吧。<br>在成为最厉害最厉害最厉害的道路上。</p>
-<p>完</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2290,7 +2512,7 @@ return result;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

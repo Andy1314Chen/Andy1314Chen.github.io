@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+	<meta name="google-site-verification" content="y1NE4TYCS_y-0LIIks73rI2qINI9JYRwk6Su8ZG-ZIw" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,机器学习," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="4. Data Munging in Python : Using PandasFor those, who have been following, here are your must wear shoes to start running. Data munging – recap of the need While our exploration of the data, we found">
+<meta name="keywords" content="python,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Complete Tutorial to Learn Data Science with Python from Scratch(3)">
+<meta property="og:url" content="http://yoursite.com/2017/07/27/A Complete Tutorial(3)/index.html">
+<meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="4. Data Munging in Python : Using PandasFor those, who have been following, here are your must wear shoes to start running. Data munging – recap of the need While our exploration of the data, we found">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.ynfzb.cn/upload/image/201111/20111115141602377484.jpg">
+<meta property="og:image" content="http://i.imgur.com/UBSLV9T.png">
+<meta property="og:image" content="http://i.imgur.com/gBbmlag.png">
+<meta property="og:image" content="http://i.imgur.com/IPLEAsM.png">
+<meta property="og:image" content="http://i.imgur.com/GQjJl4e.png">
+<meta property="og:updated_time" content="2017-07-27T08:40:03.565Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Complete Tutorial to Learn Data Science with Python from Scratch(3)">
+<meta name="twitter:description" content="4. Data Munging in Python : Using PandasFor those, who have been following, here are your must wear shoes to start running. Data munging – recap of the need While our exploration of the data, we found">
+<meta name="twitter:image" content="http://www.ynfzb.cn/upload/image/201111/20111115141602377484.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/27/A Complete Tutorial(3)/"/>
+
+
+
+
+
+  <title>A Complete Tutorial to Learn Data Science with Python from Scratch(3) | Andy's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+<a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Andy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点儿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/A Complete Tutorial(3)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A Complete Tutorial to Learn Data Science with Python from Scratch(3)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T00:00:00+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="4-Data-Munging-in-Python-Using-Pandas"><a href="#4-Data-Munging-in-Python-Using-Pandas" class="headerlink" title="4. Data Munging in Python : Using Pandas"></a>4. Data Munging in Python : Using Pandas</h2><p>For those, who have been following, here are your must wear shoes to start running.</p>
+<p>Data munging – recap of the need</p>
+<p>While our exploration of the data, we found a few problems in the data set, which needs to be solved before the data is ready for a good model. This exercise is typically referred as “Data Munging”. Here are the problems, we are already aware of:</p>
+<p>There are missing values in some variables. We should estimate those values wisely depending on the amount of missing values and the expected importance of variables.<br>While looking at the distributions, we saw that ApplicantIncome and LoanAmount seemed to contain extreme values at either end. Though they might make intuitive sense, but should be treated appropriately.<br>In addition to these problems with numerical fields, we should also look at the non-numerical fields i.e. Gender, Property_Area, Married, Education and Dependents to see, if they contain any useful information.</p>
+<p>If you are new to Pandas, I would recommend reading <a href="https://www.analyticsvidhya.com/blog/2016/01/12-pandas-techniques-python-data-manipulation/" target="_blank" rel="external">this article(Pandas的12种奇淫异巧)</a> before moving on. It details some useful techniques of data manipulation.</p>
+<p><strong>数据修复</strong></p>
+<p><img src="http://www.ynfzb.cn/upload/image/201111/20111115141602377484.jpg" alt="数据修复"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">%matplotlib inline</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df=pd.read_csv(<span class="string">"G:/Datahack/Loanprediction/TrainFile/train.csv"</span>) <span class="comment">#读取数据</span></div></pre></td></tr></table></figure>
+<h3 id="Check-missing-values-in-the-dataset"><a href="#Check-missing-values-in-the-dataset" class="headerlink" title="Check missing values in the dataset"></a>Check missing values in the dataset</h3><p>Let us look at missing values in all the variables because most of the models don’t work with missing data and even if they do, imputing them helps more often than not. So, let us check the number of nulls / NaNs in the dataset.<br>(检查一下数据集的缺失值)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.apply(<span class="keyword">lambda</span> x:sum(x.isnull()),axis=<span class="number">0</span>) <span class="comment"># 匿名函数，axis=0表示针对每列应该用，可以看看</span></div><div class="line"><span class="comment">#与 df.apply(lambda x:sum(x.isnull()),axis=1)的区别</span></div></pre></td></tr></table></figure>
+<pre><code>Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount           22
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64
+</code></pre><p>可以看到Gender丢失13个，Married丢失3个，Dependents丢失15个，Self_Employed丢失32个，LoanAmount丢失22个，Loan_Amount_Term丢失14个，Credit_History丢失50个。</p>
+<p>Though the missing values are not very high in number, but many variables have them and each one of these should be estimated and added in the data. Get a detailed view on different imputation techniques through <a href="https://www.analyticsvidhya.com/blog/2016/01/guide-data-exploration/" target="_blank" rel="external">this article(A Comprehensive Guide to Data Exploration)</a>.</p>
+<p>Note: Remember that missing values may not always be NaNs. For instance, if the Loan_Amount_Term is 0, does it makes sense or would you consider that missing? I suppose your answer is missing and you’re right. So we should check for values which are unpractical.(值得注意的是，并非所有丢失值都是NaN,也可能是0或者其他不合理的值)</p>
+<h3 id="How-to-fill-missing-values-in-LoanAmount"><a href="#How-to-fill-missing-values-in-LoanAmount" class="headerlink" title="How to fill missing values in LoanAmount?"></a>How to fill missing values in LoanAmount?</h3><p>如何填充丢失值是一个问题，下面以LoanAmount为例。</p>
+<p>There are numerous ways to fill the missing values of loan amount – the simplest being replacement by mean, which can be done by following code:（最简单的方法，以平均值进行填充）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'LoanAmount'</span>].fillna(df[<span class="string">'LoanAmount'</span>].mean(),inplace=<span class="keyword">True</span>)<span class="comment"># 平均值填充</span></div></pre></td></tr></table></figure>
+<p>The other extreme could be to build a supervised learning model to predict loan amount on the basis of other variables and then use age along with other variables to predict survival.(另一个方法是建立一个有监督学习模型利用其他变量来预测未知值）</p>
+<p>Since, the purpose now is to bring out the steps in data munging, I’ll rather take an approach, which lies some where in between these 2 extremes. A key hypothesis is that the whether a person is educated or self-employed can combine to give a good estimate of loan amount.（但这里只是一个入门教程，采用一种介于上述两种方法之间的手段来填充丢失值）</p>
+<p>First, let’s look at the boxplot to see if a trend exists:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'LoanAmount'</span>,by=[<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>])</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x9d956d8&gt;
+</code></pre><p><img src="http://i.imgur.com/UBSLV9T.png" alt="picture1"></p>
+<p>Thus we see some variations in the median of loan amount for each group and this can be used to impute the values. But first, we have to ensure that each of Self_Employed and Education variables should not have a missing values.(由上面的Boxplot可以看出，不同Education和Self_Employed的组合对LoanAmount的中位数还是有影响的。因此，可以用Education和Self_Employed来进行推断。但在此之前，必须保证Education和Self_Employed是完整的)</p>
+<p>As we say earlier, Self_Employed has some missing values. Let’s look at the frequency table:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Self_Employed'</span>].value_counts()</div></pre></td></tr></table></figure>
+<pre><code>No     500
+Yes     82
+Name: Self_Employed, dtype: int64
+</code></pre><p>Since ~86% values are “No”, it is safe to impute the missing values as “No” as there is a high probability of success. This can be done using the following code:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Self_Employed'</span>].fillna(<span class="string">'No'</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<p>Now, we will create a Pivot table, which provides us median values for all the groups of unique values of Self_Employed and Education features. Next, we define a function, which returns the values of these cells and apply it to fill the missing values of loan amount:<br>(由Education和Self_Employed两列所确定的LoanAmount的中位数来填充LoanAmount的丢失值)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">table = df.pivot_table(values=<span class="string">'LoanAmount'</span>, index=<span class="string">'Self_Employed'</span> ,</div><div class="line">                       columns=<span class="string">'Education'</span>, aggfunc=np.median)</div><div class="line"><span class="comment"># Define function to return value of this pivot_table</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fage</span><span class="params">(x)</span>:</span></div><div class="line"> <span class="keyword">return</span> table.loc[x[<span class="string">'Self_Employed'</span>],x[<span class="string">'Education'</span>]]</div><div class="line"><span class="comment"># Replace missing values</span></div><div class="line">df[<span class="string">'LoanAmount'</span>].fillna(df[df[<span class="string">'LoanAmount'</span>].isnull()].apply(fage, axis=<span class="number">1</span>), inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<h3 id="How-to-treat-for-extreme-values-in-distribution-of-LoanAmount-and-ApplicantIncome"><a href="#How-to-treat-for-extreme-values-in-distribution-of-LoanAmount-and-ApplicantIncome" class="headerlink" title="How to treat for extreme values in distribution of LoanAmount and ApplicantIncome ?"></a>How to treat for extreme values in distribution of LoanAmount and ApplicantIncome ?</h3><p>Let’s analyze LoanAmount first. Since the extreme values are practically possible, i.e. some people might apply for high value loans due to specific needs. So instead of treating them as outliers, let’s try a log transformation to nullify their effect:<br>(使用Log函数消除极端值的影响）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'LoanAmount_log'</span>]=np.log(df[<span class="string">'LoanAmount'</span>])</div><div class="line">df[<span class="string">'LoanAmount_log'</span>].hist(bins=<span class="number">20</span>)</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x9f000f0&gt;
+</code></pre><p><img src="http://i.imgur.com/gBbmlag.png" alt="picture2"></p>
+<p>Now the distribution looks much closer to normal and effect of extreme values has been significantly subsided.</p>
+<p>Coming to ApplicantIncome. One intuition can be that some applicants have lower income but strong support Co-applicants. So it might be a good idea to combine both incomes as total income and take a log transformation of the same.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'TotalIncome'</span>]=df[<span class="string">'ApplicantIncome'</span>]+df[<span class="string">'CoapplicantIncome'</span>]</div><div class="line">df[<span class="string">'TotalIncome_log'</span>]=np.log(df[<span class="string">'TotalIncome'</span>])</div><div class="line">df[<span class="string">'LoanAmount_log'</span>].hist(bins=<span class="number">20</span>)</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0xa007da0&gt;
+</code></pre><p><img src="http://i.imgur.com/IPLEAsM.png" alt="picture3"></p>
+<p>Now we see that the distribution is much better than before. I will leave it upto you to impute the missing values for Gender, Married, Dependents, Loan_Amount_Term, Credit_History. Also, I encourage you to think about possible additional information which can be derived from the data. For example, creating a column for LoanAmount/TotalIncome might make sense as it gives an idea of how well the applicant is suited to pay back his loan.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.apply(<span class="keyword">lambda</span> x:sum(x.isnull()),axis=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<pre><code>Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed         0
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount            0
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+LoanAmount_log        0
+TotalIncome           0
+TotalIncome_log       0
+dtype: int64
+</code></pre><p>丢失的还有Gender,Married,Dependents,Loan_Amount_Term,Credit_History5个。其中Married比较好处理，直接以大多数类别填充，先把它处理啦。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Married'</span>].value_counts()</div></pre></td></tr></table></figure>
+<pre><code>Yes    398
+No     213
+Name: Married, dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Married'</span>].fillna(<span class="string">'Yes'</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<p>接着处理Gender(性别),缺了13个。直观上，先看看Gender和Married、Education、Self_Employed、Property_Area的关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">percConvert</span><span class="params">(ser)</span>:</span></div><div class="line">    <span class="keyword">return</span> ser/float(ser[<span class="number">-1</span>])</div><div class="line"></div><div class="line">pd.crosstab(df[<span class="string">'Married'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Married</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>No</th><br>      <td>0.380952</td><br>      <td>0.619048</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Yes</th><br>      <td>0.081841</td><br>      <td>0.918159</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出已婚人士中，Male占0.918，那假如某人性别未知，只知其已婚，是不是有0.918的概率判断其为男性呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.crosstab(df[<span class="string">'Education'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Education</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>Graduate</th><br>      <td>0.196581</td><br>      <td>0.803419</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Not Graduate</th><br>      <td>0.150376</td><br>      <td>0.849624</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出性别与其Education关系好像并不大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.crosstab(df[<span class="string">'Self_Employed'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Self_Employed</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>No</th><br>      <td>0.185468</td><br>      <td>0.814532</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Yes</th><br>      <td>0.192308</td><br>      <td>0.807692</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出性别与其Self_Employed关系好像也并不大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.crosstab(df[<span class="string">'Dependents'</span>],df[<span class="string">'Gender'</span>],margins=<span class="keyword">True</span>).apply(percConvert,axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Dependents</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>0.236686</td><br>      <td>0.763314</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>0.188119</td><br>      <td>0.811881</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>0.070707</td><br>      <td>0.929293</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>3+</th><br>      <td>0.062500</td><br>      <td>0.937500</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186007</td><br>      <td>0.813993</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">coding</span><span class="params">(col,codeDict)</span>:</span></div><div class="line">    colCoded=pd.Series(col,copy=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">for</span> key,value <span class="keyword">in</span> codeDict.items():</div><div class="line">        colCoded.replace(key,value,inplace=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> colCoded</div><div class="line">df[<span class="string">'Gender'</span>]=coding(df[<span class="string">'Gender'</span>],&#123;<span class="string">'Male'</span>:<span class="number">1</span>,<span class="string">'Female'</span>:<span class="number">0</span>&#125;) <span class="comment">#将‘Gender'转换为0,1表示（男士：1，女生：0）</span></div><div class="line">table2=df.pivot_table(values=[<span class="string">'Gender'</span>],index=[<span class="string">'Married'</span>,<span class="string">'Dependents'</span>],aggfunc=np.median)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pd.crosstab(df['Married'],df['Dependents'],margins=True).apply(percConvert,axis=1)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependent</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">if</span> x[<span class="string">'Married'</span>]==<span class="string">'No'</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">'0'</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">'1'</span></div><div class="line">df[<span class="string">'Dependents'</span>].fillna(df[df[<span class="string">'Dependents'</span>].isnull()].apply(dependent,axis=<span class="number">1</span>),inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Define function to return value of this pivot_table</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fage</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">if</span> table2.loc[x[<span class="string">'Married'</span>],x[<span class="string">'Dependents'</span>]].values[<span class="number">0</span>]==<span class="number">1.0</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1.0</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">0.0</span></div><div class="line"><span class="comment"># Replace missing values</span></div><div class="line">df[<span class="string">'Gender'</span>].fillna(df[df[<span class="string">'Gender'</span>].isnull()].apply(fage, axis=<span class="number">1</span>), inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.apply(<span class="keyword">lambda</span> x:sum(x.isnull()),axis=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<pre><code>Loan_ID               0
+Gender                0
+Married               0
+Dependents            0
+Education             0
+Self_Employed         0
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount            0
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+LoanAmount_log        0
+TotalIncome           0
+TotalIncome_log       0
+dtype: int64
+</code></pre><p>可以看到只剩下Loan_Amount_Term和Credit_History没有处理啦，因为Credit_History由前面分析，对于结果来说是非常重要的，那么就放在最后处理好了。现在来对Loan_Amount_Term进行分析，Loan_Amount_Term是数值型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'Loan_Amount_Term'</span>,by=[<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>])</div></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0xbc43d30&gt;
+</code></pre><p><img src="http://i.imgur.com/GQjJl4e.png" alt="picture5"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">termMedian=df[<span class="string">'Loan_Amount_Term'</span>].median()</div><div class="line">df[<span class="string">'Loan_Amount_Term'</span>].fillna(termMedian,inplace=<span class="keyword">True</span>)<span class="comment">#直接由中位数填充好了……</span></div></pre></td></tr></table></figure>
+<p>按理说，Credit_History应该是根据一个人的性别，婚姻，家属，教育等申请之前的状态有很大关系，而与当前该次申请贷款的数额、期限等业务关系不大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.info()</div></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 614 entries, 0 to 613
+Data columns (total 17 columns):
+Loan_ID                   614 non-null object
+Gender                    614 non-null float64
+Married                   614 non-null object
+Dependents                614 non-null object
+Education                 614 non-null object
+Self_Employed             614 non-null object
+ApplicantIncome           614 non-null int64
+CoapplicantIncome         614 non-null float64
+LoanAmount                614 non-null float64
+Loan_Amount_Term          614 non-null object
+Credit_History            564 non-null float64
+Property_Area             614 non-null object
+Loan_Status               614 non-null object
+LoanAmount_log            614 non-null float64
+TotalIncome               614 non-null float64
+TotalIncome_log           614 non-null float64
+LoanAmount/TotalIncome    614 non-null float64
+dtypes: float64(8), int64(1), object(8)
+memory usage: 81.6+ KB
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</div><div class="line">var_mod=[<span class="string">'Married'</span>,<span class="string">'Dependents'</span>,<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>,<span class="string">'Property_Area'</span>,<span class="string">'Loan_Status'</span>]</div><div class="line">le=LabelEncoder()</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> var_mod:</div><div class="line">    df[i]=le.fit_transform(df[i])</div><div class="line">df.dtypes<span class="comment">#将以上非数值型，转化为数值型量</span></div></pre></td></tr></table></figure>
+<pre><code>Loan_ID                    object
+Gender                    float64
+Married                     int64
+Dependents                  int64
+Education                   int64
+Self_Employed               int64
+ApplicantIncome             int64
+CoapplicantIncome         float64
+LoanAmount                float64
+Loan_Amount_Term           object
+Credit_History            float64
+Property_Area               int64
+Loan_Status                 int64
+LoanAmount_log            float64
+TotalIncome               float64
+TotalIncome_log           float64
+LoanAmount/TotalIncome    float64
+dtype: object
+</code></pre><h2 id="5-Building-a-Predictive-Model-in-Python"><a href="#5-Building-a-Predictive-Model-in-Python" class="headerlink" title="5. Building a Predictive Model in Python"></a>5. Building a Predictive Model in Python</h2><p>After, we have made the data useful for modeling, let’s now look at the python code to create a predictive model on our data set. Skicit-Learn (sklearn) is the most commonly used library in Python for this purpose and we will follow the trail. I encourage you to get a refresher on sklearn through <a href="https://www.analyticsvidhya.com/blog/2015/01/scikit-learn-python-machine-learning-tool/" target="_blank" rel="external">this article</a>.</p>
+<p>Next, we will import the required modules. Then we will define a generic classification function, which takes a model as input and determines the Accuracy and Cross-Validation scores. Since this is an introductory article, I will not go into the details of coding. Please refer to <a href="https://www.analyticsvidhya.com/blog/2015/08/common-machine-learning-algorithms/" target="_blank" rel="external">this article</a> for getting details of the algorithms with R and Python codes. Also, it’ll be good to get a refresher on cross-validation through <a href="https://www.analyticsvidhya.com/blog/2015/11/improve-model-performance-cross-validation-in-python-r/" target="_blank" rel="external">this article</a>, as it is a very important measure of power performance.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Import models from scikit learn module:</span></div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</div><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</div><div class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier, export_graphviz</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Generic function for making a classification model and accessing performance:</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classification_model</span><span class="params">(model,data,predictors,outcome)</span>:</span></div><div class="line">    <span class="comment">#Fit the model:</span></div><div class="line">    model.fit(data[predictors],data[outcome])</div><div class="line">    </div><div class="line">    <span class="comment">#Make predictions on training set:</span></div><div class="line">    predictions=model.predict(data[predictors])</div><div class="line">    </div><div class="line">    <span class="comment">#Print accuracy</span></div><div class="line">    accuracy=metrics.accuracy_score(predictions,data[outcome])</div><div class="line">    print(<span class="string">"Accuracy : %s"</span> % <span class="string">"&#123;0:.3%&#125;"</span>.format(accuracy))</div><div class="line">    </div><div class="line">    <span class="comment">#Perform k-fold cross-validation with 5 folds</span></div><div class="line">    kf=KFold(n_splits=<span class="number">5</span>).split(data)</div><div class="line">    error=[]</div><div class="line">    <span class="keyword">for</span> train,test <span class="keyword">in</span> kf:</div><div class="line">        <span class="comment">#Filter training data</span></div><div class="line">        train_predictors=(data[predictors].iloc[train,:])</div><div class="line">        </div><div class="line">        <span class="comment">#The target we're using to train the algorithm.</span></div><div class="line">        train_target=data[outcome].iloc[train]</div><div class="line">        </div><div class="line">        <span class="comment">#Training the algorithm using the predictors and target.</span></div><div class="line">        model.fit(train_predictors,train_target)</div><div class="line">        </div><div class="line">        <span class="comment">#Record error from each cross-validation run</span></div><div class="line">        error.append(model.score(data[predictors].iloc[test,:],data[outcome].iloc[test]))</div><div class="line">    </div><div class="line">    print(<span class="string">"Cross-Validation Score : %s"</span> % <span class="string">"&#123;0:.3%&#125;"</span>.format(np.mean(error)))</div><div class="line">    </div><div class="line">    <span class="comment">#Fit the model again so that it can be refered outside the function:</span></div><div class="line">    model.fit(data[predictors],data[outcome])</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">creditTrain=df[df[<span class="string">'Credit_History'</span>].notnull()] <span class="comment">#以Credit_History为输出进行预测</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Credit_History'</span></div><div class="line">model=LogisticRegression()<span class="comment">#模型选用普通的线性回归</span></div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>,<span class="string">'TotalIncome'</span>]</div><div class="line">classification_model(model,creditTrain,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 84.220%
+Cross-Validation Score : 84.218%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Credit_History'</span></div><div class="line">model=DecisionTreeClassifier()<span class="comment">#模型改为决策树</span></div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>,<span class="string">'TotalIncome'</span>]</div><div class="line">classification_model(model,creditTrain,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 99.113%
+Cross-Validation Score : 74.651%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Credit_History'</span></div><div class="line">model=RandomForestClassifier(n_estimators=<span class="number">25</span>,min_samples_split=<span class="number">25</span>,max_depth=<span class="number">7</span>,max_features=<span class="number">1</span>)<span class="comment">#模型改为Random Forest</span></div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>,<span class="string">'TotalIncome'</span>]</div><div class="line">classification_model(model,creditTrain,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 84.929%
+Cross-Validation Score : 83.864%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">creditTest=df[df[<span class="string">'Credit_History'</span>].isnull()]<span class="comment">#以Credit_History丢失值作为测试集，进行预测填充丢失值</span></div><div class="line">creditPredictions=model.predict(creditTest[predictor_var])</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.loc[df[<span class="string">'Credit_History'</span>].isnull(),<span class="string">'Credit_History'</span>]=creditPredictions <span class="comment">#以预测值进行填充</span></div></pre></td></tr></table></figure>
+<h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><p>Let’s make our first Logistic Regression model. One way would be to take all the variables into the model but this might result in overfitting (don’t worry if you’re unaware of this terminology yet). In simple words, taking all variables might result in the model understanding complex relations specific to the data and will not generalize well. Read more about <a href="https://www.analyticsvidhya.com/blog/2015/11/beginners-guide-on-logistic-regression-in-r/" target="_blank" rel="external">Logistic Regression</a>.</p>
+<p>We can easily make some intuitive hypothesis to set the ball rolling. The chances of getting a loan will be higher for:</p>
+<ul>
+<li>Applicants having a credit history (remember we observed this in exploration?)</li>
+<li>Applicants with higher applicant and co-applicant incomes</li>
+<li>Applicants with higher education level</li>
+<li>Properties in urban areas with high growth perspectives</li>
+</ul>
+<p>So let’s make our first model with ‘Credit_History’.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">outcome_var=<span class="string">'Loan_Status'</span></div><div class="line">model=LogisticRegression()</div><div class="line">predictor_var=[<span class="string">'Credit_History'</span>]<span class="comment">#仅仅使用一个特征来预测</span></div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#再加上一些特征</span></div><div class="line">predictor_var=[<span class="string">'Credit_History'</span>,<span class="string">'Education'</span>,<span class="string">'Married'</span>,<span class="string">'Self_Employed'</span>,<span class="string">'Property_Area'</span>,<span class="string">'LoanAmount/TotalIncome'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><p>Generally we expect the accuracy to increase on adding variables. But this is a more challenging case. The accuracy and cross-validation score are not getting impacted by less important variables. Credit_History is dominating the mode. We have two options now:(可以看到使用线性回归方法，在增加更多特征的时候，预测效果并没有很好改变，几乎和原来一样。这时候就需要考虑以下两种方法。）</p>
+<ul>
+<li>Feature Engineering: dereive new information and try to predict those. I will leave this to your creativity.</li>
+<li>Better modeling techniques. Let’s explore this next.</li>
+</ul>
+<h3 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a>Decision Tree</h3><p>Decision tree is another method for making a predictive model. It is known to provide higher accuracy than logistic regression model. Read more about <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="external">Decision Trees</a>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">model=DecisionTreeClassifier()<span class="comment">#换模型</span></div><div class="line">predictor_var=[<span class="string">'Credit_History'</span>,<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Education'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><p>Here the model based on categorical variables is unable to have an impact because Credit History is dominating over them. Let’s try a few numerical variables:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predictor_var=[<span class="string">'Credit_History'</span>,<span class="string">'Loan_Amount_Term'</span>,<span class="string">'LoanAmount_log'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 88.925%
+Cross-Validation Score : 69.371%
+</code></pre><p>Here we observed that although the accuracy went up on adding variables, the cross-validation error went down. This is the result of model over-fitting the data. Let’s try an even more sophisticated algorithm and see if it helps:</p>
+<h3 id="Random-Forest"><a href="#Random-Forest" class="headerlink" title="Random Forest"></a>Random Forest</h3><p>Random forest is another algorithm for solving the classification problem. Read more about <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="external">Random Forest</a>.</p>
+<p>An advantage with Random Forest is that we can make it work with all the features and it returns a feature importance matrix which can be used to select features.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">model=RandomForestClassifier(n_estimators=<span class="number">100</span>)</div><div class="line">predictor_var=[<span class="string">'Gender'</span>,<span class="string">'Married'</span>,<span class="string">'Dependents'</span>,<span class="string">'Education'</span>,<span class="string">'Self_Employed'</span>,<span class="string">'Loan_Amount_Term'</span>,<span class="string">'Credit_History'</span>,</div><div class="line">              <span class="string">'Property_Area'</span>,<span class="string">'LoanAmount_log'</span>,<span class="string">'TotalIncome_log'</span>,<span class="string">'LoanAmount/TotalIncome'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 100.000%
+Cross-Validation Score : 78.665%
+</code></pre><p>Here we see that the accuracy is 100% for the training set(显然过拟合). This is the ultimate case of overfitting and can be resolved in two ways:</p>
+<ul>
+<li>Reducing the number of predictors</li>
+<li>Tuning the model parameters</li>
+</ul>
+<p>Let’s try both of these. First we see the feature importance matrix from which we’ll take the most important features.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Create a series with feature importances:</span></div><div class="line">featimp=pd.Series(model.feature_importances_,index=predictor_var).sort_values(ascending=<span class="keyword">False</span>)</div><div class="line">print(featimp)</div></pre></td></tr></table></figure>
+<pre><code>Credit_History            0.263870
+LoanAmount/TotalIncome    0.192546
+TotalIncome_log           0.182355
+LoanAmount_log            0.164331
+Property_Area             0.041543
+Dependents                0.041328
+Loan_Amount_Term          0.035326
+Married                   0.023571
+Gender                    0.019269
+Education                 0.018238
+Self_Employed             0.017623
+dtype: float64
+</code></pre><p>Let’s use the top 6 variables for creating a model. Also, we will modify the parameters of random forest model a little bit:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">model=RandomForestClassifier(n_estimators=<span class="number">25</span>,min_samples_split=<span class="number">25</span>,max_depth=<span class="number">7</span>,max_features=<span class="number">1</span>)</div><div class="line">predictor_var=[<span class="string">'TotalIncome_log'</span>,<span class="string">'LoanAmount_log'</span>,<span class="string">'Credit_History'</span>,<span class="string">'LoanAmount/TotalIncome'</span>,<span class="string">'Property_Area'</span>,</div><div class="line">              <span class="string">'Dependents'</span>]</div><div class="line">classification_model(model,df,predictor_var,outcome_var)</div></pre></td></tr></table></figure>
+<pre><code>Accuracy : 83.550%
+Cross-Validation Score : 80.782%
+</code></pre><p>Notice that although accuracy reduced, but the cross-validation score is improving showing that the model is generalizing well. Remember that random forest models are not exactly repeatable. Different runs will result in slight variations because of randomization. But the output should stay in the ballpark.</p>
+<p>You would have noticed that even after some basic parameter tuning on random forest, we have reached a cross-validation accuracy only slightly better than the original logistic regression model. This exercise gives us some very interesting and unique learning:</p>
+<ol>
+<li>Using a more sophisticated model does not guarantee better results.</li>
+<li>Avoid using complex modeling techniques as a black box without understanding the underlying concepts. Doing so would increase the tendency of overfitting thus making your models less interpretable</li>
+<li>Feature Engineering is the key to success. Everyone can use an Xgboost models but the real art and creativity lies in enhancing your features to better suit the model.</li>
+</ol>
+<p>So are you ready to take on the challenge? Start your data science journey with Loan Prediction Problem.</p>
+<p><a href="https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/" target="_blank" rel="external">参考文章：</a><br><a href="https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/" title="参考链接" target="_blank" rel="external">https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/25/A Complete Tutorail(1)/" rel="next" title="A Complete Tutorial to Learn Data Science with Python from Scratch(1)">
+                <i class="fa fa-chevron-left"></i> A Complete Tutorial to Learn Data Science with Python from Scratch(1)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Andy Chen" />
+          <p class="site-author-name" itemprop="name">Andy Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Andy1314Chen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Data-Munging-in-Python-Using-Pandas"><span class="nav-number">1.</span> <span class="nav-text">4. Data Munging in Python : Using Pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-missing-values-in-the-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Check missing values in the dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-fill-missing-values-in-LoanAmount"><span class="nav-number">1.2.</span> <span class="nav-text">How to fill missing values in LoanAmount?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-treat-for-extreme-values-in-distribution-of-LoanAmount-and-ApplicantIncome"><span class="nav-number">1.3.</span> <span class="nav-text">How to treat for extreme values in distribution of LoanAmount and ApplicantIncome ?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Building-a-Predictive-Model-in-Python"><span class="nav-number">2.</span> <span class="nav-text">5. Building a Predictive Model in Python</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">2.1.</span> <span class="nav-text">Logistic Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decision-Tree"><span class="nav-number">2.2.</span> <span class="nav-text">Decision Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-Forest"><span class="nav-number">2.3.</span> <span class="nav-text">Random Forest</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Andy Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+  |  本页点击 <span id="busuanzi_value_page_pv"></span> 次
+  |  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
+  <!-- 小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>
