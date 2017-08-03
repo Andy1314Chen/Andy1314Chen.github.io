@@ -851,6 +851,224 @@ Cross-Validation Score : 80.782%
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(2)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/25/A Complete Tutorail(2)/" itemprop="url">A Complete Tutorial to Learn Data Science with Python from Scratch(2)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T00:00:00+08:00">
+                2017-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="3-Exploratory-analysis-in-Python-using-Pandas"><a href="#3-Exploratory-analysis-in-Python-using-Pandas" class="headerlink" title="3. Exploratory analysis in Python using Pandas"></a>3. Exploratory analysis in Python using Pandas</h2><p>Pandas是Python中最为实用的一种数据分析库，接下来会简单介绍Pandas，然后利用Pandas读取Analytics Vidhya竞赛中的一个数据集进行探索分析，建立一个简单的分类算法来解决这个问题。</p>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ23hIYcOBOMyLBsC1knJS9lBo0Xx-oQ1O1YoTFFlND0FZHeeYrg" alt="可爱的Pandas"></p>
+<h3 id="Introduction-to-Series-and-Dataframe"><a href="#Introduction-to-Series-and-Dataframe" class="headerlink" title="Introduction to Series and Dataframe"></a>Introduction to Series and Dataframe</h3><p>开始读取数据集之前，先来理解Pandas的两个关键数据结构-Series &amp; DataFrame</p>
+<p><strong>Series</strong> 可以理解为一个1维带标签（labelled）或索引(indexed)的数组,可以通过labels来读取series中的元素（elements).</p>
+<p><strong>DataFrame</strong> 则与Excel表格很相像，可以通过Column names来引用某一列，可以使用Row numbers 来引用某一行。区别在于，在DataFrame中，Column names被称为Column,Row numbers被称为row index.</p>
+<p>Series and dataframes form the core data model for Pandas in Python. The data sets are first read into these dataframes and then various operations (e.g. group by, aggregation etc.) can be applied very easily to its columns.</p>
+<p>More: + <a href="http://pandas.pydata.org/pandas-docs/stable/10min.html" target="_blank" rel="external">10 Minutes to Pandas(亲身经历，感觉10分钟根本没看完，可能英语渣吧……)</a></p>
+<h3 id="Practice-data-set-—-Loan-Prediction-Problem"><a href="#Practice-data-set-—-Loan-Prediction-Problem" class="headerlink" title="Practice data set — Loan Prediction Problem"></a>Practice data set — Loan Prediction Problem</h3><ul>
+<li><a href="https://datahack.analyticsvidhya.com/contest/practice-problem-loan-prediction-iii/" target="_blank" rel="external">数据集下载地址</a></li>
+</ul>
+<p>貌似是Analytics Vidhya举办的一个竞赛吧，贷款预测问题（Loan Prediction Problem).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">VARIABLE DESCRIPTIONS:(数据集变量描述)</div><div class="line"></div><div class="line">Variable	          Description</div><div class="line"></div><div class="line">Loan_ID(贷款人标识)	                  Unique Loan ID</div><div class="line"></div><div class="line">Gender(性别)	                  Male/ Female</div><div class="line"></div><div class="line">Married(婚姻)	                  Applicant married (Y/N)</div><div class="line"></div><div class="line">Dependents(家属)	          Number of dependents</div><div class="line"></div><div class="line">Education(教育)	          Applicant Education (Graduate/ Under Graduate)</div><div class="line"></div><div class="line">Self_Employed(自营)	          Self employed (Y/N)</div><div class="line"></div><div class="line">ApplicantIncome(申请人收入)	          Applicant income</div><div class="line"></div><div class="line">CoapplicantIncome	  Coapplicant income</div><div class="line"></div><div class="line">LoanAmount(贷款金额)	          Loan amount <span class="keyword">in</span> thousands</div><div class="line"></div><div class="line">Loan_Amount_Term(贷款期限)	  Term of loan <span class="keyword">in</span> months</div><div class="line"></div><div class="line">Credit_History(信用记录)	          credit history meets guidelines</div><div class="line"></div><div class="line">Property_Area(居住地)	          Urban/ Semi Urban/ Rural</div><div class="line"></div><div class="line">Loan_Status(贷款状况)	          Loan approved (Y/N)</div></pre></td></tr></table></figure>
+<h3 id="Importing-libraries-and-the-data-set"><a href="#Importing-libraries-and-the-data-set" class="headerlink" title="Importing libraries and the data set"></a>Importing libraries and the data set</h3><ul>
+<li>numpy</li>
+<li>matploylib</li>
+<li>pandas</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">df=pd.read_csv(<span class="string">"G:/Datahack/Loanprediction/TrainFile/train.csv"</span>)</div></pre></td></tr></table></figure>
+<h3 id="Quick-Data-Exploration"><a href="#Quick-Data-Exploration" class="headerlink" title="Quick Data Exploration"></a>Quick Data Exploration</h3><p>Once you have read the dataset, you can have a look at few top rows by using the function <strong>head()</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.head() <span class="comment">#print first 5 rows of dataset</span></div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>Loan_ID</th><br>      <th>Gender</th><br>      <th>Married</th><br>      <th>Dependents</th><br>      <th>Education</th><br>      <th>Self_Employed</th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>      <th>Property_Area</th><br>      <th>Loan_Status</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>LP001002</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>5849</td><br>      <td>0.0</td><br>      <td>NaN</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>LP001003</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>1</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>4583</td><br>      <td>1508.0</td><br>      <td>128.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Rural</td><br>      <td>N</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>LP001005</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>Yes</td><br>      <td>3000</td><br>      <td>0.0</td><br>      <td>66.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>LP001006</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Not Graduate</td><br>      <td>No</td><br>      <td>2583</td><br>      <td>2358.0</td><br>      <td>120.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>LP001008</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>6000</td><br>      <td>0.0</td><br>      <td>141.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>Next, you can look at summary of numerical fields by using <strong>describe()</strong> function.</p>
+<p>describe() function would provide count,mean,standard deviation(std),min,quartiles and max in its output. </p>
+<p>More: + <a href="https://www.analyticsvidhya.com/blog/2014/07/statistics/" target="_blank" rel="external">basic statistics to understand population distribution</a></p>
+<p>同时，可以看到部分列还有缺失值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.describe() <span class="comment">#Get summary of numerical variables</span></div></pre></td></tr></table></figure>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>count</th><br>      <td>614.000000</td><br>      <td>614.000000</td><br>      <td>592.000000</td><br>      <td>600.00000</td><br>      <td>564.000000</td><br>    </tr><br>    <tr><br>      <th>mean</th><br>      <td>5403.459283</td><br>      <td>1621.245798</td><br>      <td>146.412162</td><br>      <td>342.00000</td><br>      <td>0.842199</td><br>    </tr><br>    <tr><br>      <th>std</th><br>      <td>6109.041673</td><br>      <td>2926.248369</td><br>      <td>85.587325</td><br>      <td>65.12041</td><br>      <td>0.364878</td><br>    </tr><br>    <tr><br>      <th>min</th><br>      <td>150.000000</td><br>      <td>0.000000</td><br>      <td>9.000000</td><br>      <td>12.00000</td><br>      <td>0.000000</td><br>    </tr><br>    <tr><br>      <th>25%</th><br>      <td>2877.500000</td><br>      <td>0.000000</td><br>      <td>100.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>50%</th><br>      <td>3812.500000</td><br>      <td>1188.500000</td><br>      <td>128.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>75%</th><br>      <td>5795.000000</td><br>      <td>2297.250000</td><br>      <td>168.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>max</th><br>      <td>81000.000000</td><br>      <td>41667.000000</td><br>      <td>700.000000</td><br>      <td>480.00000</td><br>      <td>1.000000</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>For the non-numerical values, we can look at frequency distribution to understand whether they make sense or not. The frequency table can be printed by following command:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Property_Area'</span>].value_counts()</div></pre></td></tr></table></figure>
+<pre><code>Semiurban    233
+Urban        202
+Rural        179
+Name: Property_Area, dtype: int64
+</code></pre><h3 id="Distribution-analysis"><a href="#Distribution-analysis" class="headerlink" title="Distribution analysis"></a>Distribution analysis</h3><p>通过前面的操作已经熟悉了基本数据特征，下面开始研究各个变量的分布情况。</p>
+<p>Lets start by plotting the histogram of ApplicantIncome using the follow commands:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'ApplicantIncome'</span>].hist(bins=<span class="number">50</span>,figsize=(<span class="number">15</span>,<span class="number">5</span>))</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/feIfwDI.png" alt="picture1"></p>
+<p>可以看到上图中有少数的极端值。</p>
+<p>Next, we look at box plots to understand the distributions.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'ApplicantIncome'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/DbJAesM.png" alt="Picture2"></p>
+<p>This confirms the presence of a lot of outliers/extreme values. This can be attributed to the income disparity in the society. Part of this can be driven by the fact that we are looking at people with different education levels. Let us segregate them by Education:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'ApplicantIncome'</span>,by=<span class="string">'Education'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/rIwMoMP.png" alt="picture3"></p>
+<p>We can see that there is no substantial different between the mean income of graduate and non-graduates. But there are a higher number of graduates with very high incomes, which are appearing to be the outliers.可以看出，大学毕业和大学未毕业人数平均收入是差不多的，但是大学毕业会有部分高收入值，形成离群值。</p>
+<p>Now, Let’s look at the histogram and boxplot of LoanAmount using the following command:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'LoanAmount'</span>].hist(bins=<span class="number">50</span>,figsize=(<span class="number">15</span>,<span class="number">5</span>))</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/4Spv377.png" alt="picture4"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'LoanAmount'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/9O0IfEJ.png" alt="picture5"></p>
+<p>Again, there are some extreme values. Clearly, both ApplicantIncome and LoanAmount require some amount of data munging.（小白表示懵逼啊，有很多离群值就不能用了？需要数据修复？好像吴恩达的视频是提到过） LoanAmount has missing and well as extreme values values, while ApplicantIncome has a few extreme values, which demand deeper understanding. We will take this up in coming sections.</p>
+<h3 id="Categorical-variable-analysis"><a href="#Categorical-variable-analysis" class="headerlink" title="Categorical variable analysis"></a>Categorical variable analysis</h3><p>Now that we understand distributions for ApplicantIncome and LoanIncome, let us understand categorical variables in more details. We will use Excel style pivot table and cross-tabulation. For instance, let us look at the chances of getting a loan based on credit history. This can be achieved in MS Excel using a pivot table as:</p>
+<p>Now we will look at the steps required to generate a similar insight using Python. Please refer to <a href="https://www.analyticsvidhya.com/blog/2016/01/12-pandas-techniques-python-data-manipulation/" target="_blank" rel="external">this article(12种奇淫异巧)</a> for getting a hang of the different data manipulation techniques in Pandas.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">temp1=df[<span class="string">'Credit_History'</span>].value_counts(ascending=<span class="keyword">True</span>)</div><div class="line">temp2=df.pivot_table(values=<span class="string">'Loan_Status'</span>,index=[<span class="string">'Credit_History'</span>],</div><div class="line">                     aggfunc=<span class="keyword">lambda</span> x:x.map(&#123;<span class="string">'Y'</span>:<span class="number">1</span>,<span class="string">'N'</span>:<span class="number">0</span>&#125;).mean())</div><div class="line">print(<span class="string">"Frequency Table for Credit History:"</span>)</div><div class="line">print(temp1)</div><div class="line">print(<span class="string">"\nProbility of getting loan for each Credit History class:"</span>)</div><div class="line">print(temp2)</div></pre></td></tr></table></figure>
+<pre><code>Frequency Table for Credit History:
+0.0     89
+1.0    475
+Name: Credit_History, dtype: int64
+
+Probility of getting loan for each Credit History class:
+                Loan_Status
+Credit_History             
+0.0                0.078652
+1.0                0.795789
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">temp1.plot(kind=<span class="string">'bar'</span>)</div><div class="line">plt.xlabel(<span class="string">'Credit_History'</span>)</div><div class="line">plt.ylabel(<span class="string">'Count of Applicants'</span>)</div><div class="line">plt.title(<span class="string">'Applicants by Credit_History'</span>)</div><div class="line"></div><div class="line">temp2.plot(kind=<span class="string">'bar'</span>)</div><div class="line">plt.xlabel(<span class="string">'Credit_History'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability of getting loan'</span>)</div><div class="line">plt.title(<span class="string">'Probability of getting loan by credit history'</span>)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/pfVVcHX.png" alt="picture6"></p>
+<p><img src="http://i.imgur.com/Bb0d3I5.png" alt="picture7"></p>
+<p>This shows that the chances of getting a loan are eight-fold if the applicant has a valid credit history.(在有Credit_History的人获得贷款的概率是无Credit_History的8倍)You can plot similar graphs by Married, Self-Employed, Property_Area, etc.</p>
+<p>Alternately, these two plots can also be visualized by combining them in a stacked chart::</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">temp3=pd.crosstab(df[<span class="string">'Credit_History'</span>],df[<span class="string">'Loan_Status'</span>])</div><div class="line">temp3.plot(kind=<span class="string">'bar'</span>,stacked=<span class="keyword">True</span>,color=[<span class="string">'red'</span>,<span class="string">'blue'</span>],grid=<span class="keyword">False</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/KLQod2u.png" alt="picture8"></p>
+<p>You can also add gender into the mix.</p>
+<p>If you have not realized already, we have just created two basic classification algorithms here, one based on credit history, while other on 2 categorical variables (including gender). You can quickly code this to create your first submission on AV Datahacks.</p>
+<p>We just saw how we can do exploratory analysis in Python using Pandas. I hope your love for pandas (the animal) would have increased by now – given the amount of help, the library can provide you in analyzing datasets.</p>
+<p>Next let’s explore ApplicantIncome and LoanStatus variables further, perform <a href="https://www.analyticsvidhya.com/blog/2014/09/data-munging-python-using-pandas-baby-steps-python/" target="_blank" rel="external">data munging</a> and create a dataset for applying various modeling techniques. I would strongly urge that you take another dataset and problem and go through an independent example before reading further.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1112,224 +1330,6 @@ TypeError: &apos;tuple&apos; object does not support item assignment
 <li><p>Predictive Modeling （预测模型） – running the actual algorithms and having fun </p>
 </li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(2)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/25/A Complete Tutorail(2)/" itemprop="url">A Complete Tutorial to Learn Data Science with Python from Scratch(2)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T00:00:00+08:00">
-                2017-07-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="3-Exploratory-analysis-in-Python-using-Pandas"><a href="#3-Exploratory-analysis-in-Python-using-Pandas" class="headerlink" title="3. Exploratory analysis in Python using Pandas"></a>3. Exploratory analysis in Python using Pandas</h2><p>Pandas是Python中最为实用的一种数据分析库，接下来会简单介绍Pandas，然后利用Pandas读取Analytics Vidhya竞赛中的一个数据集进行探索分析，建立一个简单的分类算法来解决这个问题。</p>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ23hIYcOBOMyLBsC1knJS9lBo0Xx-oQ1O1YoTFFlND0FZHeeYrg" alt="可爱的Pandas"></p>
-<h3 id="Introduction-to-Series-and-Dataframe"><a href="#Introduction-to-Series-and-Dataframe" class="headerlink" title="Introduction to Series and Dataframe"></a>Introduction to Series and Dataframe</h3><p>开始读取数据集之前，先来理解Pandas的两个关键数据结构-Series &amp; DataFrame</p>
-<p><strong>Series</strong> 可以理解为一个1维带标签（labelled）或索引(indexed)的数组,可以通过labels来读取series中的元素（elements).</p>
-<p><strong>DataFrame</strong> 则与Excel表格很相像，可以通过Column names来引用某一列，可以使用Row numbers 来引用某一行。区别在于，在DataFrame中，Column names被称为Column,Row numbers被称为row index.</p>
-<p>Series and dataframes form the core data model for Pandas in Python. The data sets are first read into these dataframes and then various operations (e.g. group by, aggregation etc.) can be applied very easily to its columns.</p>
-<p>More: + <a href="http://pandas.pydata.org/pandas-docs/stable/10min.html" target="_blank" rel="external">10 Minutes to Pandas(亲身经历，感觉10分钟根本没看完，可能英语渣吧……)</a></p>
-<h3 id="Practice-data-set-—-Loan-Prediction-Problem"><a href="#Practice-data-set-—-Loan-Prediction-Problem" class="headerlink" title="Practice data set — Loan Prediction Problem"></a>Practice data set — Loan Prediction Problem</h3><ul>
-<li><a href="https://datahack.analyticsvidhya.com/contest/practice-problem-loan-prediction-iii/" target="_blank" rel="external">数据集下载地址</a></li>
-</ul>
-<p>貌似是Analytics Vidhya举办的一个竞赛吧，贷款预测问题（Loan Prediction Problem).</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">VARIABLE DESCRIPTIONS:(数据集变量描述)</div><div class="line"></div><div class="line">Variable	          Description</div><div class="line"></div><div class="line">Loan_ID(贷款人标识)	                  Unique Loan ID</div><div class="line"></div><div class="line">Gender(性别)	                  Male/ Female</div><div class="line"></div><div class="line">Married(婚姻)	                  Applicant married (Y/N)</div><div class="line"></div><div class="line">Dependents(家属)	          Number of dependents</div><div class="line"></div><div class="line">Education(教育)	          Applicant Education (Graduate/ Under Graduate)</div><div class="line"></div><div class="line">Self_Employed(自营)	          Self employed (Y/N)</div><div class="line"></div><div class="line">ApplicantIncome(申请人收入)	          Applicant income</div><div class="line"></div><div class="line">CoapplicantIncome	  Coapplicant income</div><div class="line"></div><div class="line">LoanAmount(贷款金额)	          Loan amount <span class="keyword">in</span> thousands</div><div class="line"></div><div class="line">Loan_Amount_Term(贷款期限)	  Term of loan <span class="keyword">in</span> months</div><div class="line"></div><div class="line">Credit_History(信用记录)	          credit history meets guidelines</div><div class="line"></div><div class="line">Property_Area(居住地)	          Urban/ Semi Urban/ Rural</div><div class="line"></div><div class="line">Loan_Status(贷款状况)	          Loan approved (Y/N)</div></pre></td></tr></table></figure>
-<h3 id="Importing-libraries-and-the-data-set"><a href="#Importing-libraries-and-the-data-set" class="headerlink" title="Importing libraries and the data set"></a>Importing libraries and the data set</h3><ul>
-<li>numpy</li>
-<li>matploylib</li>
-<li>pandas</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">df=pd.read_csv(<span class="string">"G:/Datahack/Loanprediction/TrainFile/train.csv"</span>)</div></pre></td></tr></table></figure>
-<h3 id="Quick-Data-Exploration"><a href="#Quick-Data-Exploration" class="headerlink" title="Quick Data Exploration"></a>Quick Data Exploration</h3><p>Once you have read the dataset, you can have a look at few top rows by using the function <strong>head()</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.head() <span class="comment">#print first 5 rows of dataset</span></div></pre></td></tr></table></figure>
-<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>Loan_ID</th><br>      <th>Gender</th><br>      <th>Married</th><br>      <th>Dependents</th><br>      <th>Education</th><br>      <th>Self_Employed</th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>      <th>Property_Area</th><br>      <th>Loan_Status</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>LP001002</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>5849</td><br>      <td>0.0</td><br>      <td>NaN</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>LP001003</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>1</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>4583</td><br>      <td>1508.0</td><br>      <td>128.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Rural</td><br>      <td>N</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>LP001005</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>Yes</td><br>      <td>3000</td><br>      <td>0.0</td><br>      <td>66.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>LP001006</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Not Graduate</td><br>      <td>No</td><br>      <td>2583</td><br>      <td>2358.0</td><br>      <td>120.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>LP001008</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>6000</td><br>      <td>0.0</td><br>      <td>141.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>  </tbody><br></table><br></div>
-
-
-
-<p>Next, you can look at summary of numerical fields by using <strong>describe()</strong> function.</p>
-<p>describe() function would provide count,mean,standard deviation(std),min,quartiles and max in its output. </p>
-<p>More: + <a href="https://www.analyticsvidhya.com/blog/2014/07/statistics/" target="_blank" rel="external">basic statistics to understand population distribution</a></p>
-<p>同时，可以看到部分列还有缺失值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df.describe() <span class="comment">#Get summary of numerical variables</span></div></pre></td></tr></table></figure>
-<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>count</th><br>      <td>614.000000</td><br>      <td>614.000000</td><br>      <td>592.000000</td><br>      <td>600.00000</td><br>      <td>564.000000</td><br>    </tr><br>    <tr><br>      <th>mean</th><br>      <td>5403.459283</td><br>      <td>1621.245798</td><br>      <td>146.412162</td><br>      <td>342.00000</td><br>      <td>0.842199</td><br>    </tr><br>    <tr><br>      <th>std</th><br>      <td>6109.041673</td><br>      <td>2926.248369</td><br>      <td>85.587325</td><br>      <td>65.12041</td><br>      <td>0.364878</td><br>    </tr><br>    <tr><br>      <th>min</th><br>      <td>150.000000</td><br>      <td>0.000000</td><br>      <td>9.000000</td><br>      <td>12.00000</td><br>      <td>0.000000</td><br>    </tr><br>    <tr><br>      <th>25%</th><br>      <td>2877.500000</td><br>      <td>0.000000</td><br>      <td>100.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>50%</th><br>      <td>3812.500000</td><br>      <td>1188.500000</td><br>      <td>128.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>75%</th><br>      <td>5795.000000</td><br>      <td>2297.250000</td><br>      <td>168.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>max</th><br>      <td>81000.000000</td><br>      <td>41667.000000</td><br>      <td>700.000000</td><br>      <td>480.00000</td><br>      <td>1.000000</td><br>    </tr><br>  </tbody><br></table><br></div>
-
-
-
-<p>For the non-numerical values, we can look at frequency distribution to understand whether they make sense or not. The frequency table can be printed by following command:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Property_Area'</span>].value_counts()</div></pre></td></tr></table></figure>
-<pre><code>Semiurban    233
-Urban        202
-Rural        179
-Name: Property_Area, dtype: int64
-</code></pre><h3 id="Distribution-analysis"><a href="#Distribution-analysis" class="headerlink" title="Distribution analysis"></a>Distribution analysis</h3><p>通过前面的操作已经熟悉了基本数据特征，下面开始研究各个变量的分布情况。</p>
-<p>Lets start by plotting the histogram of ApplicantIncome using the follow commands:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'ApplicantIncome'</span>].hist(bins=<span class="number">50</span>,figsize=(<span class="number">15</span>,<span class="number">5</span>))</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/feIfwDI.png" alt="picture1"></p>
-<p>可以看到上图中有少数的极端值。</p>
-<p>Next, we look at box plots to understand the distributions.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'ApplicantIncome'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/DbJAesM.png" alt="Picture2"></p>
-<p>This confirms the presence of a lot of outliers/extreme values. This can be attributed to the income disparity in the society. Part of this can be driven by the fact that we are looking at people with different education levels. Let us segregate them by Education:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'ApplicantIncome'</span>,by=<span class="string">'Education'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/rIwMoMP.png" alt="picture3"></p>
-<p>We can see that there is no substantial different between the mean income of graduate and non-graduates. But there are a higher number of graduates with very high incomes, which are appearing to be the outliers.可以看出，大学毕业和大学未毕业人数平均收入是差不多的，但是大学毕业会有部分高收入值，形成离群值。</p>
-<p>Now, Let’s look at the histogram and boxplot of LoanAmount using the following command:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'LoanAmount'</span>].hist(bins=<span class="number">50</span>,figsize=(<span class="number">15</span>,<span class="number">5</span>))</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/4Spv377.png" alt="picture4"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.boxplot(column=<span class="string">'LoanAmount'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/9O0IfEJ.png" alt="picture5"></p>
-<p>Again, there are some extreme values. Clearly, both ApplicantIncome and LoanAmount require some amount of data munging.（小白表示懵逼啊，有很多离群值就不能用了？需要数据修复？好像吴恩达的视频是提到过） LoanAmount has missing and well as extreme values values, while ApplicantIncome has a few extreme values, which demand deeper understanding. We will take this up in coming sections.</p>
-<h3 id="Categorical-variable-analysis"><a href="#Categorical-variable-analysis" class="headerlink" title="Categorical variable analysis"></a>Categorical variable analysis</h3><p>Now that we understand distributions for ApplicantIncome and LoanIncome, let us understand categorical variables in more details. We will use Excel style pivot table and cross-tabulation. For instance, let us look at the chances of getting a loan based on credit history. This can be achieved in MS Excel using a pivot table as:</p>
-<p>Now we will look at the steps required to generate a similar insight using Python. Please refer to <a href="https://www.analyticsvidhya.com/blog/2016/01/12-pandas-techniques-python-data-manipulation/" target="_blank" rel="external">this article(12种奇淫异巧)</a> for getting a hang of the different data manipulation techniques in Pandas.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">temp1=df[<span class="string">'Credit_History'</span>].value_counts(ascending=<span class="keyword">True</span>)</div><div class="line">temp2=df.pivot_table(values=<span class="string">'Loan_Status'</span>,index=[<span class="string">'Credit_History'</span>],</div><div class="line">                     aggfunc=<span class="keyword">lambda</span> x:x.map(&#123;<span class="string">'Y'</span>:<span class="number">1</span>,<span class="string">'N'</span>:<span class="number">0</span>&#125;).mean())</div><div class="line">print(<span class="string">"Frequency Table for Credit History:"</span>)</div><div class="line">print(temp1)</div><div class="line">print(<span class="string">"\nProbility of getting loan for each Credit History class:"</span>)</div><div class="line">print(temp2)</div></pre></td></tr></table></figure>
-<pre><code>Frequency Table for Credit History:
-0.0     89
-1.0    475
-Name: Credit_History, dtype: int64
-
-Probility of getting loan for each Credit History class:
-                Loan_Status
-Credit_History             
-0.0                0.078652
-1.0                0.795789
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">temp1.plot(kind=<span class="string">'bar'</span>)</div><div class="line">plt.xlabel(<span class="string">'Credit_History'</span>)</div><div class="line">plt.ylabel(<span class="string">'Count of Applicants'</span>)</div><div class="line">plt.title(<span class="string">'Applicants by Credit_History'</span>)</div><div class="line"></div><div class="line">temp2.plot(kind=<span class="string">'bar'</span>)</div><div class="line">plt.xlabel(<span class="string">'Credit_History'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability of getting loan'</span>)</div><div class="line">plt.title(<span class="string">'Probability of getting loan by credit history'</span>)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/pfVVcHX.png" alt="picture6"></p>
-<p><img src="http://i.imgur.com/Bb0d3I5.png" alt="picture7"></p>
-<p>This shows that the chances of getting a loan are eight-fold if the applicant has a valid credit history.(在有Credit_History的人获得贷款的概率是无Credit_History的8倍)You can plot similar graphs by Married, Self-Employed, Property_Area, etc.</p>
-<p>Alternately, these two plots can also be visualized by combining them in a stacked chart::</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">temp3=pd.crosstab(df[<span class="string">'Credit_History'</span>],df[<span class="string">'Loan_Status'</span>])</div><div class="line">temp3.plot(kind=<span class="string">'bar'</span>,stacked=<span class="keyword">True</span>,color=[<span class="string">'red'</span>,<span class="string">'blue'</span>],grid=<span class="keyword">False</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/KLQod2u.png" alt="picture8"></p>
-<p>You can also add gender into the mix.</p>
-<p>If you have not realized already, we have just created two basic classification algorithms here, one based on credit history, while other on 2 categorical variables (including gender). You can quickly code this to create your first submission on AV Datahacks.</p>
-<p>We just saw how we can do exploratory analysis in Python using Pandas. I hope your love for pandas (the animal) would have increased by now – given the amount of help, the library can provide you in analyzing datasets.</p>
-<p>Next let’s explore ApplicantIncome and LoanStatus variables further, perform <a href="https://www.analyticsvidhya.com/blog/2014/09/data-munging-python-using-pandas-baby-steps-python/" target="_blank" rel="external">data munging</a> and create a dataset for applying various modeling techniques. I would strongly urge that you take another dataset and problem and go through an independent example before reading further.</p>
 
           
         
@@ -2318,7 +2318,7 @@ return result;
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2337,7 +2337,7 @@ return result;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/28/FastSqrt/" itemprop="url">快速整数平方根算法</a></h1>
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
         
 
         <div class="post-meta">
@@ -2374,8 +2374,8 @@ return result;
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
                   </a>
                 </span>
 
@@ -2412,40 +2412,9 @@ return result;
       
         
           
-            <p>LeetCode 69.Sqrt(x)问题如下：</p>
-<p>Implement int sqrt(int x).<br>Compute and return the square root of x.</p>
-<p>其实意思就是对于一个32位无符号整数，找到一个16位无符号整数，使满足n^2≤v的n最大。相应的可以写作下式：</p>
-<p><img src="http://i.imgur.com/38QAyGQ.png" alt=""></p>
-<p>关键在于a_i 的确定，使用迭代求导算法，不需要乘法，只简单的使用加法和移位操作。<br>方便起见，定义</p>
-<p><img src="http://i.imgur.com/sQYnWv0.png" alt=""></p>
-<p>则(1)可以表示为</p>
-<p><img src="http://i.imgur.com/wkrUl0M.png" alt=""></p>
-<p><img src="http://i.imgur.com/byKMwLo.png" alt=""></p>
-<p><img src="http://i.imgur.com/Ee2BjSi.png" alt=""></p>
-<p>根据<strong>参考文章3</strong>得到一个非常简便的算法，3ms.</p>
-<blockquote>
-<p>代码如下：</p>
-</blockquote>
-<pre><code>int Sqrt(int v)
-{
-    unsigned long temp, nHat = 0, b = 0x8000, bshft = 15;
-    do{
-        if (v &gt;= (temp = (((nHat &lt;&lt; 1) + b) &lt;&lt; bshft--)))
-        {
-            nHat += b;
-            v -= temp;
-        }
-    } while (b &gt;&gt;= 1);
-    return nHat;
-}
-</code></pre><h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ol>
-<li><p><a href="https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6" title="参考文章1" target="_blank" rel="external">https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6</a></p>
-</li>
-<li><p><a href="http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html" title="参考文章2" target="_blank" rel="external">http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html</a></p>
-</li>
-<li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
-</li>
-</ol>
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         

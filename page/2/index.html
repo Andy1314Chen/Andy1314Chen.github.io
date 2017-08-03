@@ -299,7 +299,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -318,7 +318,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+                <a class="post-title-link" href="/2017/06/28/FastSqrt/" itemprop="url">快速整数平方根算法</a></h1>
         
 
         <div class="post-meta">
@@ -355,8 +355,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
                   </a>
                 </span>
 
@@ -393,9 +393,40 @@
       
         
           
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
+            <p>LeetCode 69.Sqrt(x)问题如下：</p>
+<p>Implement int sqrt(int x).<br>Compute and return the square root of x.</p>
+<p>其实意思就是对于一个32位无符号整数，找到一个16位无符号整数，使满足n^2≤v的n最大。相应的可以写作下式：</p>
+<p><img src="http://i.imgur.com/38QAyGQ.png" alt=""></p>
+<p>关键在于a_i 的确定，使用迭代求导算法，不需要乘法，只简单的使用加法和移位操作。<br>方便起见，定义</p>
+<p><img src="http://i.imgur.com/sQYnWv0.png" alt=""></p>
+<p>则(1)可以表示为</p>
+<p><img src="http://i.imgur.com/wkrUl0M.png" alt=""></p>
+<p><img src="http://i.imgur.com/byKMwLo.png" alt=""></p>
+<p><img src="http://i.imgur.com/Ee2BjSi.png" alt=""></p>
+<p>根据<strong>参考文章3</strong>得到一个非常简便的算法，3ms.</p>
+<blockquote>
+<p>代码如下：</p>
+</blockquote>
+<pre><code>int Sqrt(int v)
+{
+    unsigned long temp, nHat = 0, b = 0x8000, bshft = 15;
+    do{
+        if (v &gt;= (temp = (((nHat &lt;&lt; 1) + b) &lt;&lt; bshft--)))
+        {
+            nHat += b;
+            v -= temp;
+        }
+    } while (b &gt;&gt;= 1);
+    return nHat;
+}
+</code></pre><h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ol>
+<li><p><a href="https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6" title="参考文章1" target="_blank" rel="external">https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6</a></p>
+</li>
+<li><p><a href="http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html" title="参考文章2" target="_blank" rel="external">http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html</a></p>
+</li>
+<li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
+</li>
+</ol>
 
           
         
