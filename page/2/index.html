@@ -299,7 +299,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/30/fallofgiants/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -318,7 +318,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/28/FastSqrt/" itemprop="url">快速整数平方根算法</a></h1>
+                <a class="post-title-link" href="/2017/06/30/fallofgiants/" itemprop="url">世纪三部曲</a></h1>
         
 
         <div class="post-meta">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T00:00:00+08:00">
+                2017-06-30
               </time>
             
 
@@ -355,8 +355,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/book/" itemprop="url" rel="index">
+                    <span itemprop="name">book</span>
                   </a>
                 </span>
 
@@ -393,40 +393,22 @@
       
         
           
-            <p>LeetCode 69.Sqrt(x)问题如下：</p>
-<p>Implement int sqrt(int x).<br>Compute and return the square root of x.</p>
-<p>其实意思就是对于一个32位无符号整数，找到一个16位无符号整数，使满足n^2≤v的n最大。相应的可以写作下式：</p>
-<p><img src="http://i.imgur.com/38QAyGQ.png" alt=""></p>
-<p>关键在于a_i 的确定，使用迭代求导算法，不需要乘法，只简单的使用加法和移位操作。<br>方便起见，定义</p>
-<p><img src="http://i.imgur.com/sQYnWv0.png" alt=""></p>
-<p>则(1)可以表示为</p>
-<p><img src="http://i.imgur.com/wkrUl0M.png" alt=""></p>
-<p><img src="http://i.imgur.com/byKMwLo.png" alt=""></p>
-<p><img src="http://i.imgur.com/Ee2BjSi.png" alt=""></p>
-<p>根据<strong>参考文章3</strong>得到一个非常简便的算法，3ms.</p>
+            <p><img src="http://i.imgur.com/Bn78LQM.jpg" alt=""></p>
+<p>第一部 <strong>巨人的陨落</strong></p>
 <blockquote>
-<p>代码如下：</p>
+<p>在第一次世界大战的硝烟中，每一个迈向死亡的生命都在热烈地生长——威尔士的矿工少年、刚失恋的美国法律系大学生、穷困潦倒的俄国兄弟、富有英俊的英格兰伯爵，以及痴情的德国特工……从充满灰尘和危险的煤矿到闪闪发光的皇室宫殿，从代表着权力的走廊到爱恨纠缠的卧室，五个家族迥然不同又纠葛不断的命运逐渐揭晓，波澜壮阔地展现了一个我们自认为了解，但从未如此真切感受过的20世纪。</p>
 </blockquote>
-<pre><code>int Sqrt(int v)
-{
-    unsigned long temp, nHat = 0, b = 0x8000, bshft = 15;
-    do{
-        if (v &gt;= (temp = (((nHat &lt;&lt; 1) + b) &lt;&lt; bshft--)))
-        {
-            nHat += b;
-            v -= temp;
-        }
-    } while (b &gt;&gt;= 1);
-    return nHat;
-}
-</code></pre><h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ol>
-<li><p><a href="https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6" title="参考文章1" target="_blank" rel="external">https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6</a></p>
-</li>
-<li><p><a href="http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html" title="参考文章2" target="_blank" rel="external">http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html</a></p>
-</li>
-<li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
-</li>
-</ol>
+<p><img src="http://i.imgur.com/jUeym5A.jpg" alt=""></p>
+<p>第二部 <strong>世界的凛冬</strong></p>
+<blockquote>
+<p>我亲眼目睹，每一个迈向死亡的生命都在热烈地生长。《世界的凛冬》是火遍全球的20世纪人类史诗“世纪三部曲”的第二部，是《巨人的陨落》的续篇。整个20世纪的吉光片羽，都被肯·福莱特写进了这部伟大的小说里。一切都始于那个裂变中的大时代——希特勒上台，爱德华八世退位，原子弹在广岛和长崎爆炸……世界剧烈改变，我该怎么办？<br>这正是他们的困惑——一群处于人生黄金时代的少男少女，来自德国、美国、英国、苏俄和威尔士的五大家族，他们父辈的命运因一战而彻底改变。如今，世界再次破碎，甚至更加暴烈和残酷。然而，这就是他们的时代！在时间的永恒流动中，每个人都在创造历史。所以，为什么不一起来，会一会命运？</p>
+</blockquote>
+<p><img src="http://i.imgur.com/ANzR4SP.jpg" alt=""></p>
+<p>第三部 <strong>永恒的边缘</strong></p>
+<blockquote>
+<p>《巨人的陨落》的大结局！我亲眼目睹，每一个迈向死亡的生命都在热烈地生长。“世纪三部曲”终于迎来了一个完美结局。如果说《巨人的陨落》是祖辈的传奇，《世界的凛冬》是父辈的人生，那么，《永恒的边缘》就是新一代的奋斗。<br>真正残酷和激烈的世界大战，是思想的大战。来自美国、德国、苏联、英国和威尔士的五大家族，又一次迎来了新的考验。东西德分裂、柏林墙、苏联秘密警察、刺杀肯尼迪、民权运动、古巴导弹危机、入侵黎巴嫩、弹劾尼克松……此外，第三代生活中还有摇滚、嬉皮士、跨种族婚恋、性解放，以及对过去的误会与和解。<br>说到底，世上只有一种英雄主义，就是在认清生活真相之后，依然热爱生活。</p>
+</blockquote>
+<p>很棒的小说，作者是<strong>肯•福莱特（Ken Follett，1949－）现象级畅销小说大师，爱伦坡终身大师奖得主</strong>，完全可以当做历史书来读。当年的当年明月写的《明朝那些事儿》,以一种诙谐幽默的手法展现了明朝几百年历史，让人们发现原来历史还可以这么写。当时也是连着一段时间将《明朝那些事儿》一系列书刷完，好像是7本吧，后来过了一段时间又刷了一遍。而肯.福莱特的《世纪三部曲》在我看来和《明朝那些事儿》同样成功，通过几个家族的百年兴衰，将一战、二战及冷战历史描述的非常细致。相比历史教科书，这3部书，在历史中加入了更多的人性，与其说《世纪三部曲》是一本历史长篇小说，更不如说其是一本爱情长篇小说。</p>
 
           
         
@@ -567,6 +549,177 @@
             <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
 <p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
 <p>bd0001.sys不知道是不是百度干的，好无耻~</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/FastSqrt/" itemprop="url">快速整数平方根算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>LeetCode 69.Sqrt(x)问题如下：</p>
+<p>Implement int sqrt(int x).<br>Compute and return the square root of x.</p>
+<p>其实意思就是对于一个32位无符号整数，找到一个16位无符号整数，使满足n^2≤v的n最大。相应的可以写作下式：</p>
+<p><img src="http://i.imgur.com/38QAyGQ.png" alt=""></p>
+<p>关键在于a_i 的确定，使用迭代求导算法，不需要乘法，只简单的使用加法和移位操作。<br>方便起见，定义</p>
+<p><img src="http://i.imgur.com/sQYnWv0.png" alt=""></p>
+<p>则(1)可以表示为</p>
+<p><img src="http://i.imgur.com/wkrUl0M.png" alt=""></p>
+<p><img src="http://i.imgur.com/byKMwLo.png" alt=""></p>
+<p><img src="http://i.imgur.com/Ee2BjSi.png" alt=""></p>
+<p>根据<strong>参考文章3</strong>得到一个非常简便的算法，3ms.</p>
+<blockquote>
+<p>代码如下：</p>
+</blockquote>
+<pre><code>int Sqrt(int v)
+{
+    unsigned long temp, nHat = 0, b = 0x8000, bshft = 15;
+    do{
+        if (v &gt;= (temp = (((nHat &lt;&lt; 1) + b) &lt;&lt; bshft--)))
+        {
+            nHat += b;
+            v -= temp;
+        }
+    } while (b &gt;&gt;= 1);
+    return nHat;
+}
+</code></pre><h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><ol>
+<li><p><a href="https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6" title="参考文章1" target="_blank" rel="external">https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6</a></p>
+</li>
+<li><p><a href="http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html" title="参考文章2" target="_blank" rel="external">http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html</a></p>
+</li>
+<li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
+</li>
+</ol>
 
           
         
@@ -1108,7 +1261,7 @@ int MazePath(){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1119,7 +1272,7 @@ int MazePath(){
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1130,7 +1283,7 @@ int MazePath(){
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

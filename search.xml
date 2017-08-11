@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ReSpeaker智能语音双麦克风阵列]]></title>
+    <url>%2F2017%2F08%2F11%2FReSpeaker%E6%99%BA%E8%83%BD%E8%AF%AD%E9%9F%B3%E5%8F%8C%E9%BA%A6%E5%85%8B%E9%A3%8E%E9%98%B5%E5%88%97%2F</url>
+    <content type="text"><![CDATA[去年圣诞节买了块树莓派，看了网上好多基于树莓派的DIY语音助手，一直想自己也山寨一个。主要有两个问题，一是语音输入如何解决？二是Alexa和google home都是国外，不仅仅是不支持中文，而且还有一堵“墙”在，比较麻烦。 第一个问题，网上主要有两种办法，要么直接搞免驱mini USB麦克风或者大的比较丑的的麦克风，要么就是科技范十足的麦克风阵列。我是非常倾向于用麦克风阵列的，也没想4麦克、7麦克、8麦克等，两麦克阵列就OK了，但是找了一圈没找着合适的。主要是价钱太贵，不忍心剁手。后来将就着买了个mini USB麦克风，但是除了敲桌子声音或者直接吼，根本没啥效果，检测不到声音(明明看着国外的小哥哥们用的挺好的。。。也可能是淘宝上买到假货了)。 第二个，明显今年百度开始在AI上下了不少功夫。语音这一块，主要有UNIT、DuerOS平台。虽然做的没有Google Home 和Alexa那么知名，但是支持中文，而且在国内。 所以借着百度之星UNIT对话系统，又开始了我的瞎折腾(之前搞了Alexa和Google Home,加上不支持中文、墙、硬件问题等，搞得头大就放弃了)。这一次，借助着百度AI平台，语音识别转文字，然后利用UNIT解析，再语音合成输出。那么就剩下硬件了，还是上面的选择，USB麦克风或者麦克风阵列。经人推荐，找到了一款双麦克阵列模块，兼容树莓派3，淘宝上有旗舰店，80元RMB.(哈哈，当时直接就下单了！) 淘宝上给的简介是： ReSpeaker智能语音方案 双麦克风扩展板 兼容树莓派Zero/3B/2B此产品集成了亚马逊语言和谷歌助手等，兼容树莓派Zero、树莓派3B/2B，可以构建一个更强大更灵活的语音产品。 淘宝链接 但实际上，这货的外国名是ReSpeaker 2-Mics Pi HAT 相关链接 ReSpeaker 2-Mics Pi HAT是一款为树莓派而设计针对AI或语音应用的双麦克风扩展板。这意味着你可以基于树莓派（集成Amazon Alexa,Google Assistant)建立一个更强大、更灵活的语音产品. 这块板子基于WM8960,一片低功耗立体声编解码器。有两个麦克风分别位于板子的两侧用于采集声音。板子上还有3个APA102 RGB LED,1个用户按键和两个Grove接口用于扩展应用。更惊喜的是，还有3.5mm Audio Jack和JST 2.0 Speaker接口用于输出声音。 特点 兼容树莓派(Raspberry Pi Zero and Zero W, Raspberry Pi B+,Raspberry Pi 2B and Raspberry Pi 3B) 2个麦克风 2个Grove接口 1个用户按键 3.5mm音频接口 JST2.0音频输出 应用领域 语音交互应用 AI助手 硬件介绍 BUTTON:用户按键，连接到GPIO17 MIC_L &amp; MIC_R:位于板子两侧的麦克风 RGB LED:3颗APA102 RGB LED,连接到了SPI接口 WM8960: 低功耗立体声编解码器 Raspberry Pi 40-Pin Headers: POWER:板子的USB供电口，当使用扬声器时，要保证足够的电流 I2C:Grove I2C接口，连接I2C-1 GPIO 12：Grove 数字端口，连接GPIO12 &amp; GPIO13 JST 2.0 SPEAKER OUT:连接扬声器 3.5mm AUDIO JACK:连接带有3.5mm插口的耳机或扬声器 具体配置及使用参考：http://wiki.seeed.cc/Respeaker_2_Mics_Pi_HAT/]]></content>
+      <categories>
+        <category>树莓派3</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>UNIT</tag>
+        <tag>树莓派3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[2017百度之星开发者大赛--资格赛2]]></title>
     <url>%2F2017%2F08%2F10%2F%E7%99%BE%E5%BA%A6%E4%B9%8B%E6%98%9F%E5%BC%80%E5%8F%91%E8%80%85%E5%A4%A7%E8%B5%9B-%E8%B5%84%E6%A0%BC%E8%B5%9B2%2F</url>
     <content type="text"><![CDATA[7月28日，百度之星小姐姐给打过电话后，连着搞了两天，其实也没两天，还帮老板整理了好些文档资料。前一篇博客上也说了，搞了69.06分，第9名。然后想着反正肯定可以进前100啦，就没怎么管理了。优化方案也是按着百度AI开发论坛上提供的UNIT机器人优化指南结合UNIT使用手册做的。 最后结果： 事先，基本的意图、词槽、Bot回应等等按照规定做好。实际中，我开始就没认真搞好，漏了一个错误的词槽。但是在最后资格赛结束之前发现了，改正之后提高了1点几个分数。 基本的对话系统搞定之后，后期的优化主要分为两块： 增加对话样本集 增加对话模板集 对话样本集对应着样本学习，假设对话样本足够多、样本质量非常高，那通过神经网络学习得到的模型自然也不会差。 对话模板集则是对应着规则学习，正常人对话时，会有一定的语言结构，如，主语+谓语+宾语结构。特别是在一个特定的场景下，可以充分考虑到用户的对话的模板，进行一些提炼，得到一些语言“公式”。显然这种对话模板集方式的泛化能力是有限的，但是它的优点在于可以保证在符合“公式”的对话时不会出现错误。 我所侧重的是第一个方法，即增加对话样本集。使用了目前UNIT的隐藏功能，推荐对话样本。自己可以先整一个小的对话样本，然后让UNIT平台根据自己DIY的对话样本生成一些样本，然后自己去标注。大约标注了3500个样本吧，自己整的样本比例是按照百度提供的对话样本中各个意图的比例整的，保证同分布吧。]]></content>
@@ -123,6 +136,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Chrome浏览器总是崩溃的一种解决办法]]></title>
+    <url>%2F2017%2F06%2F28%2Fchromefiex%2F</url>
+    <content type="text"><![CDATA[更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。 原因在于C:\Windows\System32\drivers\bd0001.sys这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！ bd0001.sys不知道是不是百度干的，好无耻~]]></content>
+      <categories>
+        <category>电脑</category>
+      </categories>
+      <tags>
+        <tag>computer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[快速整数平方根算法]]></title>
     <url>%2F2017%2F06%2F28%2FFastSqrt%2F</url>
     <content type="text"><![CDATA[LeetCode 69.Sqrt(x)问题如下： Implement int sqrt(int x).Compute and return the square root of x. 其实意思就是对于一个32位无符号整数，找到一个16位无符号整数，使满足n^2≤v的n最大。相应的可以写作下式： 关键在于a_i 的确定，使用迭代求导算法，不需要乘法，只简单的使用加法和移位操作。方便起见，定义 则(1)可以表示为 根据参考文章3得到一个非常简便的算法，3ms. 代码如下： int Sqrt(int v) { unsigned long temp, nHat = 0, b = 0x8000, bshft = 15; do{ if (v &gt;= (temp = (((nHat &lt;&lt; 1) + b) &lt;&lt; bshft--))) { nHat += b; v -= temp; } } while (b &gt;&gt;= 1); return nHat; } 参考文章 https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6 http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html http://www.azillionmonkeys.com/qed/ulerysqroot.pdf]]></content>
@@ -132,17 +156,6 @@
       <tags>
         <tag>C</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Chrome浏览器总是崩溃的一种解决办法]]></title>
-    <url>%2F2017%2F06%2F28%2Fchromefiex%2F</url>
-    <content type="text"><![CDATA[更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。 原因在于C:\Windows\System32\drivers\bd0001.sys这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！ bd0001.sys不知道是不是百度干的，好无耻~]]></content>
-      <categories>
-        <category>电脑</category>
-      </categories>
-      <tags>
-        <tag>computer</tag>
       </tags>
   </entry>
   <entry>
