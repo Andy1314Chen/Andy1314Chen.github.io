@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/08/16/Snowboy%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E_Hotword%20Detection/</loc>
+    <lastmod>2017-08-16T14:45:03.371Z</lastmod>
+    <data>
+        <display>
+        <title>Snowboy使用说明_Hotword Detection</title>
+        <pubTime>2017-08-15T16:00:00.000Z</pubTime>
+        
+        <tag>UNIT</tag>
+         
+        <tag>树莓派3</tag>
+         
+        <tag>语音识别</tag>
+         
+         
+           
+             
+              <breadCrumb title="树莓派3" url="http://yoursite.com/categories/%E6%A0%91%E8%8E%93%E6%B4%BE3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/08/11/ReSpeaker%E6%99%BA%E8%83%BD%E8%AF%AD%E9%9F%B3%E5%8F%8C%E9%BA%A6%E5%85%8B%E9%A3%8E%E9%98%B5%E5%88%97/</loc>
     <lastmod>2017-08-11T14:08:01.299Z</lastmod>
     <data>
@@ -11,9 +35,9 @@
         <title>ReSpeaker智能语音双麦克风阵列</title>
         <pubTime>2017-08-10T16:00:00.000Z</pubTime>
         
-        <tag>机器学习</tag>
-         
         <tag>UNIT</tag>
+         
+        <tag>机器学习</tag>
          
         <tag>树莓派3</tag>
          
@@ -35,9 +59,9 @@
         <title>2017百度之星开发者大赛--资格赛2</title>
         <pubTime>2017-08-09T16:00:00.000Z</pubTime>
         
-        <tag>机器学习</tag>
-         
         <tag>UNIT</tag>
+         
+        <tag>机器学习</tag>
          
         <tag>百度</tag>
          
@@ -59,9 +83,9 @@
         <title>2017百度之星开发者大赛--资格赛</title>
         <pubTime>2017-07-29T16:00:00.000Z</pubTime>
         
-        <tag>机器学习</tag>
-         
         <tag>UNIT</tag>
+         
+        <tag>机器学习</tag>
          
         <tag>百度</tag>
          
@@ -83,9 +107,9 @@
         <title>A Complete Tutorial to Learn Data Science with Python from Scratch(3)</title>
         <pubTime>2017-07-26T16:00:00.000Z</pubTime>
         
-        <tag>python</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>python</tag>
          
          
            
@@ -105,9 +129,9 @@
         <title>A Complete Tutorial to Learn Data Science with Python from Scratch(2)</title>
         <pubTime>2017-07-24T16:00:00.000Z</pubTime>
         
-        <tag>python</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>python</tag>
          
          
            
@@ -127,9 +151,9 @@
         <title>A Complete Tutorial to Learn Data Science with Python from Scratch(1)</title>
         <pubTime>2017-07-24T16:00:00.000Z</pubTime>
         
-        <tag>python</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>python</tag>
          
          
            

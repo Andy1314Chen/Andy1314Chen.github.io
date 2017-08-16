@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Snowboy使用说明_Hotword Detection]]></title>
+    <url>%2F2017%2F08%2F16%2FSnowboy%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E_Hotword%20Detection%2F</url>
+    <content type="text"><![CDATA[IntroductionSnowboy是一个高度自定义的基于实时甚至离线情况的hotword detection engine(敏感词检测机制？)，兼容Raspberry Pi,Linux and Mac OS X. hotword也被称为唤醒词(wake word)或触发词(trigger word)通常是一个关键词或短语，计算机会一直监听作为一个信号用于触发其他操作。 有一些例子，如Amazon Echo的“Alexa”、Google Assistant的”OK Google”和iPhone的“Hey Siri”. 这些关键词用于触发一个全面的语音交互。但是，hotwords同样可以用于其他方面，像是命令和控制等。 一种简单的方案是，运行全ASR(Automatic Speech Recognition)来检测hotword detection.在这种方案中，设备会一直观察特定触发词。但是ASR也会消耗设备和带宽资源。同样的，如果基于云的应用，将不能保护你的隐私。（因为会一直开着麦克风来检测关键词，那么周围环境包括你说的话也会实时被监听了).幸运的是，Snowboy会用来解决此类问题。 highly customizable(高度自定义） always listening but protects your privacy(总是检测但是不会泄露隐私） light-weight and embedded Apache licensed! Quick Start准备工作： 一台带有microphone的设备 相应的解压软件 训练好的模型 树莓派pre-packaged Access Microphone使用PortAudio作为一个跨平台的音频输入/输出。同样也使用sox快速检查microphone是否正确安装。 Install Sox 1sudo apt-get install python-pyaudio python3-pyaudio sox Install PortAudio’s Python bindings: 12pip install pyaudio#pip-3.2 install pyaudio To check whether you can record via your microphone, open a terminal and run: 12rec temp.wav#记录个几秒中，ctrl+c,再play temp.wav,听声 Decoder Structures上面预安装包下载解压后，如下： ├── README.md ├── _snowboydetect.so ├── demo.py ├── demo2.py ├── light.py ├── requirements.txt ├── resources │ ├── ding.wav │ ├── dong.wav │ ├── common.res │ └── snowboy.umdl ├── snowboydecoder.py ├── snowboydetect.py └── version _snowboydetect.so是用SWIG编译的一个动态链接库，依赖于系统的Python2库。snowboy所有相关库都被静态连接在这个文件里。 snowboydetect.py是一个SWIG生成的python wrapper文件。因为不易阅读，我们创建了高等级的wrapper: snowboydecoder.py 应该在https://snowboy.kitt.ai 上训练你的模型(snowboy.pmdl)，或者你也可以使用同一模型resources/snowboy.umdl Runing a Demo To access the simple demo in main code of snowboydecoder.py, run the following command in your Terminal: 12python demo.py snowboy.pmdl#snowboy.pmdl是你训练的hotword模型 When prompt,speak into your microphone to see whether snowboy detects your magic phrase. 12345678910111213141516171819202122232425262728293031323334#demo.pyimport snowboydecoderimport sysimport signalinterrupted = Falsedef signal_handler(signal, frame): global interrupted interrupted = Truedef interrupt_callback(): global interrupted return interruptedif len(sys.argv) == 1: print("Error: need to specify model name") print("Usage: python demo.py your.model") sys.exit(-1)model = sys.argv[1]signal.signal(signal.SIGINT, signal_handler)detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)print('Listening... Press Ctrl+C to exit')detector.start(detected_callback=snowboydecoder.ding_callback, interrupt_check=interrupt_callback, sleep_time=0.03)detector.terminate() 主程序在detector.start()中循环，每sleep_time=0.03: 检查ring buffer 是否有hotword, if YES,调用detected_callback函数 调用interrupt_check函数，if True，中断主程序，返回. 目前，在demo中令detected_callback=snowboydecoder.ding_callback,所以每当检测到关键词时，设备会“叮”一下。 原文出处：http://docs.kitt.ai/snowboy/#running-a-demo]]></content>
+      <categories>
+        <category>树莓派3</category>
+      </categories>
+      <tags>
+        <tag>UNIT</tag>
+        <tag>树莓派3</tag>
+        <tag>语音识别</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ReSpeaker智能语音双麦克风阵列]]></title>
     <url>%2F2017%2F08%2F11%2FReSpeaker%E6%99%BA%E8%83%BD%E8%AF%AD%E9%9F%B3%E5%8F%8C%E9%BA%A6%E5%85%8B%E9%A3%8E%E9%98%B5%E5%88%97%2F</url>
     <content type="text"><![CDATA[去年圣诞节买了块树莓派，看了网上好多基于树莓派的DIY语音助手，一直想自己也山寨一个。主要有两个问题，一是语音输入如何解决？二是Alexa和google home都是国外，不仅仅是不支持中文，而且还有一堵“墙”在，比较麻烦。 第一个问题，网上主要有两种办法，要么直接搞免驱mini USB麦克风或者大的比较丑的的麦克风，要么就是科技范十足的麦克风阵列。我是非常倾向于用麦克风阵列的，也没想4麦克、7麦克、8麦克等，两麦克阵列就OK了，但是找了一圈没找着合适的。主要是价钱太贵，不忍心剁手。后来将就着买了个mini USB麦克风，但是除了敲桌子声音或者直接吼，根本没啥效果，检测不到声音(明明看着国外的小哥哥们用的挺好的。。。也可能是淘宝上买到假货了)。 第二个，明显今年百度开始在AI上下了不少功夫。语音这一块，主要有UNIT、DuerOS平台。虽然做的没有Google Home 和Alexa那么知名，但是支持中文，而且在国内。 所以借着百度之星UNIT对话系统，又开始了我的瞎折腾(之前搞了Alexa和Google Home,加上不支持中文、墙、硬件问题等，搞得头大就放弃了)。这一次，借助着百度AI平台，语音识别转文字，然后利用UNIT解析，再语音合成输出。那么就剩下硬件了，还是上面的选择，USB麦克风或者麦克风阵列。经人推荐，找到了一款双麦克阵列模块，兼容树莓派3，淘宝上有旗舰店，80元RMB.(哈哈，当时直接就下单了！) 淘宝上给的简介是： ReSpeaker智能语音方案 双麦克风扩展板 兼容树莓派Zero/3B/2B此产品集成了亚马逊语言和谷歌助手等，兼容树莓派Zero、树莓派3B/2B，可以构建一个更强大更灵活的语音产品。 淘宝链接 但实际上，这货的外国名是ReSpeaker 2-Mics Pi HAT 相关链接 ReSpeaker 2-Mics Pi HAT是一款为树莓派而设计针对AI或语音应用的双麦克风扩展板。这意味着你可以基于树莓派（集成Amazon Alexa,Google Assistant)建立一个更强大、更灵活的语音产品. 这块板子基于WM8960,一片低功耗立体声编解码器。有两个麦克风分别位于板子的两侧用于采集声音。板子上还有3个APA102 RGB LED,1个用户按键和两个Grove接口用于扩展应用。更惊喜的是，还有3.5mm Audio Jack和JST 2.0 Speaker接口用于输出声音。 特点 兼容树莓派(Raspberry Pi Zero and Zero W, Raspberry Pi B+,Raspberry Pi 2B and Raspberry Pi 3B) 2个麦克风 2个Grove接口 1个用户按键 3.5mm音频接口 JST2.0音频输出 应用领域 语音交互应用 AI助手 硬件介绍 BUTTON:用户按键，连接到GPIO17 MIC_L &amp; MIC_R:位于板子两侧的麦克风 RGB LED:3颗APA102 RGB LED,连接到了SPI接口 WM8960: 低功耗立体声编解码器 Raspberry Pi 40-Pin Headers: POWER:板子的USB供电口，当使用扬声器时，要保证足够的电流 I2C:Grove I2C接口，连接I2C-1 GPIO 12：Grove 数字端口，连接GPIO12 &amp; GPIO13 JST 2.0 SPEAKER OUT:连接扬声器 3.5mm AUDIO JACK:连接带有3.5mm插口的耳机或扬声器 具体配置及使用参考：http://wiki.seeed.cc/Respeaker_2_Mics_Pi_HAT/]]></content>
@@ -8,8 +21,8 @@
         <category>树莓派3</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>UNIT</tag>
+        <tag>机器学习</tag>
         <tag>树莓派3</tag>
       </tags>
   </entry>
@@ -21,8 +34,8 @@
         <category>UNIT</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>UNIT</tag>
+        <tag>机器学习</tag>
         <tag>百度</tag>
       </tags>
   </entry>
@@ -34,8 +47,8 @@
         <category>UNIT</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>UNIT</tag>
+        <tag>机器学习</tag>
         <tag>百度</tag>
       </tags>
   </entry>
@@ -47,8 +60,8 @@
         <category>python</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>机器学习</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -59,8 +72,8 @@
         <category>python</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>机器学习</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -71,8 +84,8 @@
         <category>python</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>机器学习</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
