@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/08/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%A6%E5%8D%95/</loc>
+    <lastmod>2017-08-17T01:53:50.364Z</lastmod>
+    <data>
+        <display>
+        <title>机器学习路线【转】</title>
+        <pubTime>2017-08-16T16:00:00.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="book" url="http://yoursite.com/categories/book/"/>
+          
+             
+              <breadCrumb title="机器学习" url="http://yoursite.com/categories/book/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/08/16/Snowboy%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E_Hotword%20Detection/</loc>
     <lastmod>2017-08-16T14:45:03.371Z</lastmod>
     <data>
@@ -11,11 +34,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
          
            
@@ -37,9 +60,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>树莓派3</tag>
-         
         <tag>UNIT</tag>
+         
+        <tag>树莓派3</tag>
          
          
            

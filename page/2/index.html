@@ -299,6 +299,192 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/10/BaiduUNIT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/10/BaiduUNIT/" itemprop="url">百度UNIT</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-10T00:00:00+08:00">
+                2017-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/百度语音/" itemprop="url" rel="index">
+                    <span itemprop="name">百度语音</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前几天看到百度在宿舍楼下贴的海报，<strong>“百度之星”</strong>，2017年比赛分为开发者大赛和程序设计大赛。开发者大赛是要求基于百度UNIT平台设计开发一个对话系统的智能硬件或APP等都可以。主要目的应该是推广UNIT平台。</p>
+<blockquote>
+<p>UNIT（Understanding and Interaction Technology），即理解与交互技术，它是建立在百度多年积累的自然语言处理与对话技术以及大数据的基础上，面向第三方开发者提供的对话系统开发平台.</p>
+</blockquote>
+<p>从介绍上看，百度的出发点是挺好的，之前做过智能镜子，想加入语音交互功能，但是没有相应中文API提供，很蛋疼！</p>
+<blockquote>
+<p>随着AI技术和理念的兴起，很多产品都希望采用对话式的人机交互方式。然而对话系统的研发对于大多数开发者而言却是一个很困难的工作，对技术和数据的要求都很高。</p>
+<p>为此，百度将积累多年的自然语言理解与交互技术对外开放，将积累多年的自然语言理解与交互技术对外开放，推出了可定制的对话系统开发UNIT（Understanding and Interaction Technology），将业界领先的技术能力输出给广大的开发者，以便降低对话系统的研发门槛。</p>
+</blockquote>
+<p><strong>1、UNIT能做什么</strong></p>
+<p>帮开发者打造“面向任务的理解与交互能力”，可以解答用户的某些问题（天气、新闻、快递等生活服务）、执行用户指令（开空调等）、通过一系列交互引导用户达到某项需求（通过注册-选座-下单完成订票).</p>
+<p><strong>2、UNIT基本概念</strong></p>
+<p><em>（1）场景</em></p>
+<blockquote>
+<p>一个场景对应一个独立完整的对话系统，用来满足您某个具体业务场景的需求。通常按垂类划分（例如，银行信用卡办理场景、电视遥控器场景等）。</p>
+</blockquote>
+<p><em>(2)对话单元</em></p>
+<blockquote>
+<p>在UNIT里，对话单元用来定义系统在一个具体的对话任务下对用户对话的理解、以及机器人的回应方式，是系统中的最小对话单位。对话任务例如查天气、查询信用卡年费、控制空调温度等。</p>
+</blockquote>
+<p><em>(3)意图</em></p>
+<blockquote>
+<p>意图表示用户的目的（例如，”北京天气”，意图是查天气）。</p>
+</blockquote>
+<p><em>(4)词槽</em></p>
+<blockquote>
+<p>是满足用户意图时的关键信息或限定条件，可以理解为用户需要提供的筛选条件。例如在查询天气时，词槽是地点和时间。</p>
+</blockquote>
+<p><em>(5)对话样本</em></p>
+<blockquote>
+<p>对话样本就是您给对话系统做示范，教它在用户说的具体句子里，该如何理解意图，哪个词是重要信息，对应的词槽是什么。</p>
+</blockquote>
+<p><em>(6)训练模型</em></p>
+<blockquote>
+<p>即把场景下所有的配置、标注的对话样本、对话模板等打包提交给系统来训练模型。 模型生效一般需要几分钟时间。</p>
+</blockquote>
+<p><em>(7)沙盒</em></p>
+<blockquote>
+<p>每个场景都配有一个沙盒环境，将训练好的模型生效到沙盒环境后，就可以进行效果验证了，同时可接入到您自己的业务系统中使用。您可以生成多个模型版本，但只能选择一个放到沙盒环境中。</p>
+</blockquote>
+<p><strong>3、UNIT使用步骤</strong></p>
+<p><em>（a)梳理业务逻辑</em></p>
+<p><em>（b)配置对话系统</em></p>
+<p><em>（c)标注对话数据</em></p>
+<p><em>（d)对话训练与验证</em></p>
+<p><em>（e)应用调用</em></p>
+<p><strong>相关连接</strong></p>
+<p>1、<a href="http://astar2017.baidu.com/" title="2017年百度之星" target="_blank" rel="external">http://astar2017.baidu.com/</a></p>
+<p>2、<a href="http://ai.baidu.com/docs#/UNIT-guide/top" title="UNIT入门指南" target="_blank" rel="external">http://ai.baidu.com/docs#/UNIT-guide/top</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -676,6 +862,146 @@ return result;
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -804,146 +1130,6 @@ return result;
 <li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
 </li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -1485,7 +1671,7 @@ int MazePath(){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1496,7 +1682,7 @@ int MazePath(){
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
