@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法,C," />
+  <meta name="keywords" content="Python,算法,Relief," />
 
 
 
@@ -94,21 +94,23 @@
 
 
 
-<meta name="description" content="求迷宫中从入口到出口的所有路径是一个经典的程序设计问题。最简单方法是穷举法，即从某一入口出发，顺着某一方向向前探索，若能走通，则继续往前走；否则沿原路返回，换个方向继续尝试。因此，使用栈结构来处理较为合适。栈结构存储从入口到出口的路径。   比较简单的迷宫，‘+’表示墙壁，不能通过；‘o’表示通道，可以通过；但是从入口到出口路径上不能两次通过同一块通道。 求迷宫中一条路径的算法的基本思想是： 若当">
-<meta name="keywords" content="算法,C">
+<meta name="description" content="Relief算法Relief算法最早由Kira在1992年提出，最初局限于两类数据的分类问题。Relief算法是一种特征权重算法(Feature weighting algorithms)，根据各个特征和类别的相关性赋予特征不同的权重，权重小于某个阈值的特征将被移除。Relief算法中特征和类别的相关性是基于特征对近距离样本的区分能力。  基本思想：算法从训练集D中随机选择一个样本R，然后从和R同">
+<meta name="keywords" content="Python,算法,Relief">
 <meta property="og:type" content="article">
-<meta property="og:title" content="迷宫问题">
-<meta property="og:url" content="http://yoursite.com/2016/07/03/迷宫问题/index.html">
+<meta property="og:title" content="Relief特征选择算法Python实现">
+<meta property="og:url" content="http://yoursite.com/2017/08/22/ReliefF特征选择(python)/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="求迷宫中从入口到出口的所有路径是一个经典的程序设计问题。最简单方法是穷举法，即从某一入口出发，顺着某一方向向前探索，若能走通，则继续往前走；否则沿原路返回，换个方向继续尝试。因此，使用栈结构来处理较为合适。栈结构存储从入口到出口的路径。   比较简单的迷宫，‘+’表示墙壁，不能通过；‘o’表示通道，可以通过；但是从入口到出口路径上不能两次通过同一块通道。 求迷宫中一条路径的算法的基本思想是： 若当">
+<meta property="og:description" content="Relief算法Relief算法最早由Kira在1992年提出，最初局限于两类数据的分类问题。Relief算法是一种特征权重算法(Feature weighting algorithms)，根据各个特征和类别的相关性赋予特征不同的权重，权重小于某个阈值的特征将被移除。Relief算法中特征和类别的相关性是基于特征对近距离样本的区分能力。  基本思想：算法从训练集D中随机选择一个样本R，然后从和R同">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i.imgur.com/QQTrZqp.png">
-<meta property="og:image" content="http://i.imgur.com/f0IXs5b.png">
-<meta property="og:updated_time" content="2017-07-23T03:57:28.382Z">
+<meta property="og:image" content="https://www.gia.edu/images/Gold-Diggers-195648-636x358.jpg">
+<meta property="og:image" content="http://images.cnitblog.com/blog/79603/201308/29173431-34ed1713754f42e9a875eaa2e4049f8e.jpg">
+<meta property="og:image" content="http://images.cnitblog.com/blog/79603/201308/29173617-b9db490cd1b84472a5583ac52d3df72b.jpg">
+<meta property="og:image" content="http://images.cnitblog.com/blog/79603/201308/29173649-320dfe76b46e4c1097edb518dacea888.jpg">
+<meta property="og:updated_time" content="2017-08-22T14:16:11.040Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="迷宫问题">
-<meta name="twitter:description" content="求迷宫中从入口到出口的所有路径是一个经典的程序设计问题。最简单方法是穷举法，即从某一入口出发，顺着某一方向向前探索，若能走通，则继续往前走；否则沿原路返回，换个方向继续尝试。因此，使用栈结构来处理较为合适。栈结构存储从入口到出口的路径。   比较简单的迷宫，‘+’表示墙壁，不能通过；‘o’表示通道，可以通过；但是从入口到出口路径上不能两次通过同一块通道。 求迷宫中一条路径的算法的基本思想是： 若当">
-<meta name="twitter:image" content="http://i.imgur.com/QQTrZqp.png">
+<meta name="twitter:title" content="Relief特征选择算法Python实现">
+<meta name="twitter:description" content="Relief算法Relief算法最早由Kira在1992年提出，最初局限于两类数据的分类问题。Relief算法是一种特征权重算法(Feature weighting algorithms)，根据各个特征和类别的相关性赋予特征不同的权重，权重小于某个阈值的特征将被移除。Relief算法中特征和类别的相关性是基于特征对近距离样本的区分能力。  基本思想：算法从训练集D中随机选择一个样本R，然后从和R同">
+<meta name="twitter:image" content="https://www.gia.edu/images/Gold-Diggers-195648-636x358.jpg">
 
 
 
@@ -136,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/03/迷宫问题/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/22/ReliefF特征选择(python)/"/>
 
 
 
 
 
-  <title>迷宫问题 | Andy's blog</title>
+  <title>Relief特征选择算法Python实现 | Andy's blog</title>
   
 
 
@@ -305,7 +307,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/03/迷宫问题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/22/ReliefF特征选择(python)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -322,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">迷宫问题</h1>
+          <h1 class="post-title" itemprop="name headline">Relief特征选择算法Python实现</h1>
         
 
         <div class="post-meta">
@@ -334,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-03T00:00:00+08:00">
-                2016-07-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-22T00:00:00+08:00">
+                2017-08-22
               </time>
             
 
@@ -359,8 +361,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -395,154 +408,101 @@
       
 
       
-        <p>求迷宫中从入口到出口的所有路径是一个经典的程序设计问题。最简单方法是穷举法，即从某一入口出发，顺着某一方向向前探索，若能走通，则继续往前走；否则沿原路返回，换个方向继续尝试。因此，使用栈结构来处理较为合适。栈结构存储从入口到出口的路径。</p>
-<p> <img src="http://i.imgur.com/QQTrZqp.png" alt=""></p>
-<p>比较简单的迷宫，‘+’表示墙壁，不能通过；‘o’表示通道，可以通过；但是从入口到出口路径上不能两次通过同一块通道。</p>
-<p>求迷宫中一条路径的算法的基本思想是：</p>
-<p><strong>若当前位置“可通”，则入栈“当前路径”，并继续朝下一位置探索，如此重复；若当前位置“不可通”，则应顺着“来向”退回到“前一通道块”，然后朝着除“来向”之外的其他方向继续探索；若该通道块的四周4个方块均“不可通”，则应从“当前路径”上删除该通道块。</strong></p>
-<p>C语言代码如下：</p>
-<pre><code>typedef struct{
-    int x;
-    int y;
-}PosType;//坐标
+        <h2 id="Relief算法"><a href="#Relief算法" class="headerlink" title="Relief算法"></a>Relief算法</h2><p>Relief算法最早由Kira在1992年提出，最初局限于两类数据的分类问题。Relief算法是一种特征权重算法(Feature weighting algorithms)，根据各个特征和类别的相关性赋予特征不同的权重，权重小于某个阈值的特征将被移除。Relief算法中特征和类别的相关性是基于特征对近距离样本的区分能力。</p>
+<p><img src="https://www.gia.edu/images/Gold-Diggers-195648-636x358.jpg" alt="特征提取"></p>
+<p><strong>基本思想：</strong>算法从训练集D中随机选择一个样本R，然后从和R同类的样本中寻找最近邻样本H，称为NearHit，从和R不同类的样本中寻找最近邻样本M，称为NearMiss，然后根据以下规则更新每个特征的权重：如果R和NearHit在某个特征上的距离小于R和NearMiss上的距离，则说明该特征对区分同类和不同类的最近邻是有益的，则增加该特征的权重；反之，如果R和NearHit在某个特征的距离大于R和NearMiss上的距离，说明该特征对区分同类和不同类的最近邻起负面作用，则降低该特征的权重。以上过程重复m次，最后得到各特征的平均权重。特征的权重越大，表示该特征的分类能力越强，反之，表示该特征分类能力越弱。Relief算法的运行时间随着样本的抽样次数m和原始特征个数N的增加线性增加，因而运行效率非常高。</p>
+<p><strong>具体算法：</strong></p>
+<p><img src="http://images.cnitblog.com/blog/79603/201308/29173431-34ed1713754f42e9a875eaa2e4049f8e.jpg" alt="Relief具体算法"></p>
+<h2 id="ReliefF算法"><a href="#ReliefF算法" class="headerlink" title="ReliefF算法"></a>ReliefF算法</h2><p>虽然Relief算法比较简单，但运行效率高，并且结果也比较令人满意，因此得到广泛应用，但是其局限性在于只能处理两类别数据，因此1994年Kononeill对其进行了扩展，得到了ReliefF算法，可以处理多类别问题。ReliefF算法在处理多类问题时，每次从训练样本集中随机取出一个样本R，然后从和R同类的样本集中找出R的k个近邻样本(near Hits)，从每个R的不同类的样本集中均找出k个近邻样本(near Misses)，然后更新每个特征的权重，如下式所示：</p>
+<p><img src="http://images.cnitblog.com/blog/79603/201308/29173617-b9db490cd1b84472a5583ac52d3df72b.jpg" alt=""></p>
+<p><img src="http://images.cnitblog.com/blog/79603/201308/29173649-320dfe76b46e4c1097edb518dacea888.jpg" alt=""></p>
+<h2 id="ReliefF算法python程序"><a href="#ReliefF算法python程序" class="headerlink" title="ReliefF算法python程序"></a>ReliefF算法python程序</h2><pre><code>import numpy as np
+from sklearn.metrics.pairwise import pairwise_distances
+def reliefF(X,y,**kwargs):
+   if &quot;k&quot; not in kwargs.keys():
+        k=5
+   else:
+        k=kwargs[&quot;k&quot;]
+n_samples,n_features=X.shape
 
-typedef struct{
-    int ord;
-    PosType seat;
-    int di;
-}SElemType;//栈基本元素
+#计算两两距离，曼哈顿距离
+distance=pairwise_distances(X,metric=&apos;manhattan&apos;)
 
-//---------栈相关操作------------------//
-#define STACK_INIT_SIZE 100
-typedef struct{
-    SElemType *base;
-    SElemType *top;
-    int stacksize;
-}SqStack;
-int InitStack(SqStack &amp;S)
-{
-    S.base = (SElemType *)malloc(STACK_INIT_SIZE*sizeof(SElemType));
-    S.top = S.base;
-    S.stacksize = STACK_INIT_SIZE;
-    return 1;
-}
-int Push(SqStack &amp;S, SElemType e){
-    *S.top++ = e;
-    return 1;
-}
-int Pop(SqStack &amp;S, SElemType &amp;e)
-{
-    e = *--S.top;
-    return 1;
-}
-int StackEmpty(SqStack S)
-{
-    return S.top == S.base;
-}
-//---------栈相关操作------------------//
+score=np.zeros(n_features)
 
-int maze[10][10] = {
-{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-{-1, 0, 0, 0, 0, 0, 0, 0,-1,-1},
-{-1, 0, 0, 0,-1, 0,-1,-1, 0,-1},
-{-1,-1,-1, 0,-1, 0, 0,-1, 0,-1},
-{-1, 0, 0, 0,-1,-1, 0,-1, 0,-1},
-{-1, 0, 0,-1, 0, 0, 0, 0, 0,-1},
-{-1, 0, 0,-1, 0, 0,-1,-1, 0,-1},
-{-1,-1,-1, 0, 0, 0, 0,-1, 0,-1},
-{-1, 0, 0, 0, 0, 0, 0, 0, 0,-1},
-{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
-};//迷宫
-PosType start = { 1, 1 };//迷宫起点
-PosType end = { 8, 8 };//迷宫终点
+for idx in range(n_samples):
+    #同类最近邻
+    near_hit=[]
+    #异类最近邻
+    near_miss=dict()
 
-int Pass(PosType pos)//当前位置是否可通过
-{
-    return (maze[pos.x][pos.y] != -1) &amp;&amp; (maze[pos.x][pos.y] != 1);
-}
-void FootPrint(PosType pos)//走过的通道块
-{
-    maze[pos.x][pos.y] = 1;//走过
-}
-PosType NextPos(PosType pos, int di)//顺时钟方向尝试
-{
-    PosType resultPos;
-    switch (di)
-    {
-    case 1://东
-        resultPos.x = pos.x + 1;
-        resultPos.y = pos.y;
-        break;
-    case 2://南
-        resultPos.x = pos.x;
-        resultPos.y = pos.y + 1;
-        break;
-    case 3://西
-        resultPos.x = pos.x - 1;
-        resultPos.y = pos.y;
-        break;
-    case 4://北
-        resultPos.x = pos.x;
-        resultPos.y = pos.y - 1;
-        break;
-    default:
-        printf(&quot;Error!\n&quot;);
-    }
-    return resultPos;
-}
-void MarkPrint(PosType pos)//标记不可通过的位置
-{
-    maze[pos.x][pos.y] = -1;
-}
+    self_fea=X[idx,:]
+    #类别数
+    c=np.unique(y).tolist()
 
-int MazePath(){
-    SqStack S;
-    InitStack(S);//初始化栈
-    PosType curpos = start;
-    int curstep = 1;
-    SElemType e;
-    do{
-        if (Pass(curpos)){
-            FootPrint(curpos);
-            e.ord = curstep;
-            e.seat.x = curpos.x;
-            e.seat.y = curpos.y;
-            e.di = 1;
-            Push(S, e);
-            if ((curpos.x == end.x) &amp;&amp; (curpos.y == end.y))
-            {//到达终点，逐一打印栈中保持的路径；
-                while (!StackEmpty(S))
-                {
-                    Pop(S, e);
-                    printf(&quot;(%d, %d)\n&quot;, e.seat.x, e.seat.y);
-                }
-                free(S.base);
-                return true;
-            }
-            curpos = NextPos(curpos, 1);
-            curstep++;
-        }
-        else
-        {
-            if (!StackEmpty(S))
-            {
-                Pop(S, e);
-                while (e.di == 4 &amp;&amp; !StackEmpty(S)){
-                    MarkPrint(e.seat); Pop(S, e);
-                }
-                if (e.di &lt; 4){
-                    e.di++; Push(S, e);
-                    curpos = NextPos(e.seat, e.di);
-                }
-            }
-        }
-    } while (!StackEmpty(S));
-    free(S.base);
-    return false;
-}
-</code></pre><p>运行结果：</p>
-<p><img src="http://i.imgur.com/f0IXs5b.png" alt=""></p>
-<p>红色是正确路径，蓝色是尝试路径。</p>
+    stop_dict=dict()
+    for label in c:
+        stop_dict[label]=0
+    del c[c.index(y[idx])]
+
+    P_dict=dict()
+    p_label_idx=float(len(y[y==y[idx]]))/float(n_samples)
+
+    for label in c:
+        p_label_c=float(len(y[y==label]))/float(n_samples)
+        p_dict[label]=p_label_c/(1-p_label_idx)
+        near_miss[label]=[]
+
+    distance_sort=[]
+    distance[idx,idx]=np.max(distance[idx,:])
+
+    for i in range(n_samples):
+            distance_sort.append([distance[idx,i],int(i),y[i]])
+    distance_sort.sort(key=lambda x: x[0])
+
+    for i in range(n_samples):
+        #找到同类最近邻
+        if distance_sort[i][2]==y[idx]:
+            if len(near_hit) &lt;k:
+                near_hit.append(distance_sort[i][1])
+            elif len(near_hit)==k:
+                stop_dict[y[idx]]=1
+        else:
+        #异类最近邻
+            if len(near_miss[distance_sort[i][2])&lt;k:
+                near_miss[distance_sort[i][2].append(distance_sort[i][1])
+            else:
+                if len(near_miss[distance_sort[i][2]]) == k:
+                    stop_dict[distance_sort[i][2]] = 1
+        stop = True
+        for (key, value) in stop_dict.items():
+                if value != 1:
+                    stop = False
+        if stop:
+            break
+
+    #更新reliefF分数
+    for ele in near_hit:
+        near_hit_term = np.array(abs(self_fea-X[ele, :]))+np.array(near_hit_term)
+
+    near_miss_term = dict()
+    for (label, miss_list) in near_miss.items():
+        near_miss_term[label] = np.zeros(n_features)
+        for ele in miss_list:
+            near_miss_term[label] = np.array(abs(self_fea-X[ele, :]))+np.array(near_miss_term[label])
+        score += near_miss_term[label]/(k*p_dict[label])
+    score -= near_hit_term/k
+return score
+
+def feature_ranking(score):
+    idx = np.argsort(score, 0)
+    return idx[::-1]
+</code></pre><p>参考博文：</p>
+<ol>
+<li><a href="http://www.cnblogs.com/asxinyu/archive/2013/08/29/3289682.html" target="_blank" rel="external">http://www.cnblogs.com/asxinyu/archive/2013/08/29/3289682.html</a></li>
+<li><a href="https://github.com/jundongl/scikit-feature" target="_blank" rel="external">https://github.com/jundongl/scikit-feature</a></li>
+</ol>
+<p>特征提取Python库：<br><a href="http://featureselection.asu.edu/" target="_blank" rel="external">http://featureselection.asu.edu/</a></p>
 
       
     </div>
@@ -572,9 +532,11 @@ int MazePath(){
       
         <div class="post-tags">
           
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
             <a href="/tags/算法/" rel="tag"># 算法</a>
           
-            <a href="/tags/C/" rel="tag"># C</a>
+            <a href="/tags/Relief/" rel="tag"># Relief</a>
           
         </div>
       
@@ -587,15 +549,15 @@ int MazePath(){
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/08/17/机器学习书单/" rel="next" title="机器学习路线【转】">
+                <i class="fa fa-chevron-left"></i> 机器学习路线【转】
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/27/My-First-Blog/" rel="prev" title="要怎样努力，才能成为很厉害的人">
-                要怎样努力，才能成为很厉害的人 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -643,8 +605,17 @@ int MazePath(){
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -735,6 +706,22 @@ int MazePath(){
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Relief算法"><span class="nav-number">1.</span> <span class="nav-text">Relief算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReliefF算法"><span class="nav-number">2.</span> <span class="nav-text">ReliefF算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReliefF算法python程序"><span class="nav-number">3.</span> <span class="nav-text">ReliefF算法python程序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

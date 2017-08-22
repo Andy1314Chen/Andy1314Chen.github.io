@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/08/22/ReliefF%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9(python)/</loc>
+    <lastmod>2017-08-22T14:16:11.040Z</lastmod>
+    <data>
+        <display>
+        <title>Relief特征选择算法Python实现</title>
+        <pubTime>2017-08-21T16:00:00.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>算法</tag>
+         
+        <tag>Relief</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
+          
+             
+              <breadCrumb title="算法" url="http://yoursite.com/categories/Python/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/27/%E5%8F%B0%E6%B9%BE%E5%9B%BD%E7%AB%8B%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%BD%AD%E6%98%8E%E8%BE%89%E7%A0%94%E7%A9%B6%E7%94%9F%E6%89%8B%E5%86%8C/</loc>
     <lastmod>2017-08-21T13:13:13.197Z</lastmod>
     <data>
@@ -78,9 +105,9 @@
         <title>ReSpeaker智能语音双麦克风阵列</title>
         <pubTime>2017-08-10T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>UNIT</tag>
          
         <tag>树莓派3</tag>
          
@@ -102,9 +129,9 @@
         <title>2017百度之星开发者大赛--资格赛2</title>
         <pubTime>2017-08-09T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>UNIT</tag>
          
         <tag>百度</tag>
          
@@ -126,9 +153,9 @@
         <title>2017百度之星开发者大赛--资格赛</title>
         <pubTime>2017-07-29T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>UNIT</tag>
          
         <tag>百度</tag>
          
@@ -238,9 +265,9 @@
         <title>迷宫问题</title>
         <pubTime>2016-07-02T16:00:00.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>算法</tag>
+         
+        <tag>C</tag>
          
          
            
@@ -260,9 +287,9 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>算法</tag>
+         
+        <tag>C</tag>
          
         <tag>Leetcode</tag>
          
@@ -330,9 +357,9 @@
         <title>快速整数平方根算法</title>
         <pubTime>2017-06-27T16:00:00.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>算法</tag>
+         
+        <tag>C</tag>
          
          
            
