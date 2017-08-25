@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Windows系统与树莓派间文件传输]]></title>
+    <url>%2F2017%2F08%2F25%2Fwindows%E7%B3%BB%E7%BB%9F%E4%B8%8E%E6%A0%91%E8%8E%93%E6%B4%BE%E9%97%B4%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%2F</url>
+    <content type="text"><![CDATA[windows系统和树莓派之间文件传输方式有很多种，利用FileZilla来传输，是我用的最简便快捷的一种。 FileZilla特点 易于使用 FileZilla比其他任何一款FTP软件都要简单 多协议支持 FileZilla支持FTP、FTPS、SFTP等文件传输协议 多种语言 FileZilla支持多国语言，完美支持简体中文 多标签界面 多标签界面 远程查找文件 FileZilla支持远程查找文件功能 站点管理器 FileZilla自带功能强大的站点管理和传输队列管理 使用虽然介绍的功能比较多，但我关心的是与树莓派的文件传输功能。 直接上图： 主机：sftp://YOUR DEVICE IP ADDRESS(192.168.1.102) 填写用户名和密码，端口可不填 快速连接 左边本底站点为你的windows系统资源管理器，右边远程站点是树莓派文件系统，直接拖拽就可以实现文件传输。需要注意的是有些树莓派中的文件是有访问等级的，可能无法操作 下载地址：FileZilla - The free FTP solution]]></content>
+      <categories>
+        <category>树莓派3</category>
+        <category>好记性不如烂笔头</category>
+      </categories>
+      <tags>
+        <tag>树莓派3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Relief特征选择算法Python实现]]></title>
     <url>%2F2017%2F08%2F22%2FReliefF%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9(python)%2F</url>
     <content type="text"><![CDATA[Relief算法Relief算法最早由Kira在1992年提出，最初局限于两类数据的分类问题。Relief算法是一种特征权重算法(Feature weighting algorithms)，根据各个特征和类别的相关性赋予特征不同的权重，权重小于某个阈值的特征将被移除。Relief算法中特征和类别的相关性是基于特征对近距离样本的区分能力。 基本思想：算法从训练集D中随机选择一个样本R，然后从和R同类的样本中寻找最近邻样本H，称为NearHit，从和R不同类的样本中寻找最近邻样本M，称为NearMiss，然后根据以下规则更新每个特征的权重：如果R和NearHit在某个特征上的距离小于R和NearMiss上的距离，则说明该特征对区分同类和不同类的最近邻是有益的，则增加该特征的权重；反之，如果R和NearHit在某个特征的距离大于R和NearMiss上的距离，说明该特征对区分同类和不同类的最近邻起负面作用，则降低该特征的权重。以上过程重复m次，最后得到各特征的平均权重。特征的权重越大，表示该特征的分类能力越强，反之，表示该特征分类能力越弱。Relief算法的运行时间随着样本的抽样次数m和原始特征个数N的增加线性增加，因而运行效率非常高。 具体算法： ReliefF算法虽然Relief算法比较简单，但运行效率高，并且结果也比较令人满意，因此得到广泛应用，但是其局限性在于只能处理两类别数据，因此1994年Kononeill对其进行了扩展，得到了ReliefF算法，可以处理多类别问题。ReliefF算法在处理多类问题时，每次从训练样本集中随机取出一个样本R，然后从和R同类的样本集中找出R的k个近邻样本(near Hits)，从每个R的不同类的样本集中均找出k个近邻样本(near Misses)，然后更新每个特征的权重，如下式所示： ReliefF算法python程序import numpy as np from sklearn.metrics.pairwise import pairwise_distances def reliefF(X,y,**kwargs): if &quot;k&quot; not in kwargs.keys(): k=5 else: k=kwargs[&quot;k&quot;] n_samples,n_features=X.shape #计算两两距离，曼哈顿距离 distance=pairwise_distances(X,metric=&apos;manhattan&apos;) score=np.zeros(n_features) for idx in range(n_samples): #同类最近邻 near_hit=[] #异类最近邻 near_miss=dict() self_fea=X[idx,:] #类别数 c=np.unique(y).tolist() stop_dict=dict() for label in c: stop_dict[label]=0 del c[c.index(y[idx])] P_dict=dict() p_label_idx=float(len(y[y==y[idx]]))/float(n_samples) for label in c: p_label_c=float(len(y[y==label]))/float(n_samples) p_dict[label]=p_label_c/(1-p_label_idx) near_miss[label]=[] distance_sort=[] distance[idx,idx]=np.max(distance[idx,:]) for i in range(n_samples): distance_sort.append([distance[idx,i],int(i),y[i]]) distance_sort.sort(key=lambda x: x[0]) for i in range(n_samples): #找到同类最近邻 if distance_sort[i][2]==y[idx]: if len(near_hit) &lt;k: near_hit.append(distance_sort[i][1]) elif len(near_hit)==k: stop_dict[y[idx]]=1 else: #异类最近邻 if len(near_miss[distance_sort[i][2])&lt;k: near_miss[distance_sort[i][2].append(distance_sort[i][1]) else: if len(near_miss[distance_sort[i][2]]) == k: stop_dict[distance_sort[i][2]] = 1 stop = True for (key, value) in stop_dict.items(): if value != 1: stop = False if stop: break #更新reliefF分数 for ele in near_hit: near_hit_term = np.array(abs(self_fea-X[ele, :]))+np.array(near_hit_term) near_miss_term = dict() for (label, miss_list) in near_miss.items(): near_miss_term[label] = np.zeros(n_features) for ele in miss_list: near_miss_term[label] = np.array(abs(self_fea-X[ele, :]))+np.array(near_miss_term[label]) score += near_miss_term[label]/(k*p_dict[label]) score -= near_hit_term/k return score def feature_ranking(score): idx = np.argsort(score, 0) return idx[::-1] 参考博文： http://www.cnblogs.com/asxinyu/archive/2013/08/29/3289682.html https://github.com/jundongl/scikit-feature 特征提取Python库：http://featureselection.asu.edu/]]></content>
@@ -9,8 +21,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>算法</tag>
+        <tag>Python</tag>
         <tag>Relief</tag>
       </tags>
   </entry>
@@ -47,8 +59,8 @@
         <category>树莓派3</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>UNIT</tag>
+        <tag>机器学习</tag>
         <tag>树莓派3</tag>
       </tags>
   </entry>
@@ -60,8 +72,8 @@
         <category>UNIT</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>UNIT</tag>
+        <tag>机器学习</tag>
         <tag>百度</tag>
       </tags>
   </entry>
@@ -73,8 +85,8 @@
         <category>UNIT</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>UNIT</tag>
+        <tag>机器学习</tag>
         <tag>百度</tag>
       </tags>
   </entry>
@@ -169,8 +181,8 @@
         <category>C</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>C</tag>
+        <tag>算法</tag>
         <tag>Leetcode</tag>
       </tags>
   </entry>
@@ -193,8 +205,8 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>C</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -227,8 +239,8 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>C</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>
