@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/08/30/Windows%E4%B8%8B%E5%AE%89%E8%A3%85Xgboost/</loc>
+    <lastmod>2017-08-30T12:54:58.392Z</lastmod>
+    <data>
+        <display>
+        <title>Windows系统下Xgboost安装【转】</title>
+        <pubTime>2017-08-30T04:37:43.000Z</pubTime>
+        
+        <tag>xgboost</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://yoursite.com/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/01/13/Numpy%E5%BA%93%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2017-08-28T09:21:03.766Z</lastmod>
     <data>
@@ -56,9 +76,9 @@
         <title>Relief特征选择算法Python实现</title>
         <pubTime>2017-08-21T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
         <tag>Relief</tag>
          
@@ -310,9 +330,9 @@
         <title>迷宫问题</title>
         <pubTime>2016-07-02T16:00:00.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>算法</tag>
+         
+        <tag>C</tag>
          
          
            
@@ -332,11 +352,11 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>算法</tag>
          
         <tag>Leetcode</tag>
+         
+        <tag>C</tag>
          
          
            
@@ -402,9 +422,9 @@
         <title>快速整数平方根算法</title>
         <pubTime>2017-06-27T16:00:00.000Z</pubTime>
         
-        <tag>C</tag>
-         
         <tag>算法</tag>
+         
+        <tag>C</tag>
          
          
            

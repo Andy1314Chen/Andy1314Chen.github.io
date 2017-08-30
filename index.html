@@ -299,6 +299,210 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/Windows下安装Xgboost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/30/Windows下安装Xgboost/" itemprop="url">Windows系统下Xgboost安装【转】</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T12:37:43+08:00">
+                2017-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>XGBoost是Gradient Boosting算法的一种高级实现，在Kaggle competitions上崭露头角。下面就对XGBoost在Windows上的安装作一个介绍，因为XGBoost在Windows平台上的安装不是那么简单直接。我在实验室的电脑上（Windows 7，64 bits）通过这些步骤安装成功，希望能对后来人有所帮助。</p>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7eIqfJRaX1uWf9oLGlL-3BT2qR2lswhzWj_psFGKy8xgKvJbs" alt=""></p>
+<h2 id="安装必要的软件"><a href="#安装必要的软件" class="headerlink" title="安装必要的软件"></a>安装必要的软件</h2><p>为了能在Windows上通过Python使用XGBoost，需要先安装以下三个软件：</p>
+<ul>
+<li>Python</li>
+<li>Git</li>
+<li>MINGW</li>
+</ul>
+<h2 id="Python和Git的安装"><a href="#Python和Git的安装" class="headerlink" title="Python和Git的安装"></a>Python和Git的安装</h2><p>对于Python，你可以到Python官网上下载你想安装的版本，安装很简单，这里就跳过。对于Git的安装有很多种选择，一种选择就是使用Git for Windows，Git for Windows的安装也比较简单，遵从指示就行，这里也跳过。</p>
+<h2 id="XGBoost的下载"><a href="#XGBoost的下载" class="headerlink" title="XGBoost的下载"></a>XGBoost的下载</h2><p>Git安装完成后，开始菜单中会出现一个叫Git Bash的程序，点开后就会出现一个类似Windows命令行的窗口，首先在这个Bash窗口，使用cd命令进入你想保存XGBoost代码的文件夹，比如下面的示例：</p>
+<pre><code>$ cd /e/algorithm
+</code></pre><p>然后输入下面的代码下载XGBoost文件包：</p>
+<pre><code>$ git clone --recursive https://github.com/dmlc/xgboost
+$ cd xgboost
+$ git submodule init
+$ git submodule update
+</code></pre><h2 id="编译XGBoost代码"><a href="#编译XGBoost代码" class="headerlink" title="编译XGBoost代码"></a>编译XGBoost代码</h2><h3 id="MinGW-W64的安装"><a href="#MinGW-W64的安装" class="headerlink" title="MinGW-W64的安装"></a>MinGW-W64的安装</h3><p>接下来就是编译我们刚刚下载的XGBoost的代码。这就需要用到MinGW-W64。它的安装包我是从这里下载的，下载完成后双击安装，出现下面的安装界面，点击Next：</p>
+<p><img src="http://o9zemtn5i.bkt.clouddn.com/mingw_1.JPG" alt=""></p>
+<p>然后<strong>在Architecture选项处选择x86_64</strong>(!!!不要忘记了)即可，其他选项保持默认，如下图：</p>
+<p><img src="http://o9zemtn5i.bkt.clouddn.com/mingw_2.JPG" alt=""></p>
+<p>然后点击下一步，就能安装完成。我使用的是默认安装路径C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1。那么make命令和运行库就在下面的文件夹中（也就是包含mingw32-make的文件夹）：C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin，接下来就是把上面的路径添加到系统的Path中，关于如何添加环境变量到系统的Path中，可以参考<a href="https://www.computerhope.com/issues/ch000549.htm" target="_blank" rel="external">这篇文章</a>。</p>
+<p>上面的步骤完成后，关闭Git Bash窗口后重新打开，为了确认添加环境变量已经添加成功，可以在Bash中键入下面的命令：</p>
+<pre><code>$ which mingw32-make
+</code></pre><p>如果添加成功的话，应该返回类似下面这样的信息：</p>
+<pre><code>C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\mingw32-make
+</code></pre><p>为了输入的方便，可以简化mingw32-make命令为make</p>
+<pre><code>$ alias make=&apos;mingw32-make&apos;
+</code></pre><h3 id="XGBoost的编译"><a href="#XGBoost的编译" class="headerlink" title="XGBoost的编译"></a>XGBoost的编译</h3><p>现在就可以开始编译XGBoost了，首先进入xgboost文件夹</p>
+<pre><code>$ cd /e/algorithm/xgboost
+</code></pre><p>通过<a href="https://xgboost.readthedocs.io/en/latest/build.html#building-on-windows" target="_blank" rel="external">这篇官方文档</a>给出的统一编译的方法在写这篇文章时还不能正常编译成功，所以我们采用下面的命令来分开编译，每次编译一个子模块。注意，我们要等每个命令编译完成后才能键入下一个命令。</p>
+<pre><code>$ cd dmlc-core
+$ make -j4
+$ cd ../rabit
+$ make lib/librabit_empty.a -j4
+$ cd ..
+$ cp make/mingw64.mk config.mk
+$ make -j4
+</code></pre><p>一旦最后一个命令完成后，整个编译过程就完成了。下面就开始安装Python模块。进入XGBoost文件夹下面的python-package子文件夹，然后键入：</p>
+<pre><code>$ cd /e/algorithm/xgboost/python-package&gt;python setup.py install
+</code></pre><p>进行到这儿，基本上就完成了，这时打开一个Jupyter notebook，直接导入xgboost包会出现错误，我们需要先运行下面的代码：</p>
+<pre><code>import os
+mingw_path = &apos;C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin&apos;
+os.environ[&apos;PATH&apos;] = mingw_path + &apos;;&apos; + os.environ[&apos;PATH&apos;]
+</code></pre><h3 id="成功示例"><a href="#成功示例" class="headerlink" title="成功示例"></a>成功示例</h3><p>然后我们就可以开始导入xgboost包去运行下面的示例：</p>
+<pre><code>import xgboost as xgb
+import numpy as np
+data = np.random.rand(5,10) # 5 entities, each contains 10 features
+label = np.random.randint(2, size=5) # binary target
+dtrain = xgb.DMatrix( data, label=label)
+dtest = dtrain
+param = {&apos;bst:max_depth&apos;:2, &apos;bst:eta&apos;:1, &apos;silent&apos;:1, &apos;objective&apos;:&apos;binary:logistic&apos; }
+param[&apos;nthread&apos;] = 4
+param[&apos;eval_metric&apos;] = &apos;auc&apos;
+evallist  = [(dtest,&apos;eval&apos;), (dtrain,&apos;train&apos;)]
+num_round = 10
+bst = xgb.train( param, dtrain, num_round, evallist )
+bst.dump_model(&apos;dump.raw.txt&apos;)
+</code></pre><p>至此，如果没有出现错误，就表示安装成功。</p>
+<h2 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h2><ol>
+<li>可能对git bash不熟悉的可以先看看git操作命令</li>
+<li>上面添加PATH步骤很重要，有些网上的博客并未提及，我第一次就是这里没有安装成功</li>
+<li>xgboost这个文件夹最好不要放在python的工作路径内，也不要随意删除</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://wang-shuo.github.io/2017/02/21/%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85XGBoost/" target="_blank" rel="external">https://wang-shuo.github.io/2017/02/21/%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85XGBoost/</a></li>
+<li><a href="https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en" target="_blank" rel="external">https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/windows系统与树莓派间文件传输/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2530,310 +2734,6 @@ Cross-Validation Score : 80.782%
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/25/A Complete Tutorail(1)/" itemprop="url">A Complete Tutorial to Learn Data Science with Python from Scratch(1)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T00:00:00+08:00">
-                2017-07-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近一段时间进行大论文研究方向的调研，主要是关于电子系统或设备故障预测和健康管理（PHM）这一块。也跟老板沟通了，大致就做这一块了。研一在实验室除了上理论课之外，就负责实验室项目中上位机软件编程，也没掌握啥儿高大上的东西。现在论文大方向基本定了，趁着暑假想掌握一些数据分析(Data Analysis)方面的基本技术，包括（Python及其相关库、机器学习、数据挖掘算法等）。</p>
-<p>在<a href="https://www.analyticsvidhya.com" target="_blank" rel="external">https://www.analyticsvidhya.com</a>网站里看到一篇很不错的博客，跟着学习了一下。算是对前一段时间Numpy、Pandas、Scipy库的复习运用吧，整体上对用Python进行机器学习过程有一个把握。</p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2014/09/Orange-Shoes-300x300.jpg" alt="参考博主女儿的鞋子，很卡哇伊啊~"></p>
-<h2 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录(Table of Contents)"></a>目录(Table of Contents)</h2><ol>
-<li>Python基础知识(Basics of Python for Data Analysis)<ul>
-<li>Why learn Python for data analysis?</li>
-<li>Python 2.7 vs 3.4</li>
-<li>How to install Python?</li>
-<li>Running a few simple program in Python</li>
-</ul>
-</li>
-<li>Python库和数据结构(Python libraries and data structures)<ul>
-<li>Python Data Structures</li>
-<li>Python Iteration and Conditional Constructs</li>
-<li>Python Libraries</li>
-</ul>
-</li>
-<li>使用Pandas库探索分析(Exploratory analysis in Python using Pandas)<ul>
-<li>Introduction to series and dataframes</li>
-<li>Analytics Vidhy a dataset- Loan Prediction Problem</li>
-</ul>
-</li>
-<li>使用Pandas数据修复(Data Munging in Python using Pandas)</li>
-<li>建立预测模型(Building a Predictive Model in Python)<ul>
-<li>Logistic Regression</li>
-<li>Decision Tree</li>
-<li>Random Forest</li>
-</ul>
-</li>
-</ol>
-<h2 id="1、Python基础知识"><a href="#1、Python基础知识" class="headerlink" title="1、Python基础知识"></a>1、Python基础知识</h2><p><strong>Why learn Python for data analysis?</strong></p>
-<pre><code>- 开源、免费安装
-- 丰富的在线社区论坛
-- 简单易学
-- 可以成为Data Science的一种标准语言
-</code></pre><p>但是缺点也显而易见，</p>
-<pre><code>- 解释型语言，速度慢
-</code></pre><p><strong>Python 2.7 vs 3.4</strong></p>
-<p>这是一个非常具有争议性的话题，但是，我个人感觉，如果现在入门学习一定要用Python3了。</p>
-<p><strong>How to install Python?</strong></p>
-<p>有两种方法：</p>
-<pre><code>-直接从Python官网上下载安装包，一步一步配置环境，需要什么包装什么包
--直接安装Anaconda,基本库都预安装了，啥事儿没有，不过要自己百度Anaconda教程，看看如何使用，挺简单的！
-</code></pre><p>推荐使用第二种方法，特别是国内&amp;Windows系统，自己配置Python环境，安装相关库真的是非常麻烦的！</p>
-<h2 id="2、Python库和数据结构"><a href="#2、Python库和数据结构" class="headerlink" title="2、Python库和数据结构"></a>2、Python库和数据结构</h2><p><strong>Python Data Structures</strong></p>
-<ul>
-<li>Lists-Lists 是Python中使用最为频繁，功能也最为丰富的数据结构。可以简单的由逗号和中括号定义。Lists可以包含不同类型的元素，但是使用时基本都是同类型的。Python中lists是可变的，list中的每个元素也都可以改写。</li>
-</ul>
-<h2 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h2><p>A list can be simply defined by writing comma separated values in square brackets.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>,<span class="number">25</span>]</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list</div></pre></td></tr></table></figure>
-<pre><code>[0, 1, 4, 9, 16, 25]
-</code></pre><p>Individual elements of a list can be accessed by writing the index number in square bracket. Please note that the first index of a list is 0 and not 1</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list[<span class="number">0</span>]<span class="comment">#Indexing returns the item</span></div></pre></td></tr></table></figure>
-<pre><code>0
-</code></pre><p>A range of script can be accessed by having first index and last index</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list[<span class="number">2</span>:<span class="number">4</span>] <span class="comment">#Slicing returns a new list</span></div></pre></td></tr></table></figure>
-<pre><code>[4, 9]
-</code></pre><p>A Negative index access the list from end</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list[<span class="number">-2</span>] <span class="comment">#It should return the second last element in the list</span></div></pre></td></tr></table></figure>
-<pre><code>16
-</code></pre><p>A few common methods applicable to lists include: append(),extend(),insert(),remove(),pop(),count(),sort(),reverse()</p>
-<ul>
-<li><strong>Strings</strong>- Strings 可以简单的用单引号(‘),双引号(“),三引号( ”’)表示。 Strings用三引号时可以包含多行，因此在Python docstrings中使用较多。‘\’是一个换行符，另起一行。但是需要注意Python strings是不可变的，不能改变strings!</li>
-</ul>
-<h2 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h2><p>A string can be simply defined by using single(‘),double(‘’) or triple(‘’’) quotation</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">greeting=<span class="string">'Hello'</span></div><div class="line">print(greeting[<span class="number">1</span>])</div><div class="line">print(len(greeting))</div><div class="line">print(greeting+<span class="string">'World'</span>)</div></pre></td></tr></table></figure>
-<pre><code>e
-5
-HelloWorld
-</code></pre><p>Raw strings can be used to pass on string as is. Python interpretter does not alter the string, if you specify a string to be raw. Raw string can be defined by adding r to the string</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">stmt=<span class="string">r'\n is a newline character by default.'</span></div><div class="line">print(stmt)</div></pre></td></tr></table></figure>
-<pre><code>\n is a newline character by default.
-</code></pre><p>Python strings are immutable and hence can be changed. Doing so will result in an error.</p>
-<p>Common string methods include lower(),strip(),isdigit(),isspace(),find(),replace(),split() and join(). These are usually very helpful when you need to perform data mainpulation or cleaning on text fields.</p>
-<ul>
-<li><strong> Tuples </strong> - 元组可以用逗号和圆括号表示。元组是不可变的，输出由圆括号包围。尽管元组是不可变的，但是可以包含可变元素。</li>
-</ul>
-<p>因为元组是不可变的，在处理上相对于List更快。可以使用tuple代替使用不会更改的list.</p>
-<h2 id="Tuples"><a href="#Tuples" class="headerlink" title="Tuples"></a>Tuples</h2><p>A tuple is represented by a number of values separated by commas.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example=<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>,<span class="number">25</span></div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example</div></pre></td></tr></table></figure>
-<pre><code>(0, 1, 4, 9, 16, 25)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example[<span class="number">2</span>]</div></pre></td></tr></table></figure>
-<pre><code>4
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example[<span class="number">2</span>]=<span class="number">6</span></div></pre></td></tr></table></figure>
-<pre><code>---------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-12-59fc5567f2da&gt; in &lt;module&gt;()
-----&gt; 1 tuple_example[2]=6
-
-
-TypeError: &apos;tuple&apos; object does not support item assignment
-</code></pre><ul>
-<li>Dictionary -Dictionary是一种无序的key-value对集合，同一Dictionary中Key必须是唯一的。用大括号变可以建立一个空的Dictionary.</li>
-</ul>
-<h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><p>A dictionary is an unordered set of key: value pairs, with the requirement that the keys are unique (within one dictionary). A pair of braces creates an empty dictionary:{}</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extensions=&#123;<span class="string">'Kunal'</span>:<span class="number">9073</span>,<span class="string">'Tavish'</span>:<span class="number">9128</span>,<span class="string">'Sunil'</span>:<span class="number">9223</span>,<span class="string">'Nitin'</span>:<span class="number">9330</span>&#125;</div><div class="line">extensions</div></pre></td></tr></table></figure>
-<pre><code>{&apos;Kunal&apos;: 9073, &apos;Nitin&apos;: 9330, &apos;Sunil&apos;: 9223, &apos;Tavish&apos;: 9128}
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extensions[<span class="string">'Mukesh'</span>]=<span class="number">9150</span></div><div class="line">extensions</div></pre></td></tr></table></figure>
-<pre><code>{&apos;Kunal&apos;: 9073, &apos;Mukesh&apos;: 9150, &apos;Nitin&apos;: 9330, &apos;Sunil&apos;: 9223, &apos;Tavish&apos;: 9128}
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extensions.keys()</div></pre></td></tr></table></figure>
-<pre><code>dict_keys([&apos;Kunal&apos;, &apos;Tavish&apos;, &apos;Sunil&apos;, &apos;Nitin&apos;, &apos;Mukesh&apos;])
-</code></pre><h2 id="Python-Iteration-and-Conditional-Constructs"><a href="#Python-Iteration-and-Conditional-Constructs" class="headerlink" title="Python Iteration and Conditional Constructs"></a>Python Iteration and Conditional Constructs</h2><p>Like most languages, Python also has a FOR-loop which is the most widely used method for iteration. It has a simple syntax:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [Python Iterable]:</div><div class="line">  expression(i)</div></pre></td></tr></table></figure>
-<p>Here “Python Iterable” can be a list, tuple or other advanced data structures which we will explore in later sections. Let’s take a look at a simple example, determining the factorial of a number.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">fact=<span class="number">1</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,N+<span class="number">1</span>):</div><div class="line">  fact *=i</div></pre></td></tr></table></figure>
-<p>Coming to conditional statements, these are used to execute code fragments based on a condition. The most commonly used construct is if-else, with following syntax:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> [condition]:</div><div class="line">   __execution <span class="keyword">if</span> true__</div><div class="line"><span class="keyword">else</span>:</div><div class="line">   __execution <span class="keyword">if</span> false__</div></pre></td></tr></table></figure>
-<p>For instance, if we want to print whether the number N is even or odd:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> N%<span class="number">2</span> == <span class="number">0</span>:</div><div class="line">  print(<span class="string">'Even'</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">  print(<span class="string">'Odd'</span>)</div></pre></td></tr></table></figure>
-<p>Now that you are familiar with Python fundamentals, let’s take a step further. </p>
-<h2 id="Python-Libraries"><a href="#Python-Libraries" class="headerlink" title="Python Libraries"></a>Python Libraries</h2><p>Lets take one step ahead in our journey to learn Python by getting acquainted with some useful libraries. The first step is obviously to learn to import them into our environment. There are several ways of doing so in Python:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> math <span class="keyword">as</span> m</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> math <span class="keyword">import</span> *</div></pre></td></tr></table></figure>
-<p>In the first manner, we have defined an alias m to library math. We can now use various functions from math library (e.g. factorial) by referencing it using the alias m.factorial().</p>
-<p>In the second manner, you have imported the entire name space in math i.e. you can directly use factorial() without referring to math.</p>
-<p>推荐使用前一种导入方法。</p>
-<p>科学计算和数据分析常用的库：</p>
-<ul>
-<li><p><strong>NumPy</strong> stands for Numerical Python. The most powerful feature of NumPy is n-dimensional array. This library also contains basic linear algebra functions, Fourier transforms,  advanced random number capabilities and tools for integration with other low level languages like Fortran, C and C++</p>
-</li>
-<li><p><strong>SciPy</strong> stands for Scientific Python. SciPy is built on NumPy. It is one of the most useful library for variety of high level science and engineering modules like discrete Fourier transform, Linear Algebra, Optimization and Sparse matrices.</p>
-</li>
-<li><p><strong>Matplotlib</strong> for plotting vast variety of graphs, starting from histograms to line plots to heat plots.. You can use Pylab feature in ipython notebook (ipython notebook –pylab = inline) to use these plotting features inline. If you ignore the inline option, then pylab converts ipython environment to an environment, very similar to Matlab. You can also use Latex commands to add math to your plot.</p>
-</li>
-<li><p><strong>Pandas</strong> for structured data operations and manipulations. It is extensively used for data munging and preparation. Pandas were added relatively recently to Python and have been instrumental in boosting Python’s usage in data scientist community.</p>
-</li>
-<li><p><strong>Scikit Learn</strong> for machine learning. Built on NumPy, SciPy and matplotlib, this library contains a lot of effiecient tools for machine learning and statistical modeling including classification, regression, clustering and dimensionality reduction.</p>
-</li>
-<li><p><strong>Statsmodels</strong> for statistical modeling. Statsmodels is a Python module that allows users to explore data, estimate statistical models, and perform statistical tests. An extensive list of descriptive statistics, statistical tests, plotting functions, and result statistics are available for different types of data and each estimator.</p>
-</li>
-<li><p><strong>Seaborn</strong> for statistical data visualization. Seaborn is a library for making attractive and informative statistical graphics in Python. It is based on matplotlib. Seaborn aims to make visualization a central part of exploring and understanding data.</p>
-</li>
-<li><p><strong>Bokeh</strong> for creating interactive plots, dashboards and data applications on modern web-browsers. It empowers the user to generate elegant and concise graphics in the style of D3.js. Moreover, it has the capability of high-performance interactivity over very large or streaming datasets.</p>
-</li>
-<li><p><strong>Blaze</strong> for extending the capability of Numpy and Pandas to distributed and streaming datasets. It can be used to access data from a multitude of sources including Bcolz, MongoDB, SQLAlchemy, Apache Spark, PyTables, etc. Together with Bokeh, Blaze can act as a very powerful tool for creating effective visualizations and dashboards on huge chunks of data.</p>
-</li>
-<li><p><strong>Scrapy</strong> for web crawling. It is a very useful framework for getting specific patterns of data. It has the capability to start at a website home url and then dig through web-pages within the website to gather information.</p>
-</li>
-<li><p><strong>SymPy</strong> for symbolic computation. It has wide-ranging capabilities from basic symbolic arithmetic to calculus, algebra, discrete mathematics and quantum physics. Another useful feature is the capability of formatting the result of the computations as LaTeX code.</p>
-</li>
-<li><p><strong>Requests</strong> for accessing the web. It works similar to the the standard python library urllib2 but is much easier to code. You will find subtle differences with urllib2 but for beginners, Requests might be more convenient.</p>
-</li>
-</ul>
-<p>还有一些其他的库可能会用到：</p>
-<ul>
-<li><p><strong>os</strong> for Operating system and file operations</p>
-</li>
-<li><p><strong>networkx</strong> and <strong> igraph </strong> for graph based data manipulations</p>
-</li>
-<li><p><strong>regular expressions </strong> for finding patterns in text data</p>
-</li>
-<li><p><strong> BeautifulSoup </strong> for scrapping web. It is inferior to Scrapy as it will extract information from just a single webpage in a run.</p>
-</li>
-</ul>
-<p>Now that we are familiar with Python fundamentals and additional libraries, lets take a deep dive into problem solving through Python. Yes I mean making a predictive model! In the process, we use some powerful libraries and also come across the next level of data structures. We will take you through the 3 key phases:</p>
-<ol>
-<li><p>Data Exploration (分析数据） – finding out more about the data we have</p>
-</li>
-<li><p>Data Munging （数据修复） – cleaning the data and playing with it to make it better suit statistical modeling</p>
-</li>
-<li><p>Predictive Modeling （预测模型） – running the actual algorithms and having fun </p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2884,7 +2784,7 @@ TypeError: &apos;tuple&apos; object does not support item assignment
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2906,7 +2806,7 @@ TypeError: &apos;tuple&apos; object does not support item assignment
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

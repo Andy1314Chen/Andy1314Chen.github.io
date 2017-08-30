@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Life, Books, Code" />
+  <meta name="keywords" content="xgboost," />
 
 
 
@@ -94,14 +94,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta name="description" content="XGBoost是Gradient Boosting算法的一种高级实现，在Kaggle competitions上崭露头角。下面就对XGBoost在Windows上的安装作一个介绍，因为XGBoost在Windows平台上的安装不是那么简单直接。我在实验室的电脑上（Windows 7，64 bits）通过这些步骤安装成功，希望能对后来人有所帮助。  安装必要的软件为了能在Windows上通过Pyth">
+<meta name="keywords" content="xgboost">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows系统下Xgboost安装【转】">
+<meta property="og:url" content="http://yoursite.com/2017/08/30/Windows下安装Xgboost/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="XGBoost是Gradient Boosting算法的一种高级实现，在Kaggle competitions上崭露头角。下面就对XGBoost在Windows上的安装作一个介绍，因为XGBoost在Windows平台上的安装不是那么简单直接。我在实验室的电脑上（Windows 7，64 bits）通过这些步骤安装成功，希望能对后来人有所帮助。  安装必要的软件为了能在Windows上通过Pyth">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-23T03:46:31.021Z">
+<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7eIqfJRaX1uWf9oLGlL-3BT2qR2lswhzWj_psFGKy8xgKvJbs">
+<meta property="og:image" content="http://o9zemtn5i.bkt.clouddn.com/mingw_1.JPG">
+<meta property="og:image" content="http://o9zemtn5i.bkt.clouddn.com/mingw_2.JPG">
+<meta property="og:updated_time" content="2017-08-30T12:54:58.392Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="Windows系统下Xgboost安装【转】">
+<meta name="twitter:description" content="XGBoost是Gradient Boosting算法的一种高级实现，在Kaggle competitions上崭露头角。下面就对XGBoost在Windows上的安装作一个介绍，因为XGBoost在Windows平台上的安装不是那么简单直接。我在实验室的电脑上（Windows 7，64 bits）通过这些步骤安装成功，希望能对后来人有所帮助。  安装必要的软件为了能在Windows上通过Pyth">
+<meta name="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7eIqfJRaX1uWf9oLGlL-3BT2qR2lswhzWj_psFGKy8xgKvJbs">
 
 
 
@@ -129,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/30/Windows下安装Xgboost/"/>
 
 
 
 
 
-  <title>categories | Andy's blog</title>
+  <title>Windows系统下Xgboost安装【转】 | Andy's blog</title>
   
 
 
@@ -289,25 +297,238 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/Windows下安装Xgboost/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
 
     
-    
-      <div class="category-all-page">
-        <div class="category-all-title">
-            目前共计 14 个分类
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Windows系统下Xgboost安装【转】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T12:37:43+08:00">
+                2017-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
-        <div class="category-all">
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/UNIT/">UNIT</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/book/">book</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/book/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/book/机器学习/">机器学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/树莓派3/">树莓派3</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/树莓派3/好记性不如烂笔头/">好记性不如烂笔头</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/电脑/">电脑</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/百度语音/">百度语音</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程/C/">C</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/鸡汤/">鸡汤</a><span class="category-list-count">2</span></li></ul>
-        </div>
-      </div>
+      </header>
     
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>XGBoost是Gradient Boosting算法的一种高级实现，在Kaggle competitions上崭露头角。下面就对XGBoost在Windows上的安装作一个介绍，因为XGBoost在Windows平台上的安装不是那么简单直接。我在实验室的电脑上（Windows 7，64 bits）通过这些步骤安装成功，希望能对后来人有所帮助。</p>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7eIqfJRaX1uWf9oLGlL-3BT2qR2lswhzWj_psFGKy8xgKvJbs" alt=""></p>
+<h2 id="安装必要的软件"><a href="#安装必要的软件" class="headerlink" title="安装必要的软件"></a>安装必要的软件</h2><p>为了能在Windows上通过Python使用XGBoost，需要先安装以下三个软件：</p>
+<ul>
+<li>Python</li>
+<li>Git</li>
+<li>MINGW</li>
+</ul>
+<h2 id="Python和Git的安装"><a href="#Python和Git的安装" class="headerlink" title="Python和Git的安装"></a>Python和Git的安装</h2><p>对于Python，你可以到Python官网上下载你想安装的版本，安装很简单，这里就跳过。对于Git的安装有很多种选择，一种选择就是使用Git for Windows，Git for Windows的安装也比较简单，遵从指示就行，这里也跳过。</p>
+<h2 id="XGBoost的下载"><a href="#XGBoost的下载" class="headerlink" title="XGBoost的下载"></a>XGBoost的下载</h2><p>Git安装完成后，开始菜单中会出现一个叫Git Bash的程序，点开后就会出现一个类似Windows命令行的窗口，首先在这个Bash窗口，使用cd命令进入你想保存XGBoost代码的文件夹，比如下面的示例：</p>
+<pre><code>$ cd /e/algorithm
+</code></pre><p>然后输入下面的代码下载XGBoost文件包：</p>
+<pre><code>$ git clone --recursive https://github.com/dmlc/xgboost
+$ cd xgboost
+$ git submodule init
+$ git submodule update
+</code></pre><h2 id="编译XGBoost代码"><a href="#编译XGBoost代码" class="headerlink" title="编译XGBoost代码"></a>编译XGBoost代码</h2><h3 id="MinGW-W64的安装"><a href="#MinGW-W64的安装" class="headerlink" title="MinGW-W64的安装"></a>MinGW-W64的安装</h3><p>接下来就是编译我们刚刚下载的XGBoost的代码。这就需要用到MinGW-W64。它的安装包我是从这里下载的，下载完成后双击安装，出现下面的安装界面，点击Next：</p>
+<p><img src="http://o9zemtn5i.bkt.clouddn.com/mingw_1.JPG" alt=""></p>
+<p>然后<strong>在Architecture选项处选择x86_64</strong>(!!!不要忘记了)即可，其他选项保持默认，如下图：</p>
+<p><img src="http://o9zemtn5i.bkt.clouddn.com/mingw_2.JPG" alt=""></p>
+<p>然后点击下一步，就能安装完成。我使用的是默认安装路径C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1。那么make命令和运行库就在下面的文件夹中（也就是包含mingw32-make的文件夹）：C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin，接下来就是把上面的路径添加到系统的Path中，关于如何添加环境变量到系统的Path中，可以参考<a href="https://www.computerhope.com/issues/ch000549.htm" target="_blank" rel="external">这篇文章</a>。</p>
+<p>上面的步骤完成后，关闭Git Bash窗口后重新打开，为了确认添加环境变量已经添加成功，可以在Bash中键入下面的命令：</p>
+<pre><code>$ which mingw32-make
+</code></pre><p>如果添加成功的话，应该返回类似下面这样的信息：</p>
+<pre><code>C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\mingw32-make
+</code></pre><p>为了输入的方便，可以简化mingw32-make命令为make</p>
+<pre><code>$ alias make=&apos;mingw32-make&apos;
+</code></pre><h3 id="XGBoost的编译"><a href="#XGBoost的编译" class="headerlink" title="XGBoost的编译"></a>XGBoost的编译</h3><p>现在就可以开始编译XGBoost了，首先进入xgboost文件夹</p>
+<pre><code>$ cd /e/algorithm/xgboost
+</code></pre><p>通过<a href="https://xgboost.readthedocs.io/en/latest/build.html#building-on-windows" target="_blank" rel="external">这篇官方文档</a>给出的统一编译的方法在写这篇文章时还不能正常编译成功，所以我们采用下面的命令来分开编译，每次编译一个子模块。注意，我们要等每个命令编译完成后才能键入下一个命令。</p>
+<pre><code>$ cd dmlc-core
+$ make -j4
+$ cd ../rabit
+$ make lib/librabit_empty.a -j4
+$ cd ..
+$ cp make/mingw64.mk config.mk
+$ make -j4
+</code></pre><p>一旦最后一个命令完成后，整个编译过程就完成了。下面就开始安装Python模块。进入XGBoost文件夹下面的python-package子文件夹，然后键入：</p>
+<pre><code>$ cd /e/algorithm/xgboost/python-package&gt;python setup.py install
+</code></pre><p>进行到这儿，基本上就完成了，这时打开一个Jupyter notebook，直接导入xgboost包会出现错误，我们需要先运行下面的代码：</p>
+<pre><code>import os
+mingw_path = &apos;C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin&apos;
+os.environ[&apos;PATH&apos;] = mingw_path + &apos;;&apos; + os.environ[&apos;PATH&apos;]
+</code></pre><h3 id="成功示例"><a href="#成功示例" class="headerlink" title="成功示例"></a>成功示例</h3><p>然后我们就可以开始导入xgboost包去运行下面的示例：</p>
+<pre><code>import xgboost as xgb
+import numpy as np
+data = np.random.rand(5,10) # 5 entities, each contains 10 features
+label = np.random.randint(2, size=5) # binary target
+dtrain = xgb.DMatrix( data, label=label)
+dtest = dtrain
+param = {&apos;bst:max_depth&apos;:2, &apos;bst:eta&apos;:1, &apos;silent&apos;:1, &apos;objective&apos;:&apos;binary:logistic&apos; }
+param[&apos;nthread&apos;] = 4
+param[&apos;eval_metric&apos;] = &apos;auc&apos;
+evallist  = [(dtest,&apos;eval&apos;), (dtrain,&apos;train&apos;)]
+num_round = 10
+bst = xgb.train( param, dtrain, num_round, evallist )
+bst.dump_model(&apos;dump.raw.txt&apos;)
+</code></pre><p>至此，如果没有出现错误，就表示安装成功。</p>
+<h2 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h2><ol>
+<li>可能对git bash不熟悉的可以先看看git操作命令</li>
+<li>上面添加PATH步骤很重要，有些网上的博客并未提及，我第一次就是这里没有安装成功</li>
+<li>xgboost这个文件夹最好不要放在python的工作路径内，也不要随意删除</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://wang-shuo.github.io/2017/02/21/%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85XGBoost/" target="_blank" rel="external">https://wang-shuo.github.io/2017/02/21/%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85XGBoost/</a></li>
+<li><a href="https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en" target="_blank" rel="external">https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xgboost/" rel="tag"># xgboost</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/25/windows系统与树莓派间文件传输/" rel="next" title="Windows系统与树莓派间文件传输">
+                <i class="fa fa-chevron-left"></i> Windows系统与树莓派间文件传输
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -340,8 +561,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -432,6 +662,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装必要的软件"><span class="nav-number">1.</span> <span class="nav-text">安装必要的软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python和Git的安装"><span class="nav-number">2.</span> <span class="nav-text">Python和Git的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XGBoost的下载"><span class="nav-number">3.</span> <span class="nav-text">XGBoost的下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译XGBoost代码"><span class="nav-number">4.</span> <span class="nav-text">编译XGBoost代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MinGW-W64的安装"><span class="nav-number">4.1.</span> <span class="nav-text">MinGW-W64的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XGBoost的编译"><span class="nav-number">4.2.</span> <span class="nav-text">XGBoost的编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#成功示例"><span class="nav-number">4.3.</span> <span class="nav-text">成功示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附加"><span class="nav-number">5.</span> <span class="nav-text">附加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -559,10 +805,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
