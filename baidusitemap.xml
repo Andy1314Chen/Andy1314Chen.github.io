@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2017-09-02T02:14:24.431Z</lastmod>
+    <data>
+        <display>
+        <title>机器学习实战第二章学习笔记(k-NN)</title>
+        <pubTime>2017-08-31T16:00:00.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+        <tag>算法</tag>
+         
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
+          
+             
+              <breadCrumb title="算法" url="http://yoursite.com/categories/Python/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/08/30/Windows%E4%B8%8B%E5%AE%89%E8%A3%85Xgboost/</loc>
     <lastmod>2017-08-30T12:54:58.392Z</lastmod>
     <data>
@@ -76,9 +103,9 @@
         <title>Relief特征选择算法Python实现</title>
         <pubTime>2017-08-21T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>Relief</tag>
          
@@ -330,9 +357,9 @@
         <title>迷宫问题</title>
         <pubTime>2016-07-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -352,11 +379,11 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
+        <tag>C</tag>
+         
         <tag>算法</tag>
          
         <tag>Leetcode</tag>
-         
-        <tag>C</tag>
          
          
            
@@ -422,9 +449,9 @@
         <title>快速整数平方根算法</title>
         <pubTime>2017-06-27T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            

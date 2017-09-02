@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[机器学习实战第二章学习笔记(k-NN)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。 优点： 精度高、对异常值不敏感、无数据输入假定 缺点： 计算复杂度高、空间复杂度高 基本原理存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算法中k的出处，通常k是不大于20的整数。最后，选择k个最相似数据中出现次数最多的分类，作为新数据的分类。 k-近邻算法的一般流程 收集数据：可以使用任何方法 准备数据：距离计算所需要的数值，最好是结构化的数据格式 分析数据：可以使用任何方法 训练算法：此步骤不适用于k-近邻算法 测试算法：计算错误率 使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k-近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理。 kNN代码实现伪代码： 计算已知类别数据集中的点和当前点之间的距离； 按照距离递增次序排序； 选取与当前点距离最小的k个点； 确定前k个点所在类别的出行频率； 返回前k个点出行频率最高的类别作为当前点的预测分类。 Python代码： #python3.6 import numpy as np import operator from os import listdir def createDataSet(): group=np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]]) labels=[&apos;A&apos;,&apos;A&apos;,&apos;B&apos;,&apos;B&apos;] return group,labels # inX: input # dataSet: train data set # labels: labels of dataSet # k: k of kNN def classify0(inX,dataSet,labels,k): dataSetSize=dataSet.shape[0]#样本个数 diffMat=np.tile(inX,(dataSetSize,1))-dataSet #np.tile()函数用法 sqDiffMat=diffMat**2 sqDistances=sqDiffMat.sum(axis=1)#欧式距离 distances=sqDistances**0.5 sortedDistIndicies=distances.argsort()#按距离排序，返回从小到大的索引值 classCount={} for i in range(k): voteIlabel=labels[sortedDistIndicies[i]] classCount[voteIlabel]=classCount.get(voteIlabel,0)+1#计算前k个，各个类别的个数 sortedClassCount=sorted(classCount.items(), key=operator.itemgetter(1), reverse=True) #Python3中没有.iteritems(),更换为.items() #print(sortedClassCount) return sortedClassCount[0][0] #测试 import kNN group,labels=kNN.createDataSet() kNN.classify0([0,0],group,labels,3) #结果应该是B,可以改变输入[0,0] 示例1、改进约会网站的配对效果约会数据存放在datingTestSet2.txt中，每个样本占一行，共有1000行，即1000个样本。主要特征： 每年获得的飞行常客里程数 玩视频游戏所耗时间百分比 每周消费的冰淇淋公升数 数据下载 将文本记录到转换NumPy的解析程序#输入文件名，输出训练样本矩阵和类标签向量 def file2matrix(filename): #打开文件 fr=open(filename) #按行全部读取数据 arrayOLines=fr.readlines() #行数 numberOfLines=len(arrayOLines) #用于存放样本，主要有3个特征 returnMat=np.zeros((numberOfLines,3)) #分类标签 classLabelVector=[] index=0 for line in arrayOLines: line=line.strip() listFromLine=line.split(&apos;\t&apos;) returnMat[index,:]=listFromLine[0:3] classLabelVector.append(int(listFromLine[-1])) index+=1 return returnMat,classLabelVector #测试 reload(kNN)#重新加载kNN #python3中没有内置该函数，需要from imp import reload datingDataMat,datingLabels=kNN.file2matrix(&apos;datingTestSet2.txt&apos;) 归一化数值因为kNN是依赖样本间距离进行分类的，欧式距离的计算中，数字差值最大的特征对计算结果的影响要大一些。但是，一般来说，每个特征视为同等重要的。这样就需要对特征值进行处理，通常采用的方法是将数值归一化，如将取值范围处理为0-1或-1-1之间。 newValue=(oldValue-min)/(max-min) 公式可以将任意取值范围的特征值转化为0到1区间内的值。 归一化特征值Python3程序#输入样本集，输出归一化后的样本集、ranges，minVals def autoNorm(dataSet): #newValue=(oldValue-min)/(max-min) minVals=dataSet.min(0) maxVals=dataSet.max(0) ranges=maxVals-minVals normDataSet=np.zeros(np.shape(dataSet)) m=dataSet.shape[0] normDataSet=dataSet-np.tile(minVals,(m,1)) normDataSet=normDataSet/np.tile(ranges,(m,1)) return normDataSet,ranges,minVals #测试 reload(kNN) normMat,ranges,minVals=kNN.autoNorm(datingDataMat) kNN约会网站测试代码def datingClassTest(): hoRatio=0.10 datingDataMat,datingLabels=file2matrix(&apos;datingTestSet2.txt&apos;) normMat,ranges,minVals=autoNorm(datingDataMat) m=normMat.shape[0] numTestVecs=int(m*hoRatio) errorCount=0.0 for i in range(numTestVecs): classifierResult=classify0(normMat[i,:],normMat[numTestVecs:m,:], datingLabels[numTestVecs:m],5) print(&apos;the classifier came back with: %d, the real answer is: %d&apos; % (classifierResult,datingLabels[i])) if (classifierResult != datingLabels[i]): errorCount+=1.0 print(&apos;the total error rate is : %f&apos; % (errorCount/float(numTestVecs))) #测试 kNN.datingClassTest() 约会网站预测函数def classifyPerson(): resultList=[&apos;not at all&apos;,&apos;in small doses&apos;,&apos;in large doses&apos;] percentTats=float(input(&apos;percentage of time spent playing video games?&apos;)) ffMiles=float(input(&apos;frequent fliter miles earned per year?&apos;)) iceCream=float(input(&apos;liters of ice cream consumed per year?&apos;)) datingDataMat,datingLabels=file2matrix(&apos;datingTestSet2.txt&apos;) normMat,ranges,minVals=autoNorm(datingDataMat) inArr=np.array([ffMiles,percentTats,iceCream]) classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3) print(&apos;You will probably like this person: &apos;,\ resultList[classifierResult-1]) #python2中的raw_input()，python3中为input() 示例2、手写识别系统将32*32的二进制图像矩阵转化为1*1024向量def img2vector(filename): returnVect=np.zeros((1,1024)) fr=open(filename) for i in range(32): lineStr=fr.readline() for j in range(32): returnVect[0,32*i+j]=int(lineStr[j]) return returnVect #测试 testVector=kNN.img2vector(&apos;testDigits/0_13.txt&apos;) 手写数字识别系统的测试代码from os import listdir def handwritingClassTest(): hwLabels=[] trainingFileList=listdir(&apos;trainingDigits&apos;) m=len(trainingFileList) trainingMat=np.zeros((m,1024)) for i in range(m): fileNameStr=trainingFileList[i] fileStr=fileNameStr.split(&apos;.&apos;)[0] classNumStr=int(fileStr.split(&apos;_&apos;)[0])#文件名是标签 hwLabels.append(classNumStr) trainingMat[i,:]=img2vector(&apos;trainingDigits/%s&apos; % fileNameStr) testFileList=listdir(&apos;testDigits&apos;) errorCount=0.0 mTest=len(testFileList) for i in range(mTest): fileNameStr=testFileList[i] fileStr=fileNameStr.split(&apos;.&apos;)[0] classNumStr=int(fileStr.split(&apos;_&apos;)[0]) vectorUnderTest=img2vector(&apos;testDigits/%s&apos; % fileNameStr) classifierResult=classify0(vectorUnderTest,\ trainingMat,hwLabels,3) print(&apos;the classifier came back with: %d, the real anser is: %d&apos; \ % (classifierResult,classNumStr)) if classifierResult != classNumStr: errorCount+=1.0 print(&apos;the total number of errors is: %d&apos; % errorCount) #测试 kNN.handwritingClassTest() 小结k-近邻算法是分类数据最简单最有效的算法。k-近邻算法是基于实例的学习，使用算法时必须有接近实际数据的训练样本数据。k-近邻算法必须保存全部数据集，如果训练数据集很大，必须使用大量的存储空间。此外，由于必须对数据集中的每个数据计算距离值，实际使用时可能非常耗时。 k-近邻算法的另一个缺陷是它无法给出任何数据的基础结构信息，因此无法知晓平均实例样本和典型实例样本具有什么特征。]]></content>
+      <categories>
+        <category>Python</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>算法</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Windows系统下Xgboost安装【转】]]></title>
     <url>%2F2017%2F08%2F30%2FWindows%E4%B8%8B%E5%AE%89%E8%A3%85Xgboost%2F</url>
     <content type="text"><![CDATA[XGBoost是Gradient Boosting算法的一种高级实现，在Kaggle competitions上崭露头角。下面就对XGBoost在Windows上的安装作一个介绍，因为XGBoost在Windows平台上的安装不是那么简单直接。我在实验室的电脑上（Windows 7，64 bits）通过这些步骤安装成功，希望能对后来人有所帮助。 安装必要的软件为了能在Windows上通过Python使用XGBoost，需要先安装以下三个软件： Python Git MINGW Python和Git的安装对于Python，你可以到Python官网上下载你想安装的版本，安装很简单，这里就跳过。对于Git的安装有很多种选择，一种选择就是使用Git for Windows，Git for Windows的安装也比较简单，遵从指示就行，这里也跳过。 XGBoost的下载Git安装完成后，开始菜单中会出现一个叫Git Bash的程序，点开后就会出现一个类似Windows命令行的窗口，首先在这个Bash窗口，使用cd命令进入你想保存XGBoost代码的文件夹，比如下面的示例： $ cd /e/algorithm 然后输入下面的代码下载XGBoost文件包： $ git clone --recursive https://github.com/dmlc/xgboost $ cd xgboost $ git submodule init $ git submodule update 编译XGBoost代码MinGW-W64的安装接下来就是编译我们刚刚下载的XGBoost的代码。这就需要用到MinGW-W64。它的安装包我是从这里下载的，下载完成后双击安装，出现下面的安装界面，点击Next： 然后在Architecture选项处选择x86_64(!!!不要忘记了)即可，其他选项保持默认，如下图： 然后点击下一步，就能安装完成。我使用的是默认安装路径C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1。那么make命令和运行库就在下面的文件夹中（也就是包含mingw32-make的文件夹）：C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin，接下来就是把上面的路径添加到系统的Path中，关于如何添加环境变量到系统的Path中，可以参考这篇文章。 上面的步骤完成后，关闭Git Bash窗口后重新打开，为了确认添加环境变量已经添加成功，可以在Bash中键入下面的命令： $ which mingw32-make 如果添加成功的话，应该返回类似下面这样的信息： C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\mingw32-make 为了输入的方便，可以简化mingw32-make命令为make $ alias make=&apos;mingw32-make&apos; XGBoost的编译现在就可以开始编译XGBoost了，首先进入xgboost文件夹 $ cd /e/algorithm/xgboost 通过这篇官方文档给出的统一编译的方法在写这篇文章时还不能正常编译成功，所以我们采用下面的命令来分开编译，每次编译一个子模块。注意，我们要等每个命令编译完成后才能键入下一个命令。 $ cd dmlc-core $ make -j4 $ cd ../rabit $ make lib/librabit_empty.a -j4 $ cd .. $ cp make/mingw64.mk config.mk $ make -j4 一旦最后一个命令完成后，整个编译过程就完成了。下面就开始安装Python模块。进入XGBoost文件夹下面的python-package子文件夹，然后键入： $ cd /e/algorithm/xgboost/python-package&gt;python setup.py install 进行到这儿，基本上就完成了，这时打开一个Jupyter notebook，直接导入xgboost包会出现错误，我们需要先运行下面的代码： import os mingw_path = &apos;C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin&apos; os.environ[&apos;PATH&apos;] = mingw_path + &apos;;&apos; + os.environ[&apos;PATH&apos;] 成功示例然后我们就可以开始导入xgboost包去运行下面的示例： import xgboost as xgb import numpy as np data = np.random.rand(5,10) # 5 entities, each contains 10 features label = np.random.randint(2, size=5) # binary target dtrain = xgb.DMatrix( data, label=label) dtest = dtrain param = {&apos;bst:max_depth&apos;:2, &apos;bst:eta&apos;:1, &apos;silent&apos;:1, &apos;objective&apos;:&apos;binary:logistic&apos; } param[&apos;nthread&apos;] = 4 param[&apos;eval_metric&apos;] = &apos;auc&apos; evallist = [(dtest,&apos;eval&apos;), (dtrain,&apos;train&apos;)] num_round = 10 bst = xgb.train( param, dtrain, num_round, evallist ) bst.dump_model(&apos;dump.raw.txt&apos;) 至此，如果没有出现错误，就表示安装成功。 附加 可能对git bash不熟悉的可以先看看git操作命令 上面添加PATH步骤很重要，有些网上的博客并未提及，我第一次就是这里没有安装成功 xgboost这个文件夹最好不要放在python的工作路径内，也不要随意删除 参考 https://wang-shuo.github.io/2017/02/21/%E5%9C%A8Windows%E4%B8%8B%E5%AE%89%E8%A3%85XGBoost/ https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en]]></content>
@@ -32,8 +46,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>算法</tag>
+        <tag>Python</tag>
         <tag>Relief</tag>
       </tags>
   </entry>
@@ -192,9 +206,9 @@
         <category>C</category>
       </categories>
       <tags>
+        <tag>C</tag>
         <tag>算法</tag>
         <tag>Leetcode</tag>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -216,8 +230,8 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>C</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -262,8 +276,8 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>C</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>
