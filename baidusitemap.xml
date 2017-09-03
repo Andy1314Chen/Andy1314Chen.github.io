@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2017-09-03T09:48:26.446Z</lastmod>
+    <data>
+        <display>
+        <title>机器学习实战第三章学习笔记(决策树-Decision Tree)</title>
+        <pubTime>2017-09-02T16:00:00.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+        <tag>算法</tag>
+         
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
+          
+             
+              <breadCrumb title="算法" url="http://yoursite.com/categories/Python/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/09/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2017-09-02T02:14:24.431Z</lastmod>
     <data>
@@ -173,9 +200,9 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
         <tag>语音识别</tag>
          
@@ -199,9 +226,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
          
            
