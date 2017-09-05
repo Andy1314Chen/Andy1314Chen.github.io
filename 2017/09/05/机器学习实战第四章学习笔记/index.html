@@ -94,20 +94,22 @@
 
 
 
-<meta name="description" content="k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。  优点： 精度高、对异常值不敏感、无数据输入假定 缺点： 计算复杂度高、空间复杂度高  基本原理存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算">
+<meta name="description" content="之前两章，k-NN近邻算法和决策树算法构建的分类器都是对测试数据给出一种具体的类别，即‘非黑即白’。而朴素贝叶斯分类器会给出每个类别的概率，将概率最大的类别作为最优类别猜测结果。  基于贝叶斯决策理论的分类方法 优点：在数据较少的情况下仍然有效，可以处理多类别问题。 缺点：对于输入数据的准备方式较为敏感 适用数据类型：离散型  贝叶斯决策理论举个简单的小例子： 假设有一个数据集，每条数据样本都有两">
 <meta name="keywords" content="机器学习,算法,Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习实战第二章学习笔记(k-NN)">
-<meta property="og:url" content="http://yoursite.com/2017/09/01/机器学习实战第二章笔记/index.html">
+<meta property="og:title" content="机器学习实战第四章学习笔记(朴素贝叶斯分类器)">
+<meta property="og:url" content="http://yoursite.com/2017/09/05/机器学习实战第四章学习笔记/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。  优点： 精度高、对异常值不敏感、无数据输入假定 缺点： 计算复杂度高、空间复杂度高  基本原理存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算">
+<meta property="og:description" content="之前两章，k-NN近邻算法和决策树算法构建的分类器都是对测试数据给出一种具体的类别，即‘非黑即白’。而朴素贝叶斯分类器会给出每个类别的概率，将概率最大的类别作为最优类别猜测结果。  基于贝叶斯决策理论的分类方法 优点：在数据较少的情况下仍然有效，可以处理多类别问题。 缺点：对于输入数据的准备方式较为敏感 适用数据类型：离散型  贝叶斯决策理论举个简单的小例子： 假设有一个数据集，每条数据样本都有两">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHdNJrDq4rkAaAucglnuDjOujx_RZeG0qzAVUQwXb7fWNy0EH_">
-<meta property="og:updated_time" content="2017-09-02T02:14:24.431Z">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/article/740_740/201703/58b978fa8bdb6.png?imageMogr2/format/jpg/quality/90">
+<meta property="og:image" content="http://img.blog.csdn.net/20170418192042562">
+<meta property="og:image" content="http://img.blog.csdn.net/20170418214530308">
+<meta property="og:updated_time" content="2017-09-05T08:32:04.605Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习实战第二章学习笔记(k-NN)">
-<meta name="twitter:description" content="k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。  优点： 精度高、对异常值不敏感、无数据输入假定 缺点： 计算复杂度高、空间复杂度高  基本原理存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算">
-<meta name="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHdNJrDq4rkAaAucglnuDjOujx_RZeG0qzAVUQwXb7fWNy0EH_">
+<meta name="twitter:title" content="机器学习实战第四章学习笔记(朴素贝叶斯分类器)">
+<meta name="twitter:description" content="之前两章，k-NN近邻算法和决策树算法构建的分类器都是对测试数据给出一种具体的类别，即‘非黑即白’。而朴素贝叶斯分类器会给出每个类别的概率，将概率最大的类别作为最优类别猜测结果。  基于贝叶斯决策理论的分类方法 优点：在数据较少的情况下仍然有效，可以处理多类别问题。 缺点：对于输入数据的准备方式较为敏感 适用数据类型：离散型  贝叶斯决策理论举个简单的小例子： 假设有一个数据集，每条数据样本都有两">
+<meta name="twitter:image" content="https://static.leiphone.com/uploads/new/article/740_740/201703/58b978fa8bdb6.png?imageMogr2/format/jpg/quality/90">
 
 
 
@@ -135,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/01/机器学习实战第二章笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/05/机器学习实战第四章学习笔记/"/>
 
 
 
 
 
-  <title>机器学习实战第二章学习笔记(k-NN) | Andy's blog</title>
+  <title>机器学习实战第四章学习笔记(朴素贝叶斯分类器) | Andy's blog</title>
   
 
 
@@ -304,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/机器学习实战第二章笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/机器学习实战第四章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -321,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">机器学习实战第二章学习笔记(k-NN)</h1>
+          <h1 class="post-title" itemprop="name headline">机器学习实战第四章学习笔记(朴素贝叶斯分类器)</h1>
         
 
         <div class="post-meta">
@@ -333,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
+                2017-09-05
               </time>
             
 
@@ -405,192 +407,279 @@
       
 
       
-        <p>k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。</p>
-<ul>
-<li>优点： 精度高、对异常值不敏感、无数据输入假定</li>
-<li>缺点： 计算复杂度高、空间复杂度高</li>
+        <p>之前两章，k-NN近邻算法和决策树算法构建的分类器都是对测试数据给出一种具体的类别，即‘非黑即白’。而朴素贝叶斯分类器会给出每个类别的概率，将概率最大的类别作为最优类别猜测结果。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201703/58b978fa8bdb6.png?imageMogr2/format/jpg/quality/90" alt="贝叶斯概率公式"></p>
+<h2 id="基于贝叶斯决策理论的分类方法"><a href="#基于贝叶斯决策理论的分类方法" class="headerlink" title="基于贝叶斯决策理论的分类方法"></a>基于贝叶斯决策理论的分类方法</h2><ul>
+<li>优点：在数据较少的情况下仍然有效，可以处理多类别问题。</li>
+<li>缺点：对于输入数据的准备方式较为敏感</li>
+<li>适用数据类型：离散型</li>
 </ul>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算法中k的出处，通常k是不大于20的整数。最后，选择k个最相似数据中出现次数最多的分类，作为新数据的分类。</p>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHdNJrDq4rkAaAucglnuDjOujx_RZeG0qzAVUQwXb7fWNy0EH_" alt=""></p>
-<h3 id="k-近邻算法的一般流程"><a href="#k-近邻算法的一般流程" class="headerlink" title="k-近邻算法的一般流程"></a>k-近邻算法的一般流程</h3><ol>
-<li>收集数据：可以使用任何方法</li>
-<li>准备数据：距离计算所需要的数值，最好是结构化的数据格式</li>
-<li>分析数据：可以使用任何方法</li>
-<li>训练算法：此步骤不适用于k-近邻算法</li>
-<li>测试算法：计算错误率</li>
-<li>使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k-近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理。</li>
-</ol>
-<h3 id="kNN代码实现"><a href="#kNN代码实现" class="headerlink" title="kNN代码实现"></a>kNN代码实现</h3><p><strong>伪代码：</strong></p>
+<h4 id="贝叶斯决策理论"><a href="#贝叶斯决策理论" class="headerlink" title="贝叶斯决策理论"></a>贝叶斯决策理论</h4><p>举个简单的小例子：</p>
+<p>假设有一个数据集，每条数据样本都有两个特征(x,y)和一个类别标签(0,1).目标是把一条新的数据贴上准确的标签。</p>
+<p>用p1(x,y)表示数据(x,y)属于类别1的概率，用p2(x,y)表示数据(x,y)属于类别2的概率。那么，用条件概率公式来表示这两个概率，就分别是P(c1|x,y)和P(c2|x,y),具体意义就是：由x和y这两个属性值确定的数据，其属于类别1、类别2的概率。</p>
+<p>由<a href="https://zh.wikipedia.org/wiki/%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%A6%82%E7%8E%87" target="_blank" rel="external">贝叶斯定理</a>，可得到：</p>
+<p><img src="http://img.blog.csdn.net/20170418192042562" alt=""></p>
+<p>p(x,y|c<em>i</em>):基于一个样本数据集，在c<em>i</em>这个类中，数据(x,y)出现的概率。</p>
+<p>p(c<em>i</em>):基于这个样本数据集，属于c<em>i</em>这个类别的数据，占所有数据的数量。</p>
+<p>p(x,y):在所有样本数据中，数据(x,y)出现的概率。</p>
+<p><em>用具体的数字说明一下：</em></p>
+<p>该样本数据集中共有20个样本，标签为c<em>1</em>的为15个，标签c<em>2</em>的为5个，(X0,Y0)是该样本集中独特的一个，标签为c<em>1</em>。</p>
+<p>则p(X0,Y0|c<em>1</em>)=1/15,</p>
+<p>p(c<em>1</em>)=2/3,</p>
+<p>p(X0,Y0)=1/20</p>
+<p>对于数据集中任意一个样本数据(x,y)来说，用p1(x,y)表示数据点(x,y)属于类别1的概率，用p2(x,y)表示数据点(x,y)属于类别2的概率，那么对于一个新数据点(x,y)，可以用下面的规则判断它的类别：</p>
+<ul>
+<li>如果p1(x,y)=p(c<em>1</em>|x,y) &gt; p2(x,y)=p(c<em>2</em>|x,y),那么类别为1.</li>
+<li>如果p1(x,y)=p(c<em>1</em>|x,y) &lt; p2(x,y)=p(c<em>2</em>|x,y),那么类别为2.</li>
+</ul>
+<p>简单的讲，我们会选择高概率对应的类别，这也是贝叶斯决策理论的核心思想。</p>
+<h2 id="使用朴素贝叶斯进行文档分类"><a href="#使用朴素贝叶斯进行文档分类" class="headerlink" title="使用朴素贝叶斯进行文档分类"></a>使用朴素贝叶斯进行文档分类</h2><p>朴素贝叶斯的一般过程：</p>
 <ol>
-<li>计算已知类别数据集中的点和当前点之间的距离；</li>
-<li>按照距离递增次序排序；</li>
-<li>选取与当前点距离最小的k个点；</li>
-<li>确定前k个点所在类别的出行频率；</li>
-<li>返回前k个点出行频率最高的类别作为当前点的预测分类。</li>
+<li>收集数据：可以使用任何方法，这里使用RSS源</li>
+<li>准备数据：需要数值型或者布尔型数据。</li>
+<li>分析数据：有大量特征时，绘制特征作用不大，此时使用直方图效果更好。</li>
+<li>训练算法：计算不同的独立特征的条件概率。</li>
+<li>测试算法：计算错误率。</li>
+<li>使用算法：一个常见的朴素贝叶斯应用是文档分类。</li>
 </ol>
-<p><strong>Python代码：</strong></p>
-<pre><code>#python3.6
+<p>由统计学知识：</p>
+<p><strong>如果每个特征需要N个样本，那么对于10个特征将需要N^10个样本，对于包含1000个特征的词汇表将需要N^1000个样本。</strong></p>
+<p>如果特征之间相互独立，那么样本数就可以从N^1000减少到1000<em>N. </em>那么什么是独立呢？？*</p>
+<p>所谓独立指的是统计意义上的独立，即一个特征或者单词出现的可能性与它和其他单词相邻没有关系。</p>
+<p>而这正是朴素贝叶斯分类器的一个假设，即<strong>特征之间相互统计独立</strong>。朴素贝叶斯分类器的另一个假设是，<strong>每个特征同等重要</strong>。</p>
+<p>而这两个<strong>天真</strong>的假设正是朴素贝叶斯分类器中朴素(naive)一词的来源。这个假设虽然看起来很不靠谱，但在实际运用的时候，往往能达到比较好的效果。</p>
+<p>朴素贝叶斯分类器通常有两种实现方式：一种基于贝努力模型实现，一种基于多项式模型实现。区别在于，是否考虑词在文档中出现的次数。</p>
+<h2 id="使用Python进行文本分类"><a href="#使用Python进行文本分类" class="headerlink" title="使用Python进行文本分类"></a>使用Python进行文本分类</h2><p>首先给出将文本转换为数字向量的过程，然后介绍如何基于这些向量来计算条件概率，并在此基础上构建分类器，最后还要介绍一些利用Python实现朴素贝叶斯过程中需要考虑的问题。</p>
+<h4 id="从文本中构建词向量"><a href="#从文本中构建词向量" class="headerlink" title="从文本中构建词向量"></a>从文本中构建词向量</h4><pre><code>#词表到向量的转换函数
+def loadDataSet():        
+    postingList=[[&apos;my&apos;,&apos;dog&apos;,&apos;has&apos;,&apos;flea&apos;,&apos;problems&apos;,&apos;help&apos;,&apos;please&apos;],
+                 [&apos;maybe&apos;,&apos;not&apos;,&apos;take&apos;,&apos;him&apos;,&apos;to&apos;,&apos;dog&apos;,&apos;park&apos;,&apos;stupid&apos;],
+                 [&apos;my&apos;,&apos;dalmation&apos;,&apos;is&apos;,&apos;so&apos;,&apos;cute&apos;,&apos;I&apos;,&apos;love&apos;,&apos;him&apos;],
+                 [&apos;stop&apos;,&apos;posting&apos;,&apos;stupid&apos;,&apos;worthless&apos;,&apos;garbage&apos;],
+                 [&apos;mr&apos;,&apos;licks&apos;,&apos;ate&apos;,&apos;my&apos;,&apos;steak&apos;,&apos;how&apos;,&apos;to&apos;,&apos;stop&apos;,&apos;him&apos;],
+                 [&apos;quit&apos;,&apos;buying&apos;,&apos;worthless&apos;,&apos;dog&apos;,&apos;food&apos;,&apos;stupid&apos;]]
 
-import numpy as np
-import operator
-from os import listdir
+    classVec=[0,1,0,1,0,1]
+    #1，代表侮辱性文字，0，代表正常言论
+    return postingList,classVec
+#创建词汇表
+def createVocabList(dataSet):
+    vocabSet=set([])
+    for document in dataSet:
+        vocabSet=vocabSet|set(document)
+    return list(vocabSet)
+#将文本转换为向量
+#依据词汇表中单词的有无，输出向量相应位置置1或置0
+def setOfWords2Vec(vocabList,inputSet):
+    returnVec=[0]*len(vocabList)
+    for word in inputSet:
+        if word in vocabList:
+            returnVec[vocabList.index(word)]=1
+        else:
+            print(&quot;the word: %s is not in my Vocabulary!&quot; % word)
+    return returnVec
+</code></pre><p>第一个函数创建的是数据样本，第二个函数合并所有样本文档，生成一个词汇表，这个不重复词表可看做是一个一维向量。第三个函数，根据样本文档，参考词汇表向量，若样本文档中含有某些词汇，则输出向量相应位置会置1.</p>
+<h4 id="训练算法：从词向量计算概率"><a href="#训练算法：从词向量计算概率" class="headerlink" title="训练算法：从词向量计算概率"></a>训练算法：从词向量计算概率</h4><p><img src="http://img.blog.csdn.net/20170418214530308" alt=""></p>
+<p>将之前的x,y替换为w,w在这里是一个词向量。</p>
+<p>这个公式，等号右边的p(c<em>i</em>)是最好计算的，用类别<em>i</em>中文档树除以总的文档数，就可以得到类别c<em>i</em>的概率。接着计算p(w|c<em>i</em>),这里使用朴素贝叶斯假设，如果将w展开为一个个独立特征，则p(w|c<em>i</em>)等于p(w0,w1,w2,…,wN|c<em>i</em>),即等于p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)…p(wN|c<em>i</em>).</p>
+<pre><code>#基于条件独立性假设
+#朴素贝叶斯分类器训练函数
+def trainNB0(trainMatrix,trainCategory):
+    numTrainDocs=len(trainMatrix)#训练样本数量
+    numWords=len(trainMatrix[0])#每个训练样本的特征数
+    pAbusive=sum(trainCategory)/float(numTrainDocs)#侮辱性概率
+    p0Num=np.ones(numWords);p1Num=np.ones(numWords)
+    p0Denom=2.0;p1Denom=2.0
+    for i in range(numTrainDocs):
+        if trainCategory[i]==1:
+            p1Num+=trainMatrix[i]#标签为abusive的文档中，词汇表的单词出现过多少次
+            p1Denom+=sum(trainMatrix[i])#到目前为止，标签为abusive的文档中出现过单词的总量
+        else:
+            p0Num+=trainMatrix[i]#到目前为止，标签为normal的文档中，词汇表的单词出现过多少次
+            p0Denom+=sum(trainMatrix[i])#到目前为止，标签为normal的文档中出现过单词的总量
+    p1Vect=np.log(p1Num/p1Denom)#标签为abusive的文档中，词汇的各个单词的出现概率
+    #计算的是p(w*j*|c*i*)
+    p0Vect=np.log(p0Num/p0Denom)#取自然对数，防止下溢
+    return p0Vect,p1Vect,pAbusive
+</code></pre><p>函数的伪代码如下：</p>
+<pre><code>计算每个类别中的文档数目
+对每篇训练文档：
+    对每个类别：
+        如果词条出现文档中--&gt;增加该词条的计数值
+        增加所有词条的计数值
+    对每个类别：
+        对每个词条：
+            将该词条的数目除以总词条数目得到条件概率
+    返回每个类别的条件概率
+</code></pre><p>函数返回结果是：</p>
+<pre><code>#类别0的各个词条条件概率
+p0Vect=[p(w0|c*0*),p(w1|c*0*),p(w2|c*0*),...,p(wN|c*0*)]
+#类别1的各个词条条件概率
+p1Vect=[p(w0|c*1*),p(w1|c*1*),p(w2|c*1*),...,p(wN|c*1*)]
+#类别为Abusive的概率
+pAbusive
+</code></pre><h4 id="测试算法：根据现实情况修改分类器"><a href="#测试算法：根据现实情况修改分类器" class="headerlink" title="测试算法：根据现实情况修改分类器"></a>测试算法：根据现实情况修改分类器</h4><p>利用贝叶斯分类器对文档进行分类时，要计算多个概率的乘积以获得文档属于某个类别，即计算p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)。若其中一个概率值为0，那么最后的乘积也为0.为降低这种影响，可以将所有词的出现次数初始化为1，并将分母初始化为2.（因为要计算的是概率，若样本词条数较大的话，这样处理对结果的影响并不是很大）。</p>
+<p>另一个问题，下溢出。当计算p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)…p(wN|c<em>i</em>)时，可能大部分因子都是非常小的，所以程序会产生下溢出或者得不到正确答案（结果非常接近0，计算机精度有限，而直接将其近似为0）。一种解决办法是对乘积取自然对数，<em>ln(a\</em>b)=ln(a)+ln(b)*. 因为最终判决时，是比较两个类别概率的大小，对他们取自然对数并不影响他们的相对大小关系。</p>
+<pre><code>#朴素贝叶斯分类器
+def classifyNB(vec2Classify,p0Vec,p1Vec,pClass1):
+    p1=sum(vec2Classify*p1Vec)+np.log(pClass1)
+    #因为取自然对数，所以原来的乘积运算转换为加法运算
+    p0=sum(vec2Classify*p0Vec)+np.log(1.0-pClass1)
+    if p1&gt;p0:
+        return 1
+    else:
+        return 0
 
-def createDataSet():
-    group=np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
-    labels=[&apos;A&apos;,&apos;A&apos;,&apos;B&apos;,&apos;B&apos;]
-    return group,labels
+def testingNB():
+    listOPosts,listClasses=loadDataSet()
+    myVocabList=createVocabList(listOPosts)#词汇表
 
-    # inX: input
-    # dataSet: train data set
-    # labels: labels of dataSet
-    # k:  k of kNN
+    trainMat=[]
+    for postinDoc in listOPosts:#获取训练样本集
+        trainMat.append(setOfWords2Vec(myVocabList,postinDoc))
+    p0V,p1V,pAb=trainNB0(np.array(trainMat),np.array(listClasses))#训练
 
-def classify0(inX,dataSet,labels,k):
-    dataSetSize=dataSet.shape[0]#样本个数
-    diffMat=np.tile(inX,(dataSetSize,1))-dataSet
-    #np.tile()函数用法
-    sqDiffMat=diffMat**2
-    sqDistances=sqDiffMat.sum(axis=1)#欧式距离
-    distances=sqDistances**0.5
-    sortedDistIndicies=distances.argsort()#按距离排序，返回从小到大的索引值
+    testEntry=[&apos;love&apos;,&apos;my&apos;,&apos;dalmation&apos;]
+    thisDoc=np.array(setOfWords2Vec(myVocabList,testEntry))
+    print(testEntry,&apos;classified as: &apos;,classifyNB(thisDoc,p0V,p1V,pAb))
 
-    classCount={}
-    for i in range(k):
-        voteIlabel=labels[sortedDistIndicies[i]]
-        classCount[voteIlabel]=classCount.get(voteIlabel,0)+1#计算前k个，各个类别的个数
-    sortedClassCount=sorted(classCount.items(),
-                            key=operator.itemgetter(1),
-                            reverse=True)
-    #Python3中没有.iteritems(),更换为.items()
-    #print(sortedClassCount)
-    return sortedClassCount[0][0]
+    testEntry=[&apos;stupid&apos;,&apos;garbage&apos;]
+    thisDoc=np.array(setOfWords2Vec(myVocabList,testEntry))
+    print(testEntry,&apos;classified as: &apos;,classifyNB(thisDoc,p0V,p1V,pAb))
+</code></pre><p>做个简单的小结：</p>
+<p>首先将文档合并提取出一个不重复的词汇表，对每个文档依据这个不重复词汇表转换为一维向量，向量的长度就是词汇表的个数。接下来，根据文档的类别标签，计算p(w<em>j</em>|c<em>i</em>),计算过程是：在c<em>i</em>类别中，词条w<em>j</em>出现的次数除以c<em>i</em>中总词条数目。得到p(w<em>j</em>|c<em>i</em>)后，基于朴素贝叶斯分类器的假设，可以计算p(<strong>w</strong>|c<em>i</em>).而p(c<em>i</em>)可以很容易求出来。然后比较p(<strong>w</strong>|c<em>0</em>)p(c<em>0</em>)和p(<strong>w</strong>|c<em>1</em>)p(c<em>1</em>)的大小，就可以判定属于哪个类别。</p>
+<h4 id="文档词袋模型"><a href="#文档词袋模型" class="headerlink" title="文档词袋模型"></a>文档词袋模型</h4><p>目前为止，我们是将每个词的出现与否作为一个特征的，这可以被描述为词集模型（set-of-words model).如果一个词在文档中出现不止一次，这可能意味着包含该词是否出现在文档中所不能表达的某种信息，这种方法被称为词袋模型(bag-of-words model).显然，词条出现的次数应该也要被考虑在内，因此，将函数setOfWords2Vec()修改为bagOfWords2Vec().</p>
+<pre><code>#词集模型--》词袋模型
+#朴素贝叶斯词袋模型
+def bagOfWords2VecMN(vocabList,inputSet):
+    returnVec=[0]*len(vocabList)
+    for word in inputSet:
+        if word in vocabList:
+            returnVec[vocabList.index(word)]+=1
+    return returnVec
+</code></pre><h2 id="示例：使用朴素贝叶斯过滤垃圾邮件"><a href="#示例：使用朴素贝叶斯过滤垃圾邮件" class="headerlink" title="示例：使用朴素贝叶斯过滤垃圾邮件"></a>示例：使用朴素贝叶斯过滤垃圾邮件</h2><ol>
+<li>收集数据：提供文本文件</li>
+<li>准备数据：将文本文件解析成词条向量</li>
+<li>分析数据：检查词条确保解析的正确性</li>
+<li>训练算法：使用我们之前建立的trainNB0()函数</li>
+<li>测试算法：使用classifyNB(),并且构建一个新的测试函数来计算文档集的错误率</li>
+<li>使用算法：构建一个完整的程序对一组文档进行分类，将错分的文档输出到屏幕上。</li>
+</ol>
+<h4 id="测试算法：使用朴素贝叶斯进行交叉验证"><a href="#测试算法：使用朴素贝叶斯进行交叉验证" class="headerlink" title="测试算法：使用朴素贝叶斯进行交叉验证"></a>测试算法：使用朴素贝叶斯进行交叉验证</h4><pre><code>#文件解析及完整的垃圾邮件测试函数
+def textParse(bigString):
+    import re
+    listOfTokens=re.split(r&apos;\W*&apos;,bigString)
+    return [tok.lower() for tok in listOfTokens if len(tok)&gt;2]
+#垃圾邮件分类测试
+def spamTest():
+    docList=[];classList=[];fullText=[]
+    for i in range(1,26):
+        wordList=textParse(open(&apos;email/spam/%d.txt&apos; % i).read())
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(1)
+        wordList=textParse(open(&apos;email/ham/%d.txt&apos; % i).read())
+        #第23个文件有些问题，需要修改
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(0)
+    vocabList=createVocabList(docList)#构建词汇表
+    trainingSet=list(range(50));testSet=[]
+    for i in range(10):#随机挑选10个邮件作为测试集
+        randIndex=int(np.random.uniform(0,len(trainingSet)))
+        testSet.append(trainingSet[randIndex])
+        del(trainingSet[randIndex])
+    trainMat=[];trainClasses=[]
+    for docIndex in trainingSet:
+        trainMat.append(setOfWords2Vec(vocabList,docList[docIndex]))
+        trainClasses.append(classList[docIndex])
+    p0V,p1V,pSpam=trainNB0(np.array(trainMat),np.array(trainClasses))#进行训练
+    errorCount=0
+    for docIndex in testSet:
+        wordVector=setOfWords2Vec(vocabList,docList[docIndex])
+        if classifyNB(np.array(wordVector),p0V,p1V,pSpam)!= classList[docIndex]:
+            errorCount+=1
+    print(&apos;the error rate is: &apos;,float(errorCount)/len(testSet))
+</code></pre><h2 id="示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向"><a href="#示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向" class="headerlink" title="示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向"></a>示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向</h2><ol>
+<li>收集数据：从RSS源收集内容，这里需要对RSS源构建一个借口</li>
+<li>准备数据：将文本文件解析成词条向量</li>
+<li>分析数据：检查词条确保解析的正确性</li>
+<li>训练算法：使用我们之前建立的trainNB0()函数</li>
+<li>测试算法：观察错误率，确保分类器可用。可以修改切分程序，以降低错误率，提高分类结果。</li>
+<li>使用算法：构建一个完整的程序，封装所有内容。给定两个RSS源，该程序会显示最常用的公共词。</li>
+</ol>
+<h4 id="收集数据：导入RSS源"><a href="#收集数据：导入RSS源" class="headerlink" title="收集数据：导入RSS源"></a>收集数据：导入RSS源</h4><p>安装feedparser包</p>
+<pre><code>pip install feedparser
 
-    #测试
-import kNN
-group,labels=kNN.createDataSet()
-kNN.classify0([0,0],group,labels,3)
-#结果应该是B,可以改变输入[0,0]
-</code></pre><h3 id="示例1、改进约会网站的配对效果"><a href="#示例1、改进约会网站的配对效果" class="headerlink" title="示例1、改进约会网站的配对效果"></a>示例1、改进约会网站的配对效果</h3><p>约会数据存放在datingTestSet2.txt中，每个样本占一行，共有1000行，即1000个样本。主要特征：</p>
-<ul>
-<li>每年获得的飞行常客里程数</li>
-<li>玩视频游戏所耗时间百分比</li>
-<li>每周消费的冰淇淋公升数</li>
-</ul>
-<p><a href="https://github.com/pbharrin/machinelearninginaction" target="_blank" rel="external">数据下载</a></p>
-<h4 id="将文本记录到转换NumPy的解析程序"><a href="#将文本记录到转换NumPy的解析程序" class="headerlink" title="将文本记录到转换NumPy的解析程序"></a>将文本记录到转换NumPy的解析程序</h4><pre><code>#输入文件名，输出训练样本矩阵和类标签向量
-def file2matrix(filename):
-    #打开文件
-    fr=open(filename)
-    #按行全部读取数据
-    arrayOLines=fr.readlines()
-    #行数
-    numberOfLines=len(arrayOLines)
-    #用于存放样本，主要有3个特征
-    returnMat=np.zeros((numberOfLines,3))
-    #分类标签
-    classLabelVector=[]
-    index=0
-    for line in arrayOLines:
-        line=line.strip()
-        listFromLine=line.split(&apos;\t&apos;)
-        returnMat[index,:]=listFromLine[0:3]
-        classLabelVector.append(int(listFromLine[-1]))
-        index+=1
-    return returnMat,classLabelVector
+#RSS源分类器及高频词去除函数
+def calcMostFreq(vocabList,fullText):
+    import operator
+    freqDict={}
+    for token in vocabList:
+        freqDict[token]=fullText.count(token)
+    sortedFreq=sorted(freqDict.items(),key=operator.itemgetter(1),\
+                      reverse=True)
+    return sortedFreq[:30]
+#返回前30个高频词条
 
-#测试
-reload(kNN)#重新加载kNN
-#python3中没有内置该函数，需要from imp import reload
-datingDataMat,datingLabels=kNN.file2matrix(&apos;datingTestSet2.txt&apos;)
-</code></pre><h4 id="归一化数值"><a href="#归一化数值" class="headerlink" title="归一化数值"></a>归一化数值</h4><p>因为kNN是依赖样本间距离进行分类的，欧式距离的计算中，数字差值最大的特征对计算结果的影响要大一些。但是，一般来说，每个特征视为同等重要的。这样就需要对特征值进行处理，通常采用的方法是将数值归一化，如将取值范围处理为0-1或-1-1之间。</p>
-<blockquote>
-<p>newValue=(oldValue-min)/(max-min)</p>
-</blockquote>
-<p>公式可以将任意取值范围的特征值转化为0到1区间内的值。</p>
-<h4 id="归一化特征值Python3程序"><a href="#归一化特征值Python3程序" class="headerlink" title="归一化特征值Python3程序"></a>归一化特征值Python3程序</h4><pre><code>#输入样本集，输出归一化后的样本集、ranges，minVals
-def autoNorm(dataSet):
-#newValue=(oldValue-min)/(max-min)
-    minVals=dataSet.min(0)
-    maxVals=dataSet.max(0)
-    ranges=maxVals-minVals
-    normDataSet=np.zeros(np.shape(dataSet))
-    m=dataSet.shape[0]
-    normDataSet=dataSet-np.tile(minVals,(m,1))
-    normDataSet=normDataSet/np.tile(ranges,(m,1))
-    return normDataSet,ranges,minVals
-#测试
-reload(kNN)
-normMat,ranges,minVals=kNN.autoNorm(datingDataMat)
-</code></pre><h4 id="kNN约会网站测试代码"><a href="#kNN约会网站测试代码" class="headerlink" title="kNN约会网站测试代码"></a>kNN约会网站测试代码</h4><pre><code>def datingClassTest():
-    hoRatio=0.10
-    datingDataMat,datingLabels=file2matrix(&apos;datingTestSet2.txt&apos;)
-    normMat,ranges,minVals=autoNorm(datingDataMat)
-    m=normMat.shape[0]
-    numTestVecs=int(m*hoRatio)
-    errorCount=0.0
-    for i in range(numTestVecs):
-        classifierResult=classify0(normMat[i,:],normMat[numTestVecs:m,:],
-        datingLabels[numTestVecs:m],5)
-        print(&apos;the classifier came back with: %d, the real answer is: %d&apos; % (classifierResult,datingLabels[i]))
-        if (classifierResult != datingLabels[i]):
-            errorCount+=1.0
-    print(&apos;the total error rate is : %f&apos; % (errorCount/float(numTestVecs)))
 
-#测试
-kNN.datingClassTest()
-</code></pre><h4 id="约会网站预测函数"><a href="#约会网站预测函数" class="headerlink" title="约会网站预测函数"></a>约会网站预测函数</h4><pre><code>def classifyPerson():
-    resultList=[&apos;not at all&apos;,&apos;in small doses&apos;,&apos;in large doses&apos;]
-    percentTats=float(input(&apos;percentage of time spent playing video games?&apos;))
-    ffMiles=float(input(&apos;frequent fliter miles earned per year?&apos;))
-    iceCream=float(input(&apos;liters of ice cream consumed per year?&apos;))
-    datingDataMat,datingLabels=file2matrix(&apos;datingTestSet2.txt&apos;)
-    normMat,ranges,minVals=autoNorm(datingDataMat)
-    inArr=np.array([ffMiles,percentTats,iceCream])
-    classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
-    print(&apos;You will probably like this person: &apos;,\
-        resultList[classifierResult-1])
-    #python2中的raw_input()，python3中为input()
-</code></pre><h3 id="示例2、手写识别系统"><a href="#示例2、手写识别系统" class="headerlink" title="示例2、手写识别系统"></a>示例2、手写识别系统</h3><h4 id="将32-32的二进制图像矩阵转化为1-1024向量"><a href="#将32-32的二进制图像矩阵转化为1-1024向量" class="headerlink" title="将32*32的二进制图像矩阵转化为1*1024向量"></a>将32*32的二进制图像矩阵转化为1*1024向量</h4><pre><code>def img2vector(filename):
-    returnVect=np.zeros((1,1024))
-    fr=open(filename)
-    for i in range(32):
-        lineStr=fr.readline()
-        for j in range(32):
-            returnVect[0,32*i+j]=int(lineStr[j])
-    return returnVect
-#测试
-testVector=kNN.img2vector(&apos;testDigits/0_13.txt&apos;)
-</code></pre><h4 id="手写数字识别系统的测试代码"><a href="#手写数字识别系统的测试代码" class="headerlink" title="手写数字识别系统的测试代码"></a>手写数字识别系统的测试代码</h4><pre><code>from os import listdir
-def handwritingClassTest():
-    hwLabels=[]
-    trainingFileList=listdir(&apos;trainingDigits&apos;)
-    m=len(trainingFileList)
-    trainingMat=np.zeros((m,1024))
-    for i in range(m):
-        fileNameStr=trainingFileList[i]
-        fileStr=fileNameStr.split(&apos;.&apos;)[0]
-        classNumStr=int(fileStr.split(&apos;_&apos;)[0])#文件名是标签
-        hwLabels.append(classNumStr)
-        trainingMat[i,:]=img2vector(&apos;trainingDigits/%s&apos; % fileNameStr)
-    testFileList=listdir(&apos;testDigits&apos;)
-    errorCount=0.0
-    mTest=len(testFileList)
-    for i in range(mTest):
-        fileNameStr=testFileList[i]
-        fileStr=fileNameStr.split(&apos;.&apos;)[0]
-        classNumStr=int(fileStr.split(&apos;_&apos;)[0])
-        vectorUnderTest=img2vector(&apos;testDigits/%s&apos; % fileNameStr)
-        classifierResult=classify0(vectorUnderTest,\
-            trainingMat,hwLabels,3)
-        print(&apos;the classifier came back with: %d, the real anser is: %d&apos; \
-            % (classifierResult,classNumStr))
-        if    classifierResult != classNumStr:
-            errorCount+=1.0
-    print(&apos;the total number of errors is: %d&apos; % errorCount)
-#测试
-kNN.handwritingClassTest()
-</code></pre><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>k-近邻算法是分类数据最简单最有效的算法。k-近邻算法是基于实例的学习，使用算法时必须有接近实际数据的训练样本数据。k-近邻算法必须保存全部数据集，如果训练数据集很大，必须使用大量的存储空间。此外，由于必须对数据集中的每个数据计算距离值，实际使用时可能非常耗时。</p>
-<p>k-近邻算法的另一个缺陷是它无法给出任何数据的基础结构信息，因此无法知晓平均实例样本和典型实例样本具有什么特征。</p>
+def localWords(feed1,feed0):
+    import feedparser
+    docList=[];classList=[];fullText=[]
+    minLen=min(len(feed1[&apos;entries&apos;]),len(feed0[&apos;entries&apos;]))#帖子数量
+    for i in range(minLen):
+        wordList=textParse(feed1[&apos;entries&apos;][i][&apos;summary&apos;])#帖子内容解析
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(1)
+        wordList=textParse(feed0[&apos;entries&apos;][i][&apos;summary&apos;])
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(0)
+    vocabList=createVocabList(docList)#创建词汇表
+    top30words=calcMostFreq(vocabList,fullText)
+    for pairW in top30words:
+        if pairW[0] in vocabList:
+            vocabList.remove(pairW[0])#去除出现次数最高的那些词
+    trainingSet=list(range(2*minLen));testSet=[]
+    for i in range(int(minLen/10)):#选取10%的数据，建立测试集
+        randIndex=int(np.random.uniform(0,len(trainingSet)))
+        testSet.append(trainingSet[randIndex])
+        del(trainingSet[randIndex])
+    trainMat=[];trainClasses=[]
+    for docIndex in trainingSet:
+        trainMat.append(bagOfWords2VecMN(vocabList,docList[docIndex]))
+        trainClasses.append(classList[docIndex])
+    p0V,p1V,pSpam=trainNB0(np.array(trainMat),np.array(trainClasses))
+    errorCount=0
+    for docIndex in testSet:
+        wordVector=bagOfWords2VecMN(vocabList,docList[docIndex])
+        if classifyNB(np.array(wordVector),p0V,p1V,pSpam) !=\
+            classList[docIndex]:
+                errorCount+=1
+    print(&apos;the error rate is: &apos;,float(errorCount)/len(testSet))
+    return vocabList,p0V,p1V
+</code></pre><p>这个分类器的作用是给出一个帖子，判断它是来自哪个地区的（东部还是西部，因为两地的语言用词可能不太一样）。<br>前30个高频词去掉的原因是，一般很多词都是虚词，如“maybe”、”yes”、“will”、”can”等等。当然这样处理是比较粗糙的，一般会根据停用词表来进行处理。</p>
+<pre><code>#最具表征性的词汇显示函数
+def getTopWords(ny,sf):
+    import operator
+    vocabList,p0V,p1V=localWords(ny,sf)
+    topNY=[];topSF=[]
+    for i in range(len(p0V)):
+        if p0V[i]&gt;-6.0:topSF.append((vocabList[i],p0V[i]))
+        if p1V[i]&gt;-6.0:topNY.append((vocabList[i],p1V[i]))
+    sortedSF=sorted(topSF,key=lambda pair:pair[1],reverse=True)
+    print(&quot;SF**&quot;*10)
+    for item in sortedSF:
+        print(item[0])
+    sortedNY=sorted(topNY,key=lambda pair:pair[1],reverse=True)
+    print(&quot;NY**&quot;*10)
+    for item in sortedNY:
+        print(item[0])
+</code></pre><p>Craigslist这个网站是分地区的，比如纽约（New York，美国东部）和旧金山（San Francisco，美国西部）。我们从这两个地区的Ctaigslist里面选取一些帖子，通过分析这些帖子里的征婚广告信息，来比较这两个城市的人们在广告用词上是否存在差异。如果确实存在差异，那么两个地区的人各自常用的词是哪些？</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/70244028" target="_blank" rel="external">《机器学习实战》第四章：朴素贝叶斯（2）两个实例</a></li>
+</ol>
 
       
     </div>
@@ -637,8 +726,8 @@ kNN.handwritingClassTest()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/30/Windows下安装Xgboost/" rel="next" title="Windows系统下Xgboost安装【转】">
-                <i class="fa fa-chevron-left"></i> Windows系统下Xgboost安装【转】
+              <a href="/2017/09/03/机器学习实战第三章学习笔记/" rel="next" title="机器学习实战第三章学习笔记(决策树-Decision Tree)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第三章学习笔记(决策树-Decision Tree)
               </a>
             
           </div>
@@ -646,10 +735,6 @@ kNN.handwritingClassTest()
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/03/机器学习实战第三章学习笔记/" rel="prev" title="机器学习实战第三章学习笔记(决策树-Decision Tree)">
-                机器学习实战第三章学习笔记(决策树-Decision Tree) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -808,7 +893,7 @@ kNN.handwritingClassTest()
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本原理"><span class="nav-number">1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-近邻算法的一般流程"><span class="nav-number">2.</span> <span class="nav-text">k-近邻算法的一般流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kNN代码实现"><span class="nav-number">3.</span> <span class="nav-text">kNN代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例1、改进约会网站的配对效果"><span class="nav-number">4.</span> <span class="nav-text">示例1、改进约会网站的配对效果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将文本记录到转换NumPy的解析程序"><span class="nav-number">4.1.</span> <span class="nav-text">将文本记录到转换NumPy的解析程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化数值"><span class="nav-number">4.2.</span> <span class="nav-text">归一化数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化特征值Python3程序"><span class="nav-number">4.3.</span> <span class="nav-text">归一化特征值Python3程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#kNN约会网站测试代码"><span class="nav-number">4.4.</span> <span class="nav-text">kNN约会网站测试代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#约会网站预测函数"><span class="nav-number">4.5.</span> <span class="nav-text">约会网站预测函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例2、手写识别系统"><span class="nav-number">5.</span> <span class="nav-text">示例2、手写识别系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将32-32的二进制图像矩阵转化为1-1024向量"><span class="nav-number">5.1.</span> <span class="nav-text">将32*32的二进制图像矩阵转化为1*1024向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#手写数字识别系统的测试代码"><span class="nav-number">5.2.</span> <span class="nav-text">手写数字识别系统的测试代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于贝叶斯决策理论的分类方法"><span class="nav-number">1.</span> <span class="nav-text">基于贝叶斯决策理论的分类方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#贝叶斯决策理论"><span class="nav-number">1.0.1.</span> <span class="nav-text">贝叶斯决策理论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用朴素贝叶斯进行文档分类"><span class="nav-number">2.</span> <span class="nav-text">使用朴素贝叶斯进行文档分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Python进行文本分类"><span class="nav-number">3.</span> <span class="nav-text">使用Python进行文本分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从文本中构建词向量"><span class="nav-number">3.0.1.</span> <span class="nav-text">从文本中构建词向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#训练算法：从词向量计算概率"><span class="nav-number">3.0.2.</span> <span class="nav-text">训练算法：从词向量计算概率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试算法：根据现实情况修改分类器"><span class="nav-number">3.0.3.</span> <span class="nav-text">测试算法：根据现实情况修改分类器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文档词袋模型"><span class="nav-number">3.0.4.</span> <span class="nav-text">文档词袋模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例：使用朴素贝叶斯过滤垃圾邮件"><span class="nav-number">4.</span> <span class="nav-text">示例：使用朴素贝叶斯过滤垃圾邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试算法：使用朴素贝叶斯进行交叉验证"><span class="nav-number">4.0.1.</span> <span class="nav-text">测试算法：使用朴素贝叶斯进行交叉验证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向"><span class="nav-number">5.</span> <span class="nav-text">示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#收集数据：导入RSS源"><span class="nav-number">5.0.1.</span> <span class="nav-text">收集数据：导入RSS源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">6.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
             
 
           </div>
