@@ -5,10 +5,10 @@
     
   <url>
     <loc>http://yoursite.com/2017/09/07/sklearn%E5%BA%93LogisticRegression%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E8%B0%83%E5%8F%82/</loc>
-    <lastmod>2017-09-07T12:58:10.786Z</lastmod>
+    <lastmod>2017-09-07T13:03:01.927Z</lastmod>
     <data>
         <display>
-        <title>机器学习实战第五章学习笔记(Logistic回归)</title>
+        <title>sklearn库LogisticRegression使用及简单调参</title>
         <pubTime>2017-09-06T16:00:00.000Z</pubTime>
         
         <tag>机器学习</tag>
