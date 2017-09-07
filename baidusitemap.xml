@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/07/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2017-09-07T08:03:55.517Z</lastmod>
+    <data>
+        <display>
+        <title>机器学习实战第五章学习笔记(Logistic回归)</title>
+        <pubTime>2017-09-06T16:00:00.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+        <tag>算法</tag>
+         
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
+          
+             
+              <breadCrumb title="算法" url="http://yoursite.com/categories/Python/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/09/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2017-09-05T08:32:04.605Z</lastmod>
     <data>
@@ -389,9 +416,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>AI</tag>
-         
         <tag>python</tag>
+         
+        <tag>AI</tag>
          
          
            

@@ -299,6 +299,386 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/机器学习实战第五章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/机器学习实战第五章学习笔记/" itemprop="url">机器学习实战第五章学习笔记(Logistic回归)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。</p>
+<p>利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要<br>寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。</p>
+<p>Logistic的一般过程：</p>
+<ol>
+<li>收集数据：采用任意方法收集数据。</li>
+<li>准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。</li>
+<li>分析数据：采用任意方法对数据进行分析。</li>
+<li>训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。</li>
+<li>测试数据：一旦训练步骤完成，分类将会很快。</li>
+<li>使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。</li>
+</ol>
+<p><img src="http://images2015.cnblogs.com/blog/1015872/201609/1015872-20160904123448491-2104213729.png" alt=""></p>
+<h2 id="基于Logistic回归和Sigmoid函数的分类"><a href="#基于Logistic回归和Sigmoid函数的分类" class="headerlink" title="基于Logistic回归和Sigmoid函数的分类"></a>基于Logistic回归和Sigmoid函数的分类</h2><ul>
+<li>优点：计算代价不高，易于理解和实现。</li>
+<li>缺点：容易欠拟合，分类精度可能不高。</li>
+<li>适用数据类型：数值型和标称型数据。</li>
+</ul>
+<p>我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function).</p>
+<p><img src="http://img.blog.csdn.net/20161116083548612" alt=""></p>
+<p>而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。</p>
+<p>说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。</p>
+<p>由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。</p>
+<p><img src="http://img.blog.csdn.net/20170425225033129" alt=""></p>
+<p>那么，现在的关键在于，如何确定上述的最佳回归系数？</p>
+<h2 id="基于最优化方法的最佳回归系数确定"><a href="#基于最优化方法的最佳回归系数确定" class="headerlink" title="基于最优化方法的最佳回归系数确定"></a>基于最优化方法的最佳回归系数确定</h2><p>Sigmoid函数：<br><img src="http://img.blog.csdn.net/20170426142819918" alt=""></p>
+<p><img src="http://img.blog.csdn.net/20170426144754539" alt=""></p>
+<p>这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。</p>
+<p><img src="http://img.blog.csdn.net/20170426145716228" alt=""></p>
+<h4 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h4><p>梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。</p>
+<p><img src="http://img.blog.csdn.net/20170426152948300" alt=""></p>
+<p>梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。</p>
+<h4 id="梯度下降算法和梯度上升算法的区别"><a href="#梯度下降算法和梯度上升算法的区别" class="headerlink" title="梯度下降算法和梯度上升算法的区别"></a>梯度下降算法和梯度上升算法的区别</h4><p><img src="http://img.blog.csdn.net/20170426154316798" alt=""></p>
+<p>梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山).</p>
+<h4 id="训练算法：使用梯度上升找到最佳参数"><a href="#训练算法：使用梯度上升找到最佳参数" class="headerlink" title="训练算法：使用梯度上升找到最佳参数"></a>训练算法：使用梯度上升找到最佳参数</h4><pre><code>#梯度上升法的伪代码：
+每个回归系数初始化为1
+重复R次：
+    计算整个数据集的梯度
+    使用α*gradient更新回归系数的向量
+    返回回归系数
+
+import numpy as np
+
+#Logistic回归梯度上升法优化算法
+def loadDataSet():#读取样本数据
+    dataMat=[];labelMat=[]
+    fr=open(&apos;testSet.txt&apos;)
+    for line in fr.readlines():
+        lineArr=line.strip().split()#除去空格后划分
+        dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征
+        labelMat.append(int(lineArr[2]))#标签
+    return dataMat,labelMat
+
+def sigmoid(inX):
+    return 1.0/(1+np.exp(-inX))
+
+def gradAscent(dataMatIn,classLabels):
+    dataMatrix=np.mat(dataMatIn)#100*3
+    labelMat=np.mat(classLabels).transpose()
+    m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数
+    alpha=0.001#步长
+    maxCycles=500#最大迭代次数
+    weights=np.ones((n,1))#回归系数初始化为1
+    for k in range(maxCycles):
+        h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1
+        error=(labelMat-h)#
+        weights=weights+alpha*dataMatrix.transpose()*error
+    return weights
+
+
+#画出数据集和Logistic回归最佳拟合直线的函数
+def plotBestFit(wei):
+    import matplotlib.pyplot as plt
+    weights=wei#.getA()
+    dataMat,labelMat=loadDataSet()
+    dataArr=np.array(dataMat)
+
+    n=np.shape(dataArr)[0]
+    xcord1=[];ycord1=[]
+    xcord2=[];ycord2=[] 
+    for i in range(n):
+        if int(labelMat[i])==1:
+            xcord1.append(dataArr[i,1])
+            ycord1.append(dataArr[i,2])
+        else:
+            xcord2.append(dataArr[i,1])
+            ycord2.append(dataArr[i,2])
+    fig=plt.figure()
+    ax=fig.add_subplot(111)
+    print(len(xcord1),len(ycord1))
+    ax.scatter(xcord1,ycord1,s=30,c=&apos;red&apos;,marker=&apos;s&apos;)
+    ax.scatter(xcord2,ycord2,s=30,c=&apos;green&apos;)
+    x=np.arange(-3.0,3.0,0.1)
+    y=(-weights[0]-weights[1]*x)/weights[2]
+    ax.plot(x,y)
+    plt.xlabel(&apos;X1&apos;);plt.ylabel(&apos;X2&apos;);
+    plt.show()
+</code></pre><p><img src="http://img.blog.csdn.net/20170502140250228" alt=""></p>
+<h4 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h4><p>回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是<img src="http://img.blog.csdn.net/20150414211501282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTHU1OTcyMDM5MzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。</p>
+<p>那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数：<img src="http://img.blog.csdn.net/20170427114316036" alt=""></p>
+<p>观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。</p>
+<p>这个分段函数还可以简写为：<img src="http://img.blog.csdn.net/20170427120139821" alt=""></p>
+<p>那么对于m条训练样本而言，代价函数就是m个预测代价的累加和：<br><img src="http://img.blog.csdn.net/20170427160158802" alt=""></p>
+<p>为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导：<br><img src="http://img.blog.csdn.net/20170427125124391" alt=""></p>
+<p>所以结果就是:<img src="http://img.blog.csdn.net/20170427160242364" alt=""></p>
+<pre><code>weights=weights+alpha*dataMatrix.transpose()*error
+</code></pre><p><img src="http://img.blog.csdn.net/20170427163508100" alt=""></p>
+<p>是一致的！！</p>
+<p><img src="http://img.blog.csdn.net/20170427162423610" alt=""></p>
+<h4 id="训练算法：随机梯度上升"><a href="#训练算法：随机梯度上升" class="headerlink" title="训练算法：随机梯度上升"></a>训练算法：随机梯度上升</h4><p>梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。</p>
+<pre><code>#随机梯度上升算法伪代码：
+所有回归系数初始化为1
+对数据集中每个样本
+    计算该样本的梯度
+    使用alpha*gradient更新回归系数值
+返回回归系数值
+
+#随机梯度上升算法
+def stocGradAscent0(dataMatrix,classLabels):
+    m,n=np.shape(dataMatrix)
+    alpha=0.01#步长
+    weights=np.ones(n)#1*n
+    X=[]#保持weights的历史数据
+    for j in range(300):#迭代300次
+        for i in range(m):
+            h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = 
+            error=classLabels[i]-h
+            weights=weights+alpha*error*dataMatrix[i]
+            X.append(weights)
+    return weights
+</code></pre><p>这段代码与梯度上升算法很相似，但是也有些区别：</p>
+<ol>
+<li>这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本)</li>
+<li>没有矩阵的转换过程，所有变量的数据类型都是NumPy数组</li>
+</ol>
+<p><strong>但是有个问题，为什么随机梯度上升算法也可以达到最优呢？</strong>书中并没有给出相关解释。</p>
+<p><img src="http://img.blog.csdn.net/20170502170148006" alt=""></p>
+<p>在迭代200次过程中，weights=[X0,X1,X2]变化曲线；<br>而我自己的300次跌打过程中，变化曲线是：</p>
+<p>X0:<br><img src="https://i.imgur.com/QgNPopg.png" alt=""></p>
+<p>X1:<img src="https://i.imgur.com/iAz1YYD.png" alt=""></p>
+<p>X2:<img src="https://i.imgur.com/Kug7oOn.png" alt=""></p>
+<p>从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。</p>
+<p>因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。</p>
+<p>代码如下：</p>
+<pre><code>#改进的随机梯度上升算法
+def stocGradAscent1(dataMatrix,classLabels,numIter=150):
+    m,n=np.shape(dataMatrix)
+    weights=np.ones(n)
+    X=[]
+    for j in range(numIter):
+        dataIndex=list(range(m))
+        for i in range(m):
+            alpha=4/(1.0+j+i)+0.01
+            randIndex=int(np.random.uniform(0,len(dataIndex)))
+            h=sigmoid(sum(dataMatrix[randIndex]*weights))
+            error=classLabels[randIndex]-h
+            weights=weights+alpha*error*dataMatrix[randIndex]
+            X.append(weights)
+            del dataIndex[randIndex]
+    X=np.array(X)
+    return weights
+</code></pre><p>改进之处有两个方面，<strong>每次迭代时调整alpha</strong>和<strong>随机选取更新</strong>。</p>
+<p>步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。</p>
+<p>通过随机选取样本来更新回归系数，可以减少周期性的波动。</p>
+<p><img src="http://img.blog.csdn.net/20170502193141309" alt=""></p>
+<h2 id="示例：从疝气病症预测病马的死亡率"><a href="#示例：从疝气病症预测病马的死亡率" class="headerlink" title="示例：从疝气病症预测病马的死亡率"></a>示例：从疝气病症预测病马的死亡率</h2><p>使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。</p>
+<p>使用Logistic回归估计马疝气病的死亡率</p>
+<ol>
+<li>收集数据：UCI机器学习数据库</li>
+<li>准备数据：用Python解析文本文件并填充缺失值</li>
+<li>分析数据：可视化并观察数据</li>
+<li>训练算法：使用优化算法，找到最佳的系数</li>
+<li>测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。</li>
+<li>使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。</li>
+</ol>
+<p>(数据集中有30%的值是缺失的)</p>
+<h4 id="准备数据：处理数据中的缺失值"><a href="#准备数据：处理数据中的缺失值" class="headerlink" title="准备数据：处理数据中的缺失值"></a>准备数据：处理数据中的缺失值</h4><p>由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题：</p>
+<ul>
+<li>使用可用特征的均值来填充缺失值；</li>
+<li>使用特殊值来填补缺失值，如-1；</li>
+<li>忽略有缺失值的样本；</li>
+<li>使用相似样本的均值添补缺失值；</li>
+<li>使用另外的机器学习算法预测缺失值；</li>
+</ul>
+<p>在数据预处理阶段，所有缺失值用实数0代替。原因有二：</p>
+<ol>
+<li>根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新；</li>
+<li>sigmoid(0)=0.5,对结果不具有任何倾向性；</li>
+</ol>
+<p>对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。</p>
+<h4 id="测试算法：用Logistic回归进行分类"><a href="#测试算法：用Logistic回归进行分类" class="headerlink" title="测试算法：用Logistic回归进行分类"></a>测试算法：用Logistic回归进行分类</h4><pre><code>#Logistic回归分类函数
+def classifyVector(inX,weights):
+    prob=sigmoid(sum(inX*weights))
+    if prob&gt;0.5:
+        return 1.0
+    else:
+        return 0.0
+
+def colicTest():
+    frTrain=open(&apos;horseColicTraining.txt&apos;)
+    frTest=open(&apos;horseColicTest.txt&apos;)
+    trainingSet=[];trainingLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&apos;\t&apos;)
+        lineArr=[]
+        for i in range(21):#21个特征
+            lineArr.append(float(currLine[i]))
+        trainingSet.append(lineArr)
+        trainingLabels.append(float(currLine[21])) #标签               
+    trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500)
+    errorCount=0;numTestVec=0.0
+    for line in frTest.readlines():
+        numTestVec+=1.0
+        currLine=line.strip().split(&apos;\t&apos;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]):
+                errorCount+=1
+    errorRate=(float(errorCount)/numTestVec)
+    print(&quot;the error rate of this test is: %f&quot; % errorRate)
+    return errorRate
+
+def multiTest():
+    numTests=10;errorSum=0.0
+    for k in range(numTests):
+        errorSum+=colicTest()
+    print(&quot;after %d iterations the average error rate is: %f&quot; 
+          % (numTests,errorSum/float(numTests)))
+</code></pre><h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://blog.csdn.net/lu597203933/article/details/38468303#comments" target="_blank" rel="external">http://blog.csdn.net/lu597203933/article/details/38468303#comments</a></li>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/70767791#comments" target="_blank" rel="external">http://blog.csdn.net/CharlieLincy/article/details/70767791#comments</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/机器学习实战第四章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2973,155 +3353,6 @@ def feature_ranking(score):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/百度之星开发者大赛-资格赛2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/10/百度之星开发者大赛-资格赛2/" itemprop="url">2017百度之星开发者大赛--资格赛2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T00:00:00+08:00">
-                2017-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/UNIT/" itemprop="url" rel="index">
-                    <span itemprop="name">UNIT</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>7月28日，百度之星小姐姐给打过电话后，连着搞了两天，其实也没两天，还帮老板整理了好些文档资料。前一篇博客上也说了，搞了69.06分，第9名。然后想着反正肯定可以进前100啦，就没怎么管理了。优化方案也是按着百度AI开发论坛上提供的<a href="http://developer.baidu.com/forum/topic/show?topicId=241520" target="_blank" rel="external">UNIT机器人优化指南</a>结合UNIT使用手册做的。</p>
-<p>最后结果：</p>
-<p><img src="http://i.imgur.com/R6cgjjZ.png" alt="第六名"></p>
-<p>事先，基本的意图、词槽、Bot回应等等按照规定做好。实际中，我开始就没认真搞好，漏了一个错误的词槽。但是在最后资格赛结束之前发现了，改正之后提高了1点几个分数。</p>
-<p>基本的对话系统搞定之后，后期的优化主要分为两块：</p>
-<ul>
-<li>增加对话样本集</li>
-<li>增加对话模板集</li>
-</ul>
-<p>对话样本集对应着样本学习，假设对话样本足够多、样本质量非常高，那通过神经网络学习得到的模型自然也不会差。</p>
-<p>对话模板集则是对应着规则学习，正常人对话时，会有一定的语言结构，如，主语+谓语+宾语结构。特别是在一个特定的场景下，可以充分考虑到用户的对话的模板，进行一些提炼，得到一些语言“公式”。显然这种对话模板集方式的泛化能力是有限的，但是它的优点在于可以保证在符合“公式”的对话时不会出现错误。</p>
-<p>我所侧重的是第一个方法，即增加对话样本集。使用了目前UNIT的隐藏功能，推荐对话样本。自己可以先整一个小的对话样本，然后让UNIT平台根据自己DIY的对话样本生成一些样本，然后自己去标注。大约标注了3500个样本吧，自己整的样本比例是按照百度提供的对话样本中各个意图的比例整的，保证同分布吧。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3172,7 +3403,7 @@ def feature_ranking(score):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
