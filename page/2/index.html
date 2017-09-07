@@ -299,6 +299,185 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/11/ReSpeaker智能语音双麦克风阵列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/11/ReSpeaker智能语音双麦克风阵列/" itemprop="url">ReSpeaker智能语音双麦克风阵列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-11T00:00:00+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/树莓派3/" itemprop="url" rel="index">
+                    <span itemprop="name">树莓派3</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>去年圣诞节买了块树莓派，看了网上好多基于树莓派的DIY语音助手，一直想自己也山寨一个。主要有两个问题，一是语音输入如何解决？二是Alexa和google home都是国外，不仅仅是不支持中文，而且还有一堵“墙”在，比较麻烦。</p>
+<p>第一个问题，网上主要有两种办法，要么直接搞免驱mini USB麦克风或者大的比较丑的的麦克风，要么就是科技范十足的麦克风阵列。我是非常倾向于用麦克风阵列的，也没想4麦克、7麦克、8麦克等，两麦克阵列就OK了，但是找了一圈没找着合适的。主要是价钱太贵，不忍心剁手。后来将就着买了个mini USB麦克风，但是除了敲桌子声音或者直接吼，根本没啥效果，检测不到声音(明明看着国外的小哥哥们用的挺好的。。。也可能是淘宝上买到假货了)。</p>
+<p><img src="https://ksr-ugc.imgix.net/assets/013/450/587/88ed9594144b9cf686c055b282e3fa4b_original.jpg?w=680&amp;fit=max&amp;v=1471845738&amp;auto=format&amp;q=92&amp;s=3e81cd923a00655c28c20c5b143b57c2" alt="麦克风阵列"></p>
+<p><img src="https://gd4.alicdn.com/imgextra/i2/329675712/TB2FS30spXXXXX6XpXXXXXXXXXX_!!329675712.jpg_400x400.jpg" alt="mini USB麦克风"></p>
+<p>第二个，明显今年百度开始在AI上下了不少功夫。语音这一块，主要有UNIT、DuerOS平台。虽然做的没有Google Home 和Alexa那么知名，但是支持中文，而且在国内。</p>
+<p>所以借着百度之星UNIT对话系统，又开始了我的瞎折腾(之前搞了Alexa和Google Home,加上不支持中文、墙、硬件问题等，搞得头大就放弃了)。这一次，借助着百度AI平台，语音识别转文字，然后利用UNIT解析，再语音合成输出。那么就剩下硬件了，还是上面的选择，USB麦克风或者麦克风阵列。经人推荐，找到了一款双麦克阵列模块，兼容树莓派3，淘宝上有旗舰店，80元RMB.(哈哈，当时直接就下单了！)</p>
+<p>淘宝上给的简介是：</p>
+<blockquote>
+<h3 id="ReSpeaker智能语音方案-双麦克风扩展板-兼容树莓派Zero-3B-2B"><a href="#ReSpeaker智能语音方案-双麦克风扩展板-兼容树莓派Zero-3B-2B" class="headerlink" title="ReSpeaker智能语音方案 双麦克风扩展板 兼容树莓派Zero/3B/2B"></a>ReSpeaker智能语音方案 双麦克风扩展板 兼容树莓派Zero/3B/2B</h3><p>此产品集成了亚马逊语言和谷歌助手等，兼容树莓派Zero、树莓派3B/2B，可以构建一个更强大更灵活的语音产品。</p>
+</blockquote>
+<p><a href="https://item.taobao.com/item.htm?spm=a1z10.3-c.w4002-11172317909.38.5e478797SzWPpR&amp;id=553438198956" target="_blank" rel="external">淘宝链接</a></p>
+<p>但实际上，这货的外国名是<strong>ReSpeaker 2-Mics Pi HAT</strong></p>
+<p><a href="http://wiki.seeed.cc/Respeaker_2_Mics_Pi_HAT/" target="_blank" rel="external">相关链接</a></p>
+<p><img src="https://github.com/SeeedDocument/MIC_HATv1.0_for_raspberrypi/blob/master/img/2mics-zero-high-res.jpg?raw=true" alt="ReSpeaker 2-Mics Pi HAT"></p>
+<p>ReSpeaker 2-Mics Pi HAT是一款为树莓派而设计针对AI或语音应用的双麦克风扩展板。这意味着你可以基于树莓派（集成Amazon Alexa,Google Assistant)建立一个更强大、更灵活的语音产品.</p>
+<p>这块板子基于WM8960,一片低功耗立体声编解码器。有两个麦克风分别位于板子的两侧用于采集声音。板子上还有3个APA102 RGB LED,1个用户按键和两个Grove接口用于扩展应用。更惊喜的是，还有3.5mm Audio Jack和JST 2.0 Speaker接口用于输出声音。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>兼容树莓派(Raspberry Pi Zero and Zero W, Raspberry Pi B+,Raspberry Pi 2B and Raspberry Pi 3B)</li>
+<li>2个麦克风</li>
+<li>2个Grove接口</li>
+<li>1个用户按键</li>
+<li>3.5mm音频接口</li>
+<li>JST2.0音频输出</li>
+</ul>
+<h2 id="应用领域"><a href="#应用领域" class="headerlink" title="应用领域"></a>应用领域</h2><ul>
+<li>语音交互应用</li>
+<li>AI助手</li>
+</ul>
+<h2 id="硬件介绍"><a href="#硬件介绍" class="headerlink" title="硬件介绍"></a>硬件介绍</h2><p><img src="https://github.com/SeeedDocument/MIC_HATv1.0_for_raspberrypi/blob/master/img/mic_hatv1.0.png?raw=true" alt="Hardware Overview"></p>
+<ul>
+<li>BUTTON:用户按键，连接到GPIO17</li>
+<li>MIC_L &amp; MIC_R:位于板子两侧的麦克风</li>
+<li>RGB LED:3颗APA102 RGB LED,连接到了SPI接口</li>
+<li>WM8960: 低功耗立体声编解码器</li>
+<li>Raspberry Pi 40-Pin Headers:</li>
+<li>POWER:板子的USB供电口，当使用扬声器时，要保证足够的电流</li>
+<li>I2C:Grove I2C接口，连接I2C-1</li>
+<li>GPIO 12：Grove 数字端口，连接GPIO12 &amp; GPIO13</li>
+<li>JST 2.0 SPEAKER OUT:连接扬声器</li>
+<li>3.5mm AUDIO JACK:连接带有3.5mm插口的耳机或扬声器</li>
+</ul>
+<p>具体配置及使用参考：<a href="http://wiki.seeed.cc/Respeaker_2_Mics_Pi_HAT/" target="_blank" rel="external">http://wiki.seeed.cc/Respeaker_2_Mics_Pi_HAT/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/百度之星开发者大赛-资格赛2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2291,230 +2470,6 @@ Credit_History
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/03/ValidParentheses/" itemprop="url">Leetcode 20 Valid Parentheses</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
-                2017-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>LeetCode 20.Valid Parentheses问题如下：</p>
-<blockquote>
-<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.</p>
-<p>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
-</blockquote>
-<p>仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。</p>
-<pre><code>typedef struct{
-int *base;//栈底指针
-int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置
-int stackSize;//栈长度
-}SqStack;//定义结构体
-
-int Push(SqStack *S,int e)
-{
-    *(*S).top++ = e;//入栈操作
-    return 1;
-}
-
-int Pop(SqStack *S, int *e)
-{
-    *e = *--(*S).top;//出栈
-    return 1;
-}
-
-int StackEmpty(SqStack S)
-{
-    return S.top == S.base;//栈空
-}
-
-bool isValid(char* s) {
-if(s==NULL)
-    return true;
-SqStack S;
-int N = strlen(s);
-if(N==1)
-    return false;
-if(N%2)
-    return false;
-S.base = (int *)malloc(N*sizeof(int));//分配空间
-S.top = S.base;//空栈，栈顶指针等于栈底指针
-S.stackSize = N;//栈长度，本例中，假设不会超过初始长度
-
-int table[128] = { 10 };
-int e=0;
-table[&apos;(&apos;] = &apos;)&apos;;
-table[&apos;{&apos;] = &apos;}&apos;;
-table[&apos;[&apos;] = &apos;]&apos;;
-table[&apos;]&apos;] = &apos;-&apos;;
-table[&apos;}&apos;] = &apos;-&apos;;
-table[&apos;)&apos;] = &apos;-&apos;;
-for (int i = 0; i &lt; N; i++)
-{
-    if (!StackEmpty(S))
-    {
-        Pop(&amp;S, &amp;e);
-        if (table[e] == s[i])
-        {
-            continue;
-        }
-        else
-            Push(&amp;S, e);
-    }
-    if (table[s[i]] == s[i + 1])
-    {
-        i++;
-        continue;
-    }
-    else
-    {
-        Push(&amp;S, s[i]);
-    }
-}
-int result = StackEmpty(S);
-free(S.base);
-return result;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2565,7 +2520,7 @@ return result;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2587,7 +2542,7 @@ return result;
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

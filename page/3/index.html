@@ -299,6 +299,230 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/03/ValidParentheses/" itemprop="url">Leetcode 20 Valid Parentheses</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>LeetCode 20.Valid Parentheses问题如下：</p>
+<blockquote>
+<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.</p>
+<p>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
+</blockquote>
+<p>仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。</p>
+<pre><code>typedef struct{
+int *base;//栈底指针
+int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置
+int stackSize;//栈长度
+}SqStack;//定义结构体
+
+int Push(SqStack *S,int e)
+{
+    *(*S).top++ = e;//入栈操作
+    return 1;
+}
+
+int Pop(SqStack *S, int *e)
+{
+    *e = *--(*S).top;//出栈
+    return 1;
+}
+
+int StackEmpty(SqStack S)
+{
+    return S.top == S.base;//栈空
+}
+
+bool isValid(char* s) {
+if(s==NULL)
+    return true;
+SqStack S;
+int N = strlen(s);
+if(N==1)
+    return false;
+if(N%2)
+    return false;
+S.base = (int *)malloc(N*sizeof(int));//分配空间
+S.top = S.base;//空栈，栈顶指针等于栈底指针
+S.stackSize = N;//栈长度，本例中，假设不会超过初始长度
+
+int table[128] = { 10 };
+int e=0;
+table[&apos;(&apos;] = &apos;)&apos;;
+table[&apos;{&apos;] = &apos;}&apos;;
+table[&apos;[&apos;] = &apos;]&apos;;
+table[&apos;]&apos;] = &apos;-&apos;;
+table[&apos;}&apos;] = &apos;-&apos;;
+table[&apos;)&apos;] = &apos;-&apos;;
+for (int i = 0; i &lt; N; i++)
+{
+    if (!StackEmpty(S))
+    {
+        Pop(&amp;S, &amp;e);
+        if (table[e] == s[i])
+        {
+            continue;
+        }
+        else
+            Push(&amp;S, e);
+    }
+    if (table[s[i]] == s[i + 1])
+    {
+        i++;
+        continue;
+    }
+    else
+    {
+        Push(&amp;S, s[i]);
+    }
+}
+int result = StackEmpty(S);
+free(S.base);
+return result;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/30/fallofgiants/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,146 +633,6 @@
 <p>《巨人的陨落》的大结局！我亲眼目睹，每一个迈向死亡的生命都在热烈地生长。“世纪三部曲”终于迎来了一个完美结局。如果说《巨人的陨落》是祖辈的传奇，《世界的凛冬》是父辈的人生，那么，《永恒的边缘》就是新一代的奋斗。<br>真正残酷和激烈的世界大战，是思想的大战。来自美国、德国、苏联、英国和威尔士的五大家族，又一次迎来了新的考验。东西德分裂、柏林墙、苏联秘密警察、刺杀肯尼迪、民权运动、古巴导弹危机、入侵黎巴嫩、弹劾尼克松……此外，第三代生活中还有摇滚、嬉皮士、跨种族婚恋、性解放，以及对过去的误会与和解。<br>说到底，世上只有一种英雄主义，就是在认清生活真相之后，依然热爱生活。</p>
 </blockquote>
 <p>很棒的小说，作者是<strong>肯•福莱特（Ken Follett，1949－）现象级畅销小说大师，爱伦坡终身大师奖得主</strong>，完全可以当做历史书来读。当年的当年明月写的《明朝那些事儿》,以一种诙谐幽默的手法展现了明朝几百年历史，让人们发现原来历史还可以这么写。当时也是连着一段时间将《明朝那些事儿》一系列书刷完，好像是7本吧，后来过了一段时间又刷了一遍。而肯.福莱特的《世纪三部曲》在我看来和《明朝那些事儿》同样成功，通过几个家族的百年兴衰，将一战、二战及冷战历史描述的非常细致。相比历史教科书，这3部书，在历史中加入了更多的人性，与其说《世纪三部曲》是一本历史长篇小说，更不如说其是一本爱情长篇小说。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -720,6 +804,146 @@
 <li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
 </li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -1549,7 +1773,7 @@ int MazePath(){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1571,7 +1795,7 @@ int MazePath(){
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
