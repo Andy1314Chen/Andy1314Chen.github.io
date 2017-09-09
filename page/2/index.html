@@ -299,6 +299,209 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/16/Snowboy使用说明_Hotword Detection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/16/Snowboy使用说明_Hotword Detection/" itemprop="url">Snowboy使用说明_Hotword Detection</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-16T00:00:00+08:00">
+                2017-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/树莓派3/" itemprop="url" rel="index">
+                    <span itemprop="name">树莓派3</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Snowboy是一个高度自定义的基于实时甚至离线情况的hotword detection engine(敏感词检测机制？)，兼容Raspberry Pi,Linux and Mac OS X.</p>
+<p>hotword也被称为唤醒词(wake word)或触发词(trigger word)通常是一个关键词或短语，计算机会一直监听作为一个信号用于触发其他操作。</p>
+<p>有一些例子，如Amazon Echo的“Alexa”、Google Assistant的”OK Google”和iPhone的“Hey Siri”. 这些关键词用于触发一个全面的语音交互。但是，hotwords同样可以用于其他方面，像是命令和控制等。</p>
+<p>一种简单的方案是，运行全ASR(Automatic Speech Recognition)来检测hotword detection.在这种方案中，设备会一直观察特定触发词。但是ASR也会消耗设备和带宽资源。同样的，如果基于云的应用，将不能保护你的隐私。（因为会一直开着麦克风来检测关键词，那么周围环境包括你说的话也会实时被监听了).幸运的是，Snowboy会用来解决此类问题。</p>
+<ul>
+<li>highly customizable(高度自定义）</li>
+<li>always listening but protects your privacy(总是检测但是不会泄露隐私）</li>
+<li>light-weight and embedded</li>
+<li>Apache licensed!</li>
+</ul>
+<p><img src="http://i.imgur.com/iJulCvp.jpg" alt="Snowboy"></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p>准备工作：</p>
+<ol>
+<li>一台带有microphone的设备</li>
+<li>相应的解压软件 </li>
+<li>训练好的模型</li>
+</ol>
+<p><a href="https://s3-us-west-2.amazonaws.com/snowboy/snowboy-releases/rpi-arm-raspbian-8.0-1.1.1.tar.bz2" target="_blank" rel="external">树莓派pre-packaged</a></p>
+<h3 id="Access-Microphone"><a href="#Access-Microphone" class="headerlink" title="Access Microphone"></a>Access Microphone</h3><p>使用PortAudio作为一个跨平台的音频输入/输出。同样也使用sox快速检查microphone是否正确安装。</p>
+<ol>
+<li>Install Sox</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install python-pyaudio python3-pyaudio sox</div></pre></td></tr></table></figure>
+<ol>
+<li>Install PortAudio’s Python bindings:</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pip install pyaudio</div><div class="line"><span class="comment">#pip-3.2 install pyaudio</span></div></pre></td></tr></table></figure>
+<ol>
+<li>To check whether you can record via your microphone, open a terminal and run:</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rec temp.wav</div><div class="line"><span class="comment">#记录个几秒中，ctrl+c,再play temp.wav,听声</span></div></pre></td></tr></table></figure>
+<h3 id="Decoder-Structures"><a href="#Decoder-Structures" class="headerlink" title="Decoder Structures"></a>Decoder Structures</h3><p>上面预安装包下载解压后，如下：</p>
+<blockquote>
+<p>├── README.md</p>
+<p>├── _snowboydetect.so</p>
+<p>├── demo.py</p>
+<p>├── demo2.py</p>
+<p>├── light.py</p>
+<p>├── requirements.txt</p>
+<p>├── resources</p>
+<p>│   ├── ding.wav</p>
+<p>│   ├── dong.wav</p>
+<p>│   ├── common.res</p>
+<p>│   └── snowboy.umdl</p>
+<p>├── snowboydecoder.py</p>
+<p>├── snowboydetect.py</p>
+<p>└── version</p>
+</blockquote>
+<p><strong>_snowboydetect.so</strong>是用SWIG编译的一个动态链接库，依赖于系统的Python2库。snowboy所有相关库都被静态连接在这个文件里。</p>
+<p><strong>snowboydetect.py</strong>是一个SWIG生成的python wrapper文件。因为不易阅读，我们创建了高等级的wrapper: <strong>snowboydecoder.py</strong></p>
+<p>应该在<a href="https://snowboy.kitt.ai" target="_blank" rel="external">https://snowboy.kitt.ai </a>上训练你的模型(snowboy.pmdl)，或者你也可以使用同一模型<strong>resources/snowboy.umdl</strong></p>
+<h3 id="Runing-a-Demo"><a href="#Runing-a-Demo" class="headerlink" title="Runing a Demo"></a>Runing a Demo</h3><ol>
+<li>To access the simple demo in <strong>main</strong> code of snowboydecoder.py, run the following command in your Terminal:</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">python demo.py snowboy.pmdl</div><div class="line"><span class="comment">#snowboy.pmdl是你训练的hotword模型</span></div></pre></td></tr></table></figure>
+<ol>
+<li>When prompt,speak into your microphone to see whether snowboy detects your magic phrase.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">#demo.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> snowboydecoder</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> signal</div><div class="line"></div><div class="line">interrupted = <span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">signal_handler</span><span class="params">(signal, frame)</span>:</span></div><div class="line">   	<span class="keyword">global</span> interrupted</div><div class="line">   	interrupted = <span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">interrupt_callback</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> interrupted</div><div class="line">    <span class="keyword">return</span> interrupted</div><div class="line"></div><div class="line"><span class="keyword">if</span> len(sys.argv) == <span class="number">1</span>:</div><div class="line">    print(<span class="string">"Error: need to specify model name"</span>)</div><div class="line">    print(<span class="string">"Usage: python demo.py your.model"</span>)</div><div class="line">    sys.exit(<span class="number">-1</span>)</div><div class="line"></div><div class="line">model = sys.argv[<span class="number">1</span>]</div><div class="line"></div><div class="line">signal.signal(signal.SIGINT, signal_handler)</div><div class="line"></div><div class="line">detector = snowboydecoder.HotwordDetector(model, sensitivity=<span class="number">0.5</span>)</div><div class="line">print(<span class="string">'Listening... Press Ctrl+C to exit'</span>)</div><div class="line"></div><div class="line">detector.start(detected_callback=snowboydecoder.ding_callback,</div><div class="line">               interrupt_check=interrupt_callback,</div><div class="line">               sleep_time=<span class="number">0.03</span>)</div><div class="line"></div><div class="line">detector.terminate()</div></pre></td></tr></table></figure>
+<p>主程序在<strong>detector.start()</strong>中循环，每<strong>sleep_time=0.03</strong>:</p>
+<ol>
+<li>检查ring buffer 是否有hotword, if <strong>YES</strong>,调用<strong>detected_callback</strong>函数</li>
+<li>调用<strong>interrupt_check</strong>函数，if <strong>True</strong>，中断主程序，返回.</li>
+</ol>
+<p>目前，在demo中令detected_callback=snowboydecoder.ding_callback,所以每当检测到关键词时，设备会“叮”一下。</p>
+<p><strong>原文出处</strong>：<a href="http://docs.kitt.ai/snowboy/#running-a-demo" target="_blank" rel="external">http://docs.kitt.ai/snowboy/#running-a-demo</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/11/ReSpeaker智能语音双麦克风阵列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2284,192 +2487,6 @@ Credit_History
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/10/BaiduUNIT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/10/BaiduUNIT/" itemprop="url">百度UNIT</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-10T00:00:00+08:00">
-                2017-07-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/百度语音/" itemprop="url" rel="index">
-                    <span itemprop="name">百度语音</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前几天看到百度在宿舍楼下贴的海报，<strong>“百度之星”</strong>，2017年比赛分为开发者大赛和程序设计大赛。开发者大赛是要求基于百度UNIT平台设计开发一个对话系统的智能硬件或APP等都可以。主要目的应该是推广UNIT平台。</p>
-<blockquote>
-<p>UNIT（Understanding and Interaction Technology），即理解与交互技术，它是建立在百度多年积累的自然语言处理与对话技术以及大数据的基础上，面向第三方开发者提供的对话系统开发平台.</p>
-</blockquote>
-<p>从介绍上看，百度的出发点是挺好的，之前做过智能镜子，想加入语音交互功能，但是没有相应中文API提供，很蛋疼！</p>
-<blockquote>
-<p>随着AI技术和理念的兴起，很多产品都希望采用对话式的人机交互方式。然而对话系统的研发对于大多数开发者而言却是一个很困难的工作，对技术和数据的要求都很高。</p>
-<p>为此，百度将积累多年的自然语言理解与交互技术对外开放，将积累多年的自然语言理解与交互技术对外开放，推出了可定制的对话系统开发UNIT（Understanding and Interaction Technology），将业界领先的技术能力输出给广大的开发者，以便降低对话系统的研发门槛。</p>
-</blockquote>
-<p><strong>1、UNIT能做什么</strong></p>
-<p>帮开发者打造“面向任务的理解与交互能力”，可以解答用户的某些问题（天气、新闻、快递等生活服务）、执行用户指令（开空调等）、通过一系列交互引导用户达到某项需求（通过注册-选座-下单完成订票).</p>
-<p><strong>2、UNIT基本概念</strong></p>
-<p><em>（1）场景</em></p>
-<blockquote>
-<p>一个场景对应一个独立完整的对话系统，用来满足您某个具体业务场景的需求。通常按垂类划分（例如，银行信用卡办理场景、电视遥控器场景等）。</p>
-</blockquote>
-<p><em>(2)对话单元</em></p>
-<blockquote>
-<p>在UNIT里，对话单元用来定义系统在一个具体的对话任务下对用户对话的理解、以及机器人的回应方式，是系统中的最小对话单位。对话任务例如查天气、查询信用卡年费、控制空调温度等。</p>
-</blockquote>
-<p><em>(3)意图</em></p>
-<blockquote>
-<p>意图表示用户的目的（例如，”北京天气”，意图是查天气）。</p>
-</blockquote>
-<p><em>(4)词槽</em></p>
-<blockquote>
-<p>是满足用户意图时的关键信息或限定条件，可以理解为用户需要提供的筛选条件。例如在查询天气时，词槽是地点和时间。</p>
-</blockquote>
-<p><em>(5)对话样本</em></p>
-<blockquote>
-<p>对话样本就是您给对话系统做示范，教它在用户说的具体句子里，该如何理解意图，哪个词是重要信息，对应的词槽是什么。</p>
-</blockquote>
-<p><em>(6)训练模型</em></p>
-<blockquote>
-<p>即把场景下所有的配置、标注的对话样本、对话模板等打包提交给系统来训练模型。 模型生效一般需要几分钟时间。</p>
-</blockquote>
-<p><em>(7)沙盒</em></p>
-<blockquote>
-<p>每个场景都配有一个沙盒环境，将训练好的模型生效到沙盒环境后，就可以进行效果验证了，同时可接入到您自己的业务系统中使用。您可以生成多个模型版本，但只能选择一个放到沙盒环境中。</p>
-</blockquote>
-<p><strong>3、UNIT使用步骤</strong></p>
-<p><em>（a)梳理业务逻辑</em></p>
-<p><em>（b)配置对话系统</em></p>
-<p><em>（c)标注对话数据</em></p>
-<p><em>（d)对话训练与验证</em></p>
-<p><em>（e)应用调用</em></p>
-<p><strong>相关连接</strong></p>
-<p>1、<a href="http://astar2017.baidu.com/" title="2017年百度之星" target="_blank" rel="external">http://astar2017.baidu.com/</a></p>
-<p>2、<a href="http://ai.baidu.com/docs#/UNIT-guide/top" title="UNIT入门指南" target="_blank" rel="external">http://ai.baidu.com/docs#/UNIT-guide/top</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2520,7 +2537,7 @@ Credit_History
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

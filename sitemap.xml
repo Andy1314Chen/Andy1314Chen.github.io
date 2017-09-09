@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/09/09/%E7%BD%91%E6%98%93%E4%B8%80%E9%81%93%E7%AE%97%E6%B3%95%E9%A2%98/</loc>
+    
+    <lastmod>2017-09-09T10:02:26.721Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/09/07/sklearn%E5%BA%93LogisticRegression%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E8%B0%83%E5%8F%82/</loc>
     
     <lastmod>2017-09-07T13:03:01.927Z</lastmod>
