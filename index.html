@@ -299,6 +299,204 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/英特尔两道编程题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/14/英特尔两道编程题/" itemprop="url">英特尔校招两道编程题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T00:00:00+08:00">
+                2017-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。<br>师兄做的是B类，共有两道编程题，和A类是一致的。</p>
+<p>第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。</p>
+<pre><code>D_LIST* remove(D_LIST* head, int val)
+{
+    if(head==NULL)
+        return head;
+    D_LIST* preNode=(D_LIST*)malloc(sizeof(D_LIST));//就是这里没有分配
+    preNode-&gt;next=head;
+    D_LIST* curNode=preNode;
+    while(curNode-&gt;next!=NULL)
+    {
+        if(curNode-&gt;next-&gt;data==val)
+        {
+            D_LIST* nextNode=curNode-&gt;next;
+            curNode-&gt;next=nextNode-&gt;next;
+
+        }
+        else
+            curNode=curNode-&gt;next;
+    }
+    D_LIST* result=preNode-&gt;next;
+    free(preNode);
+    return result; 
+}
+</code></pre><p>第二道是，删除字符串中/**/包围的字符，也很简单，但是没有AC，原因在于写的太混乱，总是报错。</p>
+<pre><code>void remove_comments(char *txt)
+{
+    char *str=txt;
+    if(str==NULL)
+        return;
+    int n=strlen(txt);
+    int ind1=0,ind2=0;
+    for(int i=0;i&lt;n;i++)
+    {
+        if(str[i]==&apos;/&apos;)
+        {
+            if(!ind1)
+            {
+                ind1=i;
+                continue;
+            }
+            else
+            {
+                ind2=i;
+                break;
+            }
+        }
+    }
+    int i=0,j=0;
+    if(ind1&amp;&amp;ind2)
+    { 
+        for( i=0,j=0;i&lt;n;i++)
+        {
+            if((i&lt;ind1)||(i&gt;ind2))
+            {
+                txt[j++]=str[i];
+            }
+        }
+    }
+    txt[j]=&apos;\0&apos;;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2995,515 +3193,6 @@ def feature_ranking(score):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/17/机器学习书单/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/17/机器学习书单/" itemprop="url">机器学习路线【转】</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T00:00:00+08:00">
-                2017-08-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/book/" itemprop="url" rel="index">
-                    <span itemprop="name">book</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/book/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><ul>
-<li><a href="#preparation">前言</a> </li>
-<li><a href="#curriculum">课程列表</a></li>
-<li><p><a href="#learning_route">推荐学习路线</a></p>
-<ul>
-<li><a href="#math_basic">数学基础初级</a></li>
-<li><a href="#programming_basic">程序语言能力</a> </li>
-<li><a href="#machine_learning_basic">机器学习课程初级</a></li>
-<li><a href="#math_median">数学基础中级</a></li>
-<li><a href="#machine_learning_median">机器学习课程中级</a></li>
-</ul>
-</li>
-<li><p><a href="#booklists">推荐书籍列表</a></p>
-</li>
-<li><a href="#special_learning">机器学习专项领域学习</a></li>
-<li><a href="#many_thanks">致谢</a></li>
-</ul>
-<p><img src="http://i.imgur.com/WDsQmWN.jpg" alt="Machine Learning"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><h2 id="preparation">前言</h2></h2><p>   我们要求把这些课程的所有Notes,Slides以及作者强烈推荐的论文看懂看明白，并完成所有的老师布置的习题，而推荐的书籍是不做要求的，如果有些书籍是需要看完的，我们会进行额外的说明。</p>
-<h2 id="课程列表"><a href="#课程列表" class="headerlink" title="课程列表"></a><h2 id="curriculum">课程列表</h2></h2><table>
-<thead>
-<tr>
-<th style="text-align:left">课程</th>
-<th style="text-align:center">机构</th>
-<th style="text-align:center">参考书</th>
-<th style="text-align:center">Notes等其他资料</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/movie/2006/8/M/L/M6GLI5A07_M6GLJH1ML.html" target="_blank" rel="external">单变量微积分</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="https://www.amazon.com/exec/obidos/ASIN/0070576424/ref=nosim/mitopencourse-20" target="_blank" rel="external">Calculus with Analytic Geometry</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/mathematics/18-01-single-variable-calculus-fall-2006/" target="_blank" rel="external">链接</a> </td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/special/opencourse/multivariable.html" target="_blank" rel="external">多变量微积分</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="https://www.amazon.com/exec/obidos/ASIN/0130339679/ref=nosim/mitopencourse-20" target="_blank" rel="external">Multivariable Calculus</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/mathematics/18-02-multivariable-calculus-fall-2007/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/special/opencourse/daishu.html" target="_blank" rel="external">线性代数</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="http://math.mit.edu/~gs/linearalgebra/" target="_blank" rel="external">Introduction to Linear Algebra</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/study-materials/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/movie/2011/6/6/0/M82IC6GQU_M83J9IK60.html" target="_blank" rel="external">统计入门</a></td>
-<td style="text-align:center">可汗学院</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-</tr>
-<tr>
-<td style="text-align:left">概率论入门: <a href="http://mooc.guokr.com/course/461/%E6%A9%9F%E7%8E%87/" target="_blank" rel="external">链接1</a>,<a href="https://www.youtube.com/watch?v=GwSEguqJj6U&amp;index=1&amp;list=PLtvno3VRDR_jMAJcNY1n4pnP5kXtPOmVk" target="_blank" rel="external">链接2</a></td>
-<td style="text-align:center">NTU</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.youtube.com/watch?v=j9WZyLZCBzs&amp;list=PLQ3khvAsNhargDx0dG1cQXOrA2u3JsFKc" target="_blank" rel="external">概率与统计</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="https://www.amazon.com/exec/obidos/ASIN/188652923X/ref=nosim/mitopencourse-20" target="_blank" rel="external">Introduction to Probability</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/tutorials/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left">矩阵论</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="https://www.amazon.cn/%E7%9F%A9%E9%98%B5%E8%AE%BA-%E6%88%B4%E5%8D%8E/dp/B00116BRO0/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1478614198&amp;sr=1-1&amp;keywords=%E6%88%B4%E5%8D%8E%EF%BC%8C+%E7%9F%A9%E9%98%B5%E8%AE%BA" target="_blank" rel="external">矩阵论</a></td>
-<td style="text-align:center">暂无 </td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://lagunita.stanford.edu/courses/Engineering/CVX101/Winter2014/about" target="_blank" rel="external">凸优化1</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center"><a href="http://www.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf" target="_blank" rel="external">Convex Optimization</a></td>
-<td style="text-align:center"><a href="http://stanford.edu/class/ee364a/index.html" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.youtube.com/watch?v=U3lJAObbMFI&amp;list=PL3940DD956CDF0622&amp;index=20" target="_blank" rel="external">凸优化2</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="http://stanford.edu/class/ee364b/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/about" target="_blank" rel="external">统计学习入门</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center"><a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank" rel="external">An Introduction to Statistical Learning</a></td>
-<td style="text-align:center"><a href="https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/about" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.coursera.org/instructor/htlin" target="_blank" rel="external">机器学习基石</a></td>
-<td style="text-align:center">NTU</td>
-<td style="text-align:center"><a href="https://www.amazon.com/gp/product/1600490069" target="_blank" rel="external">Learning from Data</a></td>
-<td style="text-align:center"><a href="https://www.csie.ntu.edu.tw/~htlin/course/mlfound16fall/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.coursera.org/instructor/htlin" target="_blank" rel="external">机器学习技法</a></td>
-<td style="text-align:center">NTU</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="https://www.csie.ntu.edu.tw/~htlin/course/ml15fall/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.youtube.com/watch?v=mbyG85GZ0PI&amp;index=1&amp;list=PLD63A284B7615313A" target="_blank" rel="external">机器学习</a></td>
-<td style="text-align:center">Caltech</td>
-<td style="text-align:center"><a href="https://www.amazon.com/gp/product/1600490069" target="_blank" rel="external">Learning from Data</a></td>
-<td style="text-align:center"><a href="http://work.caltech.edu/lectures.html" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/movie/2008/1/M/C/M6SGF6VB4_M6SGHFBMC.html" target="_blank" rel="external">机器学习(matlab)</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="http://cs229.stanford.edu/materials.html" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left">Python程序语言设计</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-</tr>
-<tr>
-<td style="text-align:left">Matlab程序语言设计</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-</tr>
-</tbody>
-</table>
-<h2 id="推荐学习路线"><a href="#推荐学习路线" class="headerlink" title="推荐学习路线"></a><h2 id="learning_route">推荐学习路线</h2></h2><h3 id="数学基础初级"><a href="#数学基础初级" class="headerlink" title="数学基础初级"></a><h3 id="math_basic">数学基础初级</h3></h3><table>
-<thead>
-<tr>
-<th style="text-align:left">课程</th>
-<th style="text-align:center">机构</th>
-<th style="text-align:center">参考书</th>
-<th style="text-align:center">Notes等其他资料</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/movie/2006/8/M/L/M6GLI5A07_M6GLJH1ML.html" target="_blank" rel="external">单变量微积分</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="https://www.amazon.com/exec/obidos/ASIN/0070576424/ref=nosim/mitopencourse-20" target="_blank" rel="external">Calculus with Analytic Geometry</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/mathematics/18-01-single-variable-calculus-fall-2006/" target="_blank" rel="external">链接</a> </td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/special/opencourse/multivariable.html" target="_blank" rel="external">多变量微积分</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="https://www.amazon.com/exec/obidos/ASIN/0130339679/ref=nosim/mitopencourse-20" target="_blank" rel="external">Multivariable Calculus</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/mathematics/18-02-multivariable-calculus-fall-2007/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/special/opencourse/daishu.html" target="_blank" rel="external">线性代数</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="http://math.mit.edu/~gs/linearalgebra/" target="_blank" rel="external">Introduction to Linear Algebra</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/study-materials/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/movie/2011/6/6/0/M82IC6GQU_M83J9IK60.html" target="_blank" rel="external">统计入门</a></td>
-<td style="text-align:center">可汗学院</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-</tr>
-<tr>
-<td style="text-align:left">概率论入门: <a href="http://mooc.guokr.com/course/461/%E6%A9%9F%E7%8E%87/" target="_blank" rel="external">链接1</a>,<a href="https://www.youtube.com/watch?v=GwSEguqJj6U&amp;index=1&amp;list=PLtvno3VRDR_jMAJcNY1n4pnP5kXtPOmVk" target="_blank" rel="external">链接2</a></td>
-<td style="text-align:center">NTU</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.youtube.com/watch?v=j9WZyLZCBzs&amp;list=PLQ3khvAsNhargDx0dG1cQXOrA2u3JsFKc" target="_blank" rel="external">概率与统计</a></td>
-<td style="text-align:center">MIT</td>
-<td style="text-align:center"><a href="https://www.amazon.com/exec/obidos/ASIN/188652923X/ref=nosim/mitopencourse-20" target="_blank" rel="external">Introduction to Probability</a></td>
-<td style="text-align:center"><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/tutorials/" target="_blank" rel="external">链接</a></td>
-</tr>
-</tbody>
-</table>
-<h3 id="程序语言能力"><a href="#程序语言能力" class="headerlink" title="程序语言能力"></a><h3 id="programming_basic">程序语言能力</h3></h3><p>考虑到机器学习的核心是里面的数学原理和算法思想，程序语言目前主要是帮助大家较好的完成课后作业以及实现自己的一些idea，此处我们仅仅给出推荐的参考学习链接，大家掌握一些常用的模块即可，即完成参考学习链接部分的内容即可，推荐书籍比较经典，但不做要求。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">课程</th>
-<th style="text-align:center">参考学习链接</th>
-<th style="text-align:center">推荐书籍</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Python程序语言设计</td>
-<td style="text-align:center"><a href="http://cs231n.github.io/python-numpy-tutorial/" target="_blank" rel="external">链接</a></td>
-<td style="text-align:center">暂无  </td>
-</tr>
-<tr>
-<td style="text-align:left">Matlab程序语言设计</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无 </td>
-</tr>
-<tr>
-<td style="text-align:left">R程序语言设计</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center">暂无 </td>
-</tr>
-</tbody>
-</table>
-<h3 id="机器学习课程初级"><a href="#机器学习课程初级" class="headerlink" title="机器学习课程初级"></a><h3 id="machine_learning_basic">机器学习课程初级</h3></h3><table>
-<thead>
-<tr>
-<th style="text-align:left">课程</th>
-<th style="text-align:center">机构</th>
-<th style="text-align:center">参考书</th>
-<th style="text-align:center">Notes等其他资料</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><a href="https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/about" target="_blank" rel="external">统计学习入门</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center"><a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank" rel="external">An Introduction to Statistical Learning</a></td>
-<td style="text-align:center"><a href="https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/about" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="external">机器学习入门</a></td>
-<td style="text-align:center">Coursera</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="external">链接</a></td>
-</tr>
-</tbody>
-</table>
-<h3 id="数学基础中级"><a href="#数学基础中级" class="headerlink" title="数学基础中级"></a><h3 id="math_median">数学基础中级</h3></h3><table>
-<thead>
-<tr>
-<th style="text-align:left">课程</th>
-<th style="text-align:center">机构</th>
-<th style="text-align:center">参考书</th>
-<th style="text-align:center">Notes等其他资料</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">矩阵论</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="https://www.amazon.cn/%E7%9F%A9%E9%98%B5%E8%AE%BA-%E6%88%B4%E5%8D%8E/dp/B00116BRO0/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1478614198&amp;sr=1-1&amp;keywords=%E6%88%B4%E5%8D%8E%EF%BC%8C+%E7%9F%A9%E9%98%B5%E8%AE%BA" target="_blank" rel="external">矩阵论</a></td>
-<td style="text-align:center">暂无 </td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://lagunita.stanford.edu/courses/Engineering/CVX101/Winter2014/about" target="_blank" rel="external">凸优化1</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center"><a href="http://www.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf" target="_blank" rel="external">Convex Optimization</a></td>
-<td style="text-align:center"><a href="http://stanford.edu/class/ee364a/index.html" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.youtube.com/watch?v=U3lJAObbMFI&amp;list=PL3940DD956CDF0622&amp;index=20" target="_blank" rel="external">凸优化2</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="http://stanford.edu/class/ee364b/" target="_blank" rel="external">链接</a></td>
-</tr>
-</tbody>
-</table>
-<p>下面这个概述必须看完。</p>
-<ul>
-<li><a href="https://link.zhihu.com/?target=http%3A//arxiv.org/abs/1405.4980" target="_blank" rel="external">Convex Optimization: Algorithms and Complexity</a></li>
-</ul>
-<h3 id="机器学习课程中级"><a href="#机器学习课程中级" class="headerlink" title="机器学习课程中级"></a><h3 id="machine_learning_median">机器学习课程中级</h3></h3><p>   此处NTU和Caltech两个大学的课程是由《Learning from Data》一书的两个不同的作者讲的，所以仅仅只需选择一个完成即可，注意：如果选择完成NTU的机器学习课程，则<strong>NTU的“机器学习基石”和“机器学习技法”需同时完成。</strong>。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">课程</th>
-<th style="text-align:center">机构</th>
-<th style="text-align:center">参考书</th>
-<th style="text-align:center">Notes等其他资料</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><a href="https://www.coursera.org/instructor/htlin" target="_blank" rel="external">机器学习基石</a></td>
-<td style="text-align:center">NTU</td>
-<td style="text-align:center"><a href="https://www.amazon.com/gp/product/1600490069" target="_blank" rel="external">Learning from Data</a></td>
-<td style="text-align:center"><a href="https://www.csie.ntu.edu.tw/~htlin/course/mlfound16fall/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.coursera.org/instructor/htlin" target="_blank" rel="external">机器学习技法</a></td>
-<td style="text-align:center">NTU</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="https://www.csie.ntu.edu.tw/~htlin/course/ml15fall/" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://open.163.com/movie/2008/1/M/C/M6SGF6VB4_M6SGHFBMC.html" target="_blank" rel="external">机器学习</a></td>
-<td style="text-align:center">Stanford</td>
-<td style="text-align:center">暂无</td>
-<td style="text-align:center"><a href="http://cs229.stanford.edu/materials.html" target="_blank" rel="external">链接</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.youtube.com/watch?v=mbyG85GZ0PI&amp;index=1&amp;list=PLD63A284B7615313A" target="_blank" rel="external">机器学习</a></td>
-<td style="text-align:center">Caltech</td>
-<td style="text-align:center"><a href="https://www.amazon.com/gp/product/1600490069" target="_blank" rel="external">Learning from Data</a></td>
-<td style="text-align:center"><a href="http://work.caltech.edu/lectures.html" target="_blank" rel="external">链接</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="推荐书籍列表"><a href="#推荐书籍列表" class="headerlink" title="推荐书籍列表"></a><h2 id="booklists">推荐书籍列表</h2></h2><p>   以下推荐的书籍都是公认的机器学习领域界的好书，建议<strong>一般难度的书籍至少详细阅读一本，建议看两本</strong>，而较难的书籍不做任何要求，大家可以在学有余力时细细品味经典。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">书名</th>
-<th style="text-align:center">难度</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><a href="https://www.amazon.cn/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95-%E6%9D%8E%E8%88%AA/dp/B007TSFMTA" target="_blank" rel="external">统计学习方法</a></td>
-<td style="text-align:center">一般</td>
-</tr>
-<tr>
-<td style="text-align:left"> <a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank" rel="external">An Introduction to Statistical Learning</a></td>
-<td style="text-align:center">一般</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.amazon.com/gp/product/0071154671?ie=UTF8&amp;tag=jefork-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0071154671" target="_blank" rel="external">Machine Learning</a></td>
-<td style="text-align:center">一般</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.amazon.com/gp/product/1600490069" target="_blank" rel="external">Learning from Data</a></td>
-<td style="text-align:center">一般，<a href="https://work.caltech.edu/telecourse.html" target="_blank" rel="external">配套讲义</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738/ref=pd_sim_14_1?ie=UTF8&amp;dpID=61f0EXfMRvL&amp;dpSrc=sims&amp;preST=_AC_UL160_SR118%2C160_&amp;refRID=119X50P5F0DFA339S9DR" target="_blank" rel="external">Pattern Recognition and Machine Learning</a></td>
-<td style="text-align:center">较难(偏贝叶斯),<a href="http://cs.brown.edu/courses/csci1420/lectures.html" target="_blank" rel="external">配套讲义</a></td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.amazon.com/The-Elements-Statistical-Learning-Prediction/dp/0387848576/ref=pd_sim_14_2?ie=UTF8&amp;dpID=41LeU3HcBdL&amp;dpSrc=sims&amp;preST=_AC_UL160_SR103%2C160_&amp;refRID=119X50P5F0DFA339S9DR" target="_blank" rel="external">The Elements of Statistical Learning</a></td>
-<td style="text-align:center">较难</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="http://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf" target="_blank" rel="external">Understanding Machine Learning:From Theory to Algorithms</a></td>
-<td style="text-align:center">较难</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://www.amazon.com/Machine-Learning-Probabilistic-Perspective-Computation/dp/0262018020" target="_blank" rel="external">Machine Learning: A probabilistic approach</a></td>
-<td style="text-align:center">较难</td>
-</tr>
-</tbody>
-</table>
-<h2 id="机器学习专项领域学习"><a href="#机器学习专项领域学习" class="headerlink" title="机器学习专项领域学习"></a><h3 id="special_learning">机器学习专项领域学习</h3></h2><p>如果您已经完成了上述的所有科目，恭喜您已经拥有十分扎实的机器学习基础了，已经是一名合格的机器学习成员了，可以较为顺利的进入下面某一专项领域进行较为深入研究,因为并不是所有的专项领域都有对应的课程或者书籍等学习资料，所以此处我们仅列举一些我们知道的专项领域的学习资料，当然这些领域不能涵盖所有，还有很多领域没有整理（希望大家一起完善），如果这些领域适合你，那就继续加油！如果不清楚，那么大家可以去下面列举的高级会议期刊上去寻找自己感兴趣的话题进行学习研究。</p>
-<h3 id="一些专项领域资料"><a href="#一些专项领域资料" class="headerlink" title="一些专项领域资料"></a><h3 id="special_learning_data">一些专项领域资料</h3></h3><ul>
-<li><a href="https://github.com/JustFollowUs/Deep-Learning" target="_blank" rel="external">深度学习</a></li>
-<li><a href="https://github.com/JustFollowUs/Probabilistic-graphical-models" target="_blank" rel="external">图模型</a></li>
-<li><a href="https://github.com/JustFollowUs/Reinforcement-Learning" target="_blank" rel="external">强化学习</a></li>
-<li><a href="http://cs.nju.edu.cn/lwj/L2H.html" target="_blank" rel="external">Hash</a> </li>
-<li><a href="https://github.com/JustFollowUs/Theoretical-Machine-Learning/" target="_blank" rel="external">理论机器学习</a></li>
-<li>其他(尚未完善)</li>
-</ul>
-<h3 id="领域会议期刊"><a href="#领域会议期刊" class="headerlink" title="领域会议期刊"></a><h3 id="special_learning_data">领域会议期刊</h3></h3><ul>
-<li><a href="https://nips.cc/" target="_blank" rel="external">NIPS</a></li>
-<li><a href="http://icml.cc/" target="_blank" rel="external">ICML</a></li>
-<li><a href="http://www.aaai.org/" target="_blank" rel="external">AAAI</a></li>
-<li><a href="http://www.ijcai.org/" target="_blank" rel="external">IJCAI</a></li>
-<li><a href="http://www.kdd.org/" target="_blank" rel="external">KDD</a></li>
-<li><a href="http://www.cs.uvm.edu/~icdm/" target="_blank" rel="external">ICDM</a></li>
-<li><a href="http://www.learningtheory.org/" target="_blank" rel="external">COLT</a></li>
-<li>其他(尚未完善)</li>
-</ul>
-<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a><h2 id="many_thanks">致谢</h2></h2><p>  感谢南京大学LAMDA实验组杨杨博士的建议与资料的分享。</p>
-<p>原文链接：<a href="https://github.com/JustFollowUs/Machine-Learning" target="_blank" rel="external">https://github.com/JustFollowUs/Machine-Learning</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3554,7 +3243,7 @@ def feature_ranking(score):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
