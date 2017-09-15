@@ -144,6 +144,8 @@
 
 
 
+<link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+
   <title>Relief特征选择算法Python实现 | Andy's blog</title>
   
 
@@ -426,7 +428,7 @@ def reliefF(X,y,**kwargs):
 n_samples,n_features=X.shape
 
 #计算两两距离，曼哈顿距离
-distance=pairwise_distances(X,metric=&apos;manhattan&apos;)
+distance=pairwise_distances(X,metric=&#39;manhattan&#39;)
 
 score=np.zeros(n_features)
 
@@ -1231,5 +1233,14 @@ def feature_ranking(score):
   <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
   <!-- 小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script>
+  
 </body>
 </html>

@@ -141,6 +141,8 @@
 
 
 
+<link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+
   <title>A Complete Tutorial to Learn Data Science with Python from Scratch(1) | Andy's blog</title>
   
 
@@ -430,7 +432,7 @@
 - 简单易学
 - 可以成为Data Science的一种标准语言
 </code></pre><p>但是缺点也显而易见，</p>
-<pre><code>- 解释型语言，速度慢
+<pre><code> - 解释型语言，速度慢
 </code></pre><p><strong>Python 2.7 vs 3.4</strong></p>
 <p>这是一个非常具有争议性的话题，但是，我个人感觉，如果现在入门学习一定要用Python3了。</p>
 <p><strong>How to install Python?</strong></p>
@@ -443,29 +445,40 @@
 <li>Lists-Lists 是Python中使用最为频繁，功能也最为丰富的数据结构。可以简单的由逗号和中括号定义。Lists可以包含不同类型的元素，但是使用时基本都是同类型的。Python中lists是可变的，list中的每个元素也都可以改写。</li>
 </ul>
 <h2 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h2><p>A list can be simply defined by writing comma separated values in square brackets.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>,<span class="number">25</span>]</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list</div></pre></td></tr></table></figure>
+<pre><code class="python">squares_list=[0,1,4,9,16,25]
+</code></pre>
+<pre><code class="python">squares_list
+</code></pre>
 <pre><code>[0, 1, 4, 9, 16, 25]
 </code></pre><p>Individual elements of a list can be accessed by writing the index number in square bracket. Please note that the first index of a list is 0 and not 1</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list[<span class="number">0</span>]<span class="comment">#Indexing returns the item</span></div></pre></td></tr></table></figure>
+<pre><code class="python">squares_list[0]#Indexing returns the item
+</code></pre>
 <pre><code>0
 </code></pre><p>A range of script can be accessed by having first index and last index</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list[<span class="number">2</span>:<span class="number">4</span>] <span class="comment">#Slicing returns a new list</span></div></pre></td></tr></table></figure>
+<pre><code class="python">squares_list[2:4] #Slicing returns a new list
+</code></pre>
 <pre><code>[4, 9]
 </code></pre><p>A Negative index access the list from end</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares_list[<span class="number">-2</span>] <span class="comment">#It should return the second last element in the list</span></div></pre></td></tr></table></figure>
+<pre><code class="python">squares_list[-2] #It should return the second last element in the list
+</code></pre>
 <pre><code>16
 </code></pre><p>A few common methods applicable to lists include: append(),extend(),insert(),remove(),pop(),count(),sort(),reverse()</p>
 <ul>
 <li><strong>Strings</strong>- Strings 可以简单的用单引号(‘),双引号(“),三引号( ”’)表示。 Strings用三引号时可以包含多行，因此在Python docstrings中使用较多。‘\’是一个换行符，另起一行。但是需要注意Python strings是不可变的，不能改变strings!</li>
 </ul>
 <h2 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h2><p>A string can be simply defined by using single(‘),double(‘’) or triple(‘’’) quotation</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">greeting=<span class="string">'Hello'</span></div><div class="line">print(greeting[<span class="number">1</span>])</div><div class="line">print(len(greeting))</div><div class="line">print(greeting+<span class="string">'World'</span>)</div></pre></td></tr></table></figure>
+<pre><code class="python">greeting=&#39;Hello&#39;
+print(greeting[1])
+print(len(greeting))
+print(greeting+&#39;World&#39;)
+</code></pre>
 <pre><code>e
 5
 HelloWorld
 </code></pre><p>Raw strings can be used to pass on string as is. Python interpretter does not alter the string, if you specify a string to be raw. Raw string can be defined by adding r to the string</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">stmt=<span class="string">r'\n is a newline character by default.'</span></div><div class="line">print(stmt)</div></pre></td></tr></table></figure>
+<pre><code class="python">stmt=r&#39;\n is a newline character by default.&#39;
+print(stmt)
+</code></pre>
 <pre><code>\n is a newline character by default.
 </code></pre><p>Python strings are immutable and hence can be changed. Doing so will result in an error.</p>
 <p>Common string methods include lower(),strip(),isdigit(),isspace(),find(),replace(),split() and join(). These are usually very helpful when you need to perform data mainpulation or cleaning on text fields.</p>
@@ -474,12 +487,16 @@ HelloWorld
 </ul>
 <p>因为元组是不可变的，在处理上相对于List更快。可以使用tuple代替使用不会更改的list.</p>
 <h2 id="Tuples"><a href="#Tuples" class="headerlink" title="Tuples"></a>Tuples</h2><p>A tuple is represented by a number of values separated by commas.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example=<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>,<span class="number">25</span></div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example</div></pre></td></tr></table></figure>
+<pre><code class="python">tuple_example=0,1,4,9,16,25
+</code></pre>
+<pre><code class="python">tuple_example
+</code></pre>
 <pre><code>(0, 1, 4, 9, 16, 25)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example[<span class="number">2</span>]</div></pre></td></tr></table></figure>
+</code></pre><pre><code class="python">tuple_example[2]
+</code></pre>
 <pre><code>4
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tuple_example[<span class="number">2</span>]=<span class="number">6</span></div></pre></td></tr></table></figure>
+</code></pre><pre><code class="python">tuple_example[2]=6
+</code></pre>
 <pre><code>---------------------------------------------------------------------------
 
 TypeError                                 Traceback (most recent call last)
@@ -488,29 +505,49 @@ TypeError                                 Traceback (most recent call last)
 ----&gt; 1 tuple_example[2]=6
 
 
-TypeError: &apos;tuple&apos; object does not support item assignment
+TypeError: &#39;tuple&#39; object does not support item assignment
 </code></pre><ul>
 <li>Dictionary -Dictionary是一种无序的key-value对集合，同一Dictionary中Key必须是唯一的。用大括号变可以建立一个空的Dictionary.</li>
 </ul>
 <h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><p>A dictionary is an unordered set of key: value pairs, with the requirement that the keys are unique (within one dictionary). A pair of braces creates an empty dictionary:{}</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extensions=&#123;<span class="string">'Kunal'</span>:<span class="number">9073</span>,<span class="string">'Tavish'</span>:<span class="number">9128</span>,<span class="string">'Sunil'</span>:<span class="number">9223</span>,<span class="string">'Nitin'</span>:<span class="number">9330</span>&#125;</div><div class="line">extensions</div></pre></td></tr></table></figure>
-<pre><code>{&apos;Kunal&apos;: 9073, &apos;Nitin&apos;: 9330, &apos;Sunil&apos;: 9223, &apos;Tavish&apos;: 9128}
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extensions[<span class="string">'Mukesh'</span>]=<span class="number">9150</span></div><div class="line">extensions</div></pre></td></tr></table></figure>
-<pre><code>{&apos;Kunal&apos;: 9073, &apos;Mukesh&apos;: 9150, &apos;Nitin&apos;: 9330, &apos;Sunil&apos;: 9223, &apos;Tavish&apos;: 9128}
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extensions.keys()</div></pre></td></tr></table></figure>
-<pre><code>dict_keys([&apos;Kunal&apos;, &apos;Tavish&apos;, &apos;Sunil&apos;, &apos;Nitin&apos;, &apos;Mukesh&apos;])
+<pre><code class="python">extensions={&#39;Kunal&#39;:9073,&#39;Tavish&#39;:9128,&#39;Sunil&#39;:9223,&#39;Nitin&#39;:9330}
+extensions
+</code></pre>
+<pre><code>{&#39;Kunal&#39;: 9073, &#39;Nitin&#39;: 9330, &#39;Sunil&#39;: 9223, &#39;Tavish&#39;: 9128}
+</code></pre><pre><code class="python">extensions[&#39;Mukesh&#39;]=9150
+extensions
+</code></pre>
+<pre><code>{&#39;Kunal&#39;: 9073, &#39;Mukesh&#39;: 9150, &#39;Nitin&#39;: 9330, &#39;Sunil&#39;: 9223, &#39;Tavish&#39;: 9128}
+</code></pre><pre><code class="python">extensions.keys()
+</code></pre>
+<pre><code>dict_keys([&#39;Kunal&#39;, &#39;Tavish&#39;, &#39;Sunil&#39;, &#39;Nitin&#39;, &#39;Mukesh&#39;])
 </code></pre><h2 id="Python-Iteration-and-Conditional-Constructs"><a href="#Python-Iteration-and-Conditional-Constructs" class="headerlink" title="Python Iteration and Conditional Constructs"></a>Python Iteration and Conditional Constructs</h2><p>Like most languages, Python also has a FOR-loop which is the most widely used method for iteration. It has a simple syntax:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [Python Iterable]:</div><div class="line">  expression(i)</div></pre></td></tr></table></figure>
+<pre><code class="Python"> for i in [Python Iterable]:
+   expression(i)
+</code></pre>
 <p>Here “Python Iterable” can be a list, tuple or other advanced data structures which we will explore in later sections. Let’s take a look at a simple example, determining the factorial of a number.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">fact=<span class="number">1</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,N+<span class="number">1</span>):</div><div class="line">  fact *=i</div></pre></td></tr></table></figure>
+<pre><code class="Python"> fact=1
+ for i in range(1,N+1):
+   fact *=i
+</code></pre>
 <p>Coming to conditional statements, these are used to execute code fragments based on a condition. The most commonly used construct is if-else, with following syntax:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> [condition]:</div><div class="line">   __execution <span class="keyword">if</span> true__</div><div class="line"><span class="keyword">else</span>:</div><div class="line">   __execution <span class="keyword">if</span> false__</div></pre></td></tr></table></figure>
+<pre><code class="Python">  if [condition]:
+     __execution if true__
+  else:
+     __execution if false__
+</code></pre>
 <p>For instance, if we want to print whether the number N is even or odd:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> N%<span class="number">2</span> == <span class="number">0</span>:</div><div class="line">  print(<span class="string">'Even'</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">  print(<span class="string">'Odd'</span>)</div></pre></td></tr></table></figure>
+<pre><code class="Python">  if N%2 == 0:
+    print(&#39;Even&#39;)
+  else:
+    print(&#39;Odd&#39;)
+</code></pre>
 <p>Now that you are familiar with Python fundamentals, let’s take a step further. </p>
 <h2 id="Python-Libraries"><a href="#Python-Libraries" class="headerlink" title="Python Libraries"></a>Python Libraries</h2><p>Lets take one step ahead in our journey to learn Python by getting acquainted with some useful libraries. The first step is obviously to learn to import them into our environment. There are several ways of doing so in Python:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> math <span class="keyword">as</span> m</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> math <span class="keyword">import</span> *</div></pre></td></tr></table></figure>
+<pre><code class="Python">  import math as m
+</code></pre>
+<pre><code class="Python">  from math import *
+</code></pre>
 <p>In the first manner, we have defined an alias m to library math. We can now use various functions from math library (e.g. factorial) by referencing it using the alias m.factorial().</p>
 <p>In the second manner, you have imported the entire name space in math i.e. you can directly use factorial() without referring to math.</p>
 <p>推荐使用前一种导入方法。</p>
@@ -1287,5 +1324,14 @@ TypeError: &apos;tuple&apos; object does not support item assignment
   <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
   <!-- 小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script>
+  
 </body>
 </html>

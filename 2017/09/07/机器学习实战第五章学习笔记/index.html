@@ -162,6 +162,8 @@
 
 
 
+<link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+
   <title>机器学习实战第五章学习笔记(Logistic回归) | Andy's blog</title>
   
 
@@ -471,7 +473,7 @@ import numpy as np
 #Logistic回归梯度上升法优化算法
 def loadDataSet():#读取样本数据
     dataMat=[];labelMat=[]
-    fr=open(&apos;testSet.txt&apos;)
+    fr=open(&#39;testSet.txt&#39;)
     for line in fr.readlines():
         lineArr=line.strip().split()#除去空格后划分
         dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征
@@ -515,12 +517,12 @@ def plotBestFit(wei):
     fig=plt.figure()
     ax=fig.add_subplot(111)
     print(len(xcord1),len(ycord1))
-    ax.scatter(xcord1,ycord1,s=30,c=&apos;red&apos;,marker=&apos;s&apos;)
-    ax.scatter(xcord2,ycord2,s=30,c=&apos;green&apos;)
+    ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;)
+    ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;)
     x=np.arange(-3.0,3.0,0.1)
     y=(-weights[0]-weights[1]*x)/weights[2]
     ax.plot(x,y)
-    plt.xlabel(&apos;X1&apos;);plt.ylabel(&apos;X2&apos;);
+    plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;);
     plt.show()
 </code></pre><p><img src="http://img.blog.csdn.net/20170502140250228" alt=""></p>
 <h4 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h4><p>回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是<img src="http://img.blog.csdn.net/20150414211501282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTHU1OTcyMDM5MzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。</p>
@@ -624,11 +626,11 @@ def classifyVector(inX,weights):
         return 0.0
 
 def colicTest():
-    frTrain=open(&apos;horseColicTraining.txt&apos;)
-    frTest=open(&apos;horseColicTest.txt&apos;)
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
     trainingSet=[];trainingLabels=[]
     for line in frTrain.readlines():
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):#21个特征
             lineArr.append(float(currLine[i]))
@@ -638,7 +640,7 @@ def colicTest():
     errorCount=0;numTestVec=0.0
     for line in frTest.readlines():
         numTestVec+=1.0
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):
             lineArr.append(float(currLine[i]))
@@ -704,8 +706,8 @@ def multiTest():
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/07/sklearn库LogisticRegression使用及简单调参/" rel="next" title="sklearn库LogisticRegression使用及简单调参">
-                <i class="fa fa-chevron-left"></i> sklearn库LogisticRegression使用及简单调参
+              <a href="/2017/09/05/机器学习实战第四章学习笔记/" rel="next" title="机器学习实战第四章学习笔记(朴素贝叶斯分类器)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第四章学习笔记(朴素贝叶斯分类器)
               </a>
             
           </div>
@@ -714,8 +716,8 @@ def multiTest():
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/09/网易一道算法题/" rel="prev" title="网易校招一道算法题">
-                网易校招一道算法题 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/07/sklearn库LogisticRegression使用及简单调参/" rel="prev" title="sklearn库LogisticRegression使用及简单调参">
+                sklearn库LogisticRegression使用及简单调参 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1386,5 +1388,14 @@ def multiTest():
   <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
   <!-- 小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script>
+  
 </body>
 </html>

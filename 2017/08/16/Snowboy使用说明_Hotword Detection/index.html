@@ -141,6 +141,8 @@
 
 
 
+<link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+
   <title>Snowboy使用说明_Hotword Detection | Andy's blog</title>
   
 
@@ -416,15 +418,20 @@
 <ol>
 <li>Install Sox</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install python-pyaudio python3-pyaudio sox</div></pre></td></tr></table></figure>
+<pre><code class="Python">  sudo apt-get install python-pyaudio python3-pyaudio sox
+</code></pre>
 <ol>
 <li>Install PortAudio’s Python bindings:</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pip install pyaudio</div><div class="line"><span class="comment">#pip-3.2 install pyaudio</span></div></pre></td></tr></table></figure>
+<pre><code class="Python">   pip install pyaudio
+   #pip-3.2 install pyaudio
+</code></pre>
 <ol>
 <li>To check whether you can record via your microphone, open a terminal and run:</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rec temp.wav</div><div class="line"><span class="comment">#记录个几秒中，ctrl+c,再play temp.wav,听声</span></div></pre></td></tr></table></figure>
+<pre><code class="Python">   rec temp.wav
+   #记录个几秒中，ctrl+c,再play temp.wav,听声
+</code></pre>
 <h3 id="Decoder-Structures"><a href="#Decoder-Structures" class="headerlink" title="Decoder Structures"></a>Decoder Structures</h3><p>上面预安装包下载解压后，如下：</p>
 <blockquote>
 <p>├── README.md</p>
@@ -448,11 +455,47 @@
 <h3 id="Runing-a-Demo"><a href="#Runing-a-Demo" class="headerlink" title="Runing a Demo"></a>Runing a Demo</h3><ol>
 <li>To access the simple demo in <strong>main</strong> code of snowboydecoder.py, run the following command in your Terminal:</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">python demo.py snowboy.pmdl</div><div class="line"><span class="comment">#snowboy.pmdl是你训练的hotword模型</span></div></pre></td></tr></table></figure>
+<pre><code class="Python">    python demo.py snowboy.pmdl
+    #snowboy.pmdl是你训练的hotword模型
+</code></pre>
 <ol>
 <li>When prompt,speak into your microphone to see whether snowboy detects your magic phrase.</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">#demo.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> snowboydecoder</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> signal</div><div class="line"></div><div class="line">interrupted = <span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">signal_handler</span><span class="params">(signal, frame)</span>:</span></div><div class="line">   	<span class="keyword">global</span> interrupted</div><div class="line">   	interrupted = <span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">interrupt_callback</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> interrupted</div><div class="line">    <span class="keyword">return</span> interrupted</div><div class="line"></div><div class="line"><span class="keyword">if</span> len(sys.argv) == <span class="number">1</span>:</div><div class="line">    print(<span class="string">"Error: need to specify model name"</span>)</div><div class="line">    print(<span class="string">"Usage: python demo.py your.model"</span>)</div><div class="line">    sys.exit(<span class="number">-1</span>)</div><div class="line"></div><div class="line">model = sys.argv[<span class="number">1</span>]</div><div class="line"></div><div class="line">signal.signal(signal.SIGINT, signal_handler)</div><div class="line"></div><div class="line">detector = snowboydecoder.HotwordDetector(model, sensitivity=<span class="number">0.5</span>)</div><div class="line">print(<span class="string">'Listening... Press Ctrl+C to exit'</span>)</div><div class="line"></div><div class="line">detector.start(detected_callback=snowboydecoder.ding_callback,</div><div class="line">               interrupt_check=interrupt_callback,</div><div class="line">               sleep_time=<span class="number">0.03</span>)</div><div class="line"></div><div class="line">detector.terminate()</div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    #demo.py
+
+    import snowboydecoder
+    import sys
+    import signal
+
+    interrupted = False
+
+    def signal_handler(signal, frame):
+        global interrupted
+        interrupted = True
+
+    def interrupt_callback():
+        global interrupted
+        return interrupted
+
+    if len(sys.argv) == 1:
+        print(&quot;Error: need to specify model name&quot;)
+        print(&quot;Usage: python demo.py your.model&quot;)
+        sys.exit(-1)
+
+    model = sys.argv[1]
+
+    signal.signal(signal.SIGINT, signal_handler)
+
+    detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
+    print(&#39;Listening... Press Ctrl+C to exit&#39;)
+
+    detector.start(detected_callback=snowboydecoder.ding_callback,
+                   interrupt_check=interrupt_callback,
+                   sleep_time=0.03)
+
+    detector.terminate()
+</code></pre>
 <p>主程序在<strong>detector.start()</strong>中循环，每<strong>sleep_time=0.03</strong>:</p>
 <ol>
 <li>检查ring buffer 是否有hotword, if <strong>YES</strong>,调用<strong>detected_callback</strong>函数</li>
@@ -1188,5 +1231,14 @@
   <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
   <!-- 小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script>
+  
 </body>
 </html>

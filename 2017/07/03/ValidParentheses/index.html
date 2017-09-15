@@ -139,6 +139,8 @@
 
 
 
+<link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+
   <title>Leetcode 20 Valid Parentheses | Andy's blog</title>
   
 
@@ -447,12 +449,12 @@ S.stackSize = N;//栈长度，本例中，假设不会超过初始长度
 
 int table[128] = { 10 };
 int e=0;
-table[&apos;(&apos;] = &apos;)&apos;;
-table[&apos;{&apos;] = &apos;}&apos;;
-table[&apos;[&apos;] = &apos;]&apos;;
-table[&apos;]&apos;] = &apos;-&apos;;
-table[&apos;}&apos;] = &apos;-&apos;;
-table[&apos;)&apos;] = &apos;-&apos;;
+table[&#39;(&#39;] = &#39;)&#39;;
+table[&#39;{&#39;] = &#39;}&#39;;
+table[&#39;[&#39;] = &#39;]&#39;;
+table[&#39;]&#39;] = &#39;-&#39;;
+table[&#39;}&#39;] = &#39;-&#39;;
+table[&#39;)&#39;] = &#39;-&#39;;
 for (int i = 0; i &lt; N; i++)
 {
     if (!StackEmpty(S))
@@ -1182,5 +1184,14 @@ return result;
   <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
   <!-- 小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script>
+  
 </body>
 </html>

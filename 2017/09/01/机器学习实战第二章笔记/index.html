@@ -141,6 +141,8 @@
 
 
 
+<link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+
   <title>机器学习实战第二章学习笔记(k-NN) | Andy's blog</title>
   
 
@@ -437,7 +439,7 @@ from os import listdir
 
 def createDataSet():
     group=np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
-    labels=[&apos;A&apos;,&apos;A&apos;,&apos;B&apos;,&apos;B&apos;]
+    labels=[&#39;A&#39;,&#39;A&#39;,&#39;B&#39;,&#39;B&#39;]
     return group,labels
 
     # inX: input
@@ -492,7 +494,7 @@ def file2matrix(filename):
     index=0
     for line in arrayOLines:
         line=line.strip()
-        listFromLine=line.split(&apos;\t&apos;)
+        listFromLine=line.split(&#39;\t&#39;)
         returnMat[index,:]=listFromLine[0:3]
         classLabelVector.append(int(listFromLine[-1]))
         index+=1
@@ -501,7 +503,7 @@ def file2matrix(filename):
 #测试
 reload(kNN)#重新加载kNN
 #python3中没有内置该函数，需要from imp import reload
-datingDataMat,datingLabels=kNN.file2matrix(&apos;datingTestSet2.txt&apos;)
+datingDataMat,datingLabels=kNN.file2matrix(&#39;datingTestSet2.txt&#39;)
 </code></pre><h4 id="归一化数值"><a href="#归一化数值" class="headerlink" title="归一化数值"></a>归一化数值</h4><p>因为kNN是依赖样本间距离进行分类的，欧式距离的计算中，数字差值最大的特征对计算结果的影响要大一些。但是，一般来说，每个特征视为同等重要的。这样就需要对特征值进行处理，通常采用的方法是将数值归一化，如将取值范围处理为0-1或-1-1之间。</p>
 <blockquote>
 <p>newValue=(oldValue-min)/(max-min)</p>
@@ -523,7 +525,7 @@ reload(kNN)
 normMat,ranges,minVals=kNN.autoNorm(datingDataMat)
 </code></pre><h4 id="kNN约会网站测试代码"><a href="#kNN约会网站测试代码" class="headerlink" title="kNN约会网站测试代码"></a>kNN约会网站测试代码</h4><pre><code>def datingClassTest():
     hoRatio=0.10
-    datingDataMat,datingLabels=file2matrix(&apos;datingTestSet2.txt&apos;)
+    datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;)
     normMat,ranges,minVals=autoNorm(datingDataMat)
     m=normMat.shape[0]
     numTestVecs=int(m*hoRatio)
@@ -531,23 +533,23 @@ normMat,ranges,minVals=kNN.autoNorm(datingDataMat)
     for i in range(numTestVecs):
         classifierResult=classify0(normMat[i,:],normMat[numTestVecs:m,:],
         datingLabels[numTestVecs:m],5)
-        print(&apos;the classifier came back with: %d, the real answer is: %d&apos; % (classifierResult,datingLabels[i]))
+        print(&#39;the classifier came back with: %d, the real answer is: %d&#39; % (classifierResult,datingLabels[i]))
         if (classifierResult != datingLabels[i]):
             errorCount+=1.0
-    print(&apos;the total error rate is : %f&apos; % (errorCount/float(numTestVecs)))
+    print(&#39;the total error rate is : %f&#39; % (errorCount/float(numTestVecs)))
 
 #测试
 kNN.datingClassTest()
 </code></pre><h4 id="约会网站预测函数"><a href="#约会网站预测函数" class="headerlink" title="约会网站预测函数"></a>约会网站预测函数</h4><pre><code>def classifyPerson():
-    resultList=[&apos;not at all&apos;,&apos;in small doses&apos;,&apos;in large doses&apos;]
-    percentTats=float(input(&apos;percentage of time spent playing video games?&apos;))
-    ffMiles=float(input(&apos;frequent fliter miles earned per year?&apos;))
-    iceCream=float(input(&apos;liters of ice cream consumed per year?&apos;))
-    datingDataMat,datingLabels=file2matrix(&apos;datingTestSet2.txt&apos;)
+    resultList=[&#39;not at all&#39;,&#39;in small doses&#39;,&#39;in large doses&#39;]
+    percentTats=float(input(&#39;percentage of time spent playing video games?&#39;))
+    ffMiles=float(input(&#39;frequent fliter miles earned per year?&#39;))
+    iceCream=float(input(&#39;liters of ice cream consumed per year?&#39;))
+    datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;)
     normMat,ranges,minVals=autoNorm(datingDataMat)
     inArr=np.array([ffMiles,percentTats,iceCream])
     classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
-    print(&apos;You will probably like this person: &apos;,\
+    print(&#39;You will probably like this person: &#39;,\
         resultList[classifierResult-1])
     #python2中的raw_input()，python3中为input()
 </code></pre><h3 id="示例2、手写识别系统"><a href="#示例2、手写识别系统" class="headerlink" title="示例2、手写识别系统"></a>示例2、手写识别系统</h3><h4 id="将32-32的二进制图像矩阵转化为1-1024向量"><a href="#将32-32的二进制图像矩阵转化为1-1024向量" class="headerlink" title="将32*32的二进制图像矩阵转化为1*1024向量"></a>将32*32的二进制图像矩阵转化为1*1024向量</h4><pre><code>def img2vector(filename):
@@ -559,34 +561,34 @@ kNN.datingClassTest()
             returnVect[0,32*i+j]=int(lineStr[j])
     return returnVect
 #测试
-testVector=kNN.img2vector(&apos;testDigits/0_13.txt&apos;)
+testVector=kNN.img2vector(&#39;testDigits/0_13.txt&#39;)
 </code></pre><h4 id="手写数字识别系统的测试代码"><a href="#手写数字识别系统的测试代码" class="headerlink" title="手写数字识别系统的测试代码"></a>手写数字识别系统的测试代码</h4><pre><code>from os import listdir
 def handwritingClassTest():
     hwLabels=[]
-    trainingFileList=listdir(&apos;trainingDigits&apos;)
+    trainingFileList=listdir(&#39;trainingDigits&#39;)
     m=len(trainingFileList)
     trainingMat=np.zeros((m,1024))
     for i in range(m):
         fileNameStr=trainingFileList[i]
-        fileStr=fileNameStr.split(&apos;.&apos;)[0]
-        classNumStr=int(fileStr.split(&apos;_&apos;)[0])#文件名是标签
+        fileStr=fileNameStr.split(&#39;.&#39;)[0]
+        classNumStr=int(fileStr.split(&#39;_&#39;)[0])#文件名是标签
         hwLabels.append(classNumStr)
-        trainingMat[i,:]=img2vector(&apos;trainingDigits/%s&apos; % fileNameStr)
-    testFileList=listdir(&apos;testDigits&apos;)
+        trainingMat[i,:]=img2vector(&#39;trainingDigits/%s&#39; % fileNameStr)
+    testFileList=listdir(&#39;testDigits&#39;)
     errorCount=0.0
     mTest=len(testFileList)
     for i in range(mTest):
         fileNameStr=testFileList[i]
-        fileStr=fileNameStr.split(&apos;.&apos;)[0]
-        classNumStr=int(fileStr.split(&apos;_&apos;)[0])
-        vectorUnderTest=img2vector(&apos;testDigits/%s&apos; % fileNameStr)
+        fileStr=fileNameStr.split(&#39;.&#39;)[0]
+        classNumStr=int(fileStr.split(&#39;_&#39;)[0])
+        vectorUnderTest=img2vector(&#39;testDigits/%s&#39; % fileNameStr)
         classifierResult=classify0(vectorUnderTest,\
             trainingMat,hwLabels,3)
-        print(&apos;the classifier came back with: %d, the real anser is: %d&apos; \
+        print(&#39;the classifier came back with: %d, the real anser is: %d&#39; \
             % (classifierResult,classNumStr))
         if    classifierResult != classNumStr:
             errorCount+=1.0
-    print(&apos;the total number of errors is: %d&apos; % errorCount)
+    print(&#39;the total number of errors is: %d&#39; % errorCount)
 #测试
 kNN.handwritingClassTest()
 </code></pre><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>k-近邻算法是分类数据最简单最有效的算法。k-近邻算法是基于实例的学习，使用算法时必须有接近实际数据的训练样本数据。k-近邻算法必须保存全部数据集，如果训练数据集很大，必须使用大量的存储空间。此外，由于必须对数据集中的每个数据计算距离值，实际使用时可能非常耗时。</p>
@@ -1319,5 +1321,14 @@ kNN.handwritingClassTest()
   <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
   <!-- 小红心 -->
   <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script>
+  
 </body>
 </html>
