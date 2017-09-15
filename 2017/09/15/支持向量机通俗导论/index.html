@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
-	<meta name="google-site-verification" content="y1NE4TYCS_y-0LIIks73rI2qINI9JYRwk6Su8ZG-ZIw" />
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta name="google-site-verification" content="y1NE4TYCS_y-0LIIks73rI2qINI9JYRwk6Su8ZG-ZIw" />
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -181,7 +181,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20131111154113734">
 <meta property="og:image" content="http://img.blog.csdn.net/20131111155205109">
 <meta property="og:image" content="http://img.blog.csdn.net/20140829141714944">
-<meta property="og:updated_time" content="2017-09-15T03:15:30.469Z">
+<meta property="og:updated_time" content="2017-09-15T14:20:10.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="支持向量机通俗导论（1）【转】">
 <meta name="twitter:description" content="这是一篇CSDN上关于SVM的博客，由浅入深，写的很详细，很多推荐的 作者：July 。致谢：pluskid、白石、JerryLead。说明：本文最初写于2012年6月，而后不断反反复复修改&amp;amp;优化，修改次数达上百次，最后修改于2016年11月。声明：本文于2012年便早已附上所有参考链接，并注明是篇“学习笔记”，且写明具体参考了pluskid等人的文章。文末2013年的PDF是为证。  前">
@@ -221,7 +221,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>支持向量机通俗导论（1）【转】 | Andy's blog</title>
+  <title>支持向量机通俗导论（1）【转】 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -245,7 +245,7 @@
   
     
   
-<a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
@@ -485,10 +485,12 @@
 <h4 id="1-1、分类标准的起源：Logistic回归"><a href="#1-1、分类标准的起源：Logistic回归" class="headerlink" title="1.1、分类标准的起源：Logistic回归"></a>1.1、分类标准的起源：Logistic回归</h4><p>理解SVM，咱们必须先弄清楚一个概念：线性分类器。</p>
 <p>给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用x表示数据点，用y表示类别（y可以取1或者-1，分别代表两个不同的类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面（hyper plane），这个超平面的方程可以表示为（ wT中的T代表转置）：</p>
 <p><img src="http://img.blog.csdn.net/20131107201104906" alt=""></p>
+<p>$$ w^Tx+b=0 $$</p>
 <p>可能有读者对类别取1或-1有疑问，事实上，这个1或-1的分类标准起源于logistic回归。</p>
 <p>Logistic回归目的是从特征学习出一个0/1分类模型，而这个模型是将特征的线性组合作为自变量，由于自变量的取值范围是负无穷到正无穷。因此，使用logistic函数（或称作sigmoid函数）将自变量映射到(0,1)上，映射后的值被认为是属于y=1的概率。</p>
 <p>假设函数</p>
 <p><img src="http://img.my.csdn.net/uploads/201304/05/1365174192_8325.png" alt=""></p>
+<p>$$ h_\theta(x)=g(\theta^Tx)=\frac 1{1+e^{-\theta^Tx}}, $$</p>
 <p>其中x是n维特征向量，函数g就是logistic函数。</p>
 <p><img src="http://img.my.csdn.net/uploads/201304/05/1365174223_1807.png" alt="">图像是</p>
 <p><img src="http://img.my.csdn.net/uploads/201304/05/1365174236_6175.png" alt=""></p>
@@ -1266,7 +1268,7 @@
 	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
 	prettyPrint();
 	})    
-	</script>
+	</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 </body>
 </html>
