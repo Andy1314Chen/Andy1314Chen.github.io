@@ -440,6 +440,15 @@
 <p>又由于 x0 是超平面上的点，满足 f(x0)=0 ，代入超平面的方程\(w^Tx+b=0\)，可得\(w^Tx_0+b=0\)，即\(w^Tx_0=-b\)。</p>
 <p>随即让此式\(x=x_0+\gamma\frac w{||w||}\)的两边同时乘以\(w^T\)，再根据\(w^Tx_0=-b\)和\(w^Tw={||w||}^2\)，即可算出：<br>$$ \gamma=\frac {w^Tx+b}{||w||} = \frac {f(x)}{||w||} $$<br>为了得到的\(\gamma\)绝对值，令\(\gamma\)乘上对应的类别 y，即可得出几何间隔（用\(\tilde{\gamma}\)表示<strong>函数间隔是头上是箭头，几何间隔是波浪线</strong>）的定义：<br>$$ \tilde{\gamma}=y\gamma=\frac {\tilde{\gamma}}{||w||} $$</p>
 <p>从上述函数间隔和几何间隔的定义可以看出：几何间隔就是函数间隔除以||w||，而且函数间隔\(y(w^Tx+b)=yf(x)\)实际上就是|f(x)|，只是人为定义的一个间隔度量，而几何间隔|f(x)|/||w||才是直观上的点到超平面的距离。</p>
+<h4 id="1-4、最大间隔分类器Maximum-Margin-Classifier的定义"><a href="#1-4、最大间隔分类器Maximum-Margin-Classifier的定义" class="headerlink" title="1.4、最大间隔分类器Maximum Margin Classifier的定义"></a>1.4、最大间隔分类器Maximum Margin Classifier的定义</h4><p>对一个数据点进行分类，当超平面离数据点的“间隔”越大，分类的确信度（confidence）也越大。所以，为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个“间隔”值。这个间隔就是下图中的Gap的一半。</p>
+<p><img src="http://img.blog.csdn.net/20140829135959290" alt=""></p>
+<p>通过由前面的分析可知：函数间隔不适合用来最大化间隔值，因为在超平面固定以后，可以等比例地缩放w的长度和b的值，这样可以使得\(f(x)=w^Tx+b\)的值任意大，亦即函数间隔\(\hat{\gamma}\)可以在超平面保持不变的情况下被取得任意大。但几何间隔因为除上||w||了，使得在缩放w和b的时候几何间隔\(\tilde{\gamma}\)的值是不会改变的，它只随着超平面的变动而变动，因此，这是更加合适的一个间隔。换言之，这里要找的最大间隔分类超平面中的“间隔”指的是几何间隔。</p>
+<p> 于是最大间隔分类器（maximum margin classifier）的目标函数可以定义为：<br>\(\max \tilde\gamma\)<br>同时需满足一些条件，根据间隔的定义，有<br>\(y_i(w^Tx_i+b)=\hat{\gamma_i}\ge{\hat\gamma}\)</p>
+<p>回顾下几何间隔的定义\(\tilde\gamma=y\gamma=\frac {\hat\gamma}{||w||}\)，可知：如果令函数间隔\(\hat\gamma\)等于1（之所以令\(\hat\gamma\)等于1，是为了方便推导和优化，且这样做对目标函数的优化没有影响，至于为什么，请见本文评论下第42楼回复），则有\(\hat\gamma=\frac 1{||w||}\)且\(y_i(w^Tx_i+b)\ge1,i=1,…,n\)，从而上述目标函数转化成了\(max \frac 1{||w||}, s.t.,y_i(w^Tx_i+b)\ge1,i=1,…,n\)</p>
+<p>相当于在相应的约束条件\(y_i(w^Tx_i+b)\ge1,i=1,…,n\)下，最大化这个1/||w||值，而1/||w||便是几何间隔\(\tilde\gamma\)。   </p>
+<p>如下图所示，中间的实线便是寻找到的最优超平面（Optimal Hyper Plane），其到两条虚线边界的距离相等，这个距离便是几何间隔\(\tilde\gamma\)，两条虚线间隔边界之间的距离等于2\(\tilde\gamma\)，而虚线间隔边界上的点则是支持向量。由于这些支持向量刚好在虚线间隔边界上，所以它们满足\(y(w^Tx+b)=1\)（还记得我们把 functional margin 定为 1 了吗？上节中：处于方便推导和优化的目的，我们可以令\(\hat\gamma=1\)），而对于所有不是支持向量的点，则显然有\(y(w^Tx+b)&gt;1\)。</p>
+<p><img src="http://img.blog.csdn.net/20140829141714944" alt=""></p>
+<p>OK，到此为止，算是了解到了SVM的第一层，对于那些只关心怎么用SVM的朋友便已足够，不必再更进一层深究其更深的原理。</p>
 <h2 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h2><p><a href="http://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/7624837</a></p>
 
           
