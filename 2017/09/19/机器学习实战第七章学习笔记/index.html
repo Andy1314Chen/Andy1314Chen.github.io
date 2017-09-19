@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://file03.16sucai.com/2017/1100/16sucai_p20161105069_1a7.JPG">
 <meta property="og:image" content="http://images.cnitblog.com/blog/550724/201501/021052397167053.png">
 <meta property="og:image" content="https://i.imgur.com/eia9P7R.jpg">
-<meta property="og:updated_time" content="2017-09-19T03:09:16.305Z">
+<meta property="og:updated_time" content="2017-09-19T03:15:46.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习实战第七章学习笔记(AdaBoost算法)">
 <meta name="twitter:description" content="众人拾材火焰高，当做重大决定时，一般会综合多个专家的意见。元算法（meta-algorithm)背后的思路也是如此。元算法是对其他算法进行组合的一种方式，而机器学习实战第七章就介绍了最为流行的AdaBoost元算法。  这一章首先讨论不同分类器的集成方法，主要关注boosting方法及其代表分类器Adaboost.随后，建立一个单层决策树(decision stump)分类器，并基于这些弱分类器，">
@@ -449,10 +449,10 @@
 <p>左边是数据集，其中直方图的不同宽度表示每个样例上的不同权重。在经过一个分类器后，加权的预测结果会通过三角形中的alpha值进行加权。每个三角形中输出的加权结果在圆形中求和，从而得到最终的输出结果。</p>
 <p>计算出alpha值之后，可以对权重向量D进行更新，以使得那些正确分类的样本的权重降低而错分样本的权重升高。D的计算方法如下。</p>
 <p>如果某个样本被正确分类，那么该样本的权重更改为：</p>
-<p>$$ {D_i}^{(i+1)} = \frac {D_i^{(i)}e^{-\alpha}}{Sum(D)} $$</p>
+<p>$$ {D_i}^{(t+1)} = \frac {D_i^{(t)}e^{-\alpha}}{Sum(D)} $$</p>
 <p>其中t是第t次迭代，而i是第i个样本。</p>
 <p>而如果某个样本被错分，那么该样本的权重更改为：</p>
-<p>$$ {D_i}^{(i+1)}=\frac {D_i^{(i)}e^{\alpha}}{Sum(D)} $$</p>
+<p>$$ {D_i}^{(t+1)}=\frac {D_i^{(t)}e^{\alpha}}{Sum(D)} $$</p>
 <p>在计算出D之后，AdaBoost又开始进入下一轮迭代。AdaBoost算法会不断地重复训练和调整权重(分类器的权重alpha,样本的权重Di)的过程，直到训练错误率为0或者弱分类器的数目达到用户的指定值为止。</p>
 <h2 id="基于单层决策树构建弱分类器"><a href="#基于单层决策树构建弱分类器" class="headerlink" title="基于单层决策树构建弱分类器"></a>基于单层决策树构建弱分类器</h2><p>单层决策树(decision stump,决策树桩）是一种简单的决策树。仅仅基于单个特征来做决策，由于这个单次分裂过程，也被称为树桩。</p>
 <p>本书惯例，先构造一个简单的数据集：</p>
