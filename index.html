@@ -301,6 +301,731 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/机器学习实战第八章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/21/机器学习实战第八章学习笔记/" itemprop="url">机器学习实战第八章学习笔记(回归)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T00:00:00+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前面几章都是介绍分类，是对离散值进行分类预测，本章则将对连续型的数据做出预测。</p>
+<h2 id="用线性回归找到最佳拟合直线"><a href="#用线性回归找到最佳拟合直线" class="headerlink" title="用线性回归找到最佳拟合直线"></a>用线性回归找到最佳拟合直线</h2><p><strong>线性回归</strong></p>
+<ul>
+<li>优点：结果易于理解，计算上不复杂。</li>
+<li>缺点：对非线性的数据拟合不好。</li>
+<li>适用数据类型：数值型和标称型数据。</li>
+</ul>
+<p>回归的目的是预测数值型的目标值。</p>
+<p>举个例子，假如你想预测姐姐男友汽车的功率大小，可能会这么计算：</p>
+<p>$$ HorsePower=0.0015\cdot{annualSalary}-0.99\cdot{hoursListeningToPublicRadio} $$</p>
+<p>这就是一个回归方程（regression equation)，其中的0.0015和-0.99称作回归系数（regression weights),求这些回归系数的过程就是回归。</p>
+<p>一般讲到回归都是指线性回归，但也存在非线性回归。</p>
+<p><strong>回归的一般方法</strong></p>
+<ol>
+<li>收集数据：采用任意方法收集数据。</li>
+<li>准备数据：回归需要数值型数据，标称型数据将被转成二值型数据。</li>
+<li>分析数据：绘出数据的可视化二维图将有助于对数据做出理解和分析，在采用缩减法求得新回归系数之后，可以将新拟合线绘在图上作为对比。</li>
+<li>训练算法：找到回归系数</li>
+<li>测试算法：使用R2或者预测值和数据的拟合度，来分析模型的效果</li>
+<li>使用算法：使用回归，可以在给定输入的时候预测出一个数值，这是对分类方法的提升，因为这样可以预测连续型数据而不仅仅是离散的类别标签。</li>
+</ol>
+<p>用平方误差来指示预测效果：</p>
+<p>$$ \sum_i^m{(y_i-x_i^Tw)}^2 $$</p>
+<p>用矩阵表示，可以写做：</p>
+<p>$$ {(y-Xw)}^T(y-Xw) $$</p>
+<p>对w求导，得到\(X^T(Y-Xw)\),令其等于0，解得w:</p>
+<p>$$ \hat w={(X^TX)}^{-1}X^Ty $$</p>
+<p><img src="https://i.imgur.com/aHjfKmd.png" alt=""></p>
+<p>对上图的散点做一个简单的回归。</p>
+<pre><code>import numpy as np
+
+#标准回归函数和数据导入函数
+def loadDataSet(fileName):
+    numFeat=len(open(fileName).readline().split(&#39;\t&#39;))-1
+    dataMat=[];labelMat=[]
+    fr=open(fileName)
+    for line in fr.readlines():
+        lineArr=[]
+        curLine=line.strip().split(&#39;\t&#39;)
+        for i in range(numFeat):
+            lineArr.append(float(curLine[i]))
+        dataMat.append(lineArr)
+        labelMat.append(float(curLine[-1]))
+    return dataMat,labelMat
+
+def standRegres(xArr,yArr):
+    xMat=np.mat(xArr);yMat=np.mat(yArr).T
+    xTx=xMat.T*xMat
+    #如果行列式为0，则计算逆矩阵时会出错
+    if np.linalg.det(xTx)==0.0:
+        print(&quot;This matrix is singular,cannot do inverse&quot;)
+        return
+    ws=xTx.I*(xMat.T*yMat)
+    return ws
+</code></pre><p><img src="https://i.imgur.com/ZgqRhwW.jpg" alt=""></p>
+<p>如何去判断已经建立的模型的好坏呢？可以计算预测值与真实值的相关系数。<br>Numpy库提供了相关系数的计算方法，corrcoef(yEstimate,yActual)</p>
+<p><img src="https://i.imgur.com/w1V4jfJ.jpg" alt=""></p>
+<h2 id="局部加权线性回归"><a href="#局部加权线性回归" class="headerlink" title="局部加权线性回归"></a>局部加权线性回归</h2><p>线性回归的一个问题是有可能出现欠拟合现象，因为求的是具有最小均方误差的无偏估计。可以采用某些方法在估计中引入一些偏差，从而降低预测的均方误差。</p>
+<p>其中的一个方法是局部加权线性回归（Locally Weighted Linear Regression,LWLR).在该算法中，我们给待预测点附近的每个点赋予一定的权重</p>
+<p>$$ \hat w={(X^TWX)}^{-1}X^TWy $$</p>
+<p>其中W是一个矩阵，给每个数据点赋予权重。</p>
+<p>LWLR使用“核”来对附近的点赋予更高的权重。核的类型可以自由选择，最常用的核就是高斯核，高斯核对应的权重如下：</p>
+<p>$$ w(i,i)=exp[\frac {|x^{(i)}-x|}{-2k^2}] $$</p>
+<p>这样就构建了一个只包含对角元素的权重矩阵w,并且点x与x(i)越近，w(i,i)越大，其中k参数可调：</p>
+<p><img src="https://i.imgur.com/sB3jfsH.jpg" alt=""></p>
+<pre><code>#局部加权线性回归（Locally Weighted Linear Regression,LWLR)
+&quot;&quot;&quot;
+    局部加权线性回归，是取某点附近的一些点并根据与该点的距离远近来赋予不同的权重，
+    再根据这些点进行拟合，最终给出该点的预测值
+&quot;&quot;&quot;
+def lwlr(testPoint,xArr,yArr,k=1.0):
+    xMat=np.mat(xArr);yMat=np.mat(yArr).T
+    m=np.shape(xMat)[0]
+    weights=np.mat(np.eye((m)))
+    for j in range(m):
+        diffMat=testPoint-xMat[j,:]
+        #计算权重值
+        weights[j,j]=np.exp(diffMat*diffMat.T/(-2.0*k**2))
+    xTx=xMat.T*(weights*xMat)
+    if np.linalg.det(xTx)==0.0:
+        print(&quot;This matrix is singular,cannot do inverse&quot;)
+        return
+    ws=xTx.I*(xMat.T*(weights*yMat))
+    return testPoint*ws
+
+def lwlrTest(testArr,xArr,yArr,k=1.0):
+    m=np.shape(testArr)[0]
+    yHat=np.zeros(m)
+    for i in range(m):
+        yHat[i]=lwlr(testArr[i],xArr,yArr,k)
+    return yHat
+
+&quot;&quot;&quot;
+k=1.0时，欠拟合
+k=0.01时，差不多
+k=0.003时，过拟合
+
+局部加权线性回归效果比一般线性回归要好，但是也存在一个问题，即增加了计算量。
+对每个点做预测时都必须使用整个数据集。
+
+&quot;&quot;&quot;
+</code></pre><p><img src="https://i.imgur.com/ktJGq6t.png" alt=""></p>
+<p><img src="https://i.imgur.com/Zb69jDg.png" alt=""></p>
+<p><img src="https://i.imgur.com/AWLkwcI.png" alt=""></p>
+<p>从上到下，k=1.0,k=0.01,k=0.003,可以看到，k=1.0时的模型效果与最小二乘法差不多，k=0.01时该模型可以挖出数据的潜在规律，而k=0.003时，则考虑了太多的噪声，导致了过拟合现象。</p>
+<p>局部加权线性回归也存在一个问题，即增加了计算量，因为它对每个点做预测时都必须使用整个数据集。</p>
+<h2 id="示例：预测鲍鱼的年龄"><a href="#示例：预测鲍鱼的年龄" class="headerlink" title="示例：预测鲍鱼的年龄"></a>示例：预测鲍鱼的年龄</h2><pre><code>#预测鲍鱼的年龄
+def rssError(yArr,yHatArr):
+    return ((yArr-yHatArr)**2).sum()
+</code></pre><h2 id="缩减系数来“理解”数据"><a href="#缩减系数来“理解”数据" class="headerlink" title="缩减系数来“理解”数据"></a>缩减系数来“理解”数据</h2><p>如果特征比样本点还多（n&gt;m），输入数据的矩阵X不是满秩矩阵，这样求逆时会出现问题。本章会着重介绍两种方法来解决这一问题，第一种方法岭回归(ridge regression),第二种方法是lasso法，但这种方法计算复杂，介绍与lasso效果差不多，但更容易实现的前向逐步回归法。</p>
+<h4 id="岭回归"><a href="#岭回归" class="headerlink" title="岭回归"></a>岭回归</h4><p>简单来说，岭回归就是在矩阵\(X^TX\)上加一个λI从而使得矩阵非奇异，进而能对\(X^TX+\lambda I\)求逆。</p>
+<p>$$ \hat w={(X^TX+\lambda I)}^{-1}X^Ty $$</p>
+<p>岭回归最先用于处理特征数多于样本数的情况，现在也用于在估计中加入偏差，从而得到更好的估计。通过引入该惩罚项，能够减少不重要的参数，这个技术在统计学中也叫做缩减(shrinkage)。缩减方法可以去掉不重要的参数，因此能更好地理解数据。</p>
+<pre><code>#岭回归
+def ridgeRegres(xMat,yMat,lam=0.2):
+    xTx=xMat.T*xMat
+    denom=xTx+np.eye(np.shape(xMat)[1])*lam
+    if np.linalg.det(denom) == 0.0:
+        print(&quot;This matrix is singular, cannot do inverse&quot;)
+        return
+    ws=denom.I*(xMat.T*yMat)
+    return ws
+
+def ridgeTest(xArr,yArr):
+    xMat=np.mat(xArr);yMat=np.mat(yArr).T
+    yMean=np.mean(yMat,0)
+    yMat=yMat-yMean
+    xMeans=np.mean(xMat,0)
+    xVar=np.var(xMat,0)
+    xMat=(xMat-xMeans)/xVar
+    numTestPts=30
+    wMat=np.zeros((numTestPts,np.shape(xMat)[1]))
+    for i in range(numTestPts):
+        #lambda以指数级变化
+        ws=ridgeRegres(xMat,yMat,np.exp(i-10))
+        wMat[i,:]=ws.T
+    return wMat
+&quot;&quot;&quot;
+ridgeRegres()用于计算回归系数，
+ridgeTest()用于在一组lambda上测试结果。
+函数ridgeTest()中进行了数据标准化的，特征减去均值并除以方差
+&quot;&quot;&quot;
+</code></pre><p><img src="https://i.imgur.com/mSDyC1T.jpg" alt=""></p>
+<h4 id="Lasso"><a href="#Lasso" class="headerlink" title="Lasso"></a>Lasso</h4><p>不难证明，在增加如下约束时，普通的最小二乘法回归会得到与岭回归一样的公式：</p>
+<p>$$ \sum_{k=1}^n w_k^2 \le \lambda $$</p>
+<p>上式限定了所有回归系数的平方和不能大于λ，使用普通的最小二乘法回归在当两个或更多的特征相关时，可能会得到一个很大的正系数和一个很大的负系数。正是因为上述限制条件的存在，使用岭回归可以避免这个问题。</p>
+<p>与岭回归类似，lasso也对回归系数做了限定，对应的约束条件如下：</p>
+<p>$$ \sum_{k=1}^n|w_k| \le \lambda $$</p>
+<p>唯一的不同点在于，这个约束条件使用绝对值取代了平方和。在λ很小的时候，一些系数会因此被缩减到0，这个特征可以帮助我们更好的理解数据。</p>
+<h4 id="前向逐步回归"><a href="#前向逐步回归" class="headerlink" title="前向逐步回归"></a>前向逐步回归</h4><p>前向逐步回归算法可以得到与lasso差不多的效果，但更加简单。属于一种贪心算法，即每一步都尽可能减少误差。</p>
+<pre><code>&quot;&quot;&quot;
+前向逐步回归算法：
+    数据标准化，使其分布满足0均值和单位方差
+    在每轮迭代过程中：
+        设置当前最小误差lowestError为正∞
+        对每个特征：
+            增大或缩小：
+                改变一个系数得到一个新的W
+                计算新W下的误差
+                如果误差Error小于当前最小误差lowestError:设置Wbest等于当前的W
+            将W设置为新的Wbest
+&quot;&quot;&quot;
+#前向逐步线性回归
+def stageWise(xArr,yArr,eps=0.01,numIt=100):
+    xMat=np.mat(xArr);yMat=np.mat(yArr).T
+    yMean=np.mean(yMat,0)
+    yMat=yMat-yMean
+    xMat=regularize(xMat)
+    m,n=np.shape(xMat)
+    returnMat=np.zeros((numIt,n))
+    ws=np.zeros((n,1));wsTest=ws.copy();wsMax=ws.copy()
+    for i in range(numIt):
+        print(ws.T)
+        lowestError=np.inf;
+        for j in range(n):
+            for sign in [-1,1]:
+                wsTest=ws.copy()
+                wsTest[j]+=eps*sign
+                yTest=xMat*wsTest
+                rssE=rssError(yMat.A,yTest.A)
+                if rssE&lt;lowestError:
+                    lowestError=rssE
+                    wsMax=wsTest
+        ws=wsMax.copy()
+        returnMat[i,:]=ws.T
+    return returnMat
+
+#标准化
+def regularize(xMat):
+    inMat=xMat.copy()
+    inMeans=np.mean(inMat,0)
+    inVar=np.var(inMat,0)
+    inMat=(inMat-inMeans)/inVar
+    return inMat
+</code></pre><p>逐步线性回归算法可以帮助理解现有的模型并做出改进，主要是可以看出哪些特征比较重要而哪些特征不那么重要。</p>
+<h2 id="权衡偏差与方差"><a href="#权衡偏差与方差" class="headerlink" title="权衡偏差与方差"></a>权衡偏差与方差</h2><p><img src="https://pic2.zhimg.com/v2-286539c808d9a429e69fd59fe33a16dd_b.png" alt=""></p>
+<p>偏差：描述的是预测值（估计值）的期望与真实值之间的差距。</p>
+<p>方差：描述的是预测值的变化范围，离散程度，也就是离其期望值的距离。</p>
+<h2 id="示例：预测乐高玩具套装的价格"><a href="#示例：预测乐高玩具套装的价格" class="headerlink" title="示例：预测乐高玩具套装的价格"></a>示例：预测乐高玩具套装的价格</h2><ol>
+<li>收集数据：用Google Shopping的API收集数据</li>
+<li>准备数据：从返回的JSON数据中抽取价格</li>
+<li>分析数据：可视化并观察数据</li>
+<li>训练算法：构建不同的模型，采用逐步线性回归和直接的线性回归模型</li>
+<li>测试算法：使用交叉验证来测试不同的模型，分析哪个效果最好</li>
+<li>使用算法：这次练习的目标就是生成数据模型</li>
+</ol>
+<h4 id="收集数据：使用Google购物的API"><a href="#收集数据：使用Google购物的API" class="headerlink" title="收集数据：使用Google购物的API"></a>收集数据：使用Google购物的API</h4><p>(在Google API的控制台好像已经找不到这个API了，书上提供的网址：<a href="http://code.google.com/apis/shopping/search/v1/getting_started.html也打不开了。" target="_blank" rel="external">http://code.google.com/apis/shopping/search/v1/getting_started.html也打不开了。</a>)<br>所以以下程序没有测试。</p>
+<pre><code>&quot;&quot;&quot;
+示例：预测乐高玩具套装的价格
+
+&quot;&quot;&quot;
+#购物信息的获取函数
+from time import sleep
+import json
+import urllib.request
+def searchForSet(retX,retY,setNum,yr,numPce,origPrc):
+    sleep(10)
+    myAPIstr=&quot;AIzaSyD2cR2KFyx12hXu6PFU-wrWot3NXvko8vY&quot;
+    searchURL=&#39;https://www.googleapis.com/shopping/search/v1/public/products?\
+        key=%s&amp;country=US&amp;q=lego+%d&amp;alt=json&#39; % (myAPIstr,setNum)
+    pg=urllib.request.urlopen(searchURL)
+    retDict=json.loads(pg.read())
+    for i in range(len(retDict[&#39;items&#39;])):
+        try:
+            currItem=retDict[&#39;items&#39;][i]
+            if currItem[&#39;product&#39;][&#39;condition&#39;]==&#39;new&#39;:
+                newFlag=1
+            else:
+                newFlag=0
+            listOfInv=currItem[&#39;product&#39;][&#39;inventories&#39;]
+            for item in listOfInv:
+                sellingPrice=item[&#39;price&#39;]
+                if sellingPrice&gt;origPrc*0.5:
+                    print(&quot;%d\t%d\t%d\t%f\t%f&quot; % \
+                          (yr,numPce,newFlag,origPrc,sellingPrice))
+                    retX.append([yr,numPce,newFlag,origPrc])
+                    retY.append(sellingPrice)
+        except:
+            print(&quot;problem with item %d&quot; % i)
+
+def setDataCollect(retX,retY):
+    searchForSet(retX,retY,8288,2006,800,49.99)
+    searchForSet(retX,retY,10030,2002,3096,269.99)
+    searchForSet(retX,retY,10179,2007,5195,499.99)
+    searchForSet(retX,retY,10181,2007,3428,199.99)
+    searchForSet(retX,retY,10189,2008,5922,299.99)
+    searchForSet(retX,retY,10196,2009,3263,249.99)
+
+#交叉验证测试岭回归
+def crossValidation(xArr,yArr,numVal=10):
+    #数据点个数
+    m=len(yArr)
+    indexList=range(m)
+    errorMat=np.zeros((numVal,30))
+    for i in range(numVal):
+        trainX=[];trainY=[]
+        testX=[];testY=[]
+        #打乱顺序
+        np.random.shuffle(indexList)
+        for j in range(m):
+            #取90%的数据集为训练样本
+            if j&lt;m*0.9:
+                trainX.append(xArr[indexList[j]])
+                trainY.append(yArr[indexList[j]])
+            #10%的数据为测试集
+            else:
+                testX.append(xArr[indexList[j]])
+                testY.append(yArr[indexList[j]])
+        #训练完成后，将回归系数保存在wMat中
+        wMat=ridgeTest(trainX,trainY)
+        #用30组不同的lambda值来进行测试
+        for k in range(30):
+            matTestX=np.mat(testX);matTrainX=np.mat(trainY)
+            meanTrain=np.mean(matTrainX,0)
+            varTrain=np.var(matTrainX,0)
+            matTestX=(matTestX-meanTrain)/varTrain
+            yEst=matTestX*np.mat(wMat[k,:]).T+np.mean(trainY)
+            #每个lambda应该对应10个误差
+            errorMat[i,k]=rssError(yEst.T.A,np.array(testY))
+    meanErrors=np.mean(errorMat,0)
+    minMean=float(np.min(meanErrors))
+    bestWeights=wMat[np.nonzero(meanErrors==minMean)]
+    xMat=np.mat(xArr);yMat=np.mat(yArr).T
+    meanX=np.mean(xMat,0);varX=np.var(xMat,0)
+    unReg=bestWeights/varX
+    print(&quot;the best model from Ridge Regression is:\n&quot;,unReg)
+    print(&quot;with constant term: &quot;,\
+          -1*np.sum(np.multiply(meanX,unReg))+np.mean(yMat))
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在回归方程中，求得特征对应的最佳回归系数的方法是最小化误差的平方和。数据集上计算出的回归方程并不一定意味着它是最佳的（只是根据给定的数据下最佳），可以使用预测值\(\hat y\)和原始值y的相关性来度量回归方程的好坏。</p>
+<p>当数据的样本数比特征数还少时，矩阵\(X^TX\)的逆不能直接计算。即便当样本数比特征数多时，由于特征之间可能高度相关，这时\(X^TX\)的逆也不能直接计算。这时可以考虑使用岭回归，因为当\(X^TX\)的逆不能直接计算时，仍然能保证求得回归参数。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+<ul>
+<li><p>TP：正确肯定的数目；</p>
+</li>
+<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
+</li>
+<li><p>FP：误报，给出的匹配是不正确的；</p>
+</li>
+<li><p>TN：正确拒绝的非匹配对数；</p>
+</li>
+</ul>
+<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">预测1</th>
+<th style="text-align:center">预测0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实际1</strong></td>
+<td style="text-align:center">True Positive(TP)</td>
+<td style="text-align:center">False Negative(FN)</td>
+</tr>
+<tr>
+<td><strong>实际0</strong></td>
+<td style="text-align:center">False Positive(FP)</td>
+<td style="text-align:center">True Negative(TN)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
+<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
+<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
+<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
+<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
+<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
+<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
+<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
+<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
+<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
+<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
+<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
+<p>不妨举这样一个例子：</p>
+<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
+<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
+<p>　　召回率 = 700 / 1400 = 50%</p>
+<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
+<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
+<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
+<p>　　召回率 = 1400 / 1400 = 100%</p>
+<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
+<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
+<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
+<p>F-Measure是Precision和Recall加权调和平均：</p>
+<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
+<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
+<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
+<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
+<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
+<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
+<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
+<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
+<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
+<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
+<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
+<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
+<p>曲线距离左上角越近,证明分类器效果越好。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
+<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
+<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
+<ul>
+<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
+</li>
+<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
+</li>
+<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
+</li>
+<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
+</li>
+</ul>
+<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
+<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
+<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
+<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
+<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
+<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
+<pre><code>#ROC曲线的绘制及AUC计算函数
+def plotROC(predStrengths,classLabels):
+    import matplotlib.pyplot as plt
+    #光标的位置
+    cur=(1.0,1.0)
+    #用于计算AUC的值
+    ySum=0.0
+    #正样本个数
+    numPosClas=np.sum(np.array(classLabels)==1.0)
+    #y轴上步进数目
+    yStep=1/float(numPosClas)
+    #x轴上步进数目
+    xStep=1/float(len(classLabels)-numPosClas)
+    #预测强度排序从小到大，（1,1）-&gt;(0,0)
+    #按照从小到大的顺序，输出对应的index索引
+    sortedIndicies=predStrengths.argsort()
+    fig=plt.figure()
+    fig.clf()
+    ax=plt.subplot(111)
+    for index in sortedIndicies.tolist()[0]:
+        #正例，修改真阳率
+        if classLabels[index]==1.0:
+            delX=0;delY=yStep;
+        #反例，修改假阳率
+        else:
+            delX=xStep;delY=0;
+            ySum+=cur[1]
+        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
+        cur=(cur[0]-delX,cur[1]-delY)
+    ax.plot([0,1],[0,1],&#39;b--&#39;)
+    plt.xlabel(&#39;False Positive Rate&#39;);
+    plt.ylabel(&#39;True Positive Rate&#39;)
+    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
+    ax.axis([0,1,0,1])
+    plt.show()
+    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
+</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
+<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -604,293 +1329,6 @@ return dataMat,labelMat
 </code></pre><p>通过改变弱分类器的数目为1到10000之间的几个不同数字，测试不同弱分类器数目下的错误率。</p>
 <p><img src="https://i.imgur.com/eia9P7R.jpg" alt=""></p>
 <p>之前采用Logistic回归得到的平均错误率为0.35，而这里采用AdaBoost可以轻松达到0.21. 当分类器数目过大时，错误率又会上升，这是由于过拟合(overfitting）。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
-<ul>
-<li><p>TP：正确肯定的数目；</p>
-</li>
-<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
-</li>
-<li><p>FP：误报，给出的匹配是不正确的；</p>
-</li>
-<li><p>TN：正确拒绝的非匹配对数；</p>
-</li>
-</ul>
-<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">预测1</th>
-<th style="text-align:center">预测0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>实际1</strong></td>
-<td style="text-align:center">True Positive(TP)</td>
-<td style="text-align:center">False Negative(FN)</td>
-</tr>
-<tr>
-<td><strong>实际0</strong></td>
-<td style="text-align:center">False Positive(FP)</td>
-<td style="text-align:center">True Negative(TN)</td>
-</tr>
-</tbody>
-</table>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
-<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
-<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
-<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
-<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
-<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
-<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
-<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
-<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
-<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
-<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
-<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
-<p>不妨举这样一个例子：</p>
-<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
-<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
-<p>　　召回率 = 700 / 1400 = 50%</p>
-<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
-<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
-<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
-<p>　　召回率 = 1400 / 1400 = 100%</p>
-<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
-<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
-<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
-<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
-<p>F-Measure是Precision和Recall加权调和平均：</p>
-<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
-<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
-<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
-<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
-<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
-<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
-<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
-<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
-<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
-<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
-<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
-<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
-<p>曲线距离左上角越近,证明分类器效果越好。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
-<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
-<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
-<ul>
-<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
-</li>
-<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
-</li>
-<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
-</li>
-<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
-</li>
-</ul>
-<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
-<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
-<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
-<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
-<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
-<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
-<pre><code>#ROC曲线的绘制及AUC计算函数
-def plotROC(predStrengths,classLabels):
-    import matplotlib.pyplot as plt
-    #光标的位置
-    cur=(1.0,1.0)
-    #用于计算AUC的值
-    ySum=0.0
-    #正样本个数
-    numPosClas=np.sum(np.array(classLabels)==1.0)
-    #y轴上步进数目
-    yStep=1/float(numPosClas)
-    #x轴上步进数目
-    xStep=1/float(len(classLabels)-numPosClas)
-    #预测强度排序从小到大，（1,1）-&gt;(0,0)
-    #按照从小到大的顺序，输出对应的index索引
-    sortedIndicies=predStrengths.argsort()
-    fig=plt.figure()
-    fig.clf()
-    ax=plt.subplot(111)
-    for index in sortedIndicies.tolist()[0]:
-        #正例，修改真阳率
-        if classLabels[index]==1.0:
-            delX=0;delY=yStep;
-        #反例，修改假阳率
-        else:
-            delX=xStep;delY=0;
-            ySum+=cur[1]
-        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
-        cur=(cur[0]-delX,cur[1]-delY)
-    ax.plot([0,1],[0,1],&#39;b--&#39;)
-    plt.xlabel(&#39;False Positive Rate&#39;);
-    plt.ylabel(&#39;True Positive Rate&#39;)
-    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
-    ax.axis([0,1,0,1])
-    plt.show()
-    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
-</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
-<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
-</ol>
 
           
         
@@ -3044,340 +3482,6 @@ def grabTree(filename):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/机器学习实战第二章笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/机器学习实战第二章笔记/" itemprop="url">机器学习实战第二章学习笔记(k-NN)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。</p>
-<ul>
-<li>优点： 精度高、对异常值不敏感、无数据输入假定</li>
-<li>缺点： 计算复杂度高、空间复杂度高</li>
-</ul>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算法中k的出处，通常k是不大于20的整数。最后，选择k个最相似数据中出现次数最多的分类，作为新数据的分类。</p>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHdNJrDq4rkAaAucglnuDjOujx_RZeG0qzAVUQwXb7fWNy0EH_" alt=""></p>
-<h3 id="k-近邻算法的一般流程"><a href="#k-近邻算法的一般流程" class="headerlink" title="k-近邻算法的一般流程"></a>k-近邻算法的一般流程</h3><ol>
-<li>收集数据：可以使用任何方法</li>
-<li>准备数据：距离计算所需要的数值，最好是结构化的数据格式</li>
-<li>分析数据：可以使用任何方法</li>
-<li>训练算法：此步骤不适用于k-近邻算法</li>
-<li>测试算法：计算错误率</li>
-<li>使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k-近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理。</li>
-</ol>
-<h3 id="kNN代码实现"><a href="#kNN代码实现" class="headerlink" title="kNN代码实现"></a>kNN代码实现</h3><p><strong>伪代码：</strong></p>
-<ol>
-<li>计算已知类别数据集中的点和当前点之间的距离；</li>
-<li>按照距离递增次序排序；</li>
-<li>选取与当前点距离最小的k个点；</li>
-<li>确定前k个点所在类别的出行频率；</li>
-<li>返回前k个点出行频率最高的类别作为当前点的预测分类。</li>
-</ol>
-<p><strong>Python代码：</strong></p>
-<pre><code>#python3.6
-
-import numpy as np
-import operator
-from os import listdir
-
-def createDataSet():
-    group=np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
-    labels=[&#39;A&#39;,&#39;A&#39;,&#39;B&#39;,&#39;B&#39;]
-    return group,labels
-
-    # inX: input
-    # dataSet: train data set
-    # labels: labels of dataSet
-    # k:  k of kNN
-
-def classify0(inX,dataSet,labels,k):
-    dataSetSize=dataSet.shape[0]#样本个数
-    diffMat=np.tile(inX,(dataSetSize,1))-dataSet
-    #np.tile()函数用法
-    sqDiffMat=diffMat**2
-    sqDistances=sqDiffMat.sum(axis=1)#欧式距离
-    distances=sqDistances**0.5
-    sortedDistIndicies=distances.argsort()#按距离排序，返回从小到大的索引值
-
-    classCount={}
-    for i in range(k):
-        voteIlabel=labels[sortedDistIndicies[i]]
-        classCount[voteIlabel]=classCount.get(voteIlabel,0)+1#计算前k个，各个类别的个数
-    sortedClassCount=sorted(classCount.items(),
-                            key=operator.itemgetter(1),
-                            reverse=True)
-    #Python3中没有.iteritems(),更换为.items()
-    #print(sortedClassCount)
-    return sortedClassCount[0][0]
-
-    #测试
-import kNN
-group,labels=kNN.createDataSet()
-kNN.classify0([0,0],group,labels,3)
-#结果应该是B,可以改变输入[0,0]
-</code></pre><h3 id="示例1、改进约会网站的配对效果"><a href="#示例1、改进约会网站的配对效果" class="headerlink" title="示例1、改进约会网站的配对效果"></a>示例1、改进约会网站的配对效果</h3><p>约会数据存放在datingTestSet2.txt中，每个样本占一行，共有1000行，即1000个样本。主要特征：</p>
-<ul>
-<li>每年获得的飞行常客里程数</li>
-<li>玩视频游戏所耗时间百分比</li>
-<li>每周消费的冰淇淋公升数</li>
-</ul>
-<p><a href="https://github.com/pbharrin/machinelearninginaction" target="_blank" rel="external">数据下载</a></p>
-<h4 id="将文本记录到转换NumPy的解析程序"><a href="#将文本记录到转换NumPy的解析程序" class="headerlink" title="将文本记录到转换NumPy的解析程序"></a>将文本记录到转换NumPy的解析程序</h4><pre><code>#输入文件名，输出训练样本矩阵和类标签向量
-def file2matrix(filename):
-    #打开文件
-    fr=open(filename)
-    #按行全部读取数据
-    arrayOLines=fr.readlines()
-    #行数
-    numberOfLines=len(arrayOLines)
-    #用于存放样本，主要有3个特征
-    returnMat=np.zeros((numberOfLines,3))
-    #分类标签
-    classLabelVector=[]
-    index=0
-    for line in arrayOLines:
-        line=line.strip()
-        listFromLine=line.split(&#39;\t&#39;)
-        returnMat[index,:]=listFromLine[0:3]
-        classLabelVector.append(int(listFromLine[-1]))
-        index+=1
-    return returnMat,classLabelVector
-
-#测试
-reload(kNN)#重新加载kNN
-#python3中没有内置该函数，需要from imp import reload
-datingDataMat,datingLabels=kNN.file2matrix(&#39;datingTestSet2.txt&#39;)
-</code></pre><h4 id="归一化数值"><a href="#归一化数值" class="headerlink" title="归一化数值"></a>归一化数值</h4><p>因为kNN是依赖样本间距离进行分类的，欧式距离的计算中，数字差值最大的特征对计算结果的影响要大一些。但是，一般来说，每个特征视为同等重要的。这样就需要对特征值进行处理，通常采用的方法是将数值归一化，如将取值范围处理为0-1或-1-1之间。</p>
-<blockquote>
-<p>newValue=(oldValue-min)/(max-min)</p>
-</blockquote>
-<p>公式可以将任意取值范围的特征值转化为0到1区间内的值。</p>
-<h4 id="归一化特征值Python3程序"><a href="#归一化特征值Python3程序" class="headerlink" title="归一化特征值Python3程序"></a>归一化特征值Python3程序</h4><pre><code>#输入样本集，输出归一化后的样本集、ranges，minVals
-def autoNorm(dataSet):
-#newValue=(oldValue-min)/(max-min)
-    minVals=dataSet.min(0)
-    maxVals=dataSet.max(0)
-    ranges=maxVals-minVals
-    normDataSet=np.zeros(np.shape(dataSet))
-    m=dataSet.shape[0]
-    normDataSet=dataSet-np.tile(minVals,(m,1))
-    normDataSet=normDataSet/np.tile(ranges,(m,1))
-    return normDataSet,ranges,minVals
-#测试
-reload(kNN)
-normMat,ranges,minVals=kNN.autoNorm(datingDataMat)
-</code></pre><h4 id="kNN约会网站测试代码"><a href="#kNN约会网站测试代码" class="headerlink" title="kNN约会网站测试代码"></a>kNN约会网站测试代码</h4><pre><code>def datingClassTest():
-    hoRatio=0.10
-    datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;)
-    normMat,ranges,minVals=autoNorm(datingDataMat)
-    m=normMat.shape[0]
-    numTestVecs=int(m*hoRatio)
-    errorCount=0.0
-    for i in range(numTestVecs):
-        classifierResult=classify0(normMat[i,:],normMat[numTestVecs:m,:],
-        datingLabels[numTestVecs:m],5)
-        print(&#39;the classifier came back with: %d, the real answer is: %d&#39; % (classifierResult,datingLabels[i]))
-        if (classifierResult != datingLabels[i]):
-            errorCount+=1.0
-    print(&#39;the total error rate is : %f&#39; % (errorCount/float(numTestVecs)))
-
-#测试
-kNN.datingClassTest()
-</code></pre><h4 id="约会网站预测函数"><a href="#约会网站预测函数" class="headerlink" title="约会网站预测函数"></a>约会网站预测函数</h4><pre><code>def classifyPerson():
-    resultList=[&#39;not at all&#39;,&#39;in small doses&#39;,&#39;in large doses&#39;]
-    percentTats=float(input(&#39;percentage of time spent playing video games?&#39;))
-    ffMiles=float(input(&#39;frequent fliter miles earned per year?&#39;))
-    iceCream=float(input(&#39;liters of ice cream consumed per year?&#39;))
-    datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;)
-    normMat,ranges,minVals=autoNorm(datingDataMat)
-    inArr=np.array([ffMiles,percentTats,iceCream])
-    classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
-    print(&#39;You will probably like this person: &#39;,\
-        resultList[classifierResult-1])
-    #python2中的raw_input()，python3中为input()
-</code></pre><h3 id="示例2、手写识别系统"><a href="#示例2、手写识别系统" class="headerlink" title="示例2、手写识别系统"></a>示例2、手写识别系统</h3><h4 id="将32-32的二进制图像矩阵转化为1-1024向量"><a href="#将32-32的二进制图像矩阵转化为1-1024向量" class="headerlink" title="将32*32的二进制图像矩阵转化为1*1024向量"></a>将32*32的二进制图像矩阵转化为1*1024向量</h4><pre><code>def img2vector(filename):
-    returnVect=np.zeros((1,1024))
-    fr=open(filename)
-    for i in range(32):
-        lineStr=fr.readline()
-        for j in range(32):
-            returnVect[0,32*i+j]=int(lineStr[j])
-    return returnVect
-#测试
-testVector=kNN.img2vector(&#39;testDigits/0_13.txt&#39;)
-</code></pre><h4 id="手写数字识别系统的测试代码"><a href="#手写数字识别系统的测试代码" class="headerlink" title="手写数字识别系统的测试代码"></a>手写数字识别系统的测试代码</h4><pre><code>from os import listdir
-def handwritingClassTest():
-    hwLabels=[]
-    trainingFileList=listdir(&#39;trainingDigits&#39;)
-    m=len(trainingFileList)
-    trainingMat=np.zeros((m,1024))
-    for i in range(m):
-        fileNameStr=trainingFileList[i]
-        fileStr=fileNameStr.split(&#39;.&#39;)[0]
-        classNumStr=int(fileStr.split(&#39;_&#39;)[0])#文件名是标签
-        hwLabels.append(classNumStr)
-        trainingMat[i,:]=img2vector(&#39;trainingDigits/%s&#39; % fileNameStr)
-    testFileList=listdir(&#39;testDigits&#39;)
-    errorCount=0.0
-    mTest=len(testFileList)
-    for i in range(mTest):
-        fileNameStr=testFileList[i]
-        fileStr=fileNameStr.split(&#39;.&#39;)[0]
-        classNumStr=int(fileStr.split(&#39;_&#39;)[0])
-        vectorUnderTest=img2vector(&#39;testDigits/%s&#39; % fileNameStr)
-        classifierResult=classify0(vectorUnderTest,\
-            trainingMat,hwLabels,3)
-        print(&#39;the classifier came back with: %d, the real anser is: %d&#39; \
-            % (classifierResult,classNumStr))
-        if    classifierResult != classNumStr:
-            errorCount+=1.0
-    print(&#39;the total number of errors is: %d&#39; % errorCount)
-#测试
-kNN.handwritingClassTest()
-</code></pre><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>k-近邻算法是分类数据最简单最有效的算法。k-近邻算法是基于实例的学习，使用算法时必须有接近实际数据的训练样本数据。k-近邻算法必须保存全部数据集，如果训练数据集很大，必须使用大量的存储空间。此外，由于必须对数据集中的每个数据计算距离值，实际使用时可能非常耗时。</p>
-<p>k-近邻算法的另一个缺陷是它无法给出任何数据的基础结构信息，因此无法知晓平均实例样本和典型实例样本具有什么特征。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3428,7 +3532,7 @@ kNN.handwritingClassTest()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
