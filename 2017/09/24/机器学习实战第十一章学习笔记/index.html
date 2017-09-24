@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Life, Books, Code" />
+  <meta name="keywords" content="算法,机器学习,Python," />
 
 
 
@@ -94,13 +94,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Andy&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/Leetcode/index.html">
+<meta name="description" content="本章主要内容：  Apriori算法 频繁项集生成 关联规则生成 投票中的关联规则发现  几个概念从大规模数据集中寻找物品间的隐含关系被称作关联分析（association analysis)或者关联规则学习（association rule learning). 关联分析是一种在大规模数据集中寻找有趣关系的任务，这些有趣关系可以有两种形式：频繁项集或者关联规则。 频繁项集（frequent it">
+<meta name="keywords" content="算法,机器学习,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)">
+<meta property="og:url" content="http://yoursite.com/2017/09/24/机器学习实战第十一章学习笔记/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="本章主要内容：  Apriori算法 频繁项集生成 关联规则生成 投票中的关联规则发现  几个概念从大规模数据集中寻找物品间的隐含关系被称作关联分析（association analysis)或者关联规则学习（association rule learning). 关联分析是一种在大规模数据集中寻找有趣关系的任务，这些有趣关系可以有两种形式：频繁项集或者关联规则。 频繁项集（frequent it">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-24T08:15:27.015Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Andy&#39;s blog">
+<meta name="twitter:title" content="机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)">
+<meta name="twitter:description" content="本章主要内容：  Apriori算法 频繁项集生成 关联规则生成 投票中的关联规则发现  几个概念从大规模数据集中寻找物品间的隐含关系被称作关联分析（association analysis)或者关联规则学习（association rule learning). 关联分析是一种在大规模数据集中寻找有趣关系的任务，这些有趣关系可以有两种形式：频繁项集或者关联规则。 频繁项集（frequent it">
 
 
 
@@ -128,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/Leetcode/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/24/机器学习实战第十一章学习笔记/"/>
 
 
 
@@ -136,7 +141,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>标签: Leetcode | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析) | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -161,7 +166,7 @@
     
   
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,44 +294,406 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>Leetcode<small>标签</small>
-      </h1>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/机器学习实战第十一章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T00:00:00+08:00">
+                2017-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>本章主要内容：</p>
+<ul>
+<li>Apriori算法</li>
+<li>频繁项集生成</li>
+<li>关联规则生成</li>
+<li>投票中的关联规则发现</li>
+</ul>
+<h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><p>从大规模数据集中寻找物品间的隐含关系被称作<strong>关联分析</strong>（association analysis)或者<strong>关联规则学习</strong>（association rule learning).</p>
+<p>关联分析是一种在大规模数据集中寻找有趣关系的任务，这些有趣关系可以有两种形式：频繁项集或者关联规则。</p>
+<p><strong>频繁项集</strong>（frequent item sets)是经常出现在一块的物品的集合，<strong>关联规则</strong>（association rules)暗示两种物品之间可能存在很强的关系。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">交易号码</th>
+<th style="text-align:left">商品</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">豆奶，莴苣</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">莴苣，尿布，葡萄酒，甜菜</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">豆奶，尿布，葡萄酒，橙汁</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">莴苣，豆奶，尿布，葡萄酒</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">莴苣，豆奶，尿布，橙汁</td>
+</tr>
+</tbody>
+</table>
+<p><em>上表是某个杂货店的交易清单</em></p>
+<p>频繁项集是指那些经常出现在一起的物品集合，{葡萄酒、尿布、豆奶}就是一个频繁项集。 也可以找到尿布-&gt;葡萄酒这样的关联规则。(这意味着如果有人买了尿布，那么他也很可能买葡萄酒）</p>
+<p>当寻找频繁项集时，频繁（frequent)的定义是什么？有许多概念可以解答这个问题，不过本章主要考虑<strong>支持度</strong>和<strong>可信度</strong>。</p>
+<p>一个项集的支持度（support)被定义为数据集中包含该项集的记录所占的比例。上表中，{豆奶}的支持度是4/5,而{豆奶，尿布}的支持度为3/5. </p>
+<p>可信度（或者说置信度）(confidence)是针对一条诸如{尿布}-&gt;{葡萄酒}的关联规则来定义的。这条规则的可信度被定义为“支持度（{尿布，葡萄酒}）/支持度（{尿布}）”。</p>
+<p><em>{尿布，葡萄酒}的支持度为3/5，{尿布}的支持度为4/5，所以“尿布-&gt;葡萄酒”这条关联规则的可信度为3/4=75%.</em></p>
+<p>对于一个数据集（商店），如果能列出所有物品可能的组合的清单，然后对于每一种组合统计出频繁程度，那这样可以得到很多的有用信息，可以提升商店销售额。但是当物品成千上万时，暴力搜索，计算量是非常大的。</p>
+<h2 id="Apriori原理"><a href="#Apriori原理" class="headerlink" title="Apriori原理"></a>Apriori原理</h2><p>为了降低所需的计算时间，研究人员发现一种所谓的Apriori原理，Apriori原理可以帮我们减少可能感兴趣的项集。Apriori原理是说如果某个项集是频繁的，那么它的所有子集也是频繁的。反之，如果一个项集是非频繁集，那么它的所有超集也是非频繁的。</p>
+<blockquote>
+<p>apriori在拉丁语中指“来自以前”，当定义问题时，通常会使用先验知识或者假设，这被称作“一个先验”（a priori).在贝叶斯统计中，使用先验知识作为条件进行推断也很常见。先验知识可能来自领域知识、先前的一些测量结果，等等。</p>
+</blockquote>
+<p>假如说我们计算出一个项集（集合）是非频繁集后，那么它的超集（它作为子集被包含）就也是非频繁集，就不用再进行计算它的超集了，从而减少了很大的计算量。</p>
+<h2 id="使用Apriori算法来发现频繁集"><a href="#使用Apriori算法来发现频繁集" class="headerlink" title="使用Apriori算法来发现频繁集"></a>使用Apriori算法来发现频繁集</h2><p>基于Apriori原理的Apriori算法，并使用Python来实现，然后将其应用于虚拟商店Hole Foods的数据集上。</p>
+<p>Apriori算法的两个输入参数分别是最小支持度和数据集。该算法首先会生成所有单个物品的项集列表。接着扫描交易记录来查看哪些项集满足最小支持度要求，那些不满足最小支持度的集合会被去掉。然后，对剩下的集合进行组合以生成包含两个元素的项集。接下来，再重新扫描交易记录，去掉不满足最小支持度的项集。该过程重复进行直到所有项集都被去掉。</p>
+<pre><code>#数据集扫描伪代码：
+对数据集中的每条交易记录tran
+对每个候选项集can:
+    检查一下can是否是tran的子集：
+    如果是，则增加can的计数值
+    对每个候选项集：
+    如果其支持度不低于最小值，则保留该项集
+    返回所有频繁项集列表
 
-      <h2 class="post-title">
+
+import numpy as np
+
+#程序清单11-1 Apriori算法中的辅助函数
+
+def loadDataSet():
+    return [[1,3,4],[2,3,5],[1,2,3,5],[2,5]]
+
+def createC1(dataSet):
+    C1=[]
+    for transaction in dataSet:
+        for item in transaction:
+            if not [item] in C1:
+                C1.append([item])
+    C1.sort()
+    return list(map(frozenset,C1))
+
+def scanD(D,CK,minSupport):
+    ssCnt={}
+    for tid in D:
+        for can in CK:
+            if can.issubset(tid):
+                if can not in ssCnt:
+                    ssCnt[can]=1
+                else:
+                    ssCnt[can]+=1
+    numItems=float(len(D))
+    retList=[]
+    supportData={}
+    for key in ssCnt:
+        #计算支持度
+        support=ssCnt[key]/numItems
+        if support&gt;=minSupport:
+            retList.insert(0,key)
+        supportData[key]=support
+    return retList,supportData    
+</code></pre><p>函数loadDataSet()构建一个测试数据，createC1()返回一个包含单个物品的列表，scanD()根据数据集计算支持度并返回大于最小支持度的集合的列表。</p>
+<pre><code>#整个Apriori算法的伪代码：
+当集合中项的个数大于0时：
+    构建一个k个项组成的候选项集的列表
+    检查数据以确认每个项集都是频繁的
+    保留频繁项集并构建k+1项组成的候选项集的列表
+
+#程序清单11-2 Apriori算法
+def aprioriGen(Lk,k):
+    retList=[]
+    lenLk=len(Lk)
+    for i in range(lenLk):
+        for j in range(i+1,lenLk):
+            L1=list(Lk[i])[:k-2];L2=list(Lk[j])[:k-2]
+            L1.sort();L2.sort()
+            #如果L1、L2前k-2个元素都相等，合并
+            if L1==L2:
+                retList.append(Lk[i]|Lk[j])
+    return retList
+
+def apriori(dataSet,minSupport=0.5):
+    C1=createC1(dataSet)
+    D=list(map(set,dataSet))
+    L1,supportData=scanD(D,C1,minSupport)
+    L=[L1]
+    k=2
+    while (len(L[k-2])&gt;0):
+        Ck=aprioriGen(L[k-2],k)
+        Lk,supK=scanD(D,Ck,minSupport)
+        supportData.update(supK)
+        L.append(Lk)
+        k+=1
+    return L,supportData
+
+#这两函数比较难懂，Ck是候选项集列表，经过最小支持度筛选Ck-&gt;Lk.
+#而Lk-&gt;Ck+1
+
+#输出
+   reload(apriori)
+Out[22]: &lt;module &#39;apriori&#39; from &#39;G:\\MyPython_MachineLearning\\机器学习实战\\ch11\\apriori.py&#39;&gt;
+
+L,suppData=apriori.apriori(dataSet)
+
+Out[24]: L
+[[frozenset({5}), frozenset({2}), frozenset({3}), frozenset({1})],
+ [frozenset({2, 3}), frozenset({3, 5}), frozenset({2, 5}), frozenset({1, 3})],
+ [frozenset({2, 3, 5})],
+ []]
+
+Out[25]: suppData
+{frozenset({1}): 0.5,
+ frozenset({3}): 0.75,
+ frozenset({4}): 0.25,
+ frozenset({2}): 0.75,
+ frozenset({5}): 0.75,
+ frozenset({1, 3}): 0.5,
+ frozenset({2, 5}): 0.75,
+ frozenset({3, 5}): 0.5,
+ frozenset({2, 3}): 0.5,
+ frozenset({1, 5}): 0.25,
+ frozenset({1, 2}): 0.25,
+ frozenset({2, 3, 5}): 0.5}
+</code></pre><p>有个问题是L2=[{2,3},{3,5},{2,5},{1,3}]根据aprioriGen函数“L1==L2”才能合并，那只有{2,3}和{2,5}才能合并为{2,3,5}，C3.但是{1,3,5}为什么不是C3里的呢？</p>
+<h2 id="从频繁项集中挖掘关联规则"><a href="#从频繁项集中挖掘关联规则" class="headerlink" title="从频繁项集中挖掘关联规则"></a>从频繁项集中挖掘关联规则</h2><p>从频繁项集中挖掘关联规则可以利用关联分析发现许多有趣的内容，最常寻找的两个目标是频繁项集与关联规则。</p>
+<p>一条规则P-&gt;H的可信度定义为support(P|H)/support(P)。</p>
+<p>如果规则0,1,2-&gt;3并不满足最小可信度要求，那么就知道任何左部为{0,1,2}子集的规则也不会满足最小可信度要求。</p>
+<p>首先从一个频繁项集开始，接着创建一个规则列表，其中规则右部只包含一个元素，然后对这些规则进行测试。接下来合并所有剩余规则来创建一个新的规则列表，其中规则右部包含两个元素。这种方法也被称为分级法。</p>
+<pre><code>#程序清单11-3 关联规则生成函数
+#频繁项集列表，包含那些频繁项集支持数据的字典，最小可信度阈值
+def generateRules(L,supportData,minConf=0.7):
+    bigRuleList=[]
+    #只获取有两个或更多元素的集合
+    for i in range(1,len(L)):
+        for freqSet in L[i]:
+            H1=[frozenset([item]) for item in freqSet]
+            #频繁项集数目超过2，做进一步合并
+            if (i&gt;1):
+                rulesFromConseq(freqSet,H1,supportData,bigRuleList,\
+                                minConf)
+            #如果频繁项集中只有两个元素，那计算可信度
+            else:
+                calcConf(freqSet,H1,supportData,bigRuleList,minConf)
+    #返回一个包含可信度的规则列表
+    return bigRuleList
+
+#对规则进行评估
+def calcConf(freqSet,H,supportData,br1,minConf=0.7):
+    prunedH=[]
+    for conseq in H:
+        #计算可信度
+        conf=supportData[freqSet]/supportData[freqSet-conseq]
+        #大于最小可信度
+        if conf&gt;=minConf:
+            print(freqSet-conseq,&#39;--&gt;&#39;,conseq,&#39;conf:&#39;,conf)
+            br1.append((freqSet-conseq,conseq,conf))
+            prunedH.append(conseq)
+    #返回满足最小可信度要求的规则
+    return prunedH
+
+#用于生成候选规则集合
+def rulesFromConseq(freqSet,H,supportData,br1,minConf=0.7):
+    #频繁项集的大小
+    m=len(H[0])
+    if (len(freqSet)&gt;(m+1)):
+        #生成H中元素的无重复组合
+        Hmp1=aprioriGen(H,m+1)
+        #计算Hmp1中所有可能规则的可信度
+        Hmp1=calcConf(freqSet,Hmp1,supportData,br1,minConf)
+        if (len(Hmp1)&gt;1):
+            rulesFromConseq(freqSet,Hmp1,supportData,br1,minConf)
+
+In[43] L,suppData=apriori.apriori(dataSet,minSupport=0.5)
+
+In[44] rules=apriori.generateRules(L,suppData,minConf=0.7)
+frozenset({5}) --&gt; frozenset({2}) conf: 1.0
+frozenset({2}) --&gt; frozenset({5}) conf: 1.0
+frozenset({1}) --&gt; frozenset({3}) conf: 1.0 
+</code></pre><p>##小结##<br>关联分析是用于发现大数据集中元素间有趣关系的一个工具集，可以采用两种方式来量化这些有趣的关系。第一种方式是使用频繁项集，它会给出经常在一起出现的元素项。第二种方式是关联规则，每条关联规则意味着元素项之间的“If…Then…”关系。</p>
+<p>发现元素间不同的组合是个十分耗时的任务，一个解决方法是Apriori算法。使用Apriori原理来减少在数据库上进行检查的集合的数目。Apriori原理是说如果一个元素项是不频繁的，那么那些包含该元素的超集也是不频繁的。Apriori算法从单元素项集开始，通过组合满足最小支持度要求的项集来形成更大的集合。</p>
+
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/07/03/ValidParentheses/" itemprop="url">
-              
-                <span itemprop="name">Leetcode 20 Valid Parentheses</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-03T00:00:00+08:00"
-              content="2017-07-03" >
-          07-03
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/23/机器学习实战第10章学习笔记/" rel="next" title="机器学习实战第十章学习笔记(利用K-均值聚类算法对未标注数据分组)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第十章学习笔记(利用K-均值聚类算法对未标注数据分组)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -334,6 +701,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -354,8 +725,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -446,6 +826,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#几个概念"><span class="nav-number">1.</span> <span class="nav-text">几个概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apriori原理"><span class="nav-number">2.</span> <span class="nav-text">Apriori原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Apriori算法来发现频繁集"><span class="nav-number">3.</span> <span class="nav-text">使用Apriori算法来发现频繁集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从频繁项集中挖掘关联规则"><span class="nav-number">4.</span> <span class="nav-text">从频繁项集中挖掘关联规则</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -573,10 +969,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
