@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python,机器学习," />
+  <meta name="keywords" content="机器学习,算法,Python," />
 
 
 
@@ -94,28 +94,21 @@
 
 
 
-<meta name="description" content="3. Exploratory analysis in Python using PandasPandas是Python中最为实用的一种数据分析库，接下来会简单介绍Pandas，然后利用Pandas读取Analytics Vidhya竞赛中的一个数据集进行探索分析，建立一个简单的分类算法来解决这个问题。  Introduction to Series and Dataframe开始读取数据集之前，先">
-<meta name="keywords" content="python,机器学习">
+<meta name="description" content="本章主要内容  发现事务数据中的公共模式 FP-growth算法 发现Twitter源中的共现词  本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。 FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只">
+<meta name="keywords" content="机器学习,算法,Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Complete Tutorial to Learn Data Science with Python from Scratch(2)">
-<meta property="og:url" content="http://yoursite.com/2017/07/25/A Complete Tutorail(2)/index.html">
+<meta property="og:title" content="机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)">
+<meta property="og:url" content="http://yoursite.com/2017/09/27/机器学习实战第十二章学习笔记/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="3. Exploratory analysis in Python using PandasPandas是Python中最为实用的一种数据分析库，接下来会简单介绍Pandas，然后利用Pandas读取Analytics Vidhya竞赛中的一个数据集进行探索分析，建立一个简单的分类算法来解决这个问题。  Introduction to Series and Dataframe开始读取数据集之前，先">
+<meta property="og:description" content="本章主要内容  发现事务数据中的公共模式 FP-growth算法 发现Twitter源中的共现词  本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。 FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ23hIYcOBOMyLBsC1knJS9lBo0Xx-oQ1O1YoTFFlND0FZHeeYrg">
-<meta property="og:image" content="http://i.imgur.com/feIfwDI.png">
-<meta property="og:image" content="http://i.imgur.com/DbJAesM.png">
-<meta property="og:image" content="http://i.imgur.com/rIwMoMP.png">
-<meta property="og:image" content="http://i.imgur.com/4Spv377.png">
-<meta property="og:image" content="http://i.imgur.com/9O0IfEJ.png">
-<meta property="og:image" content="http://i.imgur.com/pfVVcHX.png">
-<meta property="og:image" content="http://i.imgur.com/Bb0d3I5.png">
-<meta property="og:image" content="http://i.imgur.com/KLQod2u.png">
-<meta property="og:updated_time" content="2017-07-25T09:14:58.226Z">
+<meta property="og:image" content="https://i.imgur.com/CCAnDpi.jpg">
+<meta property="og:image" content="https://i.imgur.com/RSrPhW0.jpg">
+<meta property="og:updated_time" content="2017-09-27T12:20:43.004Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Complete Tutorial to Learn Data Science with Python from Scratch(2)">
-<meta name="twitter:description" content="3. Exploratory analysis in Python using PandasPandas是Python中最为实用的一种数据分析库，接下来会简单介绍Pandas，然后利用Pandas读取Analytics Vidhya竞赛中的一个数据集进行探索分析，建立一个简单的分类算法来解决这个问题。  Introduction to Series and Dataframe开始读取数据集之前，先">
-<meta name="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ23hIYcOBOMyLBsC1knJS9lBo0Xx-oQ1O1YoTFFlND0FZHeeYrg">
+<meta name="twitter:title" content="机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)">
+<meta name="twitter:description" content="本章主要内容  发现事务数据中的公共模式 FP-growth算法 发现Twitter源中的共现词  本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。 FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只">
+<meta name="twitter:image" content="https://i.imgur.com/CCAnDpi.jpg">
 
 
 
@@ -143,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/25/A Complete Tutorail(2)/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/27/机器学习实战第十二章学习笔记/"/>
 
 
 
@@ -151,7 +144,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>A Complete Tutorial to Learn Data Science with Python from Scratch(2) | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集) | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -314,7 +307,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(2)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/27/机器学习实战第十二章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -331,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">A Complete Tutorial to Learn Data Science with Python from Scratch(2)</h1>
+          <h1 class="post-title" itemprop="name headline">机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)</h1>
         
 
         <div class="post-meta">
@@ -343,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T00:00:00+08:00">
-                2017-07-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-27T00:00:00+08:00">
+                2017-09-27
               </time>
             
 
@@ -368,8 +361,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -404,155 +408,252 @@
       
 
       
-        <h2 id="3-Exploratory-analysis-in-Python-using-Pandas"><a href="#3-Exploratory-analysis-in-Python-using-Pandas" class="headerlink" title="3. Exploratory analysis in Python using Pandas"></a>3. Exploratory analysis in Python using Pandas</h2><p>Pandas是Python中最为实用的一种数据分析库，接下来会简单介绍Pandas，然后利用Pandas读取Analytics Vidhya竞赛中的一个数据集进行探索分析，建立一个简单的分类算法来解决这个问题。</p>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ23hIYcOBOMyLBsC1knJS9lBo0Xx-oQ1O1YoTFFlND0FZHeeYrg" alt="可爱的Pandas"></p>
-<h3 id="Introduction-to-Series-and-Dataframe"><a href="#Introduction-to-Series-and-Dataframe" class="headerlink" title="Introduction to Series and Dataframe"></a>Introduction to Series and Dataframe</h3><p>开始读取数据集之前，先来理解Pandas的两个关键数据结构-Series &amp; DataFrame</p>
-<p><strong>Series</strong> 可以理解为一个1维带标签（labelled）或索引(indexed)的数组,可以通过labels来读取series中的元素（elements).</p>
-<p><strong>DataFrame</strong> 则与Excel表格很相像，可以通过Column names来引用某一列，可以使用Row numbers 来引用某一行。区别在于，在DataFrame中，Column names被称为Column,Row numbers被称为row index.</p>
-<p>Series and dataframes form the core data model for Pandas in Python. The data sets are first read into these dataframes and then various operations (e.g. group by, aggregation etc.) can be applied very easily to its columns.</p>
-<p>More: + <a href="http://pandas.pydata.org/pandas-docs/stable/10min.html" target="_blank" rel="external">10 Minutes to Pandas(亲身经历，感觉10分钟根本没看完，可能英语渣吧……)</a></p>
-<h3 id="Practice-data-set-—-Loan-Prediction-Problem"><a href="#Practice-data-set-—-Loan-Prediction-Problem" class="headerlink" title="Practice data set — Loan Prediction Problem"></a>Practice data set — Loan Prediction Problem</h3><ul>
-<li><a href="https://datahack.analyticsvidhya.com/contest/practice-problem-loan-prediction-iii/" target="_blank" rel="external">数据集下载地址</a></li>
+        <p>本章主要内容</p>
+<ul>
+<li>发现事务数据中的公共模式</li>
+<li>FP-growth算法</li>
+<li>发现Twitter源中的共现词</li>
 </ul>
-<p>貌似是Analytics Vidhya举办的一个竞赛吧，贷款预测问题（Loan Prediction Problem).</p>
-<pre><code class="Python">VARIABLE DESCRIPTIONS:(数据集变量描述)
-
-Variable              Description
-
-Loan_ID(贷款人标识)                      Unique Loan ID
-
-Gender(性别)                      Male/ Female
-
-Married(婚姻)                      Applicant married (Y/N)
-
-Dependents(家属)              Number of dependents
-
-Education(教育)              Applicant Education (Graduate/ Under Graduate)
-
-Self_Employed(自营)              Self employed (Y/N)
-
-ApplicantIncome(申请人收入)              Applicant income
-
-CoapplicantIncome      Coapplicant income
-
-LoanAmount(贷款金额)              Loan amount in thousands
-
-Loan_Amount_Term(贷款期限)      Term of loan in months
-
-Credit_History(信用记录)              credit history meets guidelines
-
-Property_Area(居住地)              Urban/ Semi Urban/ Rural
-
-Loan_Status(贷款状况)              Loan approved (Y/N)
-</code></pre>
-<h3 id="Importing-libraries-and-the-data-set"><a href="#Importing-libraries-and-the-data-set" class="headerlink" title="Importing libraries and the data set"></a>Importing libraries and the data set</h3><ul>
-<li>numpy</li>
-<li>matploylib</li>
-<li>pandas</li>
+<p>本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。</p>
+<p>FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只需要对数据库进行两次扫描，而Apriori算法对于每个候选项集都会扫描数据集判定给定模式是否频繁，因此FP-growth算法的速度要比Apriori算法要快。其发现频繁项集的基本过程如下：<br>（1）构建FP树；（2）从FP树中挖掘频繁项集。</p>
+<h2 id="FP树：用于编码数据集的有效方式"><a href="#FP树：用于编码数据集的有效方式" class="headerlink" title="FP树：用于编码数据集的有效方式"></a>FP树：用于编码数据集的有效方式</h2><p><strong>FP-growth算法</strong></p>
+<ul>
+<li>优点：一般要快于Apriori</li>
+<li>缺点：实现比较困难，在某些数据集上性能会下降</li>
+<li>适用数据类型：标称型数据</li>
 </ul>
-<pre><code class="python">import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+<p>FP-growth算法将数据存储在一种称为FP树的紧凑数据结构中，FP代表频繁模式(Frequent Pattern),通过链接(link)来连接相似元素，被连起来的元素项可以看成一个链表。</p>
+<p><img src="https://i.imgur.com/CCAnDpi.jpg" alt=""></p>
+<p>为构建FP树，需要对原始数据集扫描两遍。第一遍对所有元素项的出现次数进行计数。因为在上一章提到Apriori原理，如果某一元素是不频繁的，那么包含该元素的超集也是不频繁的。数据库的第一遍扫描用来统计出现的频率，而第二遍扫描中只考虑那些频繁元素。</p>
+<h2 id="构建FP树"><a href="#构建FP树" class="headerlink" title="构建FP树"></a>构建FP树</h2><p>在第二次扫描数据集时会构建一棵FP树，为构建一棵树，需要一个容器来保存树。</p>
+<pre><code>#程序清单12-1 FP树的类定义
 
-df=pd.read_csv(&quot;G:/Datahack/Loanprediction/TrainFile/train.csv&quot;)
-</code></pre>
-<h3 id="Quick-Data-Exploration"><a href="#Quick-Data-Exploration" class="headerlink" title="Quick Data Exploration"></a>Quick Data Exploration</h3><p>Once you have read the dataset, you can have a look at few top rows by using the function <strong>head()</strong></p>
-<pre><code class="python">df.head() #print first 5 rows of dataset
-</code></pre>
-<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>Loan_ID</th><br>      <th>Gender</th><br>      <th>Married</th><br>      <th>Dependents</th><br>      <th>Education</th><br>      <th>Self_Employed</th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>      <th>Property_Area</th><br>      <th>Loan_Status</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>LP001002</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>5849</td><br>      <td>0.0</td><br>      <td>NaN</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>LP001003</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>1</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>4583</td><br>      <td>1508.0</td><br>      <td>128.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Rural</td><br>      <td>N</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>LP001005</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>Yes</td><br>      <td>3000</td><br>      <td>0.0</td><br>      <td>66.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>LP001006</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Not Graduate</td><br>      <td>No</td><br>      <td>2583</td><br>      <td>2358.0</td><br>      <td>120.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>LP001008</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>6000</td><br>      <td>0.0</td><br>      <td>141.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>  </tbody><br></table><br></div>
+class treeNode:
+    def __init__(self,nameValue,numOccur,parentNode):
+        #节点名字
+        self.name=nameValue
+        #计数值
+        self.count=numOccur
+        #下一个节点指针
+        self.nodeLink=None
+        #上一节点的指针
+        self.parent=parentNode
+        #子节点
+        self.children={}
 
+    def inc(self,numOccur):
+        self.count+=numOccur
 
+    def disp(self,ind=1):
+        print(&#39; &#39;*ind,self.name,&#39; &#39;,self.count)
+        for child in self.children.values():
+            child.disp(ind+1)
+</code></pre><p>除了FP树外，还需要一个头指针表来指向给定类型的第一个实例。</p>
+<p><img src="https://i.imgur.com/RSrPhW0.jpg" alt=""></p>
+<p>头指针表有两个功能，存放指针和保存FP树中每类元素的总数。</p>
+<p>在对事务记录过滤和排序之后，就可以构建FP树。从空集开始，向其中不断添加频繁项集。过滤、排序后的事务依次添加到树中，如果树中已存在现有元素，则增加现有元素的值。如果现有元素不存在，则向树添加一个分枝。</p>
+<pre><code>#程序清单12-2 FP树构建函数
 
-<p>Next, you can look at summary of numerical fields by using <strong>describe()</strong> function.</p>
-<p>describe() function would provide count,mean,standard deviation(std),min,quartiles and max in its output. </p>
-<p>More: + <a href="https://www.analyticsvidhya.com/blog/2014/07/statistics/" target="_blank" rel="external">basic statistics to understand population distribution</a></p>
-<p>同时，可以看到部分列还有缺失值。</p>
-<pre><code class="python">df.describe() #Get summary of numerical variables
-</code></pre>
-<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>count</th><br>      <td>614.000000</td><br>      <td>614.000000</td><br>      <td>592.000000</td><br>      <td>600.00000</td><br>      <td>564.000000</td><br>    </tr><br>    <tr><br>      <th>mean</th><br>      <td>5403.459283</td><br>      <td>1621.245798</td><br>      <td>146.412162</td><br>      <td>342.00000</td><br>      <td>0.842199</td><br>    </tr><br>    <tr><br>      <th>std</th><br>      <td>6109.041673</td><br>      <td>2926.248369</td><br>      <td>85.587325</td><br>      <td>65.12041</td><br>      <td>0.364878</td><br>    </tr><br>    <tr><br>      <th>min</th><br>      <td>150.000000</td><br>      <td>0.000000</td><br>      <td>9.000000</td><br>      <td>12.00000</td><br>      <td>0.000000</td><br>    </tr><br>    <tr><br>      <th>25%</th><br>      <td>2877.500000</td><br>      <td>0.000000</td><br>      <td>100.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>50%</th><br>      <td>3812.500000</td><br>      <td>1188.500000</td><br>      <td>128.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>75%</th><br>      <td>5795.000000</td><br>      <td>2297.250000</td><br>      <td>168.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>max</th><br>      <td>81000.000000</td><br>      <td>41667.000000</td><br>      <td>700.000000</td><br>      <td>480.00000</td><br>      <td>1.000000</td><br>    </tr><br>  </tbody><br></table><br></div>
+def createTree(dataSet,minSup=1):
+    headerTable={}
+    #第一次遍历数据集
+    for trans in dataSet:
+        for item in trans:
+            #dict .get(item,0)若item存在返回其值，若不存在返回0
+            #统计每个元素出现的频度
+            headerTable[item]=headerTable.get(item,0)+dataSet[trans]
+    keys=[k for k in headerTable.keys()]
+    for k in keys:
+        if headerTable[k]&lt;minSup:
+            #移除不满足最小支持度的元素项
+            del (headerTable[k])
+    #用set创建集合
+    freqItemSet=set(headerTable.keys())
+    if len(freqItemSet)==0:
+        return None,None
+    #扩展头指针表，保存每个元素的个数及指向每种类型第一个元素项的指针
+    for k in headerTable:
+        headerTable[k]=[headerTable[k],None]
+    #FP树根节点
+    retTree=treeNode(&#39;Null Set&#39;,1,None)
+    #再次遍历数据集
+    for tranSet,count in dataSet.items():
+        localD={}
+        #对每个事务
+        for item in tranSet:
+            #只考虑频繁项集
+            if item in freqItemSet:
+                #获取item个数，过滤重排
+                localD[item]=headerTable[item][0]
+        if len(localD)&gt;0:
+            #对localD中元素进行排序
+            orderedItems=[v[0] for v in sorted(localD.items(),
+                          key=lambda p:p[1],reverse=True)]
+            #更新树
+            updateTree(orderedItems,retTree,headerTable,count)
+    return retTree,headerTable
 
+def updateTree(items,inTree,headerTable,count):
+    #查看元素是否为inTree子节点
+    if items[0] in inTree.children:
+        #增加计数
+        inTree.children[items[0]].inc(count)
+    #不存在，则做为子节点添加
+    else:
+        inTree.children[items[0]]=treeNode(items[0],count,inTree)
+        if headerTable[items[0]][1]==None:
+            #更新头指针表
+            headerTable[items[0]][1]=inTree.children[items[0]]
+        else:
+            updateHeader(headerTable[items[0]][1],inTree.children[items[0]])
+    if len(items)&gt;1:
+        #items[1::]去掉第一个元素
+        updateTree(items[1::],inTree.children[items[0]],headerTable,count)
 
+def updateHeader(nodeToTest,targetNode):
+    while (nodeToTest.nodeLink!=None):
+        nodeToTest=nodeToTest.nodeLink
+    #把targetNode挂在以nodeToTest为头结点的链表的最后边
+    nodeToTest.nodeLink=targetNode
+</code></pre><h2 id="从一颗FP树中挖掘频繁项集"><a href="#从一颗FP树中挖掘频繁项集" class="headerlink" title="从一颗FP树中挖掘频繁项集"></a>从一颗FP树中挖掘频繁项集</h2><p>FP树以及构建完成，接下来抽取频繁项集。首先从单元素项集合开始，然后在此基础上逐步构建更大的集合。</p>
+<p>抽取频繁项集分为3个基本步骤：</p>
+<ol>
+<li>从FP树中获得条件模式基</li>
+<li>利用条件模式基，构建一个条件FP树</li>
+<li>迭代重复步骤1和步骤2，直到树包含一个元素项为止</li>
+</ol>
+<p><strong>条件模式基</strong>(conditional pattern base)是以所查找元素项为结尾的路径集合。每一条路径又可称为前缀路径（prefix path)，一条前缀路径是介于所查找元素项与树根节点之间的所有内容。</p>
+<p>前缀路径将被用于构建条件FP树，为了获得这些前缀路径，可以对树进行穷举式搜索，直到获得想要的频繁项为止。一种更为高效的搜索过程是，利用之前保存的头指针表，依次从元素项当前位置向根节点回溯。</p>
+<pre><code>#从一颗FP树中挖掘频繁项集
+&quot;&quot;&quot;
+条件模式基，是以所查找元素项为结尾的路径集合。
+每一条路径其实都是一条前缀路径，一条前缀路径是介于所查找元素项与树根节点之间的所有内容
+&quot;&quot;&quot;
 
-<p>For the non-numerical values, we can look at frequency distribution to understand whether they make sense or not. The frequency table can be printed by following command:</p>
-<pre><code class="python">df[&#39;Property_Area&#39;].value_counts()
-</code></pre>
-<pre><code>Semiurban    233
-Urban        202
-Rural        179
-Name: Property_Area, dtype: int64
-</code></pre><h3 id="Distribution-analysis"><a href="#Distribution-analysis" class="headerlink" title="Distribution analysis"></a>Distribution analysis</h3><p>通过前面的操作已经熟悉了基本数据特征，下面开始研究各个变量的分布情况。</p>
-<p>Lets start by plotting the histogram of ApplicantIncome using the follow commands:</p>
-<pre><code class="python">df[&#39;ApplicantIncome&#39;].hist(bins=50,figsize=(15,5))
-plt.show()
-</code></pre>
-<p><img src="http://i.imgur.com/feIfwDI.png" alt="picture1"></p>
-<p>可以看到上图中有少数的极端值。</p>
-<p>Next, we look at box plots to understand the distributions.</p>
-<pre><code class="python">df.boxplot(column=&#39;ApplicantIncome&#39;)
-plt.show()
-</code></pre>
-<p><img src="http://i.imgur.com/DbJAesM.png" alt="Picture2"></p>
-<p>This confirms the presence of a lot of outliers/extreme values. This can be attributed to the income disparity in the society. Part of this can be driven by the fact that we are looking at people with different education levels. Let us segregate them by Education:</p>
-<pre><code class="python">df.boxplot(column=&#39;ApplicantIncome&#39;,by=&#39;Education&#39;)
-plt.show()
-</code></pre>
-<p><img src="http://i.imgur.com/rIwMoMP.png" alt="picture3"></p>
-<p>We can see that there is no substantial different between the mean income of graduate and non-graduates. But there are a higher number of graduates with very high incomes, which are appearing to be the outliers.可以看出，大学毕业和大学未毕业人数平均收入是差不多的，但是大学毕业会有部分高收入值，形成离群值。</p>
-<p>Now, Let’s look at the histogram and boxplot of LoanAmount using the following command:</p>
-<pre><code class="python">df[&#39;LoanAmount&#39;].hist(bins=50,figsize=(15,5))
-plt.show()
-</code></pre>
-<p><img src="http://i.imgur.com/4Spv377.png" alt="picture4"></p>
-<pre><code class="python">df.boxplot(column=&#39;LoanAmount&#39;)
-plt.show()
-</code></pre>
-<p><img src="http://i.imgur.com/9O0IfEJ.png" alt="picture5"></p>
-<p>Again, there are some extreme values. Clearly, both ApplicantIncome and LoanAmount require some amount of data munging.（小白表示懵逼啊，有很多离群值就不能用了？需要数据修复？好像吴恩达的视频是提到过） LoanAmount has missing and well as extreme values values, while ApplicantIncome has a few extreme values, which demand deeper understanding. We will take this up in coming sections.</p>
-<h3 id="Categorical-variable-analysis"><a href="#Categorical-variable-analysis" class="headerlink" title="Categorical variable analysis"></a>Categorical variable analysis</h3><p>Now that we understand distributions for ApplicantIncome and LoanIncome, let us understand categorical variables in more details. We will use Excel style pivot table and cross-tabulation. For instance, let us look at the chances of getting a loan based on credit history. This can be achieved in MS Excel using a pivot table as:</p>
-<p>Now we will look at the steps required to generate a similar insight using Python. Please refer to <a href="https://www.analyticsvidhya.com/blog/2016/01/12-pandas-techniques-python-data-manipulation/" target="_blank" rel="external">this article(12种奇淫异巧)</a> for getting a hang of the different data manipulation techniques in Pandas.</p>
-<pre><code class="python">temp1=df[&#39;Credit_History&#39;].value_counts(ascending=True)
-temp2=df.pivot_table(values=&#39;Loan_Status&#39;,index=[&#39;Credit_History&#39;],
-                     aggfunc=lambda x:x.map({&#39;Y&#39;:1,&#39;N&#39;:0}).mean())
-print(&quot;Frequency Table for Credit History:&quot;)
-print(temp1)
-print(&quot;\nProbility of getting loan for each Credit History class:&quot;)
-print(temp2)
-</code></pre>
-<pre><code>Frequency Table for Credit History:
-0.0     89
-1.0    475
-Name: Credit_History, dtype: int64
+#程序清单12-4 发现以给定元素项结尾的所有路径的函数
+def ascendTree(leafNode,prefixPath):
+    #从某一叶节点，迭代上溯整棵树
+    if leafNode.parent!=None:
+        prefixPath.append(leafNode.name)
+        ascendTree(leafNode.parent,prefixPath)
 
-Probility of getting loan for each Credit History class:
-                Loan_Status
-Credit_History             
-0.0                0.078652
-1.0                0.795789
-</code></pre><pre><code class="python">temp1.plot(kind=&#39;bar&#39;)
-plt.xlabel(&#39;Credit_History&#39;)
-plt.ylabel(&#39;Count of Applicants&#39;)
-plt.title(&#39;Applicants by Credit_History&#39;)
+def findPrefixPath(basePat,treeNode):
+    condPats={}
+    while treeNode!=None:
+        prefixPath=[]
+        ascendTree(treeNode,prefixPath)
+        if len(prefixPath)&gt;1:
+            #将所有前缀路径加入condPats中，并记录它们的个数
+            condPats[frozenset(prefixPath[1:])]=treeNode.count
+        #移动到下一个节点
+        treeNode=treeNode.nodeLink
+    #返回条件模式基
+    return condPats
+</code></pre><p>这两个函数用于为给定元素项生成一个条件模式基（前缀路径的集合）。</p>
+<p>对于每一个频繁项，都要创建一棵条件FP树，我们会为z,x以及其他频繁项构建条件树。可以使用刚才发现的条件模式基作为输入数据，并通过相同的建树代码来构建这些树。</p>
+<pre><code>#程序清单12-5 递归查找频繁项集的mineTree函数
+def mineTree(inTree,headerTable,minSup,preFix,freqItemList):
+    #对头指针表中的元素项按照其出现的频率进行排序，从小到大
+    bigL=[v[0] for v in sorted(headerTable.items(),key=lambda p:p[1][0])]
 
-temp2.plot(kind=&#39;bar&#39;)
-plt.xlabel(&#39;Credit_History&#39;)
-plt.ylabel(&#39;Probability of getting loan&#39;)
-plt.title(&#39;Probability of getting loan by credit history&#39;)
+    for basePat in bigL:
+        newFreqSet=preFix.copy()
+        newFreqSet.add(basePat)
+        #将每一个频繁项添加到频繁项集列表freqItemList中
+        freqItemList.append(newFreqSet)
+        #调用findPrefixPath()函数来创建条件基
+        condPattBases=findPrefixPath(basePat,headerTable[basePat][1])
+        #创建的条件基被作为数据集传入createTree()函数中
+        myCondTree,myHead=createTree(condPattBases,minSup)
 
-plt.show()
-</code></pre>
-<p><img src="http://i.imgur.com/pfVVcHX.png" alt="picture6"></p>
-<p><img src="http://i.imgur.com/Bb0d3I5.png" alt="picture7"></p>
-<p>This shows that the chances of getting a loan are eight-fold if the applicant has a valid credit history.(在有Credit_History的人获得贷款的概率是无Credit_History的8倍)You can plot similar graphs by Married, Self-Employed, Property_Area, etc.</p>
-<p>Alternately, these two plots can also be visualized by combining them in a stacked chart::</p>
-<pre><code class="python">temp3=pd.crosstab(df[&#39;Credit_History&#39;],df[&#39;Loan_Status&#39;])
-temp3.plot(kind=&#39;bar&#39;,stacked=True,color=[&#39;red&#39;,&#39;blue&#39;],grid=False)
-plt.show()
-</code></pre>
-<p><img src="http://i.imgur.com/KLQod2u.png" alt="picture8"></p>
-<p>You can also add gender into the mix.</p>
-<p>If you have not realized already, we have just created two basic classification algorithms here, one based on credit history, while other on 2 categorical variables (including gender). You can quickly code this to create your first submission on AV Datahacks.</p>
-<p>We just saw how we can do exploratory analysis in Python using Pandas. I hope your love for pandas (the animal) would have increased by now – given the amount of help, the library can provide you in analyzing datasets.</p>
-<p>Next let’s explore ApplicantIncome and LoanStatus variables further, perform <a href="https://www.analyticsvidhya.com/blog/2014/09/data-munging-python-using-pandas-baby-steps-python/" target="_blank" rel="external">data munging</a> and create a dataset for applying various modeling techniques. I would strongly urge that you take another dataset and problem and go through an independent example before reading further.</p>
+        #如果树中还有元素项大于最小支持度，递归调用mineTree()函数
+        if myHead!=None:
+            print(&#39;conditional tree for: &#39;,newFreqSet)
+            myCondTree.disp(1)
+            mineTree(myCondTree,myHead,minSup,newFreqSet,freqItemList)
+
+&quot;&quot;&quot;
+示例： 在Twitter源中发现一些共现词
+&quot;&quot;&quot;
+
+#程序清单12-6 访问Twitter Python库的代码
+import twitter
+from time import sleep
+import re
+
+def getLotsOfTweets(searchStr):
+    CONSUMER_KEY=&#39;&#39;
+    CONSUMER_SECRET=&#39;&#39;
+    ACCESS_TOKEN_KEY=&#39;&#39;
+    ACCESS_TOKEN_SECRET=&#39;&#39;
+    api=twitter.Api(consumer_key=CONSUMER_KEY,consumer_secret=CONSUMER_SECRET,
+                    access_token_key=ACCESS_TOKEN_KEY,
+                    access_token_secret=ACCESS_TOKEN_SECRET)
+    resultsPages=[]
+    for i in range(1,15):
+        print(&#39;fetching page %d&#39; % i)
+        searchResults=api.GetSearch(searchStr,per_page=100,page=i)
+        resultsPages.append(searchResults)
+        sleep(6)
+    return resultsPages
+
+#程序清单12-7 文本解析及合成代码
+def textParse(bigString):
+    urlsRemoved=re.sub(&#39;(http[s]?:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*&#39;,
+                       &#39;&#39;,bigString)
+    listOfTokens=re.split(r&#39;\W*&#39;,urlsRemoved)
+    return [tok.lower() for tok in listOfTokens if len(tok)&gt;2]
+
+def mineTweets(tweetArr,minSup=5):
+    parsedList=[]
+    for i in range(14):
+        for j in range(100):
+            parsedList.append(textParse(tweetArr[i][j].text))
+    initSet=createInitSet(parsedList)
+    myFPtree,myHeaderTab=createTree(initSet,minSup)
+    myFreqList=[]
+    mineTree(myFPtree,myHeaderTab,minSup,set([]),myFreqList)
+    return myFreqList
+</code></pre><h2 id="示例：从新闻网站点击流中挖掘"><a href="#示例：从新闻网站点击流中挖掘" class="headerlink" title="示例：从新闻网站点击流中挖掘"></a>示例：从新闻网站点击流中挖掘</h2><p>在kosarak.dat文件中，包含将近100万条记录。该文件中的每一行包含某个用户浏览过的新闻报道。</p>
+<pre><code>In [47]: parsedDat=[line.split() for line in open(&#39;kosarak.dat&#39;).readlines()]
+
+In [48]: initSet=fpGrowth.createInitSet(parsedDat)
+
+In [49]: myFPtree,myHeaderTab=fpGrowth.createTree(initSet,100000)
+
+In [50]: myFreqList=[]
+
+In [51]: fpGrowth.mineTree(myFPtree,myHeaderTab,100000,set([]),myFreqList)
+conditional tree for:  {&#39;1&#39;}
+  Null Set   1
+   6   107404
+conditional tree for:  {&#39;3&#39;}
+  Null Set   1
+   6   186289
+    11   117401
+   11   9718
+conditional tree for:  {&#39;3&#39;, &#39;11&#39;}
+  Null Set   1
+   6   117401
+conditional tree for:  {&#39;11&#39;}
+  Null Set   1
+   6   261773
+
+In[52]: len(myFreqList)
+Out[52]: 9
+
+In[53]: myFreqList
+Out[53]: 
+[{&#39;1&#39;},
+ {&#39;1&#39;, &#39;6&#39;},
+ {&#39;3&#39;},
+ {&#39;11&#39;, &#39;3&#39;},
+ {&#39;11&#39;, &#39;3&#39;, &#39;6&#39;},
+ {&#39;3&#39;, &#39;6&#39;},
+ {&#39;11&#39;},
+ {&#39;11&#39;, &#39;6&#39;},
+ {&#39;6&#39;}]
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>FP-growth算法是一种用于发现数据集中频繁模式的有效方法。FP-growth算法利用Apriori原则，执行更快。Apriori算法产生候选项集，然后扫描数据集来检测它们是否频繁。由于只对数据集扫描两次，因此FP-growth算法执行更快。在FP-growth算法中，数据集存储在一个被称为FP树的结构中。FP树构建完成后，可以通过查找元素项的条件基及构建条件FP树来发现频繁项集。该过程不断以更多元素作为条件重复进行，直到FP树只包含一个元素为止。</p>
 
       
     </div>
@@ -582,9 +683,11 @@ plt.show()
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
             <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
@@ -597,8 +700,8 @@ plt.show()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/25/A Complete Tutorail(1)/" rel="next" title="A Complete Tutorial to Learn Data Science with Python from Scratch(1)">
-                <i class="fa fa-chevron-left"></i> A Complete Tutorial to Learn Data Science with Python from Scratch(1)
+              <a href="/2017/09/24/机器学习实战第十一章学习笔记/" rel="next" title="机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)
               </a>
             
           </div>
@@ -606,10 +709,6 @@ plt.show()
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/27/A Complete Tutorial(3)/" rel="prev" title="A Complete Tutorial to Learn Data Science with Python from Scratch(3)">
-                A Complete Tutorial to Learn Data Science with Python from Scratch(3) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -768,7 +867,7 @@ plt.show()
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Exploratory-analysis-in-Python-using-Pandas"><span class="nav-number">1.</span> <span class="nav-text">3. Exploratory analysis in Python using Pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction-to-Series-and-Dataframe"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction to Series and Dataframe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Practice-data-set-—-Loan-Prediction-Problem"><span class="nav-number">1.2.</span> <span class="nav-text">Practice data set — Loan Prediction Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Importing-libraries-and-the-data-set"><span class="nav-number">1.3.</span> <span class="nav-text">Importing libraries and the data set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Quick-Data-Exploration"><span class="nav-number">1.4.</span> <span class="nav-text">Quick Data Exploration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distribution-analysis"><span class="nav-number">1.5.</span> <span class="nav-text">Distribution analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Categorical-variable-analysis"><span class="nav-number">1.6.</span> <span class="nav-text">Categorical variable analysis</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FP树：用于编码数据集的有效方式"><span class="nav-number">1.</span> <span class="nav-text">FP树：用于编码数据集的有效方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建FP树"><span class="nav-number">2.</span> <span class="nav-text">构建FP树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从一颗FP树中挖掘频繁项集"><span class="nav-number">3.</span> <span class="nav-text">从一颗FP树中挖掘频繁项集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例：从新闻网站点击流中挖掘"><span class="nav-number">4.</span> <span class="nav-text">示例：从新闻网站点击流中挖掘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
