@@ -301,6 +301,214 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/09/网易一道算法题/" itemprop="url">网易校招一道算法题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-09T00:00:00+08:00">
+                2017-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>题目是：</p>
+<pre><code>小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行
+，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标
+(x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪
+物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。
+
+1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。
+
+2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。
+
+小易要进行一次射击，小易在进行射击前，可以使用这两种特权
+
+操作任意次。
+
+小易想知道在他射击的时候最多可以同时消灭多少只怪物。
+</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0427/141746_2boq_3454401.png" alt=""></p>
+<p>看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。</p>
+<p>想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。</p>
+<p>真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。</p>
+<p>后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1；</p>
+<p>C++代码如下：</p>
+<pre><code>作者：雨baby
+链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2
+来源：牛客网
+
+#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+const int maxn = 50 + 5;
+
+int x[maxn], y[maxn];
+int n;
+int solve() {
+    if(n &lt;= 2) return n;
+    int res = 1;
+    for(int i = 0; i &lt; n; i++) {
+        for(int j = 0; j &lt; n; j++) {
+            if(i != j) {
+                int dx1 = x[j] - x[i];
+                int dy1 = y[j] - y[i];
+                for(int k = 0; k &lt; n; k++) {
+                    int cnt = 0;
+                    if(i != k &amp;&amp; j != k) {
+                        for(int r = 0; r &lt; n; r++) {
+                            int dx2 = x[r] - x[i];
+                            int dy2 = y[r] - y[i];
+                            if(dy1 * dx2 == dy2 * dx1) {
+                                cnt++;
+                            } else {
+                                dx2 = x[r] - x[k];
+                                dy2 = y[r] - y[k];
+                                if(dy1 * dy2 == -dx2 * dx1) {
+                                    cnt++;
+                                }
+                            }
+                        }
+                    }
+                    res = max(res, cnt);
+                }
+            }
+        }
+    }
+    return res;
+}
+int main() {
+    cin &gt;&gt; n;
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i];
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i];
+    cout &lt;&lt; solve() &lt;&lt; endl;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/机器学习实战第五章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3298,250 +3506,6 @@ def feature_ranking(score):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/16/Snowboy使用说明_Hotword Detection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/16/Snowboy使用说明_Hotword Detection/" itemprop="url">Snowboy使用说明_Hotword Detection</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-16T00:00:00+08:00">
-                2017-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/树莓派3/" itemprop="url" rel="index">
-                    <span itemprop="name">树莓派3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Snowboy是一个高度自定义的基于实时甚至离线情况的hotword detection engine(敏感词检测机制？)，兼容Raspberry Pi,Linux and Mac OS X.</p>
-<p>hotword也被称为唤醒词(wake word)或触发词(trigger word)通常是一个关键词或短语，计算机会一直监听作为一个信号用于触发其他操作。</p>
-<p>有一些例子，如Amazon Echo的“Alexa”、Google Assistant的”OK Google”和iPhone的“Hey Siri”. 这些关键词用于触发一个全面的语音交互。但是，hotwords同样可以用于其他方面，像是命令和控制等。</p>
-<p>一种简单的方案是，运行全ASR(Automatic Speech Recognition)来检测hotword detection.在这种方案中，设备会一直观察特定触发词。但是ASR也会消耗设备和带宽资源。同样的，如果基于云的应用，将不能保护你的隐私。（因为会一直开着麦克风来检测关键词，那么周围环境包括你说的话也会实时被监听了).幸运的是，Snowboy会用来解决此类问题。</p>
-<ul>
-<li>highly customizable(高度自定义）</li>
-<li>always listening but protects your privacy(总是检测但是不会泄露隐私）</li>
-<li>light-weight and embedded</li>
-<li>Apache licensed!</li>
-</ul>
-<p><img src="http://i.imgur.com/iJulCvp.jpg" alt="Snowboy"></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p>准备工作：</p>
-<ol>
-<li>一台带有microphone的设备</li>
-<li>相应的解压软件 </li>
-<li>训练好的模型</li>
-</ol>
-<p><a href="https://s3-us-west-2.amazonaws.com/snowboy/snowboy-releases/rpi-arm-raspbian-8.0-1.1.1.tar.bz2" target="_blank" rel="external">树莓派pre-packaged</a></p>
-<h3 id="Access-Microphone"><a href="#Access-Microphone" class="headerlink" title="Access Microphone"></a>Access Microphone</h3><p>使用PortAudio作为一个跨平台的音频输入/输出。同样也使用sox快速检查microphone是否正确安装。</p>
-<ol>
-<li>Install Sox</li>
-</ol>
-<pre><code class="Python">  sudo apt-get install python-pyaudio python3-pyaudio sox
-</code></pre>
-<ol>
-<li>Install PortAudio’s Python bindings:</li>
-</ol>
-<pre><code class="Python">   pip install pyaudio
-   #pip-3.2 install pyaudio
-</code></pre>
-<ol>
-<li>To check whether you can record via your microphone, open a terminal and run:</li>
-</ol>
-<pre><code class="Python">   rec temp.wav
-   #记录个几秒中，ctrl+c,再play temp.wav,听声
-</code></pre>
-<h3 id="Decoder-Structures"><a href="#Decoder-Structures" class="headerlink" title="Decoder Structures"></a>Decoder Structures</h3><p>上面预安装包下载解压后，如下：</p>
-<blockquote>
-<p>├── README.md</p>
-<p>├── _snowboydetect.so</p>
-<p>├── demo.py</p>
-<p>├── demo2.py</p>
-<p>├── light.py</p>
-<p>├── requirements.txt</p>
-<p>├── resources</p>
-<p>│   ├── ding.wav</p>
-<p>│   ├── dong.wav</p>
-<p>│   ├── common.res</p>
-<p>│   └── snowboy.umdl</p>
-<p>├── snowboydecoder.py</p>
-<p>├── snowboydetect.py</p>
-<p>└── version</p>
-</blockquote>
-<p><strong>_snowboydetect.so</strong>是用SWIG编译的一个动态链接库，依赖于系统的Python2库。snowboy所有相关库都被静态连接在这个文件里。</p>
-<p><strong>snowboydetect.py</strong>是一个SWIG生成的python wrapper文件。因为不易阅读，我们创建了高等级的wrapper: <strong>snowboydecoder.py</strong></p>
-<p>应该在<a href="https://snowboy.kitt.ai" target="_blank" rel="external">https://snowboy.kitt.ai </a>上训练你的模型(snowboy.pmdl)，或者你也可以使用同一模型<strong>resources/snowboy.umdl</strong></p>
-<h3 id="Runing-a-Demo"><a href="#Runing-a-Demo" class="headerlink" title="Runing a Demo"></a>Runing a Demo</h3><ol>
-<li>To access the simple demo in <strong>main</strong> code of snowboydecoder.py, run the following command in your Terminal:</li>
-</ol>
-<pre><code class="Python">    python demo.py snowboy.pmdl
-    #snowboy.pmdl是你训练的hotword模型
-</code></pre>
-<ol>
-<li>When prompt,speak into your microphone to see whether snowboy detects your magic phrase.</li>
-</ol>
-<pre><code class="Python">
-    #demo.py
-
-    import snowboydecoder
-    import sys
-    import signal
-
-    interrupted = False
-
-    def signal_handler(signal, frame):
-        global interrupted
-        interrupted = True
-
-    def interrupt_callback():
-        global interrupted
-        return interrupted
-
-    if len(sys.argv) == 1:
-        print(&quot;Error: need to specify model name&quot;)
-        print(&quot;Usage: python demo.py your.model&quot;)
-        sys.exit(-1)
-
-    model = sys.argv[1]
-
-    signal.signal(signal.SIGINT, signal_handler)
-
-    detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
-    print(&#39;Listening... Press Ctrl+C to exit&#39;)
-
-    detector.start(detected_callback=snowboydecoder.ding_callback,
-                   interrupt_check=interrupt_callback,
-                   sleep_time=0.03)
-
-    detector.terminate()
-</code></pre>
-<p>主程序在<strong>detector.start()</strong>中循环，每<strong>sleep_time=0.03</strong>:</p>
-<ol>
-<li>检查ring buffer 是否有hotword, if <strong>YES</strong>,调用<strong>detected_callback</strong>函数</li>
-<li>调用<strong>interrupt_check</strong>函数，if <strong>True</strong>，中断主程序，返回.</li>
-</ol>
-<p>目前，在demo中令detected_callback=snowboydecoder.ding_callback,所以每当检测到关键词时，设备会“叮”一下。</p>
-<p><strong>原文出处</strong>：<a href="http://docs.kitt.ai/snowboy/#running-a-demo" target="_blank" rel="external">http://docs.kitt.ai/snowboy/#running-a-demo</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3592,7 +3556,7 @@ def feature_ranking(score):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

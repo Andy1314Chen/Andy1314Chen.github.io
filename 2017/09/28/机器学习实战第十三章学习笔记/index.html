@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Life, Books, Code" />
+  <meta name="keywords" content="机器学习,算法,Python," />
 
 
 
@@ -94,13 +94,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Andy&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/categories/book/机器学习/index.html">
+<meta name="description" content="主要内容  降维技术 主成分分析(PCA) 对半导体数据进行降维处理  降维技术 使得数据集更易使用 降低很多算法的计算开销 去除噪声 使得结果易懂  有几种降维技术：  主成分分析（Principal Component Analysis,PCA).在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标系轴选择的是原始数据中方差最大的方向，第二个新坐标轴">
+<meta name="keywords" content="机器学习,算法,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习实战第十三章学习笔记(利用PCA来简化数据)">
+<meta property="og:url" content="http://yoursite.com/2017/09/28/机器学习实战第十三章学习笔记/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="主要内容  降维技术 主成分分析(PCA) 对半导体数据进行降维处理  降维技术 使得数据集更易使用 降低很多算法的计算开销 去除噪声 使得结果易懂  有几种降维技术：  主成分分析（Principal Component Analysis,PCA).在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标系轴选择的是原始数据中方差最大的方向，第二个新坐标轴">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-28T03:07:58.603Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Andy&#39;s blog">
+<meta name="twitter:title" content="机器学习实战第十三章学习笔记(利用PCA来简化数据)">
+<meta name="twitter:description" content="主要内容  降维技术 主成分分析(PCA) 对半导体数据进行降维处理  降维技术 使得数据集更易使用 降低很多算法的计算开销 去除噪声 使得结果易懂  有几种降维技术：  主成分分析（Principal Component Analysis,PCA).在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标系轴选择的是原始数据中方差最大的方向，第二个新坐标轴">
 
 
 
@@ -128,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/book/机器学习/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/28/机器学习实战第十三章学习笔记/"/>
 
 
 
@@ -136,7 +141,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>分类: 机器学习 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>机器学习实战第十三章学习笔记(利用PCA来简化数据) | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -161,7 +166,7 @@
     
   
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,45 +294,273 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>机器学习<small>分类</small>
-      </h1>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/17/机器学习书单/" itemprop="url">
-              
-                <span itemprop="name">机器学习路线【转】</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-17T00:00:00+08:00"
-              content="2017-08-17" >
-          08-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/机器学习实战第十三章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习实战第十三章学习笔记(利用PCA来简化数据)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T00:00:00+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要内容</p>
+<ul>
+<li>降维技术</li>
+<li>主成分分析(PCA)</li>
+<li>对半导体数据进行降维处理</li>
+</ul>
+<h2 id="降维技术"><a href="#降维技术" class="headerlink" title="降维技术"></a>降维技术</h2><ul>
+<li>使得数据集更易使用</li>
+<li>降低很多算法的计算开销</li>
+<li>去除噪声</li>
+<li>使得结果易懂</li>
+</ul>
+<p>有几种降维技术：</p>
+<ol>
+<li>主成分分析（Principal Component Analysis,PCA).在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标系轴选择的是原始数据中方差最大的方向，第二个新坐标轴的选择和第一个坐标轴正交且具有最大方差的方向。该过程一直重复，重复次数为原始数据中特征的数目。大部分方差都包含在最前面的几个新坐标轴中。因此，可以忽略余下的坐标轴，即对数据进行了降维处理。</li>
+</ol>
+<ol>
+<li>因子分析（Factor Analysis).在因子分析中，假设在观察数据的生成中有一些观察不到的隐变量（latent variable).假设观察数据是这些隐变量和某些噪声的线性组合。那么隐变量的数据可能比观察数据的数目少，也就是说通过找到隐变量就可以实现数据的降维。</li>
+<li>独立成分分析（Independent Component Analysis，ICA). ICA假设数据是从N个数据源生成的，并假设数据为多个数据源的混合观察结果，这些数据源之间在统计上是相互独立的，而在PCA中只假设数据是不相关的。</li>
+</ol>
+<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><p><strong>主成分分析</strong></p>
+<ul>
+<li>优点：降低数据的复杂性，识别最重要的多个特征</li>
+<li>缺点：不一定需要，且可能损失有用信息</li>
+<li>适用数据类型：数值型数据</li>
+</ul>
+<p>PCA的基本过程，第一个主成分是从数据差异性最大（即方差最大）的方向提取出来，第二个主成分则来自于数据差异性次大的方向，并且该方向与第一个主成分方向正交。通过数据集的协方差矩阵及其特征值分析，可以求得这些主成分的值。</p>
+<p>一旦得到了协方差矩阵的特征向量，就可以保留最大的N个值，通过将数据乘上这N个特征向量而将它转换到新的空间。</p>
+<pre><code>将数据转换成前N个主成分的伪代码：
+
+去除平均值
+计算协方差矩阵
+计算协方差矩阵的特征值和特征向量
+将特征值从大到小排序
+保留最上面的N个特征向量
+将数据转换到上述N个特征向量构建的新空间中
+
+#程序清单13-1 PCA算法
+
+import numpy as np
+
+def loadDataSet(fileName,delim=&#39;\t&#39;):
+    fr=open(fileName)
+    stringArr=[line.strip().split(delim) for line in fr.readlines()]
+    datArr=[list(map(float,line)) for line in stringArr]
+    return np.mat(datArr)
+
+def pca(dataMat,topNfeat=9999999):
+    #求取每个特征的平均值
+    meanVals=np.mean(dataMat,axis=0)
+    #减去平均值
+    meanRemoved=dataMat-meanVals
+    #计算协方差矩阵
+    covMat=np.cov(meanRemoved,rowvar=0)
+    #计算协方差矩阵特征值及特征向量
+    eigVals,eigVects=np.linalg.eig(np.mat(covMat))
+    #对特征值进行从小到大的排序
+    eigValInd=np.argsort(eigVals)
+    #进行逆序，
+    eigValInd=eigValInd[:-(topNfeat+1):-1]
+    #提取出前N个特征值对应的特征向量
+    redEigVects=eigVects[:,eigValInd]
+    #低维空间数据
+    lowDDataMat=meanRemoved*redEigVects
+    #重构原始数据
+    reconMat=(lowDDataMat*redEigVects.T)+meanVals
+    return lowDDataMat,reconMat
+
+
+
+&quot;&quot;&quot;
+    示例：利用PCA对半导体制造数据降维
+&quot;&quot;&quot;
+
+#程序清单13-2 将NaN替换成平均值的函数
+def replaceNanWithMean():
+    datMat=loadDataSet(&#39;secom.data&#39;,&#39; &#39;)
+    numFeat=np.shape(datMat)[1]
+    for i in range(numFeat):
+        meanVal=np.mean(datMat[np.nonzero(-np.isnan(datMat[:,i].A))[0],i])
+        #填充NaN为平均值
+        datMat[np.nonzero(np.isnan(datMat[:,i].A))[0],i]=meanVal
+    return datMat
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>降维技术使得数据变得更易使用，并且往往能够去除数据中的噪声，使得其他机器学习任务更加精确。降维往往作为预处理步骤，在数据应用到其他算法之前清洗数据。</p>
+<p>PCA可以从数据中识别其主要特征，通过沿着数据最大方差方向旋转坐标轴来实现。选择方差最大的方向作为第一条坐标轴，后续坐标轴则与前面的坐标轴正交。协方差矩阵上的特征值可以用一系列的正交坐标轴来获取。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/27/机器学习实战第十二章学习笔记/" rel="next" title="机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -335,6 +568,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -355,8 +592,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -447,6 +693,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#降维技术"><span class="nav-number">1.</span> <span class="nav-text">降维技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA"><span class="nav-number">2.</span> <span class="nav-text">PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -574,10 +836,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
