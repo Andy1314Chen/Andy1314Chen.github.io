@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Life, Books, Code" />
+  <meta name="keywords" content="机器学习,算法,Python," />
 
 
 
@@ -94,14 +94,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta name="description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;#39;fivethirtyeight&amp;#39;) %matplotlib inline  #导入数据集">
+<meta name="keywords" content="机器学习,算法,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3时间序列分析模型ARIMA的简单实用">
+<meta property="og:url" content="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;#39;fivethirtyeight&amp;#39;) %matplotlib inline  #导入数据集">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-23T03:46:32.669Z">
+<meta property="og:image" content="https://i.imgur.com/rjbrTh2.png">
+<meta property="og:image" content="https://i.imgur.com/CX8ezlB.png">
+<meta property="og:image" content="https://i.imgur.com/dMU02LT.png">
+<meta property="og:image" content="https://i.imgur.com/EH4nXRx.png">
+<meta property="og:image" content="https://i.imgur.com/TfPcg9W.png">
+<meta property="og:updated_time" content="2017-09-29T12:48:41.012Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="Python3时间序列分析模型ARIMA的简单实用">
+<meta name="twitter:description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;#39;fivethirtyeight&amp;#39;) %matplotlib inline  #导入数据集">
+<meta name="twitter:image" content="https://i.imgur.com/rjbrTh2.png">
 
 
 
@@ -129,7 +139,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/"/>
 
 
 
@@ -137,7 +147,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>tags | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Python3时间序列分析模型ARIMA的简单实用 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -291,25 +301,499 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline">tags</h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
 
     
-    
-      <div class="tag-cloud">
-        <div class="tag-cloud-title">
-            目前共计 19 个标签
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python3时间序列分析模型ARIMA的简单实用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
-        <div class="tag-cloud-tags">
-          <a href="/tags/AI/" style="font-size: 14.25px; color: #b5b5b5">AI</a> <a href="/tags/C/" style="font-size: 21px; color: #6f6f6f">C</a> <a href="/tags/Leetcode/" style="font-size: 12px; color: #ccc">Leetcode</a> <a href="/tags/Python/" style="font-size: 25.5px; color: #404040">Python</a> <a href="/tags/Relief/" style="font-size: 12px; color: #ccc">Relief</a> <a href="/tags/SVM/" style="font-size: 12px; color: #ccc">SVM</a> <a href="/tags/UNIT/" style="font-size: 18.75px; color: #868686">UNIT</a> <a href="/tags/computer/" style="font-size: 12px; color: #ccc">computer</a> <a href="/tags/day-day-up/" style="font-size: 14.25px; color: #b5b5b5">day day up</a> <a href="/tags/python/" style="font-size: 23.25px; color: #575757">python</a> <a href="/tags/reading/" style="font-size: 12px; color: #ccc">reading</a> <a href="/tags/sklearn/" style="font-size: 12px; color: #ccc">sklearn</a> <a href="/tags/xgboost/" style="font-size: 12px; color: #ccc">xgboost</a> <a href="/tags/好记性不如烂笔头/" style="font-size: 12px; color: #ccc">好记性不如烂笔头</a> <a href="/tags/机器学习/" style="font-size: 30px; color: #111">机器学习</a> <a href="/tags/树莓派3/" style="font-size: 16.5px; color: #9d9d9d">树莓派3</a> <a href="/tags/百度/" style="font-size: 14.25px; color: #b5b5b5">百度</a> <a href="/tags/算法/" style="font-size: 27.75px; color: #282828">算法</a> <a href="/tags/语音识别/" style="font-size: 12px; color: #ccc">语音识别</a>
-        </div>
-      </div>
+      </header>
     
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <pre><code>import warnings
+import itertools
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+plt.style.use(&#39;fivethirtyeight&#39;)
+%matplotlib inline
+
+#导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot;
+#收集了从1958年到2001年的，CO2变化
+data=sm.datasets.co2.load_pandas()
+y=data.data
+
+#每周的数据很难工作，用每月的平均值代替
+y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean()
+
+
+
+#使用缺失值前面的值来填充
+y=y.fillna(y.bfill())
+print(y)
+
+
+1958-03-01    316.100000
+1958-04-01    317.200000
+1958-05-01    317.433333
+1958-06-01    315.625000
+1958-07-01    315.625000
+1958-08-01    314.950000
+1958-09-01    313.500000
+1958-10-01    313.425000
+1958-11-01    313.425000
+1958-12-01    314.700000
+1959-01-01    315.500000
+1959-02-01    316.700000
+1959-03-01    316.733333
+1959-04-01    317.675000
+1959-05-01    318.325000
+1959-06-01    318.025000
+1959-07-01    316.525000
+1959-08-01    314.900000
+1959-09-01    313.825000
+1959-10-01    313.400000
+1959-11-01    314.875000
+1959-12-01    315.525000
+1960-01-01    316.380000
+1960-02-01    316.975000
+1960-03-01    317.575000
+1960-04-01    319.120000
+1960-05-01    319.925000
+1960-06-01    319.450000
+1960-07-01    318.060000
+1960-08-01    315.775000
+                 ...    
+1999-07-01    369.000000
+1999-08-01    366.700000
+1999-09-01    364.675000
+1999-10-01    365.140000
+1999-11-01    366.650000
+1999-12-01    367.900000
+2000-01-01    369.020000
+2000-02-01    369.375000
+2000-03-01    370.400000
+2000-04-01    371.540000
+2000-05-01    371.650000
+2000-06-01    371.625000
+2000-07-01    369.940000
+2000-08-01    367.950000
+2000-09-01    366.540000
+2000-10-01    366.725000
+2000-11-01    368.125000
+2000-12-01    369.440000
+2001-01-01    370.175000
+2001-02-01    371.325000
+2001-03-01    372.060000
+2001-04-01    372.775000
+2001-05-01    373.800000
+2001-06-01    373.060000
+2001-07-01    371.300000
+2001-08-01    369.425000
+2001-09-01    367.880000
+2001-10-01    368.050000
+2001-11-01    369.375000
+2001-12-01    371.020000
+Freq: MS, Name: co2, Length: 526, dtype: float64
+
+
+#可视化数据
+y.plot(figsize=(15,6))
+
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt;
+</code></pre><p><img src="https://i.imgur.com/rjbrTh2.png" alt=""></p>
+<p>最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise.</p>
+<ul>
+<li><p>p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days.</p>
+</li>
+<li><p>d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small.</p>
+</li>
+<li><p>q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past.</p>
+</li>
+</ul>
+<p>When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.).</p>
+<pre><code>#Define the p,d,q parameters to take any value between 0 and 2
+p=d=q=range(0,2)
+#产生不同的组合
+pdq=list(itertools.product(p,d,q))
+#加上季节
+seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))]
+
+print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;)
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1]))
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2]))
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3]))
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4]))
+
+
+Examples of parameter combinations for Seasonal ARIMA...
+SARIMAX: (0, 0, 1) x (0, 0, 1, 12)
+SARIMAX: (0, 0, 1) x (0, 1, 0, 12)
+SARIMAX: (0, 1, 0) x (0, 1, 1, 12)
+SARIMAX: (0, 1, 0) x (1, 0, 0, 12)
+</code></pre><p>使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。</p>
+<pre><code>warnings.filterwarnings(&#39;ignore&#39;)
+for param in pdq:
+    for param_seasonal in seasonal_pdq:
+        try:
+            mod=sm.tsa.statespace.SARIMAX(y,order=param,
+                                         seasonal_order=param_seasonal,
+                                         enforce_stationarity=False,
+                                         enforce_invertibility=False)
+            results=mod.fit()
+            print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic))
+        except:
+            continue
+
+
+ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514
+ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955
+ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035
+ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077
+ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545
+ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444
+ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609
+ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488
+ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783
+ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884
+ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123
+ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135
+ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242
+ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801
+ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082
+ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724
+ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303
+ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172
+ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419
+ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214
+ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316
+ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715
+ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042
+ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721
+ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874
+ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157
+ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964
+ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518
+ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054
+ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267
+ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374
+ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998
+ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694
+ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544
+ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341
+ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134
+ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588
+ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976
+ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977
+ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118
+ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662
+ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821
+ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868
+ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384
+ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459
+ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794
+ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837
+ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677
+ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254
+ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126
+ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399
+ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544
+ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744
+ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113
+ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746
+ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897
+ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253
+ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126
+ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924
+ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222
+
+
+
+
+#发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型
+mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1),
+                             seasonal_order=(1,1,1,12),
+                             enforce_stationarity=False,
+                             enforce_invertibility=False)
+results=mod.fit()
+print(results.summary().tables[1])
+
+
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.3181      0.092      3.441      0.001       0.137       0.499
+ma.L1         -0.6254      0.077     -8.162      0.000      -0.776      -0.475
+ar.S.L12       0.0010      0.001      1.732      0.083      -0.000       0.002
+ma.S.L12      -0.8769      0.026    -33.806      0.000      -0.928      -0.826
+sigma2         0.0972      0.004     22.632      0.000       0.089       0.106
+==============================================================================
+</code></pre><p>coef列显示了各个特征的权重，如何对时间序列产生影响。</p>
+<pre><code>results.plot_diagnostics(figsize=(15,12))
+</code></pre><p><img src="https://i.imgur.com/CX8ezlB.png" alt=""></p>
+<p>Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。</p>
+<ul>
+<li>In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed.</li>
+<li>The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed.</li>
+<li>The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself.</li>
+</ul>
+<p>这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间</p>
+<pre><code>#dynamic=False,ensures that we produce one-step ahead forecasts, 
+#meaning that forecasts at each point are generated using the full history up to that point.
+pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False)
+pred_ci=pred.conf_int()
+
+#绘制出实际值
+ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;)
+#预测值
+pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7)
+#置信区间
+ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2)
+ax.set_xlabel(&#39;Date&#39;)
+ax.set_ylabel(&#39;CO2 Levels&#39;)
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0x66f26d8&gt;
+</code></pre><p><img src="https://i.imgur.com/dMU02LT.png" alt=""></p>
+<pre><code>y_forecasted=pred.predicted_mean
+y_truth=y[&#39;1998-01-01&#39;:]
+
+#计算平方差
+mse=((y_forecasted-y_truth)**2).mean()
+print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2)))
+
+
+The Mean Squared Error of our forecasts is 0.07
+
+
+#dynamic=True,利用指定时间点之前的数据进行预测？
+pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True)
+pred_dynamic_ci = pred_dynamic.conf_int()
+
+
+ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15))
+pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax)
+
+ax.fill_between(pred_dynamic_ci.index,
+                pred_dynamic_ci.iloc[:, 0],
+                pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25)
+
+ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1],
+                 alpha=.1, zorder=-1)
+
+ax.set_xlabel(&#39;Date&#39;)
+ax.set_ylabel(&#39;CO2 Levels&#39;)
+
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0xdaddcf8&gt;
+</code></pre><p><img src="https://i.imgur.com/EH4nXRx.png" alt=""></p>
+<pre><code># Extract the predicted and true values of our time series
+y_forecasted = pred_dynamic.predicted_mean
+y_truth = y[&#39;1998-01-01&#39;:]
+
+# Compute the mean square error
+mse = ((y_forecasted - y_truth) ** 2).mean()
+print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2)))
+
+The Mean Squared Error of our forecasts is 1.01
+
+
+#Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长
+pred_uc=results.get_forecast(steps=500)
+#Get confidence intervals of forecasts
+pred_ci=pred_uc.conf_int()
+
+ax=y.plot(label=&#39;observed&#39;,figsize=(20,15))
+pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;)
+ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],
+               pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25)
+ax.set_xlabel(&#39;Date&#39;)
+ax.set_ylabel(&#39;CO2 Levels&#39;)
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0xda122e8&gt;
+</code></pre><p> <img src="https://i.imgur.com/TfPcg9W.png" alt=""></p>
+<p>##参考博客##</p>
+<ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/28/机器学习实战第十三章学习笔记/" rel="next" title="机器学习实战第十三章学习笔记(利用PCA来简化数据)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第十三章学习笔记(利用PCA来简化数据)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/29/机器学习实战第十四章学习笔记/" rel="prev" title="机器学习实战第十四章学习笔记(利用SVD简化数据)">
+                机器学习实战第十四章学习笔记(利用SVD简化数据) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -561,10 +1045,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 

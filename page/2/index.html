@@ -301,6 +301,198 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/支持向量机通俗导论/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/15/支持向量机通俗导论/" itemprop="url">支持向量机通俗导论（1）【转】</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-15T00:00:00+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><em>这是一篇CSDN上关于SVM的博客，由浅入深，写的很详细，很多推荐的</em></p>
+<p>作者：July 。致谢：pluskid、白石、JerryLead。<br>说明：本文最初写于2012年6月，而后不断反反复复修改&amp;优化，修改次数达上百次，最后修改于2016年11月。<br>声明：本文于2012年便早已附上所有参考链接，并注明是篇“学习笔记”，且写明具体参考了pluskid等人的文章。文末2013年的PDF是为证。</p>
+<p><img src="https://i.imgur.com/GyzYqIk.jpg" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>动笔写这个支持向量机(support vector machine)是费了不少劲和困难的，原因很简单，一者这个东西本身就并不好懂，要深入学习和研究下去需花费不少时间和精力，二者这个东西也不好讲清楚，尽管网上已经有朋友写得不错了(见文末参考链接)，但在描述数学公式的时候还是显得不够。得益于同学白石的数学证明，我还是想尝试写一下，希望本文在兼顾通俗易懂的基础上，真真正正能足以成为一篇完整概括和介绍支持向量机的导论性的文章。</p>
+<p>本文在写的过程中，参考了不少资料，包括《支持向量机导论》、《统计学习方法》及网友pluskid的支持向量机系列等等，于此，还是一篇学习笔记，只是加入了自己的理解和总结，有任何不妥之处，还望海涵。全文宏观上整体认识支持向量机的概念和用处，微观上深究部分定理的来龙去脉，证明及原理细节，力保逻辑清晰 &amp; 通俗易懂。</p>
+<p>同时，阅读本文时建议大家尽量使用chrome等浏览器，如此公式才能更好的显示，再者，阅读时可拿张纸和笔出来，把本文所有定理.公式都亲自推导一遍或者直接打印下来（可直接打印网页版或本文文末附的PDF）在文稿上演算，从而享受随时随地思考、演算的极致快感。</p>
+<p>OK，还是那句话，有任何问题，欢迎任何人随时不吝指正 &amp; 赐教，感谢。</p>
+<h2 id="第一层、了解SVM"><a href="#第一层、了解SVM" class="headerlink" title="第一层、了解SVM"></a>第一层、了解SVM</h2><p>支持向量机，因其英文名为support vector machine，故一般简称SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
+<h4 id="1-1、分类标准的起源：Logistic回归"><a href="#1-1、分类标准的起源：Logistic回归" class="headerlink" title="1.1、分类标准的起源：Logistic回归"></a>1.1、分类标准的起源：Logistic回归</h4><p>理解SVM，咱们必须先弄清楚一个概念：线性分类器。</p>
+<p>给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用x表示数据点，用y表示类别（y可以取1或者-1，分别代表两个不同的类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面（hyper plane），这个超平面的方程可以表示为（ wT中的T代表转置）：</p>
+<p>$$ w^Tx+b=0 $$</p>
+<p>可能有读者对类别取1或-1有疑问，事实上，这个1或-1的分类标准起源于logistic回归。</p>
+<p>Logistic回归目的是从特征学习出一个0/1分类模型，而这个模型是将特征的线性组合作为自变量，由于自变量的取值范围是负无穷到正无穷。因此，使用logistic函数（或称作sigmoid函数）将自变量映射到(0,1)上，映射后的值被认为是属于y=1的概率。</p>
+<p>假设函数</p>
+<p>$$ h_\theta(x)=g(\theta^Tx)=\frac 1{1+e^{-\theta^Tx}}, $$</p>
+<p>其中x是n维特征向量，函数g就是logistic函数。</p>
+<p>\( g(z)=\frac 1{1+e^{-z}} \)图像是</p>
+<p><img src="http://img.my.csdn.net/uploads/201304/05/1365174236_6175.png" alt=""></p>
+<p>可以看到，将无穷映射到了(0,1)。<br>而假设函数就是特征属于y=1的概率。</p>
+<p>$$ P(y=1|x;\theta)=h_\theta(x) $$<br>$$ P(y=0|x;\theta)=1-h_\theta(x) $$<br> 从而，当我们要判别一个新来的特征属于哪个类时，只需求\(h_\theta(x)\)即可，若\(h_\theta(x)\)大于0.5就是y=1的类，反之属于y=0类。</p>
+<p> 此外，\(h_\theta(x)\)只和\(\theta^Tx\)有关，\(\theta^Tx>0\)，那么\(h_\theta(x)>0.5\)，而g(z)只是用来映射，真实的类别决定权还是在于\(\theta^Tx\)。再者，当\(\theta^Tx\)&gt;&gt;0时，\(h_\theta(x)=1\)，反之\(h_\theta(x)=0\)。如果我们只从\(\theta^Tx\)出发，希望模型达到的目标就是让训练数据中y=1的特征\(\theta^Tx\)&gt;&gt;0，而是y=0的特征\(\theta^Tx\)&lt;&lt;0。Logistic回归就是要学习得到θ，使得正例的特征远大于0，负例的特征远小于0，而且要在全部训练实例上达到这个目标。</p>
+<p> 接下来，尝试把logistic回归做个变形。首先，将使用的结果标签y = 0和y = 1替换为y = -1,y = 1，然后将\(\theta^Tx=\theta_0+\theta_1x_1+\theta_2x_2+…+\theta_nx_n\) \((x_0=1)\)中\(\theta_0\)的替换为b，最后将后面的\(\theta_1x_1+\theta_2x_2+…+\theta_nx_n\)替换为\(w_1x_1+w_2x_2+…+w_nx_n\)（即\(w^Tx\)）。如此，则有了\(\theta^Tx=w^Tx+b\)。也就是说除了y由y=0变为y=-1外，线性分类函数跟logistic回归的形式化表示\( h_\theta=g(\theta^Tx)=g(w^T+b) \)没区别。</p>
+<p> 进一步，可以将假设函数\(h_{w,b}(x)=g(w^Tx+b)\)中的g(z)做一个简化，将其简单映射到y=-1和y=1上。映射关系如下：<br>$$<br>g(z)=\begin{cases}<br>1,&amp; \text{if \(z &gt;=0\)}<br>\\\\<br>-1,&amp; \text{if \(z &lt;0\)}<br>\end{cases}<br>$$</p>
+<h4 id="1-2、线性分类的一个例子"><a href="#1-2、线性分类的一个例子" class="headerlink" title="1.2、线性分类的一个例子"></a>1.2、线性分类的一个例子</h4><p>下面举个简单的例子。如下图所示，现在有一个二维平面，平面上有两种不同的数据，分别用圈和叉表示。由于这些数据是线性可分的，所以可以用一条直线将这两类数据分开，这条直线就相当于一个超平面，超平面一边的数据点所对应的y全是-1 ，另一边所对应的y全是1。</p>
+<p><img src="http://img.blog.csdn.net/20140829134124453" alt=""></p>
+<p>这个超平面可以用分类函数\(f(x)=w^Tx+b\)表示，当f(x) 等于0的时候，x便是位于超平面上的点，而f(x)大于0的点对应 y=1 的数据点，f(x)小于0的点对应y=-1的点，如下图所示：<br><img src="http://img.blog.csdn.net/20140829134548371" alt=""></p>
+<blockquote>
+<p>注：有的资料上定义特征到结果的输出函数\(u=w\cdot{x}-b\)，与这里定义的\(f(x)=w^Tx+b\)实质是一样的。为什么？因为无论是\(u=w^Tx-b\)，还是\(f(x)=w^Tx+b\)，不影响最终优化结果。下文你将看到，当我们转化到优化\(max \frac 1{||w||}, s.t.,y_i(w^Tx_i+b)\ge1,i=1,…,n\)的时候，为了求解方便，会把yf(x)令为1，即yf(x)是\(y(w^Tx+b)\)，还是\(y(w^Tx-b)\)，对我们要优化的式子\(max \frac 1{||w||}\)已无影响。</p>
+</blockquote>
+<p>换言之，在进行分类的时候，遇到一个新的数据点x，将x代入f(x) 中，如果f(x)小于0则将x的类别赋为-1，如果f(x)大于0则将x的类别赋为1。</p>
+<p> 接下来的问题是，如何确定这个超平面呢？从直观上而言，这个超平面应该是最适合分开两类数据的直线。而判定“最适合”的标准就是这条直线离直线两边的数据的间隔最大。所以，得寻找有着最大间隔的超平面。</p>
+<h4 id="1-3、函数间隔Functional-margin与几何间隔Geometrical-margin"><a href="#1-3、函数间隔Functional-margin与几何间隔Geometrical-margin" class="headerlink" title="1.3、函数间隔Functional margin与几何间隔Geometrical margin"></a>1.3、函数间隔Functional margin与几何间隔Geometrical margin</h4><p>在超平面\(w^Tx+b=0\)确定的情况下，\(|w^Tx+b|\)能够表示点x到距离超平面的远近，而通过观察\(w^Tx+b\)的符号与类标记y的符号是否一致可判断分类是否正确，所以，可以用\(y(w^Tx+b)\)的正负性来判定或表示分类的正确性。于此，我们便引出了函数间隔（functional margin）的概念。</p>
+<p>定义函数间隔（用\(\hat{\gamma}\)表示）为：\(\hat{\gamma}=y(w^Tx+b)=yf(x)\)</p>
+<p>而超平面(w，b)关于T中所有样本点(xi，yi)的函数间隔最小值（其中，x是特征，y是结果标签，i表示第i个样本），便为超平面(w, b)关于训练数据集T的函数间隔：</p>
+<p>$$ \hat{\gamma}=min\hat{\gamma}_i (i=1,2,…,n) $$</p>
+<p> 但这样定义的函数间隔有问题，即如果成比例的改变w和b（如将它们改成2w和2b），则函数间隔的值f(x)却变成了原来的2倍（虽然此时超平面没有改变），所以只有函数间隔还远远不够。</p>
+<p>事实上，我们可以对法向量w加些约束条件，从而引出真正定义点到超平面的距离–几何间隔（geometrical margin）的概念。</p>
+<p>假定对于一个点 x ，令其垂直投影到超平面上的对应点为 x0 ，w 是垂直于超平面的一个向量，\(\gamma\)为样本x到超平面的距离，如下图所示：</p>
+<p><img src="http://blog.pluskid.org/wp-content/uploads/2010/09/geometric_margin.png" alt=""></p>
+<p>根据平面几何知识，有</p>
+<p>$$ x=x_0+\gamma\frac w{||w||} $$</p>
+<p>其中||w||为w的二阶范数（范数是一个类似于模的表示长度的概念），\(\frac w{||w||}\)是单位向量（一个向量除以它的模称之为单位向量）。</p>
+<p>又由于 x0 是超平面上的点，满足 f(x0)=0 ，代入超平面的方程\(w^Tx+b=0\)，可得\(w^Tx_0+b=0\)，即\(w^Tx_0=-b\)。</p>
+<p>随即让此式\(x=x_0+\gamma\frac w{||w||}\)的两边同时乘以\(w^T\)，再根据\(w^Tx_0=-b\)和\(w^Tw={||w||}^2\)，即可算出：<br>$$ \gamma=\frac {w^Tx+b}{||w||} = \frac {f(x)}{||w||} $$<br>为了得到的\(\gamma\)绝对值，令\(\gamma\)乘上对应的类别 y，即可得出几何间隔（用\(\tilde{\gamma}\)表示<strong>函数间隔是头上是箭头，几何间隔是波浪线</strong>）的定义：<br>$$ \tilde{\gamma}=y\gamma=\frac {\tilde{\gamma}}{||w||} $$</p>
+<p>从上述函数间隔和几何间隔的定义可以看出：几何间隔就是函数间隔除以||w||，而且函数间隔\(y(w^Tx+b)=yf(x)\)实际上就是|f(x)|，只是人为定义的一个间隔度量，而几何间隔|f(x)|/||w||才是直观上的点到超平面的距离。</p>
+<h4 id="1-4、最大间隔分类器Maximum-Margin-Classifier的定义"><a href="#1-4、最大间隔分类器Maximum-Margin-Classifier的定义" class="headerlink" title="1.4、最大间隔分类器Maximum Margin Classifier的定义"></a>1.4、最大间隔分类器Maximum Margin Classifier的定义</h4><p>对一个数据点进行分类，当超平面离数据点的“间隔”越大，分类的确信度（confidence）也越大。所以，为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个“间隔”值。这个间隔就是下图中的Gap的一半。</p>
+<p><img src="http://img.blog.csdn.net/20140829135959290" alt=""></p>
+<p>通过由前面的分析可知：函数间隔不适合用来最大化间隔值，因为在超平面固定以后，可以等比例地缩放w的长度和b的值，这样可以使得\(f(x)=w^Tx+b\)的值任意大，亦即函数间隔\(\hat{\gamma}\)可以在超平面保持不变的情况下被取得任意大。但几何间隔因为除上||w||了，使得在缩放w和b的时候几何间隔\(\tilde{\gamma}\)的值是不会改变的，它只随着超平面的变动而变动，因此，这是更加合适的一个间隔。换言之，这里要找的最大间隔分类超平面中的“间隔”指的是几何间隔。</p>
+<p> 于是最大间隔分类器（maximum margin classifier）的目标函数可以定义为：<br>\(\max \tilde\gamma\)<br>同时需满足一些条件，根据间隔的定义，有<br>\(y_i(w^Tx_i+b)=\hat{\gamma_i}\ge{\hat\gamma}\)</p>
+<p>回顾下几何间隔的定义\(\tilde\gamma=y\gamma=\frac {\hat\gamma}{||w||}\)，可知：如果令函数间隔\(\hat\gamma\)等于1（之所以令\(\hat\gamma\)等于1，是为了方便推导和优化，且这样做对目标函数的优化没有影响，至于为什么，请见本文评论下第42楼回复），则有\(\hat\gamma=\frac 1{||w||}\)且\(y_i(w^Tx_i+b)\ge1,i=1,…,n\)，从而上述目标函数转化成了\(max \frac 1{||w||}, s.t.,y_i(w^Tx_i+b)\ge1,i=1,…,n\)</p>
+<p>相当于在相应的约束条件\(y_i(w^Tx_i+b)\ge1,i=1,…,n\)下，最大化这个1/||w||值，而1/||w||便是几何间隔\(\tilde\gamma\)。   </p>
+<p>如下图所示，中间的实线便是寻找到的最优超平面（Optimal Hyper Plane），其到两条虚线边界的距离相等，这个距离便是几何间隔\(\tilde\gamma\)，两条虚线间隔边界之间的距离等于2\(\tilde\gamma\)，而虚线间隔边界上的点则是支持向量。由于这些支持向量刚好在虚线间隔边界上，所以它们满足\(y(w^Tx+b)=1\)（还记得我们把 functional margin 定为 1 了吗？上节中：处于方便推导和优化的目的，我们可以令\(\hat\gamma=1\)），而对于所有不是支持向量的点，则显然有\(y(w^Tx+b)&gt;1\)。</p>
+<p><img src="http://img.blog.csdn.net/20140829141714944" alt=""></p>
+<p>OK，到此为止，算是了解到了SVM的第一层，对于那些只关心怎么用SVM的朋友便已足够，不必再更进一层深究其更深的原理。</p>
+<h2 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h2><p><a href="http://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/7624837</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/英特尔两道编程题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -707,6 +899,331 @@ int main() {
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/sklearn库LogisticRegression使用及简单调参/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/sklearn库LogisticRegression使用及简单调参/" itemprop="url">sklearn库LogisticRegression使用及简单调参</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>刚刚学习了《机器学习实战》这本书的第五章，LogisticRegression分类器，使用python自己实现的分类器。但是sklearn库里有同样功能的LogisticRegression分类器。</p>
+<p>因此，在这里做一个对比，所用数据集是《机器学习实战》里第五章里病马存活预测。</p>
+<p><img src="http://p2.pstatp.com/large/1868/242024643" alt=""></p>
+<p>在《机器学习实战》第五章中，作者说通过调节alpha和迭代次数，可以将错误率降低到20%左右。而我调节的结果是：</p>
+<blockquote>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.238806</p>
+<p>the error rate of this test is: 0.283582</p>
+<p>the error rate of this test is: 0.477612</p>
+<p>the error rate of this test is: 0.283582</p>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.388060</p>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.417910</p>
+<p>the error rate of this test is: 0.343284</p>
+<p>after 10 iterations the average error rate is: 0.337313</p>
+</blockquote>
+<p>而使用sklearn库中LogisticRegression的结果如下：</p>
+<ol>
+<li>默认配置下，多次运行错误率均为0.268657</li>
+<li>对样本数据及训练数据进行归一化 0.283582</li>
+<li>使用sag随机梯度下降算法，500次迭代 0.253731</li>
+<li>使用lbfgs算法，500次迭代 0.283582</li>
+</ol>
+<h2 id="Python3测试程序"><a href="#Python3测试程序" class="headerlink" title="Python3测试程序"></a>Python3测试程序</h2><pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+def calcError():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+
+    #训练样本集
+    trainSet=[];trainLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        trainSet.append(lineArr)
+        trainLabels.append(float(currLine[21]))
+    #测试集
+    testSet=[];testLabels=[]
+    for line in frTest.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        testSet.append(lineArr)
+        testLabels.append(float(currLine[21]))
+
+    #Logistic回归
+    classifier=LogisticRegression(solver=&#39;sag&#39;,max_iter=700)
+    #拟合
+    classifier.fit(np.array(trainSet),np.array(trainLabels))
+    #默认配置预测
+    yPredict=classifier.predict(np.array(testSet))
+
+    #计算错误率
+    errorCount=0.0
+    for i in range(len(yPredict)):
+        if int(yPredict[i]) == int(testLabels[i]):
+            pass
+        else:
+            errorCount+=1
+    errorRate=errorCount/float(len(yPredict))
+    #打印错误率
+    print(&quot;Error rate: %f&quot; % errorRate)
+
+    #1. 默认配置下，多次运行错误率均为0.268657
+    #2. 对样本数据及训练数据进行归一化 0.283582
+    #3. 使用sag随机梯度下降算法，500次迭代 0.253731
+    #4. 使用lbfgs算法，500次迭代 0.283582
+
+def calcError2():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+
+    #训练样本集
+    trainSet=[];trainLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        trainSet.append(lineArr)
+        trainLabels.append(float(currLine[21]))
+    #测试集
+    testSet=[];testLabels=[]
+    for line in frTest.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        testSet.append(lineArr)
+        testLabels.append(float(currLine[21]))
+
+    #Logistic回归
+    classifier=LogisticRegression()
+    #拟合
+    #对训练数据进行归一化处理
+    X=np.array(trainSet)
+    scaler=StandardScaler().fit(X)
+    X=scaler.transform(X)
+    classifier.fit(X,np.array(trainLabels))
+    #测试集归一化处理
+    Xtest=scaler.transform(np.array(testSet))
+    #默认配置预测
+    yPredict=classifier.predict(Xtest)
+
+    #计算错误率
+    errorCount=0.0
+    for i in range(len(yPredict)):
+        if int(yPredict[i]) == int(testLabels[i]):
+            pass
+        else:
+            errorCount+=1
+    errorRate=errorCount/float(len(yPredict))
+    #打印错误率
+    print(&quot;Error rate: %f&quot; % errorRate)
+</code></pre><h2 id="scikit-learn-LogisticRegression库调参"><a href="#scikit-learn-LogisticRegression库调参" class="headerlink" title="scikit-learn LogisticRegression库调参"></a>scikit-learn LogisticRegression库调参</h2><p>默认参数：</p>
+<pre><code>LogisticRegression(penalty=’l2’, dual=False, tol=0.0001, C=1.0, 
+fit_intercept=True, intercept_scaling=1, class_weight=None, 
+random_state=None, solver=’liblinear’, max_iter=100, 
+multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)
+</code></pre><blockquote>
+<p>penalty : str, ‘l1’ or ‘l2’, default: ‘l2’<br>Used to specify the norm used in the penalization. The ‘newton-cg’, ‘sag’ and ‘lbfgs’ solvers support only l2 penalties.<br>New in version 0.19: l1 penalty with SAGA solver (allowing ‘multinomial’ + L1)</p>
+<p>dual : bool, default: False<br>Dual or primal formulation. Dual formulation is only implemented for l2 penalty with liblinear solver. Prefer dual=False when n_samples &gt; n_features.</p>
+<p>tol : float, default: 1e-4<br>Tolerance for stopping criteria.</p>
+<p>C : float, default: 1.0<br>Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.</p>
+<p>fit_intercept : bool, default: True<br>Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.</p>
+<p>intercept_scaling : float, default 1.<br>Useful only when the solver ‘liblinear’ is used and self.fit_intercept is set to True. In this case, x becomes [x, self.intercept_scaling], i.e. a “synthetic” feature with constant value equal to </p>
+<p>intercept_scaling is appended to the instance vector. The intercept becomes intercept_scaling * synthetic_feature_weight.<br>Note! the synthetic feature weight is subject to l1/l2 regularization as all other features. To lessen the effect of regularization on synthetic feature weight (and therefore on the intercept) intercept_scaling has to be increased.</p>
+<p>class_weight : dict or ‘balanced’, default: None<br>Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one.<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y)).<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.<br>New in version 0.17: class_weight=’balanced’</p>
+<p>random_state : int, RandomState instance or None, optional, default: None<br>The seed of the pseudo random number generator to use when shuffling the data. If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random. Used when solver == ‘sag’ or ‘liblinear’.</p>
+<p>solver : {‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’, ‘saga’},<br>default: ‘liblinear’ Algorithm to use in the optimization problem.<br>For small datasets, ‘liblinear’ is a good choice, whereas ‘sag’ and<br>‘saga’ are faster for large ones.<br>For multiclass problems, only ‘newton-cg’, ‘sag’, ‘saga’ and ‘lbfgs’<br>handle multinomial loss; ‘liblinear’ is limited to one-versus-rest schemes.<br>‘newton-cg’, ‘lbfgs’ and ‘sag’ only handle L2 penalty, whereas<br>‘liblinear’ and ‘saga’ handle L1 penalty.<br>Note that ‘sag’ and ‘saga’ fast convergence is only guaranteed on features with approximately the same scale. You can preprocess the data with a scaler from sklearn.preprocessing.<br>New in version 0.17: Stochastic Average Gradient descent solver.<br>New in version 0.19: SAGA solver.</p>
+<p>max_iter : int, default: 100<br>Useful only for the newton-cg, sag and lbfgs solvers. Maximum number of iterations taken for the solvers to converge.</p>
+<p>multi_class : str, {‘ovr’, ‘multinomial’}, default: ‘ovr’<br>Multiclass option can be either ‘ovr’ or ‘multinomial’. If the option chosen is ‘ovr’, then a binary problem is fit for each label. Else the loss minimised is the multinomial loss fit across the entire probability distribution. Does not work for liblinear solver.<br>New in version 0.18: Stochastic Average Gradient descent solver for ‘multinomial’ case.</p>
+<p>verbose : int, default: 0<br>For the liblinear and lbfgs solvers set verbose to any positive number for verbosity.</p>
+<p>warm_start : bool, default: False<br>When set to True, reuse the solution of the previous call to fit as initialization, otherwise, just erase the previous solution. Useless for liblinear solver.<br>New in version 0.17: warm_start to support lbfgs, newton-cg, sag, saga solvers.</p>
+<p>n_jobs : int, default: 1<br>Number of CPU cores used when parallelizing over classes if multi_class=’ovr’”. This parameter is ignored when the <code>solver</code>is set to ‘liblinear’ regardless of whether ‘multi_class’ is specified or not. If given a value of -1, all cores are used.</p>
+</blockquote>
+<h4 id="penalty-正则化选择参数"><a href="#penalty-正则化选择参数" class="headerlink" title="penalty 正则化选择参数"></a>penalty 正则化选择参数</h4><p>LogisticRegression和LogisticRegressionCV默认就带了正则化项。penalty参数可选择的值为”l1”和”l2”.分别对应L1的正则化和L2的正则化，默认是L2的正则化。</p>
+<p>在调参时如果我们主要的目的只是为了解决过拟合，一般penalty选择L2正则化就够了。但是如果选择L2正则化发现还是过拟合，即预测效果差的时候，就可以考虑L1正则化。另外，如果模型的特征非常多，我们希望一些不重要的特征系数归零，从而让模型系数稀疏化的话，也可以使用L1正则化。</p>
+<p>penalty参数的选择会影响我们损失函数优化算法的选择。即参数solver的选择，如果是L2正则化，那么4种可选的算法{‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’}都可以选择。但是如果penalty是L1正则化的话，就只能选择‘liblinear’了。这是因为L1正则化的损失函数不是连续可导的，而{‘newton-cg’, ‘lbfgs’,‘sag’}这三种优化算法时都需要损失函数的一阶或者二阶连续导数。而‘liblinear’并没有这个依赖。</p>
+<h4 id="solver-优化算法选择参数"><a href="#solver-优化算法选择参数" class="headerlink" title="solver 优化算法选择参数"></a>solver 优化算法选择参数</h4><p>solver参数决定了我们对逻辑回归损失函数的优化方法，有4种算法可以选择，分别是：</p>
+<ol>
+<li><p>liblinear：使用了开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数。</p>
+</li>
+<li><p>lbfgs：拟牛顿法的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
+</li>
+<li><p>newton-cg：也是牛顿法家族的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
+</li>
+<li><p>sag：即随机平均梯度下降，是梯度下降法的变种，和普通梯度下降法的区别是每次迭代仅仅用一部分的样本来计算梯度，适合于样本数据多的时候。</p>
+</li>
+</ol>
+<p>从上面的描述可以看出，newton-cg, lbfgs和sag这三种优化算法时都需要损失函数的一阶或者二阶连续导数，因此不能用于没有连续导数的L1正则化，只能用于L2正则化。而liblinear通吃L1正则化和L2正则化。</p>
+<p>同时，sag每次仅仅使用了部分样本进行梯度迭代，所以当样本量少的时候不要选择它，而如果样本量非常大，比如大于10万，sag是第一选择。但是sag不能用于L1正则化，所以当你有大量的样本，又需要L1正则化的话就要自己做取舍了。要么通过对样本采样来降低样本量，要么回到L2正则化。</p>
+<p>从上面的描述，大家可能觉得，既然newton-cg, lbfgs和sag这么多限制，如果不是大样本，我们选择liblinear不就行了嘛！错，因为liblinear也有自己的弱点！我们知道，逻辑回归有二元逻辑回归和多元逻辑回归。对于多元逻辑回归常见的有one-vs-rest(OvR)和many-vs-many(MvM)两种。而MvM一般比OvR分类相对准确一些。郁闷的是liblinear只支持OvR，不支持MvM，这样如果我们需要相对精确的多元逻辑回归时，就不能选择liblinear了。也意味着如果我们需要相对精确的多元逻辑回归不能使用L1正则化了。</p>
+<h4 id="multi-class-分类方式选择参数"><a href="#multi-class-分类方式选择参数" class="headerlink" title="multi_class 分类方式选择参数"></a>multi_class 分类方式选择参数</h4><p>multi_class参数决定了我们分类方式的选择，有 ovr和multinomial两个值可以选择，默认是 ovr。</p>
+<p>ovr即前面提到的one-vs-rest(OvR)，而multinomial即前面提到的many-vs-many(MvM)。如果是二元逻辑回归，ovr和multinomial并没有任何区别，区别主要在多元逻辑回归上。</p>
+<p>OvR的思想很简单，无论你是多少元逻辑回归，我们都可以看做二元逻辑回归。具体做法是，对于第K类的分类决策，我们把所有第K类的样本作为正例，除了第K类样本以外的所有样本都作为负例，然后在上面做二元逻辑回归，得到第K类的分类模型。其他类的分类模型获得以此类推。</p>
+<p>而MvM则相对复杂，这里举MvM的特例one-vs-one(OvO)作讲解。如果模型有T类，我们每次在所有的T类样本里面选择两类样本出来，不妨记为T1类和T2类，把所有的输出为T1和T2的样本放在一起，把T1作为正例，T2作为负例，进行二元逻辑回归，得到模型参数。我们一共需要T(T-1)/2次分类。</p>
+<p>从上面的描述可以看出OvR相对简单，但分类效果相对略差（这里指大多数样本分布情况，某些样本分布下OvR可能更好）。而MvM分类相对精确，但是分类速度没有OvR快。</p>
+<p>如果选择了ovr，则4种损失函数的优化方法liblinear，newton-cg, lbfgs和sag都可以选择。但是如果选择了multinomial,则只能选择newton-cg, lbfgs和sag了。</p>
+<h4 id="class-weight-类型权重参数"><a href="#class-weight-类型权重参数" class="headerlink" title="class_weight 类型权重参数"></a>class_weight 类型权重参数</h4><p>class_weight参数用于标示分类模型中各种类型的权重，可以不输入，即不考虑权重，或者说所有类型的权重一样。如果选择输入的话，可以选择balanced让类库自己计算类型权重，或者我们自己输入各个类型的权重，比如对于0,1的二元模型，我们可以定义class_weight={0:0.9, 1:0.1}，这样类型0的权重为90%，而类型1的权重为10%。</p>
+<p>如果class_weight选择balanced，那么类库会根据训练样本量来计算权重。某种类型样本量越多，则权重越低，样本量越少，则权重越高。</p>
+<p>那么class_weight有什么作用呢？在分类模型中，我们经常会遇到两类问题：</p>
+<p>第一种是误分类的代价很高。比如对合法用户和非法用户进行分类，将非法用户分类为合法用户的代价很高，我们宁愿将合法用户分类为非法用户，这时可以人工再甄别，但是却不愿将非法用户分类为合法用户。这时，我们可以适当提高非法用户的权重。</p>
+<p>第二种是样本是高度失衡的，比如我们有合法用户和非法用户的二元样本数据10000条，里面合法用户有9995条，非法用户只有5条，如果我们不考虑权重，则我们可以将所有的测试集都预测为合法用户，这样预测准确率理论上有99.95%，但是却没有任何意义。这时，我们可以选择balanced，让类库自动提高非法用户样本的权重。</p>
+<p>提高了某种分类的权重，相比不考虑权重，会有更多的样本分类划分到高权重的类别，从而可以解决上面两类问题。</p>
+<h4 id="sample-weight-样本权重参数"><a href="#sample-weight-样本权重参数" class="headerlink" title="sample_weight 样本权重参数"></a>sample_weight 样本权重参数</h4><p>由于样本不平衡，导致样本不是总体样本的无偏估计，从而可能导致我们的模型预测能力下降。遇到这种情况，我们可以通过调节样本权重来尝试解决这个问题。调节样本权重的方法有两种，第一种是在class_weight使用balanced。第二种是在调用fit函数时，通过sample_weight来自己调节每个样本权重。</p>
+<p>在scikit-learn做逻辑回归时，如果上面两种方法都用到了，那么样本的真正权重是class_weight*sample_weight.</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html</a></li>
+<li><a href="http://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="external">http://www.cnblogs.com/pinard/p/6035872.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/机器学习实战第五章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1043,331 +1560,6 @@ def multiTest():
 </code></pre><h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
 <li><a href="http://blog.csdn.net/lu597203933/article/details/38468303#comments" target="_blank" rel="external">http://blog.csdn.net/lu597203933/article/details/38468303#comments</a></li>
 <li><a href="http://blog.csdn.net/CharlieLincy/article/details/70767791#comments" target="_blank" rel="external">http://blog.csdn.net/CharlieLincy/article/details/70767791#comments</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/sklearn库LogisticRegression使用及简单调参/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/07/sklearn库LogisticRegression使用及简单调参/" itemprop="url">sklearn库LogisticRegression使用及简单调参</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
-                2017-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>刚刚学习了《机器学习实战》这本书的第五章，LogisticRegression分类器，使用python自己实现的分类器。但是sklearn库里有同样功能的LogisticRegression分类器。</p>
-<p>因此，在这里做一个对比，所用数据集是《机器学习实战》里第五章里病马存活预测。</p>
-<p><img src="http://p2.pstatp.com/large/1868/242024643" alt=""></p>
-<p>在《机器学习实战》第五章中，作者说通过调节alpha和迭代次数，可以将错误率降低到20%左右。而我调节的结果是：</p>
-<blockquote>
-<p>the error rate of this test is: 0.313433</p>
-<p>the error rate of this test is: 0.238806</p>
-<p>the error rate of this test is: 0.283582</p>
-<p>the error rate of this test is: 0.477612</p>
-<p>the error rate of this test is: 0.283582</p>
-<p>the error rate of this test is: 0.313433</p>
-<p>the error rate of this test is: 0.388060</p>
-<p>the error rate of this test is: 0.313433</p>
-<p>the error rate of this test is: 0.417910</p>
-<p>the error rate of this test is: 0.343284</p>
-<p>after 10 iterations the average error rate is: 0.337313</p>
-</blockquote>
-<p>而使用sklearn库中LogisticRegression的结果如下：</p>
-<ol>
-<li>默认配置下，多次运行错误率均为0.268657</li>
-<li>对样本数据及训练数据进行归一化 0.283582</li>
-<li>使用sag随机梯度下降算法，500次迭代 0.253731</li>
-<li>使用lbfgs算法，500次迭代 0.283582</li>
-</ol>
-<h2 id="Python3测试程序"><a href="#Python3测试程序" class="headerlink" title="Python3测试程序"></a>Python3测试程序</h2><pre><code>from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-import numpy as np
-
-def calcError():
-    frTrain=open(&#39;horseColicTraining.txt&#39;)
-    frTest=open(&#39;horseColicTest.txt&#39;)
-
-    #训练样本集
-    trainSet=[];trainLabels=[]
-    for line in frTrain.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        trainSet.append(lineArr)
-        trainLabels.append(float(currLine[21]))
-    #测试集
-    testSet=[];testLabels=[]
-    for line in frTest.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        testSet.append(lineArr)
-        testLabels.append(float(currLine[21]))
-
-    #Logistic回归
-    classifier=LogisticRegression(solver=&#39;sag&#39;,max_iter=700)
-    #拟合
-    classifier.fit(np.array(trainSet),np.array(trainLabels))
-    #默认配置预测
-    yPredict=classifier.predict(np.array(testSet))
-
-    #计算错误率
-    errorCount=0.0
-    for i in range(len(yPredict)):
-        if int(yPredict[i]) == int(testLabels[i]):
-            pass
-        else:
-            errorCount+=1
-    errorRate=errorCount/float(len(yPredict))
-    #打印错误率
-    print(&quot;Error rate: %f&quot; % errorRate)
-
-    #1. 默认配置下，多次运行错误率均为0.268657
-    #2. 对样本数据及训练数据进行归一化 0.283582
-    #3. 使用sag随机梯度下降算法，500次迭代 0.253731
-    #4. 使用lbfgs算法，500次迭代 0.283582
-
-def calcError2():
-    frTrain=open(&#39;horseColicTraining.txt&#39;)
-    frTest=open(&#39;horseColicTest.txt&#39;)
-
-    #训练样本集
-    trainSet=[];trainLabels=[]
-    for line in frTrain.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        trainSet.append(lineArr)
-        trainLabels.append(float(currLine[21]))
-    #测试集
-    testSet=[];testLabels=[]
-    for line in frTest.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        testSet.append(lineArr)
-        testLabels.append(float(currLine[21]))
-
-    #Logistic回归
-    classifier=LogisticRegression()
-    #拟合
-    #对训练数据进行归一化处理
-    X=np.array(trainSet)
-    scaler=StandardScaler().fit(X)
-    X=scaler.transform(X)
-    classifier.fit(X,np.array(trainLabels))
-    #测试集归一化处理
-    Xtest=scaler.transform(np.array(testSet))
-    #默认配置预测
-    yPredict=classifier.predict(Xtest)
-
-    #计算错误率
-    errorCount=0.0
-    for i in range(len(yPredict)):
-        if int(yPredict[i]) == int(testLabels[i]):
-            pass
-        else:
-            errorCount+=1
-    errorRate=errorCount/float(len(yPredict))
-    #打印错误率
-    print(&quot;Error rate: %f&quot; % errorRate)
-</code></pre><h2 id="scikit-learn-LogisticRegression库调参"><a href="#scikit-learn-LogisticRegression库调参" class="headerlink" title="scikit-learn LogisticRegression库调参"></a>scikit-learn LogisticRegression库调参</h2><p>默认参数：</p>
-<pre><code>LogisticRegression(penalty=’l2’, dual=False, tol=0.0001, C=1.0, 
-fit_intercept=True, intercept_scaling=1, class_weight=None, 
-random_state=None, solver=’liblinear’, max_iter=100, 
-multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)
-</code></pre><blockquote>
-<p>penalty : str, ‘l1’ or ‘l2’, default: ‘l2’<br>Used to specify the norm used in the penalization. The ‘newton-cg’, ‘sag’ and ‘lbfgs’ solvers support only l2 penalties.<br>New in version 0.19: l1 penalty with SAGA solver (allowing ‘multinomial’ + L1)</p>
-<p>dual : bool, default: False<br>Dual or primal formulation. Dual formulation is only implemented for l2 penalty with liblinear solver. Prefer dual=False when n_samples &gt; n_features.</p>
-<p>tol : float, default: 1e-4<br>Tolerance for stopping criteria.</p>
-<p>C : float, default: 1.0<br>Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.</p>
-<p>fit_intercept : bool, default: True<br>Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.</p>
-<p>intercept_scaling : float, default 1.<br>Useful only when the solver ‘liblinear’ is used and self.fit_intercept is set to True. In this case, x becomes [x, self.intercept_scaling], i.e. a “synthetic” feature with constant value equal to </p>
-<p>intercept_scaling is appended to the instance vector. The intercept becomes intercept_scaling * synthetic_feature_weight.<br>Note! the synthetic feature weight is subject to l1/l2 regularization as all other features. To lessen the effect of regularization on synthetic feature weight (and therefore on the intercept) intercept_scaling has to be increased.</p>
-<p>class_weight : dict or ‘balanced’, default: None<br>Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one.<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y)).<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.<br>New in version 0.17: class_weight=’balanced’</p>
-<p>random_state : int, RandomState instance or None, optional, default: None<br>The seed of the pseudo random number generator to use when shuffling the data. If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random. Used when solver == ‘sag’ or ‘liblinear’.</p>
-<p>solver : {‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’, ‘saga’},<br>default: ‘liblinear’ Algorithm to use in the optimization problem.<br>For small datasets, ‘liblinear’ is a good choice, whereas ‘sag’ and<br>‘saga’ are faster for large ones.<br>For multiclass problems, only ‘newton-cg’, ‘sag’, ‘saga’ and ‘lbfgs’<br>handle multinomial loss; ‘liblinear’ is limited to one-versus-rest schemes.<br>‘newton-cg’, ‘lbfgs’ and ‘sag’ only handle L2 penalty, whereas<br>‘liblinear’ and ‘saga’ handle L1 penalty.<br>Note that ‘sag’ and ‘saga’ fast convergence is only guaranteed on features with approximately the same scale. You can preprocess the data with a scaler from sklearn.preprocessing.<br>New in version 0.17: Stochastic Average Gradient descent solver.<br>New in version 0.19: SAGA solver.</p>
-<p>max_iter : int, default: 100<br>Useful only for the newton-cg, sag and lbfgs solvers. Maximum number of iterations taken for the solvers to converge.</p>
-<p>multi_class : str, {‘ovr’, ‘multinomial’}, default: ‘ovr’<br>Multiclass option can be either ‘ovr’ or ‘multinomial’. If the option chosen is ‘ovr’, then a binary problem is fit for each label. Else the loss minimised is the multinomial loss fit across the entire probability distribution. Does not work for liblinear solver.<br>New in version 0.18: Stochastic Average Gradient descent solver for ‘multinomial’ case.</p>
-<p>verbose : int, default: 0<br>For the liblinear and lbfgs solvers set verbose to any positive number for verbosity.</p>
-<p>warm_start : bool, default: False<br>When set to True, reuse the solution of the previous call to fit as initialization, otherwise, just erase the previous solution. Useless for liblinear solver.<br>New in version 0.17: warm_start to support lbfgs, newton-cg, sag, saga solvers.</p>
-<p>n_jobs : int, default: 1<br>Number of CPU cores used when parallelizing over classes if multi_class=’ovr’”. This parameter is ignored when the <code>solver</code>is set to ‘liblinear’ regardless of whether ‘multi_class’ is specified or not. If given a value of -1, all cores are used.</p>
-</blockquote>
-<h4 id="penalty-正则化选择参数"><a href="#penalty-正则化选择参数" class="headerlink" title="penalty 正则化选择参数"></a>penalty 正则化选择参数</h4><p>LogisticRegression和LogisticRegressionCV默认就带了正则化项。penalty参数可选择的值为”l1”和”l2”.分别对应L1的正则化和L2的正则化，默认是L2的正则化。</p>
-<p>在调参时如果我们主要的目的只是为了解决过拟合，一般penalty选择L2正则化就够了。但是如果选择L2正则化发现还是过拟合，即预测效果差的时候，就可以考虑L1正则化。另外，如果模型的特征非常多，我们希望一些不重要的特征系数归零，从而让模型系数稀疏化的话，也可以使用L1正则化。</p>
-<p>penalty参数的选择会影响我们损失函数优化算法的选择。即参数solver的选择，如果是L2正则化，那么4种可选的算法{‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’}都可以选择。但是如果penalty是L1正则化的话，就只能选择‘liblinear’了。这是因为L1正则化的损失函数不是连续可导的，而{‘newton-cg’, ‘lbfgs’,‘sag’}这三种优化算法时都需要损失函数的一阶或者二阶连续导数。而‘liblinear’并没有这个依赖。</p>
-<h4 id="solver-优化算法选择参数"><a href="#solver-优化算法选择参数" class="headerlink" title="solver 优化算法选择参数"></a>solver 优化算法选择参数</h4><p>solver参数决定了我们对逻辑回归损失函数的优化方法，有4种算法可以选择，分别是：</p>
-<ol>
-<li><p>liblinear：使用了开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数。</p>
-</li>
-<li><p>lbfgs：拟牛顿法的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
-</li>
-<li><p>newton-cg：也是牛顿法家族的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
-</li>
-<li><p>sag：即随机平均梯度下降，是梯度下降法的变种，和普通梯度下降法的区别是每次迭代仅仅用一部分的样本来计算梯度，适合于样本数据多的时候。</p>
-</li>
-</ol>
-<p>从上面的描述可以看出，newton-cg, lbfgs和sag这三种优化算法时都需要损失函数的一阶或者二阶连续导数，因此不能用于没有连续导数的L1正则化，只能用于L2正则化。而liblinear通吃L1正则化和L2正则化。</p>
-<p>同时，sag每次仅仅使用了部分样本进行梯度迭代，所以当样本量少的时候不要选择它，而如果样本量非常大，比如大于10万，sag是第一选择。但是sag不能用于L1正则化，所以当你有大量的样本，又需要L1正则化的话就要自己做取舍了。要么通过对样本采样来降低样本量，要么回到L2正则化。</p>
-<p>从上面的描述，大家可能觉得，既然newton-cg, lbfgs和sag这么多限制，如果不是大样本，我们选择liblinear不就行了嘛！错，因为liblinear也有自己的弱点！我们知道，逻辑回归有二元逻辑回归和多元逻辑回归。对于多元逻辑回归常见的有one-vs-rest(OvR)和many-vs-many(MvM)两种。而MvM一般比OvR分类相对准确一些。郁闷的是liblinear只支持OvR，不支持MvM，这样如果我们需要相对精确的多元逻辑回归时，就不能选择liblinear了。也意味着如果我们需要相对精确的多元逻辑回归不能使用L1正则化了。</p>
-<h4 id="multi-class-分类方式选择参数"><a href="#multi-class-分类方式选择参数" class="headerlink" title="multi_class 分类方式选择参数"></a>multi_class 分类方式选择参数</h4><p>multi_class参数决定了我们分类方式的选择，有 ovr和multinomial两个值可以选择，默认是 ovr。</p>
-<p>ovr即前面提到的one-vs-rest(OvR)，而multinomial即前面提到的many-vs-many(MvM)。如果是二元逻辑回归，ovr和multinomial并没有任何区别，区别主要在多元逻辑回归上。</p>
-<p>OvR的思想很简单，无论你是多少元逻辑回归，我们都可以看做二元逻辑回归。具体做法是，对于第K类的分类决策，我们把所有第K类的样本作为正例，除了第K类样本以外的所有样本都作为负例，然后在上面做二元逻辑回归，得到第K类的分类模型。其他类的分类模型获得以此类推。</p>
-<p>而MvM则相对复杂，这里举MvM的特例one-vs-one(OvO)作讲解。如果模型有T类，我们每次在所有的T类样本里面选择两类样本出来，不妨记为T1类和T2类，把所有的输出为T1和T2的样本放在一起，把T1作为正例，T2作为负例，进行二元逻辑回归，得到模型参数。我们一共需要T(T-1)/2次分类。</p>
-<p>从上面的描述可以看出OvR相对简单，但分类效果相对略差（这里指大多数样本分布情况，某些样本分布下OvR可能更好）。而MvM分类相对精确，但是分类速度没有OvR快。</p>
-<p>如果选择了ovr，则4种损失函数的优化方法liblinear，newton-cg, lbfgs和sag都可以选择。但是如果选择了multinomial,则只能选择newton-cg, lbfgs和sag了。</p>
-<h4 id="class-weight-类型权重参数"><a href="#class-weight-类型权重参数" class="headerlink" title="class_weight 类型权重参数"></a>class_weight 类型权重参数</h4><p>class_weight参数用于标示分类模型中各种类型的权重，可以不输入，即不考虑权重，或者说所有类型的权重一样。如果选择输入的话，可以选择balanced让类库自己计算类型权重，或者我们自己输入各个类型的权重，比如对于0,1的二元模型，我们可以定义class_weight={0:0.9, 1:0.1}，这样类型0的权重为90%，而类型1的权重为10%。</p>
-<p>如果class_weight选择balanced，那么类库会根据训练样本量来计算权重。某种类型样本量越多，则权重越低，样本量越少，则权重越高。</p>
-<p>那么class_weight有什么作用呢？在分类模型中，我们经常会遇到两类问题：</p>
-<p>第一种是误分类的代价很高。比如对合法用户和非法用户进行分类，将非法用户分类为合法用户的代价很高，我们宁愿将合法用户分类为非法用户，这时可以人工再甄别，但是却不愿将非法用户分类为合法用户。这时，我们可以适当提高非法用户的权重。</p>
-<p>第二种是样本是高度失衡的，比如我们有合法用户和非法用户的二元样本数据10000条，里面合法用户有9995条，非法用户只有5条，如果我们不考虑权重，则我们可以将所有的测试集都预测为合法用户，这样预测准确率理论上有99.95%，但是却没有任何意义。这时，我们可以选择balanced，让类库自动提高非法用户样本的权重。</p>
-<p>提高了某种分类的权重，相比不考虑权重，会有更多的样本分类划分到高权重的类别，从而可以解决上面两类问题。</p>
-<h4 id="sample-weight-样本权重参数"><a href="#sample-weight-样本权重参数" class="headerlink" title="sample_weight 样本权重参数"></a>sample_weight 样本权重参数</h4><p>由于样本不平衡，导致样本不是总体样本的无偏估计，从而可能导致我们的模型预测能力下降。遇到这种情况，我们可以通过调节样本权重来尝试解决这个问题。调节样本权重的方法有两种，第一种是在class_weight使用balanced。第二种是在调用fit函数时，通过sample_weight来自己调节每个样本权重。</p>
-<p>在scikit-learn做逻辑回归时，如果上面两种方法都用到了，那么样本的真正权重是class_weight*sample_weight.</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
-<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html</a></li>
-<li><a href="http://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="external">http://www.cnblogs.com/pinard/p/6035872.html</a></li>
 </ol>
 
           
@@ -2952,249 +3144,6 @@ bst.dump_model(&#39;dump.raw.txt&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/22/ReliefF特征选择(python)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/22/ReliefF特征选择(python)/" itemprop="url">Relief特征选择算法Python实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-22T00:00:00+08:00">
-                2017-08-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Relief算法"><a href="#Relief算法" class="headerlink" title="Relief算法"></a>Relief算法</h2><p>Relief算法最早由Kira在1992年提出，最初局限于两类数据的分类问题。Relief算法是一种特征权重算法(Feature weighting algorithms)，根据各个特征和类别的相关性赋予特征不同的权重，权重小于某个阈值的特征将被移除。Relief算法中特征和类别的相关性是基于特征对近距离样本的区分能力。</p>
-<p><img src="https://www.gia.edu/images/Gold-Diggers-195648-636x358.jpg" alt="特征提取"></p>
-<p><strong>基本思想：</strong>算法从训练集D中随机选择一个样本R，然后从和R同类的样本中寻找最近邻样本H，称为NearHit，从和R不同类的样本中寻找最近邻样本M，称为NearMiss，然后根据以下规则更新每个特征的权重：如果R和NearHit在某个特征上的距离小于R和NearMiss上的距离，则说明该特征对区分同类和不同类的最近邻是有益的，则增加该特征的权重；反之，如果R和NearHit在某个特征的距离大于R和NearMiss上的距离，说明该特征对区分同类和不同类的最近邻起负面作用，则降低该特征的权重。以上过程重复m次，最后得到各特征的平均权重。特征的权重越大，表示该特征的分类能力越强，反之，表示该特征分类能力越弱。Relief算法的运行时间随着样本的抽样次数m和原始特征个数N的增加线性增加，因而运行效率非常高。</p>
-<p><strong>具体算法：</strong></p>
-<p><img src="http://images.cnitblog.com/blog/79603/201308/29173431-34ed1713754f42e9a875eaa2e4049f8e.jpg" alt="Relief具体算法"></p>
-<h2 id="ReliefF算法"><a href="#ReliefF算法" class="headerlink" title="ReliefF算法"></a>ReliefF算法</h2><p>虽然Relief算法比较简单，但运行效率高，并且结果也比较令人满意，因此得到广泛应用，但是其局限性在于只能处理两类别数据，因此1994年Kononeill对其进行了扩展，得到了ReliefF算法，可以处理多类别问题。ReliefF算法在处理多类问题时，每次从训练样本集中随机取出一个样本R，然后从和R同类的样本集中找出R的k个近邻样本(near Hits)，从每个R的不同类的样本集中均找出k个近邻样本(near Misses)，然后更新每个特征的权重，如下式所示：</p>
-<p><img src="http://images.cnitblog.com/blog/79603/201308/29173617-b9db490cd1b84472a5583ac52d3df72b.jpg" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/79603/201308/29173649-320dfe76b46e4c1097edb518dacea888.jpg" alt=""></p>
-<h2 id="ReliefF算法python程序"><a href="#ReliefF算法python程序" class="headerlink" title="ReliefF算法python程序"></a>ReliefF算法python程序</h2><pre><code>import numpy as np
-from sklearn.metrics.pairwise import pairwise_distances
-def reliefF(X,y,**kwargs):
-   if &quot;k&quot; not in kwargs.keys():
-        k=5
-   else:
-        k=kwargs[&quot;k&quot;]
-n_samples,n_features=X.shape
-
-#计算两两距离，曼哈顿距离
-distance=pairwise_distances(X,metric=&#39;manhattan&#39;)
-
-score=np.zeros(n_features)
-
-for idx in range(n_samples):
-    #同类最近邻
-    near_hit=[]
-    #异类最近邻
-    near_miss=dict()
-
-    self_fea=X[idx,:]
-    #类别数
-    c=np.unique(y).tolist()
-
-    stop_dict=dict()
-    for label in c:
-        stop_dict[label]=0
-    del c[c.index(y[idx])]
-
-    P_dict=dict()
-    p_label_idx=float(len(y[y==y[idx]]))/float(n_samples)
-
-    for label in c:
-        p_label_c=float(len(y[y==label]))/float(n_samples)
-        p_dict[label]=p_label_c/(1-p_label_idx)
-        near_miss[label]=[]
-
-    distance_sort=[]
-    distance[idx,idx]=np.max(distance[idx,:])
-
-    for i in range(n_samples):
-            distance_sort.append([distance[idx,i],int(i),y[i]])
-    distance_sort.sort(key=lambda x: x[0])
-
-    for i in range(n_samples):
-        #找到同类最近邻
-        if distance_sort[i][2]==y[idx]:
-            if len(near_hit) &lt;k:
-                near_hit.append(distance_sort[i][1])
-            elif len(near_hit)==k:
-                stop_dict[y[idx]]=1
-        else:
-        #异类最近邻
-            if len(near_miss[distance_sort[i][2])&lt;k:
-                near_miss[distance_sort[i][2].append(distance_sort[i][1])
-            else:
-                if len(near_miss[distance_sort[i][2]]) == k:
-                    stop_dict[distance_sort[i][2]] = 1
-        stop = True
-        for (key, value) in stop_dict.items():
-                if value != 1:
-                    stop = False
-        if stop:
-            break
-
-    #更新reliefF分数
-    for ele in near_hit:
-        near_hit_term = np.array(abs(self_fea-X[ele, :]))+np.array(near_hit_term)
-
-    near_miss_term = dict()
-    for (label, miss_list) in near_miss.items():
-        near_miss_term[label] = np.zeros(n_features)
-        for ele in miss_list:
-            near_miss_term[label] = np.array(abs(self_fea-X[ele, :]))+np.array(near_miss_term[label])
-        score += near_miss_term[label]/(k*p_dict[label])
-    score -= near_hit_term/k
-return score
-
-def feature_ranking(score):
-    idx = np.argsort(score, 0)
-    return idx[::-1]
-</code></pre><p>参考博文：</p>
-<ol>
-<li><a href="http://www.cnblogs.com/asxinyu/archive/2013/08/29/3289682.html" target="_blank" rel="external">http://www.cnblogs.com/asxinyu/archive/2013/08/29/3289682.html</a></li>
-<li><a href="https://github.com/jundongl/scikit-feature" target="_blank" rel="external">https://github.com/jundongl/scikit-feature</a></li>
-</ol>
-<p>特征提取Python库：<br><a href="http://featureselection.asu.edu/" target="_blank" rel="external">http://featureselection.asu.edu/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3245,7 +3194,7 @@ def feature_ranking(score):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
