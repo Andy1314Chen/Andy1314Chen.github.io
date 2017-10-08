@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/10/08/How%20to%20Make%20Out-of-Sample%20Forecasts%20with%20ARIMA%20in%20Python/</loc>
+    
+    <lastmod>2017-10-08T14:10:19.739Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/09/29/Time%20Series%20Forecasting%20with%20ARIMA%20in%20Python3/</loc>
     
     <lastmod>2017-09-29T12:48:41.012Z</lastmod>

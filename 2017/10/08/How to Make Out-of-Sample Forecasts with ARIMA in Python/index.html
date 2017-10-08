@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta name="google-site-verification" content="y1NE4TYCS_y-0LIIks73rI2qINI9JYRwk6Su8ZG-ZIw" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="机器学习,Python,算法,时间序列分析," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="最近在看时间序列分析这一块，因为不会用R语言（R语言做时间序列分析很是方便！），只能用Python吭哧吭哧的搞，搞了好多天，在网上找了一些资料，比较乱，基本上抄来抄去，到最后也没有搞出个眉目。 今天看到一篇老外写的博客，国内没发现有类似的，打算翻译一下，顺带加深Python下ARIMA的使用。  没错，图片也是从人家博客里copy的 作者说的一点没错，  Making out-of-sample">
+<meta name="keywords" content="机器学习,Python,算法,时间序列分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Make Out-of-sample Forecast with ARIMA in Python3">
+<meta property="og:url" content="http://yoursite.com/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/index.html">
+<meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="最近在看时间序列分析这一块，因为不会用R语言（R语言做时间序列分析很是方便！），只能用Python吭哧吭哧的搞，搞了好多天，在网上找了一些资料，比较乱，基本上抄来抄去，到最后也没有搞出个眉目。 今天看到一篇老外写的博客，国内没发现有类似的，打算翻译一下，顺带加深Python下ARIMA的使用。  没错，图片也是从人家博客里copy的 作者说的一点没错，  Making out-of-sample">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/How-to-Make-Out-of-Sample-Forecasts-with-ARIMA-in-Python.jpg">
+<meta property="og:image" content="https://i.imgur.com/7iBRt7B.png">
+<meta property="og:updated_time" content="2017-10-08T14:10:19.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to Make Out-of-sample Forecast with ARIMA in Python3">
+<meta name="twitter:description" content="最近在看时间序列分析这一块，因为不会用R语言（R语言做时间序列分析很是方便！），只能用Python吭哧吭哧的搞，搞了好多天，在网上找了一些资料，比较乱，基本上抄来抄去，到最后也没有搞出个眉目。 今天看到一篇老外写的博客，国内没发现有类似的，打算翻译一下，顺带加深Python下ARIMA的使用。  没错，图片也是从人家博客里copy的 作者说的一点没错，  Making out-of-sample">
+<meta name="twitter:image" content="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/How-to-Make-Out-of-Sample-Forecasts-with-ARIMA-in-Python.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/"/>
+
+
+
+
+
+<link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
+
+  <title>How to Make Out-of-sample Forecast with ARIMA in Python3 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Andy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点儿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">How to Make Out-of-sample Forecast with ARIMA in Python3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T00:00:00+08:00">
+                2017-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在看时间序列分析这一块，因为不会用R语言（R语言做时间序列分析很是方便！），只能用Python吭哧吭哧的搞，搞了好多天，在网上找了一些资料，比较乱，基本上抄来抄去，到最后也没有搞出个眉目。</p>
+<p>今天看到一篇老外写的博客，国内没发现有类似的，打算翻译一下，顺带加深Python下ARIMA的使用。</p>
+<p><img src="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/How-to-Make-Out-of-Sample-Forecasts-with-ARIMA-in-Python.jpg" alt=""></p>
+<p><em>没错，图片也是从人家博客里copy的</em></p>
+<p>作者说的一点没错，</p>
+<blockquote>
+<p>Making out-of-sample forecasts can be confusing when getting started with time series data. </p>
+</blockquote>
+<p>的确困扰了我好久，总看到in-of-sample forecast &amp; out-of-sampl e forecast，但也没人去解释。</p>
+<p>in-of-sample forecast是指利用建模的那些时间序列数据去做预测，没错就是这样，和其他机器学习模型不太一样。而out-of-sample forecast是利用训练集训练好的数据去预测未来的数据。</p>
+<p>python下里的时间序列库最常见的是<strong>statsmodels</strong>,最常用的模型是ARIMA. </p>
+<p>这篇博客里，老外主要是以一个简单数据集为例，讲解了一下3个东西（ARIMA模型的）</p>
+<ul>
+<li>How to make a one-step out-of-sample forecast</li>
+<li>How to make a multi-step out-of-sample forecast</li>
+<li>The difference between the forecast() &amp; predict()</li>
+</ul>
+<h2 id="数据集下载"><a href="#数据集下载" class="headerlink" title="数据集下载"></a>数据集下载</h2><p>数据集是澳大利亚，墨尔本从1981-1990年10年间每日最低温度的一个数据集。</p>
+<p><a href="https://datamarket.com/data/set/2324/daily-minimum-temperatures-in-melbourne-australia-1981-1990" target="_blank" rel="external">下载地址</a></p>
+<p><em>这个数据集中有一些“？”需要去除。</em></p>
+<h2 id="分割数据集"><a href="#分割数据集" class="headerlink" title="分割数据集"></a>分割数据集</h2><p>将数据集分为两个部分，最后7天的数据分出来作为验证集，前面的一部分作为训练集。</p>
+<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>从下面的图中可以看到，该时间序列有明显的季节特性，通过简单的差分可以去掉。季节特性是以年为周期的，365天。其实，差分之后应该还要进行统计检验的，确保差分后的时间序列为平稳序列。</p>
+<p>使用ARIMA模型，通过网格搜索法找到最佳参数（7,0,1）。</p>
+<h2 id="One-Step-Out-of-Sample-Forecast"><a href="#One-Step-Out-of-Sample-Forecast" class="headerlink" title="One-Step Out-of-Sample Forecast"></a>One-Step Out-of-Sample Forecast</h2><p>ARIMA模型提供了两种方法</p>
+<ol>
+<li>Forecast Function</li>
+<li>Predict Function</li>
+</ol>
+<p>对out-of-sample预测结果都是一样的，但是predict()可以in-of-sample预测，好像更为先进一些，但是好像也没太大用处，只是验证模型。</p>
+<p>预测之后，还需要对预测值进行还原处理，因为之前对数据进行了差分处理。</p>
+<h2 id="Multi-Step-Out-of-Sample-Forecast"><a href="#Multi-Step-Out-of-Sample-Forecast" class="headerlink" title="Multi-Step Out-of-Sample Forecast"></a>Multi-Step Out-of-Sample Forecast</h2><p>同单步预测差不多，都是两个函数可以用，但是还原时要注意。</p>
+<h2 id="Python3程序"><a href="#Python3程序" class="headerlink" title="Python3程序"></a>Python3程序</h2><pre><code>from pandas import tseries
+import requests,pandas as pd,numpy as np
+from pandas import DataFrame
+from io import StringIO
+import time,json
+from datetime import date
+from statsmodels.tsa.stattools import adfuller,acf,pacf
+from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.seasonal import seasonal_decompose
+from sklearn.metrics import mean_squared_error
+import matplotlib.pylab as plt
+%matplotlib inline
+from matplotlib.pylab import rcParams
+rcParams[&#39;figure.figsize&#39;]=15,6
+
+series=pd.Series.from_csv(&#39;daily-minimum-temperatures.csv&#39;,header=0)
+print(series.head(20))
+
+Date
+1981-01-01    20.7
+1981-01-02    17.9
+1981-01-03    18.8
+1981-01-04    14.6
+1981-01-05    15.8
+1981-01-06    15.8
+1981-01-07    15.8
+1981-01-08    17.4
+1981-01-09    21.8
+1981-01-10    20.0
+1981-01-11    16.2
+1981-01-12    13.3
+1981-01-13    16.7
+1981-01-14    21.5
+1981-01-15    25.0
+1981-01-16    20.7
+1981-01-17    20.6
+1981-01-18    24.8
+1981-01-19    17.7
+1981-01-20    15.5
+Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
+
+series.plot()
+
+&lt;matplotlib.axes._subplots.AxesSubplot at 0xbe34b38&gt;
+</code></pre><p><img src="https://i.imgur.com/7iBRt7B.png" alt=""></p>
+<pre><code>#将最后7个数据分裂出去作为验证集
+split_point=len(series)-7
+dataset,validation=series[0:split_point],series[split_point:]
+print(&#39;Dataset %d, Validation %d&#39; % (len(dataset),len(validation)))
+dataset.to_csv(&#39;tempdataset.csv&#39;)
+validation.to_csv(&#39;tempvalidation.csv&#39;)
+
+Dataset 3643, Validation 7
+
+#create a differenced series
+def difference(dataset,interval=1):
+    diff=list()
+    for i in range(interval,len(dataset)):
+        value=dataset[i]-dataset[i-interval]
+        diff.append(value)
+    return np.array(diff)
+
+#invert differenced value
+def inverse_difference(history,yhat,interval=1):
+    return yhat+history[-interval]
+
+from statsmodels.tsa.arima_model import ARIMA
+
+#测试集数据
+X=dataset.values
+#观察得到周期性为一年，365天
+days_in_year=365
+#差分
+differenced=difference(X,days_in_year)
+#拟合模型,(p,d,q)是由网格搜索法确定，作者另一篇文章有介绍
+model=ARIMA(differenced,order=(7,0,1))
+model_fit=model.fit(disp=0)
+#print summary of fit model
+print(model_fit.summary())
+
+                              ARMA Model Results                              
+==============================================================================
+Dep. Variable:                      y   No. Observations:                 3278
+Model:                     ARMA(7, 1)   Log Likelihood               -8673.748
+Method:                       css-mle   S.D. of innovations              3.411
+Date:                Sun, 08 Oct 2017   AIC                          17367.497
+Time:                        20:01:58   BIC                          17428.447
+Sample:                             0   HQIC                         17389.322
+
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.0132      0.132      0.100      0.921      -0.246       0.273
+ar.L1.y        1.1426      0.287      3.977      0.000       0.580       1.706
+ar.L2.y       -0.4347      0.154     -2.830      0.005      -0.736      -0.134
+ar.L3.y        0.0961      0.042      2.290      0.022       0.014       0.178
+ar.L4.y        0.0125      0.029      0.434      0.664      -0.044       0.069
+ar.L5.y       -0.0101      0.029     -0.343      0.731      -0.068       0.047
+ar.L6.y        0.0119      0.027      0.448      0.654      -0.040       0.064
+ar.L7.y        0.0088      0.024      0.368      0.713      -0.038       0.056
+ma.L1.y       -0.6159      0.287     -2.147      0.032      -1.178      -0.054
+                                    Roots                                    
+=============================================================================
+                 Real           Imaginary           Modulus         Frequency
+-----------------------------------------------------------------------------
+AR.1            1.2234           -0.0000j            1.2234           -0.0000
+AR.2            1.2563           -1.0676j            1.6487           -0.1121
+AR.3            1.2563           +1.0676j            1.6487            0.1121
+AR.4            0.0349           -2.0162j            2.0165           -0.2472
+AR.5            0.0349           +2.0162j            2.0165            0.2472
+AR.6           -2.5780           -1.3111j            2.8923           -0.4251
+AR.7           -2.5780           +1.3111j            2.8923            0.4251
+MA.1            1.6237           +0.0000j            1.6237            0.0000
+-----------------------------------------------------------------------------
+
+dataset.tail(5)
+
+Date
+1990-12-20    15.4
+1990-12-21    13.1
+1990-12-22    13.2
+1990-12-23    13.9
+1990-12-24    10.0
+Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
+</code></pre><h2 id="One-Step-Out-of-Sample-Forecast-1"><a href="#One-Step-Out-of-Sample-Forecast-1" class="headerlink" title="One-Step Out-of-Sample Forecast"></a>One-Step Out-of-Sample Forecast</h2><p>ARIMA模型进行一步预测是很好用的。<br>在这里，一步预测的是1990-12-25日的最低气温。</p>
+<p>statsmodel库提供了<em>forecast() function</em>进行预测。默认，这个函数就会进行一步预测（out-of-sample forecast）.<em>forecast()</em>返回值包含</p>
+<p><strong>the forecast value,the standard error of the forecast, and the confidence interval information</strong></p>
+<pre><code>#one-step out-of-sample forecast
+forecast=model_fit.forecast()[0]
+
+#前面为了消除时间序列的季节特性，进行了差分，这里得到的预测值必须要还原
+forecast=inverse_difference(X,forecast,days_in_year)
+
+print(&quot;Forecast: %f&quot; % forecast)
+
+Forecast: 14.861660
+
+#真实值是12.9
+validation
+
+Date
+1990-12-25    12.9
+1990-12-26    14.6
+1990-12-27    14.0
+1990-12-28    13.6
+1990-12-29    13.5
+1990-12-30    15.7
+1990-12-31    13.0
+Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
+</code></pre><p>statsmodel库同样提供了<em>predict() function</em>函数用于预测，可以进行任意in-of-sample &amp; out-of-sample的预测。但是<em>predict()</em>需要提供一个start和end.</p>
+<pre><code>#one-step out of sample forecast
+start_index=len(differenced)
+end_index=len(differenced)
+forecast=model_fit.predict(start=start_index,end=end_index)
+#forecast=model_fit.predict(&#39;1990-12-25&#39;,&#39;1990-12-25&#39;)
+
+#invert the differenced forecast to something usable
+forecast=inverse_difference(X,forecast,days_in_year)
+print(&quot;Forecast: %f&quot; % forecast)
+
+Forecast: 14.861660
+</code></pre><p>可以看到<em>predict()</em>预测结果和<em>forecast()</em>是一样的，不过<em>predict()</em>即可以in-of-sample也可以out-of-sample.</p>
+<h2 id="Multi-Step-Out-of-Sample-Forecast-1"><a href="#Multi-Step-Out-of-Sample-Forecast-1" class="headerlink" title="Multi-Step Out-of-Sample Forecast"></a>Multi-Step Out-of-Sample Forecast</h2><p>同样可以使用<em>predict()&amp;forecast()</em>函数进行多步预测。</p>
+<pre><code>#multi-step out-of-sample forecast
+forecast=model_fit.forecast(steps=7)[0]
+#invert the differenced forecast to something usable
+history=[x for x in X]
+day=1
+result=[]
+for yhat in forecast:
+    inverted=inverse_difference(history,yhat,days_in_year)
+    print(&quot;Day %d: %f&quot; % (day,inverted))
+    history.append(inverted)
+    result.append(inverted)
+    day+=1
+
+Day 1: 14.861660
+Day 2: 15.628799
+Day 3: 13.331348
+Day 4: 11.722410
+Day 5: 10.421526
+Day 6: 14.415543
+Day 7: 12.674730
+
+
+#multi-step out-of-sample forecast By predict() function
+start_index=len(differenced)
+end_index=start_index+6
+forecast=model_fit.predict(start=start_index,end=end_index)
+
+history=[x for x in X]
+day=1
+result=[]
+for yhat in forecast:
+    inverted=inverse_difference(history,yhat,days_in_year)
+    print(&quot;Day %d: %f&quot; % (day,inverted))
+    history.append(inverted)
+    result.append(inverted)
+    day+=1
+
+Day 1: 14.861660
+Day 2: 15.628799
+Day 3: 13.331348
+Day 4: 11.722410
+Day 5: 10.421526
+Day 6: 14.415543
+Day 7: 12.674730
+</code></pre><h2 id="原文地址："><a href="#原文地址：" class="headerlink" title="原文地址："></a>原文地址：</h2><p> <a href="https://machinelearningmastery.com/make-sample-forecasts-arima-python/" target="_blank" rel="external">https://machinelearningmastery.com/make-sample-forecasts-arima-python/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/时间序列分析/" rel="tag"># 时间序列分析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/29/机器学习实战第十四章学习笔记/" rel="next" title="机器学习实战第十四章学习笔记(利用SVD简化数据)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第十四章学习笔记(利用SVD简化数据)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Andy Chen" />
+          <p class="site-author-name" itemprop="name">Andy Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Andy1314Chen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集下载"><span class="nav-number">1.</span> <span class="nav-text">数据集下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分割数据集"><span class="nav-number">2.</span> <span class="nav-text">分割数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建模"><span class="nav-number">3.</span> <span class="nav-text">建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Step-Out-of-Sample-Forecast"><span class="nav-number">4.</span> <span class="nav-text">One-Step Out-of-Sample Forecast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Step-Out-of-Sample-Forecast"><span class="nav-number">5.</span> <span class="nav-text">Multi-Step Out-of-Sample Forecast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python3程序"><span class="nav-number">6.</span> <span class="nav-text">Python3程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Step-Out-of-Sample-Forecast-1"><span class="nav-number">7.</span> <span class="nav-text">One-Step Out-of-Sample Forecast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Step-Out-of-Sample-Forecast-1"><span class="nav-number">8.</span> <span class="nav-text">Multi-Step Out-of-Sample Forecast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文地址："><span class="nav-number">9.</span> <span class="nav-text">原文地址：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Andy Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+  |  本页点击 <span id="busuanzi_value_page_pv"></span> 次
+  |  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
+  <!-- 小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>
