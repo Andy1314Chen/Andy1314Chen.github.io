@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/10/27/Boxplot/</loc>
+    <lastmod>2017-10-27T14:08:47.934Z</lastmod>
+    <data>
+        <display>
+        <title>盒图(boxplot)</title>
+        <pubTime>2017-10-26T16:00:00.000Z</pubTime>
+        
+        <tag>C</tag>
+         
+        <tag>数据分析</tag>
+         
+        <tag>统计</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://yoursite.com/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/10/08/How%20to%20Make%20Out-of-Sample%20Forecasts%20with%20ARIMA%20in%20Python/</loc>
     <lastmod>2017-10-08T14:10:19.739Z</lastmod>
     <data>
@@ -334,9 +358,9 @@
         <title>英特尔校招两道编程题</title>
         <pubTime>2017-09-13T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -356,9 +380,9 @@
         <title>网易校招一道算法题</title>
         <pubTime>2017-09-08T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -812,9 +836,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>AI</tag>
-         
         <tag>python</tag>
+         
+        <tag>AI</tag>
          
          
            
@@ -834,9 +858,9 @@
         <title>迷宫问题</title>
         <pubTime>2016-07-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -856,9 +880,9 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
         <tag>Leetcode</tag>
          
@@ -926,9 +950,9 @@
         <title>快速整数平方根算法</title>
         <pubTime>2017-06-27T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
