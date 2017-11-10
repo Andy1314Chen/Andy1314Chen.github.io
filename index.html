@@ -301,6 +301,149 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/10/python保存模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/10/python保存模型/" itemprop="url">使用sklearn.externals.joblib保存模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-10T00:00:00+08:00">
+                2017-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用sklearn.externals.joblib或者Python’s pickle module去保存模型。</p>
+<pre><code>from sklearn.externals import joblib
+
+ joblib.dump(my_model,&#39;my_model.pkl&#39;)
+# and later ...
+my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/27/Boxplot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -843,330 +986,6 @@ Day 7: 12.674730
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
-                2017-09-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
-<ul>
-<li>优点：简化数据，去除噪声，提高算法的结果</li>
-<li>缺点：数据的转换可能难以理解</li>
-<li>适用数据类型：数值型数据</li>
-</ul>
-<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
-<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
-<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
-<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
-<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
-<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
-<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
-<pre><code>import numpy as np
-
-In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
-
-In[139]: U
-Out[139]: 
-array([[-0.14142136, -0.98994949],
-       [-0.98994949,  0.14142136]])
-In[140]: Sigma
-Out[140]: 
-array([ 10.,   0.])
-
-In[141]: VT
-Out[141]: 
-array([[-0.70710678, -0.70710678],
-   [-0.70710678,  0.70710678]])
-</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
-<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
-<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
-<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
-<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
-<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
-<pre><code>#### 相似度计算 ####
-
-1. 欧式距离
-2. 皮尔相关系数（Pearson correlation)
-3. 余弦相似度(cosine similarity)
-
-#程序清单14-1 相似度计算
-
-#欧式距离
-def ecludSim(inA,inB):
-    return 1.0/(1.0+la.norm(inA-inB))
-
-#皮尔逊相关系数
-def pearsSim(inA,inB):
-    if len(inA)&lt;3:
-        return 1.0
-    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
-
-#余弦相似度
-def cosSim(inA,inB):
-    num=float(inA.T*inB)
-    denom=la.norm(inA)*la.norm(inB)
-    return 0.5+0.5*(num/denom)
-</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
-<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
-<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
-<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
-</ol>
-<p>程序源码：</p>
-<pre><code>&quot;&quot;&quot;
-    示例：餐馆菜肴推荐引擎
-&quot;&quot;&quot;
-#程序清单14-2 基于物品相似度的推荐引擎
-
-#基于给定相似度计算方法的条件下，用户对物品的估计评分值
-&quot;&quot;&quot;
-dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
-&quot;&quot;&quot;
-def standEst(dataMat,user,simMeas,item):
-    #物品数
-    n=np.shape(dataMat)[1]
-    simTotal=0;ratSimTotal=0
-    #遍历每一个物品
-    for j in range(n):
-        userRating=dataMat[user,j]
-        #如果用户没有对该物品进行评分，则跳过
-        if userRating==0:
-            continue
-        #将item所在列与当前遍历列进行逻辑与
-        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
-                                       dataMat[:,j].A&gt;0))[0]
-        #若结果为0，则相似度为0，说明item与当前物品毫无交集
-        if len(overLap)==0:
-            similarity=0
-        else:
-            #计算相似度
-            similarity=simMeas(dataMat[overLap,item],
-                               dataMat[overLap,j])
-        #总的相似度
-        simTotal+=similarity
-        #考虑用户评分
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        #归一化
-        return ratSimTotal/simTotal
-
-#返回最高N个推荐结果   
-def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
-    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
-    #所有物品都已经投过票，则不需要进行推荐
-    if len(unratedItems)==0:
-        return &#39;you rated everything&#39;
-    itemScores=[]
-    #对未投票物品进行遍历
-    for item in unratedItems:
-        estimatedScore=estMethod(dataMat,user,simMeas,item)
-        itemScores.append((item,estimatedScore))
-    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
-</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
-def svdEst(dataMat,user,simMeas,item):
-    n=np.shape(dataMat)[1]
-    simTotal=0.0;ratSimTotal=0.0
-    #奇异值分解
-    U,Sigma,VT=la.svd(dataMat)
-    #构建对角矩阵
-    Sig4=np.mat(np.eye(4)*Sigma[:4])
-    #将物品转换到低维空间中
-    xformedItems=dataMat.T*U[:,:4]*Sig4.I
-
-    for j in range(n):
-        userRating=dataMat[user,j]
-        if userRating==0 or j==item:
-            continue
-        similarity=simMeas(xformedItems[item,:].T,
-                           xformedItems[j,:].T)
-        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
-        simTotal+=similarity
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        return ratSimTotal/float(simTotal)
-</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
-<pre><code>&quot;&quot;&quot;
-    基于SVD的图像压缩
-&quot;&quot;&quot;
-
-#程序清单14-4 图像压缩函数
-def printMat(inMat,thresh=0.8):
-    for i in range(32):
-        for k in range(32):
-            if float(inMat[i,k])&gt;thresh:
-                print(1,end=&#39;&#39;);
-            else:
-                print(0,end=&#39;&#39;);
-        print(&#39;&#39;)
-
-def imgCompress(numSV=3,thresh=0.8):
-    my1=[]
-    for line in open(&#39;0_5.txt&#39;).readlines():
-        newRow=[]
-        for i in range(32):
-            newRow.append(int(line[i]))
-        my1.append(newRow)
-    myMat=np.mat(my1)
-    print(&quot;****original matrix****&quot;)
-    #打印原始数据
-    printMat(myMat,thresh)
-    #SVD分解
-    U,Sigma,VT=la.svd(myMat)
-    SigRecon=np.mat(np.zeros((numSV,numSV)))
-    for k in range(numSV):
-        SigRecon[k,k]=Sigma[k]
-    #重构矩阵
-    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
-    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
-          numSV)
-    printMat(reconMat,thresh)
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1581,6 +1400,330 @@ plt.legend()
 <ol>
 <li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
+<ul>
+<li>优点：简化数据，去除噪声，提高算法的结果</li>
+<li>缺点：数据的转换可能难以理解</li>
+<li>适用数据类型：数值型数据</li>
+</ul>
+<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
+<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
+<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
+<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
+<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
+<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
+<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
+<pre><code>import numpy as np
+
+In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
+
+In[139]: U
+Out[139]: 
+array([[-0.14142136, -0.98994949],
+       [-0.98994949,  0.14142136]])
+In[140]: Sigma
+Out[140]: 
+array([ 10.,   0.])
+
+In[141]: VT
+Out[141]: 
+array([[-0.70710678, -0.70710678],
+   [-0.70710678,  0.70710678]])
+</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
+<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
+<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
+<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
+<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
+<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
+<pre><code>#### 相似度计算 ####
+
+1. 欧式距离
+2. 皮尔相关系数（Pearson correlation)
+3. 余弦相似度(cosine similarity)
+
+#程序清单14-1 相似度计算
+
+#欧式距离
+def ecludSim(inA,inB):
+    return 1.0/(1.0+la.norm(inA-inB))
+
+#皮尔逊相关系数
+def pearsSim(inA,inB):
+    if len(inA)&lt;3:
+        return 1.0
+    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
+
+#余弦相似度
+def cosSim(inA,inB):
+    num=float(inA.T*inB)
+    denom=la.norm(inA)*la.norm(inB)
+    return 0.5+0.5*(num/denom)
+</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
+<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
+<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
+<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
+</ol>
+<p>程序源码：</p>
+<pre><code>&quot;&quot;&quot;
+    示例：餐馆菜肴推荐引擎
+&quot;&quot;&quot;
+#程序清单14-2 基于物品相似度的推荐引擎
+
+#基于给定相似度计算方法的条件下，用户对物品的估计评分值
+&quot;&quot;&quot;
+dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
+&quot;&quot;&quot;
+def standEst(dataMat,user,simMeas,item):
+    #物品数
+    n=np.shape(dataMat)[1]
+    simTotal=0;ratSimTotal=0
+    #遍历每一个物品
+    for j in range(n):
+        userRating=dataMat[user,j]
+        #如果用户没有对该物品进行评分，则跳过
+        if userRating==0:
+            continue
+        #将item所在列与当前遍历列进行逻辑与
+        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
+                                       dataMat[:,j].A&gt;0))[0]
+        #若结果为0，则相似度为0，说明item与当前物品毫无交集
+        if len(overLap)==0:
+            similarity=0
+        else:
+            #计算相似度
+            similarity=simMeas(dataMat[overLap,item],
+                               dataMat[overLap,j])
+        #总的相似度
+        simTotal+=similarity
+        #考虑用户评分
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        #归一化
+        return ratSimTotal/simTotal
+
+#返回最高N个推荐结果   
+def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
+    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
+    #所有物品都已经投过票，则不需要进行推荐
+    if len(unratedItems)==0:
+        return &#39;you rated everything&#39;
+    itemScores=[]
+    #对未投票物品进行遍历
+    for item in unratedItems:
+        estimatedScore=estMethod(dataMat,user,simMeas,item)
+        itemScores.append((item,estimatedScore))
+    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
+</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
+def svdEst(dataMat,user,simMeas,item):
+    n=np.shape(dataMat)[1]
+    simTotal=0.0;ratSimTotal=0.0
+    #奇异值分解
+    U,Sigma,VT=la.svd(dataMat)
+    #构建对角矩阵
+    Sig4=np.mat(np.eye(4)*Sigma[:4])
+    #将物品转换到低维空间中
+    xformedItems=dataMat.T*U[:,:4]*Sig4.I
+
+    for j in range(n):
+        userRating=dataMat[user,j]
+        if userRating==0 or j==item:
+            continue
+        similarity=simMeas(xformedItems[item,:].T,
+                           xformedItems[j,:].T)
+        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
+        simTotal+=similarity
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        return ratSimTotal/float(simTotal)
+</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
+<pre><code>&quot;&quot;&quot;
+    基于SVD的图像压缩
+&quot;&quot;&quot;
+
+#程序清单14-4 图像压缩函数
+def printMat(inMat,thresh=0.8):
+    for i in range(32):
+        for k in range(32):
+            if float(inMat[i,k])&gt;thresh:
+                print(1,end=&#39;&#39;);
+            else:
+                print(0,end=&#39;&#39;);
+        print(&#39;&#39;)
+
+def imgCompress(numSV=3,thresh=0.8):
+    my1=[]
+    for line in open(&#39;0_5.txt&#39;).readlines():
+        newRow=[]
+        for i in range(32):
+            newRow.append(int(line[i]))
+        my1.append(newRow)
+    myMat=np.mat(my1)
+    print(&quot;****original matrix****&quot;)
+    #打印原始数据
+    printMat(myMat,thresh)
+    #SVD分解
+    U,Sigma,VT=la.svd(myMat)
+    SigRecon=np.mat(np.zeros((numSV,numSV)))
+    for k in range(numSV):
+        SigRecon[k,k]=Sigma[k]
+    #重构矩阵
+    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
+    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
+          numSV)
+    printMat(reconMat,thresh)
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
 
           
         
@@ -3472,444 +3615,6 @@ root.mainloop()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/机器学习实战第八章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/21/机器学习实战第八章学习笔记/" itemprop="url">机器学习实战第八章学习笔记(回归)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T00:00:00+08:00">
-                2017-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前面几章都是介绍分类，是对离散值进行分类预测，本章则将对连续型的数据做出预测。</p>
-<h2 id="用线性回归找到最佳拟合直线"><a href="#用线性回归找到最佳拟合直线" class="headerlink" title="用线性回归找到最佳拟合直线"></a>用线性回归找到最佳拟合直线</h2><p><strong>线性回归</strong></p>
-<ul>
-<li>优点：结果易于理解，计算上不复杂。</li>
-<li>缺点：对非线性的数据拟合不好。</li>
-<li>适用数据类型：数值型和标称型数据。</li>
-</ul>
-<p>回归的目的是预测数值型的目标值。</p>
-<p>举个例子，假如你想预测姐姐男友汽车的功率大小，可能会这么计算：</p>
-<p>$$ HorsePower=0.0015\cdot{annualSalary}-0.99\cdot{hoursListeningToPublicRadio} $$</p>
-<p>这就是一个回归方程（regression equation)，其中的0.0015和-0.99称作回归系数（regression weights),求这些回归系数的过程就是回归。</p>
-<p>一般讲到回归都是指线性回归，但也存在非线性回归。</p>
-<p><strong>回归的一般方法</strong></p>
-<ol>
-<li>收集数据：采用任意方法收集数据。</li>
-<li>准备数据：回归需要数值型数据，标称型数据将被转成二值型数据。</li>
-<li>分析数据：绘出数据的可视化二维图将有助于对数据做出理解和分析，在采用缩减法求得新回归系数之后，可以将新拟合线绘在图上作为对比。</li>
-<li>训练算法：找到回归系数</li>
-<li>测试算法：使用R2或者预测值和数据的拟合度，来分析模型的效果</li>
-<li>使用算法：使用回归，可以在给定输入的时候预测出一个数值，这是对分类方法的提升，因为这样可以预测连续型数据而不仅仅是离散的类别标签。</li>
-</ol>
-<p>用平方误差来指示预测效果：</p>
-<p>$$ \sum_i^m{(y_i-x_i^Tw)}^2 $$</p>
-<p>用矩阵表示，可以写做：</p>
-<p>$$ {(y-Xw)}^T(y-Xw) $$</p>
-<p>对w求导，得到\(X^T(Y-Xw)\),令其等于0，解得w:</p>
-<p>$$ \hat w={(X^TX)}^{-1}X^Ty $$</p>
-<p><img src="https://i.imgur.com/aHjfKmd.png" alt=""></p>
-<p>对上图的散点做一个简单的回归。</p>
-<pre><code>import numpy as np
-
-#标准回归函数和数据导入函数
-def loadDataSet(fileName):
-    numFeat=len(open(fileName).readline().split(&#39;\t&#39;))-1
-    dataMat=[];labelMat=[]
-    fr=open(fileName)
-    for line in fr.readlines():
-        lineArr=[]
-        curLine=line.strip().split(&#39;\t&#39;)
-        for i in range(numFeat):
-            lineArr.append(float(curLine[i]))
-        dataMat.append(lineArr)
-        labelMat.append(float(curLine[-1]))
-    return dataMat,labelMat
-
-def standRegres(xArr,yArr):
-    xMat=np.mat(xArr);yMat=np.mat(yArr).T
-    xTx=xMat.T*xMat
-    #如果行列式为0，则计算逆矩阵时会出错
-    if np.linalg.det(xTx)==0.0:
-        print(&quot;This matrix is singular,cannot do inverse&quot;)
-        return
-    ws=xTx.I*(xMat.T*yMat)
-    return ws
-</code></pre><p><img src="https://i.imgur.com/ZgqRhwW.jpg" alt=""></p>
-<p>如何去判断已经建立的模型的好坏呢？可以计算预测值与真实值的相关系数。<br>Numpy库提供了相关系数的计算方法，corrcoef(yEstimate,yActual)</p>
-<p><img src="https://i.imgur.com/w1V4jfJ.jpg" alt=""></p>
-<h2 id="局部加权线性回归"><a href="#局部加权线性回归" class="headerlink" title="局部加权线性回归"></a>局部加权线性回归</h2><p>线性回归的一个问题是有可能出现欠拟合现象，因为求的是具有最小均方误差的无偏估计。可以采用某些方法在估计中引入一些偏差，从而降低预测的均方误差。</p>
-<p>其中的一个方法是局部加权线性回归（Locally Weighted Linear Regression,LWLR).在该算法中，我们给待预测点附近的每个点赋予一定的权重</p>
-<p>$$ \hat w={(X^TWX)}^{-1}X^TWy $$</p>
-<p>其中W是一个矩阵，给每个数据点赋予权重。</p>
-<p>LWLR使用“核”来对附近的点赋予更高的权重。核的类型可以自由选择，最常用的核就是高斯核，高斯核对应的权重如下：</p>
-<p>$$ w(i,i)=exp[\frac {|x^{(i)}-x|}{-2k^2}] $$</p>
-<p>这样就构建了一个只包含对角元素的权重矩阵w,并且点x与x(i)越近，w(i,i)越大，其中k参数可调：</p>
-<p><img src="https://i.imgur.com/sB3jfsH.jpg" alt=""></p>
-<pre><code>#局部加权线性回归（Locally Weighted Linear Regression,LWLR)
-&quot;&quot;&quot;
-    局部加权线性回归，是取某点附近的一些点并根据与该点的距离远近来赋予不同的权重，
-    再根据这些点进行拟合，最终给出该点的预测值
-&quot;&quot;&quot;
-def lwlr(testPoint,xArr,yArr,k=1.0):
-    xMat=np.mat(xArr);yMat=np.mat(yArr).T
-    m=np.shape(xMat)[0]
-    weights=np.mat(np.eye((m)))
-    for j in range(m):
-        diffMat=testPoint-xMat[j,:]
-        #计算权重值
-        weights[j,j]=np.exp(diffMat*diffMat.T/(-2.0*k**2))
-    xTx=xMat.T*(weights*xMat)
-    if np.linalg.det(xTx)==0.0:
-        print(&quot;This matrix is singular,cannot do inverse&quot;)
-        return
-    ws=xTx.I*(xMat.T*(weights*yMat))
-    return testPoint*ws
-
-def lwlrTest(testArr,xArr,yArr,k=1.0):
-    m=np.shape(testArr)[0]
-    yHat=np.zeros(m)
-    for i in range(m):
-        yHat[i]=lwlr(testArr[i],xArr,yArr,k)
-    return yHat
-
-&quot;&quot;&quot;
-k=1.0时，欠拟合
-k=0.01时，差不多
-k=0.003时，过拟合
-
-局部加权线性回归效果比一般线性回归要好，但是也存在一个问题，即增加了计算量。
-对每个点做预测时都必须使用整个数据集。
-
-&quot;&quot;&quot;
-</code></pre><p><img src="https://i.imgur.com/ktJGq6t.png" alt=""></p>
-<p><img src="https://i.imgur.com/Zb69jDg.png" alt=""></p>
-<p><img src="https://i.imgur.com/AWLkwcI.png" alt=""></p>
-<p>从上到下，k=1.0,k=0.01,k=0.003,可以看到，k=1.0时的模型效果与最小二乘法差不多，k=0.01时该模型可以挖出数据的潜在规律，而k=0.003时，则考虑了太多的噪声，导致了过拟合现象。</p>
-<p>局部加权线性回归也存在一个问题，即增加了计算量，因为它对每个点做预测时都必须使用整个数据集。</p>
-<h2 id="示例：预测鲍鱼的年龄"><a href="#示例：预测鲍鱼的年龄" class="headerlink" title="示例：预测鲍鱼的年龄"></a>示例：预测鲍鱼的年龄</h2><pre><code>#预测鲍鱼的年龄
-def rssError(yArr,yHatArr):
-    return ((yArr-yHatArr)**2).sum()
-</code></pre><h2 id="缩减系数来“理解”数据"><a href="#缩减系数来“理解”数据" class="headerlink" title="缩减系数来“理解”数据"></a>缩减系数来“理解”数据</h2><p>如果特征比样本点还多（n&gt;m），输入数据的矩阵X不是满秩矩阵，这样求逆时会出现问题。本章会着重介绍两种方法来解决这一问题，第一种方法岭回归(ridge regression),第二种方法是lasso法，但这种方法计算复杂，介绍与lasso效果差不多，但更容易实现的前向逐步回归法。</p>
-<h4 id="岭回归"><a href="#岭回归" class="headerlink" title="岭回归"></a>岭回归</h4><p>简单来说，岭回归就是在矩阵\(X^TX\)上加一个λI从而使得矩阵非奇异，进而能对\(X^TX+\lambda I\)求逆。</p>
-<p>$$ \hat w={(X^TX+\lambda I)}^{-1}X^Ty $$</p>
-<p>岭回归最先用于处理特征数多于样本数的情况，现在也用于在估计中加入偏差，从而得到更好的估计。通过引入该惩罚项，能够减少不重要的参数，这个技术在统计学中也叫做缩减(shrinkage)。缩减方法可以去掉不重要的参数，因此能更好地理解数据。</p>
-<pre><code>#岭回归
-def ridgeRegres(xMat,yMat,lam=0.2):
-    xTx=xMat.T*xMat
-    denom=xTx+np.eye(np.shape(xMat)[1])*lam
-    if np.linalg.det(denom) == 0.0:
-        print(&quot;This matrix is singular, cannot do inverse&quot;)
-        return
-    ws=denom.I*(xMat.T*yMat)
-    return ws
-
-def ridgeTest(xArr,yArr):
-    xMat=np.mat(xArr);yMat=np.mat(yArr).T
-    yMean=np.mean(yMat,0)
-    yMat=yMat-yMean
-    xMeans=np.mean(xMat,0)
-    xVar=np.var(xMat,0)
-    xMat=(xMat-xMeans)/xVar
-    numTestPts=30
-    wMat=np.zeros((numTestPts,np.shape(xMat)[1]))
-    for i in range(numTestPts):
-        #lambda以指数级变化
-        ws=ridgeRegres(xMat,yMat,np.exp(i-10))
-        wMat[i,:]=ws.T
-    return wMat
-&quot;&quot;&quot;
-ridgeRegres()用于计算回归系数，
-ridgeTest()用于在一组lambda上测试结果。
-函数ridgeTest()中进行了数据标准化的，特征减去均值并除以方差
-&quot;&quot;&quot;
-</code></pre><p><img src="https://i.imgur.com/mSDyC1T.jpg" alt=""></p>
-<h4 id="Lasso"><a href="#Lasso" class="headerlink" title="Lasso"></a>Lasso</h4><p>不难证明，在增加如下约束时，普通的最小二乘法回归会得到与岭回归一样的公式：</p>
-<p>$$ \sum_{k=1}^n w_k^2 \le \lambda $$</p>
-<p>上式限定了所有回归系数的平方和不能大于λ，使用普通的最小二乘法回归在当两个或更多的特征相关时，可能会得到一个很大的正系数和一个很大的负系数。正是因为上述限制条件的存在，使用岭回归可以避免这个问题。</p>
-<p>与岭回归类似，lasso也对回归系数做了限定，对应的约束条件如下：</p>
-<p>$$ \sum_{k=1}^n|w_k| \le \lambda $$</p>
-<p>唯一的不同点在于，这个约束条件使用绝对值取代了平方和。在λ很小的时候，一些系数会因此被缩减到0，这个特征可以帮助我们更好的理解数据。</p>
-<h4 id="前向逐步回归"><a href="#前向逐步回归" class="headerlink" title="前向逐步回归"></a>前向逐步回归</h4><p>前向逐步回归算法可以得到与lasso差不多的效果，但更加简单。属于一种贪心算法，即每一步都尽可能减少误差。</p>
-<pre><code>&quot;&quot;&quot;
-前向逐步回归算法：
-    数据标准化，使其分布满足0均值和单位方差
-    在每轮迭代过程中：
-        设置当前最小误差lowestError为正∞
-        对每个特征：
-            增大或缩小：
-                改变一个系数得到一个新的W
-                计算新W下的误差
-                如果误差Error小于当前最小误差lowestError:设置Wbest等于当前的W
-            将W设置为新的Wbest
-&quot;&quot;&quot;
-#前向逐步线性回归
-def stageWise(xArr,yArr,eps=0.01,numIt=100):
-    xMat=np.mat(xArr);yMat=np.mat(yArr).T
-    yMean=np.mean(yMat,0)
-    yMat=yMat-yMean
-    xMat=regularize(xMat)
-    m,n=np.shape(xMat)
-    returnMat=np.zeros((numIt,n))
-    ws=np.zeros((n,1));wsTest=ws.copy();wsMax=ws.copy()
-    for i in range(numIt):
-        print(ws.T)
-        lowestError=np.inf;
-        for j in range(n):
-            for sign in [-1,1]:
-                wsTest=ws.copy()
-                wsTest[j]+=eps*sign
-                yTest=xMat*wsTest
-                rssE=rssError(yMat.A,yTest.A)
-                if rssE&lt;lowestError:
-                    lowestError=rssE
-                    wsMax=wsTest
-        ws=wsMax.copy()
-        returnMat[i,:]=ws.T
-    return returnMat
-
-#标准化
-def regularize(xMat):
-    inMat=xMat.copy()
-    inMeans=np.mean(inMat,0)
-    inVar=np.var(inMat,0)
-    inMat=(inMat-inMeans)/inVar
-    return inMat
-</code></pre><p>逐步线性回归算法可以帮助理解现有的模型并做出改进，主要是可以看出哪些特征比较重要而哪些特征不那么重要。</p>
-<h2 id="权衡偏差与方差"><a href="#权衡偏差与方差" class="headerlink" title="权衡偏差与方差"></a>权衡偏差与方差</h2><p><img src="https://pic2.zhimg.com/v2-286539c808d9a429e69fd59fe33a16dd_b.png" alt=""></p>
-<p>偏差：描述的是预测值（估计值）的期望与真实值之间的差距。</p>
-<p>方差：描述的是预测值的变化范围，离散程度，也就是离其期望值的距离。</p>
-<h2 id="示例：预测乐高玩具套装的价格"><a href="#示例：预测乐高玩具套装的价格" class="headerlink" title="示例：预测乐高玩具套装的价格"></a>示例：预测乐高玩具套装的价格</h2><ol>
-<li>收集数据：用Google Shopping的API收集数据</li>
-<li>准备数据：从返回的JSON数据中抽取价格</li>
-<li>分析数据：可视化并观察数据</li>
-<li>训练算法：构建不同的模型，采用逐步线性回归和直接的线性回归模型</li>
-<li>测试算法：使用交叉验证来测试不同的模型，分析哪个效果最好</li>
-<li>使用算法：这次练习的目标就是生成数据模型</li>
-</ol>
-<h4 id="收集数据：使用Google购物的API"><a href="#收集数据：使用Google购物的API" class="headerlink" title="收集数据：使用Google购物的API"></a>收集数据：使用Google购物的API</h4><p>(在Google API的控制台好像已经找不到这个API了，书上提供的网址：<a href="http://code.google.com/apis/shopping/search/v1/getting_started.html也打不开了。" target="_blank" rel="external">http://code.google.com/apis/shopping/search/v1/getting_started.html也打不开了。</a>)<br>所以以下程序没有测试。</p>
-<pre><code>&quot;&quot;&quot;
-示例：预测乐高玩具套装的价格
-
-&quot;&quot;&quot;
-#购物信息的获取函数
-from time import sleep
-import json
-import urllib.request
-def searchForSet(retX,retY,setNum,yr,numPce,origPrc):
-    sleep(10)
-    myAPIstr=&quot;AIzaSyD2cR2KFyx12hXu6PFU-wrWot3NXvko8vY&quot;
-    searchURL=&#39;https://www.googleapis.com/shopping/search/v1/public/products?\
-        key=%s&amp;country=US&amp;q=lego+%d&amp;alt=json&#39; % (myAPIstr,setNum)
-    pg=urllib.request.urlopen(searchURL)
-    retDict=json.loads(pg.read())
-    for i in range(len(retDict[&#39;items&#39;])):
-        try:
-            currItem=retDict[&#39;items&#39;][i]
-            if currItem[&#39;product&#39;][&#39;condition&#39;]==&#39;new&#39;:
-                newFlag=1
-            else:
-                newFlag=0
-            listOfInv=currItem[&#39;product&#39;][&#39;inventories&#39;]
-            for item in listOfInv:
-                sellingPrice=item[&#39;price&#39;]
-                if sellingPrice&gt;origPrc*0.5:
-                    print(&quot;%d\t%d\t%d\t%f\t%f&quot; % \
-                          (yr,numPce,newFlag,origPrc,sellingPrice))
-                    retX.append([yr,numPce,newFlag,origPrc])
-                    retY.append(sellingPrice)
-        except:
-            print(&quot;problem with item %d&quot; % i)
-
-def setDataCollect(retX,retY):
-    searchForSet(retX,retY,8288,2006,800,49.99)
-    searchForSet(retX,retY,10030,2002,3096,269.99)
-    searchForSet(retX,retY,10179,2007,5195,499.99)
-    searchForSet(retX,retY,10181,2007,3428,199.99)
-    searchForSet(retX,retY,10189,2008,5922,299.99)
-    searchForSet(retX,retY,10196,2009,3263,249.99)
-
-#交叉验证测试岭回归
-def crossValidation(xArr,yArr,numVal=10):
-    #数据点个数
-    m=len(yArr)
-    indexList=range(m)
-    errorMat=np.zeros((numVal,30))
-    for i in range(numVal):
-        trainX=[];trainY=[]
-        testX=[];testY=[]
-        #打乱顺序
-        np.random.shuffle(indexList)
-        for j in range(m):
-            #取90%的数据集为训练样本
-            if j&lt;m*0.9:
-                trainX.append(xArr[indexList[j]])
-                trainY.append(yArr[indexList[j]])
-            #10%的数据为测试集
-            else:
-                testX.append(xArr[indexList[j]])
-                testY.append(yArr[indexList[j]])
-        #训练完成后，将回归系数保存在wMat中
-        wMat=ridgeTest(trainX,trainY)
-        #用30组不同的lambda值来进行测试
-        for k in range(30):
-            matTestX=np.mat(testX);matTrainX=np.mat(trainY)
-            meanTrain=np.mean(matTrainX,0)
-            varTrain=np.var(matTrainX,0)
-            matTestX=(matTestX-meanTrain)/varTrain
-            yEst=matTestX*np.mat(wMat[k,:]).T+np.mean(trainY)
-            #每个lambda应该对应10个误差
-            errorMat[i,k]=rssError(yEst.T.A,np.array(testY))
-    meanErrors=np.mean(errorMat,0)
-    minMean=float(np.min(meanErrors))
-    bestWeights=wMat[np.nonzero(meanErrors==minMean)]
-    xMat=np.mat(xArr);yMat=np.mat(yArr).T
-    meanX=np.mean(xMat,0);varX=np.var(xMat,0)
-    unReg=bestWeights/varX
-    print(&quot;the best model from Ridge Regression is:\n&quot;,unReg)
-    print(&quot;with constant term: &quot;,\
-          -1*np.sum(np.multiply(meanX,unReg))+np.mean(yMat))
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在回归方程中，求得特征对应的最佳回归系数的方法是最小化误差的平方和。数据集上计算出的回归方程并不一定意味着它是最佳的（只是根据给定的数据下最佳），可以使用预测值\(\hat y\)和原始值y的相关性来度量回归方程的好坏。</p>
-<p>当数据的样本数比特征数还少时，矩阵\(X^TX\)的逆不能直接计算。即便当样本数比特征数多时，由于特征之间可能高度相关，这时\(X^TX\)的逆也不能直接计算。这时可以考虑使用岭回归，因为当\(X^TX\)的逆不能直接计算时，仍然能保证求得回归参数。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3960,7 +3665,7 @@ def crossValidation(xArr,yArr,numVal=10):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
