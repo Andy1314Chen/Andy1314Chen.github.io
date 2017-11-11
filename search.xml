@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[时间序列规则法快速入门【转】]]></title>
+    <url>%2F2017%2F11%2F11%2F%E6%97%B6%E9%97%B4%E8%A7%84%E5%88%99%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%2F</url>
+    <content type="text"><![CDATA[时间序列规则法快速入门 前言大家好~我是drop-out。今年我参加了IJCAI-17数据挖掘竞赛和KDD CUP 2017，分别获得了第三名和第九名。两个比赛都是时间序列数据。因为我本身是学金融的，对金融时间序列接触的比较多，然而我发现搞机器学习的小伙伴们时间序列处理的基本方法都没有入门~所以这里写一篇文章，以IJCAI-17口碑客流量预测大赛为背景，介绍一下时间序列规则法，让大家快速入门！= = IJCAI-17给的是蚂蚁金服的支付数据，具体来说，给的是店铺（实体店）过去每天的客流量，预测店铺未来14天每天的客流量。由过去外推未来，这是典型的时间序列问题。像支付数据、客流量数据、交通数据等，具有明显的周期性。从预测的角度说，周期性是核心，只要抓住了周期性，任务就完成了一大半。 基本规则法快速入门假设给定下面的数据，任务是预测第四周每天的客流量。 周一 周二 周三 周四 周五 周六 周日 周均值 第一周 20 10 70 50 250 200 100 100 第二周 26 18 66 50 180 140 80 80 第三周 15 8 67 60 270 160 120 100 明显能看到周一到周日的周期波动。预测的核心任务就是尽可能准确的提取这种周期。 第一步: 除以周均值，得到一个比例。 第二步: 按列取中位数。 就可以得到一组鲁棒的周期因子。 周一 周二 周三 周四 周五 周六 周日 第一周 0.2 0.1 0.7 0.5 2.5 2 1 第二周 0.325 0.225 0.825 0.625 2.25 1.75 1 第三周 0.15 0.08 0.67 0.6 2.7 1.6 1.2 中位数 0.2 0.1 0.7 0.6 2.5 1.75 1 做预测时，只要将周期因子，乘以一个base，就可以做下一周的预测啦。比如说，我们取最后一周的平均客流量100作为base，那么我们直接乘上周期因子，就得到下一周的预测: 周一 周二 周三 周四 周五 周六 周日 中位数 0.2 0.1 0.7 0.6 2.5 1.75 1 预测 (base=100) 20 10 70 60 250 175 100 实际应用当然要取更长的时段啦。具体取几周以测试集的效果来确定。 针对周期因子的优化按列提取中位数是一种简单而有效的提取周期因子的方法。中位数十分鲁棒，不受极端值的影响。但中位数损失了很多信息。实践中，可以在此基础上进一步优化。比如可以提取一个均值和一个中位数，然后将均值和中位数融合。融合的比例按照测试集的表现来确定。也可以根据与预测周的时间距离来赋予不同的权重。 针对base的优化直接用最后一周的平均客流量作为base并不一定是最好的方法。也许最后三天或最后五天的均值能更好的反映最新的情况。但是，我们不能直接对最后三天客流量取均值（最后三天是周末，这样取的base就偏大了）。需要去掉周期性因素后，再取平均。具体做法，就是用客流量除以周期因子。 周一 周二 周三 周四 周五 周六 周日 第三周 15 8 67 60 270 160 120 中位数 0.2 0.1 0.7 0.6 2.5 1.75 1 去周期以后的客流量 75 80 95.7 100 108 91.4 120 这样我们就可以取最后三天的平均，(108+91.4+120)/3=106.5，作为base。具体取多少天的，也要通过测试集的表现来确定。当然也可以按某些函数形式来给每天赋予不同的权重。 其他影响因素在IJCAI-17的这个赛题里面，天气是非常重要的一个影响因素。可以提取残差，然后用残差训练一个天气的模型。推荐使用xgboost。其他影响因素可以如法炮制。 总结 周期因子的确定，中位数Or均值，或者两者的融合 周期因子 = \(\alpha*{中位数}+\beta*{均值} (\alpha + \beta = 1)\) 提取前几周来确定周期因子，或者与预测周的时间距离赋予不同的权重 Base的选择，最后一周？最后3天？最后5天？ 原文链接： http://www.jianshu.com/p/31e20f00c26f?spm=5176.9876270.0.0.2e44f4d2wd3dPO https://tianchi.aliyun.com/competition/new_articleDetail.html?spm=5176.8366600.0.0.472ba697eBOdsh&amp;raceId=231591&amp;postsId=2526]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>时间序列</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用sklearn.externals.joblib保存模型]]></title>
     <url>%2F2017%2F11%2F10%2Fpython%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%9E%8B%2F</url>
     <content type="text"><![CDATA[使用sklearn.externals.joblib或者Python’s pickle module去保存模型。 from sklearn.externals import joblib joblib.dump(my_model,&#39;my_model.pkl&#39;) # and later ... my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)]]></content>
@@ -35,8 +47,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
         <tag>时间序列分析</tag>
       </tags>
   </entry>
@@ -50,8 +62,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -64,8 +76,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -78,8 +90,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -92,8 +104,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -106,8 +118,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -120,8 +132,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -134,8 +146,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -148,22 +160,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[机器学习算法常用指标]]></title>
-    <url>%2F2017%2F09%2F19%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02%2F</url>
-    <content type="text"><![CDATA[基本概念考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。 TP：正确肯定的数目； FN：漏报，没有正确找到的匹配的数目； FP：误报，给出的匹配是不正确的； TN：正确拒绝的非匹配对数； 列联表如下表所示，1代表正类，0代表负类： 预测1 预测0 实际1 True Positive(TP) False Negative(FN) 实际0 False Positive(FP) True Negative(TN) TPR、FPR&amp;TNR从列联表引入两个新名词。 其一是真正类率(true positive rate ,TPR), 计算公式为 $$ TPR=\frac {TP}{(TP+FN)} $$ 刻画的是分类器所识别出的 正实例占所有正实例的比例。 另外一个是负正类率(false positive rate, FPR),计算公式为 $$ FPR=\frac {FP}{(FP+TN)} $$ 计算的是分类器错认为正类的负实例占所有负实例的比例。 还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为 $$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$ 精确率Precision、召回率Recall和F1值精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。 一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下： $$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$ $$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$ 为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下： $$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$ 不妨举这样一个例子： 某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下： 正确率 = 700 / (700 + 200 + 100) = 70% 召回率 = 700 / 1400 = 50% F1值 = 70% 50% 2 / (70% + 50%) = 58.3% 不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化： 正确率 = 1400 / (1400 + 300 + 300) = 70% 召回率 = 1400 / 1400 = 100% F1值 = 70% 100% 2 / (70% + 100%) = 82.35% 由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。 当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。 综合评价指标F-measurePrecision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。 F-Measure是Precision和Recall加权调和平均： $$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$ 当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。 ROC曲线和AUC为什么引入ROC曲线？Motivation1：在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。 Motivation2：在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。 什么是ROC曲线？ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。 $$ TPR=\frac {TP}{(TP+FN)} $$ $$ FPR=\frac {FP}{(FP+TN)} $$ 此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。 为了更好地理解ROC曲线，我们使用具体的实例来说明： 如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。 不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。 我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。 我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。 还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。 曲线距离左上角越近,证明分类器效果越好。 如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。 什么是AUC?AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。 AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。 0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。 AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。 AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。 AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。 怎样计算AUC?第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。 第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取NM(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(NM)。 第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\),时间复杂度为O(N+M). 为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。 为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。 #ROC曲线的绘制及AUC计算函数 def plotROC(predStrengths,classLabels): import matplotlib.pyplot as plt #光标的位置 cur=(1.0,1.0) #用于计算AUC的值 ySum=0.0 #正样本个数 numPosClas=np.sum(np.array(classLabels)==1.0) #y轴上步进数目 yStep=1/float(numPosClas) #x轴上步进数目 xStep=1/float(len(classLabels)-numPosClas) #预测强度排序从小到大，（1,1）-&gt;(0,0) #按照从小到大的顺序，输出对应的index索引 sortedIndicies=predStrengths.argsort() fig=plt.figure() fig.clf() ax=plt.subplot(111) for index in sortedIndicies.tolist()[0]: #正例，修改真阳率 if classLabels[index]==1.0: delX=0;delY=yStep; #反例，修改假阳率 else: delX=xStep;delY=0; ySum+=cur[1] ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;) cur=(cur[0]-delX,cur[1]-delY) ax.plot([0,1],[0,1],&#39;b--&#39;) plt.xlabel(&#39;False Positive Rate&#39;); plt.ylabel(&#39;True Positive Rate&#39;) plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;) ax.axis([0,1,0,1]) plt.show() print(&quot;the Area Under the Curve is: &quot;,ySum*xStep) 该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。 为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。 参考博客 http://www.cnblogs.com/maybe2030/p/5375175.html#top]]></content>
-      <categories>
-        <category>Python</category>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -176,8 +174,22 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[机器学习算法常用指标]]></title>
+    <url>%2F2017%2F09%2F19%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02%2F</url>
+    <content type="text"><![CDATA[基本概念考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。 TP：正确肯定的数目； FN：漏报，没有正确找到的匹配的数目； FP：误报，给出的匹配是不正确的； TN：正确拒绝的非匹配对数； 列联表如下表所示，1代表正类，0代表负类： 预测1 预测0 实际1 True Positive(TP) False Negative(FN) 实际0 False Positive(FP) True Negative(TN) TPR、FPR&amp;TNR从列联表引入两个新名词。 其一是真正类率(true positive rate ,TPR), 计算公式为 $$ TPR=\frac {TP}{(TP+FN)} $$ 刻画的是分类器所识别出的 正实例占所有正实例的比例。 另外一个是负正类率(false positive rate, FPR),计算公式为 $$ FPR=\frac {FP}{(FP+TN)} $$ 计算的是分类器错认为正类的负实例占所有负实例的比例。 还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为 $$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$ 精确率Precision、召回率Recall和F1值精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。 一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下： $$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$ $$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$ 为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下： $$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$ 不妨举这样一个例子： 某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下： 正确率 = 700 / (700 + 200 + 100) = 70% 召回率 = 700 / 1400 = 50% F1值 = 70% 50% 2 / (70% + 50%) = 58.3% 不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化： 正确率 = 1400 / (1400 + 300 + 300) = 70% 召回率 = 1400 / 1400 = 100% F1值 = 70% 100% 2 / (70% + 100%) = 82.35% 由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。 当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。 综合评价指标F-measurePrecision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。 F-Measure是Precision和Recall加权调和平均： $$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$ 当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。 ROC曲线和AUC为什么引入ROC曲线？Motivation1：在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。 Motivation2：在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。 什么是ROC曲线？ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。 $$ TPR=\frac {TP}{(TP+FN)} $$ $$ FPR=\frac {FP}{(FP+TN)} $$ 此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。 为了更好地理解ROC曲线，我们使用具体的实例来说明： 如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。 不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。 我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。 我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。 还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。 曲线距离左上角越近,证明分类器效果越好。 如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。 什么是AUC?AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。 AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。 0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。 AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。 AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。 AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。 怎样计算AUC?第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。 第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取NM(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(NM)。 第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\),时间复杂度为O(N+M). 为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。 为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。 #ROC曲线的绘制及AUC计算函数 def plotROC(predStrengths,classLabels): import matplotlib.pyplot as plt #光标的位置 cur=(1.0,1.0) #用于计算AUC的值 ySum=0.0 #正样本个数 numPosClas=np.sum(np.array(classLabels)==1.0) #y轴上步进数目 yStep=1/float(numPosClas) #x轴上步进数目 xStep=1/float(len(classLabels)-numPosClas) #预测强度排序从小到大，（1,1）-&gt;(0,0) #按照从小到大的顺序，输出对应的index索引 sortedIndicies=predStrengths.argsort() fig=plt.figure() fig.clf() ax=plt.subplot(111) for index in sortedIndicies.tolist()[0]: #正例，修改真阳率 if classLabels[index]==1.0: delX=0;delY=yStep; #反例，修改假阳率 else: delX=xStep;delY=0; ySum+=cur[1] ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;) cur=(cur[0]-delX,cur[1]-delY) ax.plot([0,1],[0,1],&#39;b--&#39;) plt.xlabel(&#39;False Positive Rate&#39;); plt.ylabel(&#39;True Positive Rate&#39;) plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;) ax.axis([0,1,0,1]) plt.show() print(&quot;the Area Under the Curve is: &quot;,ySum*xStep) 该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。 为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。 参考博客 http://www.cnblogs.com/maybe2030/p/5375175.html#top]]></content>
+      <categories>
+        <category>Python</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -227,8 +239,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
         <tag>sklearn</tag>
       </tags>
   </entry>
@@ -242,8 +254,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -256,8 +268,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -270,8 +282,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -284,8 +296,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -320,8 +332,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Python</tag>
+        <tag>算法</tag>
         <tag>Relief</tag>
       </tags>
   </entry>

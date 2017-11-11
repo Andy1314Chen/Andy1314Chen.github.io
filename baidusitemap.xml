@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/11/11/%E6%97%B6%E9%97%B4%E8%A7%84%E5%88%99%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</loc>
+    <lastmod>2017-11-11T14:53:11.961Z</lastmod>
+    <data>
+        <display>
+        <title>时间序列规则法快速入门【转】</title>
+        <pubTime>2017-11-10T16:00:00.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+        <tag>时间序列</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/11/10/python%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2017-11-10T13:55:39.514Z</lastmod>
     <data>
@@ -59,9 +81,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
         <tag>时间序列分析</tag>
          
@@ -88,9 +110,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -115,9 +137,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -142,9 +164,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -169,9 +191,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -196,9 +218,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -223,9 +245,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -250,9 +272,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -277,9 +299,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -304,9 +326,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -331,9 +353,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -426,9 +448,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
         <tag>sklearn</tag>
          
@@ -455,9 +477,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -482,9 +504,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -509,9 +531,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -536,9 +558,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -626,9 +648,9 @@
         <title>Relief特征选择算法Python实现</title>
         <pubTime>2017-08-21T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>Python</tag>
+         
+        <tag>算法</tag>
          
         <tag>Relief</tag>
          
