@@ -301,6 +301,389 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/23/机器学习实战第10章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/23/机器学习实战第10章学习笔记/" itemprop="url">机器学习实战第十章学习笔记(利用K-均值聚类算法对未标注数据分组)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-23T00:00:00+08:00">
+                2017-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>主要内容：</p>
+<ul>
+<li>K-均值聚类算法</li>
+<li>对聚类得到的簇进行后处理</li>
+<li>二分K-均值聚类算法</li>
+<li>对地理位置进行聚类</li>
+</ul>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfuuDuDOHZtTmJHlAfMrTf1efb3fV08klKDnf4Lp3xh63cs3474Q" alt=""></p>
+<h2 id="K-均值聚类算法"><a href="#K-均值聚类算法" class="headerlink" title="K-均值聚类算法"></a>K-均值聚类算法</h2><p>K-均值是发现给定数据集的k个簇的算法。簇个数k是用户给定的，每个簇通过其质心(Centroid)，即簇中所有点的中心来描述。</p>
+<p>K-均值算法的工作流程是：首先随机确定k个初始点作为质心，然后将数据集中的每个点分配到一个簇中，具体而言，为每个点找到距其最近的质心（Centroid),并将其分配给该质心所对应的簇。这一步之后，每个簇的质心更新为该簇所有点的平均值。</p>
+<p><strong>K-均值聚类</strong></p>
+<ul>
+<li>优点：容易实现</li>
+<li>缺点：可能收敛到局部最小值，在大规模数据集上收敛较慢。</li>
+<li>适用数据类型：数值型数据。</li>
+</ul>
+<p>算法伪代码如下：</p>
+<pre><code>创建k个点作为起始质心（经常是随机选择）
+当任意一个点的簇分配结果发生改变时
+    对数据集中的每个数据点
+        对每个Centroid
+            计算Centroid到数据点之间的距离
+        将数据点分配到距其最近的簇
+    对每一个簇，计算簇中所有点的均值并将均值作为Centroid
+</code></pre><p><strong>K-均值聚类的一般流程</strong></p>
+<ol>
+<li>收集数据：使用任意方法</li>
+<li>准备数据：需要数值型数据来计算距离，也可以将标称型数据映射为二值型数据再用于距离计算</li>
+<li>分析数据：使用任意方法</li>
+<li>训练算法：不适应于无监督学习，即无监督学习没有训练过程</li>
+<li>测试算法：应用聚类算法、观察结果。可以使用量化的误差指标如误差平方和来评价算法的结果。</li>
+<li>使用算法：可以用于所希望的任何应用。通常情况下，簇Centroid可以代表整个簇的数据来做出决策。</li>
+</ol>
+<p>K-均值聚类支持函数：</p>
+<pre><code>import numpy as np
+
+#K-均值聚类支持函数
+def loadDataSet(fileName):
+    dataMat=[]
+    fr=open(fileName)
+    for line in fr.readlines():
+        curLine=line.strip().split(&#39;\t&#39;)
+        fltLine=list(map(float,curLine))
+        dataMat.append(fltLine)
+    return dataMat
+
+def distEclud(vecA,vecB):
+    return np.sqrt(np.sum(np.power(vecA-vecB,2)))
+
+def randCent(dataSet,k):
+    n=np.shape(dataSet)[1]
+    centroids=np.mat(np.zeros((k,n)))
+    for j in range(n):
+        minJ=np.min(dataSet[:,j])
+        rangeJ=float(np.max(dataSet[:,j])-minJ)
+        #确保随机质心在数据的边界之内
+        centroids[:,j]=minJ+rangeJ*np.random.rand(k,1)
+    return centroids
+</code></pre><p>上述三个函数功能分别是，读取数据、计算距离、随机初始化k个Centroid.</p>
+<pre><code>#K-均值聚类算法
+&quot;&quot;&quot;
+算法思路：
+    初始化分配k个质心；
+    计算样本距离，分配样本；
+    重新计算k个质心；
+    重复以上过程，直到所有数据点的分配结果不再变化
+&quot;&quot;&quot;
+
+def kMeans(dataSet,k,distMeas=distEclud,createCent=randCent):
+    m=np.shape(dataSet)[0]
+    #存储每个样本点的分配结果，第一列记录簇索引值，第二列存储误差
+    clusterAssment=np.mat(np.zeros((m,2)))
+    #随机产生K个质心
+    centroids=createCent(dataSet,k)
+    clusterChanged=True
+    while clusterChanged:
+        clusterChanged=False
+        for i in range(m):
+            minDist=np.inf;minIndex=-1
+            for j in range(k):
+                #计算样本距离
+                distJI=distMeas(centroids[j,:],dataSet[i,:])
+                if distJI&lt;minDist:
+                    #找到与Xi最近的质心
+                    minDist=distJI;minIndex=j
+            if clusterAssment[i,0]!=minIndex:
+                clusterChanged=True
+            clusterAssment[i,:]=minIndex,minDist**2
+        #print(centroids)
+        #更新k个质心
+        for cent in range(k):
+            ptsInClust=dataSet[np.nonzero(clusterAssment[:,0].A==cent)[0]]
+            centroids[cent,:]=np.mean(ptsInClust,axis=0)
+    return centroids,clusterAssment
+</code></pre><p>在K-均值聚类中簇的数目k是一个用户预先定义的参数，那么用户如何才能知道k的选择是否正确？如何才能知道生成的簇比较好呢？在包含簇分配结果的矩阵中保持着每个点的误差，即该点到簇Centroid的距离平方值。</p>
+<p>K-均值算法可能会收敛到局部最小值，而非全局最小值。一种用于度量聚类效果的指标是SSE(Sum of Squared Error,误差平方和）。SSE值越小表示数据点越接近于它们的Centroid,聚类效果也越好。</p>
+<h2 id="二分K-均值算法"><a href="#二分K-均值算法" class="headerlink" title="二分K-均值算法"></a>二分K-均值算法</h2><p>为克服K-均值算法收敛于局部最小值的问题，有人提出了二分K-均值（bisecting K-means)的算法。基本思路是：首先将所有点作为一个簇，然后将该簇一分为二，之后选择其中一个簇继续进行划分，选择哪一个簇进行划分取决于对其划分是否可以最大程度降低SSE的值。该过程不断重复，直到得到用户指定的簇数目为止。</p>
+<p>#二分K-均值算法<br>“””<br>该算法首先将所有点作为一个簇，然后将该簇一分为二。之后选择其中一个簇继续进行划分，<br>选择哪一个进行划分取决于对其划分是否可以最大程度降低SSE的值。上述基于SSE的划分过程<br>不断重复，直到得到用户指定的簇数目为止。</p>
+<pre><code>    二分K-均值算法的伪代码：
+    将所有点看成一个簇
+    当簇数目小于k时
+    对于每一个簇
+        计算总误差
+        在给定的簇上面进行K-均值聚类（k=2）
+        计算将该簇一分为二之后的总误差
+    选择使得误差最小的那个簇进行划分操作
+&quot;&quot;&quot;
+#二分K-均值聚类算法
+def biKmeans(dataSet,k,distMeas=distEclud):
+    m=np.shape(dataSet)[0]
+    #存储数据集中每个点的簇分配结果及平方误差
+    clusterAssment=np.mat(np.zeros((m,2)))
+    #计算该数据集的均值，并以此作为数据集的初始簇的质心
+    centroid0=np.mean(dataSet,axis=0).tolist()[0]
+    centList=[centroid0]
+    for j in range(m):
+        #计算每个样本的距离
+        clusterAssment[j,1]=distMeas(np.mat(centroid0),dataSet[j,:])**2
+    #小于k个聚类
+    while(len(centList)&lt;k):
+        lowestSSE=np.inf
+        #遍历所有簇来决定最佳簇进行划分
+        for i in range(len(centList)):
+            #选择出第i个聚类
+            ptsInCurrCluster=\
+                dataSet[np.nonzero(clusterAssment[:,0].A==i)[0],:]
+            #对其进行划分
+            centroidMat,splitClustAss=\
+                kMeans(ptsInCurrCluster,2,distMeas)
+            #划分后的SSE
+            sseSplit=np.sum(splitClustAss[:,1])
+            #未划分的SSE
+            sseNotSplit=\
+                np.sum(clusterAssment[np.nonzero(clusterAssment[:,0].A!=i)[0],1])
+            print(&quot;sseSplit, and notSplit: &quot;,sseSplit,sseNotSplit)
+            if (sseSplit+sseNotSplit)&lt;lowestSSE:
+                bestCentToSplit=i
+                bestNewCents=centroidMat
+                bestClustAss=splitClustAss.copy()
+                lowestSSE=sseSplit+sseNotSplit
+        #将簇编号修改为新编号
+        bestClustAss[np.nonzero(bestClustAss[:,0].A==1)[0],0]=\
+            len(centList)
+        bestClustAss[np.nonzero(bestClustAss[:,0].A==0)[0],0]=\
+            bestCentToSplit
+        print(&#39;the bestCentToSplit is: &#39;,bestCentToSplit)
+        print(&#39;the len of bestClustAss is: &#39;,len(bestClustAss))
+        centList[bestCentToSplit]=bestNewCents[0,:]
+        centList.append((bestNewCents[1,:]))
+        clusterAssment[np.nonzero(clusterAssment[:,0].A==\
+                                  bestCentToSplit)[0],:]=bestClustAss
+    return centList,clusterAssment
+</code></pre><h2 id="示例：对地图上的点进行聚类"><a href="#示例：对地图上的点进行聚类" class="headerlink" title="示例：对地图上的点进行聚类"></a>示例：对地图上的点进行聚类</h2><p>你的朋友Drew要在城里庆祝生日，一晚上要去70多个地方，让你合理安排出行计划。大致思路是，根据这些地名在Yahoo PlaceFinder API进行检索，再根据得到的经度、纬度计算两点之间的距离。将这70个地方进行聚类，然后可以乘坐交通工具到达各个簇的Centroid，再步行至各个目的地。</p>
+<p>和之前一样，由于年代久远，这次的API获取数据又失败了。只好根据源码里提供的数据进行验证。</p>
+<pre><code>#Yahoo! PlaceFinder API
+import json
+import urllib.request
+
+def geoGrab(stAddress,city):
+    apiStem=&#39;http://where.yahooapis.com/geocode?&#39;
+    params={}
+    params[&#39;flags&#39;]=&#39;J&#39;
+    params[&#39;appid&#39;]=&#39;aaa0VN6k&#39;
+    params[&#39;location&#39;]=&#39;%s %s&#39; % (stAddress,city)
+    url_params=urllib.parse.urlencode(params)
+    yahooApi=apiStem+url_params
+    print(yahooApi)
+    c=urllib.request.urlopen(yahooApi)
+    return json.loads(c.read())
+#函数geoGrab会返回一个字典
+
+from time import sleep
+def massPlaceFind(fileName):
+    fw=open(&#39;places.txt&#39;,&#39;w&#39;)
+    for line in open(fileName).readlines():
+        line=line.strip()
+        lineArr=line.split(&#39;\t&#39;)
+        #用地址查询经度、维度
+        retDict=geoGrab(lineArr[1],lineArr[2])
+        #解析结果
+        if retDict[&#39;ResultSet&#39;][&#39;Error&#39;]==0:
+            lat=float(retDict[&#39;ResultSet&#39;][&#39;Results&#39;][0][&#39;latitude&#39;])
+            lng=float(retDict[&#39;ResultSet&#39;][&#39;Results&#39;][0][&#39;longitude&#39;])
+            print(&quot;%s\t%f\t%f&quot; % (lineArr[0],lat,lng))
+            fw.write(&#39;%s\t%f\t%f\n&#39; % (line,lat,lng))
+        else:
+            print(&quot;error fetching&quot;)
+        sleep(1)
+    fw.close()
+
+
+#对地理坐标进行聚类  （使用球面余弦定理来计算两个经纬度之间的距离）
+#返回地球表面两点之间的距离
+def distSLC(vecA,vecB):
+    a=np.sin(vecA[0,1]*np.pi/180)*np.sin(vecB[0,1]*np.pi/180)
+    b=np.cos(vecA[0,1]*np.pi/180)*np.cos(vecB[0,1]*np.pi/180)*\
+        np.cos(np.pi*(vecB[0,0]-vecA[0,0])/180)
+    return np.array(np.arccos(a+b)*6371.0)
+
+import matplotlib
+import matplotlib.pyplot as plt
+#聚类并画出结果
+def clusterClubs(numClust=5):
+    datList=[]
+    for line in open(&#39;places.txt&#39;).readlines():
+        lineArr=line.split(&#39;\t&#39;)
+        datList.append([float(lineArr[4]),float(lineArr[3])])
+    datMat=np.mat(datList)
+    myCentroids,clustAssing=biKmeans(datMat,numClust,distMeas=distSLC)
+    fig=plt.figure()
+    rect=[0.1,0.1,1.0,1.0]
+    scatterMarkers=[&#39;s&#39;,&#39;o&#39;,&#39;^&#39;,&#39;8&#39;,&#39;p&#39;,\
+                    &#39;d&#39;,&#39;v&#39;,&#39;h&#39;,&#39;&gt;&#39;,&#39;&lt;&#39;]
+    axprops=dict(xticks=[],yticks=[])
+    ax0=fig.add_axes(rect,label=&#39;ax0&#39;,**axprops)
+    imgP=plt.imread(&#39;Portland.png&#39;)
+    ax0.imshow(imgP)
+    ax1=fig.add_axes(rect,label=&#39;ax1&#39;,frameon=False)
+    for i in range(numClust):
+        ptsInCurrCluster=datMat[np.nonzero(clustAssing[:,0].A==i)[0],:]
+        markerStyle=scatterMarkers[i % len(scatterMarkers)]
+        ax1.scatter(ptsInCurrCluster[:,0].flatten().A[0],\
+                    ptsInCurrCluster[:,1].flatten().A[0],\
+                    marker=markerStyle,s=90)
+    x=[];y=[]
+    for i in range(len(myCentroids)):
+        #myCentroids[i]=np.array(myCentroids[i])
+        x.extend(myCentroids[i].A[:,0])
+        y.extend(myCentroids[i].A[:,1])
+
+    ax1.scatter(np.array(x),np.array(y),marker=&#39;+&#39;,s=300)
+    plt.show()
+</code></pre><p><img src="https://i.imgur.com/mbKpVAs.png" alt=""></p>
+<p>这里是聚类为5类，十字箭头是每个簇的聚类中心。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>聚类是一种无监督的学习方法。所谓无监督学习是指事先并不知道要寻找的内容，即没有目标变量。聚类将数据点归到多个簇中，其中相似数据点处于同一簇，而不相似数据点处于不同簇中。这一章主要学习k-均值聚类算法和二分K-均值聚类算法。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/机器学习实战第九章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1220,6 +1603,293 @@ def crossValidation(xArr,yArr,numVal=10):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+<ul>
+<li><p>TP：正确肯定的数目；</p>
+</li>
+<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
+</li>
+<li><p>FP：误报，给出的匹配是不正确的；</p>
+</li>
+<li><p>TN：正确拒绝的非匹配对数；</p>
+</li>
+</ul>
+<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">预测1</th>
+<th style="text-align:center">预测0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实际1</strong></td>
+<td style="text-align:center">True Positive(TP)</td>
+<td style="text-align:center">False Negative(FN)</td>
+</tr>
+<tr>
+<td><strong>实际0</strong></td>
+<td style="text-align:center">False Positive(FP)</td>
+<td style="text-align:center">True Negative(TN)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
+<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
+<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
+<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
+<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
+<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
+<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
+<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
+<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
+<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
+<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
+<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
+<p>不妨举这样一个例子：</p>
+<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
+<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
+<p>　　召回率 = 700 / 1400 = 50%</p>
+<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
+<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
+<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
+<p>　　召回率 = 1400 / 1400 = 100%</p>
+<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
+<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
+<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
+<p>F-Measure是Precision和Recall加权调和平均：</p>
+<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
+<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
+<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
+<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
+<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
+<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
+<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
+<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
+<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
+<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
+<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
+<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
+<p>曲线距离左上角越近,证明分类器效果越好。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
+<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
+<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
+<ul>
+<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
+</li>
+<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
+</li>
+<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
+</li>
+<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
+</li>
+</ul>
+<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
+<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
+<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
+<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
+<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
+<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
+<pre><code>#ROC曲线的绘制及AUC计算函数
+def plotROC(predStrengths,classLabels):
+    import matplotlib.pyplot as plt
+    #光标的位置
+    cur=(1.0,1.0)
+    #用于计算AUC的值
+    ySum=0.0
+    #正样本个数
+    numPosClas=np.sum(np.array(classLabels)==1.0)
+    #y轴上步进数目
+    yStep=1/float(numPosClas)
+    #x轴上步进数目
+    xStep=1/float(len(classLabels)-numPosClas)
+    #预测强度排序从小到大，（1,1）-&gt;(0,0)
+    #按照从小到大的顺序，输出对应的index索引
+    sortedIndicies=predStrengths.argsort()
+    fig=plt.figure()
+    fig.clf()
+    ax=plt.subplot(111)
+    for index in sortedIndicies.tolist()[0]:
+        #正例，修改真阳率
+        if classLabels[index]==1.0:
+            delX=0;delY=yStep;
+        #反例，修改假阳率
+        else:
+            delX=xStep;delY=0;
+            ySum+=cur[1]
+        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
+        cur=(cur[0]-delX,cur[1]-delY)
+    ax.plot([0,1],[0,1],&#39;b--&#39;)
+    plt.xlabel(&#39;False Positive Rate&#39;);
+    plt.ylabel(&#39;True Positive Rate&#39;)
+    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
+    ax.axis([0,1,0,1])
+    plt.show()
+    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
+</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
+<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1523,293 +2193,6 @@ return dataMat,labelMat
 </code></pre><p>通过改变弱分类器的数目为1到10000之间的几个不同数字，测试不同弱分类器数目下的错误率。</p>
 <p><img src="https://i.imgur.com/eia9P7R.jpg" alt=""></p>
 <p>之前采用Logistic回归得到的平均错误率为0.35，而这里采用AdaBoost可以轻松达到0.21. 当分类器数目过大时，错误率又会上升，这是由于过拟合(overfitting）。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
-<ul>
-<li><p>TP：正确肯定的数目；</p>
-</li>
-<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
-</li>
-<li><p>FP：误报，给出的匹配是不正确的；</p>
-</li>
-<li><p>TN：正确拒绝的非匹配对数；</p>
-</li>
-</ul>
-<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">预测1</th>
-<th style="text-align:center">预测0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>实际1</strong></td>
-<td style="text-align:center">True Positive(TP)</td>
-<td style="text-align:center">False Negative(FN)</td>
-</tr>
-<tr>
-<td><strong>实际0</strong></td>
-<td style="text-align:center">False Positive(FP)</td>
-<td style="text-align:center">True Negative(TN)</td>
-</tr>
-</tbody>
-</table>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
-<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
-<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
-<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
-<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
-<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
-<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
-<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
-<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
-<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
-<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
-<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
-<p>不妨举这样一个例子：</p>
-<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
-<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
-<p>　　召回率 = 700 / 1400 = 50%</p>
-<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
-<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
-<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
-<p>　　召回率 = 1400 / 1400 = 100%</p>
-<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
-<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
-<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
-<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
-<p>F-Measure是Precision和Recall加权调和平均：</p>
-<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
-<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
-<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
-<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
-<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
-<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
-<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
-<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
-<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
-<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
-<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
-<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
-<p>曲线距离左上角越近,证明分类器效果越好。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
-<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
-<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
-<ul>
-<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
-</li>
-<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
-</li>
-<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
-</li>
-<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
-</li>
-</ul>
-<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
-<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
-<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
-<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
-<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
-<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
-<pre><code>#ROC曲线的绘制及AUC计算函数
-def plotROC(predStrengths,classLabels):
-    import matplotlib.pyplot as plt
-    #光标的位置
-    cur=(1.0,1.0)
-    #用于计算AUC的值
-    ySum=0.0
-    #正样本个数
-    numPosClas=np.sum(np.array(classLabels)==1.0)
-    #y轴上步进数目
-    yStep=1/float(numPosClas)
-    #x轴上步进数目
-    xStep=1/float(len(classLabels)-numPosClas)
-    #预测强度排序从小到大，（1,1）-&gt;(0,0)
-    #按照从小到大的顺序，输出对应的index索引
-    sortedIndicies=predStrengths.argsort()
-    fig=plt.figure()
-    fig.clf()
-    ax=plt.subplot(111)
-    for index in sortedIndicies.tolist()[0]:
-        #正例，修改真阳率
-        if classLabels[index]==1.0:
-            delX=0;delY=yStep;
-        #反例，修改假阳率
-        else:
-            delX=xStep;delY=0;
-            ySum+=cur[1]
-        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
-        cur=(cur[0]-delX,cur[1]-delY)
-    ax.plot([0,1],[0,1],&#39;b--&#39;)
-    plt.xlabel(&#39;False Positive Rate&#39;);
-    plt.ylabel(&#39;True Positive Rate&#39;)
-    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
-    ax.axis([0,1,0,1])
-    plt.show()
-    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
-</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
-<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
-</ol>
 
           
         
@@ -2451,331 +2834,6 @@ int main() {
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/sklearn库LogisticRegression使用及简单调参/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/07/sklearn库LogisticRegression使用及简单调参/" itemprop="url">sklearn库LogisticRegression使用及简单调参</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
-                2017-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>刚刚学习了《机器学习实战》这本书的第五章，LogisticRegression分类器，使用python自己实现的分类器。但是sklearn库里有同样功能的LogisticRegression分类器。</p>
-<p>因此，在这里做一个对比，所用数据集是《机器学习实战》里第五章里病马存活预测。</p>
-<p><img src="http://p2.pstatp.com/large/1868/242024643" alt=""></p>
-<p>在《机器学习实战》第五章中，作者说通过调节alpha和迭代次数，可以将错误率降低到20%左右。而我调节的结果是：</p>
-<blockquote>
-<p>the error rate of this test is: 0.313433</p>
-<p>the error rate of this test is: 0.238806</p>
-<p>the error rate of this test is: 0.283582</p>
-<p>the error rate of this test is: 0.477612</p>
-<p>the error rate of this test is: 0.283582</p>
-<p>the error rate of this test is: 0.313433</p>
-<p>the error rate of this test is: 0.388060</p>
-<p>the error rate of this test is: 0.313433</p>
-<p>the error rate of this test is: 0.417910</p>
-<p>the error rate of this test is: 0.343284</p>
-<p>after 10 iterations the average error rate is: 0.337313</p>
-</blockquote>
-<p>而使用sklearn库中LogisticRegression的结果如下：</p>
-<ol>
-<li>默认配置下，多次运行错误率均为0.268657</li>
-<li>对样本数据及训练数据进行归一化 0.283582</li>
-<li>使用sag随机梯度下降算法，500次迭代 0.253731</li>
-<li>使用lbfgs算法，500次迭代 0.283582</li>
-</ol>
-<h2 id="Python3测试程序"><a href="#Python3测试程序" class="headerlink" title="Python3测试程序"></a>Python3测试程序</h2><pre><code>from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-import numpy as np
-
-def calcError():
-    frTrain=open(&#39;horseColicTraining.txt&#39;)
-    frTest=open(&#39;horseColicTest.txt&#39;)
-
-    #训练样本集
-    trainSet=[];trainLabels=[]
-    for line in frTrain.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        trainSet.append(lineArr)
-        trainLabels.append(float(currLine[21]))
-    #测试集
-    testSet=[];testLabels=[]
-    for line in frTest.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        testSet.append(lineArr)
-        testLabels.append(float(currLine[21]))
-
-    #Logistic回归
-    classifier=LogisticRegression(solver=&#39;sag&#39;,max_iter=700)
-    #拟合
-    classifier.fit(np.array(trainSet),np.array(trainLabels))
-    #默认配置预测
-    yPredict=classifier.predict(np.array(testSet))
-
-    #计算错误率
-    errorCount=0.0
-    for i in range(len(yPredict)):
-        if int(yPredict[i]) == int(testLabels[i]):
-            pass
-        else:
-            errorCount+=1
-    errorRate=errorCount/float(len(yPredict))
-    #打印错误率
-    print(&quot;Error rate: %f&quot; % errorRate)
-
-    #1. 默认配置下，多次运行错误率均为0.268657
-    #2. 对样本数据及训练数据进行归一化 0.283582
-    #3. 使用sag随机梯度下降算法，500次迭代 0.253731
-    #4. 使用lbfgs算法，500次迭代 0.283582
-
-def calcError2():
-    frTrain=open(&#39;horseColicTraining.txt&#39;)
-    frTest=open(&#39;horseColicTest.txt&#39;)
-
-    #训练样本集
-    trainSet=[];trainLabels=[]
-    for line in frTrain.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        trainSet.append(lineArr)
-        trainLabels.append(float(currLine[21]))
-    #测试集
-    testSet=[];testLabels=[]
-    for line in frTest.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        testSet.append(lineArr)
-        testLabels.append(float(currLine[21]))
-
-    #Logistic回归
-    classifier=LogisticRegression()
-    #拟合
-    #对训练数据进行归一化处理
-    X=np.array(trainSet)
-    scaler=StandardScaler().fit(X)
-    X=scaler.transform(X)
-    classifier.fit(X,np.array(trainLabels))
-    #测试集归一化处理
-    Xtest=scaler.transform(np.array(testSet))
-    #默认配置预测
-    yPredict=classifier.predict(Xtest)
-
-    #计算错误率
-    errorCount=0.0
-    for i in range(len(yPredict)):
-        if int(yPredict[i]) == int(testLabels[i]):
-            pass
-        else:
-            errorCount+=1
-    errorRate=errorCount/float(len(yPredict))
-    #打印错误率
-    print(&quot;Error rate: %f&quot; % errorRate)
-</code></pre><h2 id="scikit-learn-LogisticRegression库调参"><a href="#scikit-learn-LogisticRegression库调参" class="headerlink" title="scikit-learn LogisticRegression库调参"></a>scikit-learn LogisticRegression库调参</h2><p>默认参数：</p>
-<pre><code>LogisticRegression(penalty=’l2’, dual=False, tol=0.0001, C=1.0, 
-fit_intercept=True, intercept_scaling=1, class_weight=None, 
-random_state=None, solver=’liblinear’, max_iter=100, 
-multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)
-</code></pre><blockquote>
-<p>penalty : str, ‘l1’ or ‘l2’, default: ‘l2’<br>Used to specify the norm used in the penalization. The ‘newton-cg’, ‘sag’ and ‘lbfgs’ solvers support only l2 penalties.<br>New in version 0.19: l1 penalty with SAGA solver (allowing ‘multinomial’ + L1)</p>
-<p>dual : bool, default: False<br>Dual or primal formulation. Dual formulation is only implemented for l2 penalty with liblinear solver. Prefer dual=False when n_samples &gt; n_features.</p>
-<p>tol : float, default: 1e-4<br>Tolerance for stopping criteria.</p>
-<p>C : float, default: 1.0<br>Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.</p>
-<p>fit_intercept : bool, default: True<br>Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.</p>
-<p>intercept_scaling : float, default 1.<br>Useful only when the solver ‘liblinear’ is used and self.fit_intercept is set to True. In this case, x becomes [x, self.intercept_scaling], i.e. a “synthetic” feature with constant value equal to </p>
-<p>intercept_scaling is appended to the instance vector. The intercept becomes intercept_scaling * synthetic_feature_weight.<br>Note! the synthetic feature weight is subject to l1/l2 regularization as all other features. To lessen the effect of regularization on synthetic feature weight (and therefore on the intercept) intercept_scaling has to be increased.</p>
-<p>class_weight : dict or ‘balanced’, default: None<br>Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one.<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y)).<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.<br>New in version 0.17: class_weight=’balanced’</p>
-<p>random_state : int, RandomState instance or None, optional, default: None<br>The seed of the pseudo random number generator to use when shuffling the data. If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random. Used when solver == ‘sag’ or ‘liblinear’.</p>
-<p>solver : {‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’, ‘saga’},<br>default: ‘liblinear’ Algorithm to use in the optimization problem.<br>For small datasets, ‘liblinear’ is a good choice, whereas ‘sag’ and<br>‘saga’ are faster for large ones.<br>For multiclass problems, only ‘newton-cg’, ‘sag’, ‘saga’ and ‘lbfgs’<br>handle multinomial loss; ‘liblinear’ is limited to one-versus-rest schemes.<br>‘newton-cg’, ‘lbfgs’ and ‘sag’ only handle L2 penalty, whereas<br>‘liblinear’ and ‘saga’ handle L1 penalty.<br>Note that ‘sag’ and ‘saga’ fast convergence is only guaranteed on features with approximately the same scale. You can preprocess the data with a scaler from sklearn.preprocessing.<br>New in version 0.17: Stochastic Average Gradient descent solver.<br>New in version 0.19: SAGA solver.</p>
-<p>max_iter : int, default: 100<br>Useful only for the newton-cg, sag and lbfgs solvers. Maximum number of iterations taken for the solvers to converge.</p>
-<p>multi_class : str, {‘ovr’, ‘multinomial’}, default: ‘ovr’<br>Multiclass option can be either ‘ovr’ or ‘multinomial’. If the option chosen is ‘ovr’, then a binary problem is fit for each label. Else the loss minimised is the multinomial loss fit across the entire probability distribution. Does not work for liblinear solver.<br>New in version 0.18: Stochastic Average Gradient descent solver for ‘multinomial’ case.</p>
-<p>verbose : int, default: 0<br>For the liblinear and lbfgs solvers set verbose to any positive number for verbosity.</p>
-<p>warm_start : bool, default: False<br>When set to True, reuse the solution of the previous call to fit as initialization, otherwise, just erase the previous solution. Useless for liblinear solver.<br>New in version 0.17: warm_start to support lbfgs, newton-cg, sag, saga solvers.</p>
-<p>n_jobs : int, default: 1<br>Number of CPU cores used when parallelizing over classes if multi_class=’ovr’”. This parameter is ignored when the <code>solver</code>is set to ‘liblinear’ regardless of whether ‘multi_class’ is specified or not. If given a value of -1, all cores are used.</p>
-</blockquote>
-<h4 id="penalty-正则化选择参数"><a href="#penalty-正则化选择参数" class="headerlink" title="penalty 正则化选择参数"></a>penalty 正则化选择参数</h4><p>LogisticRegression和LogisticRegressionCV默认就带了正则化项。penalty参数可选择的值为”l1”和”l2”.分别对应L1的正则化和L2的正则化，默认是L2的正则化。</p>
-<p>在调参时如果我们主要的目的只是为了解决过拟合，一般penalty选择L2正则化就够了。但是如果选择L2正则化发现还是过拟合，即预测效果差的时候，就可以考虑L1正则化。另外，如果模型的特征非常多，我们希望一些不重要的特征系数归零，从而让模型系数稀疏化的话，也可以使用L1正则化。</p>
-<p>penalty参数的选择会影响我们损失函数优化算法的选择。即参数solver的选择，如果是L2正则化，那么4种可选的算法{‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’}都可以选择。但是如果penalty是L1正则化的话，就只能选择‘liblinear’了。这是因为L1正则化的损失函数不是连续可导的，而{‘newton-cg’, ‘lbfgs’,‘sag’}这三种优化算法时都需要损失函数的一阶或者二阶连续导数。而‘liblinear’并没有这个依赖。</p>
-<h4 id="solver-优化算法选择参数"><a href="#solver-优化算法选择参数" class="headerlink" title="solver 优化算法选择参数"></a>solver 优化算法选择参数</h4><p>solver参数决定了我们对逻辑回归损失函数的优化方法，有4种算法可以选择，分别是：</p>
-<ol>
-<li><p>liblinear：使用了开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数。</p>
-</li>
-<li><p>lbfgs：拟牛顿法的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
-</li>
-<li><p>newton-cg：也是牛顿法家族的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
-</li>
-<li><p>sag：即随机平均梯度下降，是梯度下降法的变种，和普通梯度下降法的区别是每次迭代仅仅用一部分的样本来计算梯度，适合于样本数据多的时候。</p>
-</li>
-</ol>
-<p>从上面的描述可以看出，newton-cg, lbfgs和sag这三种优化算法时都需要损失函数的一阶或者二阶连续导数，因此不能用于没有连续导数的L1正则化，只能用于L2正则化。而liblinear通吃L1正则化和L2正则化。</p>
-<p>同时，sag每次仅仅使用了部分样本进行梯度迭代，所以当样本量少的时候不要选择它，而如果样本量非常大，比如大于10万，sag是第一选择。但是sag不能用于L1正则化，所以当你有大量的样本，又需要L1正则化的话就要自己做取舍了。要么通过对样本采样来降低样本量，要么回到L2正则化。</p>
-<p>从上面的描述，大家可能觉得，既然newton-cg, lbfgs和sag这么多限制，如果不是大样本，我们选择liblinear不就行了嘛！错，因为liblinear也有自己的弱点！我们知道，逻辑回归有二元逻辑回归和多元逻辑回归。对于多元逻辑回归常见的有one-vs-rest(OvR)和many-vs-many(MvM)两种。而MvM一般比OvR分类相对准确一些。郁闷的是liblinear只支持OvR，不支持MvM，这样如果我们需要相对精确的多元逻辑回归时，就不能选择liblinear了。也意味着如果我们需要相对精确的多元逻辑回归不能使用L1正则化了。</p>
-<h4 id="multi-class-分类方式选择参数"><a href="#multi-class-分类方式选择参数" class="headerlink" title="multi_class 分类方式选择参数"></a>multi_class 分类方式选择参数</h4><p>multi_class参数决定了我们分类方式的选择，有 ovr和multinomial两个值可以选择，默认是 ovr。</p>
-<p>ovr即前面提到的one-vs-rest(OvR)，而multinomial即前面提到的many-vs-many(MvM)。如果是二元逻辑回归，ovr和multinomial并没有任何区别，区别主要在多元逻辑回归上。</p>
-<p>OvR的思想很简单，无论你是多少元逻辑回归，我们都可以看做二元逻辑回归。具体做法是，对于第K类的分类决策，我们把所有第K类的样本作为正例，除了第K类样本以外的所有样本都作为负例，然后在上面做二元逻辑回归，得到第K类的分类模型。其他类的分类模型获得以此类推。</p>
-<p>而MvM则相对复杂，这里举MvM的特例one-vs-one(OvO)作讲解。如果模型有T类，我们每次在所有的T类样本里面选择两类样本出来，不妨记为T1类和T2类，把所有的输出为T1和T2的样本放在一起，把T1作为正例，T2作为负例，进行二元逻辑回归，得到模型参数。我们一共需要T(T-1)/2次分类。</p>
-<p>从上面的描述可以看出OvR相对简单，但分类效果相对略差（这里指大多数样本分布情况，某些样本分布下OvR可能更好）。而MvM分类相对精确，但是分类速度没有OvR快。</p>
-<p>如果选择了ovr，则4种损失函数的优化方法liblinear，newton-cg, lbfgs和sag都可以选择。但是如果选择了multinomial,则只能选择newton-cg, lbfgs和sag了。</p>
-<h4 id="class-weight-类型权重参数"><a href="#class-weight-类型权重参数" class="headerlink" title="class_weight 类型权重参数"></a>class_weight 类型权重参数</h4><p>class_weight参数用于标示分类模型中各种类型的权重，可以不输入，即不考虑权重，或者说所有类型的权重一样。如果选择输入的话，可以选择balanced让类库自己计算类型权重，或者我们自己输入各个类型的权重，比如对于0,1的二元模型，我们可以定义class_weight={0:0.9, 1:0.1}，这样类型0的权重为90%，而类型1的权重为10%。</p>
-<p>如果class_weight选择balanced，那么类库会根据训练样本量来计算权重。某种类型样本量越多，则权重越低，样本量越少，则权重越高。</p>
-<p>那么class_weight有什么作用呢？在分类模型中，我们经常会遇到两类问题：</p>
-<p>第一种是误分类的代价很高。比如对合法用户和非法用户进行分类，将非法用户分类为合法用户的代价很高，我们宁愿将合法用户分类为非法用户，这时可以人工再甄别，但是却不愿将非法用户分类为合法用户。这时，我们可以适当提高非法用户的权重。</p>
-<p>第二种是样本是高度失衡的，比如我们有合法用户和非法用户的二元样本数据10000条，里面合法用户有9995条，非法用户只有5条，如果我们不考虑权重，则我们可以将所有的测试集都预测为合法用户，这样预测准确率理论上有99.95%，但是却没有任何意义。这时，我们可以选择balanced，让类库自动提高非法用户样本的权重。</p>
-<p>提高了某种分类的权重，相比不考虑权重，会有更多的样本分类划分到高权重的类别，从而可以解决上面两类问题。</p>
-<h4 id="sample-weight-样本权重参数"><a href="#sample-weight-样本权重参数" class="headerlink" title="sample_weight 样本权重参数"></a>sample_weight 样本权重参数</h4><p>由于样本不平衡，导致样本不是总体样本的无偏估计，从而可能导致我们的模型预测能力下降。遇到这种情况，我们可以通过调节样本权重来尝试解决这个问题。调节样本权重的方法有两种，第一种是在class_weight使用balanced。第二种是在调用fit函数时，通过sample_weight来自己调节每个样本权重。</p>
-<p>在scikit-learn做逻辑回归时，如果上面两种方法都用到了，那么样本的真正权重是class_weight*sample_weight.</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
-<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html</a></li>
-<li><a href="http://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="external">http://www.cnblogs.com/pinard/p/6035872.html</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/机器学习实战第五章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3156,7 +3214,7 @@ def multiTest():
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/机器学习实战第四章学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/sklearn库LogisticRegression使用及简单调参/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -3175,7 +3233,7 @@ def multiTest():
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/05/机器学习实战第四章学习笔记/" itemprop="url">机器学习实战第四章学习笔记(朴素贝叶斯分类器)</a></h1>
+                <a class="post-title-link" href="/2017/09/07/sklearn库LogisticRegression使用及简单调参/" itemprop="url">sklearn库LogisticRegression使用及简单调参</a></h1>
         
 
         <div class="post-meta">
@@ -3187,8 +3245,8 @@ def multiTest():
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
-                2017-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
               </time>
             
 
@@ -3261,278 +3319,182 @@ def multiTest():
       
         
           
-            <p>之前两章，k-NN近邻算法和决策树算法构建的分类器都是对测试数据给出一种具体的类别，即‘非黑即白’。而朴素贝叶斯分类器会给出每个类别的概率，将概率最大的类别作为最优类别猜测结果。</p>
-<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201703/58b978fa8bdb6.png?imageMogr2/format/jpg/quality/90" alt="贝叶斯概率公式"></p>
-<h2 id="基于贝叶斯决策理论的分类方法"><a href="#基于贝叶斯决策理论的分类方法" class="headerlink" title="基于贝叶斯决策理论的分类方法"></a>基于贝叶斯决策理论的分类方法</h2><ul>
-<li>优点：在数据较少的情况下仍然有效，可以处理多类别问题。</li>
-<li>缺点：对于输入数据的准备方式较为敏感</li>
-<li>适用数据类型：离散型</li>
-</ul>
-<h4 id="贝叶斯决策理论"><a href="#贝叶斯决策理论" class="headerlink" title="贝叶斯决策理论"></a>贝叶斯决策理论</h4><p>举个简单的小例子：</p>
-<p>假设有一个数据集，每条数据样本都有两个特征(x,y)和一个类别标签(0,1).目标是把一条新的数据贴上准确的标签。</p>
-<p>用p1(x,y)表示数据(x,y)属于类别1的概率，用p2(x,y)表示数据(x,y)属于类别2的概率。那么，用条件概率公式来表示这两个概率，就分别是P(c1|x,y)和P(c2|x,y),具体意义就是：由x和y这两个属性值确定的数据，其属于类别1、类别2的概率。</p>
-<p>由<a href="https://zh.wikipedia.org/wiki/%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%A6%82%E7%8E%87" target="_blank" rel="external">贝叶斯定理</a>，可得到：</p>
-<p><img src="http://img.blog.csdn.net/20170418192042562" alt=""></p>
-<p>p(x,y|c<em>i</em>):基于一个样本数据集，在c<em>i</em>这个类中，数据(x,y)出现的概率。</p>
-<p>p(c<em>i</em>):基于这个样本数据集，属于c<em>i</em>这个类别的数据，占所有数据的数量。</p>
-<p>p(x,y):在所有样本数据中，数据(x,y)出现的概率。</p>
-<p><em>用具体的数字说明一下：</em></p>
-<p>该样本数据集中共有20个样本，标签为c<em>1</em>的为15个，标签c<em>2</em>的为5个，(X0,Y0)是该样本集中独特的一个，标签为c<em>1</em>。</p>
-<p>则p(X0,Y0|c<em>1</em>)=1/15,</p>
-<p>p(c<em>1</em>)=2/3,</p>
-<p>p(X0,Y0)=1/20</p>
-<p>对于数据集中任意一个样本数据(x,y)来说，用p1(x,y)表示数据点(x,y)属于类别1的概率，用p2(x,y)表示数据点(x,y)属于类别2的概率，那么对于一个新数据点(x,y)，可以用下面的规则判断它的类别：</p>
-<ul>
-<li>如果p1(x,y)=p(c<em>1</em>|x,y) &gt; p2(x,y)=p(c<em>2</em>|x,y),那么类别为1.</li>
-<li>如果p1(x,y)=p(c<em>1</em>|x,y) &lt; p2(x,y)=p(c<em>2</em>|x,y),那么类别为2.</li>
-</ul>
-<p>简单的讲，我们会选择高概率对应的类别，这也是贝叶斯决策理论的核心思想。</p>
-<h2 id="使用朴素贝叶斯进行文档分类"><a href="#使用朴素贝叶斯进行文档分类" class="headerlink" title="使用朴素贝叶斯进行文档分类"></a>使用朴素贝叶斯进行文档分类</h2><p>朴素贝叶斯的一般过程：</p>
+            <p>刚刚学习了《机器学习实战》这本书的第五章，LogisticRegression分类器，使用python自己实现的分类器。但是sklearn库里有同样功能的LogisticRegression分类器。</p>
+<p>因此，在这里做一个对比，所用数据集是《机器学习实战》里第五章里病马存活预测。</p>
+<p><img src="http://p2.pstatp.com/large/1868/242024643" alt=""></p>
+<p>在《机器学习实战》第五章中，作者说通过调节alpha和迭代次数，可以将错误率降低到20%左右。而我调节的结果是：</p>
+<blockquote>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.238806</p>
+<p>the error rate of this test is: 0.283582</p>
+<p>the error rate of this test is: 0.477612</p>
+<p>the error rate of this test is: 0.283582</p>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.388060</p>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.417910</p>
+<p>the error rate of this test is: 0.343284</p>
+<p>after 10 iterations the average error rate is: 0.337313</p>
+</blockquote>
+<p>而使用sklearn库中LogisticRegression的结果如下：</p>
 <ol>
-<li>收集数据：可以使用任何方法，这里使用RSS源</li>
-<li>准备数据：需要数值型或者布尔型数据。</li>
-<li>分析数据：有大量特征时，绘制特征作用不大，此时使用直方图效果更好。</li>
-<li>训练算法：计算不同的独立特征的条件概率。</li>
-<li>测试算法：计算错误率。</li>
-<li>使用算法：一个常见的朴素贝叶斯应用是文档分类。</li>
+<li>默认配置下，多次运行错误率均为0.268657</li>
+<li>对样本数据及训练数据进行归一化 0.283582</li>
+<li>使用sag随机梯度下降算法，500次迭代 0.253731</li>
+<li>使用lbfgs算法，500次迭代 0.283582</li>
 </ol>
-<p>由统计学知识：</p>
-<p><strong>如果每个特征需要N个样本，那么对于10个特征将需要N^10个样本，对于包含1000个特征的词汇表将需要N^1000个样本。</strong></p>
-<p>如果特征之间相互独立，那么样本数就可以从N^1000减少到1000<em>N. </em>那么什么是独立呢？？*</p>
-<p>所谓独立指的是统计意义上的独立，即一个特征或者单词出现的可能性与它和其他单词相邻没有关系。</p>
-<p>而这正是朴素贝叶斯分类器的一个假设，即<strong>特征之间相互统计独立</strong>。朴素贝叶斯分类器的另一个假设是，<strong>每个特征同等重要</strong>。</p>
-<p>而这两个<strong>天真</strong>的假设正是朴素贝叶斯分类器中朴素(naive)一词的来源。这个假设虽然看起来很不靠谱，但在实际运用的时候，往往能达到比较好的效果。</p>
-<p>朴素贝叶斯分类器通常有两种实现方式：一种基于贝努力模型实现，一种基于多项式模型实现。区别在于，是否考虑词在文档中出现的次数。</p>
-<h2 id="使用Python进行文本分类"><a href="#使用Python进行文本分类" class="headerlink" title="使用Python进行文本分类"></a>使用Python进行文本分类</h2><p>首先给出将文本转换为数字向量的过程，然后介绍如何基于这些向量来计算条件概率，并在此基础上构建分类器，最后还要介绍一些利用Python实现朴素贝叶斯过程中需要考虑的问题。</p>
-<h4 id="从文本中构建词向量"><a href="#从文本中构建词向量" class="headerlink" title="从文本中构建词向量"></a>从文本中构建词向量</h4><pre><code>#词表到向量的转换函数
-def loadDataSet():        
-    postingList=[[&#39;my&#39;,&#39;dog&#39;,&#39;has&#39;,&#39;flea&#39;,&#39;problems&#39;,&#39;help&#39;,&#39;please&#39;],
-                 [&#39;maybe&#39;,&#39;not&#39;,&#39;take&#39;,&#39;him&#39;,&#39;to&#39;,&#39;dog&#39;,&#39;park&#39;,&#39;stupid&#39;],
-                 [&#39;my&#39;,&#39;dalmation&#39;,&#39;is&#39;,&#39;so&#39;,&#39;cute&#39;,&#39;I&#39;,&#39;love&#39;,&#39;him&#39;],
-                 [&#39;stop&#39;,&#39;posting&#39;,&#39;stupid&#39;,&#39;worthless&#39;,&#39;garbage&#39;],
-                 [&#39;mr&#39;,&#39;licks&#39;,&#39;ate&#39;,&#39;my&#39;,&#39;steak&#39;,&#39;how&#39;,&#39;to&#39;,&#39;stop&#39;,&#39;him&#39;],
-                 [&#39;quit&#39;,&#39;buying&#39;,&#39;worthless&#39;,&#39;dog&#39;,&#39;food&#39;,&#39;stupid&#39;]]
+<h2 id="Python3测试程序"><a href="#Python3测试程序" class="headerlink" title="Python3测试程序"></a>Python3测试程序</h2><pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+import numpy as np
 
-    classVec=[0,1,0,1,0,1]
-    #1，代表侮辱性文字，0，代表正常言论
-    return postingList,classVec
-#创建词汇表
-def createVocabList(dataSet):
-    vocabSet=set([])
-    for document in dataSet:
-        vocabSet=vocabSet|set(document)
-    return list(vocabSet)
-#将文本转换为向量
-#依据词汇表中单词的有无，输出向量相应位置置1或置0
-def setOfWords2Vec(vocabList,inputSet):
-    returnVec=[0]*len(vocabList)
-    for word in inputSet:
-        if word in vocabList:
-            returnVec[vocabList.index(word)]=1
+def calcError():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+
+    #训练样本集
+    trainSet=[];trainLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        trainSet.append(lineArr)
+        trainLabels.append(float(currLine[21]))
+    #测试集
+    testSet=[];testLabels=[]
+    for line in frTest.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        testSet.append(lineArr)
+        testLabels.append(float(currLine[21]))
+
+    #Logistic回归
+    classifier=LogisticRegression(solver=&#39;sag&#39;,max_iter=700)
+    #拟合
+    classifier.fit(np.array(trainSet),np.array(trainLabels))
+    #默认配置预测
+    yPredict=classifier.predict(np.array(testSet))
+
+    #计算错误率
+    errorCount=0.0
+    for i in range(len(yPredict)):
+        if int(yPredict[i]) == int(testLabels[i]):
+            pass
         else:
-            print(&quot;the word: %s is not in my Vocabulary!&quot; % word)
-    return returnVec
-</code></pre><p>第一个函数创建的是数据样本，第二个函数合并所有样本文档，生成一个词汇表，这个不重复词表可看做是一个一维向量。第三个函数，根据样本文档，参考词汇表向量，若样本文档中含有某些词汇，则输出向量相应位置会置1.</p>
-<h4 id="训练算法：从词向量计算概率"><a href="#训练算法：从词向量计算概率" class="headerlink" title="训练算法：从词向量计算概率"></a>训练算法：从词向量计算概率</h4><p><img src="http://img.blog.csdn.net/20170418214530308" alt=""></p>
-<p>将之前的x,y替换为w,w在这里是一个词向量。</p>
-<p>这个公式，等号右边的p(c<em>i</em>)是最好计算的，用类别<em>i</em>中文档树除以总的文档数，就可以得到类别c<em>i</em>的概率。接着计算p(w|c<em>i</em>),这里使用朴素贝叶斯假设，如果将w展开为一个个独立特征，则p(w|c<em>i</em>)等于p(w0,w1,w2,…,wN|c<em>i</em>),即等于p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)…p(wN|c<em>i</em>).</p>
-<pre><code>#基于条件独立性假设
-#朴素贝叶斯分类器训练函数
-def trainNB0(trainMatrix,trainCategory):
-    numTrainDocs=len(trainMatrix)#训练样本数量
-    numWords=len(trainMatrix[0])#每个训练样本的特征数
-    pAbusive=sum(trainCategory)/float(numTrainDocs)#侮辱性概率
-    p0Num=np.ones(numWords);p1Num=np.ones(numWords)
-    p0Denom=2.0;p1Denom=2.0
-    for i in range(numTrainDocs):
-        if trainCategory[i]==1:
-            p1Num+=trainMatrix[i]#标签为abusive的文档中，词汇表的单词出现过多少次
-            p1Denom+=sum(trainMatrix[i])#到目前为止，标签为abusive的文档中出现过单词的总量
-        else:
-            p0Num+=trainMatrix[i]#到目前为止，标签为normal的文档中，词汇表的单词出现过多少次
-            p0Denom+=sum(trainMatrix[i])#到目前为止，标签为normal的文档中出现过单词的总量
-    p1Vect=np.log(p1Num/p1Denom)#标签为abusive的文档中，词汇的各个单词的出现概率
-    #计算的是p(w*j*|c*i*)
-    p0Vect=np.log(p0Num/p0Denom)#取自然对数，防止下溢
-    return p0Vect,p1Vect,pAbusive
-</code></pre><p>函数的伪代码如下：</p>
-<pre><code>计算每个类别中的文档数目
-对每篇训练文档：
-    对每个类别：
-        如果词条出现文档中--&gt;增加该词条的计数值
-        增加所有词条的计数值
-    对每个类别：
-        对每个词条：
-            将该词条的数目除以总词条数目得到条件概率
-    返回每个类别的条件概率
-</code></pre><p>函数返回结果是：</p>
-<pre><code>#类别0的各个词条条件概率
-p0Vect=[p(w0|c*0*),p(w1|c*0*),p(w2|c*0*),...,p(wN|c*0*)]
-#类别1的各个词条条件概率
-p1Vect=[p(w0|c*1*),p(w1|c*1*),p(w2|c*1*),...,p(wN|c*1*)]
-#类别为Abusive的概率
-pAbusive
-</code></pre><h4 id="测试算法：根据现实情况修改分类器"><a href="#测试算法：根据现实情况修改分类器" class="headerlink" title="测试算法：根据现实情况修改分类器"></a>测试算法：根据现实情况修改分类器</h4><p>利用贝叶斯分类器对文档进行分类时，要计算多个概率的乘积以获得文档属于某个类别，即计算p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)。若其中一个概率值为0，那么最后的乘积也为0.为降低这种影响，可以将所有词的出现次数初始化为1，并将分母初始化为2.（因为要计算的是概率，若样本词条数较大的话，这样处理对结果的影响并不是很大）。</p>
-<p>另一个问题，下溢出。当计算p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)…p(wN|c<em>i</em>)时，可能大部分因子都是非常小的，所以程序会产生下溢出或者得不到正确答案（结果非常接近0，计算机精度有限，而直接将其近似为0）。一种解决办法是对乘积取自然对数，<em>ln(a\</em>b)=ln(a)+ln(b)*. 因为最终判决时，是比较两个类别概率的大小，对他们取自然对数并不影响他们的相对大小关系。</p>
-<pre><code>#朴素贝叶斯分类器
-def classifyNB(vec2Classify,p0Vec,p1Vec,pClass1):
-    p1=sum(vec2Classify*p1Vec)+np.log(pClass1)
-    #因为取自然对数，所以原来的乘积运算转换为加法运算
-    p0=sum(vec2Classify*p0Vec)+np.log(1.0-pClass1)
-    if p1&gt;p0:
-        return 1
-    else:
-        return 0
-
-def testingNB():
-    listOPosts,listClasses=loadDataSet()
-    myVocabList=createVocabList(listOPosts)#词汇表
-
-    trainMat=[]
-    for postinDoc in listOPosts:#获取训练样本集
-        trainMat.append(setOfWords2Vec(myVocabList,postinDoc))
-    p0V,p1V,pAb=trainNB0(np.array(trainMat),np.array(listClasses))#训练
-
-    testEntry=[&#39;love&#39;,&#39;my&#39;,&#39;dalmation&#39;]
-    thisDoc=np.array(setOfWords2Vec(myVocabList,testEntry))
-    print(testEntry,&#39;classified as: &#39;,classifyNB(thisDoc,p0V,p1V,pAb))
-
-    testEntry=[&#39;stupid&#39;,&#39;garbage&#39;]
-    thisDoc=np.array(setOfWords2Vec(myVocabList,testEntry))
-    print(testEntry,&#39;classified as: &#39;,classifyNB(thisDoc,p0V,p1V,pAb))
-</code></pre><p>做个简单的小结：</p>
-<p>首先将文档合并提取出一个不重复的词汇表，对每个文档依据这个不重复词汇表转换为一维向量，向量的长度就是词汇表的个数。接下来，根据文档的类别标签，计算p(w<em>j</em>|c<em>i</em>),计算过程是：在c<em>i</em>类别中，词条w<em>j</em>出现的次数除以c<em>i</em>中总词条数目。得到p(w<em>j</em>|c<em>i</em>)后，基于朴素贝叶斯分类器的假设，可以计算p(<strong>w</strong>|c<em>i</em>).而p(c<em>i</em>)可以很容易求出来。然后比较p(<strong>w</strong>|c<em>0</em>)p(c<em>0</em>)和p(<strong>w</strong>|c<em>1</em>)p(c<em>1</em>)的大小，就可以判定属于哪个类别。</p>
-<h4 id="文档词袋模型"><a href="#文档词袋模型" class="headerlink" title="文档词袋模型"></a>文档词袋模型</h4><p>目前为止，我们是将每个词的出现与否作为一个特征的，这可以被描述为词集模型（set-of-words model).如果一个词在文档中出现不止一次，这可能意味着包含该词是否出现在文档中所不能表达的某种信息，这种方法被称为词袋模型(bag-of-words model).显然，词条出现的次数应该也要被考虑在内，因此，将函数setOfWords2Vec()修改为bagOfWords2Vec().</p>
-<pre><code>#词集模型--》词袋模型
-#朴素贝叶斯词袋模型
-def bagOfWords2VecMN(vocabList,inputSet):
-    returnVec=[0]*len(vocabList)
-    for word in inputSet:
-        if word in vocabList:
-            returnVec[vocabList.index(word)]+=1
-    return returnVec
-</code></pre><h2 id="示例：使用朴素贝叶斯过滤垃圾邮件"><a href="#示例：使用朴素贝叶斯过滤垃圾邮件" class="headerlink" title="示例：使用朴素贝叶斯过滤垃圾邮件"></a>示例：使用朴素贝叶斯过滤垃圾邮件</h2><ol>
-<li>收集数据：提供文本文件</li>
-<li>准备数据：将文本文件解析成词条向量</li>
-<li>分析数据：检查词条确保解析的正确性</li>
-<li>训练算法：使用我们之前建立的trainNB0()函数</li>
-<li>测试算法：使用classifyNB(),并且构建一个新的测试函数来计算文档集的错误率</li>
-<li>使用算法：构建一个完整的程序对一组文档进行分类，将错分的文档输出到屏幕上。</li>
-</ol>
-<h4 id="测试算法：使用朴素贝叶斯进行交叉验证"><a href="#测试算法：使用朴素贝叶斯进行交叉验证" class="headerlink" title="测试算法：使用朴素贝叶斯进行交叉验证"></a>测试算法：使用朴素贝叶斯进行交叉验证</h4><pre><code>#文件解析及完整的垃圾邮件测试函数
-def textParse(bigString):
-    import re
-    listOfTokens=re.split(r&#39;\W*&#39;,bigString)
-    return [tok.lower() for tok in listOfTokens if len(tok)&gt;2]
-#垃圾邮件分类测试
-def spamTest():
-    docList=[];classList=[];fullText=[]
-    for i in range(1,26):
-        wordList=textParse(open(&#39;email/spam/%d.txt&#39; % i).read())
-        docList.append(wordList)
-        fullText.extend(wordList)
-        classList.append(1)
-        wordList=textParse(open(&#39;email/ham/%d.txt&#39; % i).read())
-        #第23个文件有些问题，需要修改
-        docList.append(wordList)
-        fullText.extend(wordList)
-        classList.append(0)
-    vocabList=createVocabList(docList)#构建词汇表
-    trainingSet=list(range(50));testSet=[]
-    for i in range(10):#随机挑选10个邮件作为测试集
-        randIndex=int(np.random.uniform(0,len(trainingSet)))
-        testSet.append(trainingSet[randIndex])
-        del(trainingSet[randIndex])
-    trainMat=[];trainClasses=[]
-    for docIndex in trainingSet:
-        trainMat.append(setOfWords2Vec(vocabList,docList[docIndex]))
-        trainClasses.append(classList[docIndex])
-    p0V,p1V,pSpam=trainNB0(np.array(trainMat),np.array(trainClasses))#进行训练
-    errorCount=0
-    for docIndex in testSet:
-        wordVector=setOfWords2Vec(vocabList,docList[docIndex])
-        if classifyNB(np.array(wordVector),p0V,p1V,pSpam)!= classList[docIndex]:
             errorCount+=1
-    print(&#39;the error rate is: &#39;,float(errorCount)/len(testSet))
-</code></pre><h2 id="示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向"><a href="#示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向" class="headerlink" title="示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向"></a>示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向</h2><ol>
-<li>收集数据：从RSS源收集内容，这里需要对RSS源构建一个借口</li>
-<li>准备数据：将文本文件解析成词条向量</li>
-<li>分析数据：检查词条确保解析的正确性</li>
-<li>训练算法：使用我们之前建立的trainNB0()函数</li>
-<li>测试算法：观察错误率，确保分类器可用。可以修改切分程序，以降低错误率，提高分类结果。</li>
-<li>使用算法：构建一个完整的程序，封装所有内容。给定两个RSS源，该程序会显示最常用的公共词。</li>
+    errorRate=errorCount/float(len(yPredict))
+    #打印错误率
+    print(&quot;Error rate: %f&quot; % errorRate)
+
+    #1. 默认配置下，多次运行错误率均为0.268657
+    #2. 对样本数据及训练数据进行归一化 0.283582
+    #3. 使用sag随机梯度下降算法，500次迭代 0.253731
+    #4. 使用lbfgs算法，500次迭代 0.283582
+
+def calcError2():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+
+    #训练样本集
+    trainSet=[];trainLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        trainSet.append(lineArr)
+        trainLabels.append(float(currLine[21]))
+    #测试集
+    testSet=[];testLabels=[]
+    for line in frTest.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        testSet.append(lineArr)
+        testLabels.append(float(currLine[21]))
+
+    #Logistic回归
+    classifier=LogisticRegression()
+    #拟合
+    #对训练数据进行归一化处理
+    X=np.array(trainSet)
+    scaler=StandardScaler().fit(X)
+    X=scaler.transform(X)
+    classifier.fit(X,np.array(trainLabels))
+    #测试集归一化处理
+    Xtest=scaler.transform(np.array(testSet))
+    #默认配置预测
+    yPredict=classifier.predict(Xtest)
+
+    #计算错误率
+    errorCount=0.0
+    for i in range(len(yPredict)):
+        if int(yPredict[i]) == int(testLabels[i]):
+            pass
+        else:
+            errorCount+=1
+    errorRate=errorCount/float(len(yPredict))
+    #打印错误率
+    print(&quot;Error rate: %f&quot; % errorRate)
+</code></pre><h2 id="scikit-learn-LogisticRegression库调参"><a href="#scikit-learn-LogisticRegression库调参" class="headerlink" title="scikit-learn LogisticRegression库调参"></a>scikit-learn LogisticRegression库调参</h2><p>默认参数：</p>
+<pre><code>LogisticRegression(penalty=’l2’, dual=False, tol=0.0001, C=1.0, 
+fit_intercept=True, intercept_scaling=1, class_weight=None, 
+random_state=None, solver=’liblinear’, max_iter=100, 
+multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)
+</code></pre><blockquote>
+<p>penalty : str, ‘l1’ or ‘l2’, default: ‘l2’<br>Used to specify the norm used in the penalization. The ‘newton-cg’, ‘sag’ and ‘lbfgs’ solvers support only l2 penalties.<br>New in version 0.19: l1 penalty with SAGA solver (allowing ‘multinomial’ + L1)</p>
+<p>dual : bool, default: False<br>Dual or primal formulation. Dual formulation is only implemented for l2 penalty with liblinear solver. Prefer dual=False when n_samples &gt; n_features.</p>
+<p>tol : float, default: 1e-4<br>Tolerance for stopping criteria.</p>
+<p>C : float, default: 1.0<br>Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.</p>
+<p>fit_intercept : bool, default: True<br>Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.</p>
+<p>intercept_scaling : float, default 1.<br>Useful only when the solver ‘liblinear’ is used and self.fit_intercept is set to True. In this case, x becomes [x, self.intercept_scaling], i.e. a “synthetic” feature with constant value equal to </p>
+<p>intercept_scaling is appended to the instance vector. The intercept becomes intercept_scaling * synthetic_feature_weight.<br>Note! the synthetic feature weight is subject to l1/l2 regularization as all other features. To lessen the effect of regularization on synthetic feature weight (and therefore on the intercept) intercept_scaling has to be increased.</p>
+<p>class_weight : dict or ‘balanced’, default: None<br>Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one.<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y)).<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.<br>New in version 0.17: class_weight=’balanced’</p>
+<p>random_state : int, RandomState instance or None, optional, default: None<br>The seed of the pseudo random number generator to use when shuffling the data. If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random. Used when solver == ‘sag’ or ‘liblinear’.</p>
+<p>solver : {‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’, ‘saga’},<br>default: ‘liblinear’ Algorithm to use in the optimization problem.<br>For small datasets, ‘liblinear’ is a good choice, whereas ‘sag’ and<br>‘saga’ are faster for large ones.<br>For multiclass problems, only ‘newton-cg’, ‘sag’, ‘saga’ and ‘lbfgs’<br>handle multinomial loss; ‘liblinear’ is limited to one-versus-rest schemes.<br>‘newton-cg’, ‘lbfgs’ and ‘sag’ only handle L2 penalty, whereas<br>‘liblinear’ and ‘saga’ handle L1 penalty.<br>Note that ‘sag’ and ‘saga’ fast convergence is only guaranteed on features with approximately the same scale. You can preprocess the data with a scaler from sklearn.preprocessing.<br>New in version 0.17: Stochastic Average Gradient descent solver.<br>New in version 0.19: SAGA solver.</p>
+<p>max_iter : int, default: 100<br>Useful only for the newton-cg, sag and lbfgs solvers. Maximum number of iterations taken for the solvers to converge.</p>
+<p>multi_class : str, {‘ovr’, ‘multinomial’}, default: ‘ovr’<br>Multiclass option can be either ‘ovr’ or ‘multinomial’. If the option chosen is ‘ovr’, then a binary problem is fit for each label. Else the loss minimised is the multinomial loss fit across the entire probability distribution. Does not work for liblinear solver.<br>New in version 0.18: Stochastic Average Gradient descent solver for ‘multinomial’ case.</p>
+<p>verbose : int, default: 0<br>For the liblinear and lbfgs solvers set verbose to any positive number for verbosity.</p>
+<p>warm_start : bool, default: False<br>When set to True, reuse the solution of the previous call to fit as initialization, otherwise, just erase the previous solution. Useless for liblinear solver.<br>New in version 0.17: warm_start to support lbfgs, newton-cg, sag, saga solvers.</p>
+<p>n_jobs : int, default: 1<br>Number of CPU cores used when parallelizing over classes if multi_class=’ovr’”. This parameter is ignored when the <code>solver</code>is set to ‘liblinear’ regardless of whether ‘multi_class’ is specified or not. If given a value of -1, all cores are used.</p>
+</blockquote>
+<h4 id="penalty-正则化选择参数"><a href="#penalty-正则化选择参数" class="headerlink" title="penalty 正则化选择参数"></a>penalty 正则化选择参数</h4><p>LogisticRegression和LogisticRegressionCV默认就带了正则化项。penalty参数可选择的值为”l1”和”l2”.分别对应L1的正则化和L2的正则化，默认是L2的正则化。</p>
+<p>在调参时如果我们主要的目的只是为了解决过拟合，一般penalty选择L2正则化就够了。但是如果选择L2正则化发现还是过拟合，即预测效果差的时候，就可以考虑L1正则化。另外，如果模型的特征非常多，我们希望一些不重要的特征系数归零，从而让模型系数稀疏化的话，也可以使用L1正则化。</p>
+<p>penalty参数的选择会影响我们损失函数优化算法的选择。即参数solver的选择，如果是L2正则化，那么4种可选的算法{‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’}都可以选择。但是如果penalty是L1正则化的话，就只能选择‘liblinear’了。这是因为L1正则化的损失函数不是连续可导的，而{‘newton-cg’, ‘lbfgs’,‘sag’}这三种优化算法时都需要损失函数的一阶或者二阶连续导数。而‘liblinear’并没有这个依赖。</p>
+<h4 id="solver-优化算法选择参数"><a href="#solver-优化算法选择参数" class="headerlink" title="solver 优化算法选择参数"></a>solver 优化算法选择参数</h4><p>solver参数决定了我们对逻辑回归损失函数的优化方法，有4种算法可以选择，分别是：</p>
+<ol>
+<li><p>liblinear：使用了开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数。</p>
+</li>
+<li><p>lbfgs：拟牛顿法的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
+</li>
+<li><p>newton-cg：也是牛顿法家族的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
+</li>
+<li><p>sag：即随机平均梯度下降，是梯度下降法的变种，和普通梯度下降法的区别是每次迭代仅仅用一部分的样本来计算梯度，适合于样本数据多的时候。</p>
+</li>
 </ol>
-<h4 id="收集数据：导入RSS源"><a href="#收集数据：导入RSS源" class="headerlink" title="收集数据：导入RSS源"></a>收集数据：导入RSS源</h4><p>安装feedparser包</p>
-<pre><code>pip install feedparser
-
-#RSS源分类器及高频词去除函数
-def calcMostFreq(vocabList,fullText):
-    import operator
-    freqDict={}
-    for token in vocabList:
-        freqDict[token]=fullText.count(token)
-    sortedFreq=sorted(freqDict.items(),key=operator.itemgetter(1),\
-                      reverse=True)
-    return sortedFreq[:30]
-#返回前30个高频词条
-
-
-def localWords(feed1,feed0):
-    import feedparser
-    docList=[];classList=[];fullText=[]
-    minLen=min(len(feed1[&#39;entries&#39;]),len(feed0[&#39;entries&#39;]))#帖子数量
-    for i in range(minLen):
-        wordList=textParse(feed1[&#39;entries&#39;][i][&#39;summary&#39;])#帖子内容解析
-        docList.append(wordList)
-        fullText.extend(wordList)
-        classList.append(1)
-        wordList=textParse(feed0[&#39;entries&#39;][i][&#39;summary&#39;])
-        docList.append(wordList)
-        fullText.extend(wordList)
-        classList.append(0)
-    vocabList=createVocabList(docList)#创建词汇表
-    top30words=calcMostFreq(vocabList,fullText)
-    for pairW in top30words:
-        if pairW[0] in vocabList:
-            vocabList.remove(pairW[0])#去除出现次数最高的那些词
-    trainingSet=list(range(2*minLen));testSet=[]
-    for i in range(int(minLen/10)):#选取10%的数据，建立测试集
-        randIndex=int(np.random.uniform(0,len(trainingSet)))
-        testSet.append(trainingSet[randIndex])
-        del(trainingSet[randIndex])
-    trainMat=[];trainClasses=[]
-    for docIndex in trainingSet:
-        trainMat.append(bagOfWords2VecMN(vocabList,docList[docIndex]))
-        trainClasses.append(classList[docIndex])
-    p0V,p1V,pSpam=trainNB0(np.array(trainMat),np.array(trainClasses))
-    errorCount=0
-    for docIndex in testSet:
-        wordVector=bagOfWords2VecMN(vocabList,docList[docIndex])
-        if classifyNB(np.array(wordVector),p0V,p1V,pSpam) !=\
-            classList[docIndex]:
-                errorCount+=1
-    print(&#39;the error rate is: &#39;,float(errorCount)/len(testSet))
-    return vocabList,p0V,p1V
-</code></pre><p>这个分类器的作用是给出一个帖子，判断它是来自哪个地区的（东部还是西部，因为两地的语言用词可能不太一样）。<br>前30个高频词去掉的原因是，一般很多词都是虚词，如“maybe”、”yes”、“will”、”can”等等。当然这样处理是比较粗糙的，一般会根据停用词表来进行处理。</p>
-<pre><code>#最具表征性的词汇显示函数
-def getTopWords(ny,sf):
-    import operator
-    vocabList,p0V,p1V=localWords(ny,sf)
-    topNY=[];topSF=[]
-    for i in range(len(p0V)):
-        if p0V[i]&gt;-6.0:topSF.append((vocabList[i],p0V[i]))
-        if p1V[i]&gt;-6.0:topNY.append((vocabList[i],p1V[i]))
-    sortedSF=sorted(topSF,key=lambda pair:pair[1],reverse=True)
-    print(&quot;SF**&quot;*10)
-    for item in sortedSF:
-        print(item[0])
-    sortedNY=sorted(topNY,key=lambda pair:pair[1],reverse=True)
-    print(&quot;NY**&quot;*10)
-    for item in sortedNY:
-        print(item[0])
-</code></pre><p>Craigslist这个网站是分地区的，比如纽约（New York，美国东部）和旧金山（San Francisco，美国西部）。我们从这两个地区的Ctaigslist里面选取一些帖子，通过分析这些帖子里的征婚广告信息，来比较这两个城市的人们在广告用词上是否存在差异。如果确实存在差异，那么两个地区的人各自常用的词是哪些？</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://blog.csdn.net/CharlieLincy/article/details/70244028" target="_blank" rel="external">《机器学习实战》第四章：朴素贝叶斯（2）两个实例</a></li>
+<p>从上面的描述可以看出，newton-cg, lbfgs和sag这三种优化算法时都需要损失函数的一阶或者二阶连续导数，因此不能用于没有连续导数的L1正则化，只能用于L2正则化。而liblinear通吃L1正则化和L2正则化。</p>
+<p>同时，sag每次仅仅使用了部分样本进行梯度迭代，所以当样本量少的时候不要选择它，而如果样本量非常大，比如大于10万，sag是第一选择。但是sag不能用于L1正则化，所以当你有大量的样本，又需要L1正则化的话就要自己做取舍了。要么通过对样本采样来降低样本量，要么回到L2正则化。</p>
+<p>从上面的描述，大家可能觉得，既然newton-cg, lbfgs和sag这么多限制，如果不是大样本，我们选择liblinear不就行了嘛！错，因为liblinear也有自己的弱点！我们知道，逻辑回归有二元逻辑回归和多元逻辑回归。对于多元逻辑回归常见的有one-vs-rest(OvR)和many-vs-many(MvM)两种。而MvM一般比OvR分类相对准确一些。郁闷的是liblinear只支持OvR，不支持MvM，这样如果我们需要相对精确的多元逻辑回归时，就不能选择liblinear了。也意味着如果我们需要相对精确的多元逻辑回归不能使用L1正则化了。</p>
+<h4 id="multi-class-分类方式选择参数"><a href="#multi-class-分类方式选择参数" class="headerlink" title="multi_class 分类方式选择参数"></a>multi_class 分类方式选择参数</h4><p>multi_class参数决定了我们分类方式的选择，有 ovr和multinomial两个值可以选择，默认是 ovr。</p>
+<p>ovr即前面提到的one-vs-rest(OvR)，而multinomial即前面提到的many-vs-many(MvM)。如果是二元逻辑回归，ovr和multinomial并没有任何区别，区别主要在多元逻辑回归上。</p>
+<p>OvR的思想很简单，无论你是多少元逻辑回归，我们都可以看做二元逻辑回归。具体做法是，对于第K类的分类决策，我们把所有第K类的样本作为正例，除了第K类样本以外的所有样本都作为负例，然后在上面做二元逻辑回归，得到第K类的分类模型。其他类的分类模型获得以此类推。</p>
+<p>而MvM则相对复杂，这里举MvM的特例one-vs-one(OvO)作讲解。如果模型有T类，我们每次在所有的T类样本里面选择两类样本出来，不妨记为T1类和T2类，把所有的输出为T1和T2的样本放在一起，把T1作为正例，T2作为负例，进行二元逻辑回归，得到模型参数。我们一共需要T(T-1)/2次分类。</p>
+<p>从上面的描述可以看出OvR相对简单，但分类效果相对略差（这里指大多数样本分布情况，某些样本分布下OvR可能更好）。而MvM分类相对精确，但是分类速度没有OvR快。</p>
+<p>如果选择了ovr，则4种损失函数的优化方法liblinear，newton-cg, lbfgs和sag都可以选择。但是如果选择了multinomial,则只能选择newton-cg, lbfgs和sag了。</p>
+<h4 id="class-weight-类型权重参数"><a href="#class-weight-类型权重参数" class="headerlink" title="class_weight 类型权重参数"></a>class_weight 类型权重参数</h4><p>class_weight参数用于标示分类模型中各种类型的权重，可以不输入，即不考虑权重，或者说所有类型的权重一样。如果选择输入的话，可以选择balanced让类库自己计算类型权重，或者我们自己输入各个类型的权重，比如对于0,1的二元模型，我们可以定义class_weight={0:0.9, 1:0.1}，这样类型0的权重为90%，而类型1的权重为10%。</p>
+<p>如果class_weight选择balanced，那么类库会根据训练样本量来计算权重。某种类型样本量越多，则权重越低，样本量越少，则权重越高。</p>
+<p>那么class_weight有什么作用呢？在分类模型中，我们经常会遇到两类问题：</p>
+<p>第一种是误分类的代价很高。比如对合法用户和非法用户进行分类，将非法用户分类为合法用户的代价很高，我们宁愿将合法用户分类为非法用户，这时可以人工再甄别，但是却不愿将非法用户分类为合法用户。这时，我们可以适当提高非法用户的权重。</p>
+<p>第二种是样本是高度失衡的，比如我们有合法用户和非法用户的二元样本数据10000条，里面合法用户有9995条，非法用户只有5条，如果我们不考虑权重，则我们可以将所有的测试集都预测为合法用户，这样预测准确率理论上有99.95%，但是却没有任何意义。这时，我们可以选择balanced，让类库自动提高非法用户样本的权重。</p>
+<p>提高了某种分类的权重，相比不考虑权重，会有更多的样本分类划分到高权重的类别，从而可以解决上面两类问题。</p>
+<h4 id="sample-weight-样本权重参数"><a href="#sample-weight-样本权重参数" class="headerlink" title="sample_weight 样本权重参数"></a>sample_weight 样本权重参数</h4><p>由于样本不平衡，导致样本不是总体样本的无偏估计，从而可能导致我们的模型预测能力下降。遇到这种情况，我们可以通过调节样本权重来尝试解决这个问题。调节样本权重的方法有两种，第一种是在class_weight使用balanced。第二种是在调用fit函数时，通过sample_weight来自己调节每个样本权重。</p>
+<p>在scikit-learn做逻辑回归时，如果上面两种方法都用到了，那么样本的真正权重是class_weight*sample_weight.</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html</a></li>
+<li><a href="http://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="external">http://www.cnblogs.com/pinard/p/6035872.html</a></li>
 </ol>
 
           
@@ -3618,7 +3580,7 @@ def getTopWords(ny,sf):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -3640,7 +3602,7 @@ def getTopWords(ny,sf):
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
