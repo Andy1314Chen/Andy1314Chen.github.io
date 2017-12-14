@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/12/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BE%E7%A8%8B(%E5%90%B4%E6%81%A9%E8%BE%BE)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</loc>
+    <lastmod>2017-12-14T07:14:15.376Z</lastmod>
+    <data>
+        <display>
+        <title>深度学习第二章课程(吴恩达)学习笔记（1）</title>
+        <pubTime>2017-12-13T16:00:00.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>算法</tag>
+         
+        <tag>深度学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
+          
+             
+              <breadCrumb title="算法" url="http://yoursite.com/categories/Python/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/12/13/Sigmoid%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E8%BF%87%E7%A8%8B/</loc>
     <lastmod>2017-12-13T08:18:59.751Z</lastmod>
     <data>
@@ -468,9 +495,9 @@
         <title>英特尔校招两道编程题</title>
         <pubTime>2017-09-13T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -490,9 +517,9 @@
         <title>网易校招一道算法题</title>
         <pubTime>2017-09-08T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -946,9 +973,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>AI</tag>
-         
         <tag>python</tag>
+         
+        <tag>AI</tag>
          
          
            
@@ -968,9 +995,9 @@
         <title>迷宫问题</title>
         <pubTime>2016-07-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -990,9 +1017,9 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
         <tag>Leetcode</tag>
          
@@ -1060,9 +1087,9 @@
         <title>快速整数平方根算法</title>
         <pubTime>2017-06-27T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
