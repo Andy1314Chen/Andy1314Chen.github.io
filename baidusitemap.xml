@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/12/15/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BE%E7%A8%8B(%E5%90%B4%E6%81%A9%E8%BE%BE)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</loc>
+    <lastmod>2017-12-15T02:49:33.709Z</lastmod>
+    <data>
+        <display>
+        <title>深度学习第二章课程(吴恩达)学习笔记（2）</title>
+        <pubTime>2017-12-14T16:00:00.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>算法</tag>
+         
+        <tag>深度学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
+          
+             
+              <breadCrumb title="算法" url="http://yoursite.com/categories/Python/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/12/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%AF%BE%E7%A8%8B(%E5%90%B4%E6%81%A9%E8%BE%BE)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</loc>
     <lastmod>2017-12-14T07:14:15.376Z</lastmod>
     <data>
@@ -973,9 +1000,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>python</tag>
-         
         <tag>AI</tag>
+         
+        <tag>python</tag>
          
          
            

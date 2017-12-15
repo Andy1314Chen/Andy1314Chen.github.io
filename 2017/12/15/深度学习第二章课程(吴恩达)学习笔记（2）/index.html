@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习,时间序列," />
+  <meta name="keywords" content="Python,算法,深度学习," />
 
 
 
@@ -94,18 +94,20 @@
 
 
 
-<meta name="description" content="时间序列规则法快速入门 前言大家好~我是drop-out。今年我参加了IJCAI-17数据挖掘竞赛和KDD CUP 2017，分别获得了第三名和第九名。两个比赛都是时间序列数据。因为我本身是学金融的，对金融时间序列接触的比较多，然而我发现搞机器学习的小伙伴们时间序列处理的基本方法都没有入门~所以这里写一篇文章，以IJCAI-17口碑客流量预测大赛为背景，介绍一下时间序列规则法，让大家快速入门！=">
-<meta name="keywords" content="机器学习,时间序列">
+<meta name="description" content="Gradient Descent 梯度下降法已知，\( \hat{y} = \sigma(w^Tx+b) \), \( \sigma(z) = \frac{1}{1+e^{-z}} \) $$ J(w,b) = \frac{1}{m} \sum_{i=1}^{m}L({\hat{y}}^{(i)}, y^{(i)}) = -\frac{1}{m}\sum_{i=1}^{m}y^{(i)}log{\">
+<meta name="keywords" content="Python,算法,深度学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="时间序列规则法快速入门【转】">
-<meta property="og:url" content="http://yoursite.com/2017/11/11/时间规则快速入门/index.html">
+<meta property="og:title" content="深度学习第二章课程(吴恩达)学习笔记（2）">
+<meta property="og:url" content="http://yoursite.com/2017/12/15/深度学习第二章课程(吴恩达)学习笔记（2）/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="时间序列规则法快速入门 前言大家好~我是drop-out。今年我参加了IJCAI-17数据挖掘竞赛和KDD CUP 2017，分别获得了第三名和第九名。两个比赛都是时间序列数据。因为我本身是学金融的，对金融时间序列接触的比较多，然而我发现搞机器学习的小伙伴们时间序列处理的基本方法都没有入门~所以这里写一篇文章，以IJCAI-17口碑客流量预测大赛为背景，介绍一下时间序列规则法，让大家快速入门！=">
+<meta property="og:description" content="Gradient Descent 梯度下降法已知，\( \hat{y} = \sigma(w^Tx+b) \), \( \sigma(z) = \frac{1}{1+e^{-z}} \) $$ J(w,b) = \frac{1}{m} \sum_{i=1}^{m}L({\hat{y}}^{(i)}, y^{(i)}) = -\frac{1}{m}\sum_{i=1}^{m}y^{(i)}log{\">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-11T14:53:11.961Z">
+<meta property="og:image" content="https://i.imgur.com/qPehGa3.png">
+<meta property="og:updated_time" content="2017-12-15T02:49:33.709Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="时间序列规则法快速入门【转】">
-<meta name="twitter:description" content="时间序列规则法快速入门 前言大家好~我是drop-out。今年我参加了IJCAI-17数据挖掘竞赛和KDD CUP 2017，分别获得了第三名和第九名。两个比赛都是时间序列数据。因为我本身是学金融的，对金融时间序列接触的比较多，然而我发现搞机器学习的小伙伴们时间序列处理的基本方法都没有入门~所以这里写一篇文章，以IJCAI-17口碑客流量预测大赛为背景，介绍一下时间序列规则法，让大家快速入门！=">
+<meta name="twitter:title" content="深度学习第二章课程(吴恩达)学习笔记（2）">
+<meta name="twitter:description" content="Gradient Descent 梯度下降法已知，\( \hat{y} = \sigma(w^Tx+b) \), \( \sigma(z) = \frac{1}{1+e^{-z}} \) $$ J(w,b) = \frac{1}{m} \sum_{i=1}^{m}L({\hat{y}}^{(i)}, y^{(i)}) = -\frac{1}{m}\sum_{i=1}^{m}y^{(i)}log{\">
+<meta name="twitter:image" content="https://i.imgur.com/qPehGa3.png">
 
 
 
@@ -133,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/11/时间规则快速入门/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/15/深度学习第二章课程(吴恩达)学习笔记（2）/"/>
 
 
 
@@ -141,7 +143,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>时间序列规则法快速入门【转】 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>深度学习第二章课程(吴恩达)学习笔记（2） | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -304,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/11/时间规则快速入门/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/15/深度学习第二章课程(吴恩达)学习笔记（2）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -321,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">时间序列规则法快速入门【转】</h1>
+          <h1 class="post-title" itemprop="name headline">深度学习第二章课程(吴恩达)学习笔记（2）</h1>
         
 
         <div class="post-meta">
@@ -333,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T00:00:00+08:00">
-                2017-11-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-15T00:00:00+08:00">
+                2017-12-15
               </time>
             
 
@@ -358,8 +360,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -394,222 +407,239 @@
       
 
       
-        <p>时间序列规则法快速入门</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大家好~我是drop-out。今年我<strong>参加了IJCAI-17数据挖掘竞赛和KDD CUP 2017，分别获得了第三名和第九名</strong>。两个比赛都是时间序列数据。因为我本身是学金融的，对金融时间序列接触的比较多，然而我发现搞机器学习的小伙伴们时间序列处理的基本方法都没有入门~所以这里写一篇文章，以IJCAI-17口碑客流量预测大赛为背景，介绍一下时间序列规则法，让大家快速入门！= =</p>
-<p>IJCAI-17给的是蚂蚁金服的支付数据，具体来说，给的是店铺（实体店）过去每天的客流量，预测店铺未来14天每天的客流量。由过去外推未来，这是典型的时间序列问题。像支付数据、客流量数据、交通数据等，具有明显的周期性。从预测的角度说，周期性是核心，只要抓住了周期性，任务就完成了一大半。</p>
-<h2 id="基本规则法快速入门"><a href="#基本规则法快速入门" class="headerlink" title="基本规则法快速入门"></a>基本规则法快速入门</h2><p>假设给定下面的数据，任务是预测第四周每天的客流量。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-<th>周均值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一周</td>
-<td>20</td>
-<td>10</td>
-<td>70</td>
-<td>50</td>
-<td>250</td>
-<td>200</td>
-<td>100</td>
-<td>100</td>
-</tr>
-<tr>
-<td>第二周</td>
-<td>26</td>
-<td>18</td>
-<td>66</td>
-<td>50</td>
-<td>180</td>
-<td>140</td>
-<td>80</td>
-<td>80</td>
-</tr>
-<tr>
-<td>第三周</td>
-<td>15</td>
-<td>8</td>
-<td>67</td>
-<td>60</td>
-<td>270</td>
-<td>160</td>
-<td>120</td>
-<td>100</td>
-</tr>
-</tbody>
-</table>
-<p>明显能看到周一到周日的周期波动。预测的核心任务就是尽可能准确的提取这种周期。</p>
+        <h3 id="Gradient-Descent-梯度下降法"><a href="#Gradient-Descent-梯度下降法" class="headerlink" title="Gradient Descent 梯度下降法"></a>Gradient Descent 梯度下降法</h3><p>已知，\( \hat{y} = \sigma(w^Tx+b) \), \( \sigma(z) = \frac{1}{1+e^{-z}} \)</p>
+<p>$$ J(w,b) = \frac{1}{m} \sum_{i=1}^{m}L({\hat{y}}^{(i)}, y^{(i)}) = -\frac{1}{m}\sum_{i=1}^{m}y^{(i)}log{\hat{y}}^{(i)} + (1 - y^{(i)})log(1-{\hat{y}}^{(i)}) $$</p>
+<p>Want to find w,b that minimize J(w,b).</p>
+<p><img src="https://i.imgur.com/qPehGa3.png" alt="梯度下降法"></p>
+<p>通过不断迭代w,b使得J(w,b)达到最优</p>
+<p>更新公式：</p>
+<p>$$ w:= w - \alpha \frac{\alpha J(w,b)}{\alpha w}  $$</p>
+<p>$$ b:= b - \alpha \frac{\alpha J(w,b)}{\alpha b}  $$</p>
+<h3 id="Logistic-Regression-Gradient-Descent"><a href="#Logistic-Regression-Gradient-Descent" class="headerlink" title="Logistic Regression Gradient Descent"></a>Logistic Regression Gradient Descent</h3><font color="blue">
+
+<p>$$ z = w^Tx +b $$</p>
+<p>$$ \hat{y} = a = \sigma(z) $$</p>
+<p>$$ L(a,y) = -(ylog(a) + (1-y)log(1-a)) $$</p>
+<font color="black">
+
+<p>Logistic Regression Gradient Descent 过程：</p>
+<p>(1) $$J=0, dw1 = 0, dw2 = 0, db = 0$$</p>
+<p>(2) for i = 1 to n:</p>
 <ul>
-<li><p>第一步: 除以周均值，得到一个比例。</p>
+<li><p>(1） $$ z^{(i)} = w^Tx^{(i)}+b $$</p>
 </li>
-<li><p>第二步: 按列取中位数。</p>
+<li><p>(2)  $$ a^{(i)} = \sigma(z^{(i)}) $$</p>
+</li>
+<li><p>(3)  $$ J+= -[y^{(i)}log{\hat{y}}^{(i)} + (1-y^{(i)})log(1-{\hat{y}}^{(i)})] $$</p>
+</li>
+<li><p>(4)  $$ dz^{(i)} = a^{(i)}(1-a^{(i)}) $$</p>
+</li>
+<li><p>(5)  $$ dw_1 += x_1^{(i)}dz^{(i)} $$</p>
+</li>
+<li><p>(6)  $$ dw_2 += x_2^{(i)}dz^{(i)} $$</p>
+</li>
+<li><p>(7)  $$ db += dz^{(i)} $$</p>
 </li>
 </ul>
-<p>就可以得到一组鲁棒的周期因子。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一周</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.5</td>
-<td>2.5</td>
-<td>2</td>
-<td>1</td>
-</tr>
-<tr>
-<td>第二周</td>
-<td>0.325</td>
-<td>0.225</td>
-<td>0.825</td>
-<td>0.625</td>
-<td>2.25</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-<tr>
-<td>第三周</td>
-<td>0.15</td>
-<td>0.08</td>
-<td>0.67</td>
-<td>0.6</td>
-<td>2.7</td>
-<td>1.6</td>
-<td>1.2</td>
-</tr>
-<tr>
-<td>中位数</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.6</td>
-<td>2.5</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<p>做预测时，只要将周期因子，乘以一个base，就可以做下一周的预测啦。比如说，我们取最后一周的平均客流量100作为base，那么我们直接乘上周期因子，就得到下一周的预测:</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>中位数</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.6</td>
-<td>2.5</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-<tr>
-<td>预测 (base=100)</td>
-<td>20</td>
-<td>10</td>
-<td>70</td>
-<td>60</td>
-<td>250</td>
-<td>175</td>
-<td>100</td>
-</tr>
-</tbody>
-</table>
-<p>实际应用当然要取更长的时段啦。具体取几周以测试集的效果来确定。</p>
-<h2 id="针对周期因子的优化"><a href="#针对周期因子的优化" class="headerlink" title="针对周期因子的优化"></a>针对周期因子的优化</h2><p>按列提取中位数是一种简单而有效的提取周期因子的方法。中位数十分鲁棒，不受极端值的影响。但中位数损失了很多信息。实践中，可以在此基础上进一步优化。比如可以提取一个均值和一个中位数，然后将均值和中位数融合。融合的比例按照测试集的表现来确定。也可以根据与预测周的时间距离来赋予不同的权重。</p>
-<h2 id="针对base的优化"><a href="#针对base的优化" class="headerlink" title="针对base的优化"></a>针对base的优化</h2><p>直接用最后一周的平均客流量作为base并不一定是最好的方法。也许最后三天或最后五天的均值能更好的反映最新的情况。但是，我们不能直接对最后三天客流量取均值（最后三天是周末，这样取的base就偏大了）。需要去掉周期性因素后，再取平均。具体做法，就是用客流量除以周期因子。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第三周</td>
-<td>15</td>
-<td>8</td>
-<td>67</td>
-<td>60</td>
-<td>270</td>
-<td>160</td>
-<td>120</td>
-</tr>
-<tr>
-<td>中位数</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.6</td>
-<td>2.5</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-<tr>
-<td>去周期以后的客流量</td>
-<td>75</td>
-<td>80</td>
-<td>95.7</td>
-<td>100</td>
-<td>108</td>
-<td>91.4</td>
-<td>120</td>
-</tr>
-</tbody>
-</table>
-<p>这样我们就可以取最后三天的平均，(108+91.4+120)/3=106.5，作为base。具体取多少天的，也要通过测试集的表现来确定。当然也可以按某些函数形式来给每天赋予不同的权重。</p>
-<h2 id="其他影响因素"><a href="#其他影响因素" class="headerlink" title="其他影响因素"></a>其他影响因素</h2><p>在IJCAI-17的这个赛题里面，天气是非常重要的一个影响因素。可以提取残差，然后用残差训练一个天气的模型。推荐使用xgboost。其他影响因素可以如法炮制。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>周期因子的确定，中位数Or均值，或者两者的融合 周期因子 = \(\alpha*{中位数}+\beta*{均值} (\alpha + \beta = 1)\)</li>
-<li>提取前几周来确定周期因子，或者与预测周的时间距离赋予不同的权重</li>
-<li>Base的选择，最后一周？最后3天？最后5天？</li>
-</ol>
-<h3 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h3><ol>
-<li><a href="http://www.jianshu.com/p/31e20f00c26f?spm=5176.9876270.0.0.2e44f4d2wd3dPO" target="_blank" rel="external">http://www.jianshu.com/p/31e20f00c26f?spm=5176.9876270.0.0.2e44f4d2wd3dPO</a></li>
-<li><a href="https://tianchi.aliyun.com/competition/new_articleDetail.html?spm=5176.8366600.0.0.472ba697eBOdsh&amp;raceId=231591&amp;postsId=2526" target="_blank" rel="external">https://tianchi.aliyun.com/competition/new_articleDetail.html?spm=5176.8366600.0.0.472ba697eBOdsh&amp;raceId=231591&amp;postsId=2526</a></li>
-</ol>
+<p>(3) $$ J = J/m, dw_1 = dw_1/m, dw_2 = dw_2/m, db = db /m $$</p>
+<h4 id="Vectorizing-Logistic-Regression’s-Gradient-Computation"><a href="#Vectorizing-Logistic-Regression’s-Gradient-Computation" class="headerlink" title="Vectorizing Logistic Regression’s Gradient Computation"></a>Vectorizing Logistic Regression’s Gradient Computation</h4><p>\( dz^{(1)} = a^{(1)} - y^{(1)} , dz^{(2)} = a^{(2)} - y^{(2)} , … \)</p>
+<p>\( dZ = [dz^{(1)}, dz^{(2)}, … , dz^{(m)}] \)</p>
+<p>\( A = [a^{(1)}, … , a^{(m)}], Y = [y^{(1)}, … , y^{(m)}] \)</p>
+<p>\( dZ = A-Y= [a^{(1)} - y^{(1)}, a^{(2)}-y^{(2)}, …]  \)</p>
+<p>因此：</p>
+<p>\( dw = \frac{1}{m}XdZ^T , db = \frac{1}{m} \sum_{(i=1)}^{m} dz^{(i)} \)</p>
+<p>代码实现：</p>
+<pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import warnings 
+#from sklearn.ensemble import RandomForestRegressor
 
+warnings.filterwarnings(&#39;ignore&#39;)
+
+
+#sigmoid函数
+def sigmoid(z):
+    s = 1 / (1 + np.exp(-z))
+
+    return s
+
+
+#print(&#39;sigmoid([0, 2]) = &#39; + str(sigmoid(np.array([0,2]))))
+
+#初始化参数
+def initialize_with_zeros(dim):
+    w = np.zeros((dim, 1))
+    b = 0
+
+    assert(w.shape == (dim,1))
+    assert(isinstance(b, float) or isinstance(b, int))
+
+    return w, b
+
+#dim = 2
+#w, b = initialize_with_zeros(dim)
+#print(&#39;w = &#39;+ str(w))
+#print(&#39;b = &#39;+ str(b))
+
+
+def propagate(w, b, X, Y):
+    &quot;&quot;&quot;
+    Implement the cost function and its gradient for the propagation explained above
+
+    Arguments:
+    w -- weights, a numpy array of size (num_px * num_px * 3, 1)
+    b -- bias, a scalar
+    X -- data of size (num_px * num_px * 3, number of examples)
+    Y -- true &quot;label&quot; vector (containing 0 if non-cat, 1 if cat) of size (1, number of examples)
+
+    Return:
+    cost -- negative log-likelihood cost for logistic regression
+    dw -- gradient of the loss with respect to w, thus same shape as w
+    db -- gradient of the loss with respect to b, thus same shape as b
+
+    &quot;&quot;&quot;
+    m = X.shape[1]
+
+    A = sigmoid(np.dot(w.T, X)+b)
+    cost = -1*np.sum(Y*np.log(A) + (1-Y)*np.log(1-A)) / m
+
+    dw = np.dot(X, (A-Y).T)/m
+    db = np.sum(A-Y)/m
+
+    assert(dw.shape == w.shape)
+    assert(db.dtype == float)
+    cost = np.squeeze(cost)
+    assert(cost.shape == ())
+
+    grads = {&#39;dw&#39;: dw,
+             &#39;db&#39;: db}
+
+    return grads, cost
+
+w, b, X, Y = np.array([[1],[2]]), 2, np.array([[1, 2, -1],[3, 4, -3.2]]), np.array([[1, 0, 1]])
+#grads, cost = propagate(w, b, X, Y)
+
+#print(&#39;dw = &#39; + str(grads[&#39;dw&#39;]))
+#print(&#39;db = &#39; + str(grads[&#39;db&#39;]))
+#print(&#39;cost = &#39; + str(cost))
+
+def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
+    &quot;&quot;&quot;
+    This function optimizes w and b by running a gradient descent algorithm
+
+    Arguments:
+    w -- weights, a numpy array of size (num_px * num_px * 3, 1)
+    b -- bias, a scalar
+    X -- data of shape (num_px * num_px * 3, number of examples)
+    Y -- true &quot;label&quot; vector (containing 0 if non-cat, 1 if cat), of shape (1, number of examples)
+    num_iterations -- number of iterations of the optimization loop
+    learning_rate -- learning rate of the gradient descent update rule
+    print_cost -- True to print the loss every 100 steps
+
+    Returns:
+    params -- dictionary containing the weights w and bias b
+    grads -- dictionary containing the gradients of the weights and bias with respect to the cost function
+    costs -- list of all the costs computed during the optimization, this will be used to plot the learning curve.
+
+    &quot;&quot;&quot;
+    costs = []
+
+    for i in range(num_iterations):
+        #cost and gradient calculation
+        grads, cost = propagate(w, b, X, Y)
+
+        #Retrieve derivatives from grads
+        dw = grads[&#39;dw&#39;]
+        db = grads[&#39;db&#39;]
+
+        # update rule
+        w = w - learning_rate*dw
+        b = b - learning_rate*db
+
+        # Record the costs
+        if i % 100 == 0:
+            costs.append(cost)
+
+        # Print the cost every 100 training examples
+        if print_cost and i % 100 == 0:
+            print(&#39;Cost after iteration %i: %f&#39; % (i, cost))
+
+    params = {&#39;w&#39;:w,
+              &#39;b&#39;:b}
+
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
+
+    return params, grads, costs
+
+params, grads, costs = optimize(w, b, X, Y, num_iterations=100, learning_rate=0.009, print_cost=False)
+
+#print (&quot;w = &quot; + str(params[&quot;w&quot;]))
+#print (&quot;b = &quot; + str(params[&quot;b&quot;]))
+#print (&quot;dw = &quot; + str(grads[&quot;dw&quot;]))
+#print (&quot;db = &quot; + str(grads[&quot;db&quot;]))
+
+
+def predict(w, b, X):
+    m = X.shape[1]
+    Y_prediction = np.zeros((1,m))
+    w = w.reshape(X.shape[0], 1)
+
+    A = sigmoid(np.dot(w.T, X)+b)
+
+    for i in range(A.shape[1]):
+
+        if A[0, i] &gt; 0.5:
+            Y_prediction[0, i] = 1
+        else:
+            Y_prediction[0, i] = 0
+
+    assert(Y_prediction.shape == (1,m))
+
+    return Y_prediction
+
+w = np.array([[0.1124579], [0.23106775]])
+b = -0.3
+X = np.array([[1., -1.1, -3.2],[1.2, 2, 0.1]])
+#print(&#39;predictions = &#39; + str(predict(w,b,X)))
+
+
+
+#把所有函数合并在一起
+def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate=0.5, print_cost = False):
+
+    # initialize parameters with zeros
+    w, b = initialize_with_zeros(X_train.shape[0])
+
+    # Gradient descent
+    parameters, grads, costs = optimize(w, b, X_train, Y_train, num_iterations, learning_rate, print_cost = True)
+
+    # Retrieve parameters w and b from dictionary &#39;parameters&#39;
+    w = parameters[&#39;w&#39;]
+    b = parameters[&#39;b&#39;]
+
+    # Predict test/train set examples
+    Y_prediction_test = predict(w, b, X_test)
+    Y_prediction_train = predict(w, b, X_train)
+
+    # Print train/test Errors
+    print(&#39;train accuracy: {} %&#39;.format(100 - np.mean(np.abs(Y_prediction_train - Y_train)) * 100))
+    print(&#39;test accuracy: {} %&#39;.format(100 - np.mean(np.abs(Y_prediction_test - Y_test)) * 100))
+
+    d = {&#39;costs&#39;: costs,
+         &#39;Y_prediction_test&#39;: Y_prediction_test,
+         &#39;Y_prediction_train&#39;: Y_prediction_train,
+         &#39;w&#39;: w,
+         &#39;b&#39;: b,
+         &#39;learning_rate&#39;: learning_rate,
+         &#39;num_iterations&#39;: num_iterations
+         }
+
+    return d
+
+#d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 5000, learning_rate = 0.005, print_cost = True)
+</code></pre></font></font>
       
     </div>
 
@@ -638,9 +668,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
-            <a href="/tags/时间序列/" rel="tag"># 时间序列</a>
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
           
         </div>
       
@@ -653,8 +685,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/10/python保存模型/" rel="next" title="使用sklearn.externals.joblib保存模型">
-                <i class="fa fa-chevron-left"></i> 使用sklearn.externals.joblib保存模型
+              <a href="/2017/12/14/深度学习第二章课程(吴恩达)学习笔记（1）/" rel="next" title="深度学习第二章课程(吴恩达)学习笔记（1）">
+                <i class="fa fa-chevron-left"></i> 深度学习第二章课程(吴恩达)学习笔记（1）
               </a>
             
           </div>
@@ -662,10 +694,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/16/超市优化比赛/" rel="prev" title="CCF BDCI2017小超市供销存管理优化">
-                CCF BDCI2017小超市供销存管理优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -824,7 +852,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本规则法快速入门"><span class="nav-number">2.</span> <span class="nav-text">基本规则法快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#针对周期因子的优化"><span class="nav-number">3.</span> <span class="nav-text">针对周期因子的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#针对base的优化"><span class="nav-number">4.</span> <span class="nav-text">针对base的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他影响因素"><span class="nav-number">5.</span> <span class="nav-text">其他影响因素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文链接："><span class="nav-number">5.2.</span> <span class="nav-text">原文链接：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient-Descent-梯度下降法"><span class="nav-number">1.</span> <span class="nav-text">Gradient Descent 梯度下降法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-Regression-Gradient-Descent"><span class="nav-number">2.</span> <span class="nav-text">Logistic Regression Gradient Descent</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vectorizing-Logistic-Regression’s-Gradient-Computation"><span class="nav-number">2.1.</span> <span class="nav-text">Vectorizing Logistic Regression’s Gradient Computation</span></a></li></ol></li></ol></div>
             
 
           </div>
