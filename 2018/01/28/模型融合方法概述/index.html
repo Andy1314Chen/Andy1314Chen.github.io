@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta name="google-site-verification" content="y1NE4TYCS_y-0LIIks73rI2qINI9JYRwk6Su8ZG-ZIw" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,机器学习,算法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Voting模型融合其实也没有想象的那么高大上，从最简单的Voting说起，这也可以说是一种模型融合。假设对于一个二分类问题，有3个基础模型，那么就采取投票制的方法，投票多者确定为最终的分类。 Averaging对于回归问题，一个简单直接的思路是取平均。稍稍改进的方法是进行加权平均。权值可以用排序的方法确定，举个例子，比如A、B、C三种基本模型，模型效果进行排名，假设排名分别是1、2、3，那么给这">
+<meta name="keywords" content="python,机器学习,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模型融合方法概述[转]">
+<meta property="og:url" content="http://yoursite.com/2018/01/28/模型融合方法概述/index.html">
+<meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="Voting模型融合其实也没有想象的那么高大上，从最简单的Voting说起，这也可以说是一种模型融合。假设对于一个二分类问题，有3个基础模型，那么就采取投票制的方法，投票多者确定为最终的分类。 Averaging对于回归问题，一个简单直接的思路是取平均。稍稍改进的方法是进行加权平均。权值可以用排序的方法确定，举个例子，比如A、B、C三种基本模型，模型效果进行排名，假设排名分别是1、2、3，那么给这">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-7c19e78be451fc75f44a6ec45e56c9d1_hd.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-439576e0bf018c4e8d5cbe4eba54b89d_hd.jpg">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AT_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_2+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_3+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cimplies%0A%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AP_1+%26+P_2+%26P_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btrain2%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AP_1+%26+P_2+%26P_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btrain2%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AT_1+%26+T_2+%26T_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btest2%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0Apred+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btraina%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btraina%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0A%5Cend%7Bpmatrix%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%2B%0A%5Cbegin%7Bpmatrix%7D%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%3D%0A%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%3D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-84dbc338e11fb89320f2ba310ad69ceb_hd.jpg">
+<meta property="og:updated_time" content="2018-01-28T03:31:26.736Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模型融合方法概述[转]">
+<meta name="twitter:description" content="Voting模型融合其实也没有想象的那么高大上，从最简单的Voting说起，这也可以说是一种模型融合。假设对于一个二分类问题，有3个基础模型，那么就采取投票制的方法，投票多者确定为最终的分类。 Averaging对于回归问题，一个简单直接的思路是取平均。稍稍改进的方法是进行加权平均。权值可以用排序的方法确定，举个例子，比如A、B、C三种基本模型，模型效果进行排名，假设排名分别是1、2、3，那么给这">
+<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-7c19e78be451fc75f44a6ec45e56c9d1_hd.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/28/模型融合方法概述/"/>
+
+
+
+
+
+<link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
+
+  <title>模型融合方法概述[转] | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Andy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点儿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/28/模型融合方法概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">模型融合方法概述[转]</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-28T00:00:00+08:00">
+                2018-01-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Voting"><a href="#Voting" class="headerlink" title="Voting"></a>Voting</h3><p>模型融合其实也没有想象的那么高大上，从最简单的Voting说起，这也可以说是一种模型融合。假设对于一个二分类问题，有3个基础模型，那么就采取投票制的方法，投票多者确定为最终的分类。</p>
+<h3 id="Averaging"><a href="#Averaging" class="headerlink" title="Averaging"></a>Averaging</h3><p>对于回归问题，一个简单直接的思路是取平均。稍稍改进的方法是进行加权平均。权值可以用排序的方法确定，举个例子，比如A、B、C三种基本模型，模型效果进行排名，假设排名分别是1、2、3，那么给这三个模型赋予的权值分别是3/6、2/6、1/6. 这两种方法看似简单，其实后面的高级算法也可以说是基于此而产生的，Bagging或者Boosting都是一种把许多弱分类器这样融合成强分类器的思想。</p>
+<h3 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h3><p>Bagging就是采用有放回的方式进行抽样，用抽样的样本建立子模型，对子模型进行训练，这个过程重复多次，最后进行融合。大概分为这样两步：</p>
+<ol>
+<li><p>重复K次</p>
+<ul>
+<li>有放回地重复抽样建模</li>
+<li>训练子模型</li>
+</ul>
+</li>
+<li><p>模型融合</p>
+<ul>
+<li>分类问题：voting</li>
+<li>回归问题: average</li>
+</ul>
+</li>
+</ol>
+<p>Bagging算法不用我们自己实现，随机森林就是基于Bagging算法的一个典型例子，采用的基分类器是决策树。</p>
+<h3 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h3><p>Bagging算法可以并行处理，而Boosting的思想是一种迭代的方法，每一次训练的时候都更加关心分类错误的样例，给这些分类错误的样例增加更大的权重，下一次迭代的目标就是能够更容易辨别出上一轮分类错误的样例。最终将这些弱分类器进行加权相加。引用加州大学欧文分校Alex Ihler教授的两页PPT</p>
+<p><img src="https://pic4.zhimg.com/80/v2-7c19e78be451fc75f44a6ec45e56c9d1_hd.jpg" alt=""></p>
+<p><img src="https://pic1.zhimg.com/80/v2-439576e0bf018c4e8d5cbe4eba54b89d_hd.jpg" alt=""></p>
+<p>同样地，基于Boosting思想的有AdaBoost、GBDT等，在R和Python中也都有集成好了直接调用的函数。</p>
+<h3 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h3><p>Stacking方法其实弄懂之后应该是比Boosting要简单的，毕竟小几十行代码可以写出一个Stacking算法。先从一种”错误“但是容易懂的Stacking方法讲起。Stacking模型本质上是一种分成的结构，这里简单起见，只分析二级Stacking. 假设我们有3个基模型M1、M2、M3.</p>
+<ol>
+<li>基模型M1, 对训练集train训练，然后用于预测train和test的标签列，分别是P1, T1</li>
+</ol>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AT_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>对于M2和M3, 重复相同的工作，这样也得到了P2, T2, P3, T3.</p>
+<ol>
+<li>分别把P1,P2,P3以及T1,T2,T3合并, 得到一个新的训练集和测试集train2, test2.</li>
+</ol>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_2+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_3+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cimplies%0A%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AP_1+%26+P_2+%26P_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btrain2%7D" alt=""></p>
+<ol>
+<li>再用第二层的模型M4训练train2, 预测test2, 得到最终的标签列</li>
+</ol>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AP_1+%26+P_2+%26P_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btrain2%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AT_1+%26+T_2+%26T_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btest2%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0Apred+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>Stacking本质上就是这么直接的思路，但是这样肯定是不行的，问题在于P1的得到是有问题，用整个训练集训练的模型反过来去预测训练集的标签，毫无疑问过拟合是非常非常严重的，因此现在的问题变成了如何在解决过拟合的前提下得到P1, P2, P3, 这就变成了熟悉的节奏—K折交叉验证。我们以2折交叉验证得到P1为例，假设训练集为4行3列</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>将其划分为2部分</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D" alt=""></p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D" alt=""></p>
+<p>用traina训练模型M1, 然后在trainb上进行预测得到preb3和preb4</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btraina%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>再在trainb上训练模型M1, 然后在traina上进行预测得到pred1和pred2</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btraina%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>然后把两个预测集进行拼接</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%2B%0A%5Cbegin%7Bpmatrix%7D%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%3D%0A%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%3D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>对于测试集T1的得到，有两种方法。注意到刚刚是2折交叉验证，M1相当于训练了2次，所以一种方法是每一次训练M1, 可以直接对整个test进行预测，这样2折交叉验证后测试集相当于预测了2次，然后对这两列求平均得到T1. 或者直接对测试集只用M1预测一次直接得到T1.</p>
+<p>P1、T1得到之后，P2、T2、P3、T3也就是同样的方法。理解了2折交叉验证，对于K折的情况理解也就非常顺利了。所以最终的代码是两层循环，第一层循环控制基模型的数目，每一个基模型要这样去得到P1,T1, 第二层循环控制的是交叉验证的次数K, 对每一个基模型，会训练K次最后拼接得到P1, 取平均得到T1.</p>
+<p><img src="https://pic4.zhimg.com/80/v2-84dbc338e11fb89320f2ba310ad69ceb_hd.jpg" alt=""></p>
+<p>该图是大佬<a href="https://dnc1994.com/2016/04/rank-10-percent-in-first-kaggle-competition/" title="如何在 Kaggle 首战中进入前 10%" target="_blank" rel="external">https://dnc1994.com/2016/04/rank-10-percent-in-first-kaggle-competition/</a>博客中的一幅图。图中是一个基模型得到P1和T1的过程，采用的是5折交叉验证，所以循环了5次，拼接得到P1，测试集预测了5次，取平均得到T1. 而这仅仅只是第二层输入的一列/一个特征，并不是整个训练集。再分析作者的代码也就很清楚了。也就是刚刚提到的两层循环。</p>
+<h4 id="Python-实现"><a href="#Python-实现" class="headerlink" title="Python 实现"></a>Python 实现</h4><p>用了一个Titanic的比赛尝试了代码。</p>
+<pre><code>def get_oof(clf, x_train, y_train, x_test):
+    off_train = np.zeros((ntrain,))
+    oof_test = np.zeros((ntest,))
+    oof_test_skf = np.empty((NFOLDS, ntest)) # 
+    for i, (train_index, test_index) in enumerate(kf):
+        x_tr = x_train[train_index]
+        y_tr = y_train[train_index]
+        x_te = x_train[test_index]
+        clf.fit(x_tr, y_tr)
+        oof_train[test_index] = clf.predict(x_te)
+        oof_test_skf[i,:] = clf.predict(x_test)
+    oof_test[:] = oof_test_skf.mean(axis=0)
+    return oof_train.reshape(-1,1), oof_test.reshape(-1,1)
+</code></pre><h3 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h3><p><a href="https://zhuanlan.zhihu.com/p/25836678" title="机器学习模型融合方法概述" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/25836678</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/19/利用PCA来简化数据/" rel="next" title="利用PCA来简化数据">
+                <i class="fa fa-chevron-left"></i> 利用PCA来简化数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Andy Chen" />
+          <p class="site-author-name" itemprop="name">Andy Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Andy1314Chen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Voting"><span class="nav-number">1.</span> <span class="nav-text">Voting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Averaging"><span class="nav-number">2.</span> <span class="nav-text">Averaging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bagging"><span class="nav-number">3.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boosting"><span class="nav-number">4.</span> <span class="nav-text">Boosting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stacking"><span class="nav-number">5.</span> <span class="nav-text">Stacking</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Python-实现"><span class="nav-number">5.1.</span> <span class="nav-text">Python 实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文地址"><span class="nav-number">6.</span> <span class="nav-text">原文地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Andy Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+  |  本页点击 <span id="busuanzi_value_page_pv"></span> 次
+  |  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
+  <!-- 小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

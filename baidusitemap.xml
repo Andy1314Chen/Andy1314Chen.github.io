@@ -4,7 +4,55 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/09/09/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://yoursite.com/2018/01/28/%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0/</loc>
+    <lastmod>2018-01-28T03:31:26.736Z</lastmod>
+    <data>
+        <display>
+        <title>模型融合方法概述[转]</title>
+        <pubTime>2018-01-27T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>机器学习</tag>
+         
+        <tag>算法</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/09/10/Hands-on%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(2)/</loc>
+    <lastmod>2018-01-19T09:01:16.197Z</lastmod>
+    <data>
+        <display>
+        <title>Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(2)</title>
+        <pubTime>2017-09-09T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://yoursite.com/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/09/09/Hands-on%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1)/</loc>
     <lastmod>2018-01-18T14:43:34.507Z</lastmod>
     <data>
         <display>
@@ -13,9 +61,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -595,9 +643,9 @@
         <title>英特尔校招两道编程题</title>
         <pubTime>2017-09-13T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -617,9 +665,9 @@
         <title>网易校招一道算法题</title>
         <pubTime>2017-09-08T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -641,11 +689,11 @@
         
         <tag>机器学习</tag>
          
+        <tag>sklearn</tag>
+         
         <tag>Python</tag>
          
         <tag>算法</tag>
-         
-        <tag>sklearn</tag>
          
          
            
@@ -1095,9 +1143,9 @@
         <title>迷宫问题</title>
         <pubTime>2016-07-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -1117,9 +1165,9 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
         <tag>Leetcode</tag>
          
@@ -1187,9 +1235,9 @@
         <title>快速整数平方根算法</title>
         <pubTime>2017-06-27T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>C</tag>
+         
+        <tag>算法</tag>
          
          
            
