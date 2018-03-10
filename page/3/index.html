@@ -301,6 +301,487 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/机器学习实战第九章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/22/机器学习实战第九章学习笔记/" itemprop="url">机器学习实战第九章学习笔记(树回归)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-22T00:00:00+08:00">
+                2017-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>第8章介绍的线性回归包含了一些强大的方法，但这些方法创建的模型需要拟合所有的样本点（局部加权线性回归除外）。当数据拥有众多特征并且特征之间关系十分复杂时，构建全局模型的想法就显得太难了。而且实际生活中很多问题都是非线性的，不可能使用全局线性模型来拟合任何数据。</p>
+<p>那一种可行的办法，是将数据集切分成很多易于建模的数据，然后再利用线性回归技术来建模，有点类似于控制理论中用多段线性模型去近似非线性模型。在这种切分方式下，树结构和回归法就相当有用。</p>
+<p><img src="https://thumbs.dreamstime.com/z/%E4%B8%8E%E5%8F%B6%E5%AD%90%E7%9A%84%E7%BB%93%E6%9E%84%E6%A0%91-29400678.jpg" alt=""></p>
+<h2 id="复杂数据的局部性建模"><a href="#复杂数据的局部性建模" class="headerlink" title="复杂数据的局部性建模"></a>复杂数据的局部性建模</h2><p><strong>树回归</strong></p>
+<ul>
+<li>优点：可以对复杂和非线性的数据建模</li>
+<li>缺点：结果不易理解</li>
+<li>适用数据类型：数值型和标称型数据</li>
+</ul>
+<p>第3章决策树使用的是ID3算法，每次选取最佳特征来划分数据，并按照特征的所有可能值来切分。如果按某种特征切分之后，不会再使用该特征切分。这样，会使切分过于迅速。并ID3算法无法处理连续型特征。所以CART(Classification And Regression Trees,分类回归树)使用二元切分法来处理连续型变量。</p>
+<p><strong>树回归的一般方法</strong></p>
+<ol>
+<li>收集数据：采用任意方法收集数据</li>
+<li>准备数据：需要数值型的数据，标称型数据应该映射成二值型数据</li>
+<li>分析数据：绘出数据的二维可视化显示结果，以字典方式生成树</li>
+<li>训练算法：大部分时间都花费在叶节点树模型的构建上</li>
+<li>测试算法：使用测试数据上的R2值来分析模型的效果</li>
+<li>使用算法：使用训练出的树做预测，预测结果还可以用来做很多事情</li>
+</ol>
+<h2 id="连续和离散型特征的树的构建"><a href="#连续和离散型特征的树的构建" class="headerlink" title="连续和离散型特征的树的构建"></a>连续和离散型特征的树的构建</h2><p>首先使用字典来存储树的数据结构，字典包含以下几个部分：</p>
+<ul>
+<li>待切分的特征</li>
+<li>待切分的特征值</li>
+<li>右子树。当不再需要切分的时候，可以是个单值。</li>
+<li>左子树。同上。</li>
+</ul>
+<p>回归树（regression tree),其每个叶节点包含单个值；</p>
+<p>模型树(model tree),其每个叶节点包含一个线性方程；</p>
+<pre><code>&quot;&quot;&quot;
+函数createTree()的伪代码：
+
+找到最佳的待切分特征：
+    如果该节点不能再分，将该节点存为叶节点
+    执行二元切分
+    在右子树调用createTree()方法
+    在左子树调用createTree()方法
+&quot;&quot;&quot;
+import numpy as np
+
+#CART算法的实现代码
+def loadDataSet(fileName):
+    dataMat=[]
+    fr=open(fileName)
+    for line in fr.readlines():
+        curLine=line.strip().split(&#39;\t&#39;)
+        #将每行映射成浮点型
+        fltLine=list(map(float,curLine))
+        dataMat.append(fltLine)
+    return dataMat
+#该函数有3个参数，数据集合、待切分的特征和该特征的某个值
+#在给定特征和特征值的情况下，该函数通过数组过滤方式将上述数据集合切分得到两个子集
+#并返回。
+def binSplitDataSet(dataSet,feature,value):
+    mat0=dataSet[np.nonzero(dataSet[:,feature]&gt;value)[0],:]
+    mat1=dataSet[np.nonzero(dataSet[:,feature]&lt;=value)[0],:]
+    return mat0,mat1
+
+&quot;&quot;&quot;
+leafType:给出建立叶节点的函数
+errType:误差计算函数
+ops：是一个包含树构建所需其他参数的元组
+
+&quot;&quot;&quot;
+
+def createTree(dataSet,leafType=regLeaf,errType=regErr,ops=(1,4)):
+    #选取最佳划分
+    feat,val=chooseBestSplit(dataSet,leafType,errType,ops)
+    #满足停止条件时返回叶节点值，递归返回条件
+    if feat==None:
+        return val
+    retTree={}
+    retTree[&#39;spInd&#39;]=feat
+    retTree[&#39;spVal&#39;]=val
+    #根据最佳划分特征，划分成左右两个数据集
+    lSet,rSet=binSplitDataSet(dataSet,feat,val)
+    #左子树继续递归调用
+    retTree[&#39;left&#39;]=createTree(lSet,leafType,errType,ops)
+    #右子树继续递归调用
+    retTree[&#39;right&#39;]=createTree(rSet,leafType,errType,ops)
+    return retTree
+</code></pre><h2 id="将CART算法用于回归"><a href="#将CART算法用于回归" class="headerlink" title="将CART算法用于回归"></a>将CART算法用于回归</h2><p>要对数据的复杂关系建模，已经决定借用树结构来帮助切分数据，那么如何实现数据的切分呢？<br>怎么才能知道是否已经充分切分呢？这些问题的答案取决于叶节点的建模方式。回归树假设叶节点是常数值，这种策略认为数据中的复杂关系可以用树结构来概括。</p>
+<p>使用数据集的总方差。</p>
+<h4 id="构建树"><a href="#构建树" class="headerlink" title="构建树"></a>构建树</h4><pre><code>&quot;&quot;&quot;
+chooseBestSplit()伪代码：
+对每个特征：
+    对每个特征值：
+        将数据集切分成两份
+        计算切分的误差
+        如果当前误差小于当前最小误差，那么将当前切分设定为最佳切分并更新最小误差
+返回最佳切分的特征和阈值
+
+&quot;&quot;&quot;
+
+#负责生成叶节点
+def regLeaf(dataSet):
+    #均值
+    return np.mean(dataSet[:,-1])
+
+def regErr(dataSet):
+    #总方差
+    return np.var(dataSet[:,-1])*np.shape(dataSet)[0]
+
+def chooseBestSplit(dataSet,leafType=regLeaf,errType=regErr,ops=(1,4)):
+    #tolS是容许的误差下降值，tolN是切分的最少样本数
+    tolS=ops[0];tolN=ops[1]
+    if len(set(dataSet[:,-1].T.tolist()[0]))==1:
+        #若所有值都相等则退出
+        return None,leafType(dataSet)
+    m,n=np.shape(dataSet)
+    S=errType(dataSet)
+    bestS=np.inf;bestIndex=0;bestValue=0
+    #遍历所有特征
+    for featIndex in range(n-1):
+        #遍历特征所有值
+        for splitVal in set((dataSet[:,featIndex].T.A.tolist())[0]):
+            mat0,mat1=binSplitDataSet(dataSet,featIndex,splitVal)
+            if (np.shape(mat0)[0]&lt;tolN) or (np.shape(mat1)[0]&lt;tolN):
+                continue
+            newS=errType(mat0)+errType(mat1)
+            if newS&lt;bestS:
+                bestIndex=featIndex
+                bestValue=splitVal
+                bestS=newS
+    if(S-bestS)&lt;tolS:
+        #如果误差减少不大则退出
+        return None,leafType(dataSet)
+    mat0,mat1=binSplitDataSet(dataSet,bestIndex,bestValue)
+    if(np.shape(mat0)[0]&lt;tolN) or (np.shape(mat1)[0]&lt;tolN):
+        #如果切分出的数据集很小则退出
+        return None,leafType(dataSet)
+    return bestIndex,bestValue
+</code></pre><h2 id="树剪枝"><a href="#树剪枝" class="headerlink" title="树剪枝"></a>树剪枝</h2><p>一棵树如果节点过多，表明该模型可能对数据进行了“过拟合”。通过降低决策树的复杂度来避免过拟合的过程称为剪枝（pruning).前面在函数chooseBestSplit()中的提前终止条件，实际上是在进行一种所谓的预剪枝（prepruning)操作。另一种形式的剪枝需要使用测试集和训练集，称为后剪枝（postpruning).</p>
+<h4 id="后剪枝"><a href="#后剪枝" class="headerlink" title="后剪枝"></a>后剪枝</h4><pre><code>#通过降低决策树的复杂度来避免过拟合的过程称为剪枝(pruning).
+
+&quot;&quot;&quot;
+函数prune()的伪代码如下：
+
+基于已有的树切分测试数据：
+    如果存在任一子集是一棵树，则在该子集递归剪枝过程
+    计算将当前两个叶节点合并后的误差
+    计算不合并的误差
+    如果合并会降低误差的话，就将叶节点合并
+&quot;&quot;&quot;
+#回归树剪枝函数
+
+#用于判断obj是否是一棵树
+def isTree(obj):
+    return (type(obj).__name__==&#39;dict&#39;)
+
+def getMean(tree):
+    if isTree(tree[&#39;right&#39;]):
+        tree[&#39;right&#39;]=getMean(tree[&#39;right&#39;])
+    if isTree(tree[&#39;left&#39;]):
+        tree[&#39;left&#39;]=getMean(tree[&#39;left&#39;])
+    return (tree[&#39;left&#39;]+tree[&#39;right&#39;])/2.0
+
+def prune(tree, testData):
+    if np.shape(testData)[0] == 0: 
+        return getMean(tree) #if we have no test data collapse the tree
+
+    if (isTree(tree[&#39;right&#39;]) or isTree(tree[&#39;left&#39;])):#if the branches are not trees try to prune them
+        lSet, rSet = binSplitDataSet(testData, tree[&#39;spInd&#39;], tree[&#39;spVal&#39;])
+
+    if isTree(tree[&#39;left&#39;]): 
+        tree[&#39;left&#39;] = prune(tree[&#39;left&#39;], lSet)
+
+    if isTree(tree[&#39;right&#39;]):
+        tree[&#39;right&#39;] =  prune(tree[&#39;right&#39;], rSet)
+
+    #if they are now both leafs, see if we can merge them
+    if (not isTree(tree[&#39;left&#39;])) and (not isTree(tree[&#39;right&#39;])):
+        lSet, rSet = binSplitDataSet(testData, tree[&#39;spInd&#39;], tree[&#39;spVal&#39;])
+        errorNoMerge = np.sum(np.power(lSet[:,-1] - tree[&#39;left&#39;],2)) +\
+            np.sum(np.power(rSet[:,-1] - tree[&#39;right&#39;],2))
+        treeMean = (tree[&#39;left&#39;]+tree[&#39;right&#39;])/2.0
+
+        errorMerge = np.sum(np.power(testData[:,-1] - treeMean,2))
+        if errorMerge &lt; errorNoMerge: 
+            print(&quot;merging&quot;)
+            return treeMean
+        else: return tree
+    else: return tree    
+</code></pre><p>函数getMean()是一个递归函数，从上往下遍历树直到叶节点为止。如果找到两个叶节点则计算他们的平均值。</p>
+<h2 id="模型树"><a href="#模型树" class="headerlink" title="模型树"></a>模型树</h2><p>用树来对数据建模，除了把叶节点简单地设为常数值之外，还有一种方法是把叶节点设定为分段线性函数，这里所谓的分段线性(piecewise linear)是指模型由多个线性片段组成。模型树的可解释性是它优于回归树的特点之一。此外，模型树也具有更高的预测准确度。</p>
+<p>为了找到最佳切分，对于给定的数据集，应该先用线性的模型来对它进行拟合，然后计算真实的目标值与模型预测值间的差值。最后将这些差值的平方求和就得到了所需的误差。根据这个误差去进行切分。</p>
+<pre><code>#树模型
+
+#模型树的叶节点生成函数
+def linearSolve(dataSet):
+    m,n=np.shape(dataSet)
+    X=np.mat(np.ones((m,n)));Y=np.mat(np.ones((m,1)))
+    X[:,1:n]=dataSet[:,0:n-1];Y=dataSet[:,-1]
+    xTx=X.T*X
+    if np.linalg.det(xTx)==0.0:
+        raise NameError(&#39;This matrix is singular, cannot do inverse,\n\
+                        try increasing the second value of ops&#39;)
+    ws=xTx.I*(X.T*Y)
+    return ws,X,Y
+
+def modelLeaf(dataSet):
+    ws,X,Y=linearSolve(dataSet)
+    return ws
+
+def modelErr(dataSet):
+    ws,X,Y=linearSolve(dataSet)
+    yHat=X*ws
+    return np.sum(np.power(Y-yHat,2))
+</code></pre><p>模型树、回归树以及第8章的其他模型，哪一种模型更好？一个比较客观的方法是计算相关系数，也称为R2值。</p>
+<h2 id="示例：树回归与标准回归的比较"><a href="#示例：树回归与标准回归的比较" class="headerlink" title="示例：树回归与标准回归的比较"></a>示例：树回归与标准回归的比较</h2><p>#树回归与标准回归的比较</p>
+<pre><code>def regTreeEval(model,inDat):
+    return float(model)
+
+def modelTreeEval(model,inDat):
+    n=np.shape(inDat)[1]
+    X=np.mat(np.ones((1,n+1)))
+    X[:,1:n+1]=inDat
+    return float(X*model)
+
+def treeForeCast(tree,inData,modelEval=regTreeEval):
+    if not isTree(tree):
+        return modelEval(tree,inData)
+    if inData[tree[&#39;spInd&#39;]]&gt;tree[&#39;spVal&#39;]:
+        if isTree(tree[&#39;left&#39;]):
+            return treeForeCast(tree[&#39;left&#39;],inData,modelEval)
+        else:
+            return modelEval(tree[&#39;left&#39;],inData)
+    else:
+        if isTree(tree[&#39;right&#39;]):
+            return treeForeCast(tree[&#39;right&#39;],inData,modelEval)
+        else:
+            return modelEval(tree[&#39;right&#39;],inData)
+
+def createForeCast(tree,testData,modelEval=regTreeEval):
+    m=len(testData)
+    yHat=np.mat(np.zeros((m,1)))
+    for i in range(m):
+        yHat[i,0]=treeForeCast(tree,np.mat(testData[i]),modelEval)
+    return yHat
+</code></pre><p><img src="https://i.imgur.com/1zTyzTl.jpg" alt=""></p>
+<p>对比结果，模型树要比回归树好一些，而回归树会比简单的线性模型更有效。</p>
+<h2 id="使用Python的Tkinter库创建GUI"><a href="#使用Python的Tkinter库创建GUI" class="headerlink" title="使用Python的Tkinter库创建GUI"></a>使用Python的Tkinter库创建GUI</h2><ol>
+<li>收集数据：所提供的文本文件</li>
+<li>准备数据：用Python解析上述文件，得到数值型数据</li>
+<li>分析数据：用Tkinter构建一个GUI来展示模型和数据</li>
+<li>训练算法：训练一棵回归树和一棵模型树，并与数据集一起展示出来</li>
+<li>测试算法：无</li>
+<li>使用算法：GUI使得人们可以在预剪枝时测试不同参数的影响，还可以帮助我们选择模型的类型。</li>
+</ol>
+<p>Python程序</p>
+<pre><code>#用于构建树管理界面的Tkinter小部件
+import numpy as np
+from tkinter import *
+import regTrees
+import matplotlib
+matplotlib.use(&#39;TkAgg&#39;)
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
+def reDraw(tolS,tolN):
+    reDraw.f.clf()        # clear the figure
+    reDraw.a = reDraw.f.add_subplot(111)
+    if chkBtnVar.get():
+        if tolN &lt; 2: tolN = 2
+        myTree=regTrees.createTree(reDraw.rawDat, regTrees.modelLeaf,\
+                                   regTrees.modelErr, (tolS,tolN))
+        yHat = regTrees.createForeCast(myTree, reDraw.testDat, \
+                                       regTrees.modelTreeEval)
+    else:
+        myTree=regTrees.createTree(reDraw.rawDat, ops=(tolS,tolN))
+        yHat = regTrees.createForeCast(myTree, reDraw.testDat)
+    reDraw.a.scatter(reDraw.rawDat[:,0].A, reDraw.rawDat[:,1].A, s=5) #use scatter for data set
+    reDraw.a.plot(reDraw.testDat, yHat, linewidth=2.0) #use plot for yHat
+    reDraw.canvas.show()
+
+def getInputs():
+    try:
+        tolN=int(tolNentry.get())
+    except:
+        tolN=10
+        print(&quot;enter Integer for tolN&quot;)
+        tolNentry.delete(0,END)
+        tolNentry.insert(0,&#39;10&#39;)
+    try:
+        tolS=float(tolSentry.get())
+    except:
+        tolS=1.0
+        print(&quot;enter Float for tols&quot;)
+        tolSentry.delete(0,END)
+        tolSentry.insert(0,&#39;1.0&#39;)
+    return tolN,tolS
+
+
+def drawNewTree():
+    tolN,tolS=getInputs()
+    reDraw(tolS,tolN)
+
+root=Tk()
+
+reDraw.f=Figure(figsize=(5,4),dpi=100)
+reDraw.canvas=FigureCanvasTkAgg(reDraw.f,master=root)
+reDraw.canvas.show()
+reDraw.canvas.get_tk_widget().grid(row=0,columnspan=3)
+
+# Label(root,text=&quot;Plot Place Holder&quot;).grid(row=0,columnspan=3)
+Label(root,text=&quot;tolN&quot;).grid(row=1,column=0)
+tolNentry=Entry(root)
+tolNentry.grid(row=1,column=1)
+tolNentry.insert(0,&#39;10&#39;)
+Label(root,text=&#39;tolS&#39;).grid(row=2,column=0)
+tolSentry=Entry(root)
+tolSentry.grid(row=2,column=1)
+tolSentry.insert(0,&#39;1.0&#39;)
+Button(root,text=&quot;ReDraw&quot;,command=drawNewTree).grid(row=1,column=2,\
+      rowspan=3)
+
+chkBtnVar=IntVar()
+chkBtn=Checkbutton(root,text=&quot;Model Tree&quot;,variable=chkBtnVar)
+chkBtn.grid(row=3,column=0,columnspan=2)
+
+reDraw.rawDat=np.mat(regTrees.loadDataSet(&#39;sine.txt&#39;))
+reDraw.testDat=np.arange(np.min(reDraw.rawDat[:,0]),\
+                         np.max(reDraw.rawDat[:,0]),0.01)
+reDraw(1.0,10)
+
+
+
+
+root.mainloop()
+</code></pre><p>模型树</p>
+<p><img src="https://i.imgur.com/OByobkF.jpg" alt=""></p>
+<p>回归树</p>
+<p><img src="https://i.imgur.com/wmqD30M.jpg" alt=""></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>数据集中经常包含一些复杂的相互关系，使得输入数据和目标变量之间呈现非线性关系。对这些复杂的关系建模，一种可行的方式是使用树来对预测值分段，包括分段常数或分段直线。一般采用树结构来对这种数据建模。相应地，若叶节点使用的模型是分段常数则称为回归树，若叶节点使用的模型是线性回归方程则称为模型树。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/机器学习实战第八章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1953,6 +2434,214 @@ final_rmse = np.sqrt(final_mse)
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/09/网易一道算法题/" itemprop="url">网易校招一道算法题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-09T00:00:00+08:00">
+                2017-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>题目是：</p>
+<pre><code>小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行
+，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标
+(x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪
+物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。
+
+1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。
+
+2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。
+
+小易要进行一次射击，小易在进行射击前，可以使用这两种特权
+
+操作任意次。
+
+小易想知道在他射击的时候最多可以同时消灭多少只怪物。
+</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0427/141746_2boq_3454401.png" alt=""></p>
+<p>看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。</p>
+<p>想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。</p>
+<p>真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。</p>
+<p>后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1；</p>
+<p>C++代码如下：</p>
+<pre><code>作者：雨baby
+链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2
+来源：牛客网
+
+#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+const int maxn = 50 + 5;
+
+int x[maxn], y[maxn];
+int n;
+int solve() {
+    if(n &lt;= 2) return n;
+    int res = 1;
+    for(int i = 0; i &lt; n; i++) {
+        for(int j = 0; j &lt; n; j++) {
+            if(i != j) {
+                int dx1 = x[j] - x[i];
+                int dy1 = y[j] - y[i];
+                for(int k = 0; k &lt; n; k++) {
+                    int cnt = 0;
+                    if(i != k &amp;&amp; j != k) {
+                        for(int r = 0; r &lt; n; r++) {
+                            int dx2 = x[r] - x[i];
+                            int dy2 = y[r] - y[i];
+                            if(dy1 * dx2 == dy2 * dx1) {
+                                cnt++;
+                            } else {
+                                dx2 = x[r] - x[k];
+                                dy2 = y[r] - y[k];
+                                if(dy1 * dy2 == -dx2 * dx1) {
+                                    cnt++;
+                                }
+                            }
+                        }
+                    }
+                    res = max(res, cnt);
+                }
+            }
+        }
+    }
+    return res;
+}
+int main() {
+    cin &gt;&gt; n;
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i];
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i];
+    cout &lt;&lt; solve() &lt;&lt; endl;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/Hands-on第二章学习笔记(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2210,214 +2899,6 @@ full_pipeline = FeatureUnion(trainsformer_list=[
     (&#39;num_pipeline&#39;, num_pipeline),
     (&#39;cat_pipeline&#39;, cat_pipeline),
     ])
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/09/网易一道算法题/" itemprop="url">网易校招一道算法题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-09T00:00:00+08:00">
-                2017-09-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目是：</p>
-<pre><code>小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行
-，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标
-(x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪
-物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。
-
-1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。
-
-2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。
-
-小易要进行一次射击，小易在进行射击前，可以使用这两种特权
-
-操作任意次。
-
-小易想知道在他射击的时候最多可以同时消灭多少只怪物。
-</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0427/141746_2boq_3454401.png" alt=""></p>
-<p>看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。</p>
-<p>想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。</p>
-<p>真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。</p>
-<p>后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1；</p>
-<p>C++代码如下：</p>
-<pre><code>作者：雨baby
-链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2
-来源：牛客网
-
-#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-const int maxn = 50 + 5;
-
-int x[maxn], y[maxn];
-int n;
-int solve() {
-    if(n &lt;= 2) return n;
-    int res = 1;
-    for(int i = 0; i &lt; n; i++) {
-        for(int j = 0; j &lt; n; j++) {
-            if(i != j) {
-                int dx1 = x[j] - x[i];
-                int dy1 = y[j] - y[i];
-                for(int k = 0; k &lt; n; k++) {
-                    int cnt = 0;
-                    if(i != k &amp;&amp; j != k) {
-                        for(int r = 0; r &lt; n; r++) {
-                            int dx2 = x[r] - x[i];
-                            int dy2 = y[r] - y[i];
-                            if(dy1 * dx2 == dy2 * dx1) {
-                                cnt++;
-                            } else {
-                                dx2 = x[r] - x[k];
-                                dy2 = y[r] - y[k];
-                                if(dy1 * dy2 == -dx2 * dx1) {
-                                    cnt++;
-                                }
-                            }
-                        }
-                    }
-                    res = max(res, cnt);
-                }
-            }
-        }
-    }
-    return res;
-}
-int main() {
-    cin &gt;&gt; n;
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i];
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i];
-    cout &lt;&lt; solve() &lt;&lt; endl;
-}
 </code></pre>
           
         
@@ -2777,386 +3258,6 @@ multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/机器学习实战第五章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/07/机器学习实战第五章学习笔记/" itemprop="url">机器学习实战第五章学习笔记(Logistic回归)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
-                2017-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。</p>
-<p>利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要<br>寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。</p>
-<p>Logistic的一般过程：</p>
-<ol>
-<li>收集数据：采用任意方法收集数据。</li>
-<li>准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。</li>
-<li>分析数据：采用任意方法对数据进行分析。</li>
-<li>训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。</li>
-<li>测试数据：一旦训练步骤完成，分类将会很快。</li>
-<li>使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。</li>
-</ol>
-<p><img src="http://images2015.cnblogs.com/blog/1015872/201609/1015872-20160904123448491-2104213729.png" alt=""></p>
-<h2 id="基于Logistic回归和Sigmoid函数的分类"><a href="#基于Logistic回归和Sigmoid函数的分类" class="headerlink" title="基于Logistic回归和Sigmoid函数的分类"></a>基于Logistic回归和Sigmoid函数的分类</h2><ul>
-<li>优点：计算代价不高，易于理解和实现。</li>
-<li>缺点：容易欠拟合，分类精度可能不高。</li>
-<li>适用数据类型：数值型和标称型数据。</li>
-</ul>
-<p>我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function).</p>
-<p><img src="http://img.blog.csdn.net/20161116083548612" alt=""></p>
-<p>而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。</p>
-<p>说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。</p>
-<p>由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。</p>
-<p><img src="http://img.blog.csdn.net/20170425225033129" alt=""></p>
-<p>那么，现在的关键在于，如何确定上述的最佳回归系数？</p>
-<h2 id="基于最优化方法的最佳回归系数确定"><a href="#基于最优化方法的最佳回归系数确定" class="headerlink" title="基于最优化方法的最佳回归系数确定"></a>基于最优化方法的最佳回归系数确定</h2><p>Sigmoid函数：<br><img src="http://img.blog.csdn.net/20170426142819918" alt=""></p>
-<p><img src="http://img.blog.csdn.net/20170426144754539" alt=""></p>
-<p>这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。</p>
-<p><img src="http://img.blog.csdn.net/20170426145716228" alt=""></p>
-<h4 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h4><p>梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。</p>
-<p><img src="http://img.blog.csdn.net/20170426152948300" alt=""></p>
-<p>梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。</p>
-<h4 id="梯度下降算法和梯度上升算法的区别"><a href="#梯度下降算法和梯度上升算法的区别" class="headerlink" title="梯度下降算法和梯度上升算法的区别"></a>梯度下降算法和梯度上升算法的区别</h4><p><img src="http://img.blog.csdn.net/20170426154316798" alt=""></p>
-<p>梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山).</p>
-<h4 id="训练算法：使用梯度上升找到最佳参数"><a href="#训练算法：使用梯度上升找到最佳参数" class="headerlink" title="训练算法：使用梯度上升找到最佳参数"></a>训练算法：使用梯度上升找到最佳参数</h4><pre><code>#梯度上升法的伪代码：
-每个回归系数初始化为1
-重复R次：
-    计算整个数据集的梯度
-    使用α*gradient更新回归系数的向量
-    返回回归系数
-
-import numpy as np
-
-#Logistic回归梯度上升法优化算法
-def loadDataSet():#读取样本数据
-    dataMat=[];labelMat=[]
-    fr=open(&#39;testSet.txt&#39;)
-    for line in fr.readlines():
-        lineArr=line.strip().split()#除去空格后划分
-        dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征
-        labelMat.append(int(lineArr[2]))#标签
-    return dataMat,labelMat
-
-def sigmoid(inX):
-    return 1.0/(1+np.exp(-inX))
-
-def gradAscent(dataMatIn,classLabels):
-    dataMatrix=np.mat(dataMatIn)#100*3
-    labelMat=np.mat(classLabels).transpose()
-    m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数
-    alpha=0.001#步长
-    maxCycles=500#最大迭代次数
-    weights=np.ones((n,1))#回归系数初始化为1
-    for k in range(maxCycles):
-        h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1
-        error=(labelMat-h)#
-        weights=weights+alpha*dataMatrix.transpose()*error
-    return weights
-
-
-#画出数据集和Logistic回归最佳拟合直线的函数
-def plotBestFit(wei):
-    import matplotlib.pyplot as plt
-    weights=wei#.getA()
-    dataMat,labelMat=loadDataSet()
-    dataArr=np.array(dataMat)
-
-    n=np.shape(dataArr)[0]
-    xcord1=[];ycord1=[]
-    xcord2=[];ycord2=[] 
-    for i in range(n):
-        if int(labelMat[i])==1:
-            xcord1.append(dataArr[i,1])
-            ycord1.append(dataArr[i,2])
-        else:
-            xcord2.append(dataArr[i,1])
-            ycord2.append(dataArr[i,2])
-    fig=plt.figure()
-    ax=fig.add_subplot(111)
-    print(len(xcord1),len(ycord1))
-    ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;)
-    ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;)
-    x=np.arange(-3.0,3.0,0.1)
-    y=(-weights[0]-weights[1]*x)/weights[2]
-    ax.plot(x,y)
-    plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;);
-    plt.show()
-</code></pre><p><img src="http://img.blog.csdn.net/20170502140250228" alt=""></p>
-<h4 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h4><p>回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是<img src="http://img.blog.csdn.net/20150414211501282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTHU1OTcyMDM5MzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。</p>
-<p>那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数：<img src="http://img.blog.csdn.net/20170427114316036" alt=""></p>
-<p>观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。</p>
-<p>这个分段函数还可以简写为：<img src="http://img.blog.csdn.net/20170427120139821" alt=""></p>
-<p>那么对于m条训练样本而言，代价函数就是m个预测代价的累加和：<br><img src="http://img.blog.csdn.net/20170427160158802" alt=""></p>
-<p>为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导：<br><img src="http://img.blog.csdn.net/20170427125124391" alt=""></p>
-<p>所以结果就是:<img src="http://img.blog.csdn.net/20170427160242364" alt=""></p>
-<pre><code>weights=weights+alpha*dataMatrix.transpose()*error
-</code></pre><p><img src="http://img.blog.csdn.net/20170427163508100" alt=""></p>
-<p>是一致的！！</p>
-<p><img src="http://img.blog.csdn.net/20170427162423610" alt=""></p>
-<h4 id="训练算法：随机梯度上升"><a href="#训练算法：随机梯度上升" class="headerlink" title="训练算法：随机梯度上升"></a>训练算法：随机梯度上升</h4><p>梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。</p>
-<pre><code>#随机梯度上升算法伪代码：
-所有回归系数初始化为1
-对数据集中每个样本
-    计算该样本的梯度
-    使用alpha*gradient更新回归系数值
-返回回归系数值
-
-#随机梯度上升算法
-def stocGradAscent0(dataMatrix,classLabels):
-    m,n=np.shape(dataMatrix)
-    alpha=0.01#步长
-    weights=np.ones(n)#1*n
-    X=[]#保持weights的历史数据
-    for j in range(300):#迭代300次
-        for i in range(m):
-            h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = 
-            error=classLabels[i]-h
-            weights=weights+alpha*error*dataMatrix[i]
-            X.append(weights)
-    return weights
-</code></pre><p>这段代码与梯度上升算法很相似，但是也有些区别：</p>
-<ol>
-<li>这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本)</li>
-<li>没有矩阵的转换过程，所有变量的数据类型都是NumPy数组</li>
-</ol>
-<p><strong>但是有个问题，为什么随机梯度上升算法也可以达到最优呢？</strong>书中并没有给出相关解释。</p>
-<p><img src="http://img.blog.csdn.net/20170502170148006" alt=""></p>
-<p>在迭代200次过程中，weights=[X0,X1,X2]变化曲线；<br>而我自己的300次跌打过程中，变化曲线是：</p>
-<p>X0:<br><img src="https://i.imgur.com/QgNPopg.png" alt=""></p>
-<p>X1:<img src="https://i.imgur.com/iAz1YYD.png" alt=""></p>
-<p>X2:<img src="https://i.imgur.com/Kug7oOn.png" alt=""></p>
-<p>从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。</p>
-<p>因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。</p>
-<p>代码如下：</p>
-<pre><code>#改进的随机梯度上升算法
-def stocGradAscent1(dataMatrix,classLabels,numIter=150):
-    m,n=np.shape(dataMatrix)
-    weights=np.ones(n)
-    X=[]
-    for j in range(numIter):
-        dataIndex=list(range(m))
-        for i in range(m):
-            alpha=4/(1.0+j+i)+0.01
-            randIndex=int(np.random.uniform(0,len(dataIndex)))
-            h=sigmoid(sum(dataMatrix[randIndex]*weights))
-            error=classLabels[randIndex]-h
-            weights=weights+alpha*error*dataMatrix[randIndex]
-            X.append(weights)
-            del dataIndex[randIndex]
-    X=np.array(X)
-    return weights
-</code></pre><p>改进之处有两个方面，<strong>每次迭代时调整alpha</strong>和<strong>随机选取更新</strong>。</p>
-<p>步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。</p>
-<p>通过随机选取样本来更新回归系数，可以减少周期性的波动。</p>
-<p><img src="http://img.blog.csdn.net/20170502193141309" alt=""></p>
-<h2 id="示例：从疝气病症预测病马的死亡率"><a href="#示例：从疝气病症预测病马的死亡率" class="headerlink" title="示例：从疝气病症预测病马的死亡率"></a>示例：从疝气病症预测病马的死亡率</h2><p>使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。</p>
-<p>使用Logistic回归估计马疝气病的死亡率</p>
-<ol>
-<li>收集数据：UCI机器学习数据库</li>
-<li>准备数据：用Python解析文本文件并填充缺失值</li>
-<li>分析数据：可视化并观察数据</li>
-<li>训练算法：使用优化算法，找到最佳的系数</li>
-<li>测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。</li>
-<li>使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。</li>
-</ol>
-<p>(数据集中有30%的值是缺失的)</p>
-<h4 id="准备数据：处理数据中的缺失值"><a href="#准备数据：处理数据中的缺失值" class="headerlink" title="准备数据：处理数据中的缺失值"></a>准备数据：处理数据中的缺失值</h4><p>由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题：</p>
-<ul>
-<li>使用可用特征的均值来填充缺失值；</li>
-<li>使用特殊值来填补缺失值，如-1；</li>
-<li>忽略有缺失值的样本；</li>
-<li>使用相似样本的均值添补缺失值；</li>
-<li>使用另外的机器学习算法预测缺失值；</li>
-</ul>
-<p>在数据预处理阶段，所有缺失值用实数0代替。原因有二：</p>
-<ol>
-<li>根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新；</li>
-<li>sigmoid(0)=0.5,对结果不具有任何倾向性；</li>
-</ol>
-<p>对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。</p>
-<h4 id="测试算法：用Logistic回归进行分类"><a href="#测试算法：用Logistic回归进行分类" class="headerlink" title="测试算法：用Logistic回归进行分类"></a>测试算法：用Logistic回归进行分类</h4><pre><code>#Logistic回归分类函数
-def classifyVector(inX,weights):
-    prob=sigmoid(sum(inX*weights))
-    if prob&gt;0.5:
-        return 1.0
-    else:
-        return 0.0
-
-def colicTest():
-    frTrain=open(&#39;horseColicTraining.txt&#39;)
-    frTest=open(&#39;horseColicTest.txt&#39;)
-    trainingSet=[];trainingLabels=[]
-    for line in frTrain.readlines():
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):#21个特征
-            lineArr.append(float(currLine[i]))
-        trainingSet.append(lineArr)
-        trainingLabels.append(float(currLine[21])) #标签               
-    trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500)
-    errorCount=0;numTestVec=0.0
-    for line in frTest.readlines():
-        numTestVec+=1.0
-        currLine=line.strip().split(&#39;\t&#39;)
-        lineArr=[]
-        for i in range(21):
-            lineArr.append(float(currLine[i]))
-        if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]):
-                errorCount+=1
-    errorRate=(float(errorCount)/numTestVec)
-    print(&quot;the error rate of this test is: %f&quot; % errorRate)
-    return errorRate
-
-def multiTest():
-    numTests=10;errorSum=0.0
-    for k in range(numTests):
-        errorSum+=colicTest()
-    print(&quot;after %d iterations the average error rate is: %f&quot; 
-          % (numTests,errorSum/float(numTests)))
-</code></pre><h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://blog.csdn.net/lu597203933/article/details/38468303#comments" target="_blank" rel="external">http://blog.csdn.net/lu597203933/article/details/38468303#comments</a></li>
-<li><a href="http://blog.csdn.net/CharlieLincy/article/details/70767791#comments" target="_blank" rel="external">http://blog.csdn.net/CharlieLincy/article/details/70767791#comments</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3207,7 +3308,7 @@ def multiTest():
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

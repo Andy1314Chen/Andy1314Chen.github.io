@@ -301,6 +301,155 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/百度之星开发者大赛-资格赛2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/10/百度之星开发者大赛-资格赛2/" itemprop="url">2017百度之星开发者大赛--资格赛2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T00:00:00+08:00">
+                2017-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UNIT/" itemprop="url" rel="index">
+                    <span itemprop="name">UNIT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>7月28日，百度之星小姐姐给打过电话后，连着搞了两天，其实也没两天，还帮老板整理了好些文档资料。前一篇博客上也说了，搞了69.06分，第9名。然后想着反正肯定可以进前100啦，就没怎么管理了。优化方案也是按着百度AI开发论坛上提供的<a href="http://developer.baidu.com/forum/topic/show?topicId=241520" target="_blank" rel="external">UNIT机器人优化指南</a>结合UNIT使用手册做的。</p>
+<p>最后结果：</p>
+<p><img src="http://i.imgur.com/R6cgjjZ.png" alt="第六名"></p>
+<p>事先，基本的意图、词槽、Bot回应等等按照规定做好。实际中，我开始就没认真搞好，漏了一个错误的词槽。但是在最后资格赛结束之前发现了，改正之后提高了1点几个分数。</p>
+<p>基本的对话系统搞定之后，后期的优化主要分为两块：</p>
+<ul>
+<li>增加对话样本集</li>
+<li>增加对话模板集</li>
+</ul>
+<p>对话样本集对应着样本学习，假设对话样本足够多、样本质量非常高，那通过神经网络学习得到的模型自然也不会差。</p>
+<p>对话模板集则是对应着规则学习，正常人对话时，会有一定的语言结构，如，主语+谓语+宾语结构。特别是在一个特定的场景下，可以充分考虑到用户的对话的模板，进行一些提炼，得到一些语言“公式”。显然这种对话模板集方式的泛化能力是有限的，但是它的优点在于可以保证在符合“公式”的对话时不会出现错误。</p>
+<p>我所侧重的是第一个方法，即增加对话样本集。使用了目前UNIT的隐藏功能，推荐对话样本。自己可以先整一个小的对话样本，然后让UNIT平台根据自己DIY的对话样本生成一些样本，然后自己去标注。大约标注了3500个样本吧，自己整的样本比例是按照百度提供的对话样本中各个意图的比例整的，保证同分布吧。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/百度之星开发者大赛-资格赛/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2615,159 +2764,6 @@ return result;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/30/fallofgiants/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/fallofgiants/" itemprop="url">世纪三部曲</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T00:00:00+08:00">
-                2017-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/book/" itemprop="url" rel="index">
-                    <span itemprop="name">book</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="http://i.imgur.com/Bn78LQM.jpg" alt=""></p>
-<p>第一部 <strong>巨人的陨落</strong></p>
-<blockquote>
-<p>在第一次世界大战的硝烟中，每一个迈向死亡的生命都在热烈地生长——威尔士的矿工少年、刚失恋的美国法律系大学生、穷困潦倒的俄国兄弟、富有英俊的英格兰伯爵，以及痴情的德国特工……从充满灰尘和危险的煤矿到闪闪发光的皇室宫殿，从代表着权力的走廊到爱恨纠缠的卧室，五个家族迥然不同又纠葛不断的命运逐渐揭晓，波澜壮阔地展现了一个我们自认为了解，但从未如此真切感受过的20世纪。</p>
-</blockquote>
-<p><img src="http://i.imgur.com/jUeym5A.jpg" alt=""></p>
-<p>第二部 <strong>世界的凛冬</strong></p>
-<blockquote>
-<p>我亲眼目睹，每一个迈向死亡的生命都在热烈地生长。《世界的凛冬》是火遍全球的20世纪人类史诗“世纪三部曲”的第二部，是《巨人的陨落》的续篇。整个20世纪的吉光片羽，都被肯·福莱特写进了这部伟大的小说里。一切都始于那个裂变中的大时代——希特勒上台，爱德华八世退位，原子弹在广岛和长崎爆炸……世界剧烈改变，我该怎么办？<br>这正是他们的困惑——一群处于人生黄金时代的少男少女，来自德国、美国、英国、苏俄和威尔士的五大家族，他们父辈的命运因一战而彻底改变。如今，世界再次破碎，甚至更加暴烈和残酷。然而，这就是他们的时代！在时间的永恒流动中，每个人都在创造历史。所以，为什么不一起来，会一会命运？</p>
-</blockquote>
-<p><img src="http://i.imgur.com/ANzR4SP.jpg" alt=""></p>
-<p>第三部 <strong>永恒的边缘</strong></p>
-<blockquote>
-<p>《巨人的陨落》的大结局！我亲眼目睹，每一个迈向死亡的生命都在热烈地生长。“世纪三部曲”终于迎来了一个完美结局。如果说《巨人的陨落》是祖辈的传奇，《世界的凛冬》是父辈的人生，那么，《永恒的边缘》就是新一代的奋斗。<br>真正残酷和激烈的世界大战，是思想的大战。来自美国、德国、苏联、英国和威尔士的五大家族，又一次迎来了新的考验。东西德分裂、柏林墙、苏联秘密警察、刺杀肯尼迪、民权运动、古巴导弹危机、入侵黎巴嫩、弹劾尼克松……此外，第三代生活中还有摇滚、嬉皮士、跨种族婚恋、性解放，以及对过去的误会与和解。<br>说到底，世上只有一种英雄主义，就是在认清生活真相之后，依然热爱生活。</p>
-</blockquote>
-<p>很棒的小说，作者是<strong>肯•福莱特（Ken Follett，1949－）现象级畅销小说大师，爱伦坡终身大师奖得主</strong>，完全可以当做历史书来读。当年的当年明月写的《明朝那些事儿》,以一种诙谐幽默的手法展现了明朝几百年历史，让人们发现原来历史还可以这么写。当时也是连着一段时间将《明朝那些事儿》一系列书刷完，好像是7本吧，后来过了一段时间又刷了一遍。而肯.福莱特的《世纪三部曲》在我看来和《明朝那些事儿》同样成功，通过几个家族的百年兴衰，将一战、二战及冷战历史描述的非常细致。相比历史教科书，这3部书，在历史中加入了更多的人性，与其说《世纪三部曲》是一本历史长篇小说，更不如说其是一本爱情长篇小说。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2818,7 +2814,7 @@ return result;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
