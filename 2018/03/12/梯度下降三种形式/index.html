@@ -94,13 +94,17 @@
 
 
 
-<meta property="og:type" content="website">
+<meta name="description" content="在机器学习算法中，通常会采用梯度下降法来对算法进行训练，找到最优解。但是在实际使用中，梯度下降法具有3种不同的形式，也有着各自的优缺点。 以线性回归算法为例，对3种梯度下降算法进行比较。 一般线性回归函数的假设函数为： $$ h_{\theta} = \sum^{n}_{j=0} \theta _j x_j $$ 对应的損失函數（能量函數）形式為：$$ J_{train}(0) = \frac{1">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Andy&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/比赛/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/梯度下降三种形式/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="在机器学习算法中，通常会采用梯度下降法来对算法进行训练，找到最优解。但是在实际使用中，梯度下降法具有3种不同的形式，也有着各自的优缺点。 以线性回归算法为例，对3种梯度下降算法进行比较。 一般线性回归函数的假设函数为： $$ h_{\theta} = \sum^{n}_{j=0} \theta _j x_j $$ 对应的損失函數（能量函數）形式為：$$ J_{train}(0) = \frac{1">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-12T07:31:22.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Andy&#39;s blog">
+<meta name="twitter:description" content="在机器学习算法中，通常会采用梯度下降法来对算法进行训练，找到最优解。但是在实际使用中，梯度下降法具有3种不同的形式，也有着各自的优缺点。 以线性回归算法为例，对3种梯度下降算法进行比较。 一般线性回归函数的假设函数为： $$ h_{\theta} = \sum^{n}_{j=0} \theta _j x_j $$ 对应的損失函數（能量函數）形式為：$$ J_{train}(0) = \frac{1">
 
 
 
@@ -128,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/比赛/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/梯度下降三种形式/"/>
 
 
 
@@ -136,7 +140,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>标签: 比赛 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -161,7 +165,7 @@
     
   
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,44 +293,214 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>比赛<small>标签</small>
-      </h1>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/梯度下降三种形式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T11:27:58+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>在机器学习算法中，通常会采用梯度下降法来对算法进行训练，找到最优解。但是在实际使用中，梯度下降法具有3种不同的形式，也有着各自的优缺点。</p>
+<p>以线性回归算法为例，对3种梯度下降算法进行比较。</p>
+<p>一般线性回归函数的假设函数为：</p>
+<p>$$ h_{\theta} = \sum^{n}_{j=0} \theta _j x_j $$</p>
+<p>对应的損失函數（能量函數）形式為：<br>$$ J_{train}(0) = \frac{1}{2m} \sum^{m}_{i=1} {(h_{\theta}(x^{(i)}) - y^{(i)} )}^2 $$</p>
+<ol>
+<li>批量梯度下降法BGD</li>
+</ol>
+<p>批量梯度下降法（Batch Gradient Descent, BGD)是梯度下降法最原始的形式，具體思路是在更新每一參數時都使用所有的樣本進行更新，數學形式如下：<br>（1）對上述的損失函數求偏導：</p>
+<p>$$ \frac{\alpha J(\theta)}{\alpha {\theta}_j} = - \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j $$</p>
+<p>(2)由於是最小化風險函數，所以按照每個參數\(\theta\)的梯度方向來更新每個\(\theta\):</p>
+<p>$$ \frac{\partial {\theta}_j}{\partial \theta} = {\theta}_j + \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j $$</p>
+<p>從上面公式可以注意到，得到的是一個全局最優解，但是每迭代一次，都要用到訓練集所有的數據，如果樣本數目\(m\)很大，那麼可想而知這種方法的迭代速度！所以，<br>這就引入了另外一種方法，隨機梯度下降。</p>
+<p>具體的偽代碼形式為：</p>
+<pre><code>repeat
+{
+</code></pre><p>\( \frac{\partial {\theta}_j}{\partial \theta} = {\theta}_j + \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j \)<br> (for every \( j=0, … , n\) )</p>
+<pre><code>}
+</code></pre><p><strong>優點</strong>：全局最優解；易於並行實現；</p>
+<p><strong>缺點</strong>：當樣本數目很多時，訓練過程會很慢。</p>
+<ol>
+<li>隨機梯度下降法SGD</li>
+</ol>
+<p>由於批量梯度下降法在更新每一個參數時，都需要所有的訓練數據樣本，所以訓練過程會隨著樣本數量的加大而變得異常的緩慢。隨機梯度下降法（Stochastic Gradient Descent, SGD)正是為了解決批量梯度下降法這一弊端而提出的。</p>
+<p>將上面的損失函數寫為如下形式：</p>
+<p>$$ J(\theta) = \frac{1}{m} \sum^{m}_{i=1} \frac{1}{2}{(y^i - h_{\theta}(x^i))}^2 = \frac{1}{m} \sum^{m}_{i=1} cost(\theta,(x^i,y^i)) $$</p>
+<p>$$ cost(\theta,(x^i,y^i)) = \frac{1}{2}{(y^i - h_{\theta}(x^i))}^2 $$</p>
+<p>具體過程如下：</p>
+<ul>
+<li>Randomly shuffle dataset;</li>
+<li>repeat{ <ul>
+<li>for i=1, … , m{<ul>
+<li>\( \frac{\alpha {\theta}_j}{\alpha \theta} = {\theta}_j + (y^i - h_{theta}(x^i))x^i_j \)</li>
+<li>(for j=0, … , n)</li>
+</ul>
+</li>
+<li>}}</li>
+</ul>
+</li>
+</ul>
+<p>隨機梯度下降是通過每個樣本本來迭代更新一次，如果樣本量很大的情況（例如幾十萬），可能只用其中幾萬條或者幾千條的樣本，就已經將\(\theta\)迭代到最優解了，對比<br>上面的批量梯度下降，迭代一次需要用到十幾萬訓練樣本，一次迭代不可能最優，如果迭代10次的話就需要遍歷訓練樣本10次。但是SGD伴隨的一個問題是<br>噪音較BGD要多，使得SGD并不是每次迭代都向著整體最優化方向進行。</p>
+<p><strong>優點</strong>：訓練速度快；<br><strong>缺點</strong>：準確度下降，并不是全局最優；不易於並行實現；</p>
+<ol>
+<li>小批量梯度下降法MBGD</li>
+</ol>
+<p>有上述的兩種梯度下降法可以看出，其各自均有優缺點，那麼能不能在兩種方法的性能之間取得一個折中？<br>即，算法的訓練過程比較快，而且也要保證最終參數訓練的準確率，而這正是小批量梯度下降法<br>（Mini-batch Gradient Descent, MBGD)的初衷。</p>
+<p>MBGD在每次更新參數時，使用b個樣本（一般2-100），其具體過程：</p>
+<ul>
+<li>Say b=10, m=1000</li>
+<li>Repeat{<ul>
+<li>for i=1, 11, 21, 31, … , 991{</li>
+<li>\( {\theta}_j = {\theta}_j - \alpha \frac{1}{10} \sum^{(i+9)}_{k=i}(h_{\theta}(x^{(k)}) - y^{(k)}) x^{(k)}_j \)</li>
+<li>(for every j=0, … , n)</li>
+<li>}</li>
+</ul>
+</li>
+<li>}</li>
+</ul>
+<ol>
+<li>總結</li>
+</ol>
+<ul>
+<li><strong>Batch gradient descent</strong>: Use all examples in each iteration;</li>
+<li><strong>Stochastic gradient descent</strong>: Use 1 example in each iteration;</li>
+<li><strong>Mini-batch gradient descent</strong>: Use b examples in each iteration.</li>
+</ul>
+<h3 id="參考博客"><a href="#參考博客" class="headerlink" title="參考博客"></a>參考博客</h3><ol>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5089753.html" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5089753.html</a></li>
+</ol>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/11/16/超市优化比赛/" itemprop="url">
-              
-                <span itemprop="name">CCF BDCI2017小超市供销存管理优化</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-16T00:00:00+08:00"
-              content="2017-11-16" >
-          11-16
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/预防ubuntu安装过程卡死/" rel="next" title="预防Win10双系统ubuntu安装卡死及安装过程">
+                <i class="fa fa-chevron-left"></i> 预防Win10双系统ubuntu安装卡死及安装过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -334,6 +508,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -354,8 +532,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -446,6 +633,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#參考博客"><span class="nav-number">1.</span> <span class="nav-text">參考博客</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -573,10 +776,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 

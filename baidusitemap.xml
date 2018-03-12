@@ -4,6 +4,21 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/03/12/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E4%B8%89%E7%A7%8D%E5%BD%A2%E5%BC%8F/</loc>
+    <lastmod>2018-03-12T07:31:22.399Z</lastmod>
+    <data>
+        <display>
+        <title></title>
+        <pubTime>2018-03-12T03:27:58.612Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/03/11/%E9%A2%84%E9%98%B2ubuntu%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B%E5%8D%A1%E6%AD%BB/</loc>
     <lastmod>2018-03-10T12:30:23.659Z</lastmod>
     <data>
@@ -729,9 +744,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>算法</tag>
-         
         <tag>sklearn</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
