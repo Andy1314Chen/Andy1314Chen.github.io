@@ -5,14 +5,21 @@
     
   <url>
     <loc>http://yoursite.com/2018/03/12/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E4%B8%89%E7%A7%8D%E5%BD%A2%E5%BC%8F/</loc>
-    <lastmod>2018-03-12T07:31:22.399Z</lastmod>
+    <lastmod>2018-03-12T07:33:17.653Z</lastmod>
     <data>
         <display>
-        <title></title>
-        <pubTime>2018-03-12T03:27:58.612Z</pubTime>
+        <title>梯度下降三种形式</title>
+        <pubTime>2018-03-11T16:00:00.000Z</pubTime>
         
+        <tag>机器学习</tag>
+         
+        <tag>算法</tag>
+         
          
            
+             
+              <breadCrumb title="机器学习" url="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
         </display>
     </data>
     </url>
@@ -744,9 +751,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>算法</tag>
+         
+        <tag>sklearn</tag>
          
         <tag>Python</tag>
          
