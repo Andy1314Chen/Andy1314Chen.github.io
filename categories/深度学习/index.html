@@ -94,28 +94,13 @@
 
 
 
-<meta name="description" content="限制玻尔兹曼机学习笔记 title: 限制玻尔兹曼机学习笔记categories:  深度学习 DBNdate: 2018-03-13tags:  RBM DBN 深度学习   定义与结构限制玻尔兹曼机(RBM)由Geoff Hinton发明，是一种用于降维、分类、回归、协同过滤、特征学习和主题建模的算法。 RBM是有两个层的浅层神经网络，是组成深度置信网络的基础部件。RBM的第一个层被称为可见层">
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Andy&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/2018/03/15/限制玻尔兹曼机/index.html">
+<meta property="og:url" content="http://yoursite.com/categories/深度学习/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="限制玻尔兹曼机学习笔记 title: 限制玻尔兹曼机学习笔记categories:  深度学习 DBNdate: 2018-03-13tags:  RBM DBN 深度学习   定义与结构限制玻尔兹曼机(RBM)由Geoff Hinton发明，是一种用于降维、分类、回归、协同过滤、特征学习和主题建模的算法。 RBM是有两个层的浅层神经网络，是组成深度置信网络的基础部件。RBM的第一个层被称为可见层">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://deeplearning4j.org/img/two_layer_RBM.png">
-<meta property="og:image" content="https://deeplearning4j.org/img/input_path_RBM.png">
-<meta property="og:image" content="https://deeplearning4j.org/img/weighted_input_RBM.png">
-<meta property="og:image" content="https://deeplearning4j.org/img/multiple_inputs_RBM.png">
-<meta property="og:image" content="https://deeplearning4j.org/img/multiple_hidden_layers_RBM.png">
-<meta property="og:image" content="https://deeplearning4j.org/img/reconstruction_RBM.png">
-<meta property="og:image" content="https://deeplearning4j.org/img/KL_divergence_RBM.png">
-<meta property="og:image" content="https://deeplearning4j.org/img/KLD_update_RBM.png">
-<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/12/Dice_Distribution_%28bar%29.svg">
-<meta property="og:image" content="https://deeplearning4j.org/img/sym_bipartite_graph_RBM.png">
-<meta property="og:updated_time" content="2018-03-15T07:07:12.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Andy&#39;s blog">
-<meta name="twitter:description" content="限制玻尔兹曼机学习笔记 title: 限制玻尔兹曼机学习笔记categories:  深度学习 DBNdate: 2018-03-13tags:  RBM DBN 深度学习   定义与结构限制玻尔兹曼机(RBM)由Geoff Hinton发明，是一种用于降维、分类、回归、协同过滤、特征学习和主题建模的算法。 RBM是有两个层的浅层神经网络，是组成深度置信网络的基础部件。RBM的第一个层被称为可见层">
-<meta name="twitter:image" content="https://deeplearning4j.org/img/two_layer_RBM.png">
 
 
 
@@ -143,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/15/限制玻尔兹曼机/"/>
+  <link rel="canonical" href="http://yoursite.com/categories/深度学习/"/>
 
 
 
@@ -151,7 +136,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title> | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>分类: 深度学习 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -176,7 +161,7 @@
     
   
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -304,214 +289,45 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/限制玻尔兹曼机/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
+  <section id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h1>深度学习<small>分类</small>
+      </h1>
+    </div>
 
     
-      <header class="post-header">
+      
 
-        
-        
-          <h1 class="post-title" itemprop="name headline"></h1>
-        
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2018/03/13/限制玻尔兹曼机/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">限制玻尔兹曼机学习笔记</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T10:36:45+08:00">
-                2018-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h3 id="限制玻尔兹曼机学习笔记"><a href="#限制玻尔兹曼机学习笔记" class="headerlink" title="限制玻尔兹曼机学习笔记"></a>限制玻尔兹曼机学习笔记</h3><hr>
-<p>title: 限制玻尔兹曼机学习笔记<br>categories:</p>
-<ul>
-<li>深度学习</li>
-<li>DBN<br>date: 2018-03-13<br>tags: </li>
-<li>RBM</li>
-<li>DBN</li>
-<li>深度学习</li>
-</ul>
-<hr>
-<h2 id="定义与结构"><a href="#定义与结构" class="headerlink" title="定义与结构"></a>定义与结构</h2><p>限制玻尔兹曼机(RBM)由Geoff Hinton发明，是一种用于降维、分类、回归、协同过滤、特征学习和主题建模的算法。</p>
-<p>RBM是有两个层的浅层神经网络，是组成深度置信网络的基础部件。RBM的第一个层被称为可见层(visible layer),又称为输入层，而第二个是隐藏层(hidden layer).</p>
-<p><img src="https://deeplearning4j.org/img/two_layer_RBM.png" alt="two_layer_RBM"></p>
-<p>图中每个圆圈都是一个与神经元相似的单元，称为节点，运算在节点中进行。一个层中的结点与另外一个层中的所有节点分别连接，但与同一层的其他节点并不相连。</p>
-<p><strong>相邻层节点全连接，相同层节点无连接</strong></p>
-<p>同层次节点无连接，这也是限制玻尔兹曼机被称为限制的原因。每个节点对输入进行处理和运算，判定是否继续传输输入的数据，而这种判定一开始是随机的（与输入相乘的初始系数是随机生成的）。</p>
-<p>每个可见层节点负责处理網絡需要學習的數據集中一個項目的一種低層次特征。如果處理的是一個灰度圖像的數據集，則每個可見節點將接收一張圖像中每個像素的像素值。（MNIST圖像有784個像素，所以處理這類圖像的神經網絡的一個可見層必須有784個輸入節點）</p>
-<p>仍然以MNIST數據集為例，看看單個像素值如何通過RBM網絡，在隱藏層節點1中x與一個權重相乘，再與所謂的偏差相加。這兩步運算的結果輸入激活函數，得到節點的輸出，即輸入為x時，通過節點的信號強度。</p>
-<pre><code> 激活函數f((權重矩陣W*輸入x)+偏差b) = 輸出a
-</code></pre><p><img src="https://deeplearning4j.org/img/input_path_RBM.png" alt=""></p>
-<p>再来看看一个隐藏节点如何整合多项输入，每个x分别与各自的权重相乘，乘积之和再与偏差相加，其结果同样经过激活函数运算得到节点的输出值。</p>
-<p><img src="https://deeplearning4j.org/img/weighted_input_RBM.png" alt="Weighted Inputs Combine @Hidden Node"></p>
-<p>由于每个可见节点的输入都被传递至所有的隐藏节点，所以也可将RBM定义为一种对称二分图。在每个隱藏節點中，每個輸入x都會與其項對應的權重W相乘，也就是說，每個輸入x會對應三個權重，因此總共有12個權重（4個輸入節點*3個隱藏節點）。 兩層網絡之間的權重始終都是一個行數等於輸入節點數、列數等於輸出節點數的矩陣。</p>
-<p>每個隱藏節點會接收四個與對應權重相乘后的輸入值。這些乘積之和與一個偏差值相加（保證至少能強制讓一部分節點激活），其結果再經過激活運算得到每個隱藏節點的輸出a.</p>
-<p><img src="https://deeplearning4j.org/img/multiple_inputs_RBM.png" alt="multiple inputs RBM"></p>
-<p>如果這兩層屬於一個深度神經網絡，那麼第一隱藏層的輸出會成為第二隱藏層的輸入，隨後再通過任意數量的隱藏層，直至到達最終的分類層。</p>
-<p><img src="https://deeplearning4j.org/img/multiple_hidden_layers_RBM.png" alt="multiple hidden layers"></p>
-<h2 id="重構-Reconstruction"><a href="#重構-Reconstruction" class="headerlink" title="重構(Reconstruction)"></a>重構(Reconstruction)</h2><p>重点关注限制玻尔兹曼机如何在无监督情况下学习重构数据，在可见层和第一层隐藏层之间进行多次正向和反向传递，而无需加大网络的深度。</p>
-<p>在重构阶段，第一隐藏层的激活值成为反向传递中的输入。这些输入值与同样的权重相乘，每两个相连的结点之间各有一个权重，就像正向传递中输入x的加权运算一样。这些乘积的和再与每个可见层的偏差相加，所得结果就是重构值，亦即原始输入的近似值。</p>
-<p><img src="https://deeplearning4j.org/img/reconstruction_RBM.png" alt="reconstruction RBM"></p>
-<p>由于RBM权重初始值是随机决定的，重构值与原始输入之间的差别通常很大。可以将r值与输入值之差视为重构误差，此误差值随后经由反向传播来修正RBM的权重，如此不断反复，直至误差达到最小。</p>
-<p>由此可见，RBM在正向传递中使用输入值来预测节点的激活值，亦即输入为加权的x时输出的概率：\(p(a|x;w)\)</p>
-<p>但在反向传递时，激活值成为输入，而输出的是对于原始数据的重构值，或者说猜测值。此时，RBM则是在尝试估计激活值为a时输入x的概率，激活值的加权系数与正向传递中的权重相同。第二阶段可以表示为：\(p(x|a;w)\).</p>
-<p>上述两种预测值相结合，可以得到输入x和激活值a的联合概率分布，即\(p(x,a)\).</p>
-<p>重构与回归、分类运算不同。回归运算根据许多输入值估测一个连续值，分类运算是猜测应当为一个特定的输入样例添加哪种具体的标签。</p>
-<p>而重构则是在猜测原始输入的概率分布，亦即同时预测许多不同的点的值。这被称为生成学习，必须和分类器所进行的判别学习区分开来，后者是将输入值映射至标签，用直线将数据点划分为不同的组。</p>
-<p>试想输入数据和重构数据是形状不同的常态曲线，两者仅有部分重叠。</p>
-<p>RBM用Kullback Leibler散度来衡量预测的概率分布与输入值的基准分布之间的距离。相关数据运算的详细说明可参见<a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence" target="_blank" rel="external">维基百科</a></p>
-<p>KL散度衡量两条曲线下方不重叠（即离散）的面积，而RBM的优化算法会尝试将这些离散部分的面积最小化，使共用权重在与第一隐藏层的激活值相乘后，可以得到与原始输入高度近似的结果。下图左半边是一组原始输入的概率分布曲线p, 与之并列的是重构值的的概率分布曲线q；右半边的图则显示了两条曲线之间的差异。</p>
-<p><img src="https://deeplearning4j.org/img/KL_divergence_RBM.png" alt="KL divergence RBM"></p>
-<p>RBM根据权重产生的误差反复调整权重，以此学习估计原始数据的近似值。可以说权重会慢慢开始反映输入的结构，而这种结构被编码为第一个隐藏层的激活值。整个学习过程看上去像是两条概率分布曲线在逐步重合。</p>
-<p><img src="https://deeplearning4j.org/img/KLD_update_RBM.png" alt="KLD_update_RBM"></p>
-<h2 id="概率分布"><a href="#概率分布" class="headerlink" title="概率分布"></a>概率分布</h2><p>掷两枚骰子，其和的概率分布情况如下：</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Dice_Distribution_%28bar%29.svg" alt=""></p>
-<p>也就是说，7是最有可能出现的结果，因为掷出7的组合方式（3+4、1+6、2+5）要多于掷出2到12之间其他数字的方式。任何预测掷骰子结果的公式都需要考虑到数字7的出现频率较高。</p>
-<p>试想有这样一个RBM，其输入数据都是大象和狗的图片，RBM仅有两个输出节点，分别对应一种动物。RBM在正向传递中要回答的问题是：在输入这些像素时，权重应当向哪个节点发送更强的信号？大象的节点还是狗的节点？而RBM在反向传递中要回答的问题是：如果输出是大象，则应当预期出现怎样的像素分布？</p>
-<p>这就是联合概率：给定a时x的概率以及给定x时a的概率，用RBM两层之间的一个共用权重来表示。</p>
-<p>学习重构数据的过程在某种意义上即是学习一组特定图像中有哪些像素通常会同时出现。网络深处隐藏层节点产生的激活值代表了明显的同现关系，例如：“非直线灰色管+大而松垂的耳朵+皱纹“。</p>
-<p>最后一点：RBM有两个偏差值，这是RBM与其他自动编码器的区别所在，隐藏的偏差值帮助在正向传递中生成激活值(因为偏差设定了下限，所以无论数据有多稀疏，至少有一部分节点会被激活), 而可见层的偏差则帮助RBM通过反向传递学习重构数据。</p>
-<h2 id="多层结构"><a href="#多层结构" class="headerlink" title="多层结构"></a>多层结构</h2><p>RBM根据第一个隐藏层的激活值学习了输入数据的数据结构之后，数据即在网络中继续向下传递一层。第一个隐藏层的作用现在相当于可见层。激活值实际上相当于输入，在第二个隐藏层的节点中与权重相乘，得到另一组激活值。</p>
-<p>将特征分组，再将特征组分组，由此连续生成多组激活值的过程是特征层次分析的基础，神经网络用这种方法来学习更为复杂且抽象的数据表达形式。</p>
-<p>每增加一个隐藏层，其权重都会反复进行调整，直到该层能较为准确地模拟出来来自前一层的输入。这是无监督的逐层贪婪预训练方法，不需要标签就可以改进网络的权重，也就是说可以采用未标记、未经人工处理的数据来训练，而现实中大部分的数据都属于这一类别。一般的规律是，算法接触的数据越多，产生的结果越准确，这正是深度学习算法十分厉害的原因之一。</p>
-<p>权重能够近似模拟出数据的特征后，也就为下一步的学习奠定了良好基础，比如可以在随后的有监督学习阶段使用深度置信网络来对图像进行分类。</p>
-<p>RBM有许多用途，其中最强的功能之一就是对权重进行合理的初始化，为之后的学习和分类做好准备。从某种意义上来说，RBM的作用与反向传播相似：让权重能够有效地模拟数据。可以认为预训练和反向传播是实现同一目的的不同方法，二者可以相互替代。</p>
-<p>下面这幅对称二分二向图综合显示了玻尔兹曼机的运作方式。</p>
-<p><img src="https://deeplearning4j.org/img/sym_bipartite_graph_RBM.png" alt=""></p>
-<h2 id="限制玻尔兹曼机知识概要"><a href="#限制玻尔兹曼机知识概要" class="headerlink" title="限制玻尔兹曼机知识概要"></a>限制玻尔兹曼机知识概要</h2><ol>
-<li>神经网络的两大基本功能是：特征变换和分类（回归）预测。每个基本的神经网络模型至少具备两者功能之一。而RBM则是用于进行特征变换的。考虑输入特征为\(X\)以及转化的特征为\(Y\), RBM的任务是找到\(X -&gt; Y\)的映射关系。基本的神经网络模型，通常用决策函数\(Y=f(X)\)表示这种映射关系，而对于RBM来说，则用联合概率分布\(P(X,Y)\)表示这种映射关系。无论是判别函数还是联合概率分布，都是可以描述变量关系的，且在任意条件下二者可以互相转换。因此，RBM从概率的角度去描述变量之间的关系，提供了另外一种解决特征提取问题的思路。</li>
-<li>存在两个变量表示层，Visibel Layer和Hidden Layer.层内变量无连接，层间变量全连接，和传统MLP的结构是一样的，但是RBM和MLP的理论基础是不同的。MLP是基于决策函数的变量转换，而RBM是基于概率分布的变量转换。Visible Layer表示输入变量层，Hidden Layer表示被转换的变量层，每个节点对应一个维度，同一个层内，各个维度之间相互独立。图结构表示了变量之间的依赖关系，但是无法描述\(P(X,Y)\)具体形式。如果知道\(P(X,Y)\)的具体形式，则可以很容易通过极大似然函数求解概率分布的参数，而在不知道\(P(X,Y)\)具体形式只知道变量间的依赖关系时，则可以借助Energy Based Model(EBM)构建概率分布的形式。（根据概率图，先定义一个能量函数，然后根据能量函数，再找到对应的概率分布形式）</li>
-<li>构建了\(P(X,Y)\)之后，就要确定\(P(X,Y|\theta)\)包含的参数\(\theta=\{w,a,b\}\), 每个节点的偏置项以及连接的权重，可以用梯度下降法来求解。在实际的求解过程中需要估计\( \sum_{X}P(X)\), 而\(P(X)\)难以直接估计，可以借助于Gibbs Sampling的方法，先Sample一个Visible Layer再Sample 一个Hidden Layer, 依次迭代。。。，每次梯度更新都需要若干次Gibbs Sampling的计算，导致算法的开销非常大，因此Hinton等人提出了对比散度方法(Contrastive Divergence)对参数的估计进行加速。</li>
-</ol>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章;"></a>参考文章;</h2><ol>
-<li><a href="https://deeplearning4j.org/cn/restrictedboltzmannmachine" target="_blank" rel="external">https://deeplearning4j.org/cn/restrictedboltzmannmachine</a></li>
-<li><a href="http://www.scholarpedia.org/article/Boltzmann_machine" target="_blank" rel="external">http://www.scholarpedia.org/article/Boltzmann_machine</a></li>
-<li><a href="http://deeplearning.net/tutorial/rbm.html" target="_blank" rel="external">http://deeplearning.net/tutorial/rbm.html</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/24989699" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/24989699</a></li>
-<li><a href="http://blog.csdn.net/xbinworld/article/details/45128733" target="_blank" rel="external">http://blog.csdn.net/xbinworld/article/details/45128733</a></li>
-<li><a href="http://www.cnblogs.com/jhding/p/5687696.html" target="_blank" rel="external">http://www.cnblogs.com/jhding/p/5687696.html</a></li>
-</ol>
-
-      
-    </div>
-
-    <div>
-      
+            </a>
         
+      </h2>
 
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-03-13T00:00:00+08:00"
+              content="2018-03-13" >
+          03-13
+        </time>
+      </div>
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/03/12/梯度下降三种形式/" rel="next" title="梯度下降三种形式">
-                <i class="fa fa-chevron-left"></i> 梯度下降三种形式
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+
 
 
           </div>
@@ -519,10 +335,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -543,17 +355,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -579,7 +382,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -590,7 +393,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -644,22 +447,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#限制玻尔兹曼机学习笔记"><span class="nav-number">1.</span> <span class="nav-text">限制玻尔兹曼机学习笔记</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义与结构"><span class="nav-number"></span> <span class="nav-text">定义与结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重構-Reconstruction"><span class="nav-number"></span> <span class="nav-text">重構(Reconstruction)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率分布"><span class="nav-number"></span> <span class="nav-text">概率分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多层结构"><span class="nav-number"></span> <span class="nav-text">多层结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限制玻尔兹曼机知识概要"><span class="nav-number"></span> <span class="nav-text">限制玻尔兹曼机知识概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number"></span> <span class="nav-text">参考文章;</span></a></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -787,10 +574,10 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-
+  
 
   
 
