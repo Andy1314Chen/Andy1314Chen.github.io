@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/03/16/%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/</loc>
+    <lastmod>2018-03-18T08:47:34.320Z</lastmod>
+    <data>
+        <display>
+        <title>RBM学习笔记（一）预备知识</title>
+        <pubTime>2018-03-15T16:00:00.000Z</pubTime>
+        
+        <tag>深度学习</tag>
+         
+        <tag>RBM</tag>
+         
+        <tag>DBN</tag>
+         
+         
+           
+             
+              <breadCrumb title="深度学习" url="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="DBN" url="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DBN/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/03/13/%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/</loc>
     <lastmod>2018-03-15T07:12:54.626Z</lastmod>
     <data>
@@ -174,9 +201,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -221,9 +248,9 @@
         <title>深度学习第二章课程(吴恩达)学习笔记（2）</title>
         <pubTime>2017-12-14T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>深度学习</tag>
          
@@ -248,9 +275,9 @@
         <title>深度学习第二章课程(吴恩达)学习笔记（1）</title>
         <pubTime>2017-12-13T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>深度学习</tag>
          
@@ -411,9 +438,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>时间序列分析</tag>
          
@@ -440,9 +467,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -467,9 +494,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -494,9 +521,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -521,9 +548,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -548,9 +575,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -575,9 +602,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -602,9 +629,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -629,9 +656,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -656,9 +683,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -683,9 +710,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -778,11 +805,11 @@
         
         <tag>机器学习</tag>
          
-        <tag>sklearn</tag>
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
-        <tag>算法</tag>
+        <tag>sklearn</tag>
          
          
            
@@ -807,9 +834,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -834,9 +861,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -861,9 +888,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -888,9 +915,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -978,9 +1005,9 @@
         <title>Relief特征选择算法Python实现</title>
         <pubTime>2017-08-21T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>Relief</tag>
          
@@ -1210,9 +1237,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>python</tag>
-         
         <tag>AI</tag>
+         
+        <tag>python</tag>
          
          
            
