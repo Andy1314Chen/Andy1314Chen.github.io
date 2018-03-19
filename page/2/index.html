@@ -301,6 +301,194 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/深度学习第二章课程(吴恩达)学习笔记（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/14/深度学习第二章课程(吴恩达)学习笔记（1）/" itemprop="url">深度学习第二章课程(吴恩达)学习笔记（1）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T00:00:00+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><p>Logistic regression is a learning algorithm used in a supervised learning problem when the output y are all either zero or one. The goal of logistic regression is to minimize the error between its predictions and training data.</p>
+<p>Given \(x,  \hat{y} = P(y=1|x),\)  where \( 0 ≤ \hat{y} ≤ 1 \)</p>
+<font color="blue">
+
+<p>The parameters used in Logistic regression are:</p>
+<ul>
+<li>The input features vector: \( x \in \mathbb{R}^{n_x},\) where \\(n_x\) is the number of features</li>
+<li>The training label: \( y \in 0,1\)</li>
+<li>The weights: \( w \in \mathbb{R}^{n_x},\) where \( n_x\) is the number of features</li>
+<li>The threshold: \( b \in \mathbb{R}\)</li>
+<li>The output: \( \hat{y} = \sigma(w^Tx+b) \)</li>
+<li>Sigmoid function: \( s = \sigma(w^Tx+b) = \sigma(z)= \frac {1}{1+e^{-z}} \)</li>
+</ul>
+<p><img src="https://i.imgur.com/PjaUw4w.png" alt="sigmoid函数的图像"></p>
+<font color="black">
+
+<p>\( (w^Tx+b) \)is a linear function \( (ax+b) \)， but since we are looking for  a  probability constraint between [0,1], the sigmoid function is used. The function is bounded between [0,1] as shown in the graph above.</p>
+<p>Some observations from the graph:</p>
+<ul>
+<li>if \( z \) is a large positive number, then \( \sigma(z) = 1 \)</li>
+<li>if \( z \) is small or large negative number, then \( \sigma(z) = 0 \)</li>
+<li>if \( z= 0 \), then \( \sigma(z) = 0.5 \)</li>
+</ul>
+<h3 id="Logistic-Regression-Cost-Function"><a href="#Logistic-Regression-Cost-Function" class="headerlink" title="Logistic Regression: Cost Function"></a>Logistic Regression: Cost Function</h3><p>To train the parameters w and b, we need to define a cost function.</p>
+<p>\( {\hat{y}}^{(i)} = \sigma(w^Tx^{(i)}+b) \), where \( \sigma(z^{(i)})= \frac{1}{1+e^{-z^{(i)}}} \)</p>
+<p>(\( x^{(i)} \) the i-th training example )</p>
+<p>Given \(  \{(x^{(1)}, y^{(1)}), … ,(x^{(m)},y^{(m)})\}, \) we want \( {\hat{y}}^{(i)} ≈ y^{(i)} \)</p>
+<h4 id="Loss-error-function"><a href="#Loss-error-function" class="headerlink" title="Loss(error) function"></a>Loss(error) function</h4><p>The loss function measures the discrepancy between the prediction \( {\hat{y}}^{(i)} \) and the desired output \( y^{(i)} \). In other words, the loss function computes the error for a single training example.</p>
+<p>\( L({\hat{y}}^{(i)}, y^{(i)}) = \frac{1}{2}({\hat{y}}^{(i)} - y^{(i)})^2 \)</p>
+<p>\( L({\hat{y}}^{(i)}, y^{(i)}) = -[(y^{(i)}log({\hat{y}}^{(i)}) + (1-y^{(i)})log(1-{\hat{y}}^{(i)})] \)</p>
+<ul>
+<li>If \( y^{(i)} = 1: L({\hat{y}}^{(i)}, y^{(i)}) = - log({\hat{y}}^{(i)}) \) where \( log({\hat{y}}^{(i)}) \) and \( {\hat{y}}^{(i)} \) should be close to 1</li>
+<li>If \( y^{(i)} = 0: L({\hat{y}}^{(i)}, y^{(i)}) = - log(1- {\hat{y}}^{(i)}) \) where \( log(1 - {\hat{y}}^{(i)})\) and \( {\hat{y}}^{(i)} \) should be close to 0</li>
+</ul>
+<h4 id="Cost-function"><a href="#Cost-function" class="headerlink" title="Cost function"></a>Cost function</h4><p>The cost function is the average of the loss function of the entire training set. We are going to find the parameters w and b that minimize the overall cost function.</p>
+<p>$$ J(w,b) = \frac{1}{m} \sum_{i=1}^{m} L({\hat{y}}^{(i)}, y^{(i)}) = - \frac{1}{m} \sum_{i=1}^{m} [(y^{(i)}log({\hat{y}}^{(i)})+(1-y^{(i)})log(1-{\hat{y}}^{(i)})] $$</p>
+<font color="red">
+
+<p><strong> Loss function 和 cost function 的区别</strong></p>
+<p>Loss function是针对单个样本而言，\\{\hat{y}}\)和y的差异，而cost function则是针对整个训练集而言。</p>
+<font color="black"></font></font></font></font>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/Sigmoid函数求导过程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2558,239 +2746,6 @@ def imgCompress(numSV=3,thresh=0.8):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/机器学习实战第十三章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/28/机器学习实战第十三章学习笔记/" itemprop="url">机器学习实战第十三章学习笔记(利用PCA来简化数据)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T00:00:00+08:00">
-                2017-09-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>主要内容</p>
-<ul>
-<li>降维技术</li>
-<li>主成分分析(PCA)</li>
-<li>对半导体数据进行降维处理</li>
-</ul>
-<h2 id="降维技术"><a href="#降维技术" class="headerlink" title="降维技术"></a>降维技术</h2><ul>
-<li>使得数据集更易使用</li>
-<li>降低很多算法的计算开销</li>
-<li>去除噪声</li>
-<li>使得结果易懂</li>
-</ul>
-<p>有几种降维技术：</p>
-<ol>
-<li>主成分分析（Principal Component Analysis,PCA).在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标系轴选择的是原始数据中方差最大的方向，第二个新坐标轴的选择和第一个坐标轴正交且具有最大方差的方向。该过程一直重复，重复次数为原始数据中特征的数目。大部分方差都包含在最前面的几个新坐标轴中。因此，可以忽略余下的坐标轴，即对数据进行了降维处理。</li>
-</ol>
-<ol>
-<li>因子分析（Factor Analysis).在因子分析中，假设在观察数据的生成中有一些观察不到的隐变量（latent variable).假设观察数据是这些隐变量和某些噪声的线性组合。那么隐变量的数据可能比观察数据的数目少，也就是说通过找到隐变量就可以实现数据的降维。</li>
-<li>独立成分分析（Independent Component Analysis，ICA). ICA假设数据是从N个数据源生成的，并假设数据为多个数据源的混合观察结果，这些数据源之间在统计上是相互独立的，而在PCA中只假设数据是不相关的。</li>
-</ol>
-<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><p><strong>主成分分析</strong></p>
-<ul>
-<li>优点：降低数据的复杂性，识别最重要的多个特征</li>
-<li>缺点：不一定需要，且可能损失有用信息</li>
-<li>适用数据类型：数值型数据</li>
-</ul>
-<p>PCA的基本过程，第一个主成分是从数据差异性最大（即方差最大）的方向提取出来，第二个主成分则来自于数据差异性次大的方向，并且该方向与第一个主成分方向正交。通过数据集的协方差矩阵及其特征值分析，可以求得这些主成分的值。</p>
-<p>一旦得到了协方差矩阵的特征向量，就可以保留最大的N个值，通过将数据乘上这N个特征向量而将它转换到新的空间。</p>
-<pre><code>将数据转换成前N个主成分的伪代码：
-
-去除平均值
-计算协方差矩阵
-计算协方差矩阵的特征值和特征向量
-将特征值从大到小排序
-保留最上面的N个特征向量
-将数据转换到上述N个特征向量构建的新空间中
-
-#程序清单13-1 PCA算法
-
-import numpy as np
-
-def loadDataSet(fileName,delim=&#39;\t&#39;):
-    fr=open(fileName)
-    stringArr=[line.strip().split(delim) for line in fr.readlines()]
-    datArr=[list(map(float,line)) for line in stringArr]
-    return np.mat(datArr)
-
-def pca(dataMat,topNfeat=9999999):
-    #求取每个特征的平均值
-    meanVals=np.mean(dataMat,axis=0)
-    #减去平均值
-    meanRemoved=dataMat-meanVals
-    #计算协方差矩阵
-    covMat=np.cov(meanRemoved,rowvar=0)
-    #计算协方差矩阵特征值及特征向量
-    eigVals,eigVects=np.linalg.eig(np.mat(covMat))
-    #对特征值进行从小到大的排序
-    eigValInd=np.argsort(eigVals)
-    #进行逆序，
-    eigValInd=eigValInd[:-(topNfeat+1):-1]
-    #提取出前N个特征值对应的特征向量
-    redEigVects=eigVects[:,eigValInd]
-    #低维空间数据
-    lowDDataMat=meanRemoved*redEigVects
-    #重构原始数据
-    reconMat=(lowDDataMat*redEigVects.T)+meanVals
-    return lowDDataMat,reconMat
-
-
-
-&quot;&quot;&quot;
-    示例：利用PCA对半导体制造数据降维
-&quot;&quot;&quot;
-
-#程序清单13-2 将NaN替换成平均值的函数
-def replaceNanWithMean():
-    datMat=loadDataSet(&#39;secom.data&#39;,&#39; &#39;)
-    numFeat=np.shape(datMat)[1]
-    for i in range(numFeat):
-        meanVal=np.mean(datMat[np.nonzero(-np.isnan(datMat[:,i].A))[0],i])
-        #填充NaN为平均值
-        datMat[np.nonzero(np.isnan(datMat[:,i].A))[0],i]=meanVal
-    return datMat
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>降维技术使得数据变得更易使用，并且往往能够去除数据中的噪声，使得其他机器学习任务更加精确。降维往往作为预处理步骤，在数据应用到其他算法之前清洗数据。</p>
-<p>PCA可以从数据中识别其主要特征，通过沿着数据最大方差方向旋转坐标轴来实现。选择方差最大的方向作为第一条坐标轴，后续坐标轴则与前面的坐标轴正交。协方差矩阵上的特征值可以用一系列的正交坐标轴来获取。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2841,7 +2796,7 @@ def replaceNanWithMean():
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
