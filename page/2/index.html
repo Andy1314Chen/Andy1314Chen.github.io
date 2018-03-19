@@ -301,6 +301,216 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/19/利用PCA来简化数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/19/利用PCA来简化数据/" itemprop="url">利用PCA来简化数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T00:00:00+08:00">
+                2017-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="PCA-Principal-Components-Analysis"><a href="#PCA-Principal-Components-Analysis" class="headerlink" title="PCA(Principal Components Analysis)"></a>PCA(Principal Components Analysis)</h2><p>主成分分析（Principal Components Analysis），简称PCA，是一种数据降维技术，用于数据预处理。一般我们获取的原始数据维度都很高，比如1000个特征，在这1000个特征中可能包含了很多无用的信息或者噪声，真正有用的特征才100个，那么我们可以运用PCA算法将1000个特征降到100个特征。这样不仅可以去除无用的噪声，还能减少很大的计算量。</p>
+<p>在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标轴选择的是原始数据中方差最大的方向，第二个新坐标轴的选择和第一个坐标轴正交且具有最大方差的方向。该过程一直重复，重复次数为原始数据中特征的数目。最后，大部分方差都包含在最前面的几个新坐标轴中。</p>
+<p><font color="red"><br> 数据的最大方差给出了数据的最重要的信息。 ??</font></p>
+<font color="black">
+
+<h2 id="Python中实现PCA过程"><a href="#Python中实现PCA过程" class="headerlink" title="Python中实现PCA过程"></a>Python中实现PCA过程</h2><ul>
+<li>去除平均值</li>
+<li>计算协方差矩阵</li>
+<li>计算协方差矩阵的特征值和特征向量</li>
+<li>将特征值从大到小排序</li>
+<li>保留最上面的N个特征向量</li>
+<li>将数据转换到上述N个特征向量构建的新空间中</li>
+</ul>
+<h2 id="PCA算法-python3"><a href="#PCA算法-python3" class="headerlink" title="PCA算法(python3)"></a>PCA算法(python3)</h2><pre><code>#程序清单13-1 PCA算法
+
+import numpy as np
+
+# 测试数据集加载函数
+def loadDataSet(fileName,delim=&#39;\t&#39;):
+    fr=open(fileName)
+    stringArr=[line.strip().split(delim) for line in fr.readlines()]
+    datArr=[list(map(float,line)) for line in stringArr]
+    return np.mat(datArr)
+
+def pca(dataMat,topNfeat=9999999):
+    #求取每个特征的平均值
+    meanVals=np.mean(dataMat,axis=0)
+    #减去平均值
+    meanRemoved=dataMat-meanVals
+    #计算协方差矩阵 rowvar=0 表示数据一行代表一个样本
+    covMat=np.cov(meanRemoved,rowvar=0)
+    #计算协方差矩阵特征值及特征向量
+    eigVals,eigVects=np.linalg.eig(np.mat(covMat))
+    #对特征值进行从小到大的排序
+    eigValInd=np.argsort(eigVals)
+    #进行逆序，最大的n个特征值的下标
+    eigValInd=eigValInd[:-(topNfeat+1):-1]
+    #【python里面，list[a:b:c]代表从下标a开始到b，步长为c。】
+
+    #提取出前N个特征值对应的特征向量
+    redEigVects=eigVects[:,eigValInd]
+    #低维空间数据
+    lowDDataMat=meanRemoved*redEigVects
+    #重构原始数据
+    reconMat=(lowDDataMat*redEigVects.T)+meanVals
+    return lowDDataMat,reconMat
+</code></pre><h2 id="如何确定主成分个数"><a href="#如何确定主成分个数" class="headerlink" title="如何确定主成分个数"></a>如何确定主成分个数</h2><p>在应用PCA时，如何确定n呢？即n取多少，才能保留最多信息同时去除最多的噪声？一般，是通过方差百分比来确定n的，Andrew Ng的<a href="http://deeplearning.stanford.edu/wiki/index.php/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90" target="_blank" rel="external">Ufldl教程</a>中介绍的比较详细， 其中一条简单的公式：</p>
+<p>一般而言，设\(\lambda_1, \lambda_2, …, \lambda_n \)表示\(\sum\)的特征值（按由大到小顺序排列）,使得\( \lambda_j \)为对应于特征向量\( u_j \)的特征值。那么如果我们保留前k个成分，则保留的方差百分比可计算为：<br>\( \frac {\sum_{(j=1)}^{k} \lambda_j}{ \sum_{(j=1)}^{n} \lambda_j} \)</p>
+<pre><code>def precentage2n(eigVals, percentage):
+    sortArray = np.sort(eigVals)  # 升序
+    sortArray = sortArray[-1::-1] # 降序
+    arraySum = sum(sortArray)
+    tmpSum = 0 ; num = 0
+    for i in sortArray:
+        tmpSum += i
+        num += 1
+        if tmpSum &gt; arraySum * percentage:
+            return num
+</code></pre><h2 id="参考博客："><a href="#参考博客：" class="headerlink" title="参考博客："></a>参考博客：</h2><ol>
+<li><a href="http://blog.csdn.net/u012162613/article/details/42177327" target="_blank" rel="external">http://blog.csdn.net/u012162613/article/details/42177327</a></li>
+<li><a href="https://item.jd.com/11242112.html" title="《机器学习实战》第13章" target="_blank" rel="external">《机器学习实战》第13章</a></li>
+</ol>
+</font>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/pandas绘图/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2102,393 +2312,6 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/" itemprop="url">How to Make Out-of-sample Forecast with ARIMA in Python3</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T00:00:00+08:00">
-                2017-10-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在看时间序列分析这一块，因为不会用R语言（R语言做时间序列分析很是方便！），只能用Python吭哧吭哧的搞，搞了好多天，在网上找了一些资料，比较乱，基本上抄来抄去，到最后也没有搞出个眉目。</p>
-<p>今天看到一篇老外写的博客，国内没发现有类似的，打算翻译一下，顺带加深Python下ARIMA的使用。</p>
-<p><img src="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/How-to-Make-Out-of-Sample-Forecasts-with-ARIMA-in-Python.jpg" alt=""></p>
-<p><em>没错，图片也是从人家博客里copy的</em></p>
-<p>作者说的一点没错，</p>
-<blockquote>
-<p>Making out-of-sample forecasts can be confusing when getting started with time series data. </p>
-</blockquote>
-<p>的确困扰了我好久，总看到in-of-sample forecast &amp; out-of-sampl e forecast，但也没人去解释。</p>
-<p>in-of-sample forecast是指利用建模的那些时间序列数据去做预测，没错就是这样，和其他机器学习模型不太一样。而out-of-sample forecast是利用训练集训练好的数据去预测未来的数据。</p>
-<p>python下里的时间序列库最常见的是<strong>statsmodels</strong>,最常用的模型是ARIMA. </p>
-<p>这篇博客里，老外主要是以一个简单数据集为例，讲解了一下3个东西（ARIMA模型的）</p>
-<ul>
-<li>How to make a one-step out-of-sample forecast</li>
-<li>How to make a multi-step out-of-sample forecast</li>
-<li>The difference between the forecast() &amp; predict()</li>
-</ul>
-<h2 id="数据集下载"><a href="#数据集下载" class="headerlink" title="数据集下载"></a>数据集下载</h2><p>数据集是澳大利亚，墨尔本从1981-1990年10年间每日最低温度的一个数据集。</p>
-<p><a href="https://datamarket.com/data/set/2324/daily-minimum-temperatures-in-melbourne-australia-1981-1990" target="_blank" rel="external">下载地址</a></p>
-<p><em>这个数据集中有一些“？”需要去除。</em></p>
-<h2 id="分割数据集"><a href="#分割数据集" class="headerlink" title="分割数据集"></a>分割数据集</h2><p>将数据集分为两个部分，最后7天的数据分出来作为验证集，前面的一部分作为训练集。</p>
-<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>从下面的图中可以看到，该时间序列有明显的季节特性，通过简单的差分可以去掉。季节特性是以年为周期的，365天。其实，差分之后应该还要进行统计检验的，确保差分后的时间序列为平稳序列。</p>
-<p>使用ARIMA模型，通过网格搜索法找到最佳参数（7,0,1）。</p>
-<h2 id="One-Step-Out-of-Sample-Forecast"><a href="#One-Step-Out-of-Sample-Forecast" class="headerlink" title="One-Step Out-of-Sample Forecast"></a>One-Step Out-of-Sample Forecast</h2><p>ARIMA模型提供了两种方法</p>
-<ol>
-<li>Forecast Function</li>
-<li>Predict Function</li>
-</ol>
-<p>对out-of-sample预测结果都是一样的，但是predict()可以in-of-sample预测，好像更为先进一些，但是好像也没太大用处，只是验证模型。</p>
-<p>预测之后，还需要对预测值进行还原处理，因为之前对数据进行了差分处理。</p>
-<h2 id="Multi-Step-Out-of-Sample-Forecast"><a href="#Multi-Step-Out-of-Sample-Forecast" class="headerlink" title="Multi-Step Out-of-Sample Forecast"></a>Multi-Step Out-of-Sample Forecast</h2><p>同单步预测差不多，都是两个函数可以用，但是还原时要注意。</p>
-<h2 id="Python3程序"><a href="#Python3程序" class="headerlink" title="Python3程序"></a>Python3程序</h2><pre><code>from pandas import tseries
-import requests,pandas as pd,numpy as np
-from pandas import DataFrame
-from io import StringIO
-import time,json
-from datetime import date
-from statsmodels.tsa.stattools import adfuller,acf,pacf
-from statsmodels.tsa.arima_model import ARIMA
-from statsmodels.tsa.seasonal import seasonal_decompose
-from sklearn.metrics import mean_squared_error
-import matplotlib.pylab as plt
-%matplotlib inline
-from matplotlib.pylab import rcParams
-rcParams[&#39;figure.figsize&#39;]=15,6
-
-series=pd.Series.from_csv(&#39;daily-minimum-temperatures.csv&#39;,header=0)
-print(series.head(20))
-
-Date
-1981-01-01    20.7
-1981-01-02    17.9
-1981-01-03    18.8
-1981-01-04    14.6
-1981-01-05    15.8
-1981-01-06    15.8
-1981-01-07    15.8
-1981-01-08    17.4
-1981-01-09    21.8
-1981-01-10    20.0
-1981-01-11    16.2
-1981-01-12    13.3
-1981-01-13    16.7
-1981-01-14    21.5
-1981-01-15    25.0
-1981-01-16    20.7
-1981-01-17    20.6
-1981-01-18    24.8
-1981-01-19    17.7
-1981-01-20    15.5
-Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
-
-series.plot()
-
-&lt;matplotlib.axes._subplots.AxesSubplot at 0xbe34b38&gt;
-</code></pre><p><img src="https://i.imgur.com/7iBRt7B.png" alt=""></p>
-<pre><code>#将最后7个数据分裂出去作为验证集
-split_point=len(series)-7
-dataset,validation=series[0:split_point],series[split_point:]
-print(&#39;Dataset %d, Validation %d&#39; % (len(dataset),len(validation)))
-dataset.to_csv(&#39;tempdataset.csv&#39;)
-validation.to_csv(&#39;tempvalidation.csv&#39;)
-
-Dataset 3643, Validation 7
-
-#create a differenced series
-def difference(dataset,interval=1):
-    diff=list()
-    for i in range(interval,len(dataset)):
-        value=dataset[i]-dataset[i-interval]
-        diff.append(value)
-    return np.array(diff)
-
-#invert differenced value
-def inverse_difference(history,yhat,interval=1):
-    return yhat+history[-interval]
-
-from statsmodels.tsa.arima_model import ARIMA
-
-#测试集数据
-X=dataset.values
-#观察得到周期性为一年，365天
-days_in_year=365
-#差分
-differenced=difference(X,days_in_year)
-#拟合模型,(p,d,q)是由网格搜索法确定，作者另一篇文章有介绍
-model=ARIMA(differenced,order=(7,0,1))
-model_fit=model.fit(disp=0)
-#print summary of fit model
-print(model_fit.summary())
-
-                              ARMA Model Results                              
-==============================================================================
-Dep. Variable:                      y   No. Observations:                 3278
-Model:                     ARMA(7, 1)   Log Likelihood               -8673.748
-Method:                       css-mle   S.D. of innovations              3.411
-Date:                Sun, 08 Oct 2017   AIC                          17367.497
-Time:                        20:01:58   BIC                          17428.447
-Sample:                             0   HQIC                         17389.322
-
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const          0.0132      0.132      0.100      0.921      -0.246       0.273
-ar.L1.y        1.1426      0.287      3.977      0.000       0.580       1.706
-ar.L2.y       -0.4347      0.154     -2.830      0.005      -0.736      -0.134
-ar.L3.y        0.0961      0.042      2.290      0.022       0.014       0.178
-ar.L4.y        0.0125      0.029      0.434      0.664      -0.044       0.069
-ar.L5.y       -0.0101      0.029     -0.343      0.731      -0.068       0.047
-ar.L6.y        0.0119      0.027      0.448      0.654      -0.040       0.064
-ar.L7.y        0.0088      0.024      0.368      0.713      -0.038       0.056
-ma.L1.y       -0.6159      0.287     -2.147      0.032      -1.178      -0.054
-                                    Roots                                    
-=============================================================================
-                 Real           Imaginary           Modulus         Frequency
------------------------------------------------------------------------------
-AR.1            1.2234           -0.0000j            1.2234           -0.0000
-AR.2            1.2563           -1.0676j            1.6487           -0.1121
-AR.3            1.2563           +1.0676j            1.6487            0.1121
-AR.4            0.0349           -2.0162j            2.0165           -0.2472
-AR.5            0.0349           +2.0162j            2.0165            0.2472
-AR.6           -2.5780           -1.3111j            2.8923           -0.4251
-AR.7           -2.5780           +1.3111j            2.8923            0.4251
-MA.1            1.6237           +0.0000j            1.6237            0.0000
------------------------------------------------------------------------------
-
-dataset.tail(5)
-
-Date
-1990-12-20    15.4
-1990-12-21    13.1
-1990-12-22    13.2
-1990-12-23    13.9
-1990-12-24    10.0
-Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
-</code></pre><h2 id="One-Step-Out-of-Sample-Forecast-1"><a href="#One-Step-Out-of-Sample-Forecast-1" class="headerlink" title="One-Step Out-of-Sample Forecast"></a>One-Step Out-of-Sample Forecast</h2><p>ARIMA模型进行一步预测是很好用的。<br>在这里，一步预测的是1990-12-25日的最低气温。</p>
-<p>statsmodel库提供了<em>forecast() function</em>进行预测。默认，这个函数就会进行一步预测（out-of-sample forecast）.<em>forecast()</em>返回值包含</p>
-<p><strong>the forecast value,the standard error of the forecast, and the confidence interval information</strong></p>
-<pre><code>#one-step out-of-sample forecast
-forecast=model_fit.forecast()[0]
-
-#前面为了消除时间序列的季节特性，进行了差分，这里得到的预测值必须要还原
-forecast=inverse_difference(X,forecast,days_in_year)
-
-print(&quot;Forecast: %f&quot; % forecast)
-
-Forecast: 14.861660
-
-#真实值是12.9
-validation
-
-Date
-1990-12-25    12.9
-1990-12-26    14.6
-1990-12-27    14.0
-1990-12-28    13.6
-1990-12-29    13.5
-1990-12-30    15.7
-1990-12-31    13.0
-Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
-</code></pre><p>statsmodel库同样提供了<em>predict() function</em>函数用于预测，可以进行任意in-of-sample &amp; out-of-sample的预测。但是<em>predict()</em>需要提供一个start和end.</p>
-<pre><code>#one-step out of sample forecast
-start_index=len(differenced)
-end_index=len(differenced)
-forecast=model_fit.predict(start=start_index,end=end_index)
-#forecast=model_fit.predict(&#39;1990-12-25&#39;,&#39;1990-12-25&#39;)
-
-#invert the differenced forecast to something usable
-forecast=inverse_difference(X,forecast,days_in_year)
-print(&quot;Forecast: %f&quot; % forecast)
-
-Forecast: 14.861660
-</code></pre><p>可以看到<em>predict()</em>预测结果和<em>forecast()</em>是一样的，不过<em>predict()</em>即可以in-of-sample也可以out-of-sample.</p>
-<h2 id="Multi-Step-Out-of-Sample-Forecast-1"><a href="#Multi-Step-Out-of-Sample-Forecast-1" class="headerlink" title="Multi-Step Out-of-Sample Forecast"></a>Multi-Step Out-of-Sample Forecast</h2><p>同样可以使用<em>predict()&amp;forecast()</em>函数进行多步预测。</p>
-<pre><code>#multi-step out-of-sample forecast
-forecast=model_fit.forecast(steps=7)[0]
-#invert the differenced forecast to something usable
-history=[x for x in X]
-day=1
-result=[]
-for yhat in forecast:
-    inverted=inverse_difference(history,yhat,days_in_year)
-    print(&quot;Day %d: %f&quot; % (day,inverted))
-    history.append(inverted)
-    result.append(inverted)
-    day+=1
-
-Day 1: 14.861660
-Day 2: 15.628799
-Day 3: 13.331348
-Day 4: 11.722410
-Day 5: 10.421526
-Day 6: 14.415543
-Day 7: 12.674730
-
-
-#multi-step out-of-sample forecast By predict() function
-start_index=len(differenced)
-end_index=start_index+6
-forecast=model_fit.predict(start=start_index,end=end_index)
-
-history=[x for x in X]
-day=1
-result=[]
-for yhat in forecast:
-    inverted=inverse_difference(history,yhat,days_in_year)
-    print(&quot;Day %d: %f&quot; % (day,inverted))
-    history.append(inverted)
-    result.append(inverted)
-    day+=1
-
-Day 1: 14.861660
-Day 2: 15.628799
-Day 3: 13.331348
-Day 4: 11.722410
-Day 5: 10.421526
-Day 6: 14.415543
-Day 7: 12.674730
-</code></pre><h2 id="原文地址："><a href="#原文地址：" class="headerlink" title="原文地址："></a>原文地址：</h2><p> <a href="https://machinelearningmastery.com/make-sample-forecasts-arima-python/" target="_blank" rel="external">https://machinelearningmastery.com/make-sample-forecasts-arima-python/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2539,7 +2362,7 @@ Day 7: 12.674730
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">63</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Life, Books, Code" />
+  <meta name="keywords" content="深度学习,RBM,DBN," />
 
 
 
@@ -94,13 +94,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Andy&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/机器学习/index.html">
+<meta name="description" content="RBM学习笔记（五）梯度计算公式 原博客地址http://blog.csdn.net/itplus/article/details/19168967">
+<meta name="keywords" content="深度学习,RBM,DBN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RBM学习笔记（五）梯度计算公式">
+<meta property="og:url" content="http://yoursite.com/2018/03/20/限制玻尔兹曼机梯度计算公式/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="RBM学习笔记（五）梯度计算公式 原博客地址http://blog.csdn.net/itplus/article/details/19168967">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20140214180006531">
+<meta property="og:image" content="http://img.blog.csdn.net/20140214180015046">
+<meta property="og:image" content="http://img.blog.csdn.net/20140214180023156">
+<meta property="og:image" content="http://img.blog.csdn.net/20140214182009515">
+<meta property="og:image" content="http://img.blog.csdn.net/20140218224838375">
+<meta property="og:updated_time" content="2018-03-19T07:14:57.271Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Andy&#39;s blog">
+<meta name="twitter:title" content="RBM学习笔记（五）梯度计算公式">
+<meta name="twitter:description" content="RBM学习笔记（五）梯度计算公式 原博客地址http://blog.csdn.net/itplus/article/details/19168967">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20140214180006531">
 
 
 
@@ -128,7 +139,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/机器学习/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机梯度计算公式/"/>
 
 
 
@@ -136,7 +147,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>标签: 机器学习 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>RBM学习笔记（五）梯度计算公式 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -161,7 +172,7 @@
     
   
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,300 +300,194 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>机器学习<small>标签</small>
-      </h1>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/12/梯度下降三种形式/" itemprop="url">
-              
-                <span itemprop="name">梯度下降三种形式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-12T00:00:00+08:00"
-              content="2018-03-12" >
-          03-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/28/模型融合方法概述/" itemprop="url">
-              
-                <span itemprop="name">模型融合方法概述[转]</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-28T00:00:00+08:00"
-              content="2018-01-28" >
-          01-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/19/利用PCA来简化数据/" itemprop="url">
-              
-                <span itemprop="name">利用PCA来简化数据</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-19T00:00:00+08:00"
-              content="2017-12-19" >
-          12-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/16/超市优化比赛/" itemprop="url">
-              
-                <span itemprop="name">CCF BDCI2017小超市供销存管理优化</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-16T00:00:00+08:00"
-              content="2017-11-16" >
-          11-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/11/时间规则快速入门/" itemprop="url">
-              
-                <span itemprop="name">时间序列规则法快速入门【转】</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-11T00:00:00+08:00"
-              content="2017-11-11" >
-          11-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/10/python保存模型/" itemprop="url">
-              
-                <span itemprop="name">使用sklearn.externals.joblib保存模型</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-10T00:00:00+08:00"
-              content="2017-11-10" >
-          11-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/" itemprop="url">
-              
-                <span itemprop="name">How to Make Out-of-sample Forecast with ARIMA in Python3</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-08T00:00:00+08:00"
-              content="2017-10-08" >
-          10-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/29/Time Series Forecasting with ARIMA in Python3/" itemprop="url">
-              
-                <span itemprop="name">Python3时间序列分析模型ARIMA的简单实用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-29T00:00:00+08:00"
-              content="2017-09-29" >
-          09-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">
-              
-                <span itemprop="name">机器学习实战第十四章学习笔记(利用SVD简化数据)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-29T00:00:00+08:00"
-              content="2017-09-29" >
-          09-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/28/机器学习实战第十三章学习笔记/" itemprop="url">
-              
-                <span itemprop="name">机器学习实战第十三章学习笔记(利用PCA来简化数据)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-28T00:00:00+08:00"
-              content="2017-09-28" >
-          09-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </div>
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/tags/机器学习/page/2/">2</a><a class="page-number" href="/tags/机器学习/page/3/">3</a><a class="extend next" rel="next" href="/tags/机器学习/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机梯度计算公式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RBM学习笔记（五）梯度计算公式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
+                    <span itemprop="name">DBN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="RBM学习笔记（五）梯度计算公式"><a href="#RBM学习笔记（五）梯度计算公式" class="headerlink" title="RBM学习笔记（五）梯度计算公式"></a>RBM学习笔记（五）梯度计算公式</h3><p><img src="http://img.blog.csdn.net/20140214180006531" alt=""><br><img src="http://img.blog.csdn.net/20140214180015046" alt=""><br><img src="http://img.blog.csdn.net/20140214180023156" alt=""><br><img src="http://img.blog.csdn.net/20140214182009515" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/RBM/" rel="tag"># RBM</a>
+          
+            <a href="/tags/DBN/" rel="tag"># DBN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/限制玻尔兹曼机网络结构/" rel="next" title="RBM学习笔记（二）RBM的网络结构">
+                <i class="fa fa-chevron-left"></i> RBM学习笔记（二）RBM的网络结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/20/限制玻尔兹曼机能量函数和概率分布/" rel="prev" title="RBM学习笔记（三）RBM能量函数和概率分布">
+                RBM学习笔记（三）RBM能量函数和概率分布 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -590,6 +495,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -610,8 +519,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -702,6 +620,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RBM学习笔记（五）梯度计算公式"><span class="nav-number">1.</span> <span class="nav-text">RBM学习笔记（五）梯度计算公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原博客地址"><span class="nav-number">2.</span> <span class="nav-text">原博客地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -829,10 +763,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
