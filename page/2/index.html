@@ -301,6 +301,209 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/28/模型融合方法概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/28/模型融合方法概述/" itemprop="url">模型融合方法概述[转]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-28T00:00:00+08:00">
+                2018-01-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Voting"><a href="#Voting" class="headerlink" title="Voting"></a>Voting</h3><p>模型融合其实也没有想象的那么高大上，从最简单的Voting说起，这也可以说是一种模型融合。假设对于一个二分类问题，有3个基础模型，那么就采取投票制的方法，投票多者确定为最终的分类。</p>
+<h3 id="Averaging"><a href="#Averaging" class="headerlink" title="Averaging"></a>Averaging</h3><p>对于回归问题，一个简单直接的思路是取平均。稍稍改进的方法是进行加权平均。权值可以用排序的方法确定，举个例子，比如A、B、C三种基本模型，模型效果进行排名，假设排名分别是1、2、3，那么给这三个模型赋予的权值分别是3/6、2/6、1/6. 这两种方法看似简单，其实后面的高级算法也可以说是基于此而产生的，Bagging或者Boosting都是一种把许多弱分类器这样融合成强分类器的思想。</p>
+<h3 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h3><p>Bagging就是采用有放回的方式进行抽样，用抽样的样本建立子模型，对子模型进行训练，这个过程重复多次，最后进行融合。大概分为这样两步：</p>
+<ol>
+<li><p>重复K次</p>
+<ul>
+<li>有放回地重复抽样建模</li>
+<li>训练子模型</li>
+</ul>
+</li>
+<li><p>模型融合</p>
+<ul>
+<li>分类问题：voting</li>
+<li>回归问题: average</li>
+</ul>
+</li>
+</ol>
+<p>Bagging算法不用我们自己实现，随机森林就是基于Bagging算法的一个典型例子，采用的基分类器是决策树。</p>
+<h3 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h3><p>Bagging算法可以并行处理，而Boosting的思想是一种迭代的方法，每一次训练的时候都更加关心分类错误的样例，给这些分类错误的样例增加更大的权重，下一次迭代的目标就是能够更容易辨别出上一轮分类错误的样例。最终将这些弱分类器进行加权相加。引用加州大学欧文分校Alex Ihler教授的两页PPT</p>
+<p><img src="https://pic4.zhimg.com/80/v2-7c19e78be451fc75f44a6ec45e56c9d1_hd.jpg" alt=""></p>
+<p><img src="https://pic1.zhimg.com/80/v2-439576e0bf018c4e8d5cbe4eba54b89d_hd.jpg" alt=""></p>
+<p>同样地，基于Boosting思想的有AdaBoost、GBDT等，在R和Python中也都有集成好了直接调用的函数。</p>
+<h3 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h3><p>Stacking方法其实弄懂之后应该是比Boosting要简单的，毕竟小几十行代码可以写出一个Stacking算法。先从一种”错误“但是容易懂的Stacking方法讲起。Stacking模型本质上是一种分成的结构，这里简单起见，只分析二级Stacking. 假设我们有3个基模型M1、M2、M3.</p>
+<ol>
+<li>基模型M1, 对训练集train训练，然后用于预测train和test的标签列，分别是P1, T1</li>
+</ol>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AT_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>对于M2和M3, 重复相同的工作，这样也得到了P2, T2, P3, T3.</p>
+<ol>
+<li>分别把P1,P2,P3以及T1,T2,T3合并, 得到一个新的训练集和测试集train2, test2.</li>
+</ol>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_2+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_3+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%5Cimplies%0A%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AP_1+%26+P_2+%26P_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btrain2%7D" alt=""></p>
+<ol>
+<li>再用第二层的模型M4训练train2, 预测test2, 得到最终的标签列</li>
+</ol>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AP_1+%26+P_2+%26P_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btrain2%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%5Cbegin%7Bpmatrix%7D%0A%5Cvdots+%26%5Cvdots++%26%5Cvdots+%5C%5C%0AT_1+%26+T_2+%26T_3+++%5C%5C%0A%5Cvdots++%26%5Cvdots+%26%5Cvdots+%5C%5C%0A%5Cvdots+%26%5Cvdots+%26%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D%7D%5E%7Btest2%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0Apred+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>Stacking本质上就是这么直接的思路，但是这样肯定是不行的，问题在于P1的得到是有问题，用整个训练集训练的模型反过来去预测训练集的标签，毫无疑问过拟合是非常非常严重的，因此现在的问题变成了如何在解决过拟合的前提下得到P1, P2, P3, 这就变成了熟悉的节奏—K折交叉验证。我们以2折交叉验证得到P1为例，假设训练集为4行3列</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>将其划分为2部分</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D" alt=""></p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D" alt=""></p>
+<p>用traina训练模型M1, 然后在trainb上进行预测得到preb3和preb4</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btraina%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>再在trainb上训练模型M1, 然后在traina上进行预测得到pred1和pred2</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B31%7D+%26+a_%7B32%7D+%26a_%7B33%7D++%5C%5C%0Aa_%7B41%7D+%26+a_%7B42%7D+%26a_%7B43%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btrainb%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Btrain%7D%0A%5Coverbrace%7B%0A%5Cbegin%7Bpmatrix%7D%0Aa_%7B11%7D+%26+a_%7B12%7D+%26a_%7B13%7D++%5C%5C%0Aa_%7B21%7D+%26+a_%7B22%7D+%26a_%7B23%7D++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%7D%5E%7Btraina%7D%0A%5Coverbrace%7B%5Cimplies%7D%5E%7Bpredict%7D%0A%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>然后把两个预测集进行拼接</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%2B%0A%5Cbegin%7Bpmatrix%7D%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%3D%0A%5Cbegin%7Bpmatrix%7D%0Apred1++%5C%5C%0Apred2+++%5C%5C%0Apred3++%5C%5C%0Apred4+++%5C%5C%0A%5Cend%7Bpmatrix%7D%0A%3D%0A%5Cbegin%7Bpmatrix%7D%0A%5Cvdots++%5C%5C%0AP_1+++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cvdots++%5C%5C%0A%5Cend%7Bpmatrix%7D" alt=""></p>
+<p>对于测试集T1的得到，有两种方法。注意到刚刚是2折交叉验证，M1相当于训练了2次，所以一种方法是每一次训练M1, 可以直接对整个test进行预测，这样2折交叉验证后测试集相当于预测了2次，然后对这两列求平均得到T1. 或者直接对测试集只用M1预测一次直接得到T1.</p>
+<p>P1、T1得到之后，P2、T2、P3、T3也就是同样的方法。理解了2折交叉验证，对于K折的情况理解也就非常顺利了。所以最终的代码是两层循环，第一层循环控制基模型的数目，每一个基模型要这样去得到P1,T1, 第二层循环控制的是交叉验证的次数K, 对每一个基模型，会训练K次最后拼接得到P1, 取平均得到T1.</p>
+<p><img src="https://pic4.zhimg.com/80/v2-84dbc338e11fb89320f2ba310ad69ceb_hd.jpg" alt=""></p>
+<p>该图是大佬<a href="https://dnc1994.com/2016/04/rank-10-percent-in-first-kaggle-competition/" title="如何在 Kaggle 首战中进入前 10%" target="_blank" rel="external">https://dnc1994.com/2016/04/rank-10-percent-in-first-kaggle-competition/</a>博客中的一幅图。图中是一个基模型得到P1和T1的过程，采用的是5折交叉验证，所以循环了5次，拼接得到P1，测试集预测了5次，取平均得到T1. 而这仅仅只是第二层输入的一列/一个特征，并不是整个训练集。再分析作者的代码也就很清楚了。也就是刚刚提到的两层循环。</p>
+<h4 id="Python-实现"><a href="#Python-实现" class="headerlink" title="Python 实现"></a>Python 实现</h4><p>用了一个Titanic的比赛尝试了代码。</p>
+<pre><code>def get_oof(clf, x_train, y_train, x_test):
+    off_train = np.zeros((ntrain,))
+    oof_test = np.zeros((ntest,))
+    oof_test_skf = np.empty((NFOLDS, ntest)) # 
+    for i, (train_index, test_index) in enumerate(kf):
+        x_tr = x_train[train_index]
+        y_tr = y_train[train_index]
+        x_te = x_train[test_index]
+        clf.fit(x_tr, y_tr)
+        oof_train[test_index] = clf.predict(x_te)
+        oof_test_skf[i,:] = clf.predict(x_test)
+    oof_test[:] = oof_test_skf.mean(axis=0)
+    return oof_train.reshape(-1,1), oof_test.reshape(-1,1)
+</code></pre><h3 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h3><p><a href="https://zhuanlan.zhihu.com/p/25836678" title="机器学习模型融合方法概述" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/25836678</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/19/利用PCA来简化数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2157,161 +2360,6 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/27/Boxplot/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/27/Boxplot/" itemprop="url">盒图(boxplot)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-27T00:00:00+08:00">
-                2017-10-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在搞比赛，也没多少时间写博客了，今天记录一下吧。</p>
-<p>Boxplot(盒图),搞数据分析的人应该不陌生。</p>
-<p>主要用于显示数据的离散的分布情况。</p>
-<p><img src="http://www.blogjava.net/images/blogjava_net/norvid/44484/o_boxplot.png" alt=""></p>
-<p>盒图是在1977年由美国的统计学家约翰·图基(John Tukey)发明的。它由五个数值点组成：最小值(min)，下四分位数(Q1)，中位数(median)，上四分位数(Q3)，最大值(max)。也可以往盒图里面加入平均值(mean)。如上图。下四分位数、中位数、上四分位数组成一个“带有隔间的盒子”。上四分位数到最大值之间建立一条延伸线，这个延伸线成为“胡须(whisker)”。</p>
-<p>由于现实数据中总是存在各式各样地“脏数据”，也成为“离群点”，于是为了不因这些少数的离群数据导致整体特征的偏移，将这些离群点单独汇出，而盒图中的胡须的两级修改成最小观测值与最大观测值。这里有个经验，就是最大(最小)观测值设置为与四分位数值间距离为1.5个IQR(中间四分位数极差)。</p>
-<p><img src="http://www.blogjava.net/images/blogjava_net/norvid/44484/r_boxplot.gif" alt=""></p>
-<ul>
-<li>IQR = Q3-Q1，即上四分位数与下四分位数之间的差，也就是盒子的长度。</li>
-<li>最小观测值为min = Q1 - 1.5*IQR，如果存在离群点小于最小观测值，则胡须下限为最小观测值，离群点单独以点汇出。如果没有比最小观测值小的数，则胡须下限为最小值。</li>
-<li>最大观测值为max = Q3 -1.5*IQR，如果存在离群点大于最大观测值，则胡须上限为最大观测值，离群点单独以点汇出。如果没有比最大观测值大的数，则胡须上限为最大值。</li>
-</ul>
-<p>（也就是说，盒图中上下两条横线不是实际数据的最大最小观测值，而是去掉离群点之后的最大最小观测值）</p>
-<p>通过盒图，在分析数据的时候，盒图能够有效地帮助我们识别数据的特征：</p>
-<ol>
-<li>直观地识别数据集中的异常值(查看离群点)。</li>
-<li>判断数据集的数据离散程度和偏向(观察盒子的长度，上下隔间的形状，以及胡须的长度)。</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2362,7 +2410,7 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

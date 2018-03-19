@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C,算法," />
+  <meta name="keywords" content="深度学习,RBM,DBN," />
 
 
 
@@ -94,18 +94,23 @@
 
 
 
-<meta name="description" content="英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。师兄做的是B类，共有两道编程题，和A类是一致的。 第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。 D_LIST* remove(D_LIST* head, int val) {     if(head==NULL)         return head;     D_LIST">
-<meta name="keywords" content="C,算法">
+<meta name="description" content="RBM学习笔记（六）对比散度算法  原博客地址http://blog.csdn.net/itplus/article/details/19168967">
+<meta name="keywords" content="深度学习,RBM,DBN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="英特尔校招两道编程题">
-<meta property="og:url" content="http://yoursite.com/2017/09/14/英特尔两道编程题/index.html">
+<meta property="og:title" content="RBM学习笔记（六）对比散度算法">
+<meta property="og:url" content="http://yoursite.com/2018/03/20/限制玻尔兹曼机对比散度算法/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。师兄做的是B类，共有两道编程题，和A类是一致的。 第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。 D_LIST* remove(D_LIST* head, int val) {     if(head==NULL)         return head;     D_LIST">
+<meta property="og:description" content="RBM学习笔记（六）对比散度算法  原博客地址http://blog.csdn.net/itplus/article/details/19168967">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-14T09:50:46.260Z">
+<meta property="og:image" content="http://img.blog.csdn.net/20140218141501953">
+<meta property="og:image" content="http://img.blog.csdn.net/20140309233856234">
+<meta property="og:image" content="http://img.blog.csdn.net/20140218141517671">
+<meta property="og:image" content="http://img.blog.csdn.net/20140218224838375">
+<meta property="og:updated_time" content="2018-03-19T07:25:45.510Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="英特尔校招两道编程题">
-<meta name="twitter:description" content="英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。师兄做的是B类，共有两道编程题，和A类是一致的。 第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。 D_LIST* remove(D_LIST* head, int val) {     if(head==NULL)         return head;     D_LIST">
+<meta name="twitter:title" content="RBM学习笔记（六）对比散度算法">
+<meta name="twitter:description" content="RBM学习笔记（六）对比散度算法  原博客地址http://blog.csdn.net/itplus/article/details/19168967">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20140218141501953">
 
 
 
@@ -133,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/14/英特尔两道编程题/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对比散度算法/"/>
 
 
 
@@ -141,7 +146,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>英特尔校招两道编程题 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>RBM学习笔记（六）对比散度算法 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -304,7 +309,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/英特尔两道编程题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对比散度算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -321,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">英特尔校招两道编程题</h1>
+          <h1 class="post-title" itemprop="name headline">RBM学习笔记（六）对比散度算法</h1>
         
 
         <div class="post-meta">
@@ -333,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T00:00:00+08:00">
-                2017-09-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
+                2018-03-20
               </time>
             
 
@@ -358,8 +363,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
+                    <span itemprop="name">DBN</span>
                   </a>
                 </span>
 
@@ -394,68 +410,10 @@
       
 
       
-        <p>英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。<br>师兄做的是B类，共有两道编程题，和A类是一致的。</p>
-<p>第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。</p>
-<pre><code>D_LIST* remove(D_LIST* head, int val)
-{
-    if(head==NULL)
-        return head;
-    D_LIST* preNode=(D_LIST*)malloc(sizeof(D_LIST));//就是这里没有分配
-    preNode-&gt;next=head;
-    D_LIST* curNode=preNode;
-    while(curNode-&gt;next!=NULL)
-    {
-        if(curNode-&gt;next-&gt;data==val)
-        {
-            D_LIST* nextNode=curNode-&gt;next;
-            curNode-&gt;next=nextNode-&gt;next;
+        <h3 id="RBM学习笔记（六）对比散度算法"><a href="#RBM学习笔记（六）对比散度算法" class="headerlink" title="RBM学习笔记（六）对比散度算法"></a>RBM学习笔记（六）对比散度算法</h3><p><img src="http://img.blog.csdn.net/20140218141501953" alt=""><br><img src="http://img.blog.csdn.net/20140309233856234" alt=""><br><img src="http://img.blog.csdn.net/20140218141517671" alt=""></p>
+<p><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
 
-        }
-        else
-            curNode=curNode-&gt;next;
-    }
-    D_LIST* result=preNode-&gt;next;
-    free(preNode);
-    return result; 
-}
-</code></pre><p>第二道是，删除字符串中/**/包围的字符，也很简单，但是没有AC，原因在于写的太混乱，总是报错。</p>
-<pre><code>void remove_comments(char *txt)
-{
-    char *str=txt;
-    if(str==NULL)
-        return;
-    int n=strlen(txt);
-    int ind1=0,ind2=0;
-    for(int i=0;i&lt;n;i++)
-    {
-        if(str[i]==&#39;/&#39;)
-        {
-            if(!ind1)
-            {
-                ind1=i;
-                continue;
-            }
-            else
-            {
-                ind2=i;
-                break;
-            }
-        }
-    }
-    int i=0,j=0;
-    if(ind1&amp;&amp;ind2)
-    { 
-        for( i=0,j=0;i&lt;n;i++)
-        {
-            if((i&lt;ind1)||(i&gt;ind2))
-            {
-                txt[j++]=str[i];
-            }
-        }
-    }
-    txt[j]=&#39;\0&#39;;
-}
-</code></pre>
       
     </div>
 
@@ -484,9 +442,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/C/" rel="tag"># C</a>
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/RBM/" rel="tag"># RBM</a>
+          
+            <a href="/tags/DBN/" rel="tag"># DBN</a>
           
         </div>
       
@@ -499,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/10/Hands-on第二章学习笔记(2)/" rel="next" title="Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(2)">
-                <i class="fa fa-chevron-left"></i> Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(2)
+              <a href="/2018/03/20/限制玻尔兹曼机能量函数和概率分布/" rel="next" title="RBM学习笔记（三）RBM能量函数和概率分布">
+                <i class="fa fa-chevron-left"></i> RBM学习笔记（三）RBM能量函数和概率分布
               </a>
             
           </div>
@@ -509,8 +469,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/15/支持向量机通俗导论/" rel="prev" title="支持向量机通俗导论（1）【转】">
-                支持向量机通俗导论（1）【转】 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/20/限制玻尔兹曼机对数似然函数/" rel="prev" title="RBM学习笔记（四）对数似然函数">
+                RBM学习笔记（四）对数似然函数 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -559,8 +519,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -651,6 +620,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RBM学习笔记（六）对比散度算法"><span class="nav-number">1.</span> <span class="nav-text">RBM学习笔记（六）对比散度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原博客地址"><span class="nav-number">2.</span> <span class="nav-text">原博客地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
