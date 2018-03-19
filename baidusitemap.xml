@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/03/20/%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%95%B0%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0/</loc>
+    <lastmod>2018-03-19T07:01:57.993Z</lastmod>
+    <data>
+        <display>
+        <title>RBM学习笔记（四）对数似然函数</title>
+        <pubTime>2018-03-19T16:00:00.000Z</pubTime>
+        
+        <tag>深度学习</tag>
+         
+        <tag>RBM</tag>
+         
+        <tag>DBN</tag>
+         
+         
+           
+             
+              <breadCrumb title="深度学习" url="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+          
+             
+              <breadCrumb title="DBN" url="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DBN/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/03/20/%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E8%83%BD%E9%87%8F%E5%87%BD%E6%95%B0%E5%92%8C%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83/</loc>
     <lastmod>2018-03-19T06:53:30.766Z</lastmod>
     <data>

@@ -301,6 +301,463 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/Time Series Forecasting with ARIMA in Python3/" itemprop="url">Python3时间序列分析模型ARIMA的简单实用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <pre><code>import warnings
+import itertools
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+plt.style.use(&#39;fivethirtyeight&#39;)
+%matplotlib inline
+
+#导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot;
+#收集了从1958年到2001年的，CO2变化
+data=sm.datasets.co2.load_pandas()
+y=data.data
+
+#每周的数据很难工作，用每月的平均值代替
+y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean()
+
+
+
+#使用缺失值前面的值来填充
+y=y.fillna(y.bfill())
+print(y)
+
+
+1958-03-01    316.100000
+1958-04-01    317.200000
+1958-05-01    317.433333
+1958-06-01    315.625000
+1958-07-01    315.625000
+1958-08-01    314.950000
+1958-09-01    313.500000
+1958-10-01    313.425000
+1958-11-01    313.425000
+1958-12-01    314.700000
+1959-01-01    315.500000
+1959-02-01    316.700000
+1959-03-01    316.733333
+1959-04-01    317.675000
+1959-05-01    318.325000
+1959-06-01    318.025000
+1959-07-01    316.525000
+1959-08-01    314.900000
+1959-09-01    313.825000
+1959-10-01    313.400000
+1959-11-01    314.875000
+1959-12-01    315.525000
+1960-01-01    316.380000
+1960-02-01    316.975000
+1960-03-01    317.575000
+1960-04-01    319.120000
+1960-05-01    319.925000
+1960-06-01    319.450000
+1960-07-01    318.060000
+1960-08-01    315.775000
+                 ...    
+1999-07-01    369.000000
+1999-08-01    366.700000
+1999-09-01    364.675000
+1999-10-01    365.140000
+1999-11-01    366.650000
+1999-12-01    367.900000
+2000-01-01    369.020000
+2000-02-01    369.375000
+2000-03-01    370.400000
+2000-04-01    371.540000
+2000-05-01    371.650000
+2000-06-01    371.625000
+2000-07-01    369.940000
+2000-08-01    367.950000
+2000-09-01    366.540000
+2000-10-01    366.725000
+2000-11-01    368.125000
+2000-12-01    369.440000
+2001-01-01    370.175000
+2001-02-01    371.325000
+2001-03-01    372.060000
+2001-04-01    372.775000
+2001-05-01    373.800000
+2001-06-01    373.060000
+2001-07-01    371.300000
+2001-08-01    369.425000
+2001-09-01    367.880000
+2001-10-01    368.050000
+2001-11-01    369.375000
+2001-12-01    371.020000
+Freq: MS, Name: co2, Length: 526, dtype: float64
+
+
+#可视化数据
+y.plot(figsize=(15,6))
+
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt;
+</code></pre><p><img src="https://i.imgur.com/rjbrTh2.png" alt=""></p>
+<p>最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise.</p>
+<ul>
+<li><p>p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days.</p>
+</li>
+<li><p>d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small.</p>
+</li>
+<li><p>q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past.</p>
+</li>
+</ul>
+<p>When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.).</p>
+<pre><code>#Define the p,d,q parameters to take any value between 0 and 2
+p=d=q=range(0,2)
+#产生不同的组合
+pdq=list(itertools.product(p,d,q))
+#加上季节
+seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))]
+
+print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;)
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1]))
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2]))
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3]))
+print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4]))
+
+
+Examples of parameter combinations for Seasonal ARIMA...
+SARIMAX: (0, 0, 1) x (0, 0, 1, 12)
+SARIMAX: (0, 0, 1) x (0, 1, 0, 12)
+SARIMAX: (0, 1, 0) x (0, 1, 1, 12)
+SARIMAX: (0, 1, 0) x (1, 0, 0, 12)
+</code></pre><p>使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。</p>
+<pre><code>warnings.filterwarnings(&#39;ignore&#39;)
+for param in pdq:
+    for param_seasonal in seasonal_pdq:
+        try:
+            mod=sm.tsa.statespace.SARIMAX(y,order=param,
+                                         seasonal_order=param_seasonal,
+                                         enforce_stationarity=False,
+                                         enforce_invertibility=False)
+            results=mod.fit()
+            print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic))
+        except:
+            continue
+
+
+ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514
+ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955
+ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035
+ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077
+ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545
+ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444
+ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609
+ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488
+ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783
+ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884
+ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123
+ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135
+ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242
+ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801
+ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082
+ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724
+ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303
+ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172
+ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419
+ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214
+ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316
+ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715
+ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042
+ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721
+ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874
+ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157
+ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964
+ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518
+ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054
+ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267
+ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374
+ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998
+ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694
+ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544
+ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341
+ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134
+ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588
+ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976
+ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977
+ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118
+ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662
+ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821
+ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868
+ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384
+ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459
+ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794
+ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837
+ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677
+ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254
+ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126
+ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399
+ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544
+ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744
+ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113
+ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746
+ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897
+ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253
+ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126
+ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924
+ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222
+
+
+
+
+#发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型
+mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1),
+                             seasonal_order=(1,1,1,12),
+                             enforce_stationarity=False,
+                             enforce_invertibility=False)
+results=mod.fit()
+print(results.summary().tables[1])
+
+
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.3181      0.092      3.441      0.001       0.137       0.499
+ma.L1         -0.6254      0.077     -8.162      0.000      -0.776      -0.475
+ar.S.L12       0.0010      0.001      1.732      0.083      -0.000       0.002
+ma.S.L12      -0.8769      0.026    -33.806      0.000      -0.928      -0.826
+sigma2         0.0972      0.004     22.632      0.000       0.089       0.106
+==============================================================================
+</code></pre><p>coef列显示了各个特征的权重，如何对时间序列产生影响。</p>
+<pre><code>results.plot_diagnostics(figsize=(15,12))
+</code></pre><p><img src="https://i.imgur.com/CX8ezlB.png" alt=""></p>
+<p>Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。</p>
+<ul>
+<li>In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed.</li>
+<li>The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed.</li>
+<li>The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself.</li>
+</ul>
+<p>这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间</p>
+<pre><code>#dynamic=False,ensures that we produce one-step ahead forecasts, 
+#meaning that forecasts at each point are generated using the full history up to that point.
+pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False)
+pred_ci=pred.conf_int()
+
+#绘制出实际值
+ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;)
+#预测值
+pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7)
+#置信区间
+ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2)
+ax.set_xlabel(&#39;Date&#39;)
+ax.set_ylabel(&#39;CO2 Levels&#39;)
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0x66f26d8&gt;
+</code></pre><p><img src="https://i.imgur.com/dMU02LT.png" alt=""></p>
+<pre><code>y_forecasted=pred.predicted_mean
+y_truth=y[&#39;1998-01-01&#39;:]
+
+#计算平方差
+mse=((y_forecasted-y_truth)**2).mean()
+print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2)))
+
+
+The Mean Squared Error of our forecasts is 0.07
+
+
+#dynamic=True,利用指定时间点之前的数据进行预测？
+pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True)
+pred_dynamic_ci = pred_dynamic.conf_int()
+
+
+ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15))
+pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax)
+
+ax.fill_between(pred_dynamic_ci.index,
+                pred_dynamic_ci.iloc[:, 0],
+                pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25)
+
+ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1],
+                 alpha=.1, zorder=-1)
+
+ax.set_xlabel(&#39;Date&#39;)
+ax.set_ylabel(&#39;CO2 Levels&#39;)
+
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0xdaddcf8&gt;
+</code></pre><p><img src="https://i.imgur.com/EH4nXRx.png" alt=""></p>
+<pre><code># Extract the predicted and true values of our time series
+y_forecasted = pred_dynamic.predicted_mean
+y_truth = y[&#39;1998-01-01&#39;:]
+
+# Compute the mean square error
+mse = ((y_forecasted - y_truth) ** 2).mean()
+print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2)))
+
+The Mean Squared Error of our forecasts is 1.01
+
+
+#Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长
+pred_uc=results.get_forecast(steps=500)
+#Get confidence intervals of forecasts
+pred_ci=pred_uc.conf_int()
+
+ax=y.plot(label=&#39;observed&#39;,figsize=(20,15))
+pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;)
+ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],
+               pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25)
+ax.set_xlabel(&#39;Date&#39;)
+ax.set_ylabel(&#39;CO2 Levels&#39;)
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0xda122e8&gt;
+</code></pre><p> <img src="https://i.imgur.com/TfPcg9W.png" alt=""></p>
+<p>##参考博客##</p>
+<ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2920,293 +3377,6 @@ def crossValidation(xArr,yArr,numVal=10):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
-<ul>
-<li><p>TP：正确肯定的数目；</p>
-</li>
-<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
-</li>
-<li><p>FP：误报，给出的匹配是不正确的；</p>
-</li>
-<li><p>TN：正确拒绝的非匹配对数；</p>
-</li>
-</ul>
-<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">预测1</th>
-<th style="text-align:center">预测0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>实际1</strong></td>
-<td style="text-align:center">True Positive(TP)</td>
-<td style="text-align:center">False Negative(FN)</td>
-</tr>
-<tr>
-<td><strong>实际0</strong></td>
-<td style="text-align:center">False Positive(FP)</td>
-<td style="text-align:center">True Negative(TN)</td>
-</tr>
-</tbody>
-</table>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
-<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
-<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
-<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
-<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
-<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
-<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
-<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
-<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
-<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
-<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
-<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
-<p>不妨举这样一个例子：</p>
-<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
-<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
-<p>　　召回率 = 700 / 1400 = 50%</p>
-<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
-<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
-<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
-<p>　　召回率 = 1400 / 1400 = 100%</p>
-<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
-<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
-<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
-<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
-<p>F-Measure是Precision和Recall加权调和平均：</p>
-<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
-<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
-<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
-<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
-<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
-<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
-<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
-<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
-<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
-<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
-<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
-<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
-<p>曲线距离左上角越近,证明分类器效果越好。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
-<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
-<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
-<ul>
-<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
-</li>
-<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
-</li>
-<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
-</li>
-<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
-</li>
-</ul>
-<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
-<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
-<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
-<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
-<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
-<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
-<pre><code>#ROC曲线的绘制及AUC计算函数
-def plotROC(predStrengths,classLabels):
-    import matplotlib.pyplot as plt
-    #光标的位置
-    cur=(1.0,1.0)
-    #用于计算AUC的值
-    ySum=0.0
-    #正样本个数
-    numPosClas=np.sum(np.array(classLabels)==1.0)
-    #y轴上步进数目
-    yStep=1/float(numPosClas)
-    #x轴上步进数目
-    xStep=1/float(len(classLabels)-numPosClas)
-    #预测强度排序从小到大，（1,1）-&gt;(0,0)
-    #按照从小到大的顺序，输出对应的index索引
-    sortedIndicies=predStrengths.argsort()
-    fig=plt.figure()
-    fig.clf()
-    ax=plt.subplot(111)
-    for index in sortedIndicies.tolist()[0]:
-        #正例，修改真阳率
-        if classLabels[index]==1.0:
-            delX=0;delY=yStep;
-        #反例，修改假阳率
-        else:
-            delX=xStep;delY=0;
-            ySum+=cur[1]
-        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
-        cur=(cur[0]-delX,cur[1]-delY)
-    ax.plot([0,1],[0,1],&#39;b--&#39;)
-    plt.xlabel(&#39;False Positive Rate&#39;);
-    plt.ylabel(&#39;True Positive Rate&#39;)
-    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
-    ax.axis([0,1,0,1])
-    plt.show()
-    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
-</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
-<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3553,7 +3723,7 @@ return dataMat,labelMat
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/支持向量机通俗导论/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -3572,7 +3742,7 @@ return dataMat,labelMat
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/15/支持向量机通俗导论/" itemprop="url">支持向量机通俗导论（1）【转】</a></h1>
+                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
         
 
         <div class="post-meta">
@@ -3584,8 +3754,8 @@ return dataMat,labelMat
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-15T00:00:00+08:00">
-                2017-09-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
+                2017-09-19
               </time>
             
 
@@ -3609,7 +3779,18 @@ return dataMat,labelMat
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法/" itemprop="url" rel="index">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
                     <span itemprop="name">算法</span>
                   </a>
                 </span>
@@ -3647,61 +3828,145 @@ return dataMat,labelMat
       
         
           
-            <p><em>这是一篇CSDN上关于SVM的博客，由浅入深，写的很详细，很多推荐的</em></p>
-<p>作者：July 。致谢：pluskid、白石、JerryLead。<br>说明：本文最初写于2012年6月，而后不断反反复复修改&amp;优化，修改次数达上百次，最后修改于2016年11月。<br>声明：本文于2012年便早已附上所有参考链接，并注明是篇“学习笔记”，且写明具体参考了pluskid等人的文章。文末2013年的PDF是为证。</p>
-<p><img src="https://i.imgur.com/GyzYqIk.jpg" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>动笔写这个支持向量机(support vector machine)是费了不少劲和困难的，原因很简单，一者这个东西本身就并不好懂，要深入学习和研究下去需花费不少时间和精力，二者这个东西也不好讲清楚，尽管网上已经有朋友写得不错了(见文末参考链接)，但在描述数学公式的时候还是显得不够。得益于同学白石的数学证明，我还是想尝试写一下，希望本文在兼顾通俗易懂的基础上，真真正正能足以成为一篇完整概括和介绍支持向量机的导论性的文章。</p>
-<p>本文在写的过程中，参考了不少资料，包括《支持向量机导论》、《统计学习方法》及网友pluskid的支持向量机系列等等，于此，还是一篇学习笔记，只是加入了自己的理解和总结，有任何不妥之处，还望海涵。全文宏观上整体认识支持向量机的概念和用处，微观上深究部分定理的来龙去脉，证明及原理细节，力保逻辑清晰 &amp; 通俗易懂。</p>
-<p>同时，阅读本文时建议大家尽量使用chrome等浏览器，如此公式才能更好的显示，再者，阅读时可拿张纸和笔出来，把本文所有定理.公式都亲自推导一遍或者直接打印下来（可直接打印网页版或本文文末附的PDF）在文稿上演算，从而享受随时随地思考、演算的极致快感。</p>
-<p>OK，还是那句话，有任何问题，欢迎任何人随时不吝指正 &amp; 赐教，感谢。</p>
-<h2 id="第一层、了解SVM"><a href="#第一层、了解SVM" class="headerlink" title="第一层、了解SVM"></a>第一层、了解SVM</h2><p>支持向量机，因其英文名为support vector machine，故一般简称SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
-<h4 id="1-1、分类标准的起源：Logistic回归"><a href="#1-1、分类标准的起源：Logistic回归" class="headerlink" title="1.1、分类标准的起源：Logistic回归"></a>1.1、分类标准的起源：Logistic回归</h4><p>理解SVM，咱们必须先弄清楚一个概念：线性分类器。</p>
-<p>给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用x表示数据点，用y表示类别（y可以取1或者-1，分别代表两个不同的类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面（hyper plane），这个超平面的方程可以表示为（ wT中的T代表转置）：</p>
-<p>$$ w^Tx+b=0 $$</p>
-<p>可能有读者对类别取1或-1有疑问，事实上，这个1或-1的分类标准起源于logistic回归。</p>
-<p>Logistic回归目的是从特征学习出一个0/1分类模型，而这个模型是将特征的线性组合作为自变量，由于自变量的取值范围是负无穷到正无穷。因此，使用logistic函数（或称作sigmoid函数）将自变量映射到(0,1)上，映射后的值被认为是属于y=1的概率。</p>
-<p>假设函数</p>
-<p>$$ h_\theta(x)=g(\theta^Tx)=\frac 1{1+e^{-\theta^Tx}}, $$</p>
-<p>其中x是n维特征向量，函数g就是logistic函数。</p>
-<p>\( g(z)=\frac 1{1+e^{-z}} \)图像是</p>
-<p><img src="http://img.my.csdn.net/uploads/201304/05/1365174236_6175.png" alt=""></p>
-<p>可以看到，将无穷映射到了(0,1)。<br>而假设函数就是特征属于y=1的概率。</p>
-<p>$$ P(y=1|x;\theta)=h_\theta(x) $$<br>$$ P(y=0|x;\theta)=1-h_\theta(x) $$<br> 从而，当我们要判别一个新来的特征属于哪个类时，只需求\(h_\theta(x)\)即可，若\(h_\theta(x)\)大于0.5就是y=1的类，反之属于y=0类。</p>
-<p> 此外，\(h_\theta(x)\)只和\(\theta^Tx\)有关，\(\theta^Tx>0\)，那么\(h_\theta(x)>0.5\)，而g(z)只是用来映射，真实的类别决定权还是在于\(\theta^Tx\)。再者，当\(\theta^Tx\)&gt;&gt;0时，\(h_\theta(x)=1\)，反之\(h_\theta(x)=0\)。如果我们只从\(\theta^Tx\)出发，希望模型达到的目标就是让训练数据中y=1的特征\(\theta^Tx\)&gt;&gt;0，而是y=0的特征\(\theta^Tx\)&lt;&lt;0。Logistic回归就是要学习得到θ，使得正例的特征远大于0，负例的特征远小于0，而且要在全部训练实例上达到这个目标。</p>
-<p> 接下来，尝试把logistic回归做个变形。首先，将使用的结果标签y = 0和y = 1替换为y = -1,y = 1，然后将\(\theta^Tx=\theta_0+\theta_1x_1+\theta_2x_2+…+\theta_nx_n\) \((x_0=1)\)中\(\theta_0\)的替换为b，最后将后面的\(\theta_1x_1+\theta_2x_2+…+\theta_nx_n\)替换为\(w_1x_1+w_2x_2+…+w_nx_n\)（即\(w^Tx\)）。如此，则有了\(\theta^Tx=w^Tx+b\)。也就是说除了y由y=0变为y=-1外，线性分类函数跟logistic回归的形式化表示\( h_\theta=g(\theta^Tx)=g(w^T+b) \)没区别。</p>
-<p> 进一步，可以将假设函数\(h_{w,b}(x)=g(w^Tx+b)\)中的g(z)做一个简化，将其简单映射到y=-1和y=1上。映射关系如下：<br>$$<br>g(z)=\begin{cases}<br>1,&amp; \text{if \(z &gt;=0\)}<br>\\\\<br>-1,&amp; \text{if \(z &lt;0\)}<br>\end{cases}<br>$$</p>
-<h4 id="1-2、线性分类的一个例子"><a href="#1-2、线性分类的一个例子" class="headerlink" title="1.2、线性分类的一个例子"></a>1.2、线性分类的一个例子</h4><p>下面举个简单的例子。如下图所示，现在有一个二维平面，平面上有两种不同的数据，分别用圈和叉表示。由于这些数据是线性可分的，所以可以用一条直线将这两类数据分开，这条直线就相当于一个超平面，超平面一边的数据点所对应的y全是-1 ，另一边所对应的y全是1。</p>
-<p><img src="http://img.blog.csdn.net/20140829134124453" alt=""></p>
-<p>这个超平面可以用分类函数\(f(x)=w^Tx+b\)表示，当f(x) 等于0的时候，x便是位于超平面上的点，而f(x)大于0的点对应 y=1 的数据点，f(x)小于0的点对应y=-1的点，如下图所示：<br><img src="http://img.blog.csdn.net/20140829134548371" alt=""></p>
-<blockquote>
-<p>注：有的资料上定义特征到结果的输出函数\(u=w\cdot{x}-b\)，与这里定义的\(f(x)=w^Tx+b\)实质是一样的。为什么？因为无论是\(u=w^Tx-b\)，还是\(f(x)=w^Tx+b\)，不影响最终优化结果。下文你将看到，当我们转化到优化\(max \frac 1{||w||}, s.t.,y_i(w^Tx_i+b)\ge1,i=1,…,n\)的时候，为了求解方便，会把yf(x)令为1，即yf(x)是\(y(w^Tx+b)\)，还是\(y(w^Tx-b)\)，对我们要优化的式子\(max \frac 1{||w||}\)已无影响。</p>
-</blockquote>
-<p>换言之，在进行分类的时候，遇到一个新的数据点x，将x代入f(x) 中，如果f(x)小于0则将x的类别赋为-1，如果f(x)大于0则将x的类别赋为1。</p>
-<p> 接下来的问题是，如何确定这个超平面呢？从直观上而言，这个超平面应该是最适合分开两类数据的直线。而判定“最适合”的标准就是这条直线离直线两边的数据的间隔最大。所以，得寻找有着最大间隔的超平面。</p>
-<h4 id="1-3、函数间隔Functional-margin与几何间隔Geometrical-margin"><a href="#1-3、函数间隔Functional-margin与几何间隔Geometrical-margin" class="headerlink" title="1.3、函数间隔Functional margin与几何间隔Geometrical margin"></a>1.3、函数间隔Functional margin与几何间隔Geometrical margin</h4><p>在超平面\(w^Tx+b=0\)确定的情况下，\(|w^Tx+b|\)能够表示点x到距离超平面的远近，而通过观察\(w^Tx+b\)的符号与类标记y的符号是否一致可判断分类是否正确，所以，可以用\(y(w^Tx+b)\)的正负性来判定或表示分类的正确性。于此，我们便引出了函数间隔（functional margin）的概念。</p>
-<p>定义函数间隔（用\(\hat{\gamma}\)表示）为：\(\hat{\gamma}=y(w^Tx+b)=yf(x)\)</p>
-<p>而超平面(w，b)关于T中所有样本点(xi，yi)的函数间隔最小值（其中，x是特征，y是结果标签，i表示第i个样本），便为超平面(w, b)关于训练数据集T的函数间隔：</p>
-<p>$$ \hat{\gamma}=min\hat{\gamma}_i (i=1,2,…,n) $$</p>
-<p> 但这样定义的函数间隔有问题，即如果成比例的改变w和b（如将它们改成2w和2b），则函数间隔的值f(x)却变成了原来的2倍（虽然此时超平面没有改变），所以只有函数间隔还远远不够。</p>
-<p>事实上，我们可以对法向量w加些约束条件，从而引出真正定义点到超平面的距离–几何间隔（geometrical margin）的概念。</p>
-<p>假定对于一个点 x ，令其垂直投影到超平面上的对应点为 x0 ，w 是垂直于超平面的一个向量，\(\gamma\)为样本x到超平面的距离，如下图所示：</p>
-<p><img src="http://blog.pluskid.org/wp-content/uploads/2010/09/geometric_margin.png" alt=""></p>
-<p>根据平面几何知识，有</p>
-<p>$$ x=x_0+\gamma\frac w{||w||} $$</p>
-<p>其中||w||为w的二阶范数（范数是一个类似于模的表示长度的概念），\(\frac w{||w||}\)是单位向量（一个向量除以它的模称之为单位向量）。</p>
-<p>又由于 x0 是超平面上的点，满足 f(x0)=0 ，代入超平面的方程\(w^Tx+b=0\)，可得\(w^Tx_0+b=0\)，即\(w^Tx_0=-b\)。</p>
-<p>随即让此式\(x=x_0+\gamma\frac w{||w||}\)的两边同时乘以\(w^T\)，再根据\(w^Tx_0=-b\)和\(w^Tw={||w||}^2\)，即可算出：<br>$$ \gamma=\frac {w^Tx+b}{||w||} = \frac {f(x)}{||w||} $$<br>为了得到的\(\gamma\)绝对值，令\(\gamma\)乘上对应的类别 y，即可得出几何间隔（用\(\tilde{\gamma}\)表示<strong>函数间隔是头上是箭头，几何间隔是波浪线</strong>）的定义：<br>$$ \tilde{\gamma}=y\gamma=\frac {\tilde{\gamma}}{||w||} $$</p>
-<p>从上述函数间隔和几何间隔的定义可以看出：几何间隔就是函数间隔除以||w||，而且函数间隔\(y(w^Tx+b)=yf(x)\)实际上就是|f(x)|，只是人为定义的一个间隔度量，而几何间隔|f(x)|/||w||才是直观上的点到超平面的距离。</p>
-<h4 id="1-4、最大间隔分类器Maximum-Margin-Classifier的定义"><a href="#1-4、最大间隔分类器Maximum-Margin-Classifier的定义" class="headerlink" title="1.4、最大间隔分类器Maximum Margin Classifier的定义"></a>1.4、最大间隔分类器Maximum Margin Classifier的定义</h4><p>对一个数据点进行分类，当超平面离数据点的“间隔”越大，分类的确信度（confidence）也越大。所以，为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个“间隔”值。这个间隔就是下图中的Gap的一半。</p>
-<p><img src="http://img.blog.csdn.net/20140829135959290" alt=""></p>
-<p>通过由前面的分析可知：函数间隔不适合用来最大化间隔值，因为在超平面固定以后，可以等比例地缩放w的长度和b的值，这样可以使得\(f(x)=w^Tx+b\)的值任意大，亦即函数间隔\(\hat{\gamma}\)可以在超平面保持不变的情况下被取得任意大。但几何间隔因为除上||w||了，使得在缩放w和b的时候几何间隔\(\tilde{\gamma}\)的值是不会改变的，它只随着超平面的变动而变动，因此，这是更加合适的一个间隔。换言之，这里要找的最大间隔分类超平面中的“间隔”指的是几何间隔。</p>
-<p> 于是最大间隔分类器（maximum margin classifier）的目标函数可以定义为：<br>\(\max \tilde\gamma\)<br>同时需满足一些条件，根据间隔的定义，有<br>\(y_i(w^Tx_i+b)=\hat{\gamma_i}\ge{\hat\gamma}\)</p>
-<p>回顾下几何间隔的定义\(\tilde\gamma=y\gamma=\frac {\hat\gamma}{||w||}\)，可知：如果令函数间隔\(\hat\gamma\)等于1（之所以令\(\hat\gamma\)等于1，是为了方便推导和优化，且这样做对目标函数的优化没有影响，至于为什么，请见本文评论下第42楼回复），则有\(\hat\gamma=\frac 1{||w||}\)且\(y_i(w^Tx_i+b)\ge1,i=1,…,n\)，从而上述目标函数转化成了\(max \frac 1{||w||}, s.t.,y_i(w^Tx_i+b)\ge1,i=1,…,n\)</p>
-<p>相当于在相应的约束条件\(y_i(w^Tx_i+b)\ge1,i=1,…,n\)下，最大化这个1/||w||值，而1/||w||便是几何间隔\(\tilde\gamma\)。   </p>
-<p>如下图所示，中间的实线便是寻找到的最优超平面（Optimal Hyper Plane），其到两条虚线边界的距离相等，这个距离便是几何间隔\(\tilde\gamma\)，两条虚线间隔边界之间的距离等于2\(\tilde\gamma\)，而虚线间隔边界上的点则是支持向量。由于这些支持向量刚好在虚线间隔边界上，所以它们满足\(y(w^Tx+b)=1\)（还记得我们把 functional margin 定为 1 了吗？上节中：处于方便推导和优化的目的，我们可以令\(\hat\gamma=1\)），而对于所有不是支持向量的点，则显然有\(y(w^Tx+b)&gt;1\)。</p>
-<p><img src="http://img.blog.csdn.net/20140829141714944" alt=""></p>
-<p>OK，到此为止，算是了解到了SVM的第一层，对于那些只关心怎么用SVM的朋友便已足够，不必再更进一层深究其更深的原理。</p>
-<h2 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h2><p><a href="http://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/7624837</a></p>
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+<ul>
+<li><p>TP：正确肯定的数目；</p>
+</li>
+<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
+</li>
+<li><p>FP：误报，给出的匹配是不正确的；</p>
+</li>
+<li><p>TN：正确拒绝的非匹配对数；</p>
+</li>
+</ul>
+<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">预测1</th>
+<th style="text-align:center">预测0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实际1</strong></td>
+<td style="text-align:center">True Positive(TP)</td>
+<td style="text-align:center">False Negative(FN)</td>
+</tr>
+<tr>
+<td><strong>实际0</strong></td>
+<td style="text-align:center">False Positive(FP)</td>
+<td style="text-align:center">True Negative(TN)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
+<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
+<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
+<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
+<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
+<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
+<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
+<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
+<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
+<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
+<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
+<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
+<p>不妨举这样一个例子：</p>
+<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
+<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
+<p>　　召回率 = 700 / 1400 = 50%</p>
+<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
+<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
+<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
+<p>　　召回率 = 1400 / 1400 = 100%</p>
+<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
+<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
+<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
+<p>F-Measure是Precision和Recall加权调和平均：</p>
+<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
+<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
+<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
+<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
+<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
+<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
+<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
+<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
+<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
+<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
+<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
+<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
+<p>曲线距离左上角越近,证明分类器效果越好。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
+<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
+<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
+<ul>
+<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
+</li>
+<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
+</li>
+<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
+</li>
+<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
+</li>
+</ul>
+<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
+<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
+<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
+<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
+<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
+<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
+<pre><code>#ROC曲线的绘制及AUC计算函数
+def plotROC(predStrengths,classLabels):
+    import matplotlib.pyplot as plt
+    #光标的位置
+    cur=(1.0,1.0)
+    #用于计算AUC的值
+    ySum=0.0
+    #正样本个数
+    numPosClas=np.sum(np.array(classLabels)==1.0)
+    #y轴上步进数目
+    yStep=1/float(numPosClas)
+    #x轴上步进数目
+    xStep=1/float(len(classLabels)-numPosClas)
+    #预测强度排序从小到大，（1,1）-&gt;(0,0)
+    #按照从小到大的顺序，输出对应的index索引
+    sortedIndicies=predStrengths.argsort()
+    fig=plt.figure()
+    fig.clf()
+    ax=plt.subplot(111)
+    for index in sortedIndicies.tolist()[0]:
+        #正例，修改真阳率
+        if classLabels[index]==1.0:
+            delX=0;delY=yStep;
+        #反例，修改假阳率
+        else:
+            delX=xStep;delY=0;
+            ySum+=cur[1]
+        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
+        cur=(cur[0]-delX,cur[1]-delY)
+    ax.plot([0,1],[0,1],&#39;b--&#39;)
+    plt.xlabel(&#39;False Positive Rate&#39;);
+    plt.ylabel(&#39;True Positive Rate&#39;)
+    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
+    ax.axis([0,1,0,1])
+    plt.show()
+    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
+</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
+<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
+</ol>
 
           
         
@@ -3786,7 +4051,7 @@ return dataMat,labelMat
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
