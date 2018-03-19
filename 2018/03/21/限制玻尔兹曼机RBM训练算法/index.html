@@ -94,21 +94,22 @@
 
 
 
-<meta name="description" content="RBM学习笔记（四）对数似然函数 原博客地址http://blog.csdn.net/itplus/article/details/19168967">
+<meta name="description" content="RBM学习笔记（七）RBM训练算法  原博客地址http://blog.csdn.net/itplus/article/details/19408701">
 <meta name="keywords" content="深度学习,RBM,DBN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RBM学习笔记（四）对数似然函数">
-<meta property="og:url" content="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/index.html">
+<meta property="og:title" content="RBM学习笔记（七）RBM训练算法">
+<meta property="og:url" content="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM训练算法/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="RBM学习笔记（四）对数似然函数 原博客地址http://blog.csdn.net/itplus/article/details/19168967">
+<meta property="og:description" content="RBM学习笔记（七）RBM训练算法  原博客地址http://blog.csdn.net/itplus/article/details/19408701">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20140213230041656">
+<meta property="og:image" content="http://img.blog.csdn.net/20140218142518171">
+<meta property="og:image" content="http://img.blog.csdn.net/20140218142525640">
 <meta property="og:image" content="http://img.blog.csdn.net/20140218224838375">
-<meta property="og:updated_time" content="2018-03-19T07:01:57.993Z">
+<meta property="og:updated_time" content="2018-03-19T07:34:00.587Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RBM学习笔记（四）对数似然函数">
-<meta name="twitter:description" content="RBM学习笔记（四）对数似然函数 原博客地址http://blog.csdn.net/itplus/article/details/19168967">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20140213230041656">
+<meta name="twitter:title" content="RBM学习笔记（七）RBM训练算法">
+<meta name="twitter:description" content="RBM学习笔记（七）RBM训练算法  原博客地址http://blog.csdn.net/itplus/article/details/19408701">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20140218142518171">
 
 
 
@@ -136,7 +137,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM训练算法/"/>
 
 
 
@@ -144,7 +145,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>RBM学习笔记（四）对数似然函数 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>RBM学习笔记（七）RBM训练算法 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -307,7 +308,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM训练算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -324,7 +325,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">RBM学习笔记（四）对数似然函数</h1>
+          <h1 class="post-title" itemprop="name headline">RBM学习笔记（七）RBM训练算法</h1>
         
 
         <div class="post-meta">
@@ -336,8 +337,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
-                2018-03-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
+                2018-03-21
               </time>
             
 
@@ -408,8 +409,9 @@
       
 
       
-        <h3 id="RBM学习笔记（四）对数似然函数"><a href="#RBM学习笔记（四）对数似然函数" class="headerlink" title="RBM学习笔记（四）对数似然函数"></a>RBM学习笔记（四）对数似然函数</h3><p><img src="http://img.blog.csdn.net/20140213230041656" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
+        <h3 id="RBM学习笔记（七）RBM训练算法"><a href="#RBM学习笔记（七）RBM训练算法" class="headerlink" title="RBM学习笔记（七）RBM训练算法"></a>RBM学习笔记（七）RBM训练算法</h3><p><img src="http://img.blog.csdn.net/20140218142518171" alt=""><br><img src="http://img.blog.csdn.net/20140218142525640" alt=""></p>
+<p><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19408701" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19408701</a></p>
 
       
     </div>
@@ -456,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/20/限制玻尔兹曼机对比散度算法/" rel="next" title="RBM学习笔记（六）对比散度算法">
-                <i class="fa fa-chevron-left"></i> RBM学习笔记（六）对比散度算法
+              <a href="/2018/03/20/限制玻尔兹曼机对数似然函数/" rel="next" title="RBM学习笔记（四）对数似然函数">
+                <i class="fa fa-chevron-left"></i> RBM学习笔记（四）对数似然函数
               </a>
             
           </div>
@@ -465,10 +467,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/21/限制玻尔兹曼机RBM训练算法/" rel="prev" title="RBM学习笔记（七）RBM训练算法">
-                RBM学习笔记（七）RBM训练算法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -627,7 +625,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RBM学习笔记（四）对数似然函数"><span class="nav-number">1.</span> <span class="nav-text">RBM学习笔记（四）对数似然函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原博客地址"><span class="nav-number">2.</span> <span class="nav-text">原博客地址</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RBM学习笔记（七）RBM训练算法"><span class="nav-number">1.</span> <span class="nav-text">RBM学习笔记（七）RBM训练算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原博客地址"><span class="nav-number">2.</span> <span class="nav-text">原博客地址</span></a></li></ol></div>
             
 
           </div>
