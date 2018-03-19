@@ -301,6 +301,204 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/英特尔两道编程题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/14/英特尔两道编程题/" itemprop="url">英特尔校招两道编程题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T00:00:00+08:00">
+                2017-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。<br>师兄做的是B类，共有两道编程题，和A类是一致的。</p>
+<p>第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。</p>
+<pre><code>D_LIST* remove(D_LIST* head, int val)
+{
+    if(head==NULL)
+        return head;
+    D_LIST* preNode=(D_LIST*)malloc(sizeof(D_LIST));//就是这里没有分配
+    preNode-&gt;next=head;
+    D_LIST* curNode=preNode;
+    while(curNode-&gt;next!=NULL)
+    {
+        if(curNode-&gt;next-&gt;data==val)
+        {
+            D_LIST* nextNode=curNode-&gt;next;
+            curNode-&gt;next=nextNode-&gt;next;
+
+        }
+        else
+            curNode=curNode-&gt;next;
+    }
+    D_LIST* result=preNode-&gt;next;
+    free(preNode);
+    return result; 
+}
+</code></pre><p>第二道是，删除字符串中/**/包围的字符，也很简单，但是没有AC，原因在于写的太混乱，总是报错。</p>
+<pre><code>void remove_comments(char *txt)
+{
+    char *str=txt;
+    if(str==NULL)
+        return;
+    int n=strlen(txt);
+    int ind1=0,ind2=0;
+    for(int i=0;i&lt;n;i++)
+    {
+        if(str[i]==&#39;/&#39;)
+        {
+            if(!ind1)
+            {
+                ind1=i;
+                continue;
+            }
+            else
+            {
+                ind2=i;
+                break;
+            }
+        }
+    }
+    int i=0,j=0;
+    if(ind1&amp;&amp;ind2)
+    { 
+        for( i=0,j=0;i&lt;n;i++)
+        {
+            if((i&lt;ind1)||(i&gt;ind2))
+            {
+                txt[j++]=str[i];
+            }
+        }
+    }
+    txt[j]=&#39;\0&#39;;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/Hands-on第二章学习笔记(2)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3050,206 +3248,11 @@ bst.dump_model(&#39;dump.raw.txt&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/windows系统与树莓派间文件传输/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/25/windows系统与树莓派间文件传输/" itemprop="url">Windows系统与树莓派间文件传输</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T00:00:00+08:00">
-                2017-08-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/树莓派3/" itemprop="url" rel="index">
-                    <span itemprop="name">树莓派3</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/树莓派3/好记性不如烂笔头/" itemprop="url" rel="index">
-                    <span itemprop="name">好记性不如烂笔头</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>windows系统和树莓派之间文件传输方式有很多种，利用FileZilla来传输，是我用的最简便快捷的一种。</p>
-<h3 id="FileZilla特点"><a href="#FileZilla特点" class="headerlink" title="FileZilla特点"></a>FileZilla特点</h3><ol>
-<li>易于使用</li>
-</ol>
-<blockquote>
-<p>FileZilla比其他任何一款FTP软件都要简单</p>
-</blockquote>
-<ol>
-<li>多协议支持</li>
-</ol>
-<blockquote>
-<p>FileZilla支持FTP、FTPS、SFTP等文件传输协议</p>
-</blockquote>
-<ol>
-<li>多种语言</li>
-</ol>
-<blockquote>
-<p>FileZilla支持多国语言，完美支持简体中文</p>
-</blockquote>
-<ol>
-<li>多标签界面</li>
-</ol>
-<blockquote>
-<p>多标签界面</p>
-</blockquote>
-<ol>
-<li>远程查找文件</li>
-</ol>
-<blockquote>
-<p>FileZilla支持远程查找文件功能</p>
-</blockquote>
-<ol>
-<li>站点管理器</li>
-</ol>
-<blockquote>
-<p>FileZilla自带功能强大的站点管理和传输队列管理</p>
-</blockquote>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>虽然介绍的功能比较多，但我关心的是与树莓派的文件传输功能。</p>
-<p>直接上图：</p>
-<p><img src="http://i.imgur.com/ofIVqB2.jpg" alt=""></p>
-<ol>
-<li>主机：<strong>sftp://YOUR DEVICE IP ADDRESS(192.168.1.102)</strong></li>
-<li>填写用户名和密码，端口可不填</li>
-<li><strong>快速连接</strong></li>
-</ol>
-<p>左边<strong>本底站点</strong>为你的windows系统资源管理器，右边<strong>远程站点</strong>是树莓派文件系统，直接拖拽就可以实现文件传输。<br><em>需要注意的是有些树莓派中的文件是有访问等级的，可能无法操作</em></p>
-<p>下载地址：<a href="https://filezilla-project.org/" target="_blank" rel="external">FileZilla - The free FTP solution</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -3295,7 +3298,7 @@ bst.dump_model(&#39;dump.raw.txt&#39;)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

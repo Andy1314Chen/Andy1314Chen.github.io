@@ -301,6 +301,330 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
+<ul>
+<li>优点：简化数据，去除噪声，提高算法的结果</li>
+<li>缺点：数据的转换可能难以理解</li>
+<li>适用数据类型：数值型数据</li>
+</ul>
+<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
+<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
+<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
+<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
+<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
+<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
+<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
+<pre><code>import numpy as np
+
+In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
+
+In[139]: U
+Out[139]: 
+array([[-0.14142136, -0.98994949],
+       [-0.98994949,  0.14142136]])
+In[140]: Sigma
+Out[140]: 
+array([ 10.,   0.])
+
+In[141]: VT
+Out[141]: 
+array([[-0.70710678, -0.70710678],
+   [-0.70710678,  0.70710678]])
+</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
+<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
+<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
+<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
+<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
+<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
+<pre><code>#### 相似度计算 ####
+
+1. 欧式距离
+2. 皮尔相关系数（Pearson correlation)
+3. 余弦相似度(cosine similarity)
+
+#程序清单14-1 相似度计算
+
+#欧式距离
+def ecludSim(inA,inB):
+    return 1.0/(1.0+la.norm(inA-inB))
+
+#皮尔逊相关系数
+def pearsSim(inA,inB):
+    if len(inA)&lt;3:
+        return 1.0
+    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
+
+#余弦相似度
+def cosSim(inA,inB):
+    num=float(inA.T*inB)
+    denom=la.norm(inA)*la.norm(inB)
+    return 0.5+0.5*(num/denom)
+</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
+<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
+<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
+<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
+</ol>
+<p>程序源码：</p>
+<pre><code>&quot;&quot;&quot;
+    示例：餐馆菜肴推荐引擎
+&quot;&quot;&quot;
+#程序清单14-2 基于物品相似度的推荐引擎
+
+#基于给定相似度计算方法的条件下，用户对物品的估计评分值
+&quot;&quot;&quot;
+dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
+&quot;&quot;&quot;
+def standEst(dataMat,user,simMeas,item):
+    #物品数
+    n=np.shape(dataMat)[1]
+    simTotal=0;ratSimTotal=0
+    #遍历每一个物品
+    for j in range(n):
+        userRating=dataMat[user,j]
+        #如果用户没有对该物品进行评分，则跳过
+        if userRating==0:
+            continue
+        #将item所在列与当前遍历列进行逻辑与
+        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
+                                       dataMat[:,j].A&gt;0))[0]
+        #若结果为0，则相似度为0，说明item与当前物品毫无交集
+        if len(overLap)==0:
+            similarity=0
+        else:
+            #计算相似度
+            similarity=simMeas(dataMat[overLap,item],
+                               dataMat[overLap,j])
+        #总的相似度
+        simTotal+=similarity
+        #考虑用户评分
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        #归一化
+        return ratSimTotal/simTotal
+
+#返回最高N个推荐结果   
+def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
+    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
+    #所有物品都已经投过票，则不需要进行推荐
+    if len(unratedItems)==0:
+        return &#39;you rated everything&#39;
+    itemScores=[]
+    #对未投票物品进行遍历
+    for item in unratedItems:
+        estimatedScore=estMethod(dataMat,user,simMeas,item)
+        itemScores.append((item,estimatedScore))
+    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
+</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
+def svdEst(dataMat,user,simMeas,item):
+    n=np.shape(dataMat)[1]
+    simTotal=0.0;ratSimTotal=0.0
+    #奇异值分解
+    U,Sigma,VT=la.svd(dataMat)
+    #构建对角矩阵
+    Sig4=np.mat(np.eye(4)*Sigma[:4])
+    #将物品转换到低维空间中
+    xformedItems=dataMat.T*U[:,:4]*Sig4.I
+
+    for j in range(n):
+        userRating=dataMat[user,j]
+        if userRating==0 or j==item:
+            continue
+        similarity=simMeas(xformedItems[item,:].T,
+                           xformedItems[j,:].T)
+        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
+        simTotal+=similarity
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        return ratSimTotal/float(simTotal)
+</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
+<pre><code>&quot;&quot;&quot;
+    基于SVD的图像压缩
+&quot;&quot;&quot;
+
+#程序清单14-4 图像压缩函数
+def printMat(inMat,thresh=0.8):
+    for i in range(32):
+        for k in range(32):
+            if float(inMat[i,k])&gt;thresh:
+                print(1,end=&#39;&#39;);
+            else:
+                print(0,end=&#39;&#39;);
+        print(&#39;&#39;)
+
+def imgCompress(numSV=3,thresh=0.8):
+    my1=[]
+    for line in open(&#39;0_5.txt&#39;).readlines():
+        newRow=[]
+        for i in range(32):
+            newRow.append(int(line[i]))
+        my1.append(newRow)
+    myMat=np.mat(my1)
+    print(&quot;****original matrix****&quot;)
+    #打印原始数据
+    printMat(myMat,thresh)
+    #SVD分解
+    U,Sigma,VT=la.svd(myMat)
+    SigRecon=np.mat(np.zeros((numSV,numSV)))
+    for k in range(numSV):
+        SigRecon[k,k]=Sigma[k]
+    #重构矩阵
+    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
+    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
+          numSV)
+    printMat(reconMat,thresh)
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/机器学习实战第十三章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2596,6 +2920,293 @@ def crossValidation(xArr,yArr,numVal=10):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+<ul>
+<li><p>TP：正确肯定的数目；</p>
+</li>
+<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
+</li>
+<li><p>FP：误报，给出的匹配是不正确的；</p>
+</li>
+<li><p>TN：正确拒绝的非匹配对数；</p>
+</li>
+</ul>
+<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">预测1</th>
+<th style="text-align:center">预测0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实际1</strong></td>
+<td style="text-align:center">True Positive(TP)</td>
+<td style="text-align:center">False Negative(FN)</td>
+</tr>
+<tr>
+<td><strong>实际0</strong></td>
+<td style="text-align:center">False Positive(FP)</td>
+<td style="text-align:center">True Negative(TN)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
+<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
+<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
+<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
+<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
+<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
+<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
+<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
+<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
+<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
+<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
+<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
+<p>不妨举这样一个例子：</p>
+<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
+<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
+<p>　　召回率 = 700 / 1400 = 50%</p>
+<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
+<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
+<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
+<p>　　召回率 = 1400 / 1400 = 100%</p>
+<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
+<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
+<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
+<p>F-Measure是Precision和Recall加权调和平均：</p>
+<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
+<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
+<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
+<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
+<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
+<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
+<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
+<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
+<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
+<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
+<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
+<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
+<p>曲线距离左上角越近,证明分类器效果越好。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
+<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
+<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
+<ul>
+<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
+</li>
+<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
+</li>
+<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
+</li>
+<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
+</li>
+</ul>
+<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
+<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
+<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
+<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
+<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
+<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
+<pre><code>#ROC曲线的绘制及AUC计算函数
+def plotROC(predStrengths,classLabels):
+    import matplotlib.pyplot as plt
+    #光标的位置
+    cur=(1.0,1.0)
+    #用于计算AUC的值
+    ySum=0.0
+    #正样本个数
+    numPosClas=np.sum(np.array(classLabels)==1.0)
+    #y轴上步进数目
+    yStep=1/float(numPosClas)
+    #x轴上步进数目
+    xStep=1/float(len(classLabels)-numPosClas)
+    #预测强度排序从小到大，（1,1）-&gt;(0,0)
+    #按照从小到大的顺序，输出对应的index索引
+    sortedIndicies=predStrengths.argsort()
+    fig=plt.figure()
+    fig.clf()
+    ax=plt.subplot(111)
+    for index in sortedIndicies.tolist()[0]:
+        #正例，修改真阳率
+        if classLabels[index]==1.0:
+            delX=0;delY=yStep;
+        #反例，修改假阳率
+        else:
+            delX=xStep;delY=0;
+            ySum+=cur[1]
+        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
+        cur=(cur[0]-delX,cur[1]-delY)
+    ax.plot([0,1],[0,1],&#39;b--&#39;)
+    plt.xlabel(&#39;False Positive Rate&#39;);
+    plt.ylabel(&#39;True Positive Rate&#39;)
+    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
+    ax.axis([0,1,0,1])
+    plt.show()
+    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
+</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
+<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2942,293 +3553,6 @@ return dataMat,labelMat
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
-<ul>
-<li><p>TP：正确肯定的数目；</p>
-</li>
-<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
-</li>
-<li><p>FP：误报，给出的匹配是不正确的；</p>
-</li>
-<li><p>TN：正确拒绝的非匹配对数；</p>
-</li>
-</ul>
-<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">预测1</th>
-<th style="text-align:center">预测0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>实际1</strong></td>
-<td style="text-align:center">True Positive(TP)</td>
-<td style="text-align:center">False Negative(FN)</td>
-</tr>
-<tr>
-<td><strong>实际0</strong></td>
-<td style="text-align:center">False Positive(FP)</td>
-<td style="text-align:center">True Negative(TN)</td>
-</tr>
-</tbody>
-</table>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
-<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
-<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
-<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
-<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
-<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
-<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
-<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
-<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
-<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
-<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
-<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
-<p>不妨举这样一个例子：</p>
-<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
-<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
-<p>　　召回率 = 700 / 1400 = 50%</p>
-<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
-<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
-<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
-<p>　　召回率 = 1400 / 1400 = 100%</p>
-<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
-<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
-<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
-<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
-<p>F-Measure是Precision和Recall加权调和平均：</p>
-<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
-<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
-<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
-<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
-<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
-<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
-<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
-<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
-<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
-<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
-<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
-<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
-<p>曲线距离左上角越近,证明分类器效果越好。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
-<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
-<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
-<ul>
-<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
-</li>
-<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
-</li>
-<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
-</li>
-<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
-</li>
-</ul>
-<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
-<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
-<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
-<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
-<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
-<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
-<pre><code>#ROC曲线的绘制及AUC计算函数
-def plotROC(predStrengths,classLabels):
-    import matplotlib.pyplot as plt
-    #光标的位置
-    cur=(1.0,1.0)
-    #用于计算AUC的值
-    ySum=0.0
-    #正样本个数
-    numPosClas=np.sum(np.array(classLabels)==1.0)
-    #y轴上步进数目
-    yStep=1/float(numPosClas)
-    #x轴上步进数目
-    xStep=1/float(len(classLabels)-numPosClas)
-    #预测强度排序从小到大，（1,1）-&gt;(0,0)
-    #按照从小到大的顺序，输出对应的index索引
-    sortedIndicies=predStrengths.argsort()
-    fig=plt.figure()
-    fig.clf()
-    ax=plt.subplot(111)
-    for index in sortedIndicies.tolist()[0]:
-        #正例，修改真阳率
-        if classLabels[index]==1.0:
-            delX=0;delY=yStep;
-        #反例，修改假阳率
-        else:
-            delX=xStep;delY=0;
-            ySum+=cur[1]
-        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
-        cur=(cur[0]-delX,cur[1]-delY)
-    ax.plot([0,1],[0,1],&#39;b--&#39;)
-    plt.xlabel(&#39;False Positive Rate&#39;);
-    plt.ylabel(&#39;True Positive Rate&#39;)
-    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
-    ax.axis([0,1,0,1])
-    plt.show()
-    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
-</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
-<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/支持向量机通俗导论/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3412,209 +3736,11 @@ def plotROC(predStrengths,classLabels):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/英特尔两道编程题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/14/英特尔两道编程题/" itemprop="url">英特尔校招两道编程题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T00:00:00+08:00">
-                2017-09-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。<br>师兄做的是B类，共有两道编程题，和A类是一致的。</p>
-<p>第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。</p>
-<pre><code>D_LIST* remove(D_LIST* head, int val)
-{
-    if(head==NULL)
-        return head;
-    D_LIST* preNode=(D_LIST*)malloc(sizeof(D_LIST));//就是这里没有分配
-    preNode-&gt;next=head;
-    D_LIST* curNode=preNode;
-    while(curNode-&gt;next!=NULL)
-    {
-        if(curNode-&gt;next-&gt;data==val)
-        {
-            D_LIST* nextNode=curNode-&gt;next;
-            curNode-&gt;next=nextNode-&gt;next;
-
-        }
-        else
-            curNode=curNode-&gt;next;
-    }
-    D_LIST* result=preNode-&gt;next;
-    free(preNode);
-    return result; 
-}
-</code></pre><p>第二道是，删除字符串中/**/包围的字符，也很简单，但是没有AC，原因在于写的太混乱，总是报错。</p>
-<pre><code>void remove_comments(char *txt)
-{
-    char *str=txt;
-    if(str==NULL)
-        return;
-    int n=strlen(txt);
-    int ind1=0,ind2=0;
-    for(int i=0;i&lt;n;i++)
-    {
-        if(str[i]==&#39;/&#39;)
-        {
-            if(!ind1)
-            {
-                ind1=i;
-                continue;
-            }
-            else
-            {
-                ind2=i;
-                break;
-            }
-        }
-    }
-    int i=0,j=0;
-    if(ind1&amp;&amp;ind2)
-    { 
-        for( i=0,j=0;i&lt;n;i++)
-        {
-            if((i&lt;ind1)||(i&gt;ind2))
-            {
-                txt[j++]=str[i];
-            }
-        }
-    }
-    txt[j]=&#39;\0&#39;;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -3660,7 +3786,7 @@ def plotROC(predStrengths,classLabels):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
