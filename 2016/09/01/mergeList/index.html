@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C代码// mergeList vector&amp;lt;int&amp;gt; mergeList(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b) {     vector&amp;lt;int&amp;gt; c;     int i = 0, j">
+<meta name="description" content="问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C++代码// mergeList vector&amp;lt;int&amp;gt; mergeList(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b) {     vector&amp;lt;int&amp;gt; c;     int i = 0,">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="merge两个有序线性表">
 <meta property="og:url" content="http://yoursite.com/2016/09/01/mergeList/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C代码// mergeList vector&amp;lt;int&amp;gt; mergeList(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b) {     vector&amp;lt;int&amp;gt; c;     int i = 0, j">
+<meta property="og:description" content="问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C++代码// mergeList vector&amp;lt;int&amp;gt; mergeList(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b) {     vector&amp;lt;int&amp;gt; c;     int i = 0,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-29T02:36:01.044Z">
+<meta property="og:updated_time" content="2018-03-30T07:02:16.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="merge两个有序线性表">
-<meta name="twitter:description" content="问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C代码// mergeList vector&amp;lt;int&amp;gt; mergeList(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b) {     vector&amp;lt;int&amp;gt; c;     int i = 0, j">
+<meta name="twitter:description" content="问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C++代码// mergeList vector&amp;lt;int&amp;gt; mergeList(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b) {     vector&amp;lt;int&amp;gt; c;     int i = 0,">
 
 
 
@@ -395,7 +395,7 @@
 
       
         <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。</p>
-<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>// mergeList
+<h3 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h3><pre><code>// mergeList
 vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
 {
     vector&lt;int&gt; c;
@@ -424,6 +424,43 @@ vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
         j++;
     }
     return c;
+}
+</code></pre><h3 id="C代码-有序链表的合并"><a href="#C代码-有序链表的合并" class="headerlink" title="C代码(有序链表的合并)"></a>C代码(有序链表的合并)</h3><pre><code>typedef struct Node *PtrToNode;
+typedef int ElementType;
+
+struct Node
+{
+    ElementType Data;
+    PtrToNode Next;
+};
+typedef PtrToNode List;
+
+List Merge(List L1, List L2)
+{
+    List L3 = (List)malloc(sizeof(struct Node));
+    List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3;
+
+    while (p1 &amp;&amp; p2)
+    {
+        if (p1-&gt;Data &gt; p2-&gt;Data)
+        {
+            p3-&gt;Next = p2;
+            p3 = p2;
+            p2 = p2-&gt;Next;
+        }
+        else
+        {
+            p3-&gt;Next = p1;
+            p3 = p1;
+            p1 = p1-&gt;Next;
+        }
+    }
+
+    p3-&gt;Next = p1 ? p1 : p2;
+    L1-&gt;Next = NULL;
+    L2-&gt;Next = NULL;
+
+    return L3;
 }
 </code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>时间复杂度为\(O(length(LA) + length(LB))\).</p>
 
@@ -468,8 +505,8 @@ vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/01/二分查找/" rel="next" title="二分查找">
-                <i class="fa fa-chevron-left"></i> 二分查找
+              <a href="/2016/07/03/迷宫问题/" rel="next" title="迷宫问题">
+                <i class="fa fa-chevron-left"></i> 迷宫问题
               </a>
             
           </div>
@@ -478,8 +515,8 @@ vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/13/Numpy库学习总结/" rel="prev" title="Numpy库学习总结">
-                Numpy库学习总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/09/01/二分查找/" rel="prev" title="二分查找">
+                二分查找 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -639,7 +676,7 @@ vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C代码"><span class="nav-number">2.</span> <span class="nav-text">C代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-代码"><span class="nav-number">2.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C代码-有序链表的合并"><span class="nav-number">3.</span> <span class="nav-text">C代码(有序链表的合并)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">4.</span> <span class="nav-text">分析</span></a></li></ol></div>
             
 
           </div>

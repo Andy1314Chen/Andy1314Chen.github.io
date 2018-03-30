@@ -4,11 +4,11 @@
 
     
   <url>
-    <loc>http://yoursite.com/2016/09/01/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</loc>
-    <lastmod>2018-03-29T15:21:46.712Z</lastmod>
+    <loc>http://yoursite.com/2016/09/01/mergeList/</loc>
+    <lastmod>2018-03-30T07:02:16.745Z</lastmod>
     <data>
         <display>
-        <title>二分查找</title>
+        <title>merge两个有序线性表</title>
         <pubTime>2016-08-31T16:00:00.000Z</pubTime>
         
         <tag>C++</tag>
@@ -24,11 +24,11 @@
 
     
   <url>
-    <loc>http://yoursite.com/2016/09/01/mergeList/</loc>
-    <lastmod>2018-03-29T02:36:01.044Z</lastmod>
+    <loc>http://yoursite.com/2016/09/01/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</loc>
+    <lastmod>2018-03-29T15:21:46.712Z</lastmod>
     <data>
         <display>
-        <title>merge两个有序线性表</title>
+        <title>二分查找</title>
         <pubTime>2016-08-31T16:00:00.000Z</pubTime>
         
         <tag>C++</tag>
