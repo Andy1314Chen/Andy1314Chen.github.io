@@ -301,6 +301,212 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/梯度下降三种形式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/梯度下降三种形式/" itemprop="url">梯度下降三种形式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T00:00:00+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在机器学习算法中，通常会采用梯度下降法来对算法进行训练，找到最优解。但是在实际使用中，梯度下降法具有3种不同的形式，也有着各自的优缺点。</p>
+<p>以线性回归算法为例，对3种梯度下降算法进行比较。</p>
+<p>一般线性回归函数的假设函数为：</p>
+<p>$$ h_{\theta} = \sum^{n}_{j=0} \theta _j x_j $$</p>
+<p>对应的損失函數（能量函數）形式為：<br>$$ J_{train}(0) = \frac{1}{2m} \sum^{m}_{i=1} {(h_{\theta}(x^{(i)}) - y^{(i)} )}^2 $$</p>
+<ol>
+<li>批量梯度下降法BGD</li>
+</ol>
+<p>批量梯度下降法（Batch Gradient Descent, BGD)是梯度下降法最原始的形式，具體思路是在更新每一參數時都使用所有的樣本進行更新，數學形式如下：<br>（1）對上述的損失函數求偏導：</p>
+<p>$$ \frac{\alpha J(\theta)}{\alpha {\theta}_j} = - \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j $$</p>
+<p>(2)由於是最小化風險函數，所以按照每個參數\(\theta\)的梯度方向來更新每個\(\theta\):</p>
+<p>$$ \frac{\partial {\theta}_j}{\partial \theta} = {\theta}_j + \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j $$</p>
+<p>從上面公式可以注意到，得到的是一個全局最優解，但是每迭代一次，都要用到訓練集所有的數據，如果樣本數目\(m\)很大，那麼可想而知這種方法的迭代速度！所以，<br>這就引入了另外一種方法，隨機梯度下降。</p>
+<p>具體的偽代碼形式為：</p>
+<pre><code>repeat
+{
+</code></pre><p>\( \frac{\partial {\theta}_j}{\partial \theta} = {\theta}_j + \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j \)<br> (for every \( j=0, … , n\) )</p>
+<pre><code>}
+</code></pre><p><strong>優點</strong>：全局最優解；易於並行實現；</p>
+<p><strong>缺點</strong>：當樣本數目很多時，訓練過程會很慢。</p>
+<ol>
+<li>隨機梯度下降法SGD</li>
+</ol>
+<p>由於批量梯度下降法在更新每一個參數時，都需要所有的訓練數據樣本，所以訓練過程會隨著樣本數量的加大而變得異常的緩慢。隨機梯度下降法（Stochastic Gradient Descent, SGD)正是為了解決批量梯度下降法這一弊端而提出的。</p>
+<p>將上面的損失函數寫為如下形式：</p>
+<p>$$ J(\theta) = \frac{1}{m} \sum^{m}_{i=1} \frac{1}{2}{(y^i - h_{\theta}(x^i))}^2 = \frac{1}{m} \sum^{m}_{i=1} cost(\theta,(x^i,y^i)) $$</p>
+<p>$$ cost(\theta,(x^i,y^i)) = \frac{1}{2}{(y^i - h_{\theta}(x^i))}^2 $$</p>
+<p>具體過程如下：</p>
+<ul>
+<li>Randomly shuffle dataset;</li>
+<li>repeat{ <ul>
+<li>for i=1, … , m{<ul>
+<li>\( \frac{\alpha {\theta}_j}{\alpha \theta} = {\theta}_j + (y^i - h_{theta}(x^i))x^i_j \)</li>
+<li>(for j=0, … , n)</li>
+</ul>
+</li>
+<li>}}</li>
+</ul>
+</li>
+</ul>
+<p>隨機梯度下降是通過每個樣本本來迭代更新一次，如果樣本量很大的情況（例如幾十萬），可能只用其中幾萬條或者幾千條的樣本，就已經將\(\theta\)迭代到最優解了，對比<br>上面的批量梯度下降，迭代一次需要用到十幾萬訓練樣本，一次迭代不可能最優，如果迭代10次的話就需要遍歷訓練樣本10次。但是SGD伴隨的一個問題是<br>噪音較BGD要多，使得SGD并不是每次迭代都向著整體最優化方向進行。</p>
+<p><strong>優點</strong>：訓練速度快；<br><strong>缺點</strong>：準確度下降，并不是全局最優；不易於並行實現；</p>
+<ol>
+<li>小批量梯度下降法MBGD</li>
+</ol>
+<p>有上述的兩種梯度下降法可以看出，其各自均有優缺點，那麼能不能在兩種方法的性能之間取得一個折中？<br>即，算法的訓練過程比較快，而且也要保證最終參數訓練的準確率，而這正是小批量梯度下降法<br>（Mini-batch Gradient Descent, MBGD)的初衷。</p>
+<p>MBGD在每次更新參數時，使用b個樣本（一般2-100），其具體過程：</p>
+<ul>
+<li>Say b=10, m=1000</li>
+<li>Repeat{<ul>
+<li>for i=1, 11, 21, 31, … , 991{</li>
+<li>\( {\theta}_j = {\theta}_j - \alpha \frac{1}{10} \sum^{(i+9)}_{k=i}(h_{\theta}(x^{(k)}) - y^{(k)}) x^{(k)}_j \)</li>
+<li>(for every j=0, … , n)</li>
+<li>}</li>
+</ul>
+</li>
+<li>}</li>
+</ul>
+<ol>
+<li>總結</li>
+</ol>
+<ul>
+<li><strong>Batch gradient descent</strong>: Use all examples in each iteration;</li>
+<li><strong>Stochastic gradient descent</strong>: Use 1 example in each iteration;</li>
+<li><strong>Mini-batch gradient descent</strong>: Use b examples in each iteration.</li>
+</ul>
+<h3 id="參考博客"><a href="#參考博客" class="headerlink" title="參考博客"></a>參考博客</h3><ol>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5089753.html" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5089753.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/预防ubuntu安装过程卡死/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2001,155 +2207,6 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/16/超市优化比赛/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/16/超市优化比赛/" itemprop="url">CCF BDCI2017小超市供销存管理优化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T00:00:00+08:00">
-                2017-11-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="https://i.imgur.com/IzkBgKy.png" alt=""></p>
-<p>CCF中国计算机学会主办的大数据与计算智能大赛(BDCI)2017共有12道赛题。我所选的是赛题六【零点有数】-小超市供销存管理优化</p>
-<h3 id="技术方向"><a href="#技术方向" class="headerlink" title="技术方向"></a>技术方向</h3><p>数据挖掘、数据噪声处理、时序问题、采购优化</p>
-<h3 id="赛题背景"><a href="#赛题背景" class="headerlink" title="赛题背景"></a>赛题背景</h3><p>在大数据行业的推动下，无人超市变的越来越火爆，供销存管理也显得格外重要，精准的预测店铺的商品销量，能让超市及时上货，也可以提示用户的体验，预防因为缺货而导致销量降低的风险。 </p>
-<p>此次数据是某超市在一个地市级的小连锁超市，数据是该超市日常经营的真实数据，希望参赛选手能在商品促销影响其它商品销量的噪音下，准确预测出商品大中类的日销量，为超市的供销存管理，提供智能化技术的支撑，为该连锁超市转型无人超市，设计合理的算法模型。</p>
-<h3 id="数据基本情况"><a href="#数据基本情况" class="headerlink" title="数据基本情况"></a>数据基本情况</h3><p>赛题数据为2015年某城市的超市数据，数据为完整的真实数据，提供的数据中，我们对会员卡信息进行了脱敏，初赛训练集提供，2015年01月到04月的真实数据，需要预测的数据，我们提供提交样例文件sample.csv。初赛算法赛过程中，参赛选手需要预测未来的大类 和 中类商品的销量。</p>
-<p>总之一句话，根据小超市01月到04月的会员消费记录，预测大类、中类05月份的销售情况。</p>
-<p>其中前4个月数据，02-14、03-31、04-09、04-16缺失记录或并未营业，而且2月份是中国除夕春节等一系列假期，1月份元旦之后为腊月，而且01,02,03,04大约是冬季结束+春季，预测的05月份将要进入夏季。</p>
-<p>第一次做这个比赛，因为之前对时间序列问题有了一些浅显的了解，那对这个问题的关键把握的还算正确。在初赛前期，也保持了一段时间的top10,初赛后期也是保持在top20之内，直到换B榜时，才掉出20之外。</p>
-<p>这道赛题是销量预测问题，属于典型的时间序列问题，应该首先抓住周期性的特点，通过统计发现这个超市的周三会员购物次数最多，因此基于周期性的特点就可以取得不错的分数。</p>
-<p>采用的评测函数是 RMSE:</p>
-<p><img src="https://s3.cn-north-1.amazonaws.com.cn/wid/upload/images/LqRcUsZIMtSc8A1YvaxwE9YzlIjToUOfeZW6gnh5.png" alt=""></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2200,7 +2257,7 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2211,7 +2268,7 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2222,7 +2279,7 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta name="google-site-verification" content="y1NE4TYCS_y-0LIIks73rI2qINI9JYRwk6Su8ZG-ZIw" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Tensorflow,tensorboard," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="参考CSCD上一个博客Tensorboard使用案例(以MNIST数据集为例)import argparse import sys  import tensorflow as tf  from tensorflow.examples.tutorials.mnist import input_data # 原博客中没有下面这一句，但是重复运行代码会报错！！ tf.reset_default_grap">
+<meta name="keywords" content="Tensorflow,tensorboard">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow的可视化工具Tensorboard的简单使用">
+<meta property="og:url" content="http://yoursite.com/2018/04/19/Tensorflow的可视化工具tensorboard简单使用/index.html">
+<meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="参考CSCD上一个博客Tensorboard使用案例(以MNIST数据集为例)import argparse import sys  import tensorflow as tf  from tensorflow.examples.tutorials.mnist import input_data # 原博客中没有下面这一句，但是重复运行代码会报错！！ tf.reset_default_grap">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-19T12:25:52.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow的可视化工具Tensorboard的简单使用">
+<meta name="twitter:description" content="参考CSCD上一个博客Tensorboard使用案例(以MNIST数据集为例)import argparse import sys  import tensorflow as tf  from tensorflow.examples.tutorials.mnist import input_data # 原博客中没有下面这一句，但是重复运行代码会报错！！ tf.reset_default_grap">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/19/Tensorflow的可视化工具tensorboard简单使用/"/>
+
+
+
+
+
+<link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
+
+  <title>Tensorflow的可视化工具Tensorboard的简单使用 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Andy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点儿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/19/Tensorflow的可视化工具tensorboard简单使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tensorflow的可视化工具Tensorboard的简单使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T00:00:00+08:00">
+                2018-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Tensorflow/" itemprop="url" rel="index">
+                    <span itemprop="name">Tensorflow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="参考CSCD上一个博客"><a href="#参考CSCD上一个博客" class="headerlink" title="参考CSCD上一个博客"></a>参考CSCD上一个博客</h3><h3 id="Tensorboard使用案例-以MNIST数据集为例"><a href="#Tensorboard使用案例-以MNIST数据集为例" class="headerlink" title="Tensorboard使用案例(以MNIST数据集为例)"></a>Tensorboard使用案例(以MNIST数据集为例)</h3><pre><code>import argparse
+import sys
+
+import tensorflow as tf
+
+from tensorflow.examples.tutorials.mnist import input_data
+# 原博客中没有下面这一句，但是重复运行代码会报错！！
+tf.reset_default_graph()
+
+max_steps = 1000 # 最大迭代次数
+learning_rate = 0.001 # 学习率
+dropout = 0.9 # dropout时随机保留神经元的比例
+
+data_dir = &#39;data&#39; # 样本数据存储的路径
+log_dir = &#39;log&#39; # 输出日志保存的路径
+
+# 保存mnist数据
+mnist = input_data.read_data_sets(data_dir, one_hot=True)
+# 创建TensorFlow的默认会话
+sess = tf.InteractiveSession()
+
+
+with tf.name_scope(&#39;input&#39;):
+    x = tf.placeholder(tf.float32, [None, 784], name=&#39;x-input&#39;)
+    y_ = tf.placeholder(tf.float32, [None, 10], name=&#39;y-input&#39;)
+
+# 使用tf.summary.image保存图像信息
+with tf.name_scope(&#39;input_reshape&#39;):
+    image_shaped_input = tf.reshape(x, [-1, 28, 28, 1])
+    tf.summary.image(&#39;input&#39;, image_shaped_input, 10)
+
+# 连接权重
+def weight_variable(shape):
+    # 标准差为0.1， 正态分布的随机数
+    initial = tf.truncated_normal(shape, stddev=0.1)
+    return tf.Variable(initial)
+
+# 偏置
+def bias_variable(shape):
+    initial = tf.constant(0.1, shape=shape)
+    return tf.Variable(initial)
+
+# 收录每次迭代后的参数信息
+def variable_summaries(var):
+    with tf.name_scope(&#39;summaries&#39;):
+    # 计算参数的均值，并使用tf.summary.scaler记录
+        mean = tf.reduce_mean(var)
+        tf.summary.scalar(&#39;mean&#39;, mean)
+        # 计算参数的标准差
+        with tf.name_scope(&#39;sttdev&#39;):
+            stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
+            # 使用tf.summary.scalar记录下标准差，最大值，最小值
+            tf.summary.scalar(&#39;sttdev&#39;, stddev)
+            tf.summary.scalar(&#39;max&#39;, tf.reduce_max(var))
+            tf.summary.scalar(&#39;min&#39;, tf.reduce_min(var))
+            # 用直方图记录参数的分布
+            tf.summary.histogram(&#39;histogram&#39;, var)
+
+# 构建神经网络层
+def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
+    # 设置命名空间
+    with tf.name_scope(layer_name):
+        # 调用之前的方法初始化权重w，并且调用参数信息的记录方法，记录w的信息
+        with tf.name_scope(&#39;weights&#39;):
+            weights = weight_variable([input_dim, output_dim])
+            variable_summaries(weights)
+    # 调用之前的方法初始化权重b,并且调用参数信息的记录方法，记录b的信息
+        with tf.name_scope(&#39;biases&#39;):
+            biases = bias_variable([output_dim])
+            variable_summaries(biases)
+        # 执行wx+b的线性计算，并且用直方图记录下来
+        with tf.name_scope(&#39;linear_compute&#39;):
+            preactivate = tf.matmul(input_tensor, weights) + biases
+            tf.summary.histogram(&#39;linear&#39;, preactivate)
+        # 将线性输出经过激励函数，并将输出也用直方图记录下来
+        activations = act(preactivate, name=&#39;activation&#39;)
+        tf.summary.histogram(&#39;activations&#39;, activations)
+
+# 返回激励层的最终输出
+    return activations
+# 隐含层1
+hidden1 = nn_layer(x, 784, 500, &#39;layer1&#39;)
+# 创建一个dropout层，
+with tf.name_scope(&#39;dropout&#39;):
+    keep_prob = tf.placeholder(tf.float32)
+    tf.summary.scalar(&#39;dropout_keep_probability&#39;, keep_prob)
+    dropped = tf.nn.dropout(hidden1, keep_prob)
+# 输出层
+y = nn_layer(dropped, 500, 10, &#39;layer2&#39;, act=tf.identity)
+
+# 创建损失函数
+with tf.name_scope(&#39;loss&#39;):
+    # 计算交叉熵损失
+    diff = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)
+    with tf.name_scope(&#39;total&#39;):
+        # 计算所有样本交叉熵损失的均值
+        cross_entropy = tf.reduce_mean(diff)
+tf.summary.scalar(&#39;loss&#39;, cross_entropy)
+
+# 训练
+# 使用AdamOptimizer优化器训练模型，最小化交叉熵损失
+with tf.name_scope(&#39;train&#39;):
+    train_step = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
+
+# 计算准确率
+with tf.name_scope(&#39;accuracy&#39;):
+    with tf.name_scope(&#39;correct_prediction&#39;):
+        correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+    with tf.name_scope(&#39;accuracy&#39;):
+        # 求均值即为准确率
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+tf.summary.scalar(&#39;accuracy&#39;, accuracy)
+
+# 合并summary operation, 运行初始化变量
+# summaries合并
+merged = tf.summary.merge_all()
+# 写到指定的磁盘路径中
+train_writer = tf.summary.FileWriter(log_dir+&#39;/train&#39;, sess.graph)
+test_writer = tf.summary.FileWriter(log_dir+&#39;/test&#39;)
+
+# 运行初始化变量
+tf.global_variables_initializer().run()
+
+# 训练数据
+def feed_dict(train):
+    if train:
+       xs, ys = mnist.train.next_batch(100)
+       k = dropout
+    else:
+       xs, ys = mnist.test.images, mnist.test.labels
+       k = 1.0
+    return {x: xs, y_: ys, keep_prob:k}
+
+# 开始训练
+for i in range(max_steps):
+    print(i)
+    if i%10 == 0: # 记录测试集的summary与accuracy
+        summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
+        test_writer.add_summary(summary,i)
+        print(&#39;Accuracy at step %s: %s&#39; % (i, acc))
+    else: # 记录训练集的summary
+        if i % 100 == 99:
+            run_options = tf.RunOptions(trace_level = tf.RunOptions.FULL_TRACE)
+            run_metadata = tf.RunMetadata()
+            summary, _ = sess.run([merged, train_step],
+            feed_dict=feed_dict(True),
+            options=run_options,
+            run_metadata=run_metadata)
+            train_writer.add_run_metadata(run_metadata, &#39;step%03d&#39; % i)
+            train_writer.add_summary(summary, i)
+            print(&#39;Adding run metadata for&#39;, i)
+        else:
+            summary, _ = sess.run([merged, train_step], feed_dict=feed_dict(True))
+            train_writer.add_summary(summary, i)
+
+train_writer.close()
+test_writer.close()
+</code></pre><h3 id="Tensorboard生成可视化"><a href="#Tensorboard生成可视化" class="headerlink" title="Tensorboard生成可视化"></a>Tensorboard生成可视化</h3><p>上面程序运行后，会在‘log’文件夹下生成相关文件。</p>
+<p>windows系统中使用tensorboard</p>
+<ol>
+<li>powershell中打开python3.6安装目录；</li>
+<li><strong> tensorboard –logdir=G://tf//log/train </strong></li>
+<li>复制路径在浏览器中打开</li>
+</ol>
+<h3 id="可能存在的问题"><a href="#可能存在的问题" class="headerlink" title="可能存在的问题"></a>可能存在的问题</h3><ol>
+<li>中文路径无法打开</li>
+<li>路径单斜杠无法打开, 改为双斜杠就可以了，很神奇</li>
+</ol>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><ol>
+<li><p><a href="https://blog.csdn.net/sinat_33761963/article/details/62433234" target="_blank" rel="external">https://blog.csdn.net/sinat_33761963/article/details/62433234</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/hnxyxiaomeng/article/details/78289886" target="_blank" rel="external">https://blog.csdn.net/hnxyxiaomeng/article/details/78289886</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
+            <a href="/tags/tensorboard/" rel="tag"># tensorboard</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/21/限制玻尔兹曼机RBM训练算法/" rel="next" title="RBM学习笔记（七）RBM训练算法">
+                <i class="fa fa-chevron-left"></i> RBM学习笔记（七）RBM训练算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Andy Chen" />
+          <p class="site-author-name" itemprop="name">Andy Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Andy1314Chen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考CSCD上一个博客"><span class="nav-number">1.</span> <span class="nav-text">参考CSCD上一个博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorboard使用案例-以MNIST数据集为例"><span class="nav-number">2.</span> <span class="nav-text">Tensorboard使用案例(以MNIST数据集为例)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorboard生成可视化"><span class="nav-number">3.</span> <span class="nav-text">Tensorboard生成可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可能存在的问题"><span class="nav-number">4.</span> <span class="nav-text">可能存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原博客地址"><span class="nav-number">5.</span> <span class="nav-text">原博客地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Andy Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+  |  本页点击 <span id="busuanzi_value_page_pv"></span> 次
+  |  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
+  <!-- 小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>
