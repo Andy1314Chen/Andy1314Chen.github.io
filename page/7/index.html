@@ -1449,212 +1449,6 @@ A[A&lt;0.5]
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/mergeList/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/mergeList/" itemprop="url">merge两个有序线性表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。</p>
-<h3 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h3><pre><code>// mergeList
-vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
-{
-    vector&lt;int&gt; c;
-    int i = 0, j = 0, aLen = a.size(), bLen = b.size();
-    while ((i &lt; aLen) &amp;&amp; (j &lt; bLen))
-    {
-        if (a[i] &gt; b[j])
-        {
-            c.push_back(b[j]);
-            j++;
-        }
-        else
-        {
-            c.push_back(a[i]);
-            i++;
-        }
-    }
-    while (i &lt; aLen)
-    {
-        c.push_back(a[i]);
-        i++;
-    }
-    while (j &lt; bLen)
-    {
-        c.push_back(b[j]);
-        j++;
-    }
-    return c;
-}
-</code></pre><h3 id="C代码-有序链表的合并"><a href="#C代码-有序链表的合并" class="headerlink" title="C代码(有序链表的合并)"></a>C代码(有序链表的合并)</h3><pre><code>typedef struct Node *PtrToNode;
-typedef int ElementType;
-
-struct Node
-{
-    ElementType Data;
-    PtrToNode Next;
-};
-typedef PtrToNode List;
-
-List Merge(List L1, List L2)
-{
-    List L3 = (List)malloc(sizeof(struct Node));
-    List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3;
-
-    while (p1 &amp;&amp; p2)
-    {
-        if (p1-&gt;Data &gt; p2-&gt;Data)
-        {
-            p3-&gt;Next = p2;
-            p3 = p2;
-            p2 = p2-&gt;Next;
-        }
-        else
-        {
-            p3-&gt;Next = p1;
-            p3 = p1;
-            p1 = p1-&gt;Next;
-        }
-    }
-
-    p3-&gt;Next = p1 ? p1 : p2;
-    L1-&gt;Next = NULL;
-    L2-&gt;Next = NULL;
-
-    return L3;
-}
-</code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>时间复杂度为\(O(length(LA) + length(LB))\).</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/一元多项式加法与乘法运算/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2142,6 +1936,212 @@ int findValue(int A[], int N, int val)
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/mergeList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/01/mergeList/" itemprop="url">merge两个有序线性表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
+                2016-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。</p>
+<h3 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h3><pre><code>// mergeList
+vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
+{
+    vector&lt;int&gt; c;
+    int i = 0, j = 0, aLen = a.size(), bLen = b.size();
+    while ((i &lt; aLen) &amp;&amp; (j &lt; bLen))
+    {
+        if (a[i] &gt; b[j])
+        {
+            c.push_back(b[j]);
+            j++;
+        }
+        else
+        {
+            c.push_back(a[i]);
+            i++;
+        }
+    }
+    while (i &lt; aLen)
+    {
+        c.push_back(a[i]);
+        i++;
+    }
+    while (j &lt; bLen)
+    {
+        c.push_back(b[j]);
+        j++;
+    }
+    return c;
+}
+</code></pre><h3 id="C代码-有序链表的合并"><a href="#C代码-有序链表的合并" class="headerlink" title="C代码(有序链表的合并)"></a>C代码(有序链表的合并)</h3><pre><code>typedef struct Node *PtrToNode;
+typedef int ElementType;
+
+struct Node
+{
+    ElementType Data;
+    PtrToNode Next;
+};
+typedef PtrToNode List;
+
+List Merge(List L1, List L2)
+{
+    List L3 = (List)malloc(sizeof(struct Node));
+    List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3;
+
+    while (p1 &amp;&amp; p2)
+    {
+        if (p1-&gt;Data &gt; p2-&gt;Data)
+        {
+            p3-&gt;Next = p2;
+            p3 = p2;
+            p2 = p2-&gt;Next;
+        }
+        else
+        {
+            p3-&gt;Next = p1;
+            p3 = p1;
+            p1 = p1-&gt;Next;
+        }
+    }
+
+    p3-&gt;Next = p1 ? p1 : p2;
+    L1-&gt;Next = NULL;
+    L2-&gt;Next = NULL;
+
+    return L3;
+}
+</code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>时间复杂度为\(O(length(LA) + length(LB))\).</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/03/迷宫问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2538,11 +2538,12 @@ int MazePath(){
 
         
         
+<br>
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=133998&auto=1&height=66"></iframe>
 
         
 
 		
-		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=133998&auto=1&height=66"></iframe>
 
       </section>
 
