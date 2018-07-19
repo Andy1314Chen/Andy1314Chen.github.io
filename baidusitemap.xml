@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/07/19/XGBoost%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E6%B1%87%E6%80%BB/</loc>
+    <lastmod>2018-07-19T12:48:12.772Z</lastmod>
+    <data>
+        <display>
+        <title>XGBoost学习资料学习汇总</title>
+        <pubTime>2018-07-18T16:00:00.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+        <tag>算法</tag>
+         
+        <tag>XGB</tag>
+         
+         
+           
+             
+              <breadCrumb title="算法" url="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/04/19/Tensorflow%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7tensorboard%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2018-04-19T12:25:52.772Z</lastmod>
     <data>
@@ -1079,9 +1103,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>算法</tag>
+         
+        <tag>sklearn</tag>
          
         <tag>Python</tag>
          
@@ -1349,11 +1373,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
          
            
@@ -1375,9 +1399,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
          
            

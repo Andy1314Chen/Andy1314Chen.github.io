@@ -301,6 +301,192 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/10/BaiduUNIT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/10/BaiduUNIT/" itemprop="url">百度UNIT</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-10T00:00:00+08:00">
+                2017-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/百度语音/" itemprop="url" rel="index">
+                    <span itemprop="name">百度语音</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前几天看到百度在宿舍楼下贴的海报，<strong>“百度之星”</strong>，2017年比赛分为开发者大赛和程序设计大赛。开发者大赛是要求基于百度UNIT平台设计开发一个对话系统的智能硬件或APP等都可以。主要目的应该是推广UNIT平台。</p>
+<blockquote>
+<p>UNIT（Understanding and Interaction Technology），即理解与交互技术，它是建立在百度多年积累的自然语言处理与对话技术以及大数据的基础上，面向第三方开发者提供的对话系统开发平台.</p>
+</blockquote>
+<p>从介绍上看，百度的出发点是挺好的，之前做过智能镜子，想加入语音交互功能，但是没有相应中文API提供，很蛋疼！</p>
+<blockquote>
+<p>随着AI技术和理念的兴起，很多产品都希望采用对话式的人机交互方式。然而对话系统的研发对于大多数开发者而言却是一个很困难的工作，对技术和数据的要求都很高。</p>
+<p>为此，百度将积累多年的自然语言理解与交互技术对外开放，将积累多年的自然语言理解与交互技术对外开放，推出了可定制的对话系统开发UNIT（Understanding and Interaction Technology），将业界领先的技术能力输出给广大的开发者，以便降低对话系统的研发门槛。</p>
+</blockquote>
+<p><strong>1、UNIT能做什么</strong></p>
+<p>帮开发者打造“面向任务的理解与交互能力”，可以解答用户的某些问题（天气、新闻、快递等生活服务）、执行用户指令（开空调等）、通过一系列交互引导用户达到某项需求（通过注册-选座-下单完成订票).</p>
+<p><strong>2、UNIT基本概念</strong></p>
+<p><em>（1）场景</em></p>
+<blockquote>
+<p>一个场景对应一个独立完整的对话系统，用来满足您某个具体业务场景的需求。通常按垂类划分（例如，银行信用卡办理场景、电视遥控器场景等）。</p>
+</blockquote>
+<p><em>(2)对话单元</em></p>
+<blockquote>
+<p>在UNIT里，对话单元用来定义系统在一个具体的对话任务下对用户对话的理解、以及机器人的回应方式，是系统中的最小对话单位。对话任务例如查天气、查询信用卡年费、控制空调温度等。</p>
+</blockquote>
+<p><em>(3)意图</em></p>
+<blockquote>
+<p>意图表示用户的目的（例如，”北京天气”，意图是查天气）。</p>
+</blockquote>
+<p><em>(4)词槽</em></p>
+<blockquote>
+<p>是满足用户意图时的关键信息或限定条件，可以理解为用户需要提供的筛选条件。例如在查询天气时，词槽是地点和时间。</p>
+</blockquote>
+<p><em>(5)对话样本</em></p>
+<blockquote>
+<p>对话样本就是您给对话系统做示范，教它在用户说的具体句子里，该如何理解意图，哪个词是重要信息，对应的词槽是什么。</p>
+</blockquote>
+<p><em>(6)训练模型</em></p>
+<blockquote>
+<p>即把场景下所有的配置、标注的对话样本、对话模板等打包提交给系统来训练模型。 模型生效一般需要几分钟时间。</p>
+</blockquote>
+<p><em>(7)沙盒</em></p>
+<blockquote>
+<p>每个场景都配有一个沙盒环境，将训练好的模型生效到沙盒环境后，就可以进行效果验证了，同时可接入到您自己的业务系统中使用。您可以生成多个模型版本，但只能选择一个放到沙盒环境中。</p>
+</blockquote>
+<p><strong>3、UNIT使用步骤</strong></p>
+<p><em>（a)梳理业务逻辑</em></p>
+<p><em>（b)配置对话系统</em></p>
+<p><em>（c)标注对话数据</em></p>
+<p><em>（d)对话训练与验证</em></p>
+<p><em>（e)应用调用</em></p>
+<p><strong>相关连接</strong></p>
+<p>1、<a href="http://astar2017.baidu.com/" title="2017年百度之星" target="_blank" rel="external">http://astar2017.baidu.com/</a></p>
+<p>2、<a href="http://ai.baidu.com/docs#/UNIT-guide/top" title="UNIT入门指南" target="_blank" rel="external">http://ai.baidu.com/docs#/UNIT-guide/top</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -678,146 +864,6 @@ return result;
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -946,6 +992,146 @@ return result;
 <li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
 </li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -1449,6 +1635,366 @@ A[A&lt;0.5]
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/mergeList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/01/mergeList/" itemprop="url">merge两个有序线性表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
+                2016-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。</p>
+<h3 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h3><pre><code>// mergeList
+vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
+{
+    vector&lt;int&gt; c;
+    int i = 0, j = 0, aLen = a.size(), bLen = b.size();
+    while ((i &lt; aLen) &amp;&amp; (j &lt; bLen))
+    {
+        if (a[i] &gt; b[j])
+        {
+            c.push_back(b[j]);
+            j++;
+        }
+        else
+        {
+            c.push_back(a[i]);
+            i++;
+        }
+    }
+    while (i &lt; aLen)
+    {
+        c.push_back(a[i]);
+        i++;
+    }
+    while (j &lt; bLen)
+    {
+        c.push_back(b[j]);
+        j++;
+    }
+    return c;
+}
+</code></pre><h3 id="C代码-有序链表的合并"><a href="#C代码-有序链表的合并" class="headerlink" title="C代码(有序链表的合并)"></a>C代码(有序链表的合并)</h3><pre><code>typedef struct Node *PtrToNode;
+typedef int ElementType;
+
+struct Node
+{
+    ElementType Data;
+    PtrToNode Next;
+};
+typedef PtrToNode List;
+
+List Merge(List L1, List L2)
+{
+    List L3 = (List)malloc(sizeof(struct Node));
+    List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3;
+
+    while (p1 &amp;&amp; p2)
+    {
+        if (p1-&gt;Data &gt; p2-&gt;Data)
+        {
+            p3-&gt;Next = p2;
+            p3 = p2;
+            p2 = p2-&gt;Next;
+        }
+        else
+        {
+            p3-&gt;Next = p1;
+            p3 = p1;
+            p1 = p1-&gt;Next;
+        }
+    }
+
+    p3-&gt;Next = p1 ? p1 : p2;
+    L1-&gt;Next = NULL;
+    L2-&gt;Next = NULL;
+
+    return L3;
+}
+</code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>时间复杂度为\(O(length(LA) + length(LB))\).</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/二分查找/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/01/二分查找/" itemprop="url">二分查找</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
+                2016-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>给一个有序递增数组&amp;一个给定值，二分查找给定值在数组中的位置。</p>
+<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>// 二分查找递增数组
+int findValue(int A[], int N, int val)
+{
+    int low = 0, high = N - 1;
+    while (low &lt;= high)
+    {
+        int mid = (low + high) / 2;
+        if (A[mid] &gt; val)
+            high = mid - 1;
+        else if (A[mid] &lt; val)
+            low = mid + 1;
+        else
+            return mid;
+    }
+    return -1; // 没有找到
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/一元多项式加法与乘法运算/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1773,656 +2319,11 @@ int main(void)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/二分查找/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/二分查找/" itemprop="url">二分查找</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>给一个有序递增数组&amp;一个给定值，二分查找给定值在数组中的位置。</p>
-<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>// 二分查找递增数组
-int findValue(int A[], int N, int val)
-{
-    int low = 0, high = N - 1;
-    while (low &lt;= high)
-    {
-        int mid = (low + high) / 2;
-        if (A[mid] &gt; val)
-            high = mid - 1;
-        else if (A[mid] &lt; val)
-            low = mid + 1;
-        else
-            return mid;
-    }
-    return -1; // 没有找到
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/mergeList/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/mergeList/" itemprop="url">merge两个有序线性表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。</p>
-<h3 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h3><pre><code>// mergeList
-vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
-{
-    vector&lt;int&gt; c;
-    int i = 0, j = 0, aLen = a.size(), bLen = b.size();
-    while ((i &lt; aLen) &amp;&amp; (j &lt; bLen))
-    {
-        if (a[i] &gt; b[j])
-        {
-            c.push_back(b[j]);
-            j++;
-        }
-        else
-        {
-            c.push_back(a[i]);
-            i++;
-        }
-    }
-    while (i &lt; aLen)
-    {
-        c.push_back(a[i]);
-        i++;
-    }
-    while (j &lt; bLen)
-    {
-        c.push_back(b[j]);
-        j++;
-    }
-    return c;
-}
-</code></pre><h3 id="C代码-有序链表的合并"><a href="#C代码-有序链表的合并" class="headerlink" title="C代码(有序链表的合并)"></a>C代码(有序链表的合并)</h3><pre><code>typedef struct Node *PtrToNode;
-typedef int ElementType;
-
-struct Node
-{
-    ElementType Data;
-    PtrToNode Next;
-};
-typedef PtrToNode List;
-
-List Merge(List L1, List L2)
-{
-    List L3 = (List)malloc(sizeof(struct Node));
-    List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3;
-
-    while (p1 &amp;&amp; p2)
-    {
-        if (p1-&gt;Data &gt; p2-&gt;Data)
-        {
-            p3-&gt;Next = p2;
-            p3 = p2;
-            p2 = p2-&gt;Next;
-        }
-        else
-        {
-            p3-&gt;Next = p1;
-            p3 = p1;
-            p1 = p1-&gt;Next;
-        }
-    }
-
-    p3-&gt;Next = p1 ? p1 : p2;
-    L1-&gt;Next = NULL;
-    L2-&gt;Next = NULL;
-
-    return L3;
-}
-</code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>时间复杂度为\(O(length(LA) + length(LB))\).</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/03/迷宫问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/03/迷宫问题/" itemprop="url">迷宫问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-03T00:00:00+08:00">
-                2016-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>求迷宫中从入口到出口的所有路径是一个经典的程序设计问题。最简单方法是穷举法，即从某一入口出发，顺着某一方向向前探索，若能走通，则继续往前走；否则沿原路返回，换个方向继续尝试。因此，使用栈结构来处理较为合适。栈结构存储从入口到出口的路径。</p>
-<p> <img src="http://i.imgur.com/QQTrZqp.png" alt=""></p>
-<p>比较简单的迷宫，‘+’表示墙壁，不能通过；‘o’表示通道，可以通过；但是从入口到出口路径上不能两次通过同一块通道。</p>
-<p>求迷宫中一条路径的算法的基本思想是：</p>
-<p><strong>若当前位置“可通”，则入栈“当前路径”，并继续朝下一位置探索，如此重复；若当前位置“不可通”，则应顺着“来向”退回到“前一通道块”，然后朝着除“来向”之外的其他方向继续探索；若该通道块的四周4个方块均“不可通”，则应从“当前路径”上删除该通道块。</strong></p>
-<p>C语言代码如下：</p>
-<pre><code>typedef struct{
-    int x;
-    int y;
-}PosType;//坐标
-
-typedef struct{
-    int ord;
-    PosType seat;
-    int di;
-}SElemType;//栈基本元素
-
-//---------栈相关操作------------------//
-#define STACK_INIT_SIZE 100
-typedef struct{
-    SElemType *base;
-    SElemType *top;
-    int stacksize;
-}SqStack;
-int InitStack(SqStack &amp;S)
-{
-    S.base = (SElemType *)malloc(STACK_INIT_SIZE*sizeof(SElemType));
-    S.top = S.base;
-    S.stacksize = STACK_INIT_SIZE;
-    return 1;
-}
-int Push(SqStack &amp;S, SElemType e){
-    *S.top++ = e;
-    return 1;
-}
-int Pop(SqStack &amp;S, SElemType &amp;e)
-{
-    e = *--S.top;
-    return 1;
-}
-int StackEmpty(SqStack S)
-{
-    return S.top == S.base;
-}
-//---------栈相关操作------------------//
-
-int maze[10][10] = {
-{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-{-1, 0, 0, 0, 0, 0, 0, 0,-1,-1},
-{-1, 0, 0, 0,-1, 0,-1,-1, 0,-1},
-{-1,-1,-1, 0,-1, 0, 0,-1, 0,-1},
-{-1, 0, 0, 0,-1,-1, 0,-1, 0,-1},
-{-1, 0, 0,-1, 0, 0, 0, 0, 0,-1},
-{-1, 0, 0,-1, 0, 0,-1,-1, 0,-1},
-{-1,-1,-1, 0, 0, 0, 0,-1, 0,-1},
-{-1, 0, 0, 0, 0, 0, 0, 0, 0,-1},
-{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
-};//迷宫
-PosType start = { 1, 1 };//迷宫起点
-PosType end = { 8, 8 };//迷宫终点
-
-int Pass(PosType pos)//当前位置是否可通过
-{
-    return (maze[pos.x][pos.y] != -1) &amp;&amp; (maze[pos.x][pos.y] != 1);
-}
-void FootPrint(PosType pos)//走过的通道块
-{
-    maze[pos.x][pos.y] = 1;//走过
-}
-PosType NextPos(PosType pos, int di)//顺时钟方向尝试
-{
-    PosType resultPos;
-    switch (di)
-    {
-    case 1://东
-        resultPos.x = pos.x + 1;
-        resultPos.y = pos.y;
-        break;
-    case 2://南
-        resultPos.x = pos.x;
-        resultPos.y = pos.y + 1;
-        break;
-    case 3://西
-        resultPos.x = pos.x - 1;
-        resultPos.y = pos.y;
-        break;
-    case 4://北
-        resultPos.x = pos.x;
-        resultPos.y = pos.y - 1;
-        break;
-    default:
-        printf(&quot;Error!\n&quot;);
-    }
-    return resultPos;
-}
-void MarkPrint(PosType pos)//标记不可通过的位置
-{
-    maze[pos.x][pos.y] = -1;
-}
-
-int MazePath(){
-    SqStack S;
-    InitStack(S);//初始化栈
-    PosType curpos = start;
-    int curstep = 1;
-    SElemType e;
-    do{
-        if (Pass(curpos)){
-            FootPrint(curpos);
-            e.ord = curstep;
-            e.seat.x = curpos.x;
-            e.seat.y = curpos.y;
-            e.di = 1;
-            Push(S, e);
-            if ((curpos.x == end.x) &amp;&amp; (curpos.y == end.y))
-            {//到达终点，逐一打印栈中保持的路径；
-                while (!StackEmpty(S))
-                {
-                    Pop(S, e);
-                    printf(&quot;(%d, %d)\n&quot;, e.seat.x, e.seat.y);
-                }
-                free(S.base);
-                return true;
-            }
-            curpos = NextPos(curpos, 1);
-            curstep++;
-        }
-        else
-        {
-            if (!StackEmpty(S))
-            {
-                Pop(S, e);
-                while (e.di == 4 &amp;&amp; !StackEmpty(S)){
-                    MarkPrint(e.seat); Pop(S, e);
-                }
-                if (e.di &lt; 4){
-                    e.di++; Push(S, e);
-                    curpos = NextPos(e.seat, e.di);
-                }
-            }
-        }
-    } while (!StackEmpty(S));
-    free(S.base);
-    return false;
-}
-</code></pre><p>运行结果：</p>
-<p><img src="http://i.imgur.com/f0IXs5b.png" alt=""></p>
-<p>红色是正确路径，蓝色是尝试路径。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2468,7 +2369,7 @@ int MazePath(){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-count">71</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2490,7 +2391,7 @@ int MazePath(){
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
