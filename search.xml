@@ -3,13 +3,13 @@
   <entry>
     <title><![CDATA[XGBoost学习资料学习汇总]]></title>
     <url>%2F2018%2F07%2F19%2FXGBoost%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E6%B1%87%E6%80%BB%2F</url>
-    <content type="text"><![CDATA[写在前面的话趁着找工作的机会，重新梳理一下XGBoost的知识。 基本概念提升树 (Boosting tree)提升方法采用加法模型(基函数的线性组合)与前向分步算法，以决策树为基函数的提升方法叫做提升树。李航的《统计学习方法》中第八章“提升方法”中讲的很详细。 梯度提升 (Gradient Boosting)提升树利用加法模型和前向分步算法实现学习的优化过程。当损失函数是平方损失和指数损失函数时，每一步的优化是简单的。但对于一般的损失函数，每一步的优化并不是那么容易，针对这一问题，Freidman提出了梯度提升(gradient boosting)算法。利用最速下降法的近似方法，关键在于利用损失函数的负梯度在当前模型的值作为回归问题提升树算法中的残差的近似值，拟合一颗回归树。 Gradient Boosting: 每一次的计算是为了减少上一次模型拟合的残差(residual, 利用损失函数的负梯度在当前模型的值来作为残差的近似值, 比较拗口)，而为了消除残差(或者说这个近似值), 我们可以在残差减少的梯度(gradient)方向上建立一个新的模型。所以说，在Gradient Boost中，每个新的模型的建立是为了使得之前模型的残差往梯度方向减少(当然也可以变向理解成每个新建的模型都给予上一模型的误差给了更多的关注). Shrinkage(缩减): 作用正则化，防止过拟合；思想认为，每次走一小步逐渐逼近结果的效果，要比每次迈一大步很快逼近结果的方式更容易避免过拟合。即它不完全信任每一颗残差树，认为每棵树只学到了真理的一小部分，累加的时候只累加了一小部分，通过多学几棵树弥补不足。 GBDT的特点：GBDT是一个加法回归模型，通过boosting迭代的构造一组弱学习器，相对LR的优势：不需要特征缩放；自动进行特征选择；模型可解释性好；可以适应多种损失函数如squareLoss, LogLoss;但作为非线性模型，其相对线性模型的缺点也是显然的: Boosting是个串行的过程，不能并行化，计算复杂度高，同时不适合高维稀疏特征，通常采用稠密的数值特征。 XGBoost相比传统的GBDT有何不同？XGBoost为什么快？XGBoost如何支持并行？ 传统的GBDT以CART作为基分类器，XGBoost还支持线性分类器，这个时候XGBoost相当于带L1和L2正则化项的逻辑斯蒂回归(分类)或者线性回归(回归问题) 传统GBDT在优化时只用到一阶导数(用来对残差进行近似), XGBoost则对代价函数进行了二阶泰勒展开，同时用到了一阶导数和二阶导数。同时，XGBoost工具支持自定义代价函数，只要函数可一阶可导，二阶可导。 XGBoost在代价函数(目标函数)里加入了正则项，用于控制模型的复杂度。正则项里包含了树的叶子节点个数，每个叶子节点上输出的score的L2范数。从Bias-Variance tradeoff角度上讲，正则项降低了模型的Variance,使学习出来的模型更加简单，防止过拟合，这也是XGBoost优于传统GBDT的一个特性。 Shrinkage(缩减), 相当于学习速率(xgboost中的eta). XGBoost在进行完一次迭代后，会将叶子节点的权重乘上该系数，主要是为了削弱每棵树的影响，让后面有更大的学习空间。实际应用中，一般把eta设置的小一点，然后迭代次数设置大一点。 列抽样(column subsampling). XGBoost借鉴了随机森林的做法，支持列采样，不仅能降低过拟合，还能减少计算，也是异于GBDT的一个特点。 对缺失值的处理。对于特征的值有缺失的样本，XGBoost可以自动学习出它的分裂方向； XGBoost工具支持并行。Boosting不是一种串行的结构吗？怎么并行的？注意XGBoost的并行不是Tree粒度的并行，XGBoost也是一次迭代完才能进行下一次迭代的(第t次迭代的代价函数里包含了前面t-1次迭代的预测值). XGBoost的并行是在特征粒度上的。我们知道，决策树的学习最耗时的一个步骤就是对特征的值进行排序(因为要确定最佳分割点), XGBoost在训练之前，预先对数据进行了排序，然后保存为Block结构，后面的迭代中重复使用这个结构，大大减小计算量。这个Block结构也使得并行成为了可能，在进行节点的分裂时，需要计算每个特征的增益，最终选增益最大的那个特征去做分裂，那么各个特征的增益计算就可以开多线程进行。 XGBoost使用总结 多类别分类时，类别需要从0开始编码； Watchlist不会影响模型的训练； 类别特征必须编码，因为XGBoost把特征默认都当成数值的； 调参指南：Complete Guide to Parameter Tuning in XGBoost (with codes in Python) 训练的时候，为了结果可复现，设置随机数种子； XGBoost的特征重要性是如何得到的？某个特征的重要性(feature score), 等于它被选中为树节点分裂特征的次数的和，比如特征A在第一次迭代中(即第一棵树)被选中了1次去分裂树节点，在第二次迭代被选中2次。。。那么最终特征A的feature score就是1+2+。。。 参考博客 https://blog.csdn.net/sb19931201/article/details/52557382 陈天奇PPT中文版 wepon大神的XGBoost浅入浅出 Complete Guide to Parameter Tuning in Gradient Boosting (GBM) in Python GBDT详解上 + 下 + 后补 DC学院的一门课程]]></content>
+    <content type="text"><![CDATA[写在前面的话趁着找工作的机会，重新梳理一下XGBoost的知识。 基本概念提升树 (Boosting tree)提升方法采用加法模型(基函数的线性组合)与前向分步算法，以决策树为基函数的提升方法叫做提升树。李航的《统计学习方法》中第八章“提升方法”中讲的很详细。 梯度提升 (Gradient Boosting)提升树利用加法模型和前向分步算法实现学习的优化过程。当损失函数是平方损失和指数损失函数时，每一步的优化是简单的。但对于一般的损失函数，每一步的优化并不是那么容易，针对这一问题，Freidman提出了梯度提升(gradient boosting)算法。利用最速下降法的近似方法，关键在于利用损失函数的负梯度在当前模型的值作为回归问题提升树算法中的残差的近似值，拟合一颗回归树。 Gradient Boosting: 每一次的计算是为了减少上一次模型拟合的残差(residual, 利用损失函数的负梯度在当前模型的值来作为残差的近似值, 比较拗口)，而为了消除残差(或者说这个近似值), 我们可以在残差减少的梯度(gradient)方向上建立一个新的模型。所以说，在Gradient Boost中，每个新的模型的建立是为了使得之前模型的残差往梯度方向减少(当然也可以变向理解成每个新建的模型都给予上一模型的误差给了更多的关注). Shrinkage(缩减): 作用正则化，防止过拟合；思想认为，每次走一小步逐渐逼近结果的效果，要比每次迈一大步很快逼近结果的方式更容易避免过拟合。即它不完全信任每一颗残差树，认为每棵树只学到了真理的一小部分，累加的时候只累加了一小部分，通过多学几棵树弥补不足。 GBDT的特点：GBDT是一个加法回归模型，通过boosting迭代的构造一组弱学习器，相对LR的优势：不需要特征缩放；自动进行特征选择；模型可解释性好；可以适应多种损失函数如squareLoss, LogLoss;但作为非线性模型，其相对线性模型的缺点也是显然的: Boosting是个串行的过程，不能并行化，计算复杂度高，同时不适合高维稀疏特征，通常采用稠密的数值特征。 XGBoost相比传统的GBDT有何不同？XGBoost为什么快？XGBoost如何支持并行？ 传统的GBDT以CART作为基分类器，XGBoost还支持线性分类器，这个时候XGBoost相当于带L1和L2正则化项的逻辑斯蒂回归(分类)或者线性回归(回归问题) 传统GBDT在优化时只用到一阶导数(用来对残差进行近似), XGBoost则对代价函数进行了二阶泰勒展开，同时用到了一阶导数和二阶导数。同时，XGBoost工具支持自定义代价函数，只要函数可一阶可导，二阶可导。 XGBoost在代价函数(目标函数)里加入了正则项，用于控制模型的复杂度。正则项里包含了树的叶子节点个数，每个叶子节点上输出的score的L2范数。从Bias-Variance tradeoff角度上讲，正则项降低了模型的Variance,使学习出来的模型更加简单，防止过拟合，这也是XGBoost优于传统GBDT的一个特性。 Shrinkage(缩减), 相当于学习速率(xgboost中的eta). XGBoost在进行完一次迭代后，会将叶子节点的权重乘上该系数，主要是为了削弱每棵树的影响，让后面有更大的学习空间。实际应用中，一般把eta设置的小一点，然后迭代次数设置大一点。 列抽样(column subsampling). XGBoost借鉴了随机森林的做法，支持列采样，不仅能降低过拟合，还能减少计算，也是异于GBDT的一个特点。 对缺失值的处理。对于特征的值有缺失的样本，XGBoost可以自动学习出它的分裂方向； XGBoost工具支持并行。Boosting不是一种串行的结构吗？怎么并行的？注意XGBoost的并行不是Tree粒度的并行，XGBoost也是一次迭代完才能进行下一次迭代的(第t次迭代的代价函数里包含了前面t-1次迭代的预测值). XGBoost的并行是在特征粒度上的。我们知道，决策树的学习最耗时的一个步骤就是对特征的值进行排序(因为要确定最佳分割点), XGBoost在训练之前，预先对数据进行了排序，然后保存为Block结构，后面的迭代中重复使用这个结构，大大减小计算量。这个Block结构也使得并行成为了可能，在进行节点的分裂时，需要计算每个特征的增益，最终选增益最大的那个特征去做分裂，那么各个特征的增益计算就可以开多线程进行。 XGBoost使用总结 多类别分类时，类别需要从0开始编码； Watchlist不会影响模型的训练； 类别特征必须编码，因为XGBoost把特征默认都当成数值的； 调参指南：Complete Guide to Parameter Tuning in XGBoost (with codes in Python) 训练的时候，为了结果可复现，设置随机数种子； XGBoost的特征重要性是如何得到的？某个特征的重要性(feature score), 等于它被选中为树节点分裂特征的次数的和，比如特征A在第一次迭代中(即第一棵树)被选中了1次去分裂树节点，在第二次迭代被选中2次。。。那么最终特征A的feature score就是1+2+。。。 参考博客 https://blog.csdn.net/sb19931201/article/details/52557382 陈天奇PPT中文版 wepon大神的XGBoost浅入浅出 Complete Guide to Parameter Tuning in Gradient Boosting (GBM) in Python GBDT详解上 + 下 + 后补 DC学院的一门课程 Quick Introduction to Boosting Algorithms in Machine Learning Getting smart with Machine Learning – AdaBoost and Gradient Boost]]></content>
       <categories>
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>XGB</tag>
       </tags>
   </entry>
@@ -69,20 +69,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[RBM学习笔记（五）梯度计算公式]]></title>
-    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F%2F</url>
-    <content type="text"><![CDATA[RBM学习笔记（五）梯度计算公式 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
-      <categories>
-        <category>深度学习</category>
-        <category>DBN</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>RBM</tag>
-        <tag>DBN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[RBM学习笔记（三）RBM能量函数和概率分布]]></title>
     <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E8%83%BD%E9%87%8F%E5%87%BD%E6%95%B0%E5%92%8C%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%2F</url>
     <content type="text"><![CDATA[RBM学习笔记（三）RBM能量函数和概率分布 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
@@ -100,6 +86,20 @@
     <title><![CDATA[RBM学习笔记（四）对数似然函数]]></title>
     <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%95%B0%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0%2F</url>
     <content type="text"><![CDATA[RBM学习笔记（四）对数似然函数 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
+      <categories>
+        <category>深度学习</category>
+        <category>DBN</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>RBM</tag>
+        <tag>DBN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[RBM学习笔记（五）梯度计算公式]]></title>
+    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[RBM学习笔记（五）梯度计算公式 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
       <categories>
         <category>深度学习</category>
         <category>DBN</category>
@@ -160,8 +160,8 @@
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -194,9 +194,9 @@
         <category>机器学习</category>
       </categories>
       <tags>
+        <tag>算法</tag>
         <tag>python</tag>
         <tag>机器学习</tag>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -208,8 +208,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -284,8 +284,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>比赛</tag>
       </tags>
   </entry>
@@ -335,8 +335,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
         <tag>时间序列分析</tag>
       </tags>
@@ -350,8 +350,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -364,8 +364,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -378,8 +378,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -392,8 +392,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -406,8 +406,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -420,8 +420,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -434,8 +434,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -448,8 +448,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -462,8 +462,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -476,8 +476,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -489,8 +489,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>SVM</tag>
       </tags>
   </entry>
@@ -553,8 +553,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>sklearn</tag>
         <tag>Python</tag>
       </tags>
@@ -568,8 +568,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -582,8 +582,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -596,8 +596,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -610,8 +610,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>机器学习</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -824,6 +824,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Chrome浏览器总是崩溃的一种解决办法]]></title>
+    <url>%2F2017%2F06%2F28%2Fchromefiex%2F</url>
+    <content type="text"><![CDATA[更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。 原因在于C:\Windows\System32\drivers\bd0001.sys这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！ bd0001.sys不知道是不是百度干的，好无耻~]]></content>
+      <categories>
+        <category>电脑</category>
+      </categories>
+      <tags>
+        <tag>computer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[快速整数平方根算法]]></title>
     <url>%2F2017%2F06%2F28%2FFastSqrt%2F</url>
     <content type="text"><![CDATA[LeetCode 69.Sqrt(x)问题如下： Implement int sqrt(int x).Compute and return the square root of x. 其实意思就是对于一个32位无符号整数，找到一个16位无符号整数，使满足n^2≤v的n最大。相应的可以写作下式： 关键在于a_i 的确定，使用迭代求导算法，不需要乘法，只简单的使用加法和移位操作。方便起见，定义 则(1)可以表示为 根据参考文章3得到一个非常简便的算法，3ms. 代码如下： int Sqrt(int v) { unsigned long temp, nHat = 0, b = 0x8000, bshft = 15; do{ if (v &gt;= (temp = (((nHat &lt;&lt; 1) + b) &lt;&lt; bshft--))) { nHat += b; v -= temp; } } while (b &gt;&gt;= 1); return nHat; } 参考文章 https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6 http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html http://www.azillionmonkeys.com/qed/ulerysqroot.pdf]]></content>
@@ -833,17 +844,6 @@
       <tags>
         <tag>C</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Chrome浏览器总是崩溃的一种解决办法]]></title>
-    <url>%2F2017%2F06%2F28%2Fchromefiex%2F</url>
-    <content type="text"><![CDATA[更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。 原因在于C:\Windows\System32\drivers\bd0001.sys这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！ bd0001.sys不知道是不是百度干的，好无耻~]]></content>
-      <categories>
-        <category>电脑</category>
-      </categories>
-      <tags>
-        <tag>computer</tag>
       </tags>
   </entry>
   <entry>
