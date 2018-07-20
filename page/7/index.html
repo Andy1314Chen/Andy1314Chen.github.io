@@ -487,7 +487,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/环形链表/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -506,7 +506,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/03/环形链表/" itemprop="url">LeetCode - 环形链表</a></h1>
+                <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">LeetCode - 回文链表</a></h1>
         
 
         <div class="post-meta">
@@ -581,38 +581,85 @@
       
         
           
-            <p>给定一个链表，判断链表中是否有环。</p>
-<p>进阶：<br>你能否不使用额外空间解决此题？</p>
+            <p>请判断一个链表是否为回文链表。</p>
+<p>示例 1:</p>
+<p>输入: 1-&gt;2</p>
+<p>输出: false</p>
+<p>示例 2:</p>
+<p>输入: 1-&gt;2-&gt;2-&gt;1</p>
+<p>输出: true</p>
+<p>进阶：</p>
+<p>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
 <pre><code># Definition for singly-linked list.
-# class ListNode(object):
+# class ListNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class Solution(object):
-    def hasCycle(self, head):
+class Solution:
+    # 原地反转链表
+    def reverseList(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        newHead = None
+        while head != None:
+            nextNode = ListNode(0)
+            nextNode = head.next
+
+            head.next = newHead
+            newHead = head
+            head = nextNode
+        return newHead
+    # 是否是回文链表
+    def isPalindrome(self, head):
         &quot;&quot;&quot;
         :type head: ListNode
         :rtype: bool
         &quot;&quot;&quot;
+        if head == None:
+            return True
+        elif head.next == None:
+            return True
 
+        # 快慢指针找中点
         firstPtr = head
         secondPtr = head
         while firstPtr != None:
-            secondPtr = secondPtr.next
-            firstPtr = firstPtr.next
-            # 快指针不为空
-            if firstPtr != None:
-                firstPtr = firstPtr.next
-            # 快慢指针相遇
-            if firstPtr == secondPtr:
+            if firstPtr.next != None:
+                firstPtr = firstPtr.next.next
+                secondPtr = secondPtr.next
+            else:
                 break
 
-        if firstPtr == None:
-            return False # 无环
+        # 长度为奇数的时候，此时慢指针指向中点
+        if firstPtr != None:
+            # 原地反转链表
+            secondPtr.next = self.reverseList(secondPtr.next)
+            secondPtr = secondPtr.next
+
+        # 长度为偶数的时候，慢指针指向后半段的开头
         else:
-            return True  # 有环
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>利用快慢指针，快指针每次移动两步，慢指针每次移动一步。相遇时且不为None, 说明有环，且相遇地点就是环的入口。</p>
+            # 原地反转链表
+            secondPtr = self.reverseList(secondPtr)
+
+        # 从开头和中间依次比较
+        firstPtr = head
+        while secondPtr != None:
+            if firstPtr.val != secondPtr.val:
+                return False
+            else:
+                firstPtr = firstPtr.next
+                secondPtr = secondPtr.next
+
+        return True
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位；</li>
+<li>根据快指针最后的状态，确定慢指针；</li>
+<li>将后半段原地反转；</li>
+<li>从开头和中间依次比较；</li>
+</ol>
 
           
         
@@ -880,7 +927,7 @@ return result;
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/环形链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -899,7 +946,7 @@ return result;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">LeetCode - 回文链表</a></h1>
+                <a class="post-title-link" href="/2017/07/03/环形链表/" itemprop="url">LeetCode - 环形链表</a></h1>
         
 
         <div class="post-meta">
@@ -974,85 +1021,38 @@ return result;
       
         
           
-            <p>请判断一个链表是否为回文链表。</p>
-<p>示例 1:</p>
-<p>输入: 1-&gt;2</p>
-<p>输出: false</p>
-<p>示例 2:</p>
-<p>输入: 1-&gt;2-&gt;2-&gt;1</p>
-<p>输出: true</p>
-<p>进阶：</p>
-<p>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
+            <p>给定一个链表，判断链表中是否有环。</p>
+<p>进阶：<br>你能否不使用额外空间解决此题？</p>
 <pre><code># Definition for singly-linked list.
-# class ListNode:
+# class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class Solution:
-    # 原地反转链表
-    def reverseList(self, head):
-        &quot;&quot;&quot;
-        :type head: ListNode
-        :rtype: ListNode
-        &quot;&quot;&quot;
-        newHead = None
-        while head != None:
-            nextNode = ListNode(0)
-            nextNode = head.next
-
-            head.next = newHead
-            newHead = head
-            head = nextNode
-        return newHead
-    # 是否是回文链表
-    def isPalindrome(self, head):
+class Solution(object):
+    def hasCycle(self, head):
         &quot;&quot;&quot;
         :type head: ListNode
         :rtype: bool
         &quot;&quot;&quot;
-        if head == None:
-            return True
-        elif head.next == None:
-            return True
 
-        # 快慢指针找中点
         firstPtr = head
         secondPtr = head
         while firstPtr != None:
-            if firstPtr.next != None:
-                firstPtr = firstPtr.next.next
-                secondPtr = secondPtr.next
-            else:
+            secondPtr = secondPtr.next
+            firstPtr = firstPtr.next
+            # 快指针不为空
+            if firstPtr != None:
+                firstPtr = firstPtr.next
+            # 快慢指针相遇
+            if firstPtr == secondPtr:
                 break
 
-        # 长度为奇数的时候，此时慢指针指向中点
-        if firstPtr != None:
-            # 原地反转链表
-            secondPtr.next = self.reverseList(secondPtr.next)
-            secondPtr = secondPtr.next
-
-        # 长度为偶数的时候，慢指针指向后半段的开头
+        if firstPtr == None:
+            return False # 无环
         else:
-            # 原地反转链表
-            secondPtr = self.reverseList(secondPtr)
-
-        # 从开头和中间依次比较
-        firstPtr = head
-        while secondPtr != None:
-            if firstPtr.val != secondPtr.val:
-                return False
-            else:
-                firstPtr = firstPtr.next
-                secondPtr = secondPtr.next
-
-        return True
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位；</li>
-<li>根据快指针最后的状态，确定慢指针；</li>
-<li>将后半段原地反转；</li>
-<li>从开头和中间依次比较；</li>
-</ol>
+            return True  # 有环
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>利用快慢指针，快指针每次移动两步，慢指针每次移动一步。相遇时且不为None, 说明有环，且相遇地点就是环的入口。</p>
 
           
         
@@ -1249,146 +1249,6 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1517,6 +1377,146 @@ class Solution:
 <li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
 </li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -2020,7 +2020,7 @@ A[A&lt;0.5]
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/mergeList/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/二分查找/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2039,7 +2039,7 @@ A[A&lt;0.5]
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/09/01/mergeList/" itemprop="url">merge两个有序线性表</a></h1>
+                <a class="post-title-link" href="/2016/09/01/二分查找/" itemprop="url">二分查找</a></h1>
         
 
         <div class="post-meta">
@@ -2114,76 +2114,24 @@ A[A&lt;0.5]
       
         
           
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。</p>
-<h3 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h3><pre><code>// mergeList
-vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
+            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>给一个有序递增数组&amp;一个给定值，二分查找给定值在数组中的位置。</p>
+<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>// 二分查找递增数组
+int findValue(int A[], int N, int val)
 {
-    vector&lt;int&gt; c;
-    int i = 0, j = 0, aLen = a.size(), bLen = b.size();
-    while ((i &lt; aLen) &amp;&amp; (j &lt; bLen))
+    int low = 0, high = N - 1;
+    while (low &lt;= high)
     {
-        if (a[i] &gt; b[j])
-        {
-            c.push_back(b[j]);
-            j++;
-        }
+        int mid = (low + high) / 2;
+        if (A[mid] &gt; val)
+            high = mid - 1;
+        else if (A[mid] &lt; val)
+            low = mid + 1;
         else
-        {
-            c.push_back(a[i]);
-            i++;
-        }
+            return mid;
     }
-    while (i &lt; aLen)
-    {
-        c.push_back(a[i]);
-        i++;
-    }
-    while (j &lt; bLen)
-    {
-        c.push_back(b[j]);
-        j++;
-    }
-    return c;
+    return -1; // 没有找到
 }
-</code></pre><h3 id="C代码-有序链表的合并"><a href="#C代码-有序链表的合并" class="headerlink" title="C代码(有序链表的合并)"></a>C代码(有序链表的合并)</h3><pre><code>typedef struct Node *PtrToNode;
-typedef int ElementType;
-
-struct Node
-{
-    ElementType Data;
-    PtrToNode Next;
-};
-typedef PtrToNode List;
-
-List Merge(List L1, List L2)
-{
-    List L3 = (List)malloc(sizeof(struct Node));
-    List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3;
-
-    while (p1 &amp;&amp; p2)
-    {
-        if (p1-&gt;Data &gt; p2-&gt;Data)
-        {
-            p3-&gt;Next = p2;
-            p3 = p2;
-            p2 = p2-&gt;Next;
-        }
-        else
-        {
-            p3-&gt;Next = p1;
-            p3 = p1;
-            p1 = p1-&gt;Next;
-        }
-    }
-
-    p3-&gt;Next = p1 ? p1 : p2;
-    L1-&gt;Next = NULL;
-    L2-&gt;Next = NULL;
-
-    return L3;
-}
-</code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>时间复杂度为\(O(length(LA) + length(LB))\).</p>
-
+</code></pre>
           
         
       
