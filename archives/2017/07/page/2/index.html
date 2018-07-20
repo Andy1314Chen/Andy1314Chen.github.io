@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习,算法,Python," />
+  <meta name="keywords" content="Life, Books, Code" />
 
 
 
@@ -94,21 +94,13 @@
 
 
 
-<meta name="description" content="本章主要内容  发现事务数据中的公共模式 FP-growth算法 发现Twitter源中的共现词  本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。 FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只">
-<meta name="keywords" content="机器学习,算法,Python">
-<meta property="og:type" content="article">
-<meta property="og:title" content="机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)">
-<meta property="og:url" content="http://yoursite.com/2017/09/27/机器学习实战第十二章学习笔记/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andy&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/archives/2017/07/page/2/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="本章主要内容  发现事务数据中的公共模式 FP-growth算法 发现Twitter源中的共现词  本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。 FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/CCAnDpi.jpg">
-<meta property="og:image" content="https://i.imgur.com/RSrPhW0.jpg">
-<meta property="og:updated_time" content="2017-09-27T12:20:43.004Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)">
-<meta name="twitter:description" content="本章主要内容  发现事务数据中的公共模式 FP-growth算法 发现Twitter源中的共现词  本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。 FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只">
-<meta name="twitter:image" content="https://i.imgur.com/CCAnDpi.jpg">
+<meta name="twitter:title" content="Andy&#39;s blog">
 
 
 
@@ -136,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/27/机器学习实战第十二章学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/archives/2017/07/page/2/"/>
 
 
 
@@ -144,7 +136,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集) | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>归档 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -169,7 +161,7 @@
     
   
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,438 +289,69 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/27/机器学习实战第十二章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
+    <span class="archive-page-counter">
+      
+      
+       
+        
+      好! 目前共计 73 篇日志。 继续努力。
     </span>
 
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-27T00:00:00+08:00">
-                2017-09-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
 
       
       
-
       
-        <p>本章主要内容</p>
-<ul>
-<li>发现事务数据中的公共模式</li>
-<li>FP-growth算法</li>
-<li>发现Twitter源中的共现词</li>
-</ul>
-<p>本章会在上一章的基础上进行扩展，将给出一个非常好的频繁项集发现算法。该算法是FP-growth,它比上一章讨论的Apriori算法要快，它基于Apriori算法构建，但在完成相同任务时采用了一些不同的技术。</p>
-<p>FP-growth算法能够更有效地挖掘数据，但不能用于发现关联规则。FP-growth算法只需要对数据库进行两次扫描，而Apriori算法对于每个候选项集都会扫描数据集判定给定模式是否频繁，因此FP-growth算法的速度要比Apriori算法要快。其发现频繁项集的基本过程如下：<br>（1）构建FP树；（2）从FP树中挖掘频繁项集。</p>
-<h2 id="FP树：用于编码数据集的有效方式"><a href="#FP树：用于编码数据集的有效方式" class="headerlink" title="FP树：用于编码数据集的有效方式"></a>FP树：用于编码数据集的有效方式</h2><p><strong>FP-growth算法</strong></p>
-<ul>
-<li>优点：一般要快于Apriori</li>
-<li>缺点：实现比较困难，在某些数据集上性能会下降</li>
-<li>适用数据类型：标称型数据</li>
-</ul>
-<p>FP-growth算法将数据存储在一种称为FP树的紧凑数据结构中，FP代表频繁模式(Frequent Pattern),通过链接(link)来连接相似元素，被连起来的元素项可以看成一个链表。</p>
-<p><img src="https://i.imgur.com/CCAnDpi.jpg" alt=""></p>
-<p>为构建FP树，需要对原始数据集扫描两遍。第一遍对所有元素项的出现次数进行计数。因为在上一章提到Apriori原理，如果某一元素是不频繁的，那么包含该元素的超集也是不频繁的。数据库的第一遍扫描用来统计出现的频率，而第二遍扫描中只考虑那些频繁元素。</p>
-<h2 id="构建FP树"><a href="#构建FP树" class="headerlink" title="构建FP树"></a>构建FP树</h2><p>在第二次扫描数据集时会构建一棵FP树，为构建一棵树，需要一个容器来保存树。</p>
-<pre><code>#程序清单12-1 FP树的类定义
 
-class treeNode:
-    def __init__(self,nameValue,numOccur,parentNode):
-        #节点名字
-        self.name=nameValue
-        #计数值
-        self.count=numOccur
-        #下一个节点指针
-        self.nodeLink=None
-        #上一节点的指针
-        self.parent=parentNode
-        #子节点
-        self.children={}
-
-    def inc(self,numOccur):
-        self.count+=numOccur
-
-    def disp(self,ind=1):
-        print(&#39; &#39;*ind,self.name,&#39; &#39;,self.count)
-        for child in self.children.values():
-            child.disp(ind+1)
-</code></pre><p>除了FP树外，还需要一个头指针表来指向给定类型的第一个实例。</p>
-<p><img src="https://i.imgur.com/RSrPhW0.jpg" alt=""></p>
-<p>头指针表有两个功能，存放指针和保存FP树中每类元素的总数。</p>
-<p>在对事务记录过滤和排序之后，就可以构建FP树。从空集开始，向其中不断添加频繁项集。过滤、排序后的事务依次添加到树中，如果树中已存在现有元素，则增加现有元素的值。如果现有元素不存在，则向树添加一个分枝。</p>
-<pre><code>#程序清单12-2 FP树构建函数
-
-def createTree(dataSet,minSup=1):
-    headerTable={}
-    #第一次遍历数据集
-    for trans in dataSet:
-        for item in trans:
-            #dict .get(item,0)若item存在返回其值，若不存在返回0
-            #统计每个元素出现的频度
-            headerTable[item]=headerTable.get(item,0)+dataSet[trans]
-    keys=[k for k in headerTable.keys()]
-    for k in keys:
-        if headerTable[k]&lt;minSup:
-            #移除不满足最小支持度的元素项
-            del (headerTable[k])
-    #用set创建集合
-    freqItemSet=set(headerTable.keys())
-    if len(freqItemSet)==0:
-        return None,None
-    #扩展头指针表，保存每个元素的个数及指向每种类型第一个元素项的指针
-    for k in headerTable:
-        headerTable[k]=[headerTable[k],None]
-    #FP树根节点
-    retTree=treeNode(&#39;Null Set&#39;,1,None)
-    #再次遍历数据集
-    for tranSet,count in dataSet.items():
-        localD={}
-        #对每个事务
-        for item in tranSet:
-            #只考虑频繁项集
-            if item in freqItemSet:
-                #获取item个数，过滤重排
-                localD[item]=headerTable[item][0]
-        if len(localD)&gt;0:
-            #对localD中元素进行排序
-            orderedItems=[v[0] for v in sorted(localD.items(),
-                          key=lambda p:p[1],reverse=True)]
-            #更新树
-            updateTree(orderedItems,retTree,headerTable,count)
-    return retTree,headerTable
-
-def updateTree(items,inTree,headerTable,count):
-    #查看元素是否为inTree子节点
-    if items[0] in inTree.children:
-        #增加计数
-        inTree.children[items[0]].inc(count)
-    #不存在，则做为子节点添加
-    else:
-        inTree.children[items[0]]=treeNode(items[0],count,inTree)
-        if headerTable[items[0]][1]==None:
-            #更新头指针表
-            headerTable[items[0]][1]=inTree.children[items[0]]
-        else:
-            updateHeader(headerTable[items[0]][1],inTree.children[items[0]])
-    if len(items)&gt;1:
-        #items[1::]去掉第一个元素
-        updateTree(items[1::],inTree.children[items[0]],headerTable,count)
-
-def updateHeader(nodeToTest,targetNode):
-    while (nodeToTest.nodeLink!=None):
-        nodeToTest=nodeToTest.nodeLink
-    #把targetNode挂在以nodeToTest为头结点的链表的最后边
-    nodeToTest.nodeLink=targetNode
-</code></pre><h2 id="从一颗FP树中挖掘频繁项集"><a href="#从一颗FP树中挖掘频繁项集" class="headerlink" title="从一颗FP树中挖掘频繁项集"></a>从一颗FP树中挖掘频繁项集</h2><p>FP树以及构建完成，接下来抽取频繁项集。首先从单元素项集合开始，然后在此基础上逐步构建更大的集合。</p>
-<p>抽取频繁项集分为3个基本步骤：</p>
-<ol>
-<li>从FP树中获得条件模式基</li>
-<li>利用条件模式基，构建一个条件FP树</li>
-<li>迭代重复步骤1和步骤2，直到树包含一个元素项为止</li>
-</ol>
-<p><strong>条件模式基</strong>(conditional pattern base)是以所查找元素项为结尾的路径集合。每一条路径又可称为前缀路径（prefix path)，一条前缀路径是介于所查找元素项与树根节点之间的所有内容。</p>
-<p>前缀路径将被用于构建条件FP树，为了获得这些前缀路径，可以对树进行穷举式搜索，直到获得想要的频繁项为止。一种更为高效的搜索过程是，利用之前保存的头指针表，依次从元素项当前位置向根节点回溯。</p>
-<pre><code>#从一颗FP树中挖掘频繁项集
-&quot;&quot;&quot;
-条件模式基，是以所查找元素项为结尾的路径集合。
-每一条路径其实都是一条前缀路径，一条前缀路径是介于所查找元素项与树根节点之间的所有内容
-&quot;&quot;&quot;
-
-#程序清单12-4 发现以给定元素项结尾的所有路径的函数
-def ascendTree(leafNode,prefixPath):
-    #从某一叶节点，迭代上溯整棵树
-    if leafNode.parent!=None:
-        prefixPath.append(leafNode.name)
-        ascendTree(leafNode.parent,prefixPath)
-
-def findPrefixPath(basePat,treeNode):
-    condPats={}
-    while treeNode!=None:
-        prefixPath=[]
-        ascendTree(treeNode,prefixPath)
-        if len(prefixPath)&gt;1:
-            #将所有前缀路径加入condPats中，并记录它们的个数
-            condPats[frozenset(prefixPath[1:])]=treeNode.count
-        #移动到下一个节点
-        treeNode=treeNode.nodeLink
-    #返回条件模式基
-    return condPats
-</code></pre><p>这两个函数用于为给定元素项生成一个条件模式基（前缀路径的集合）。</p>
-<p>对于每一个频繁项，都要创建一棵条件FP树，我们会为z,x以及其他频繁项构建条件树。可以使用刚才发现的条件模式基作为输入数据，并通过相同的建树代码来构建这些树。</p>
-<pre><code>#程序清单12-5 递归查找频繁项集的mineTree函数
-def mineTree(inTree,headerTable,minSup,preFix,freqItemList):
-    #对头指针表中的元素项按照其出现的频率进行排序，从小到大
-    bigL=[v[0] for v in sorted(headerTable.items(),key=lambda p:p[1][0])]
-
-    for basePat in bigL:
-        newFreqSet=preFix.copy()
-        newFreqSet.add(basePat)
-        #将每一个频繁项添加到频繁项集列表freqItemList中
-        freqItemList.append(newFreqSet)
-        #调用findPrefixPath()函数来创建条件基
-        condPattBases=findPrefixPath(basePat,headerTable[basePat][1])
-        #创建的条件基被作为数据集传入createTree()函数中
-        myCondTree,myHead=createTree(condPattBases,minSup)
-
-        #如果树中还有元素项大于最小支持度，递归调用mineTree()函数
-        if myHead!=None:
-            print(&#39;conditional tree for: &#39;,newFreqSet)
-            myCondTree.disp(1)
-            mineTree(myCondTree,myHead,minSup,newFreqSet,freqItemList)
-
-&quot;&quot;&quot;
-示例： 在Twitter源中发现一些共现词
-&quot;&quot;&quot;
-
-#程序清单12-6 访问Twitter Python库的代码
-import twitter
-from time import sleep
-import re
-
-def getLotsOfTweets(searchStr):
-    CONSUMER_KEY=&#39;&#39;
-    CONSUMER_SECRET=&#39;&#39;
-    ACCESS_TOKEN_KEY=&#39;&#39;
-    ACCESS_TOKEN_SECRET=&#39;&#39;
-    api=twitter.Api(consumer_key=CONSUMER_KEY,consumer_secret=CONSUMER_SECRET,
-                    access_token_key=ACCESS_TOKEN_KEY,
-                    access_token_secret=ACCESS_TOKEN_SECRET)
-    resultsPages=[]
-    for i in range(1,15):
-        print(&#39;fetching page %d&#39; % i)
-        searchResults=api.GetSearch(searchStr,per_page=100,page=i)
-        resultsPages.append(searchResults)
-        sleep(6)
-    return resultsPages
-
-#程序清单12-7 文本解析及合成代码
-def textParse(bigString):
-    urlsRemoved=re.sub(&#39;(http[s]?:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*&#39;,
-                       &#39;&#39;,bigString)
-    listOfTokens=re.split(r&#39;\W*&#39;,urlsRemoved)
-    return [tok.lower() for tok in listOfTokens if len(tok)&gt;2]
-
-def mineTweets(tweetArr,minSup=5):
-    parsedList=[]
-    for i in range(14):
-        for j in range(100):
-            parsedList.append(textParse(tweetArr[i][j].text))
-    initSet=createInitSet(parsedList)
-    myFPtree,myHeaderTab=createTree(initSet,minSup)
-    myFreqList=[]
-    mineTree(myFPtree,myHeaderTab,minSup,set([]),myFreqList)
-    return myFreqList
-</code></pre><h2 id="示例：从新闻网站点击流中挖掘"><a href="#示例：从新闻网站点击流中挖掘" class="headerlink" title="示例：从新闻网站点击流中挖掘"></a>示例：从新闻网站点击流中挖掘</h2><p>在kosarak.dat文件中，包含将近100万条记录。该文件中的每一行包含某个用户浏览过的新闻报道。</p>
-<pre><code>In [47]: parsedDat=[line.split() for line in open(&#39;kosarak.dat&#39;).readlines()]
-
-In [48]: initSet=fpGrowth.createInitSet(parsedDat)
-
-In [49]: myFPtree,myHeaderTab=fpGrowth.createTree(initSet,100000)
-
-In [50]: myFreqList=[]
-
-In [51]: fpGrowth.mineTree(myFPtree,myHeaderTab,100000,set([]),myFreqList)
-conditional tree for:  {&#39;1&#39;}
-  Null Set   1
-   6   107404
-conditional tree for:  {&#39;3&#39;}
-  Null Set   1
-   6   186289
-    11   117401
-   11   9718
-conditional tree for:  {&#39;3&#39;, &#39;11&#39;}
-  Null Set   1
-   6   117401
-conditional tree for:  {&#39;11&#39;}
-  Null Set   1
-   6   261773
-
-In[52]: len(myFreqList)
-Out[52]: 9
-
-In[53]: myFreqList
-Out[53]: 
-[{&#39;1&#39;},
- {&#39;1&#39;, &#39;6&#39;},
- {&#39;3&#39;},
- {&#39;11&#39;, &#39;3&#39;},
- {&#39;11&#39;, &#39;3&#39;, &#39;6&#39;},
- {&#39;3&#39;, &#39;6&#39;},
- {&#39;11&#39;},
- {&#39;11&#39;, &#39;6&#39;},
- {&#39;6&#39;}]
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>FP-growth算法是一种用于发现数据集中频繁模式的有效方法。FP-growth算法利用Apriori原则，执行更快。Apriori算法产生候选项集，然后扫描数据集来检测它们是否频繁。由于只对数据集扫描两次，因此FP-growth算法执行更快。在FP-growth算法中，数据集存储在一个被称为FP树的结构中。FP树构建完成后，可以通过查找元素项的条件基及构建条件FP树来发现频繁项集。该过程不断以更多元素作为条件重复进行，直到FP树只包含一个元素为止。</p>
-
-      
-    </div>
-
-    <div>
       
         
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
-          
-            <a href="/tags/算法/" rel="tag"># 算法</a>
-          
-            <a href="/tags/Python/" rel="tag"># Python</a>
-          
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
         </div>
       
-
-      
-      
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/09/24/机器学习实战第十一章学习笔记/" rel="next" title="机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)">
-                <i class="fa fa-chevron-left"></i> 机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)
-              </a>
-            
-          </div>
 
-          <span class="post-nav-divider"></span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/28/机器学习实战第十三章学习笔记/" rel="prev" title="机器学习实战第十三章学习笔记(利用PCA来简化数据)">
-                机器学习实战第十三章学习笔记(利用PCA来简化数据) <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">
+              
+                <span itemprop="name">LeetCode - 回文链表</span>
+              
+            </a>
+        
+      </h2>
 
-      
-      
-    </footer>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-07-03T00:00:00+08:00"
+              content="2017-07-03" >
+          07-03
+        </time>
+      </div>
+
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+    
+
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/2017/07/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2017/07/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
 
 
           </div>
@@ -736,10 +359,6 @@ Out[53]:
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -760,17 +379,8 @@ Out[53]:
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -864,22 +474,6 @@ Out[53]:
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FP树：用于编码数据集的有效方式"><span class="nav-number">1.</span> <span class="nav-text">FP树：用于编码数据集的有效方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建FP树"><span class="nav-number">2.</span> <span class="nav-text">构建FP树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从一颗FP树中挖掘频繁项集"><span class="nav-number">3.</span> <span class="nav-text">从一颗FP树中挖掘频繁项集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例：从新闻网站点击流中挖掘"><span class="nav-number">4.</span> <span class="nav-text">示例：从新闻网站点击流中挖掘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -1007,9 +601,11 @@ Out[53]:
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   
