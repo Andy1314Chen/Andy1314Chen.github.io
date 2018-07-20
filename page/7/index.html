@@ -487,6 +487,175 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/环形链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/03/环形链表/" itemprop="url">LeetCode - 环形链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个链表，判断链表中是否有环。</p>
+<p>进阶：<br>你能否不使用额外空间解决此题？</p>
+<pre><code># Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def hasCycle(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: bool
+        &quot;&quot;&quot;
+
+        firstPtr = head
+        secondPtr = head
+        while firstPtr != None:
+            secondPtr = secondPtr.next
+            firstPtr = firstPtr.next
+            # 快指针不为空
+            if firstPtr != None:
+                firstPtr = firstPtr.next
+            # 快慢指针相遇
+            if firstPtr == secondPtr:
+                break
+
+        if firstPtr == None:
+            return False # 无环
+        else:
+            return True  # 有环
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>利用快慢指针，快指针每次移动两步，慢指针每次移动一步。相遇时且不为None, 说明有环，且相遇地点就是环的入口。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -864,146 +1033,6 @@ return result;
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1132,6 +1161,146 @@ return result;
 <li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
 </li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -1986,339 +2155,6 @@ int findValue(int A[], int N, int val)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/一元多项式加法与乘法运算/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/一元多项式加法与乘法运算/" itemprop="url">一元多项式的乘法与加法运算</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>设计函数分别求两个一元多项式的乘积与和。</p>
-<h4 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h4><p>输入分2行，每行分别先给出多项式非零项的个数，再以指数递降方式输入一个多项式非零项系数和指数(绝对值均为不超过1000的整数).数字间以空格分隔。</p>
-<h4 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h4><p>输出分2行，分别以指数递降方式输出乘积多项式以及和多项式非零项的系数和指数。数字间以空格分隔，但结尾不能有多余空格。零多项式应输出为0 0.</p>
-<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-
-typedef struct PolyNode *Polynomial;
-// 多项式结构体
-struct PolyNode
-{
-    int coef;
-    int expon;
-    Polynomial link;
-};
-
-// 添加新节点
-void Attach(int c, int e, Polynomial *pRear)
-{
-    // Polynomial*表示指针的指针，
-    Polynomial P;
-
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;coef = c;
-    P-&gt;expon = e;
-    P-&gt;link = NULL;
-    (*pRear)-&gt;link = P;
-    // 指向单链表的尾部，
-    *pRear = P;
-}
-
-// 读入数据
-Polynomial ReadPoly()
-{
-    Polynomial P, Rear, t;
-    int c, e, N;
-    // 多项式非零项个数
-    scanf(&quot;%d&quot;, &amp;N);
-    // 链表头指针
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    // 链表尾指针，初始时，头指针和尾指针相同
-    Rear = P;
-    while (N--)
-    {
-        scanf(&quot;%d %d&quot;, &amp;c, &amp;e);
-        // 根据Rear尾指针，创建新节点，并连接在Rear后面，再移动Rear指向新节点
-        Attach(c, e, &amp;Rear);
-    }
-    t = P;
-    P = P-&gt;link;
-    free(t);
-    // 没有头节点的单链表
-    return P;
-}
-
-Polynomial Add(Polynomial P1, Polynomial P2)
-{
-    Polynomial t1 = P1, t2 = P2;
-    // 单独搞一个空间存放和多项式
-    Polynomial P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    Polynomial Rear = P;
-
-    while (t1 &amp;&amp; t2)
-    {
-        if (t1-&gt;expon == t2-&gt;expon)
-        {
-            if ((t1-&gt;coef + t2-&gt;coef))
-            {
-                Attach(t1-&gt;coef + t2-&gt;coef, t1-&gt;expon, &amp;Rear);
-            }
-            t1 = t1-&gt;link;
-            t2 = t2-&gt;link;
-        }
-        else if (t1-&gt;expon &gt; t2-&gt;expon)
-        {
-            Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
-            t1 = t1-&gt;link;
-        }
-        else
-        {
-            Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
-            t2 = t2-&gt;link;
-        }
-    }
-    while (t1)
-    {
-        Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
-        t1 = t1-&gt;link;
-    }
-    while (t2)
-    {
-        Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
-        t2 = t2-&gt;link;
-    }
-
-    Polynomial t = P;
-    P = P-&gt;link;
-    free(t);
-    // 没有头节点的单链表
-    return P;
-}
-
-Polynomial Mult(Polynomial P1, Polynomial P2)
-{
-    Polynomial P, Rear, t1, t2, t;
-    int c, e;
-    // 有一个为NULL,乘积为NULL
-    if (!P1 || !P2)
-        return NULL;
-
-    t1 = P1;
-    t2 = P2;
-
-    // 存放乘积结果
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    Rear = P;
-    // P1第一个非零项乘以P2中每一项
-    while (t2)
-    {
-        Attach(t1-&gt;coef * t2-&gt;coef, t1-&gt;expon + t2-&gt;expon, &amp;Rear);
-        t2 = t2-&gt;link;
-    }
-
-    t1 = t1-&gt;link;
-    // 依次将P1后面的所有非零项均乘以P2中的每一项
-    while (t1)
-    {
-        t2 = P2;
-        Rear = P;
-        while (t2)
-        {
-            e = t1-&gt;expon + t2-&gt;expon;
-            c = t1-&gt;coef * t2-&gt;coef;
-            // 查找在P中的位置
-            while (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon &gt; e)
-                Rear = Rear-&gt;link;
-            if (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon == e)
-            {
-                if (Rear-&gt;link-&gt;coef + c)
-                    Rear-&gt;link-&gt;coef += c;
-                else
-                {
-                    t = Rear-&gt;link;
-                    Rear-&gt;link = t-&gt;link;
-                    free(t);
-                }
-            }
-            else
-            {
-                t = (Polynomial)malloc(sizeof(struct PolyNode));
-                t-&gt;coef = c;
-                t-&gt;expon = e;
-                t-&gt;link = Rear-&gt;link;
-                Rear-&gt;link = t;
-                Rear = Rear-&gt;link;
-            }
-            t2 = t2-&gt;link;
-        }
-        t1 = t1-&gt;link;
-    }
-    t2 = P;
-    P = P-&gt;link;
-    free(t2);
-    return P;
-}
-void PrintPoly(Polynomial P)
-{
-    int flag = 0;
-    if (!P)
-    {
-        printf(&quot;0 0\n&quot;);
-        return;
-    }
-    while (P)
-    {
-        if (!flag)
-            flag = 1;
-        else
-        {
-            printf(&quot; &quot;);
-        }
-        printf(&quot;%d %d&quot;, P-&gt;coef, P-&gt;expon);
-        P = P-&gt;link;
-    }
-    printf(&quot;\n&quot;);
-}
-int main(void)
-{
-  Polynomial P1=ReadPoly(),P2=ReadPoly();
-  PrintPoly(Mult(P1,P2));
-  PrintPoly(Add(P1,P2));
-
-  return 0;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2369,7 +2205,7 @@ int main(void)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">71</span>
+                <span class="site-state-item-count">72</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

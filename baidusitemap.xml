@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/07/03/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/</loc>
+    <lastmod>2018-07-20T08:52:39.150Z</lastmod>
+    <data>
+        <display>
+        <title>LeetCode - 环形链表</title>
+        <pubTime>2017-07-02T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>Leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/07/19/XGBoost%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E6%B1%87%E6%80%BB/</loc>
     <lastmod>2018-07-19T13:23:48.638Z</lastmod>
     <data>
@@ -11,9 +33,9 @@
         <title>XGBoost学习资料学习汇总</title>
         <pubTime>2018-07-18T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>XGB</tag>
          
@@ -363,9 +385,9 @@
         <title>梯度下降三种形式</title>
         <pubTime>2018-03-11T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -425,11 +447,11 @@
         <title>模型融合方法概述[转]</title>
         <pubTime>2018-01-27T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>python</tag>
          
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
          
            
@@ -497,9 +519,9 @@
         <title>利用PCA来简化数据</title>
         <pubTime>2017-12-18T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -642,9 +664,9 @@
         <title>CCF BDCI2017小超市供销存管理优化</title>
         <pubTime>2017-11-15T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>比赛</tag>
          
@@ -734,9 +756,9 @@
         <title>How to Make Out-of-sample Forecast with ARIMA in Python3</title>
         <pubTime>2017-10-07T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -763,9 +785,9 @@
         <title>Python3时间序列分析模型ARIMA的简单实用</title>
         <pubTime>2017-09-28T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -790,9 +812,9 @@
         <title>机器学习实战第十四章学习笔记(利用SVD简化数据)</title>
         <pubTime>2017-09-28T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -817,9 +839,9 @@
         <title>机器学习实战第十三章学习笔记(利用PCA来简化数据)</title>
         <pubTime>2017-09-27T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -844,9 +866,9 @@
         <title>机器学习实战第十二章学习笔记(使用FP-growth算法来高效发现频繁项集)</title>
         <pubTime>2017-09-26T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -871,9 +893,9 @@
         <title>机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)</title>
         <pubTime>2017-09-23T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -898,9 +920,9 @@
         <title>机器学习实战第十章学习笔记(利用K-均值聚类算法对未标注数据分组)</title>
         <pubTime>2017-09-22T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -925,9 +947,9 @@
         <title>机器学习实战第九章学习笔记(树回归)</title>
         <pubTime>2017-09-21T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -952,9 +974,9 @@
         <title>机器学习实战第八章学习笔记(回归)</title>
         <pubTime>2017-09-20T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -979,9 +1001,9 @@
         <title>机器学习算法常用指标</title>
         <pubTime>2017-09-18T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -1006,9 +1028,9 @@
         <title>机器学习实战第七章学习笔记(AdaBoost算法)</title>
         <pubTime>2017-09-18T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -1033,9 +1055,9 @@
         <title>支持向量机通俗导论（1）【转】</title>
         <pubTime>2017-09-14T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>SVM</tag>
          
@@ -1101,9 +1123,9 @@
         <title>sklearn库LogisticRegression使用及简单调参</title>
         <pubTime>2017-09-06T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>sklearn</tag>
          
@@ -1130,9 +1152,9 @@
         <title>机器学习实战第五章学习笔记(Logistic回归)</title>
         <pubTime>2017-09-06T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -1157,9 +1179,9 @@
         <title>机器学习实战第四章学习笔记(朴素贝叶斯分类器)</title>
         <pubTime>2017-09-04T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -1184,9 +1206,9 @@
         <title>机器学习实战第三章学习笔记(决策树-Decision Tree)</title>
         <pubTime>2017-09-02T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -1211,9 +1233,9 @@
         <title>机器学习实战第二章学习笔记(k-NN)</title>
         <pubTime>2017-08-31T16:00:00.000Z</pubTime>
         
-        <tag>算法</tag>
-         
         <tag>机器学习</tag>
+         
+        <tag>算法</tag>
          
         <tag>Python</tag>
          
@@ -1373,11 +1395,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
          
            
@@ -1399,9 +1421,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>树莓派3</tag>
-         
         <tag>UNIT</tag>
+         
+        <tag>树莓派3</tag>
          
          
            
