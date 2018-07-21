@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/07/05/%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</loc>
+    <lastmod>2018-07-21T06:23:55.453Z</lastmod>
+    <data>
+        <display>
+        <title>LeetCode - 编辑距离</title>
+        <pubTime>2017-07-04T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>Leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/05/%E7%88%AC%E6%A5%BC%E6%A2%AF/</loc>
     <lastmod>2018-07-21T05:54:35.568Z</lastmod>
     <data>
@@ -1257,9 +1279,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>算法</tag>
+         
+        <tag>sklearn</tag>
          
         <tag>Python</tag>
          
