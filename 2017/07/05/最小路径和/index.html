@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Andy&#39;s blog">
 <meta property="og:description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。      class Solution:         def minPathSum(self, gri">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-20T15:27:35.802Z">
+<meta property="og:updated_time" content="2018-07-20T15:42:26.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode - 最小路径和">
 <meta name="twitter:description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。      class Solution:         def minPathSum(self, gri">
@@ -431,10 +431,31 @@
             tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1]            
             return tmp[n][m]
 </code></pre>
-<h2 id="思路-递归解法"><a href="#思路-递归解法" class="headerlink" title="思路(递归解法)"></a>思路(递归解法)</h2><ol>
+<h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
 <li>从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小；</li>
 <li>保持递归过程中的值</li>
 </ol>
+<pre><code class="Python">
+    class Solution:
+        def minPathSum(self, grid):
+            &quot;&quot;&quot;
+            :type grid: List[List[int]]
+            :rtype: int
+            &quot;&quot;&quot;
+            m = len(grid)
+            n = len(grid[0])
+            for i in range(m):# 多少列 横轴
+                for j in range(n):# 多少行 纵轴
+                    if (i==0)&amp;(j==0):
+                        continue
+                    elif i == 0:
+                        grid[i][j] += grid[i][j-1]
+                    elif j == 0:
+                        grid[i][j] += grid[i-1][j]
+                    else:
+                        grid[i][j] += min(grid[i-1][j], grid[i][j-1])
+            return grid[m-1][n-1]
+</code></pre>
 
       
     </div>
@@ -479,8 +500,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/04/动态规划/" rel="next" title="动态规划">
-                <i class="fa fa-chevron-left"></i> 动态规划
+              <a href="/2017/07/05/不同路径/" rel="next" title="LeetCode - 不同路径">
+                <i class="fa fa-chevron-left"></i> LeetCode - 不同路径
               </a>
             
           </div>
@@ -489,7 +510,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/不同路径/" rel="prev" title="LeetCode - 不同路径">
+              <a href="/2017/07/05/不同路径2/" rel="prev" title="LeetCode - 不同路径">
                 LeetCode - 不同路径 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -564,7 +585,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">77</span>
+                <span class="site-state-item-count">78</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -653,7 +674,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路-递归解法"><span class="nav-number">1.</span> <span class="nav-text">思路(递归解法)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路1-递归解法"><span class="nav-number">1.</span> <span class="nav-text">思路1(递归解法)</span></a></li></ol></div>
             
 
           </div>
