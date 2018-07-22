@@ -97,14 +97,14 @@
 <meta name="description" content="给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。      注意">
 <meta name="keywords" content="python,Leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode - 打家劫舍">
+<meta property="og:title" content="LeetCode - 买卖股票的最佳时机">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/买卖股票的最佳时机/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
 <meta property="og:description" content="给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。      注意">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-22T06:47:23.205Z">
+<meta property="og:updated_time" content="2018-07-22T07:21:20.056Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode - 打家劫舍">
+<meta name="twitter:title" content="LeetCode - 买卖股票的最佳时机">
 <meta name="twitter:description" content="给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。      注意">
 
 
@@ -141,7 +141,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>LeetCode - 打家劫舍 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>LeetCode - 买卖股票的最佳时机 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -321,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">LeetCode - 打家劫舍</h1>
+          <h1 class="post-title" itemprop="name headline">LeetCode - 买卖股票的最佳时机</h1>
         
 
         <div class="post-meta">
@@ -410,19 +410,21 @@
 <li>遍历过程中记录最低股价；</li>
 <li>同时记录最高差价；</li>
 </ol>
-<pre><code>class Solution:
-    def maxProfit(self, prices):
-        &quot;&quot;&quot;
-        :type prices: List[int]
-        :rtype: int
-        &quot;&quot;&quot;
-        res = 0
-        buy = float(&#39;inf&#39;)
-        for v in prices:
-            buy = min(buy, v)
-            res = max(res, v-buy)
-        return res
+<pre><code class="Python">
+    class Solution:
+        def maxProfit(self, prices):
+            &quot;&quot;&quot;
+            :type prices: List[int]
+            :rtype: int
+            &quot;&quot;&quot;
+            res = 0
+            buy = float(&#39;inf&#39;)
+            for v in prices:
+                buy = min(buy, v)
+                res = max(res, v-buy)
+            return res
 </code></pre>
+
       
     </div>
 
@@ -476,8 +478,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/不同路径2/" rel="prev" title="LeetCode - 不同路径">
-                LeetCode - 不同路径 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/打家劫舍/" rel="prev" title="LeetCode - 打家劫舍">
+                LeetCode - 打家劫舍 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -551,7 +553,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">82</span>
+                <span class="site-state-item-count">83</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

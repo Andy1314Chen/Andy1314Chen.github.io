@@ -4,11 +4,33 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/07/05/%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/</loc>
-    <lastmod>2018-07-22T06:47:23.205Z</lastmod>
+    <loc>http://yoursite.com/2017/07/05/%E8%AE%A1%E6%95%B0%E8%B4%A8%E6%95%B0/</loc>
+    <lastmod>2018-07-22T07:22:58.589Z</lastmod>
     <data>
         <display>
-        <title>LeetCode - 打家劫舍</title>
+        <title>LeetCode - 计数质数</title>
+        <pubTime>2017-07-04T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>Leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/07/05/%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/</loc>
+    <lastmod>2018-07-22T07:21:20.056Z</lastmod>
+    <data>
+        <display>
+        <title>LeetCode - 买卖股票的最佳时机</title>
         <pubTime>2017-07-04T16:00:00.000Z</pubTime>
         
         <tag>python</tag>
