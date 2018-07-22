@@ -1969,6 +1969,293 @@ def crossValidation(xArr,yArr,numVal=10):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+<ul>
+<li><p>TP：正确肯定的数目；</p>
+</li>
+<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
+</li>
+<li><p>FP：误报，给出的匹配是不正确的；</p>
+</li>
+<li><p>TN：正确拒绝的非匹配对数；</p>
+</li>
+</ul>
+<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">预测1</th>
+<th style="text-align:center">预测0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实际1</strong></td>
+<td style="text-align:center">True Positive(TP)</td>
+<td style="text-align:center">False Negative(FN)</td>
+</tr>
+<tr>
+<td><strong>实际0</strong></td>
+<td style="text-align:center">False Positive(FP)</td>
+<td style="text-align:center">True Negative(TN)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
+<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
+<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
+<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
+<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
+<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
+<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
+<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
+<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
+<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
+<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
+<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
+<p>不妨举这样一个例子：</p>
+<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
+<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
+<p>　　召回率 = 700 / 1400 = 50%</p>
+<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
+<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
+<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
+<p>　　召回率 = 1400 / 1400 = 100%</p>
+<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
+<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
+<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
+<p>F-Measure是Precision和Recall加权调和平均：</p>
+<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
+<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
+<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
+<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
+<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
+<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
+<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
+<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
+<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
+<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
+<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
+<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
+<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
+<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
+<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
+<p>曲线距离左上角越近,证明分类器效果越好。</p>
+<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
+<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
+<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
+<ul>
+<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
+</li>
+<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
+</li>
+<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
+</li>
+<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
+</li>
+</ul>
+<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
+<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
+<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
+<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
+<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
+<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
+<pre><code>#ROC曲线的绘制及AUC计算函数
+def plotROC(predStrengths,classLabels):
+    import matplotlib.pyplot as plt
+    #光标的位置
+    cur=(1.0,1.0)
+    #用于计算AUC的值
+    ySum=0.0
+    #正样本个数
+    numPosClas=np.sum(np.array(classLabels)==1.0)
+    #y轴上步进数目
+    yStep=1/float(numPosClas)
+    #x轴上步进数目
+    xStep=1/float(len(classLabels)-numPosClas)
+    #预测强度排序从小到大，（1,1）-&gt;(0,0)
+    #按照从小到大的顺序，输出对应的index索引
+    sortedIndicies=predStrengths.argsort()
+    fig=plt.figure()
+    fig.clf()
+    ax=plt.subplot(111)
+    for index in sortedIndicies.tolist()[0]:
+        #正例，修改真阳率
+        if classLabels[index]==1.0:
+            delX=0;delY=yStep;
+        #反例，修改假阳率
+        else:
+            delX=xStep;delY=0;
+            ySum+=cur[1]
+        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
+        cur=(cur[0]-delX,cur[1]-delY)
+    ax.plot([0,1],[0,1],&#39;b--&#39;)
+    plt.xlabel(&#39;False Positive Rate&#39;);
+    plt.ylabel(&#39;True Positive Rate&#39;)
+    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
+    ax.axis([0,1,0,1])
+    plt.show()
+    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
+</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
+<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2272,293 +2559,6 @@ return dataMat,labelMat
 </code></pre><p>通过改变弱分类器的数目为1到10000之间的几个不同数字，测试不同弱分类器数目下的错误率。</p>
 <p><img src="https://i.imgur.com/eia9P7R.jpg" alt=""></p>
 <p>之前采用Logistic回归得到的平均错误率为0.35，而这里采用AdaBoost可以轻松达到0.21. 当分类器数目过大时，错误率又会上升，这是由于过拟合(overfitting）。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记2/" itemprop="url">机器学习算法常用指标</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
-<ul>
-<li><p>TP：正确肯定的数目；</p>
-</li>
-<li><p>FN：漏报，没有正确找到的匹配的数目；</p>
-</li>
-<li><p>FP：误报，给出的匹配是不正确的；</p>
-</li>
-<li><p>TN：正确拒绝的非匹配对数；</p>
-</li>
-</ul>
-<p>　　列联表如下表所示，1代表正类，0代表负类：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">预测1</th>
-<th style="text-align:center">预测0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>实际1</strong></td>
-<td style="text-align:center">True Positive(TP)</td>
-<td style="text-align:center">False Negative(FN)</td>
-</tr>
-<tr>
-<td><strong>实际0</strong></td>
-<td style="text-align:center">False Positive(FP)</td>
-<td style="text-align:center">True Negative(TN)</td>
-</tr>
-</tbody>
-</table>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0J9dP8YXmkJxTQkdsc_qELPXbikmZhkx9gwcwgh5h9yckF5MG" alt=""></p>
-<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR&amp;TNR"></a>TPR、FPR&amp;TNR</h2><p>从列联表引入两个新名词。</p>
-<p>其一是<font color="red">真正类率(true positive rate ,TPR)</font>, 计算公式为</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
-<p>另外一个是<font color="blue">负正类率(false positive rate, FPR)</font>,计算公式为</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
-<p>还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
-<p>$$ TNR=\frac {TN}{(FP+TN)}=1-FPR $$</p>
-<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p>精确率（正确率）和召回率是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的查准率；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的查全率。</p>
-<p>一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
-<p>$$ Precision = \frac {提取出的正确信息条数}{提取出的信息条数} $$</p>
-<p>$$ Recall = \frac {提取出的正确信息条数}{样本中的信息条数} $$</p>
-<p>为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
-<p>$$ F1值= \frac {2\cdot{正确率}\cdot{召回率}}{正确率+召回率} $$</p>
-<p>不妨举这样一个例子：</p>
-<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
-<p>　　正确率 = 700 / (700 + 200 + 100) = 70%</p>
-<p>　　召回率 = 700 / 1400 = 50%</p>
-<p>　　F1值 = 70% <em> 50% </em> 2 / (70% + 50%) = 58.3%</p>
-<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
-<p>　　正确率 = 1400 / (1400 + 300 + 300) = 70%</p>
-<p>　　召回率 = 1400 / 1400 = 100%</p>
-<p>　　F1值 = 70% <em> 100% </em> 2 / (70% + 100%) = 82.35%</p>
-<p>由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
-<p>当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是<br>Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
-<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
-<p>F-Measure是Precision和Recall加权调和平均：</p>
-<p>$$ F=\frac {R\cdot{P}\cdot{(\alpha^2+1)}}{\alpha^2(P+R)} $$</p>
-<p>当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
-<h2 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h2><h4 id="为什么引入ROC曲线？"><a href="#为什么引入ROC曲线？" class="headerlink" title="为什么引入ROC曲线？"></a>为什么引入ROC曲线？</h4><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。  </p>
-<p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题。</p>
-<h4 id="什么是ROC曲线？"><a href="#什么是ROC曲线？" class="headerlink" title="什么是ROC曲线？"></a>什么是ROC曲线？</h4><p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
-<p>$$ TPR=\frac {TP}{(TP+FN)} $$</p>
-<p>$$ FPR=\frac {FP}{(FP+TN)} $$</p>
-<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
-<p>为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
-<p>如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
-<p>不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
-<p>我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
-<p><img src="http://img1.tuicool.com/Y7beQz.png!web?_=5375175" alt=""></p>
-<p>我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
-<p>还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174345379-1968591887.png" alt=""></p>
-<p>曲线距离左上角越近,证明分类器效果越好。</p>
-<p><img src="http://images2015.cnblogs.com/blog/764050/201604/764050-20160411174401488-918162160.png" alt=""></p>
-<p>如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
-<h4 id="什么是AUC"><a href="#什么是AUC" class="headerlink" title="什么是AUC?"></a>什么是AUC?</h4><p>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</p>
-<ul>
-<li><p>AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
-</li>
-<li><p>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
-</li>
-<li><p>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
-</li>
-<li><p>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
-</li>
-</ul>
-<p>AUC的物理意义：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
-<h4 id="怎样计算AUC"><a href="#怎样计算AUC" class="headerlink" title="怎样计算AUC?"></a>怎样计算AUC?</h4><p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
-<p>第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
-<p>第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为<br>\(\frac {\sum_{所有正样本}rank-M(M+1)/2}{M\cdot{N}}\)<br>,时间复杂度为O(N+M).</p>
-<p>为了画出ROC曲线，分类器必须提供每个样例被判为阳性或者阴性的可信程度值。尽管大多数分类器都能做到这一点，但是通常情况下，这些值会在最后输出离散分类标签之前被清除。</p>
-<p>为了创建ROC曲线，首先要将分类样例按照其预测强度排序。先从排名最低的正样例开始，所有排名更低的样例都被判为反例，而所有排名更高的样例都被判为正例。从排名最高该种情况对应ROC图中对应点<1.0,1.0>开始，然后将其移到排名次低的样例中去，如果该样例属于正例，那么对真阳率（TPR）修改；如果该样例属于反例，那么对假阴率（FPR）进行修改。</1.0,1.0></p>
-<pre><code>#ROC曲线的绘制及AUC计算函数
-def plotROC(predStrengths,classLabels):
-    import matplotlib.pyplot as plt
-    #光标的位置
-    cur=(1.0,1.0)
-    #用于计算AUC的值
-    ySum=0.0
-    #正样本个数
-    numPosClas=np.sum(np.array(classLabels)==1.0)
-    #y轴上步进数目
-    yStep=1/float(numPosClas)
-    #x轴上步进数目
-    xStep=1/float(len(classLabels)-numPosClas)
-    #预测强度排序从小到大，（1,1）-&gt;(0,0)
-    #按照从小到大的顺序，输出对应的index索引
-    sortedIndicies=predStrengths.argsort()
-    fig=plt.figure()
-    fig.clf()
-    ax=plt.subplot(111)
-    for index in sortedIndicies.tolist()[0]:
-        #正例，修改真阳率
-        if classLabels[index]==1.0:
-            delX=0;delY=yStep;
-        #反例，修改假阳率
-        else:
-            delX=xStep;delY=0;
-            ySum+=cur[1]
-        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
-        cur=(cur[0]-delX,cur[1]-delY)
-    ax.plot([0,1],[0,1],&#39;b--&#39;)
-    plt.xlabel(&#39;False Positive Rate&#39;);
-    plt.ylabel(&#39;True Positive Rate&#39;)
-    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
-    ax.axis([0,1,0,1])
-    plt.show()
-    print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
-</code></pre><p>该函数有两个参数，参数一predStrengths,参数二classLabels，依次是分类器预测强度和真实标签。</p>
-<p>为了计算AUC,需要对多个小矩形的面积进行累加。这些小矩形的宽度是xStep,因此可以先对所有矩形的高度进行累加，最后再乘以xStep得到其总面积。所有高度的和(ySum）随着x轴的每次移动而渐次增加。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
-</ol>
 
           
         
@@ -3183,7 +3183,7 @@ final_rmse = np.sqrt(final_mse)
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/Hands-on第二章学习笔记(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -3202,7 +3202,7 @@ final_rmse = np.sqrt(final_mse)
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/09/网易一道算法题/" itemprop="url">网易校招一道算法题</a></h1>
+                <a class="post-title-link" href="/2017/09/09/Hands-on第二章学习笔记(1)/" itemprop="url">Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(1)</a></h1>
         
 
         <div class="post-meta">
@@ -3239,8 +3239,8 @@ final_rmse = np.sqrt(final_mse)
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -3277,77 +3277,169 @@ final_rmse = np.sqrt(final_mse)
       
         
           
-            <p>题目是：</p>
-<pre><code>小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行
-，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标
-(x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪
-物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。
+            <h2 id="Chapter-2-End-to-End-Machine-Learning-Project"><a href="#Chapter-2-End-to-End-Machine-Learning-Project" class="headerlink" title="Chapter 2  End-to-End Machine Learning Project"></a>Chapter 2  End-to-End Machine Learning Project</h2><p>主要内容：</p>
+<ul>
+<li>Look at the big picture</li>
+<li>Get the data</li>
+<li>Discover and visualize the data to gain insights</li>
+<li>Prepare the data for Machine Learning algorithms</li>
+<li>Select a model and train it </li>
+<li>Fine-tune your model </li>
+<li>Present your solution</li>
+<li>Launch, monitor, and maintain your system</li>
+</ul>
+<h4 id="Pipelines"><a href="#Pipelines" class="headerlink" title="Pipelines"></a>Pipelines</h4><p>A sequence of data processing components  is called a data pipeline.</p>
+<p>一系列数据处理组件被称为pipeline.</p>
+<h4 id="Create-a-Test-Set"><a href="#Create-a-Test-Set" class="headerlink" title="Create a Test Set"></a>Create a Test Set</h4><p>通常从dataset中随机抽取出20%放在一边作为测试集。</p>
+<pre><code>import numpy as np
+# 注意确定随机数的种子，以便后期复现
+np.random.seed(42)
 
-1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。
+def split_train_test(data, test_ratio):
+    shuffled_indices = np.random.permutation(len(data))
+    test_set_size = int(len(data) * test_ratio)
+    test_indices = shuffled_indices[:test_set_size]
+    train_indices = shuffled_indices[test_set_size:]
+    return data.iloc[train_indices], data.iloc[test_indices]
 
-2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。
+train_set, test_set = split_train_test(housing, 0.2)
+print(len(train_set), &#39;train +&#39;, len(test_set), &#39;test&#39;)
 
-小易要进行一次射击，小易在进行射击前，可以使用这两种特权
+# sklearn库中也有对应的函数
+from sklearn.model_selection import train_test_split
 
-操作任意次。
+train_set, test_set = train_test_split(housing, test_size=0.2, 
+                                            random_state=42)
+</code></pre><p>有时候，test set的划分也不是完全随机的，在数据集非常大时，没有问题。但小数据时，应该保证与原始大环境同分布，避免采样偏差。</p>
+<pre><code>housing[&#39;income_cat&#39;] = np.ceil(housing[&#39;median_income&#39;] / 1.5)
+housing[&#39;income_cat&#39;].where(housing[&#39;income_cat&#39;] &lt; 5, 5.0, inplace=True)
 
-小易想知道在他射击的时候最多可以同时消灭多少只怪物。
-</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0427/141746_2boq_3454401.png" alt=""></p>
-<p>看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。</p>
-<p>想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。</p>
-<p>真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。</p>
-<p>后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1；</p>
-<p>C++代码如下：</p>
-<pre><code>作者：雨baby
-链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2
-来源：牛客网
+# 分层采样(stratified sampling)
+from sklearn.model_selection import StratifiedShuffleSplit
 
-#include &lt;bits/stdc++.h&gt;
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+for train_index, test_index in split.split(housing, housing[&#39;income_cat&#39;]):
+    strat_train_set = housing.loc[train_index]
+    strat_test_set = housing.loc[test_index]
+</code></pre><h4 id="Discover-and-Visualize-the-Data-to-Gain-Insights"><a href="#Discover-and-Visualize-the-Data-to-Gain-Insights" class="headerlink" title="Discover and Visualize the Data to Gain Insights"></a>Discover and Visualize the Data to Gain Insights</h4><pre><code># 创建副本
+housing = strat_train_set.copy()
+housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;)
+</code></pre><p>The radius of each circle represents the district’s population (option s), and the color represents the price (option c). We will use a predefined color map (option cmap) called jet, which ranges from blue (low values) to red (high prices).</p>
+<pre><code>housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;, alpha=0.4,
+    s=housing[&#39;population&#39;]/100, label=&#39;population&#39;,
+    c=&#39;median_house_value&#39;, cmap=plt.get_cmap(&#39;jet&#39;), colorbar=True)
+plt.legend()
+</code></pre><p><img src="https://i.imgur.com/YeTsaDK.png" alt="California housing prices"></p>
+<pre><code># 相关系数或者说Pearsons&#39;r系数
+corr_matrix = housing.corr()
+corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False)
 
-using namespace std;
+from pandas.tools.plotting import scatter_matrix
 
-const int maxn = 50 + 5;
+attributes = [&#39;median_house_value&#39;,&#39;median_income&#39;,&#39;total_rooms&#39;,
+&#39;housing_median_age&#39;]
+scatter_matrix(housing[attributes], figsize=(12,8))
+</code></pre><p><img src="https://i.imgur.com/QgLzjhz.png" alt="scatter_matrix"></p>
+<h4 id="Experimenting-with-Attribute-Combinations"><a href="#Experimenting-with-Attribute-Combinations" class="headerlink" title="Experimenting with Attribute Combinations"></a>Experimenting with Attribute Combinations</h4><pre><code>housing[&#39;rooms_per_household&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;households&#39;]
+housing[&#39;bedrooms_per_room&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;total_rooms&#39;]
+housing[&#39;population_per_household&#39;] = housing[&#39;population&#39;]/housing[&#39;households&#39;]
 
-int x[maxn], y[maxn];
-int n;
-int solve() {
-    if(n &lt;= 2) return n;
-    int res = 1;
-    for(int i = 0; i &lt; n; i++) {
-        for(int j = 0; j &lt; n; j++) {
-            if(i != j) {
-                int dx1 = x[j] - x[i];
-                int dy1 = y[j] - y[i];
-                for(int k = 0; k &lt; n; k++) {
-                    int cnt = 0;
-                    if(i != k &amp;&amp; j != k) {
-                        for(int r = 0; r &lt; n; r++) {
-                            int dx2 = x[r] - x[i];
-                            int dy2 = y[r] - y[i];
-                            if(dy1 * dx2 == dy2 * dx1) {
-                                cnt++;
-                            } else {
-                                dx2 = x[r] - x[k];
-                                dy2 = y[r] - y[k];
-                                if(dy1 * dy2 == -dx2 * dx1) {
-                                    cnt++;
-                                }
-                            }
-                        }
-                    }
-                    res = max(res, cnt);
-                }
-            }
-        }
-    }
-    return res;
-}
-int main() {
-    cin &gt;&gt; n;
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i];
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i];
-    cout &lt;&lt; solve() &lt;&lt; endl;
-}
+corr_matrix = housing.corr()
+corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False)
+</code></pre><h4 id="Data-Cleaning"><a href="#Data-Cleaning" class="headerlink" title="Data Cleaning"></a>Data Cleaning</h4><p>对于缺失值，有3种处理办法</p>
+<ul>
+<li>Get rid of the corresponding districts(丢弃该条样本)</li>
+<li>Get rid of the whole attribute(丢弃整个列)</li>
+<li><p>Set the values to some value (zero, the mean, the median, etc.).(填充均值、中位数)</p>
+<p>  from sklearn.preprocessing import Imputer</p>
+<p>  imputer = Imputer(strategy=’median’)<br>  housing_num = housing.drop(‘ocean_proximity’, axis=1)<br>  imputer.fit(housing_num)</p>
+<p>  X = imputer.transform(housing_num)<br>  housing_tr = pd.DataFrame(X, columns = housing_num.columns)</p>
+</li>
+</ul>
+<h4 id="Handling-Text-and-Categorical-Attributes"><a href="#Handling-Text-and-Categorical-Attributes" class="headerlink" title="Handling Text and Categorical Attributes"></a>Handling Text and Categorical Attributes</h4><pre><code>from sklearn.preprocessing import LabelEncoder
+
+encoder = LabelEncoder()
+housing_cat = housing[&#39;ocean_proximity&#39;]
+housing_cat_encoded = encoder.fit_transform(housing_cat)
+housing_cat_encoded
+
+from sklearn.preprocessing import OneHotEncoder
+
+encoder = OneHotEncoder()
+housing_cat_1hot = encoder.fit_transform(housing_cat_encoded.reshape(-1,1))
+housing_cat_1hot.toarray()
+
+from sklearn.preprocessing import LabelBinarizer
+encoder = LabelBinarizer()
+housing_cat_1hot = encoder.fit_transform(housing_cat)
+housing_cat_1hot
+</code></pre><h4 id="Custom-Transformers"><a href="#Custom-Transformers" class="headerlink" title="Custom Transformers"></a>Custom Transformers</h4><pre><code>from sklearn.base import BaseEstimator, TransformerMixin
+
+rooms_ix, bedrooms_ix, population_ix, household_ix = 3, 4, 5, 6
+class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
+    def __init__(self, add_bedrooms_per_room = True):
+        self.add_bedrooms_per_room = add_bedrooms_per_room
+    def fit(self, X, y=None):
+        return self
+    def transform(self, X, y=None):
+        rooms_per_household = X[:, rooms_ix] / X[:, household_ix]
+        population_per_household = X[:, population_ix] / X[:, household_ix]
+    if self.add_bedrooms_per_room:
+        bedrooms_per_room = X[:, bedrooms_ix] / X[:, rooms_ix]
+        return np.c_[X, rooms_per_household, population_per_household,
+                                        bedrooms_per_room]
+    else:
+        return np.c_[X, rooms_per_household, population_per_household]
+
+attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False)
+housing_extra_attribs = attr_adder.transform(housing.values)
+</code></pre><h4 id="Feature-Scaling"><a href="#Feature-Scaling" class="headerlink" title="Feature Scaling"></a>Feature Scaling</h4><p>通常有两种方式进行特征缩放，<strong>min-max scaling, standardization</strong></p>
+<ol>
+<li>Min-max scaling(normalization):</li>
+</ol>
+<p>\( \frac {x-min}{max-min} \)</p>
+<ol>
+<li>Standardization:</li>
+</ol>
+<p>\( \frac {x-mean}{variance} \)</p>
+<pre><code>from sklearn.base import BaseEstimator, TransformerMixin
+
+class DataFrameSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, attribute_names):
+        self.attribute_names = attribute_names
+    def fit(self, X, y=None):
+        return self
+    def transform(self, X):
+        return X[self.attribute_names].values
+
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+num_pipeline = Pipeline([
+    (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)),
+    (&#39;attribs_adder&#39;, CombinedAttributesAdder()),
+    (&#39;std_scaler&#39;, StandardScaler()),
+])
+
+from sklearn.pipeline import FeatureUnion
+
+num_attribs = list(housing_num)
+cat_attribs = [&#39;ocean_proximity&#39;]
+
+num_pipeline = Pipeline([
+        (&#39;selector&#39;, DataFrameSelector(num_attribs)),
+        (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)),
+        (&#39;attribs_adder&#39;, CombinedAttributesAdder()),
+        (&#39;std_scaler&#39;, StandardScaler()),
+    ])
+cat_pipeline = Pipeline([    
+        (&#39;selector&#39;, DataFrameSelector(cat_attribs)),
+        (&#39;label_binarizer&#39;, LabelBinarizer()),
+    ])
+full_pipeline = FeatureUnion(trainsformer_list=[
+    (&#39;num_pipeline&#39;, num_pipeline),
+    (&#39;cat_pipeline&#39;, cat_pipeline),
+    ])
 </code></pre>
           
         
@@ -3432,7 +3524,7 @@ int main() {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">85</span>
+                <span class="site-state-item-count">87</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
