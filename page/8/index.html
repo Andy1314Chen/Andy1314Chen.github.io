@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/不同路径/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/编辑距离/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/不同路径/" itemprop="url">LeetCode - 不同路径</a></h1>
+                <a class="post-title-link" href="/2017/07/05/编辑距离/" itemprop="url">LeetCode - 编辑距离</a></h1>
         
 
         <div class="post-meta">
@@ -395,89 +395,68 @@
       
         
           
-            <p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
-<p>问总共有多少条不同的路径？</p>
-<p><img src="https://leetcode-cn.com/static/images/problemset/robot_maze.png" alt="路径图片"></p>
-<p>例如，上图是一个7 x 3 的网格。有多少可能的路径？</p>
-<p>说明：m 和 n 的值均不超过 100。</p>
-<p>示例 1:</p>
-<p>输入: m = 3, n = 2</p>
-<p>输出: 3</p>
-<p>解释:</p>
-<p>从左上角开始，总共有 3 条路径可以到达右下角。</p>
+            <p>给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。</p>
+<p>你可以对一个单词进行如下三种操作：</p>
 <ol>
-<li><p>向右 -&gt; 向右 -&gt; 向下</p>
-</li>
-<li><p>向右 -&gt; 向下 -&gt; 向右</p>
-</li>
-<li><p>向下 -&gt; 向右 -&gt; 向右</p>
-</li>
-</ol>
-<p>示例 2:</p>
-<p>输入: m = 7, n = 3</p>
-<p>输出: 28</p>
-<pre><code>class Solution:
-    def uniquePaths(self, m, n):
-        &quot;&quot;&quot;
-        :type m: int
-        :type n: int
-        :rtype: int
-        &quot;&quot;&quot;
-        # m是纵，n是横
-        # 保持递归中间结果
-        tmp = []
-        for i in range(n+1):
-            tmp.append([-1]*(m+1))
-        # 递归调用
-        return self.myAns(m, n, tmp)
+<li>插入一个字符</li>
+<li>删除一个字符</li>
+<li><p>替换一个字符</p>
+<pre><code> 示例 1:
 
-    def myAns(self, m, n, tmp):
-        # 出界认为是0
-        if (m &lt;= 0) | (n &lt;= 0):
-            return 0
-        # 起点
-        if (m == 1) &amp; (n == 1):
-            return 1
-        # 已经递归过直接返回
-        if tmp[n][m] != -1:
-            return tmp[n][m]
-        # 由结果往回走，左边部分，上边部分
-        left = self.myAns(m-1, n, tmp)
-        up = self.myAns(m, n-1, tmp)
-        # 保持结果
-        tmp[n][m] = left + up
-        # 返回
-        return tmp[n][m]
-</code></pre><h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
-<li>从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和；</li>
-<li>m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；</li>
-<li>保持递归过程的中间值；</li>
+ 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot;
+ 输出: 3
+ 解释: 
+ horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;)
+ rorse -&gt; rose (删除 &#39;r&#39;)
+ rose -&gt; ros (删除 &#39;e&#39;)
+</code></pre></li>
 </ol>
+<pre><code>    示例 2:
+
+    输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot;
+    输出: 5
+    解释: 
+    intention -&gt; inention (删除 &#39;t&#39;)
+    inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;)
+    enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;)
+    exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;)
+    exection -&gt; execution (插入 &#39;u&#39;)
+</code></pre><p><img src="https://i.imgur.com/KJpBzH2.png" alt="求解过程"></p>
 <pre><code class="Python">
     class Solution:
-        def uniquePaths(self, m, n):
+        def minDistance(self, word1, word2):
             &quot;&quot;&quot;
-            :type m: int
-            :type n: int
+            :type word1: str
+            :type word2: str
             :rtype: int
             &quot;&quot;&quot;
-            # 递推解法
+            l1 = len(word1)
+            l2 = len(word2)
             tmp = []
-            for i in range(n+1):
-                tmp.append([0]*(m+1))
-            tmp[1][1] = 1
+            for i in range(l1+1):
+                tmp.append([-1]*(l2+1))
+            return self.myMethod(word1, word2, l1, l2, tmp)
 
-            for y in range(1, n+1):
-                for x in range(1, m+1):
-                    if (x==1) &amp; (y==1):
-                        continue
-                    tmp[y][x] = tmp[y-1][x] + tmp[y][x-1]
+        def myMethod(self, word1, word2, l1, l2, tmp):
+            if l1 == 0:
+                return l2
+            if l2 == 0:
+                return l1
+            if tmp[l1][l2] != -1:
+                return tmp[l1][l2]
 
-            return tmp[n][m]
+            if word1[l1-1] == word2[l2-1]:
+                res = self.myMethod(word1,word2, l1-1, l2-1, tmp)
+            else:
+                res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp),
+                         min(self.myMethod(word1, word2, l1 - 1, l2, tmp),
+                            self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1
+            tmp[l1][l2] = res
+            return res
 </code></pre>
-<h2 id="思路2-递推解法"><a href="#思路2-递推解法" class="headerlink" title="思路2(递推解法)"></a>思路2(递推解法)</h2><ol>
-<li>与递归相反，从上到下，递推求解；</li>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>最后一位如果相等，则去掉后求子问题；</li>
+<li>如不等，则至少需要一步，然后分情况讨论：</li>
 </ol>
 
           
@@ -522,7 +501,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/不同路径2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/买卖股票的最佳时机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -541,7 +520,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/不同路径2/" itemprop="url">LeetCode - 不同路径</a></h1>
+                <a class="post-title-link" href="/2017/07/05/买卖股票的最佳时机/" itemprop="url">LeetCode - 买卖股票的最佳时机</a></h1>
         
 
         <div class="post-meta">
@@ -616,68 +595,383 @@
       
         
           
-            <p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
-<p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
-<p><img src="https://leetcode-cn.com/static/images/problemset/robot_maze.png" alt="路径图片"></p>
-<p>网格中的障碍物和空位置分别用 1 和 0 来表示。</p>
-<p>说明：m 和 n 的值均不超过 100。</p>
+            <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p>
+<p>如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</p>
+<p>注意你不能在买入股票前卖出股票。</p>
 <p>示例 1:</p>
-<p>输入:</p>
-<p>[</p>
-<p>  [0,0,0],</p>
-<p>  [0,1,0],</p>
-<p>  [0,0,0]<br>]</p>
-<p>输出: 2</p>
-<p>解释:</p>
-<p>3x3 网格的正中间有一个障碍物。</p>
-<p>从左上角到右下角一共有 2 条不同的路径：</p>
-<ol>
-<li><p>向右 -&gt; 向右 -&gt; 向下 -&gt; 向下</p>
-</li>
-<li><p>向下 -&gt; 向下 -&gt; 向右 -&gt; 向右</p>
-</li>
+<pre><code>输入: [7,1,5,3,6,4]
+输出: 5
+解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+</code></pre><p>示例 2:</p>
+<pre><code>输入: [7,6,4,3,1]
+输出: 0
+解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>遍历过程中记录最低股价；</li>
+<li>同时记录最高差价；</li>
 </ol>
 <pre><code class="Python">
     class Solution:
-        def uniquePathsWithObstacles(self, obstacleGrid):
+        def maxProfit(self, prices):
             &quot;&quot;&quot;
-            :type obstacleGrid: List[List[int]]
+            :type prices: List[int]
             :rtype: int
             &quot;&quot;&quot;
-            m = len(obstacleGrid[0])
-            n = len(obstacleGrid)
-
-            tmp = []
-            for i in range(n+1):
-                tmp.append([-1]*(m+1))
-
-            return self.myAns(m, n, tmp, obstacleGrid)
-
-        def myAns(self, m, n, tmp, obstacleGrid):
-            if (m &lt;= 0) | (n &lt;= 0):
-                return 0
-            if (m == 1) &amp; (n == 1):
-                return 1 - obstacleGrid[0][0]
-            if tmp[n][m] != -1:
-                return tmp[n][m]
-            # 障碍物的路径数为0
-            if obstacleGrid[n-1][m-1] == 1:
-                tmp[n][m] = 0
-            else:            
-                # 左边路径数
-                left = self.myAns(m-1, n, tmp, obstacleGrid)
-                # 上边路径数
-                up = self.myAns(m, n-1, tmp, obstacleGrid)
-                tmp[n][m] = left + up
-
-            return tmp[n][m]
+            res = 0
+            buy = float(&#39;inf&#39;)
+            for v in prices:
+                buy = min(buy, v)
+                res = max(res, v-buy)
+            return res
 </code></pre>
-<h2 id="思路-递归解法"><a href="#思路-递归解法" class="headerlink" title="思路(递归解法)"></a>思路(递归解法)</h2><ol>
-<li>从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和；</li>
-<li>m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；障碍点也认为是0；</li>
-<li>保持递归过程的中间值；</li>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/有效的括号/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/有效的括号/" itemprop="url">LeetCode - 有效的括号</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。</p>
+<p>有效字符串需满足：</p>
+<p>左括号必须用相同类型的右括号闭合。<br>左括号必须以正确的顺序闭合。<br>注意空字符串可被认为是有效字符串。</p>
+<p>示例 1:</p>
+<pre><code>输入: &quot;()&quot;
+输出: true
+</code></pre><p>示例 2:</p>
+<pre><code>输入: &quot;()[]{}&quot;
+输出: true
+</code></pre><p>示例 3:</p>
+<pre><code>输入: &quot;(]&quot;
+输出: false
+</code></pre><p>示例 4:</p>
+<pre><code>输入: &quot;([)]&quot;
+输出: false
+</code></pre><p>示例 5:</p>
+<pre><code>输入: &quot;{[]}&quot;
+输出: true
+</code></pre><pre><code class="Python">
+    class Solution(object):
+        def isValid(self, s):
+            &quot;&quot;&quot;
+            :type s: str
+            :rtype: bool
+            &quot;&quot;&quot;
+            if len(s)&lt;1:
+                return True
+
+            d = {&#39;(&#39;:&#39;)&#39;,
+                &#39;[&#39;:&#39;]&#39;,
+                &#39;{&#39;:&#39;}&#39;}
+            # 当做栈
+            res = []
+            # 依次入栈
+            for v in s:
+                # 栈里有东西则进行比较，是否消除
+                if len(res) &gt; 0:
+                    # 必须是左括号才能消除
+                    if res[-1] in d.keys():
+                        if d[res[-1]] == v:
+                            res.pop()
+                            continue
+                res.append(v)
+            if len(res) &gt; 0:
+                return False
+            else:
+                return True
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/计数质数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/计数质数/" itemprop="url">LeetCode - 计数质数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>统计所有小于非负整数 n 的质数的数量。</p>
+<p>示例:</p>
+<pre><code>输入: 10
+输出: 4
+解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>从2开始遍历，将其平方，及平方+v的数，倍数全部置0</li>
+<li>求和</li>
 </ol>
+<pre><code class="Python">
+    class Solution:
+    def countPrimes(self, n):
+        &quot;&quot;&quot;
+        :type n: int
+        :rtype: int
+        &quot;&quot;&quot;
+        tmp = [1]*n
+        for v in range(2, n):
+            if tmp[v-1]:
+                # 该位置是质数
+                # 将该质数的倍数全部标记
+                for i in range(v*v, n, v):
+                        tmp[i-1] = 0
+        return sum(tmp[2:])
+</code></pre>
 
           
         
@@ -846,190 +1140,6 @@ class Solution:
             tmp[i] = max(nums[i]+tmp[i-2], tmp[i-1])
 
         return tmp[-1]
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/解码方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/解码方法/" itemprop="url">LeetCode - 解码方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一条包含字母 A-Z 的消息通过以下方式进行了编码：</p>
-<pre><code>&#39;A&#39; -&gt; 1
-&#39;B&#39; -&gt; 2
-...
-&#39;Z&#39; -&gt; 26
-</code></pre><p>给定一个只包含数字的非空字符串，请计算解码方法的总数。</p>
-<p>示例 1:</p>
-<pre><code>输入: &quot;12&quot;
-输出: 2
-解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。
-</code></pre><p>示例 2:</p>
-<pre><code>输入: &quot;226&quot;
-输出: 3
-解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。
-
-
-class Solution:
-    def numDecodings(self, s):
-        &quot;&quot;&quot;
-        :type s: str
-        :rtype: int
-        &quot;&quot;&quot;
-        if len(s) == 0:
-            return 0
-        d = {}
-        d[&quot;&quot;] = 1
-        return self.ways(s,d)
-
-    # 记忆形递归
-    def ways(self, s, d):
-        # 已经计算过
-        if s in d.keys():
-            return d[s]
-        # 首位为0不可解码
-        if s[0] == &#39;0&#39;:
-            return 0
-        # 长度为1
-        if len(s) == 1:
-            return 1
-        # 去掉一位后的子问题
-        first = self.ways(s[1:], d) # 去掉第一位
-        tmp = int(s[:2]) # 看看前两位是否符合解码标准
-        # 去掉两位后的子问题
-        if (tmp &gt; 9)&amp;(tmp &lt;= 26):
-            first += self.ways(s[2:], d)
-        d[s] = first
-        return first
 </code></pre>
           
         
@@ -1246,7 +1356,7 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/环形链表/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1265,7 +1375,7 @@ class Solution:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/03/环形链表/" itemprop="url">LeetCode - 环形链表</a></h1>
+                <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">LeetCode - 回文链表</a></h1>
         
 
         <div class="post-meta">
@@ -1340,38 +1450,85 @@ class Solution:
       
         
           
-            <p>给定一个链表，判断链表中是否有环。</p>
-<p>进阶：<br>你能否不使用额外空间解决此题？</p>
+            <p>请判断一个链表是否为回文链表。</p>
+<p>示例 1:</p>
+<p>输入: 1-&gt;2</p>
+<p>输出: false</p>
+<p>示例 2:</p>
+<p>输入: 1-&gt;2-&gt;2-&gt;1</p>
+<p>输出: true</p>
+<p>进阶：</p>
+<p>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
 <pre><code># Definition for singly-linked list.
-# class ListNode(object):
+# class ListNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class Solution(object):
-    def hasCycle(self, head):
+class Solution:
+    # 原地反转链表
+    def reverseList(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        newHead = None
+        while head != None:
+            nextNode = ListNode(0)
+            nextNode = head.next
+
+            head.next = newHead
+            newHead = head
+            head = nextNode
+        return newHead
+    # 是否是回文链表
+    def isPalindrome(self, head):
         &quot;&quot;&quot;
         :type head: ListNode
         :rtype: bool
         &quot;&quot;&quot;
+        if head == None:
+            return True
+        elif head.next == None:
+            return True
 
+        # 快慢指针找中点
         firstPtr = head
         secondPtr = head
         while firstPtr != None:
-            secondPtr = secondPtr.next
-            firstPtr = firstPtr.next
-            # 快指针不为空
-            if firstPtr != None:
-                firstPtr = firstPtr.next
-            # 快慢指针相遇
-            if firstPtr == secondPtr:
+            if firstPtr.next != None:
+                firstPtr = firstPtr.next.next
+                secondPtr = secondPtr.next
+            else:
                 break
 
-        if firstPtr == None:
-            return False # 无环
+        # 长度为奇数的时候，此时慢指针指向中点
+        if firstPtr != None:
+            # 原地反转链表
+            secondPtr.next = self.reverseList(secondPtr.next)
+            secondPtr = secondPtr.next
+
+        # 长度为偶数的时候，慢指针指向后半段的开头
         else:
-            return True  # 有环
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>利用快慢指针，快指针每次移动两步，慢指针每次移动一步。相遇时且不为None, 说明有环，且相遇地点就是环的入口。</p>
+            # 原地反转链表
+            secondPtr = self.reverseList(secondPtr)
+
+        # 从开头和中间依次比较
+        firstPtr = head
+        while secondPtr != None:
+            if firstPtr.val != secondPtr.val:
+                return False
+            else:
+                firstPtr = firstPtr.next
+                secondPtr = secondPtr.next
+
+        return True
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位；</li>
+<li>根据快指针最后的状态，确定慢指针；</li>
+<li>将后半段原地反转；</li>
+<li>从开头和中间依次比较；</li>
+</ol>
 
           
         
@@ -1639,7 +1796,7 @@ return result;
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/环形链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1658,7 +1815,7 @@ return result;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">LeetCode - 回文链表</a></h1>
+                <a class="post-title-link" href="/2017/07/03/环形链表/" itemprop="url">LeetCode - 环形链表</a></h1>
         
 
         <div class="post-meta">
@@ -1733,85 +1890,38 @@ return result;
       
         
           
-            <p>请判断一个链表是否为回文链表。</p>
-<p>示例 1:</p>
-<p>输入: 1-&gt;2</p>
-<p>输出: false</p>
-<p>示例 2:</p>
-<p>输入: 1-&gt;2-&gt;2-&gt;1</p>
-<p>输出: true</p>
-<p>进阶：</p>
-<p>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
+            <p>给定一个链表，判断链表中是否有环。</p>
+<p>进阶：<br>你能否不使用额外空间解决此题？</p>
 <pre><code># Definition for singly-linked list.
-# class ListNode:
+# class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class Solution:
-    # 原地反转链表
-    def reverseList(self, head):
-        &quot;&quot;&quot;
-        :type head: ListNode
-        :rtype: ListNode
-        &quot;&quot;&quot;
-        newHead = None
-        while head != None:
-            nextNode = ListNode(0)
-            nextNode = head.next
-
-            head.next = newHead
-            newHead = head
-            head = nextNode
-        return newHead
-    # 是否是回文链表
-    def isPalindrome(self, head):
+class Solution(object):
+    def hasCycle(self, head):
         &quot;&quot;&quot;
         :type head: ListNode
         :rtype: bool
         &quot;&quot;&quot;
-        if head == None:
-            return True
-        elif head.next == None:
-            return True
 
-        # 快慢指针找中点
         firstPtr = head
         secondPtr = head
         while firstPtr != None:
-            if firstPtr.next != None:
-                firstPtr = firstPtr.next.next
-                secondPtr = secondPtr.next
-            else:
+            secondPtr = secondPtr.next
+            firstPtr = firstPtr.next
+            # 快指针不为空
+            if firstPtr != None:
+                firstPtr = firstPtr.next
+            # 快慢指针相遇
+            if firstPtr == secondPtr:
                 break
 
-        # 长度为奇数的时候，此时慢指针指向中点
-        if firstPtr != None:
-            # 原地反转链表
-            secondPtr.next = self.reverseList(secondPtr.next)
-            secondPtr = secondPtr.next
-
-        # 长度为偶数的时候，慢指针指向后半段的开头
+        if firstPtr == None:
+            return False # 无环
         else:
-            # 原地反转链表
-            secondPtr = self.reverseList(secondPtr)
-
-        # 从开头和中间依次比较
-        firstPtr = head
-        while secondPtr != None:
-            if firstPtr.val != secondPtr.val:
-                return False
-            else:
-                firstPtr = firstPtr.next
-                secondPtr = secondPtr.next
-
-        return True
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位；</li>
-<li>根据快指针最后的状态，确定慢指针；</li>
-<li>将后半段原地反转；</li>
-<li>从开头和中间依次比较；</li>
-</ol>
+            return True  # 有环
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>利用快慢指针，快指针每次移动两步，慢指针每次移动一步。相遇时且不为None, 说明有环，且相遇地点就是环的入口。</p>
 
           
         
@@ -1999,146 +2109,6 @@ class Solution:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2189,7 +2159,7 @@ class Solution:
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-count">88</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
