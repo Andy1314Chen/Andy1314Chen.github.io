@@ -1645,330 +1645,6 @@ Day 7: 12.674730
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
-                2017-09-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
-<ul>
-<li>优点：简化数据，去除噪声，提高算法的结果</li>
-<li>缺点：数据的转换可能难以理解</li>
-<li>适用数据类型：数值型数据</li>
-</ul>
-<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
-<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
-<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
-<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
-<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
-<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
-<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
-<pre><code>import numpy as np
-
-In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
-
-In[139]: U
-Out[139]: 
-array([[-0.14142136, -0.98994949],
-       [-0.98994949,  0.14142136]])
-In[140]: Sigma
-Out[140]: 
-array([ 10.,   0.])
-
-In[141]: VT
-Out[141]: 
-array([[-0.70710678, -0.70710678],
-   [-0.70710678,  0.70710678]])
-</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
-<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
-<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
-<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
-<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
-<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
-<pre><code>#### 相似度计算 ####
-
-1. 欧式距离
-2. 皮尔相关系数（Pearson correlation)
-3. 余弦相似度(cosine similarity)
-
-#程序清单14-1 相似度计算
-
-#欧式距离
-def ecludSim(inA,inB):
-    return 1.0/(1.0+la.norm(inA-inB))
-
-#皮尔逊相关系数
-def pearsSim(inA,inB):
-    if len(inA)&lt;3:
-        return 1.0
-    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
-
-#余弦相似度
-def cosSim(inA,inB):
-    num=float(inA.T*inB)
-    denom=la.norm(inA)*la.norm(inB)
-    return 0.5+0.5*(num/denom)
-</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
-<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
-<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
-<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
-</ol>
-<p>程序源码：</p>
-<pre><code>&quot;&quot;&quot;
-    示例：餐馆菜肴推荐引擎
-&quot;&quot;&quot;
-#程序清单14-2 基于物品相似度的推荐引擎
-
-#基于给定相似度计算方法的条件下，用户对物品的估计评分值
-&quot;&quot;&quot;
-dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
-&quot;&quot;&quot;
-def standEst(dataMat,user,simMeas,item):
-    #物品数
-    n=np.shape(dataMat)[1]
-    simTotal=0;ratSimTotal=0
-    #遍历每一个物品
-    for j in range(n):
-        userRating=dataMat[user,j]
-        #如果用户没有对该物品进行评分，则跳过
-        if userRating==0:
-            continue
-        #将item所在列与当前遍历列进行逻辑与
-        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
-                                       dataMat[:,j].A&gt;0))[0]
-        #若结果为0，则相似度为0，说明item与当前物品毫无交集
-        if len(overLap)==0:
-            similarity=0
-        else:
-            #计算相似度
-            similarity=simMeas(dataMat[overLap,item],
-                               dataMat[overLap,j])
-        #总的相似度
-        simTotal+=similarity
-        #考虑用户评分
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        #归一化
-        return ratSimTotal/simTotal
-
-#返回最高N个推荐结果   
-def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
-    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
-    #所有物品都已经投过票，则不需要进行推荐
-    if len(unratedItems)==0:
-        return &#39;you rated everything&#39;
-    itemScores=[]
-    #对未投票物品进行遍历
-    for item in unratedItems:
-        estimatedScore=estMethod(dataMat,user,simMeas,item)
-        itemScores.append((item,estimatedScore))
-    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
-</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
-def svdEst(dataMat,user,simMeas,item):
-    n=np.shape(dataMat)[1]
-    simTotal=0.0;ratSimTotal=0.0
-    #奇异值分解
-    U,Sigma,VT=la.svd(dataMat)
-    #构建对角矩阵
-    Sig4=np.mat(np.eye(4)*Sigma[:4])
-    #将物品转换到低维空间中
-    xformedItems=dataMat.T*U[:,:4]*Sig4.I
-
-    for j in range(n):
-        userRating=dataMat[user,j]
-        if userRating==0 or j==item:
-            continue
-        similarity=simMeas(xformedItems[item,:].T,
-                           xformedItems[j,:].T)
-        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
-        simTotal+=similarity
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        return ratSimTotal/float(simTotal)
-</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
-<pre><code>&quot;&quot;&quot;
-    基于SVD的图像压缩
-&quot;&quot;&quot;
-
-#程序清单14-4 图像压缩函数
-def printMat(inMat,thresh=0.8):
-    for i in range(32):
-        for k in range(32):
-            if float(inMat[i,k])&gt;thresh:
-                print(1,end=&#39;&#39;);
-            else:
-                print(0,end=&#39;&#39;);
-        print(&#39;&#39;)
-
-def imgCompress(numSV=3,thresh=0.8):
-    my1=[]
-    for line in open(&#39;0_5.txt&#39;).readlines():
-        newRow=[]
-        for i in range(32):
-            newRow.append(int(line[i]))
-        my1.append(newRow)
-    myMat=np.mat(my1)
-    print(&quot;****original matrix****&quot;)
-    #打印原始数据
-    printMat(myMat,thresh)
-    #SVD分解
-    U,Sigma,VT=la.svd(myMat)
-    SigRecon=np.mat(np.zeros((numSV,numSV)))
-    for k in range(numSV):
-        SigRecon[k,k]=Sigma[k]
-    #重构矩阵
-    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
-    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
-          numSV)
-    printMat(reconMat,thresh)
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2383,6 +2059,330 @@ plt.legend()
 <ol>
 <li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
+<ul>
+<li>优点：简化数据，去除噪声，提高算法的结果</li>
+<li>缺点：数据的转换可能难以理解</li>
+<li>适用数据类型：数值型数据</li>
+</ul>
+<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
+<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
+<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
+<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
+<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
+<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
+<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
+<pre><code>import numpy as np
+
+In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
+
+In[139]: U
+Out[139]: 
+array([[-0.14142136, -0.98994949],
+       [-0.98994949,  0.14142136]])
+In[140]: Sigma
+Out[140]: 
+array([ 10.,   0.])
+
+In[141]: VT
+Out[141]: 
+array([[-0.70710678, -0.70710678],
+   [-0.70710678,  0.70710678]])
+</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
+<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
+<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
+<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
+<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
+<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
+<pre><code>#### 相似度计算 ####
+
+1. 欧式距离
+2. 皮尔相关系数（Pearson correlation)
+3. 余弦相似度(cosine similarity)
+
+#程序清单14-1 相似度计算
+
+#欧式距离
+def ecludSim(inA,inB):
+    return 1.0/(1.0+la.norm(inA-inB))
+
+#皮尔逊相关系数
+def pearsSim(inA,inB):
+    if len(inA)&lt;3:
+        return 1.0
+    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
+
+#余弦相似度
+def cosSim(inA,inB):
+    num=float(inA.T*inB)
+    denom=la.norm(inA)*la.norm(inB)
+    return 0.5+0.5*(num/denom)
+</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
+<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
+<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
+<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
+</ol>
+<p>程序源码：</p>
+<pre><code>&quot;&quot;&quot;
+    示例：餐馆菜肴推荐引擎
+&quot;&quot;&quot;
+#程序清单14-2 基于物品相似度的推荐引擎
+
+#基于给定相似度计算方法的条件下，用户对物品的估计评分值
+&quot;&quot;&quot;
+dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
+&quot;&quot;&quot;
+def standEst(dataMat,user,simMeas,item):
+    #物品数
+    n=np.shape(dataMat)[1]
+    simTotal=0;ratSimTotal=0
+    #遍历每一个物品
+    for j in range(n):
+        userRating=dataMat[user,j]
+        #如果用户没有对该物品进行评分，则跳过
+        if userRating==0:
+            continue
+        #将item所在列与当前遍历列进行逻辑与
+        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
+                                       dataMat[:,j].A&gt;0))[0]
+        #若结果为0，则相似度为0，说明item与当前物品毫无交集
+        if len(overLap)==0:
+            similarity=0
+        else:
+            #计算相似度
+            similarity=simMeas(dataMat[overLap,item],
+                               dataMat[overLap,j])
+        #总的相似度
+        simTotal+=similarity
+        #考虑用户评分
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        #归一化
+        return ratSimTotal/simTotal
+
+#返回最高N个推荐结果   
+def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
+    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
+    #所有物品都已经投过票，则不需要进行推荐
+    if len(unratedItems)==0:
+        return &#39;you rated everything&#39;
+    itemScores=[]
+    #对未投票物品进行遍历
+    for item in unratedItems:
+        estimatedScore=estMethod(dataMat,user,simMeas,item)
+        itemScores.append((item,estimatedScore))
+    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
+</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
+def svdEst(dataMat,user,simMeas,item):
+    n=np.shape(dataMat)[1]
+    simTotal=0.0;ratSimTotal=0.0
+    #奇异值分解
+    U,Sigma,VT=la.svd(dataMat)
+    #构建对角矩阵
+    Sig4=np.mat(np.eye(4)*Sigma[:4])
+    #将物品转换到低维空间中
+    xformedItems=dataMat.T*U[:,:4]*Sig4.I
+
+    for j in range(n):
+        userRating=dataMat[user,j]
+        if userRating==0 or j==item:
+            continue
+        similarity=simMeas(xformedItems[item,:].T,
+                           xformedItems[j,:].T)
+        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
+        simTotal+=similarity
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        return ratSimTotal/float(simTotal)
+</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
+<pre><code>&quot;&quot;&quot;
+    基于SVD的图像压缩
+&quot;&quot;&quot;
+
+#程序清单14-4 图像压缩函数
+def printMat(inMat,thresh=0.8):
+    for i in range(32):
+        for k in range(32):
+            if float(inMat[i,k])&gt;thresh:
+                print(1,end=&#39;&#39;);
+            else:
+                print(0,end=&#39;&#39;);
+        print(&#39;&#39;)
+
+def imgCompress(numSV=3,thresh=0.8):
+    my1=[]
+    for line in open(&#39;0_5.txt&#39;).readlines():
+        newRow=[]
+        for i in range(32):
+            newRow.append(int(line[i]))
+        my1.append(newRow)
+    myMat=np.mat(my1)
+    print(&quot;****original matrix****&quot;)
+    #打印原始数据
+    printMat(myMat,thresh)
+    #SVD分解
+    U,Sigma,VT=la.svd(myMat)
+    SigRecon=np.mat(np.zeros((numSV,numSV)))
+    for k in range(numSV):
+        SigRecon[k,k]=Sigma[k]
+    #重构矩阵
+    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
+    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
+          numSV)
+    printMat(reconMat,thresh)
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
 
           
         
@@ -3094,7 +3094,7 @@ Out[53]:
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-count">89</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

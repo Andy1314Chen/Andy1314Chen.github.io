@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/07/05/%E7%BC%BA%E5%A4%B1%E6%95%B0%E5%AD%97/</loc>
+    <lastmod>2018-07-22T08:46:08.701Z</lastmod>
+    <data>
+        <display>
+        <title>LeetCode - 缺失数字</title>
+        <pubTime>2017-07-04T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>Leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/05/%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/</loc>
     <lastmod>2018-07-22T08:38:13.527Z</lastmod>
     <data>
@@ -1909,9 +1931,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>python</tag>
-         
         <tag>AI</tag>
+         
+        <tag>python</tag>
          
          
            
@@ -1955,9 +1977,9 @@
         
         <tag>C</tag>
          
-        <tag>算法</tag>
-         
         <tag>Leetcode</tag>
+         
+        <tag>算法</tag>
          
          
            
