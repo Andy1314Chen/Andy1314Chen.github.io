@@ -686,425 +686,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/编辑距离/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/编辑距离/" itemprop="url">LeetCode - 编辑距离</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。</p>
-<p>你可以对一个单词进行如下三种操作：</p>
-<ol>
-<li>插入一个字符</li>
-<li>删除一个字符</li>
-<li><p>替换一个字符</p>
-<pre><code> 示例 1:
-
- 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot;
- 输出: 3
- 解释: 
- horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;)
- rorse -&gt; rose (删除 &#39;r&#39;)
- rose -&gt; ros (删除 &#39;e&#39;)
-</code></pre></li>
-</ol>
-<pre><code>    示例 2:
-
-    输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot;
-    输出: 5
-    解释: 
-    intention -&gt; inention (删除 &#39;t&#39;)
-    inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;)
-    enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;)
-    exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;)
-    exection -&gt; execution (插入 &#39;u&#39;)
-</code></pre><p><img src="https://i.imgur.com/KJpBzH2.png" alt="求解过程"></p>
-<pre><code class="Python">
-    class Solution:
-        def minDistance(self, word1, word2):
-            &quot;&quot;&quot;
-            :type word1: str
-            :type word2: str
-            :rtype: int
-            &quot;&quot;&quot;
-            l1 = len(word1)
-            l2 = len(word2)
-            tmp = []
-            for i in range(l1+1):
-                tmp.append([-1]*(l2+1))
-            return self.myMethod(word1, word2, l1, l2, tmp)
-
-        def myMethod(self, word1, word2, l1, l2, tmp):
-            if l1 == 0:
-                return l2
-            if l2 == 0:
-                return l1
-            if tmp[l1][l2] != -1:
-                return tmp[l1][l2]
-
-            if word1[l1-1] == word2[l2-1]:
-                res = self.myMethod(word1,word2, l1-1, l2-1, tmp)
-            else:
-                res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp),
-                         min(self.myMethod(word1, word2, l1 - 1, l2, tmp),
-                            self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1
-            tmp[l1][l2] = res
-            return res
-</code></pre>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>最后一位如果相等，则去掉后求子问题；</li>
-<li>如不等，则至少需要一步，然后分情况讨论：</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/爬楼梯/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/爬楼梯/" itemprop="url">LeetCode - 爬楼梯</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>假设你正在爬楼梯。需要 n 步你才能到达楼顶。</p>
-<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
-<p>注意：给定 n 是一个正整数。</p>
-<p>示例 1：</p>
-<p>输入： 2</p>
-<p>输出： 2</p>
-<p>解释： 有两种方法可以爬到楼顶。</p>
-<ol>
-<li>1 步 + 1 步</li>
-<li>2 步</li>
-</ol>
-<p>示例 2：</p>
-<p>输入： 3</p>
-<p>输出： 3</p>
-<p>解释： 有三种方法可以爬到楼顶。</p>
-<ol>
-<li>1 步 + 1 步 + 1 步</li>
-<li>1 步 + 2 步</li>
-<li>2 步 + 1 步</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            tmp = [0]*(n+1)
-            tmp[0] = 1
-            tmp[1] = 1
-            for i in range(2, n+1):
-                tmp[i] = tmp[i-1] + tmp[i-2]
-            return tmp[n]
-</code></pre>
-<h2 id="思路1-递推法求解"><a href="#思路1-递推法求解" class="headerlink" title="思路1(递推法求解)"></a>思路1(递推法求解)</h2><ol>
-<li>首先求得递推公式 F(n) = F(n-1) + F(n-2)</li>
-<li>实现</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def get_value(self, n, tmp):
-            if n &lt;= 1:
-                return 1
-            # 如果记忆过，则直接返回值
-            if tmp[n] != -1:
-                return tmp[n]
-            # 否则重新计算
-            tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp)
-            return tmp[n]
-
-
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            tmp = [-1]*(n+1)
-            return self.get_value(n, tmp)
-</code></pre>
-<h2 id="思路2-记忆性递归"><a href="#思路2-记忆性递归" class="headerlink" title="思路2(记忆性递归)"></a>思路2(记忆性递归)</h2><ol>
-<li>递推公式 F(n) = F(n-1) + F(n-2)</li>
-<li>递归实现</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            first = 1
-            second = 1
-            cur = 1
-            for i in range(2, n+1):
-                cur = first + second
-                first = second
-                second= cur
-            return cur
-</code></pre>
-<h2 id="思路3"><a href="#思路3" class="headerlink" title="思路3"></a>思路3</h2><ol>
-<li>使用两个变量保存前两个值</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/最小路径和/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1525,6 +1106,609 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/编辑距离/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/编辑距离/" itemprop="url">LeetCode - 编辑距离</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。</p>
+<p>你可以对一个单词进行如下三种操作：</p>
+<ol>
+<li>插入一个字符</li>
+<li>删除一个字符</li>
+<li><p>替换一个字符</p>
+<pre><code> 示例 1:
+
+ 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot;
+ 输出: 3
+ 解释: 
+ horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;)
+ rorse -&gt; rose (删除 &#39;r&#39;)
+ rose -&gt; ros (删除 &#39;e&#39;)
+</code></pre></li>
+</ol>
+<pre><code>    示例 2:
+
+    输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot;
+    输出: 5
+    解释: 
+    intention -&gt; inention (删除 &#39;t&#39;)
+    inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;)
+    enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;)
+    exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;)
+    exection -&gt; execution (插入 &#39;u&#39;)
+</code></pre><p><img src="https://i.imgur.com/KJpBzH2.png" alt="求解过程"></p>
+<pre><code class="Python">
+    class Solution:
+        def minDistance(self, word1, word2):
+            &quot;&quot;&quot;
+            :type word1: str
+            :type word2: str
+            :rtype: int
+            &quot;&quot;&quot;
+            l1 = len(word1)
+            l2 = len(word2)
+            tmp = []
+            for i in range(l1+1):
+                tmp.append([-1]*(l2+1))
+            return self.myMethod(word1, word2, l1, l2, tmp)
+
+        def myMethod(self, word1, word2, l1, l2, tmp):
+            if l1 == 0:
+                return l2
+            if l2 == 0:
+                return l1
+            if tmp[l1][l2] != -1:
+                return tmp[l1][l2]
+
+            if word1[l1-1] == word2[l2-1]:
+                res = self.myMethod(word1,word2, l1-1, l2-1, tmp)
+            else:
+                res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp),
+                         min(self.myMethod(word1, word2, l1 - 1, l2, tmp),
+                            self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1
+            tmp[l1][l2] = res
+            return res
+</code></pre>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>最后一位如果相等，则去掉后求子问题；</li>
+<li>如不等，则至少需要一步，然后分情况讨论：</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/爬楼梯/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/爬楼梯/" itemprop="url">LeetCode - 爬楼梯</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>假设你正在爬楼梯。需要 n 步你才能到达楼顶。</p>
+<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
+<p>注意：给定 n 是一个正整数。</p>
+<p>示例 1：</p>
+<p>输入： 2</p>
+<p>输出： 2</p>
+<p>解释： 有两种方法可以爬到楼顶。</p>
+<ol>
+<li>1 步 + 1 步</li>
+<li>2 步</li>
+</ol>
+<p>示例 2：</p>
+<p>输入： 3</p>
+<p>输出： 3</p>
+<p>解释： 有三种方法可以爬到楼顶。</p>
+<ol>
+<li>1 步 + 1 步 + 1 步</li>
+<li>1 步 + 2 步</li>
+<li>2 步 + 1 步</li>
+</ol>
+<pre><code class="Python">
+    class Solution:
+        def climbStairs(self, n):
+            &quot;&quot;&quot;
+            :type n: int
+            :rtype: int
+            &quot;&quot;&quot;
+            tmp = [0]*(n+1)
+            tmp[0] = 1
+            tmp[1] = 1
+            for i in range(2, n+1):
+                tmp[i] = tmp[i-1] + tmp[i-2]
+            return tmp[n]
+</code></pre>
+<h2 id="思路1-递推法求解"><a href="#思路1-递推法求解" class="headerlink" title="思路1(递推法求解)"></a>思路1(递推法求解)</h2><ol>
+<li>首先求得递推公式 F(n) = F(n-1) + F(n-2)</li>
+<li>实现</li>
+</ol>
+<pre><code class="Python">
+    class Solution:
+        def get_value(self, n, tmp):
+            if n &lt;= 1:
+                return 1
+            # 如果记忆过，则直接返回值
+            if tmp[n] != -1:
+                return tmp[n]
+            # 否则重新计算
+            tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp)
+            return tmp[n]
+
+
+        def climbStairs(self, n):
+            &quot;&quot;&quot;
+            :type n: int
+            :rtype: int
+            &quot;&quot;&quot;
+            tmp = [-1]*(n+1)
+            return self.get_value(n, tmp)
+</code></pre>
+<h2 id="思路2-记忆性递归"><a href="#思路2-记忆性递归" class="headerlink" title="思路2(记忆性递归)"></a>思路2(记忆性递归)</h2><ol>
+<li>递推公式 F(n) = F(n-1) + F(n-2)</li>
+<li>递归实现</li>
+</ol>
+<pre><code class="Python">
+    class Solution:
+        def climbStairs(self, n):
+            &quot;&quot;&quot;
+            :type n: int
+            :rtype: int
+            &quot;&quot;&quot;
+            first = 1
+            second = 1
+            cur = 1
+            for i in range(2, n+1):
+                cur = first + second
+                first = second
+                second= cur
+            return cur
+</code></pre>
+<h2 id="思路3"><a href="#思路3" class="headerlink" title="思路3"></a>思路3</h2><ol>
+<li>使用两个变量保存前两个值</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/解码方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/解码方法/" itemprop="url">LeetCode - 解码方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一条包含字母 A-Z 的消息通过以下方式进行了编码：</p>
+<pre><code>&#39;A&#39; -&gt; 1
+&#39;B&#39; -&gt; 2
+...
+&#39;Z&#39; -&gt; 26
+</code></pre><p>给定一个只包含数字的非空字符串，请计算解码方法的总数。</p>
+<p>示例 1:</p>
+<pre><code>输入: &quot;12&quot;
+输出: 2
+解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。
+</code></pre><p>示例 2:</p>
+<pre><code>输入: &quot;226&quot;
+输出: 3
+解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。
+
+
+class Solution:
+    def numDecodings(self, s):
+        &quot;&quot;&quot;
+        :type s: str
+        :rtype: int
+        &quot;&quot;&quot;
+        if len(s) == 0:
+            return 0
+        d = {}
+        d[&quot;&quot;] = 1
+        return self.ways(s,d)
+
+    # 记忆形递归
+    def ways(self, s, d):
+        # 已经计算过
+        if s in d.keys():
+            return d[s]
+        # 首位为0不可解码
+        if s[0] == &#39;0&#39;:
+            return 0
+        # 长度为1
+        if len(s) == 1:
+            return 1
+        # 去掉一位后的子问题
+        first = self.ways(s[1:], d) # 去掉第一位
+        tmp = int(s[:2]) # 看看前两位是否符合解码标准
+        # 去掉两位后的子问题
+        if (tmp &gt; 9)&amp;(tmp &lt;= 26):
+            first += self.ways(s[2:], d)
+        d[s] = first
+        return first
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/04/动态规划/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1867,230 +2051,6 @@ class Solution(object):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/03/ValidParentheses/" itemprop="url">Leetcode 20 Valid Parentheses</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
-                2017-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>LeetCode 20.Valid Parentheses问题如下：</p>
-<blockquote>
-<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.</p>
-<p>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
-</blockquote>
-<p>仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。</p>
-<pre><code>typedef struct{
-int *base;//栈底指针
-int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置
-int stackSize;//栈长度
-}SqStack;//定义结构体
-
-int Push(SqStack *S,int e)
-{
-    *(*S).top++ = e;//入栈操作
-    return 1;
-}
-
-int Pop(SqStack *S, int *e)
-{
-    *e = *--(*S).top;//出栈
-    return 1;
-}
-
-int StackEmpty(SqStack S)
-{
-    return S.top == S.base;//栈空
-}
-
-bool isValid(char* s) {
-if(s==NULL)
-    return true;
-SqStack S;
-int N = strlen(s);
-if(N==1)
-    return false;
-if(N%2)
-    return false;
-S.base = (int *)malloc(N*sizeof(int));//分配空间
-S.top = S.base;//空栈，栈顶指针等于栈底指针
-S.stackSize = N;//栈长度，本例中，假设不会超过初始长度
-
-int table[128] = { 10 };
-int e=0;
-table[&#39;(&#39;] = &#39;)&#39;;
-table[&#39;{&#39;] = &#39;}&#39;;
-table[&#39;[&#39;] = &#39;]&#39;;
-table[&#39;]&#39;] = &#39;-&#39;;
-table[&#39;}&#39;] = &#39;-&#39;;
-table[&#39;)&#39;] = &#39;-&#39;;
-for (int i = 0; i &lt; N; i++)
-{
-    if (!StackEmpty(S))
-    {
-        Pop(&amp;S, &amp;e);
-        if (table[e] == s[i])
-        {
-            continue;
-        }
-        else
-            Push(&amp;S, e);
-    }
-    if (table[s[i]] == s[i + 1])
-    {
-        i++;
-        continue;
-    }
-    else
-    {
-        Push(&amp;S, s[i]);
-    }
-}
-int result = StackEmpty(S);
-free(S.base);
-return result;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2348,7 +2308,7 @@ class Solution:
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">79</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
