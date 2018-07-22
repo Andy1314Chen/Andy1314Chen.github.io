@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/07/05/Fizz%20Buzz/</loc>
+    <lastmod>2018-07-22T07:36:20.335Z</lastmod>
+    <data>
+        <display>
+        <title>LeetCode - Fizz Buzz</title>
+        <pubTime>2017-07-04T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>Leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/05/%E8%AE%A1%E6%95%B0%E8%B4%A8%E6%95%B0/</loc>
     <lastmod>2018-07-22T07:22:58.589Z</lastmod>
     <data>
