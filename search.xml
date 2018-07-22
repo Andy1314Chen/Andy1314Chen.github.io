@@ -55,6 +55,20 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[RBM学习笔记（三）RBM能量函数和概率分布]]></title>
+    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E8%83%BD%E9%87%8F%E5%87%BD%E6%95%B0%E5%92%8C%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%2F</url>
+    <content type="text"><![CDATA[RBM学习笔记（三）RBM能量函数和概率分布 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
+      <categories>
+        <category>深度学习</category>
+        <category>DBN</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>RBM</tag>
+        <tag>DBN</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[RBM学习笔记（五）梯度计算公式]]></title>
     <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[RBM学习笔记（五）梯度计算公式 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
@@ -86,20 +100,6 @@
     <title><![CDATA[RBM学习笔记（四）对数似然函数]]></title>
     <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%95%B0%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0%2F</url>
     <content type="text"><![CDATA[RBM学习笔记（四）对数似然函数 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
-      <categories>
-        <category>深度学习</category>
-        <category>DBN</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>RBM</tag>
-        <tag>DBN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[RBM学习笔记（三）RBM能量函数和概率分布]]></title>
-    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E8%83%BD%E9%87%8F%E5%87%BD%E6%95%B0%E5%92%8C%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%2F</url>
-    <content type="text"><![CDATA[RBM学习笔记（三）RBM能量函数和概率分布 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
       <categories>
         <category>深度学习</category>
         <category>DBN</category>
@@ -545,6 +545,20 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[机器学习实战第五章学习笔记(Logistic回归)]]></title>
+    <url>%2F2017%2F09%2F07%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。 利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。 Logistic的一般过程： 收集数据：采用任意方法收集数据。 准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。 分析数据：采用任意方法对数据进行分析。 训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。 测试数据：一旦训练步骤完成，分类将会很快。 使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。 基于Logistic回归和Sigmoid函数的分类 优点：计算代价不高，易于理解和实现。 缺点：容易欠拟合，分类精度可能不高。 适用数据类型：数值型和标称型数据。 我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function). 而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。 说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。 由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。 那么，现在的关键在于，如何确定上述的最佳回归系数？ 基于最优化方法的最佳回归系数确定Sigmoid函数： 这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。 梯度上升法梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。 梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。 梯度下降算法和梯度上升算法的区别 梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山). 训练算法：使用梯度上升找到最佳参数#梯度上升法的伪代码： 每个回归系数初始化为1 重复R次： 计算整个数据集的梯度 使用α*gradient更新回归系数的向量 返回回归系数 import numpy as np #Logistic回归梯度上升法优化算法 def loadDataSet():#读取样本数据 dataMat=[];labelMat=[] fr=open(&#39;testSet.txt&#39;) for line in fr.readlines(): lineArr=line.strip().split()#除去空格后划分 dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征 labelMat.append(int(lineArr[2]))#标签 return dataMat,labelMat def sigmoid(inX): return 1.0/(1+np.exp(-inX)) def gradAscent(dataMatIn,classLabels): dataMatrix=np.mat(dataMatIn)#100*3 labelMat=np.mat(classLabels).transpose() m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数 alpha=0.001#步长 maxCycles=500#最大迭代次数 weights=np.ones((n,1))#回归系数初始化为1 for k in range(maxCycles): h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1 error=(labelMat-h)# weights=weights+alpha*dataMatrix.transpose()*error return weights #画出数据集和Logistic回归最佳拟合直线的函数 def plotBestFit(wei): import matplotlib.pyplot as plt weights=wei#.getA() dataMat,labelMat=loadDataSet() dataArr=np.array(dataMat) n=np.shape(dataArr)[0] xcord1=[];ycord1=[] xcord2=[];ycord2=[] for i in range(n): if int(labelMat[i])==1: xcord1.append(dataArr[i,1]) ycord1.append(dataArr[i,2]) else: xcord2.append(dataArr[i,1]) ycord2.append(dataArr[i,2]) fig=plt.figure() ax=fig.add_subplot(111) print(len(xcord1),len(ycord1)) ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;) ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;) x=np.arange(-3.0,3.0,0.1) y=(-weights[0]-weights[1]*x)/weights[2] ax.plot(x,y) plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;); plt.show() 公式推导回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。 那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数： 观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。 这个分段函数还可以简写为： 那么对于m条训练样本而言，代价函数就是m个预测代价的累加和： 为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导： 所以结果就是: weights=weights+alpha*dataMatrix.transpose()*error 是一致的！！ 训练算法：随机梯度上升梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。 #随机梯度上升算法伪代码： 所有回归系数初始化为1 对数据集中每个样本 计算该样本的梯度 使用alpha*gradient更新回归系数值 返回回归系数值 #随机梯度上升算法 def stocGradAscent0(dataMatrix,classLabels): m,n=np.shape(dataMatrix) alpha=0.01#步长 weights=np.ones(n)#1*n X=[]#保持weights的历史数据 for j in range(300):#迭代300次 for i in range(m): h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = error=classLabels[i]-h weights=weights+alpha*error*dataMatrix[i] X.append(weights) return weights 这段代码与梯度上升算法很相似，但是也有些区别： 这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本) 没有矩阵的转换过程，所有变量的数据类型都是NumPy数组 但是有个问题，为什么随机梯度上升算法也可以达到最优呢？书中并没有给出相关解释。 在迭代200次过程中，weights=[X0,X1,X2]变化曲线；而我自己的300次跌打过程中，变化曲线是： X0: X1: X2: 从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。 因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。 代码如下： #改进的随机梯度上升算法 def stocGradAscent1(dataMatrix,classLabels,numIter=150): m,n=np.shape(dataMatrix) weights=np.ones(n) X=[] for j in range(numIter): dataIndex=list(range(m)) for i in range(m): alpha=4/(1.0+j+i)+0.01 randIndex=int(np.random.uniform(0,len(dataIndex))) h=sigmoid(sum(dataMatrix[randIndex]*weights)) error=classLabels[randIndex]-h weights=weights+alpha*error*dataMatrix[randIndex] X.append(weights) del dataIndex[randIndex] X=np.array(X) return weights 改进之处有两个方面，每次迭代时调整alpha和随机选取更新。 步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。 通过随机选取样本来更新回归系数，可以减少周期性的波动。 示例：从疝气病症预测病马的死亡率使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。 使用Logistic回归估计马疝气病的死亡率 收集数据：UCI机器学习数据库 准备数据：用Python解析文本文件并填充缺失值 分析数据：可视化并观察数据 训练算法：使用优化算法，找到最佳的系数 测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。 使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。 (数据集中有30%的值是缺失的) 准备数据：处理数据中的缺失值由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题： 使用可用特征的均值来填充缺失值； 使用特殊值来填补缺失值，如-1； 忽略有缺失值的样本； 使用相似样本的均值添补缺失值； 使用另外的机器学习算法预测缺失值； 在数据预处理阶段，所有缺失值用实数0代替。原因有二： 根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新； sigmoid(0)=0.5,对结果不具有任何倾向性； 对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。 测试算法：用Logistic回归进行分类#Logistic回归分类函数 def classifyVector(inX,weights): prob=sigmoid(sum(inX*weights)) if prob&gt;0.5: return 1.0 else: return 0.0 def colicTest(): frTrain=open(&#39;horseColicTraining.txt&#39;) frTest=open(&#39;horseColicTest.txt&#39;) trainingSet=[];trainingLabels=[] for line in frTrain.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21):#21个特征 lineArr.append(float(currLine[i])) trainingSet.append(lineArr) trainingLabels.append(float(currLine[21])) #标签 trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500) errorCount=0;numTestVec=0.0 for line in frTest.readlines(): numTestVec+=1.0 currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]): errorCount+=1 errorRate=(float(errorCount)/numTestVec) print(&quot;the error rate of this test is: %f&quot; % errorRate) return errorRate def multiTest(): numTests=10;errorSum=0.0 for k in range(numTests): errorSum+=colicTest() print(&quot;after %d iterations the average error rate is: %f&quot; % (numTests,errorSum/float(numTests))) 参考博客 http://blog.csdn.net/lu597203933/article/details/38468303#comments http://blog.csdn.net/CharlieLincy/article/details/70767791#comments]]></content>
+      <categories>
+        <category>Python</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>算法</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[sklearn库LogisticRegression使用及简单调参]]></title>
     <url>%2F2017%2F09%2F07%2Fsklearn%E5%BA%93LogisticRegression%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E8%B0%83%E5%8F%82%2F</url>
     <content type="text"><![CDATA[刚刚学习了《机器学习实战》这本书的第五章，LogisticRegression分类器，使用python自己实现的分类器。但是sklearn库里有同样功能的LogisticRegression分类器。 因此，在这里做一个对比，所用数据集是《机器学习实战》里第五章里病马存活预测。 在《机器学习实战》第五章中，作者说通过调节alpha和迭代次数，可以将错误率降低到20%左右。而我调节的结果是： the error rate of this test is: 0.313433 the error rate of this test is: 0.238806 the error rate of this test is: 0.283582 the error rate of this test is: 0.477612 the error rate of this test is: 0.283582 the error rate of this test is: 0.313433 the error rate of this test is: 0.388060 the error rate of this test is: 0.313433 the error rate of this test is: 0.417910 the error rate of this test is: 0.343284 after 10 iterations the average error rate is: 0.337313 而使用sklearn库中LogisticRegression的结果如下： 默认配置下，多次运行错误率均为0.268657 对样本数据及训练数据进行归一化 0.283582 使用sag随机梯度下降算法，500次迭代 0.253731 使用lbfgs算法，500次迭代 0.283582 Python3测试程序from sklearn.linear_model import LogisticRegression from sklearn.preprocessing import StandardScaler import numpy as np def calcError(): frTrain=open(&#39;horseColicTraining.txt&#39;) frTest=open(&#39;horseColicTest.txt&#39;) #训练样本集 trainSet=[];trainLabels=[] for line in frTrain.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) trainSet.append(lineArr) trainLabels.append(float(currLine[21])) #测试集 testSet=[];testLabels=[] for line in frTest.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) testSet.append(lineArr) testLabels.append(float(currLine[21])) #Logistic回归 classifier=LogisticRegression(solver=&#39;sag&#39;,max_iter=700) #拟合 classifier.fit(np.array(trainSet),np.array(trainLabels)) #默认配置预测 yPredict=classifier.predict(np.array(testSet)) #计算错误率 errorCount=0.0 for i in range(len(yPredict)): if int(yPredict[i]) == int(testLabels[i]): pass else: errorCount+=1 errorRate=errorCount/float(len(yPredict)) #打印错误率 print(&quot;Error rate: %f&quot; % errorRate) #1. 默认配置下，多次运行错误率均为0.268657 #2. 对样本数据及训练数据进行归一化 0.283582 #3. 使用sag随机梯度下降算法，500次迭代 0.253731 #4. 使用lbfgs算法，500次迭代 0.283582 def calcError2(): frTrain=open(&#39;horseColicTraining.txt&#39;) frTest=open(&#39;horseColicTest.txt&#39;) #训练样本集 trainSet=[];trainLabels=[] for line in frTrain.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) trainSet.append(lineArr) trainLabels.append(float(currLine[21])) #测试集 testSet=[];testLabels=[] for line in frTest.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) testSet.append(lineArr) testLabels.append(float(currLine[21])) #Logistic回归 classifier=LogisticRegression() #拟合 #对训练数据进行归一化处理 X=np.array(trainSet) scaler=StandardScaler().fit(X) X=scaler.transform(X) classifier.fit(X,np.array(trainLabels)) #测试集归一化处理 Xtest=scaler.transform(np.array(testSet)) #默认配置预测 yPredict=classifier.predict(Xtest) #计算错误率 errorCount=0.0 for i in range(len(yPredict)): if int(yPredict[i]) == int(testLabels[i]): pass else: errorCount+=1 errorRate=errorCount/float(len(yPredict)) #打印错误率 print(&quot;Error rate: %f&quot; % errorRate) scikit-learn LogisticRegression库调参默认参数： LogisticRegression(penalty=’l2’, dual=False, tol=0.0001, C=1.0, fit_intercept=True, intercept_scaling=1, class_weight=None, random_state=None, solver=’liblinear’, max_iter=100, multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1) penalty : str, ‘l1’ or ‘l2’, default: ‘l2’Used to specify the norm used in the penalization. The ‘newton-cg’, ‘sag’ and ‘lbfgs’ solvers support only l2 penalties.New in version 0.19: l1 penalty with SAGA solver (allowing ‘multinomial’ + L1) dual : bool, default: FalseDual or primal formulation. Dual formulation is only implemented for l2 penalty with liblinear solver. Prefer dual=False when n_samples &gt; n_features. tol : float, default: 1e-4Tolerance for stopping criteria. C : float, default: 1.0Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization. fit_intercept : bool, default: TrueSpecifies if a constant (a.k.a. bias or intercept) should be added to the decision function. intercept_scaling : float, default 1.Useful only when the solver ‘liblinear’ is used and self.fit_intercept is set to True. In this case, x becomes [x, self.intercept_scaling], i.e. a “synthetic” feature with constant value equal to intercept_scaling is appended to the instance vector. The intercept becomes intercept_scaling * synthetic_feature_weight.Note! the synthetic feature weight is subject to l1/l2 regularization as all other features. To lessen the effect of regularization on synthetic feature weight (and therefore on the intercept) intercept_scaling has to be increased. class_weight : dict or ‘balanced’, default: NoneWeights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one.The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y)).Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.New in version 0.17: class_weight=’balanced’ random_state : int, RandomState instance or None, optional, default: NoneThe seed of the pseudo random number generator to use when shuffling the data. If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random. Used when solver == ‘sag’ or ‘liblinear’. solver : {‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’, ‘saga’},default: ‘liblinear’ Algorithm to use in the optimization problem.For small datasets, ‘liblinear’ is a good choice, whereas ‘sag’ and‘saga’ are faster for large ones.For multiclass problems, only ‘newton-cg’, ‘sag’, ‘saga’ and ‘lbfgs’handle multinomial loss; ‘liblinear’ is limited to one-versus-rest schemes.‘newton-cg’, ‘lbfgs’ and ‘sag’ only handle L2 penalty, whereas‘liblinear’ and ‘saga’ handle L1 penalty.Note that ‘sag’ and ‘saga’ fast convergence is only guaranteed on features with approximately the same scale. You can preprocess the data with a scaler from sklearn.preprocessing.New in version 0.17: Stochastic Average Gradient descent solver.New in version 0.19: SAGA solver. max_iter : int, default: 100Useful only for the newton-cg, sag and lbfgs solvers. Maximum number of iterations taken for the solvers to converge. multi_class : str, {‘ovr’, ‘multinomial’}, default: ‘ovr’Multiclass option can be either ‘ovr’ or ‘multinomial’. If the option chosen is ‘ovr’, then a binary problem is fit for each label. Else the loss minimised is the multinomial loss fit across the entire probability distribution. Does not work for liblinear solver.New in version 0.18: Stochastic Average Gradient descent solver for ‘multinomial’ case. verbose : int, default: 0For the liblinear and lbfgs solvers set verbose to any positive number for verbosity. warm_start : bool, default: FalseWhen set to True, reuse the solution of the previous call to fit as initialization, otherwise, just erase the previous solution. Useless for liblinear solver.New in version 0.17: warm_start to support lbfgs, newton-cg, sag, saga solvers. n_jobs : int, default: 1Number of CPU cores used when parallelizing over classes if multi_class=’ovr’”. This parameter is ignored when the solveris set to ‘liblinear’ regardless of whether ‘multi_class’ is specified or not. If given a value of -1, all cores are used. penalty 正则化选择参数LogisticRegression和LogisticRegressionCV默认就带了正则化项。penalty参数可选择的值为”l1”和”l2”.分别对应L1的正则化和L2的正则化，默认是L2的正则化。 在调参时如果我们主要的目的只是为了解决过拟合，一般penalty选择L2正则化就够了。但是如果选择L2正则化发现还是过拟合，即预测效果差的时候，就可以考虑L1正则化。另外，如果模型的特征非常多，我们希望一些不重要的特征系数归零，从而让模型系数稀疏化的话，也可以使用L1正则化。 penalty参数的选择会影响我们损失函数优化算法的选择。即参数solver的选择，如果是L2正则化，那么4种可选的算法{‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’}都可以选择。但是如果penalty是L1正则化的话，就只能选择‘liblinear’了。这是因为L1正则化的损失函数不是连续可导的，而{‘newton-cg’, ‘lbfgs’,‘sag’}这三种优化算法时都需要损失函数的一阶或者二阶连续导数。而‘liblinear’并没有这个依赖。 solver 优化算法选择参数solver参数决定了我们对逻辑回归损失函数的优化方法，有4种算法可以选择，分别是： liblinear：使用了开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数。 lbfgs：拟牛顿法的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。 newton-cg：也是牛顿法家族的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。 sag：即随机平均梯度下降，是梯度下降法的变种，和普通梯度下降法的区别是每次迭代仅仅用一部分的样本来计算梯度，适合于样本数据多的时候。 从上面的描述可以看出，newton-cg, lbfgs和sag这三种优化算法时都需要损失函数的一阶或者二阶连续导数，因此不能用于没有连续导数的L1正则化，只能用于L2正则化。而liblinear通吃L1正则化和L2正则化。 同时，sag每次仅仅使用了部分样本进行梯度迭代，所以当样本量少的时候不要选择它，而如果样本量非常大，比如大于10万，sag是第一选择。但是sag不能用于L1正则化，所以当你有大量的样本，又需要L1正则化的话就要自己做取舍了。要么通过对样本采样来降低样本量，要么回到L2正则化。 从上面的描述，大家可能觉得，既然newton-cg, lbfgs和sag这么多限制，如果不是大样本，我们选择liblinear不就行了嘛！错，因为liblinear也有自己的弱点！我们知道，逻辑回归有二元逻辑回归和多元逻辑回归。对于多元逻辑回归常见的有one-vs-rest(OvR)和many-vs-many(MvM)两种。而MvM一般比OvR分类相对准确一些。郁闷的是liblinear只支持OvR，不支持MvM，这样如果我们需要相对精确的多元逻辑回归时，就不能选择liblinear了。也意味着如果我们需要相对精确的多元逻辑回归不能使用L1正则化了。 multi_class 分类方式选择参数multi_class参数决定了我们分类方式的选择，有 ovr和multinomial两个值可以选择，默认是 ovr。 ovr即前面提到的one-vs-rest(OvR)，而multinomial即前面提到的many-vs-many(MvM)。如果是二元逻辑回归，ovr和multinomial并没有任何区别，区别主要在多元逻辑回归上。 OvR的思想很简单，无论你是多少元逻辑回归，我们都可以看做二元逻辑回归。具体做法是，对于第K类的分类决策，我们把所有第K类的样本作为正例，除了第K类样本以外的所有样本都作为负例，然后在上面做二元逻辑回归，得到第K类的分类模型。其他类的分类模型获得以此类推。 而MvM则相对复杂，这里举MvM的特例one-vs-one(OvO)作讲解。如果模型有T类，我们每次在所有的T类样本里面选择两类样本出来，不妨记为T1类和T2类，把所有的输出为T1和T2的样本放在一起，把T1作为正例，T2作为负例，进行二元逻辑回归，得到模型参数。我们一共需要T(T-1)/2次分类。 从上面的描述可以看出OvR相对简单，但分类效果相对略差（这里指大多数样本分布情况，某些样本分布下OvR可能更好）。而MvM分类相对精确，但是分类速度没有OvR快。 如果选择了ovr，则4种损失函数的优化方法liblinear，newton-cg, lbfgs和sag都可以选择。但是如果选择了multinomial,则只能选择newton-cg, lbfgs和sag了。 class_weight 类型权重参数class_weight参数用于标示分类模型中各种类型的权重，可以不输入，即不考虑权重，或者说所有类型的权重一样。如果选择输入的话，可以选择balanced让类库自己计算类型权重，或者我们自己输入各个类型的权重，比如对于0,1的二元模型，我们可以定义class_weight={0:0.9, 1:0.1}，这样类型0的权重为90%，而类型1的权重为10%。 如果class_weight选择balanced，那么类库会根据训练样本量来计算权重。某种类型样本量越多，则权重越低，样本量越少，则权重越高。 那么class_weight有什么作用呢？在分类模型中，我们经常会遇到两类问题： 第一种是误分类的代价很高。比如对合法用户和非法用户进行分类，将非法用户分类为合法用户的代价很高，我们宁愿将合法用户分类为非法用户，这时可以人工再甄别，但是却不愿将非法用户分类为合法用户。这时，我们可以适当提高非法用户的权重。 第二种是样本是高度失衡的，比如我们有合法用户和非法用户的二元样本数据10000条，里面合法用户有9995条，非法用户只有5条，如果我们不考虑权重，则我们可以将所有的测试集都预测为合法用户，这样预测准确率理论上有99.95%，但是却没有任何意义。这时，我们可以选择balanced，让类库自动提高非法用户样本的权重。 提高了某种分类的权重，相比不考虑权重，会有更多的样本分类划分到高权重的类别，从而可以解决上面两类问题。 sample_weight 样本权重参数由于样本不平衡，导致样本不是总体样本的无偏估计，从而可能导致我们的模型预测能力下降。遇到这种情况，我们可以通过调节样本权重来尝试解决这个问题。调节样本权重的方法有两种，第一种是在class_weight使用balanced。第二种是在调用fit函数时，通过sample_weight来自己调节每个样本权重。 在scikit-learn做逻辑回归时，如果上面两种方法都用到了，那么样本的真正权重是class_weight*sample_weight. 参考文章 http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html http://www.cnblogs.com/pinard/p/6035872.html]]></content>
@@ -556,20 +570,6 @@
         <tag>机器学习</tag>
         <tag>算法</tag>
         <tag>sklearn</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[机器学习实战第五章学习笔记(Logistic回归)]]></title>
-    <url>%2F2017%2F09%2F07%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。 利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。 Logistic的一般过程： 收集数据：采用任意方法收集数据。 准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。 分析数据：采用任意方法对数据进行分析。 训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。 测试数据：一旦训练步骤完成，分类将会很快。 使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。 基于Logistic回归和Sigmoid函数的分类 优点：计算代价不高，易于理解和实现。 缺点：容易欠拟合，分类精度可能不高。 适用数据类型：数值型和标称型数据。 我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function). 而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。 说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。 由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。 那么，现在的关键在于，如何确定上述的最佳回归系数？ 基于最优化方法的最佳回归系数确定Sigmoid函数： 这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。 梯度上升法梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。 梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。 梯度下降算法和梯度上升算法的区别 梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山). 训练算法：使用梯度上升找到最佳参数#梯度上升法的伪代码： 每个回归系数初始化为1 重复R次： 计算整个数据集的梯度 使用α*gradient更新回归系数的向量 返回回归系数 import numpy as np #Logistic回归梯度上升法优化算法 def loadDataSet():#读取样本数据 dataMat=[];labelMat=[] fr=open(&#39;testSet.txt&#39;) for line in fr.readlines(): lineArr=line.strip().split()#除去空格后划分 dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征 labelMat.append(int(lineArr[2]))#标签 return dataMat,labelMat def sigmoid(inX): return 1.0/(1+np.exp(-inX)) def gradAscent(dataMatIn,classLabels): dataMatrix=np.mat(dataMatIn)#100*3 labelMat=np.mat(classLabels).transpose() m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数 alpha=0.001#步长 maxCycles=500#最大迭代次数 weights=np.ones((n,1))#回归系数初始化为1 for k in range(maxCycles): h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1 error=(labelMat-h)# weights=weights+alpha*dataMatrix.transpose()*error return weights #画出数据集和Logistic回归最佳拟合直线的函数 def plotBestFit(wei): import matplotlib.pyplot as plt weights=wei#.getA() dataMat,labelMat=loadDataSet() dataArr=np.array(dataMat) n=np.shape(dataArr)[0] xcord1=[];ycord1=[] xcord2=[];ycord2=[] for i in range(n): if int(labelMat[i])==1: xcord1.append(dataArr[i,1]) ycord1.append(dataArr[i,2]) else: xcord2.append(dataArr[i,1]) ycord2.append(dataArr[i,2]) fig=plt.figure() ax=fig.add_subplot(111) print(len(xcord1),len(ycord1)) ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;) ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;) x=np.arange(-3.0,3.0,0.1) y=(-weights[0]-weights[1]*x)/weights[2] ax.plot(x,y) plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;); plt.show() 公式推导回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。 那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数： 观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。 这个分段函数还可以简写为： 那么对于m条训练样本而言，代价函数就是m个预测代价的累加和： 为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导： 所以结果就是: weights=weights+alpha*dataMatrix.transpose()*error 是一致的！！ 训练算法：随机梯度上升梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。 #随机梯度上升算法伪代码： 所有回归系数初始化为1 对数据集中每个样本 计算该样本的梯度 使用alpha*gradient更新回归系数值 返回回归系数值 #随机梯度上升算法 def stocGradAscent0(dataMatrix,classLabels): m,n=np.shape(dataMatrix) alpha=0.01#步长 weights=np.ones(n)#1*n X=[]#保持weights的历史数据 for j in range(300):#迭代300次 for i in range(m): h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = error=classLabels[i]-h weights=weights+alpha*error*dataMatrix[i] X.append(weights) return weights 这段代码与梯度上升算法很相似，但是也有些区别： 这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本) 没有矩阵的转换过程，所有变量的数据类型都是NumPy数组 但是有个问题，为什么随机梯度上升算法也可以达到最优呢？书中并没有给出相关解释。 在迭代200次过程中，weights=[X0,X1,X2]变化曲线；而我自己的300次跌打过程中，变化曲线是： X0: X1: X2: 从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。 因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。 代码如下： #改进的随机梯度上升算法 def stocGradAscent1(dataMatrix,classLabels,numIter=150): m,n=np.shape(dataMatrix) weights=np.ones(n) X=[] for j in range(numIter): dataIndex=list(range(m)) for i in range(m): alpha=4/(1.0+j+i)+0.01 randIndex=int(np.random.uniform(0,len(dataIndex))) h=sigmoid(sum(dataMatrix[randIndex]*weights)) error=classLabels[randIndex]-h weights=weights+alpha*error*dataMatrix[randIndex] X.append(weights) del dataIndex[randIndex] X=np.array(X) return weights 改进之处有两个方面，每次迭代时调整alpha和随机选取更新。 步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。 通过随机选取样本来更新回归系数，可以减少周期性的波动。 示例：从疝气病症预测病马的死亡率使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。 使用Logistic回归估计马疝气病的死亡率 收集数据：UCI机器学习数据库 准备数据：用Python解析文本文件并填充缺失值 分析数据：可视化并观察数据 训练算法：使用优化算法，找到最佳的系数 测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。 使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。 (数据集中有30%的值是缺失的) 准备数据：处理数据中的缺失值由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题： 使用可用特征的均值来填充缺失值； 使用特殊值来填补缺失值，如-1； 忽略有缺失值的样本； 使用相似样本的均值添补缺失值； 使用另外的机器学习算法预测缺失值； 在数据预处理阶段，所有缺失值用实数0代替。原因有二： 根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新； sigmoid(0)=0.5,对结果不具有任何倾向性； 对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。 测试算法：用Logistic回归进行分类#Logistic回归分类函数 def classifyVector(inX,weights): prob=sigmoid(sum(inX*weights)) if prob&gt;0.5: return 1.0 else: return 0.0 def colicTest(): frTrain=open(&#39;horseColicTraining.txt&#39;) frTest=open(&#39;horseColicTest.txt&#39;) trainingSet=[];trainingLabels=[] for line in frTrain.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21):#21个特征 lineArr.append(float(currLine[i])) trainingSet.append(lineArr) trainingLabels.append(float(currLine[21])) #标签 trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500) errorCount=0;numTestVec=0.0 for line in frTest.readlines(): numTestVec+=1.0 currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]): errorCount+=1 errorRate=(float(errorCount)/numTestVec) print(&quot;the error rate of this test is: %f&quot; % errorRate) return errorRate def multiTest(): numTests=10;errorSum=0.0 for k in range(numTests): errorSum+=colicTest() print(&quot;after %d iterations the average error rate is: %f&quot; % (numTests,errorSum/float(numTests))) 参考博客 http://blog.csdn.net/lu597203933/article/details/38468303#comments http://blog.csdn.net/CharlieLincy/article/details/70767791#comments]]></content>
-      <categories>
-        <category>Python</category>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>算法</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -672,9 +672,9 @@
         <category>树莓派3</category>
       </categories>
       <tags>
-        <tag>UNIT</tag>
-        <tag>树莓派3</tag>
         <tag>语音识别</tag>
+        <tag>树莓派3</tag>
+        <tag>UNIT</tag>
       </tags>
   </entry>
   <entry>
@@ -686,8 +686,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>UNIT</tag>
         <tag>树莓派3</tag>
+        <tag>UNIT</tag>
       </tags>
   </entry>
   <entry>
@@ -783,8 +783,8 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>AI</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -799,45 +799,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 编辑距离]]></title>
-    <url>%2F2017%2F07%2F05%2F%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB%2F</url>
-    <content type="text"><![CDATA[给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作： 插入一个字符 删除一个字符 替换一个字符 示例 1: 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot; 输出: 3 解释: horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;) rorse -&gt; rose (删除 &#39;r&#39;) rose -&gt; ros (删除 &#39;e&#39;) 示例 2: 输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot; 输出: 5 解释: intention -&gt; inention (删除 &#39;t&#39;) inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;) enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;) exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;) exection -&gt; execution (插入 &#39;u&#39;) class Solution: def minDistance(self, word1, word2): &quot;&quot;&quot; :type word1: str :type word2: str :rtype: int &quot;&quot;&quot; l1 = len(word1) l2 = len(word2) tmp = [] for i in range(l1+1): tmp.append([-1]*(l2+1)) return self.myMethod(word1, word2, l1, l2, tmp) def myMethod(self, word1, word2, l1, l2, tmp): if l1 == 0: return l2 if l2 == 0: return l1 if tmp[l1][l2] != -1: return tmp[l1][l2] if word1[l1-1] == word2[l2-1]: res = self.myMethod(word1,word2, l1-1, l2-1, tmp) else: res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp), min(self.myMethod(word1, word2, l1 - 1, l2, tmp), self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1 tmp[l1][l2] = res return res 思路 最后一位如果相等，则去掉后求子问题； 如不等，则至少需要一步，然后分情况讨论：]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 不同路径]]></title>
-    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84%2F</url>
-    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 问总共有多少条不同的路径？ 例如，上图是一个7 x 3 的网格。有多少可能的路径？ 说明：m 和 n 的值均不超过 100。 示例 1: 输入: m = 3, n = 2 输出: 3 解释: 从左上角开始，总共有 3 条路径可以到达右下角。 向右 -&gt; 向右 -&gt; 向下 向右 -&gt; 向下 -&gt; 向右 向下 -&gt; 向右 -&gt; 向右 示例 2: 输入: m = 7, n = 3 输出: 28 class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # m是纵，n是横 # 保持递归中间结果 tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) # 递归调用 return self.myAns(m, n, tmp) def myAns(self, m, n, tmp): # 出界认为是0 if (m &lt;= 0) | (n &lt;= 0): return 0 # 起点 if (m == 1) &amp; (n == 1): return 1 # 已经递归过直接返回 if tmp[n][m] != -1: return tmp[n][m] # 由结果往回走，左边部分，上边部分 left = self.myAns(m-1, n, tmp) up = self.myAns(m, n-1, tmp) # 保持结果 tmp[n][m] = left + up # 返回 return tmp[n][m] 思路1(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0； 保持递归过程的中间值； class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # 递推解法 tmp = [] for i in range(n+1): tmp.append([0]*(m+1)) tmp[1][1] = 1 for y in range(1, n+1): for x in range(1, m+1): if (x==1) &amp; (y==1): continue tmp[y][x] = tmp[y-1][x] + tmp[y][x-1] return tmp[n][m] 思路2(递推解法) 与递归相反，从上到下，递推求解；]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 爬楼梯]]></title>
-    <url>%2F2017%2F07%2F05%2F%E7%88%AC%E6%A5%BC%E6%A2%AF%2F</url>
-    <content type="text"><![CDATA[假设你正在爬楼梯。需要 n 步你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 输入： 2 输出： 2 解释： 有两种方法可以爬到楼顶。 1 步 + 1 步 2 步 示例 2： 输入： 3 输出： 3 解释： 有三种方法可以爬到楼顶。 1 步 + 1 步 + 1 步 1 步 + 2 步 2 步 + 1 步 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [0]*(n+1) tmp[0] = 1 tmp[1] = 1 for i in range(2, n+1): tmp[i] = tmp[i-1] + tmp[i-2] return tmp[n] 思路1(递推法求解) 首先求得递推公式 F(n) = F(n-1) + F(n-2) 实现 class Solution: def get_value(self, n, tmp): if n &lt;= 1: return 1 # 如果记忆过，则直接返回值 if tmp[n] != -1: return tmp[n] # 否则重新计算 tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp) return tmp[n] def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [-1]*(n+1) return self.get_value(n, tmp) 思路2(记忆性递归) 递推公式 F(n) = F(n-1) + F(n-2) 递归实现 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; first = 1 second = 1 cur = 1 for i in range(2, n+1): cur = first + second first = second second= cur return cur 思路3 使用两个变量保存前两个值]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 买卖股票的最佳时机]]></title>
-    <url>%2F2017%2F07%2F05%2F%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%2F</url>
-    <content type="text"><![CDATA[给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。 示例 2: 输入: [7,6,4,3,1] 输出: 0 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。 思路 遍历过程中记录最低股价； 同时记录最高差价； class Solution: def maxProfit(self, prices): &quot;&quot;&quot; :type prices: List[int] :rtype: int &quot;&quot;&quot; res = 0 buy = float(&#39;inf&#39;) for v in prices: buy = min(buy, v) res = max(res, v-buy) return res]]></content>
+    <title><![CDATA[LeetCode - 最小路径和]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%2F</url>
+    <content type="text"><![CDATA[给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [ [1,3,1], [1,5,1], [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid[0]) n = len(grid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, grid, tmp) def myAns(self, m, n, grid, tmp): if (m &lt;= 0) | (n &lt;= 0): return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意 if (m == 1)&amp;(n == 1): return grid[0][0] if tmp[n][m] != -1: return tmp[n][m] tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1] return tmp[n][m] 思路1(递归解法) 从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小； 保持递归过程中的值 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid) n = len(grid[0]) for i in range(m):# 多少列 横轴 for j in range(n):# 多少行 纵轴 if (i==0)&amp;(j==0): continue elif i == 0: grid[i][j] += grid[i][j-1] elif j == 0: grid[i][j] += grid[i-1][j] else: grid[i][j] += min(grid[i-1][j], grid[i][j-1]) return grid[m-1][n-1]]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -871,9 +835,33 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[LeetCode - 爬楼梯]]></title>
+    <url>%2F2017%2F07%2F05%2F%E7%88%AC%E6%A5%BC%E6%A2%AF%2F</url>
+    <content type="text"><![CDATA[假设你正在爬楼梯。需要 n 步你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 输入： 2 输出： 2 解释： 有两种方法可以爬到楼顶。 1 步 + 1 步 2 步 示例 2： 输入： 3 输出： 3 解释： 有三种方法可以爬到楼顶。 1 步 + 1 步 + 1 步 1 步 + 2 步 2 步 + 1 步 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [0]*(n+1) tmp[0] = 1 tmp[1] = 1 for i in range(2, n+1): tmp[i] = tmp[i-1] + tmp[i-2] return tmp[n] 思路1(递推法求解) 首先求得递推公式 F(n) = F(n-1) + F(n-2) 实现 class Solution: def get_value(self, n, tmp): if n &lt;= 1: return 1 # 如果记忆过，则直接返回值 if tmp[n] != -1: return tmp[n] # 否则重新计算 tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp) return tmp[n] def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [-1]*(n+1) return self.get_value(n, tmp) 思路2(记忆性递归) 递推公式 F(n) = F(n-1) + F(n-2) 递归实现 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; first = 1 second = 1 cur = 1 for i in range(2, n+1): cur = first + second first = second second= cur return cur 思路3 使用两个变量保存前两个值]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LeetCode - 不同路径]]></title>
-    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%842%2F</url>
-    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？ 网格中的障碍物和空位置分别用 1 和 0 来表示。 说明：m 和 n 的值均不超过 100。 示例 1: 输入: [ [0,0,0], [0,1,0], [0,0,0]] 输出: 2 解释: 3x3 网格的正中间有一个障碍物。 从左上角到右下角一共有 2 条不同的路径： 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右 class Solution: def uniquePathsWithObstacles(self, obstacleGrid): &quot;&quot;&quot; :type obstacleGrid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(obstacleGrid[0]) n = len(obstacleGrid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, tmp, obstacleGrid) def myAns(self, m, n, tmp, obstacleGrid): if (m &lt;= 0) | (n &lt;= 0): return 0 if (m == 1) &amp; (n == 1): return 1 - obstacleGrid[0][0] if tmp[n][m] != -1: return tmp[n][m] # 障碍物的路径数为0 if obstacleGrid[n-1][m-1] == 1: tmp[n][m] = 0 else: # 左边路径数 left = self.myAns(m-1, n, tmp, obstacleGrid) # 上边路径数 up = self.myAns(m, n-1, tmp, obstacleGrid) tmp[n][m] = left + up return tmp[n][m] 思路(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；障碍点也认为是0； 保持递归过程的中间值；]]></content>
+    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84%2F</url>
+    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 问总共有多少条不同的路径？ 例如，上图是一个7 x 3 的网格。有多少可能的路径？ 说明：m 和 n 的值均不超过 100。 示例 1: 输入: m = 3, n = 2 输出: 3 解释: 从左上角开始，总共有 3 条路径可以到达右下角。 向右 -&gt; 向右 -&gt; 向下 向右 -&gt; 向下 -&gt; 向右 向下 -&gt; 向右 -&gt; 向右 示例 2: 输入: m = 7, n = 3 输出: 28 class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # m是纵，n是横 # 保持递归中间结果 tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) # 递归调用 return self.myAns(m, n, tmp) def myAns(self, m, n, tmp): # 出界认为是0 if (m &lt;= 0) | (n &lt;= 0): return 0 # 起点 if (m == 1) &amp; (n == 1): return 1 # 已经递归过直接返回 if tmp[n][m] != -1: return tmp[n][m] # 由结果往回走，左边部分，上边部分 left = self.myAns(m-1, n, tmp) up = self.myAns(m, n-1, tmp) # 保持结果 tmp[n][m] = left + up # 返回 return tmp[n][m] 思路1(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0； 保持递归过程的中间值； class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # 递推解法 tmp = [] for i in range(n+1): tmp.append([0]*(m+1)) tmp[1][1] = 1 for y in range(1, n+1): for x in range(1, m+1): if (x==1) &amp; (y==1): continue tmp[y][x] = tmp[y-1][x] + tmp[y][x-1] return tmp[n][m] 思路2(递推解法) 与递归相反，从上到下，递推求解；]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 汉明距离]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB%2F</url>
+    <content type="text"><![CDATA[两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &lt; 231. 示例: 输入: x = 1, y = 4 输出: 2 解释: 1 (0 0 0 1) 4 (0 1 0 0) ↑ ↑ 上面的箭头指出了对应二进制位不同的位置。 class Solution(object): def hammingDistance(self, x, y): &quot;&quot;&quot; :type x: int :type y: int :rtype: int &quot;&quot;&quot; bx = [v for v in bin(x)[2:]] by = [v for v in bin(y)[2:]] bx.reverse() by.reverse() i = 0; cnt = 0 while (i&lt;len(bx))&amp;(i&lt;len(by)): if bx[i] != by[i]: cnt += 1 i += 1 if len(bx)&gt;i: cnt += bx[i:].count(&#39;1&#39;) if len(by)&gt;i: cnt += by[i:].count(&#39;1&#39;) return cnt # return bin(x^y).count(&#39;1&#39;)]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -895,9 +883,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 解码方法]]></title>
-    <url>%2F2017%2F07%2F05%2F%E8%A7%A3%E7%A0%81%E6%96%B9%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[一条包含字母 A-Z 的消息通过以下方式进行了编码： &#39;A&#39; -&gt; 1 &#39;B&#39; -&gt; 2 ... &#39;Z&#39; -&gt; 26 给定一个只包含数字的非空字符串，请计算解码方法的总数。 示例 1: 输入: &quot;12&quot; 输出: 2 解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。 示例 2: 输入: &quot;226&quot; 输出: 3 解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。 class Solution: def numDecodings(self, s): &quot;&quot;&quot; :type s: str :rtype: int &quot;&quot;&quot; if len(s) == 0: return 0 d = {} d[&quot;&quot;] = 1 return self.ways(s,d) # 记忆形递归 def ways(self, s, d): # 已经计算过 if s in d.keys(): return d[s] # 首位为0不可解码 if s[0] == &#39;0&#39;: return 0 # 长度为1 if len(s) == 1: return 1 # 去掉一位后的子问题 first = self.ways(s[1:], d) # 去掉第一位 tmp = int(s[:2]) # 看看前两位是否符合解码标准 # 去掉两位后的子问题 if (tmp &gt; 9)&amp;(tmp &lt;= 26): first += self.ways(s[2:], d) d[s] = first return first]]></content>
+    <title><![CDATA[LeetCode - 买卖股票的最佳时机]]></title>
+    <url>%2F2017%2F07%2F05%2F%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%2F</url>
+    <content type="text"><![CDATA[给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。 示例 2: 输入: [7,6,4,3,1] 输出: 0 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。 思路 遍历过程中记录最低股价； 同时记录最高差价； class Solution: def maxProfit(self, prices): &quot;&quot;&quot; :type prices: List[int] :rtype: int &quot;&quot;&quot; res = 0 buy = float(&#39;inf&#39;) for v in prices: buy = min(buy, v) res = max(res, v-buy) return res]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -907,9 +895,33 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 最小路径和]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%2F</url>
-    <content type="text"><![CDATA[给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [ [1,3,1], [1,5,1], [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid[0]) n = len(grid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, grid, tmp) def myAns(self, m, n, grid, tmp): if (m &lt;= 0) | (n &lt;= 0): return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意 if (m == 1)&amp;(n == 1): return grid[0][0] if tmp[n][m] != -1: return tmp[n][m] tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1] return tmp[n][m] 思路1(递归解法) 从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小； 保持递归过程中的值 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid) n = len(grid[0]) for i in range(m):# 多少列 横轴 for j in range(n):# 多少行 纵轴 if (i==0)&amp;(j==0): continue elif i == 0: grid[i][j] += grid[i][j-1] elif j == 0: grid[i][j] += grid[i-1][j] else: grid[i][j] += min(grid[i-1][j], grid[i][j-1]) return grid[m-1][n-1]]]></content>
+    <title><![CDATA[LeetCode - 编辑距离]]></title>
+    <url>%2F2017%2F07%2F05%2F%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB%2F</url>
+    <content type="text"><![CDATA[给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作： 插入一个字符 删除一个字符 替换一个字符 示例 1: 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot; 输出: 3 解释: horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;) rorse -&gt; rose (删除 &#39;r&#39;) rose -&gt; ros (删除 &#39;e&#39;) 示例 2: 输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot; 输出: 5 解释: intention -&gt; inention (删除 &#39;t&#39;) inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;) enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;) exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;) exection -&gt; execution (插入 &#39;u&#39;) class Solution: def minDistance(self, word1, word2): &quot;&quot;&quot; :type word1: str :type word2: str :rtype: int &quot;&quot;&quot; l1 = len(word1) l2 = len(word2) tmp = [] for i in range(l1+1): tmp.append([-1]*(l2+1)) return self.myMethod(word1, word2, l1, l2, tmp) def myMethod(self, word1, word2, l1, l2, tmp): if l1 == 0: return l2 if l2 == 0: return l1 if tmp[l1][l2] != -1: return tmp[l1][l2] if word1[l1-1] == word2[l2-1]: res = self.myMethod(word1,word2, l1-1, l2-1, tmp) else: res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp), min(self.myMethod(word1, word2, l1 - 1, l2, tmp), self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1 tmp[l1][l2] = res return res 思路 最后一位如果相等，则去掉后求子问题； 如不等，则至少需要一步，然后分情况讨论：]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 不同路径]]></title>
+    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%842%2F</url>
+    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？ 网格中的障碍物和空位置分别用 1 和 0 来表示。 说明：m 和 n 的值均不超过 100。 示例 1: 输入: [ [0,0,0], [0,1,0], [0,0,0]] 输出: 2 解释: 3x3 网格的正中间有一个障碍物。 从左上角到右下角一共有 2 条不同的路径： 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右 class Solution: def uniquePathsWithObstacles(self, obstacleGrid): &quot;&quot;&quot; :type obstacleGrid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(obstacleGrid[0]) n = len(obstacleGrid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, tmp, obstacleGrid) def myAns(self, m, n, tmp, obstacleGrid): if (m &lt;= 0) | (n &lt;= 0): return 0 if (m == 1) &amp; (n == 1): return 1 - obstacleGrid[0][0] if tmp[n][m] != -1: return tmp[n][m] # 障碍物的路径数为0 if obstacleGrid[n-1][m-1] == 1: tmp[n][m] = 0 else: # 左边路径数 left = self.myAns(m-1, n, tmp, obstacleGrid) # 上边路径数 up = self.myAns(m, n-1, tmp, obstacleGrid) tmp[n][m] = left + up return tmp[n][m] 思路(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；障碍点也认为是0； 保持递归过程的中间值；]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 解码方法]]></title>
+    <url>%2F2017%2F07%2F05%2F%E8%A7%A3%E7%A0%81%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[一条包含字母 A-Z 的消息通过以下方式进行了编码： &#39;A&#39; -&gt; 1 &#39;B&#39; -&gt; 2 ... &#39;Z&#39; -&gt; 26 给定一个只包含数字的非空字符串，请计算解码方法的总数。 示例 1: 输入: &quot;12&quot; 输出: 2 解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。 示例 2: 输入: &quot;226&quot; 输出: 3 解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。 class Solution: def numDecodings(self, s): &quot;&quot;&quot; :type s: str :rtype: int &quot;&quot;&quot; if len(s) == 0: return 0 d = {} d[&quot;&quot;] = 1 return self.ways(s,d) # 记忆形递归 def ways(self, s, d): # 已经计算过 if s in d.keys(): return d[s] # 首位为0不可解码 if s[0] == &#39;0&#39;: return 0 # 长度为1 if len(s) == 1: return 1 # 去掉一位后的子问题 first = self.ways(s[1:], d) # 去掉第一位 tmp = int(s[:2]) # 看看前两位是否符合解码标准 # 去掉两位后的子问题 if (tmp &gt; 9)&amp;(tmp &lt;= 26): first += self.ways(s[2:], d) d[s] = first return first]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -931,16 +943,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Leetcode 20 Valid Parentheses]]></title>
-    <url>%2F2017%2F07%2F03%2FValidParentheses%2F</url>
-    <content type="text"><![CDATA[LeetCode 20.Valid Parentheses问题如下： Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid. The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not. 仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。 typedef struct{ int *base;//栈底指针 int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置 int stackSize;//栈长度 }SqStack;//定义结构体 int Push(SqStack *S,int e) { *(*S).top++ = e;//入栈操作 return 1; } int Pop(SqStack *S, int *e) { *e = *--(*S).top;//出栈 return 1; } int StackEmpty(SqStack S) { return S.top == S.base;//栈空 } bool isValid(char* s) { if(s==NULL) return true; SqStack S; int N = strlen(s); if(N==1) return false; if(N%2) return false; S.base = (int *)malloc(N*sizeof(int));//分配空间 S.top = S.base;//空栈，栈顶指针等于栈底指针 S.stackSize = N;//栈长度，本例中，假设不会超过初始长度 int table[128] = { 10 }; int e=0; table[&#39;(&#39;] = &#39;)&#39;; table[&#39;{&#39;] = &#39;}&#39;; table[&#39;[&#39;] = &#39;]&#39;; table[&#39;]&#39;] = &#39;-&#39;; table[&#39;}&#39;] = &#39;-&#39;; table[&#39;)&#39;] = &#39;-&#39;; for (int i = 0; i &lt; N; i++) { if (!StackEmpty(S)) { Pop(&amp;S, &amp;e); if (table[e] == s[i]) { continue; } else Push(&amp;S, e); } if (table[s[i]] == s[i + 1]) { i++; continue; } else { Push(&amp;S, s[i]); } } int result = StackEmpty(S); free(S.base); return result; }]]></content>
+    <title><![CDATA[LeetCode - 环形链表]]></title>
+    <url>%2F2017%2F07%2F03%2F%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[给定一个链表，判断链表中是否有环。 进阶：你能否不使用额外空间解决此题？ # Definition for singly-linked list. # class ListNode(object): # def __init__(self, x): # self.val = x # self.next = None class Solution(object): def hasCycle(self, head): &quot;&quot;&quot; :type head: ListNode :rtype: bool &quot;&quot;&quot; firstPtr = head secondPtr = head while firstPtr != None: secondPtr = secondPtr.next firstPtr = firstPtr.next # 快指针不为空 if firstPtr != None: firstPtr = firstPtr.next # 快慢指针相遇 if firstPtr == secondPtr: break if firstPtr == None: return False # 无环 else: return True # 有环 思路利用快慢指针，快指针每次移动两步，慢指针每次移动一步。相遇时且不为None, 说明有环，且相遇地点就是环的入口。]]></content>
       <categories>
         <category>编程</category>
-        <category>C</category>
       </categories>
       <tags>
-        <tag>C</tag>
-        <tag>算法</tag>
+        <tag>python</tag>
         <tag>Leetcode</tag>
       </tags>
   </entry>
@@ -957,14 +967,16 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 环形链表]]></title>
-    <url>%2F2017%2F07%2F03%2F%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8%2F</url>
-    <content type="text"><![CDATA[给定一个链表，判断链表中是否有环。 进阶：你能否不使用额外空间解决此题？ # Definition for singly-linked list. # class ListNode(object): # def __init__(self, x): # self.val = x # self.next = None class Solution(object): def hasCycle(self, head): &quot;&quot;&quot; :type head: ListNode :rtype: bool &quot;&quot;&quot; firstPtr = head secondPtr = head while firstPtr != None: secondPtr = secondPtr.next firstPtr = firstPtr.next # 快指针不为空 if firstPtr != None: firstPtr = firstPtr.next # 快慢指针相遇 if firstPtr == secondPtr: break if firstPtr == None: return False # 无环 else: return True # 有环 思路利用快慢指针，快指针每次移动两步，慢指针每次移动一步。相遇时且不为None, 说明有环，且相遇地点就是环的入口。]]></content>
+    <title><![CDATA[Leetcode 20 Valid Parentheses]]></title>
+    <url>%2F2017%2F07%2F03%2FValidParentheses%2F</url>
+    <content type="text"><![CDATA[LeetCode 20.Valid Parentheses问题如下： Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid. The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not. 仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。 typedef struct{ int *base;//栈底指针 int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置 int stackSize;//栈长度 }SqStack;//定义结构体 int Push(SqStack *S,int e) { *(*S).top++ = e;//入栈操作 return 1; } int Pop(SqStack *S, int *e) { *e = *--(*S).top;//出栈 return 1; } int StackEmpty(SqStack S) { return S.top == S.base;//栈空 } bool isValid(char* s) { if(s==NULL) return true; SqStack S; int N = strlen(s); if(N==1) return false; if(N%2) return false; S.base = (int *)malloc(N*sizeof(int));//分配空间 S.top = S.base;//空栈，栈顶指针等于栈底指针 S.stackSize = N;//栈长度，本例中，假设不会超过初始长度 int table[128] = { 10 }; int e=0; table[&#39;(&#39;] = &#39;)&#39;; table[&#39;{&#39;] = &#39;}&#39;; table[&#39;[&#39;] = &#39;]&#39;; table[&#39;]&#39;] = &#39;-&#39;; table[&#39;}&#39;] = &#39;-&#39;; table[&#39;)&#39;] = &#39;-&#39;; for (int i = 0; i &lt; N; i++) { if (!StackEmpty(S)) { Pop(&amp;S, &amp;e); if (table[e] == s[i]) { continue; } else Push(&amp;S, e); } if (table[s[i]] == s[i + 1]) { i++; continue; } else { Push(&amp;S, s[i]); } } int result = StackEmpty(S); free(S.base); return result; }]]></content>
       <categories>
         <category>编程</category>
+        <category>C</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>C</tag>
+        <tag>算法</tag>
         <tag>Leetcode</tag>
       </tags>
   </entry>
@@ -980,17 +992,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Chrome浏览器总是崩溃的一种解决办法]]></title>
-    <url>%2F2017%2F06%2F28%2Fchromefiex%2F</url>
-    <content type="text"><![CDATA[更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。 原因在于C:\Windows\System32\drivers\bd0001.sys这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！ bd0001.sys不知道是不是百度干的，好无耻~]]></content>
-      <categories>
-        <category>电脑</category>
-      </categories>
-      <tags>
-        <tag>computer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[快速整数平方根算法]]></title>
     <url>%2F2017%2F06%2F28%2FFastSqrt%2F</url>
     <content type="text"><![CDATA[LeetCode 69.Sqrt(x)问题如下： Implement int sqrt(int x).Compute and return the square root of x. 其实意思就是对于一个32位无符号整数，找到一个16位无符号整数，使满足n^2≤v的n最大。相应的可以写作下式： 关键在于a_i 的确定，使用迭代求导算法，不需要乘法，只简单的使用加法和移位操作。方便起见，定义 则(1)可以表示为 根据参考文章3得到一个非常简便的算法，3ms. 代码如下： int Sqrt(int v) { unsigned long temp, nHat = 0, b = 0x8000, bshft = 15; do{ if (v &gt;= (temp = (((nHat &lt;&lt; 1) + b) &lt;&lt; bshft--))) { nHat += b; v -= temp; } } while (b &gt;&gt;= 1); return nHat; } 参考文章 https://wapwenku.baidu.com/view/53e2d77b168884868762d6fb.html?pn=3&amp;pu=usm@1,sz@320_1002,ta@iphone_2_7.0_2_6.6 http://www.cnblogs.com/nsnow/archive/2010/08/09/1796111.html http://www.azillionmonkeys.com/qed/ulerysqroot.pdf]]></content>
@@ -1000,6 +1001,17 @@
       <tags>
         <tag>C</tag>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Chrome浏览器总是崩溃的一种解决办法]]></title>
+    <url>%2F2017%2F06%2F28%2Fchromefiex%2F</url>
+    <content type="text"><![CDATA[更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。 原因在于C:\Windows\System32\drivers\bd0001.sys这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！ bd0001.sys不知道是不是百度干的，好无耻~]]></content>
+      <categories>
+        <category>电脑</category>
+      </categories>
+      <tags>
+        <tag>computer</tag>
       </tags>
   </entry>
   <entry>
@@ -1026,9 +1038,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[二分查找]]></title>
-    <url>%2F2016%2F09%2F01%2F%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%2F</url>
-    <content type="text"><![CDATA[问题给一个有序递增数组&amp;一个给定值，二分查找给定值在数组中的位置。 C代码// 二分查找递增数组 int findValue(int A[], int N, int val) { int low = 0, high = N - 1; while (low &lt;= high) { int mid = (low + high) / 2; if (A[mid] &gt; val) high = mid - 1; else if (A[mid] &lt; val) low = mid + 1; else return mid; } return -1; // 没有找到 }]]></content>
+    <title><![CDATA[merge两个有序线性表]]></title>
+    <url>%2F2016%2F09%2F01%2FmergeList%2F</url>
+    <content type="text"><![CDATA[问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C++代码// mergeList vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b) { vector&lt;int&gt; c; int i = 0, j = 0, aLen = a.size(), bLen = b.size(); while ((i &lt; aLen) &amp;&amp; (j &lt; bLen)) { if (a[i] &gt; b[j]) { c.push_back(b[j]); j++; } else { c.push_back(a[i]); i++; } } while (i &lt; aLen) { c.push_back(a[i]); i++; } while (j &lt; bLen) { c.push_back(b[j]); j++; } return c; } C代码(有序链表的合并)typedef struct Node *PtrToNode; typedef int ElementType; struct Node { ElementType Data; PtrToNode Next; }; typedef PtrToNode List; List Merge(List L1, List L2) { List L3 = (List)malloc(sizeof(struct Node)); List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3; while (p1 &amp;&amp; p2) { if (p1-&gt;Data &gt; p2-&gt;Data) { p3-&gt;Next = p2; p3 = p2; p2 = p2-&gt;Next; } else { p3-&gt;Next = p1; p3 = p1; p1 = p1-&gt;Next; } } p3-&gt;Next = p1 ? p1 : p2; L1-&gt;Next = NULL; L2-&gt;Next = NULL; return L3; } 分析时间复杂度为\(O(length(LA) + length(LB))\).]]></content>
       <categories>
         <category>数据结构</category>
       </categories>
@@ -1048,9 +1060,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[merge两个有序线性表]]></title>
-    <url>%2F2016%2F09%2F01%2FmergeList%2F</url>
-    <content type="text"><![CDATA[问题已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。 C++代码// mergeList vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b) { vector&lt;int&gt; c; int i = 0, j = 0, aLen = a.size(), bLen = b.size(); while ((i &lt; aLen) &amp;&amp; (j &lt; bLen)) { if (a[i] &gt; b[j]) { c.push_back(b[j]); j++; } else { c.push_back(a[i]); i++; } } while (i &lt; aLen) { c.push_back(a[i]); i++; } while (j &lt; bLen) { c.push_back(b[j]); j++; } return c; } C代码(有序链表的合并)typedef struct Node *PtrToNode; typedef int ElementType; struct Node { ElementType Data; PtrToNode Next; }; typedef PtrToNode List; List Merge(List L1, List L2) { List L3 = (List)malloc(sizeof(struct Node)); List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3; while (p1 &amp;&amp; p2) { if (p1-&gt;Data &gt; p2-&gt;Data) { p3-&gt;Next = p2; p3 = p2; p2 = p2-&gt;Next; } else { p3-&gt;Next = p1; p3 = p1; p1 = p1-&gt;Next; } } p3-&gt;Next = p1 ? p1 : p2; L1-&gt;Next = NULL; L2-&gt;Next = NULL; return L3; } 分析时间复杂度为\(O(length(LA) + length(LB))\).]]></content>
+    <title><![CDATA[二分查找]]></title>
+    <url>%2F2016%2F09%2F01%2F%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%2F</url>
+    <content type="text"><![CDATA[问题给一个有序递增数组&amp;一个给定值，二分查找给定值在数组中的位置。 C代码// 二分查找递增数组 int findValue(int A[], int N, int val) { int low = 0, high = N - 1; while (low &lt;= high) { int mid = (low + high) / 2; if (A[mid] &gt; val) high = mid - 1; else if (A[mid] &lt; val) low = mid + 1; else return mid; } return -1; // 没有找到 }]]></content>
       <categories>
         <category>数据结构</category>
       </categories>

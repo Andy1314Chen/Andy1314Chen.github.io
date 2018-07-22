@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/07/05/%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB/</loc>
+    <lastmod>2018-07-22T08:00:13.406Z</lastmod>
+    <data>
+        <display>
+        <title>LeetCode - 汉明距离</title>
+        <pubTime>2017-07-04T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>Leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/05/Fizz%20Buzz/</loc>
     <lastmod>2018-07-22T07:36:20.335Z</lastmod>
     <data>
@@ -1659,11 +1681,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
          
            
@@ -1685,9 +1707,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
          
            
@@ -1821,9 +1843,9 @@
         <title>数据科学的完整学习路径【转】</title>
         <pubTime>2017-07-11T16:00:00.000Z</pubTime>
         
-        <tag>python</tag>
-         
         <tag>AI</tag>
+         
+        <tag>python</tag>
          
          
            
