@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/Hands-on第二章学习笔记(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/09/网易一道算法题/" itemprop="url">网易校招一道算法题</a></h1>
+                <a class="post-title-link" href="/2017/09/09/Hands-on第二章学习笔记(1)/" itemprop="url">Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(1)</a></h1>
         
 
         <div class="post-meta">
@@ -357,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -395,77 +395,169 @@
       
         
           
-            <p>题目是：</p>
-<pre><code>小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行
-，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标
-(x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪
-物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。
+            <h2 id="Chapter-2-End-to-End-Machine-Learning-Project"><a href="#Chapter-2-End-to-End-Machine-Learning-Project" class="headerlink" title="Chapter 2  End-to-End Machine Learning Project"></a>Chapter 2  End-to-End Machine Learning Project</h2><p>主要内容：</p>
+<ul>
+<li>Look at the big picture</li>
+<li>Get the data</li>
+<li>Discover and visualize the data to gain insights</li>
+<li>Prepare the data for Machine Learning algorithms</li>
+<li>Select a model and train it </li>
+<li>Fine-tune your model </li>
+<li>Present your solution</li>
+<li>Launch, monitor, and maintain your system</li>
+</ul>
+<h4 id="Pipelines"><a href="#Pipelines" class="headerlink" title="Pipelines"></a>Pipelines</h4><p>A sequence of data processing components  is called a data pipeline.</p>
+<p>一系列数据处理组件被称为pipeline.</p>
+<h4 id="Create-a-Test-Set"><a href="#Create-a-Test-Set" class="headerlink" title="Create a Test Set"></a>Create a Test Set</h4><p>通常从dataset中随机抽取出20%放在一边作为测试集。</p>
+<pre><code>import numpy as np
+# 注意确定随机数的种子，以便后期复现
+np.random.seed(42)
 
-1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。
+def split_train_test(data, test_ratio):
+    shuffled_indices = np.random.permutation(len(data))
+    test_set_size = int(len(data) * test_ratio)
+    test_indices = shuffled_indices[:test_set_size]
+    train_indices = shuffled_indices[test_set_size:]
+    return data.iloc[train_indices], data.iloc[test_indices]
 
-2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。
+train_set, test_set = split_train_test(housing, 0.2)
+print(len(train_set), &#39;train +&#39;, len(test_set), &#39;test&#39;)
 
-小易要进行一次射击，小易在进行射击前，可以使用这两种特权
+# sklearn库中也有对应的函数
+from sklearn.model_selection import train_test_split
 
-操作任意次。
+train_set, test_set = train_test_split(housing, test_size=0.2, 
+                                            random_state=42)
+</code></pre><p>有时候，test set的划分也不是完全随机的，在数据集非常大时，没有问题。但小数据时，应该保证与原始大环境同分布，避免采样偏差。</p>
+<pre><code>housing[&#39;income_cat&#39;] = np.ceil(housing[&#39;median_income&#39;] / 1.5)
+housing[&#39;income_cat&#39;].where(housing[&#39;income_cat&#39;] &lt; 5, 5.0, inplace=True)
 
-小易想知道在他射击的时候最多可以同时消灭多少只怪物。
-</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0427/141746_2boq_3454401.png" alt=""></p>
-<p>看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。</p>
-<p>想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。</p>
-<p>真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。</p>
-<p>后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1；</p>
-<p>C++代码如下：</p>
-<pre><code>作者：雨baby
-链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2
-来源：牛客网
+# 分层采样(stratified sampling)
+from sklearn.model_selection import StratifiedShuffleSplit
 
-#include &lt;bits/stdc++.h&gt;
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+for train_index, test_index in split.split(housing, housing[&#39;income_cat&#39;]):
+    strat_train_set = housing.loc[train_index]
+    strat_test_set = housing.loc[test_index]
+</code></pre><h4 id="Discover-and-Visualize-the-Data-to-Gain-Insights"><a href="#Discover-and-Visualize-the-Data-to-Gain-Insights" class="headerlink" title="Discover and Visualize the Data to Gain Insights"></a>Discover and Visualize the Data to Gain Insights</h4><pre><code># 创建副本
+housing = strat_train_set.copy()
+housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;)
+</code></pre><p>The radius of each circle represents the district’s population (option s), and the color represents the price (option c). We will use a predefined color map (option cmap) called jet, which ranges from blue (low values) to red (high prices).</p>
+<pre><code>housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;, alpha=0.4,
+    s=housing[&#39;population&#39;]/100, label=&#39;population&#39;,
+    c=&#39;median_house_value&#39;, cmap=plt.get_cmap(&#39;jet&#39;), colorbar=True)
+plt.legend()
+</code></pre><p><img src="https://i.imgur.com/YeTsaDK.png" alt="California housing prices"></p>
+<pre><code># 相关系数或者说Pearsons&#39;r系数
+corr_matrix = housing.corr()
+corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False)
 
-using namespace std;
+from pandas.tools.plotting import scatter_matrix
 
-const int maxn = 50 + 5;
+attributes = [&#39;median_house_value&#39;,&#39;median_income&#39;,&#39;total_rooms&#39;,
+&#39;housing_median_age&#39;]
+scatter_matrix(housing[attributes], figsize=(12,8))
+</code></pre><p><img src="https://i.imgur.com/QgLzjhz.png" alt="scatter_matrix"></p>
+<h4 id="Experimenting-with-Attribute-Combinations"><a href="#Experimenting-with-Attribute-Combinations" class="headerlink" title="Experimenting with Attribute Combinations"></a>Experimenting with Attribute Combinations</h4><pre><code>housing[&#39;rooms_per_household&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;households&#39;]
+housing[&#39;bedrooms_per_room&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;total_rooms&#39;]
+housing[&#39;population_per_household&#39;] = housing[&#39;population&#39;]/housing[&#39;households&#39;]
 
-int x[maxn], y[maxn];
-int n;
-int solve() {
-    if(n &lt;= 2) return n;
-    int res = 1;
-    for(int i = 0; i &lt; n; i++) {
-        for(int j = 0; j &lt; n; j++) {
-            if(i != j) {
-                int dx1 = x[j] - x[i];
-                int dy1 = y[j] - y[i];
-                for(int k = 0; k &lt; n; k++) {
-                    int cnt = 0;
-                    if(i != k &amp;&amp; j != k) {
-                        for(int r = 0; r &lt; n; r++) {
-                            int dx2 = x[r] - x[i];
-                            int dy2 = y[r] - y[i];
-                            if(dy1 * dx2 == dy2 * dx1) {
-                                cnt++;
-                            } else {
-                                dx2 = x[r] - x[k];
-                                dy2 = y[r] - y[k];
-                                if(dy1 * dy2 == -dx2 * dx1) {
-                                    cnt++;
-                                }
-                            }
-                        }
-                    }
-                    res = max(res, cnt);
-                }
-            }
-        }
-    }
-    return res;
-}
-int main() {
-    cin &gt;&gt; n;
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i];
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i];
-    cout &lt;&lt; solve() &lt;&lt; endl;
-}
+corr_matrix = housing.corr()
+corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False)
+</code></pre><h4 id="Data-Cleaning"><a href="#Data-Cleaning" class="headerlink" title="Data Cleaning"></a>Data Cleaning</h4><p>对于缺失值，有3种处理办法</p>
+<ul>
+<li>Get rid of the corresponding districts(丢弃该条样本)</li>
+<li>Get rid of the whole attribute(丢弃整个列)</li>
+<li><p>Set the values to some value (zero, the mean, the median, etc.).(填充均值、中位数)</p>
+<p>  from sklearn.preprocessing import Imputer</p>
+<p>  imputer = Imputer(strategy=’median’)<br>  housing_num = housing.drop(‘ocean_proximity’, axis=1)<br>  imputer.fit(housing_num)</p>
+<p>  X = imputer.transform(housing_num)<br>  housing_tr = pd.DataFrame(X, columns = housing_num.columns)</p>
+</li>
+</ul>
+<h4 id="Handling-Text-and-Categorical-Attributes"><a href="#Handling-Text-and-Categorical-Attributes" class="headerlink" title="Handling Text and Categorical Attributes"></a>Handling Text and Categorical Attributes</h4><pre><code>from sklearn.preprocessing import LabelEncoder
+
+encoder = LabelEncoder()
+housing_cat = housing[&#39;ocean_proximity&#39;]
+housing_cat_encoded = encoder.fit_transform(housing_cat)
+housing_cat_encoded
+
+from sklearn.preprocessing import OneHotEncoder
+
+encoder = OneHotEncoder()
+housing_cat_1hot = encoder.fit_transform(housing_cat_encoded.reshape(-1,1))
+housing_cat_1hot.toarray()
+
+from sklearn.preprocessing import LabelBinarizer
+encoder = LabelBinarizer()
+housing_cat_1hot = encoder.fit_transform(housing_cat)
+housing_cat_1hot
+</code></pre><h4 id="Custom-Transformers"><a href="#Custom-Transformers" class="headerlink" title="Custom Transformers"></a>Custom Transformers</h4><pre><code>from sklearn.base import BaseEstimator, TransformerMixin
+
+rooms_ix, bedrooms_ix, population_ix, household_ix = 3, 4, 5, 6
+class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
+    def __init__(self, add_bedrooms_per_room = True):
+        self.add_bedrooms_per_room = add_bedrooms_per_room
+    def fit(self, X, y=None):
+        return self
+    def transform(self, X, y=None):
+        rooms_per_household = X[:, rooms_ix] / X[:, household_ix]
+        population_per_household = X[:, population_ix] / X[:, household_ix]
+    if self.add_bedrooms_per_room:
+        bedrooms_per_room = X[:, bedrooms_ix] / X[:, rooms_ix]
+        return np.c_[X, rooms_per_household, population_per_household,
+                                        bedrooms_per_room]
+    else:
+        return np.c_[X, rooms_per_household, population_per_household]
+
+attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False)
+housing_extra_attribs = attr_adder.transform(housing.values)
+</code></pre><h4 id="Feature-Scaling"><a href="#Feature-Scaling" class="headerlink" title="Feature Scaling"></a>Feature Scaling</h4><p>通常有两种方式进行特征缩放，<strong>min-max scaling, standardization</strong></p>
+<ol>
+<li>Min-max scaling(normalization):</li>
+</ol>
+<p>\( \frac {x-min}{max-min} \)</p>
+<ol>
+<li>Standardization:</li>
+</ol>
+<p>\( \frac {x-mean}{variance} \)</p>
+<pre><code>from sklearn.base import BaseEstimator, TransformerMixin
+
+class DataFrameSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, attribute_names):
+        self.attribute_names = attribute_names
+    def fit(self, X, y=None):
+        return self
+    def transform(self, X):
+        return X[self.attribute_names].values
+
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+num_pipeline = Pipeline([
+    (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)),
+    (&#39;attribs_adder&#39;, CombinedAttributesAdder()),
+    (&#39;std_scaler&#39;, StandardScaler()),
+])
+
+from sklearn.pipeline import FeatureUnion
+
+num_attribs = list(housing_num)
+cat_attribs = [&#39;ocean_proximity&#39;]
+
+num_pipeline = Pipeline([
+        (&#39;selector&#39;, DataFrameSelector(num_attribs)),
+        (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)),
+        (&#39;attribs_adder&#39;, CombinedAttributesAdder()),
+        (&#39;std_scaler&#39;, StandardScaler()),
+    ])
+cat_pipeline = Pipeline([    
+        (&#39;selector&#39;, DataFrameSelector(cat_attribs)),
+        (&#39;label_binarizer&#39;, LabelBinarizer()),
+    ])
+full_pipeline = FeatureUnion(trainsformer_list=[
+    (&#39;num_pipeline&#39;, num_pipeline),
+    (&#39;cat_pipeline&#39;, cat_pipeline),
+    ])
 </code></pre>
           
         
@@ -3556,7 +3648,7 @@ def feature_ranking(score):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-count">95</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
