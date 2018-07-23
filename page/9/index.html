@@ -301,6 +301,230 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/03/ValidParentheses/" itemprop="url">Leetcode 20 Valid Parentheses</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>LeetCode 20.Valid Parentheses问题如下：</p>
+<blockquote>
+<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.</p>
+<p>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
+</blockquote>
+<p>仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。</p>
+<pre><code>typedef struct{
+int *base;//栈底指针
+int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置
+int stackSize;//栈长度
+}SqStack;//定义结构体
+
+int Push(SqStack *S,int e)
+{
+    *(*S).top++ = e;//入栈操作
+    return 1;
+}
+
+int Pop(SqStack *S, int *e)
+{
+    *e = *--(*S).top;//出栈
+    return 1;
+}
+
+int StackEmpty(SqStack S)
+{
+    return S.top == S.base;//栈空
+}
+
+bool isValid(char* s) {
+if(s==NULL)
+    return true;
+SqStack S;
+int N = strlen(s);
+if(N==1)
+    return false;
+if(N%2)
+    return false;
+S.base = (int *)malloc(N*sizeof(int));//分配空间
+S.top = S.base;//空栈，栈顶指针等于栈底指针
+S.stackSize = N;//栈长度，本例中，假设不会超过初始长度
+
+int table[128] = { 10 };
+int e=0;
+table[&#39;(&#39;] = &#39;)&#39;;
+table[&#39;{&#39;] = &#39;}&#39;;
+table[&#39;[&#39;] = &#39;]&#39;;
+table[&#39;]&#39;] = &#39;-&#39;;
+table[&#39;}&#39;] = &#39;-&#39;;
+table[&#39;)&#39;] = &#39;-&#39;;
+for (int i = 0; i &lt; N; i++)
+{
+    if (!StackEmpty(S))
+    {
+        Pop(&amp;S, &amp;e);
+        if (table[e] == s[i])
+        {
+            continue;
+        }
+        else
+            Push(&amp;S, e);
+    }
+    if (table[s[i]] == s[i + 1])
+    {
+        i++;
+        continue;
+    }
+    else
+    {
+        Push(&amp;S, s[i]);
+    }
+}
+int result = StackEmpty(S);
+free(S.base);
+return result;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/环形链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1610,339 +1834,6 @@ A[A&lt;0.5]
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/一元多项式加法与乘法运算/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/一元多项式加法与乘法运算/" itemprop="url">一元多项式的乘法与加法运算</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>设计函数分别求两个一元多项式的乘积与和。</p>
-<h4 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h4><p>输入分2行，每行分别先给出多项式非零项的个数，再以指数递降方式输入一个多项式非零项系数和指数(绝对值均为不超过1000的整数).数字间以空格分隔。</p>
-<h4 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h4><p>输出分2行，分别以指数递降方式输出乘积多项式以及和多项式非零项的系数和指数。数字间以空格分隔，但结尾不能有多余空格。零多项式应输出为0 0.</p>
-<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-
-typedef struct PolyNode *Polynomial;
-// 多项式结构体
-struct PolyNode
-{
-    int coef;
-    int expon;
-    Polynomial link;
-};
-
-// 添加新节点
-void Attach(int c, int e, Polynomial *pRear)
-{
-    // Polynomial*表示指针的指针，
-    Polynomial P;
-
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;coef = c;
-    P-&gt;expon = e;
-    P-&gt;link = NULL;
-    (*pRear)-&gt;link = P;
-    // 指向单链表的尾部，
-    *pRear = P;
-}
-
-// 读入数据
-Polynomial ReadPoly()
-{
-    Polynomial P, Rear, t;
-    int c, e, N;
-    // 多项式非零项个数
-    scanf(&quot;%d&quot;, &amp;N);
-    // 链表头指针
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    // 链表尾指针，初始时，头指针和尾指针相同
-    Rear = P;
-    while (N--)
-    {
-        scanf(&quot;%d %d&quot;, &amp;c, &amp;e);
-        // 根据Rear尾指针，创建新节点，并连接在Rear后面，再移动Rear指向新节点
-        Attach(c, e, &amp;Rear);
-    }
-    t = P;
-    P = P-&gt;link;
-    free(t);
-    // 没有头节点的单链表
-    return P;
-}
-
-Polynomial Add(Polynomial P1, Polynomial P2)
-{
-    Polynomial t1 = P1, t2 = P2;
-    // 单独搞一个空间存放和多项式
-    Polynomial P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    Polynomial Rear = P;
-
-    while (t1 &amp;&amp; t2)
-    {
-        if (t1-&gt;expon == t2-&gt;expon)
-        {
-            if ((t1-&gt;coef + t2-&gt;coef))
-            {
-                Attach(t1-&gt;coef + t2-&gt;coef, t1-&gt;expon, &amp;Rear);
-            }
-            t1 = t1-&gt;link;
-            t2 = t2-&gt;link;
-        }
-        else if (t1-&gt;expon &gt; t2-&gt;expon)
-        {
-            Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
-            t1 = t1-&gt;link;
-        }
-        else
-        {
-            Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
-            t2 = t2-&gt;link;
-        }
-    }
-    while (t1)
-    {
-        Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
-        t1 = t1-&gt;link;
-    }
-    while (t2)
-    {
-        Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
-        t2 = t2-&gt;link;
-    }
-
-    Polynomial t = P;
-    P = P-&gt;link;
-    free(t);
-    // 没有头节点的单链表
-    return P;
-}
-
-Polynomial Mult(Polynomial P1, Polynomial P2)
-{
-    Polynomial P, Rear, t1, t2, t;
-    int c, e;
-    // 有一个为NULL,乘积为NULL
-    if (!P1 || !P2)
-        return NULL;
-
-    t1 = P1;
-    t2 = P2;
-
-    // 存放乘积结果
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    Rear = P;
-    // P1第一个非零项乘以P2中每一项
-    while (t2)
-    {
-        Attach(t1-&gt;coef * t2-&gt;coef, t1-&gt;expon + t2-&gt;expon, &amp;Rear);
-        t2 = t2-&gt;link;
-    }
-
-    t1 = t1-&gt;link;
-    // 依次将P1后面的所有非零项均乘以P2中的每一项
-    while (t1)
-    {
-        t2 = P2;
-        Rear = P;
-        while (t2)
-        {
-            e = t1-&gt;expon + t2-&gt;expon;
-            c = t1-&gt;coef * t2-&gt;coef;
-            // 查找在P中的位置
-            while (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon &gt; e)
-                Rear = Rear-&gt;link;
-            if (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon == e)
-            {
-                if (Rear-&gt;link-&gt;coef + c)
-                    Rear-&gt;link-&gt;coef += c;
-                else
-                {
-                    t = Rear-&gt;link;
-                    Rear-&gt;link = t-&gt;link;
-                    free(t);
-                }
-            }
-            else
-            {
-                t = (Polynomial)malloc(sizeof(struct PolyNode));
-                t-&gt;coef = c;
-                t-&gt;expon = e;
-                t-&gt;link = Rear-&gt;link;
-                Rear-&gt;link = t;
-                Rear = Rear-&gt;link;
-            }
-            t2 = t2-&gt;link;
-        }
-        t1 = t1-&gt;link;
-    }
-    t2 = P;
-    P = P-&gt;link;
-    free(t2);
-    return P;
-}
-void PrintPoly(Polynomial P)
-{
-    int flag = 0;
-    if (!P)
-    {
-        printf(&quot;0 0\n&quot;);
-        return;
-    }
-    while (P)
-    {
-        if (!flag)
-            flag = 1;
-        else
-        {
-            printf(&quot; &quot;);
-        }
-        printf(&quot;%d %d&quot;, P-&gt;coef, P-&gt;expon);
-        P = P-&gt;link;
-    }
-    printf(&quot;\n&quot;);
-}
-int main(void)
-{
-  Polynomial P1=ReadPoly(),P2=ReadPoly();
-  PrintPoly(Mult(P1,P2));
-  PrintPoly(Add(P1,P2));
-
-  return 0;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/二分查找/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2344,7 +2235,7 @@ List Merge(List L1, List L2)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">91</span>
+                <span class="site-state-item-count">92</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
