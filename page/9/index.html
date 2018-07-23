@@ -301,6 +301,190 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/解码方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/解码方法/" itemprop="url">LeetCode - 解码方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一条包含字母 A-Z 的消息通过以下方式进行了编码：</p>
+<pre><code>&#39;A&#39; -&gt; 1
+&#39;B&#39; -&gt; 2
+...
+&#39;Z&#39; -&gt; 26
+</code></pre><p>给定一个只包含数字的非空字符串，请计算解码方法的总数。</p>
+<p>示例 1:</p>
+<pre><code>输入: &quot;12&quot;
+输出: 2
+解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。
+</code></pre><p>示例 2:</p>
+<pre><code>输入: &quot;226&quot;
+输出: 3
+解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。
+
+
+class Solution:
+    def numDecodings(self, s):
+        &quot;&quot;&quot;
+        :type s: str
+        :rtype: int
+        &quot;&quot;&quot;
+        if len(s) == 0:
+            return 0
+        d = {}
+        d[&quot;&quot;] = 1
+        return self.ways(s,d)
+
+    # 记忆形递归
+    def ways(self, s, d):
+        # 已经计算过
+        if s in d.keys():
+            return d[s]
+        # 首位为0不可解码
+        if s[0] == &#39;0&#39;:
+            return 0
+        # 长度为1
+        if len(s) == 1:
+            return 1
+        # 去掉一位后的子问题
+        first = self.ways(s[1:], d) # 去掉第一位
+        tmp = int(s[:2]) # 看看前两位是否符合解码标准
+        # 去掉两位后的子问题
+        if (tmp &gt; 9)&amp;(tmp &lt;= 26):
+            first += self.ways(s[2:], d)
+        d[s] = first
+        return first
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/计数质数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -419,173 +603,6 @@
                 for i in range(v*v, n, v):
                         tmp[i-1] = 0
         return sum(tmp[2:])
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/买卖股票的最佳时机/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/买卖股票的最佳时机/" itemprop="url">LeetCode - 买卖股票的最佳时机</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p>
-<p>如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</p>
-<p>注意你不能在买入股票前卖出股票。</p>
-<p>示例 1:</p>
-<pre><code>输入: [7,1,5,3,6,4]
-输出: 5
-解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
-     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
-</code></pre><p>示例 2:</p>
-<pre><code>输入: [7,6,4,3,1]
-输出: 0
-解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>遍历过程中记录最低股价；</li>
-<li>同时记录最高差价；</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def maxProfit(self, prices):
-            &quot;&quot;&quot;
-            :type prices: List[int]
-            :rtype: int
-            &quot;&quot;&quot;
-            res = 0
-            buy = float(&#39;inf&#39;)
-            for v in prices:
-                buy = min(buy, v)
-                res = max(res, v-buy)
-            return res
 </code></pre>
 
           
@@ -759,6 +776,222 @@
 </li>
 <li><p><a href="https://blog.csdn.net/u013309870/article/details/75193592" target="_blank" rel="external">算法-动态规划 Dynamic Programming–从菜鸟到老鸟</a></p>
 </li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">LeetCode - 回文链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>请判断一个链表是否为回文链表。</p>
+<p>示例 1:</p>
+<p>输入: 1-&gt;2</p>
+<p>输出: false</p>
+<p>示例 2:</p>
+<p>输入: 1-&gt;2-&gt;2-&gt;1</p>
+<p>输出: true</p>
+<p>进阶：</p>
+<p>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
+<pre><code># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    # 原地反转链表
+    def reverseList(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: ListNode
+        &quot;&quot;&quot;
+        newHead = None
+        while head != None:
+            nextNode = ListNode(0)
+            nextNode = head.next
+
+            head.next = newHead
+            newHead = head
+            head = nextNode
+        return newHead
+    # 是否是回文链表
+    def isPalindrome(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: bool
+        &quot;&quot;&quot;
+        if head == None:
+            return True
+        elif head.next == None:
+            return True
+
+        # 快慢指针找中点
+        firstPtr = head
+        secondPtr = head
+        while firstPtr != None:
+            if firstPtr.next != None:
+                firstPtr = firstPtr.next.next
+                secondPtr = secondPtr.next
+            else:
+                break
+
+        # 长度为奇数的时候，此时慢指针指向中点
+        if firstPtr != None:
+            # 原地反转链表
+            secondPtr.next = self.reverseList(secondPtr.next)
+            secondPtr = secondPtr.next
+
+        # 长度为偶数的时候，慢指针指向后半段的开头
+        else:
+            # 原地反转链表
+            secondPtr = self.reverseList(secondPtr)
+
+        # 从开头和中间依次比较
+        firstPtr = head
+        while secondPtr != None:
+            if firstPtr.val != secondPtr.val:
+                return False
+            else:
+                firstPtr = firstPtr.next
+                secondPtr = secondPtr.next
+
+        return True
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位；</li>
+<li>根据快指针最后的状态，确定慢指针；</li>
+<li>将后半段原地反转；</li>
+<li>从开头和中间依次比较；</li>
 </ol>
 
           
@@ -1196,222 +1429,6 @@ return result;
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">LeetCode - 回文链表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
-                2017-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>请判断一个链表是否为回文链表。</p>
-<p>示例 1:</p>
-<p>输入: 1-&gt;2</p>
-<p>输出: false</p>
-<p>示例 2:</p>
-<p>输入: 1-&gt;2-&gt;2-&gt;1</p>
-<p>输出: true</p>
-<p>进阶：</p>
-<p>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
-<pre><code># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    # 原地反转链表
-    def reverseList(self, head):
-        &quot;&quot;&quot;
-        :type head: ListNode
-        :rtype: ListNode
-        &quot;&quot;&quot;
-        newHead = None
-        while head != None:
-            nextNode = ListNode(0)
-            nextNode = head.next
-
-            head.next = newHead
-            newHead = head
-            head = nextNode
-        return newHead
-    # 是否是回文链表
-    def isPalindrome(self, head):
-        &quot;&quot;&quot;
-        :type head: ListNode
-        :rtype: bool
-        &quot;&quot;&quot;
-        if head == None:
-            return True
-        elif head.next == None:
-            return True
-
-        # 快慢指针找中点
-        firstPtr = head
-        secondPtr = head
-        while firstPtr != None:
-            if firstPtr.next != None:
-                firstPtr = firstPtr.next.next
-                secondPtr = secondPtr.next
-            else:
-                break
-
-        # 长度为奇数的时候，此时慢指针指向中点
-        if firstPtr != None:
-            # 原地反转链表
-            secondPtr.next = self.reverseList(secondPtr.next)
-            secondPtr = secondPtr.next
-
-        # 长度为偶数的时候，慢指针指向后半段的开头
-        else:
-            # 原地反转链表
-            secondPtr = self.reverseList(secondPtr)
-
-        # 从开头和中间依次比较
-        firstPtr = head
-        while secondPtr != None:
-            if firstPtr.val != secondPtr.val:
-                return False
-            else:
-                firstPtr = firstPtr.next
-                secondPtr = secondPtr.next
-
-        return True
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位；</li>
-<li>根据快指针最后的状态，确定慢指针；</li>
-<li>将后半段原地反转；</li>
-<li>从开头和中间依次比较；</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/30/fallofgiants/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1522,6 +1539,146 @@ class Solution:
 <p>《巨人的陨落》的大结局！我亲眼目睹，每一个迈向死亡的生命都在热烈地生长。“世纪三部曲”终于迎来了一个完美结局。如果说《巨人的陨落》是祖辈的传奇，《世界的凛冬》是父辈的人生，那么，《永恒的边缘》就是新一代的奋斗。<br>真正残酷和激烈的世界大战，是思想的大战。来自美国、德国、苏联、英国和威尔士的五大家族，又一次迎来了新的考验。东西德分裂、柏林墙、苏联秘密警察、刺杀肯尼迪、民权运动、古巴导弹危机、入侵黎巴嫩、弹劾尼克松……此外，第三代生活中还有摇滚、嬉皮士、跨种族婚恋、性解放，以及对过去的误会与和解。<br>说到底，世上只有一种英雄主义，就是在认清生活真相之后，依然热爱生活。</p>
 </blockquote>
 <p>很棒的小说，作者是<strong>肯•福莱特（Ken Follett，1949－）现象级畅销小说大师，爱伦坡终身大师奖得主</strong>，完全可以当做历史书来读。当年的当年明月写的《明朝那些事儿》,以一种诙谐幽默的手法展现了明朝几百年历史，让人们发现原来历史还可以这么写。当时也是连着一段时间将《明朝那些事儿》一系列书刷完，好像是7本吧，后来过了一段时间又刷了一遍。而肯.福莱特的《世纪三部曲》在我看来和《明朝那些事儿》同样成功，通过几个家族的百年兴衰，将一战、二战及冷战历史描述的非常细致。相比历史教科书，这3部书，在历史中加入了更多的人性，与其说《世纪三部曲》是一本历史长篇小说，更不如说其是一本爱情长篇小说。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -1693,146 +1850,6 @@ class Solution:
 <li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
 </li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
