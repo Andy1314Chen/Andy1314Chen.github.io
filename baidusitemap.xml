@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/07/05/2%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/</loc>
+    <lastmod>2018-07-24T12:18:15.016Z</lastmod>
+    <data>
+        <display>
+        <title>LeetCode - 寻找重复数</title>
+        <pubTime>2017-07-04T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>Leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://yoursite.com/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/05/%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/</loc>
     <lastmod>2018-07-24T11:09:11.382Z</lastmod>
     <data>
@@ -2222,11 +2244,11 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
+        <tag>Leetcode</tag>
+         
         <tag>C</tag>
          
         <tag>算法</tag>
-         
-        <tag>Leetcode</tag>
          
          
            
