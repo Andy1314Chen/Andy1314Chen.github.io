@@ -466,191 +466,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/有效的括号/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/有效的括号/" itemprop="url">LeetCode - 有效的括号</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。</p>
-<p>有效字符串需满足：</p>
-<p>左括号必须用相同类型的右括号闭合。<br>左括号必须以正确的顺序闭合。<br>注意空字符串可被认为是有效字符串。</p>
-<p>示例 1:</p>
-<pre><code>输入: &quot;()&quot;
-输出: true
-</code></pre><p>示例 2:</p>
-<pre><code>输入: &quot;()[]{}&quot;
-输出: true
-</code></pre><p>示例 3:</p>
-<pre><code>输入: &quot;(]&quot;
-输出: false
-</code></pre><p>示例 4:</p>
-<pre><code>输入: &quot;([)]&quot;
-输出: false
-</code></pre><p>示例 5:</p>
-<pre><code>输入: &quot;{[]}&quot;
-输出: true
-</code></pre><pre><code class="Python">
-    class Solution(object):
-        def isValid(self, s):
-            &quot;&quot;&quot;
-            :type s: str
-            :rtype: bool
-            &quot;&quot;&quot;
-            if len(s)&lt;1:
-                return True
-
-            d = {&#39;(&#39;:&#39;)&#39;,
-                &#39;[&#39;:&#39;]&#39;,
-                &#39;{&#39;:&#39;}&#39;}
-            # 当做栈
-            res = []
-            # 依次入栈
-            for v in s:
-                # 栈里有东西则进行比较，是否消除
-                if len(res) &gt; 0:
-                    # 必须是左括号才能消除
-                    if res[-1] in d.keys():
-                        if d[res[-1]] == v:
-                            res.pop()
-                            continue
-                res.append(v)
-            if len(res) &gt; 0:
-                return False
-            else:
-                return True
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/Fizz Buzz/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1057,7 +872,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/第一个错误的版本/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/颠倒二进制位/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1076,7 +891,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/第一个错误的版本/" itemprop="url">LeetCode - 第一个错误的版本</a></h1>
+                <a class="post-title-link" href="/2017/07/05/颠倒二进制位/" itemprop="url">LeetCode - 颠倒二进制位</a></h1>
         
 
         <div class="post-meta">
@@ -1151,37 +966,24 @@
       
         
           
-            <p>你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。</p>
-<p>假设你有 n 个版本 [1, 2, …, n]，你想找出导致之后所有版本出错的第一个错误的版本。</p>
-<p>你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。</p>
+            <p>颠倒给定的 32 位无符号整数的二进制位。</p>
 <p>示例:</p>
-<pre><code>给定 n = 5，并且 version = 4 是第一个错误的版本。
-
-调用 isBadVersion(3) -&gt; false
-调用 isBadVersion(5) -&gt; true
-调用 isBadVersion(4) -&gt; true
-
-所以，4 是第一个错误的版本。 
-</code></pre><pre><code class="Python">
-    # The isBadVersion API is already defined for you.
-    # @param version, an integer
-    # @return a bool
-    # def isBadVersion(version):
-
-    class Solution(object):
-        def firstBadVersion(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            left = 1; right = n
-            while left &lt; right:
-                mid = (left + right)//2
-                if isBadVersion(mid) == True:
-                    right = mid
-                else:
-                    left = mid + 1
-            return left
+<pre><code>输入: 43261596
+输出: 964176192
+解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，
+     返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。
+</code></pre><p>进阶:<br>如果多次调用这个函数，你将如何优化你的算法？</p>
+<pre><code class="Python">
+    class Solution:
+        # @param n, an integer
+        # @return an integer
+        def reverseBits(self, n):
+            # 32位填充
+            bin_1 = bin(n)[2:].zfill(32)
+            bin_1 = [v for v in bin_1]
+            bin_1.reverse()
+            res = int(&#39;&#39;.join(bin_1), 2)
+            return res
 </code></pre>
 
           
@@ -1447,7 +1249,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/计数质数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/第一个错误的版本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1466,7 +1268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/计数质数/" itemprop="url">LeetCode - 计数质数</a></h1>
+                <a class="post-title-link" href="/2017/07/05/第一个错误的版本/" itemprop="url">LeetCode - 第一个错误的版本</a></h1>
         
 
         <div class="post-meta">
@@ -1541,30 +1343,37 @@
       
         
           
-            <p>统计所有小于非负整数 n 的质数的数量。</p>
+            <p>你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。</p>
+<p>假设你有 n 个版本 [1, 2, …, n]，你想找出导致之后所有版本出错的第一个错误的版本。</p>
+<p>你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。</p>
 <p>示例:</p>
-<pre><code>输入: 10
-输出: 4
-解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>从2开始遍历，将其平方，及平方+v的数，倍数全部置0</li>
-<li>求和</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-    def countPrimes(self, n):
-        &quot;&quot;&quot;
-        :type n: int
-        :rtype: int
-        &quot;&quot;&quot;
-        tmp = [1]*n
-        for v in range(2, n):
-            if tmp[v-1]:
-                # 该位置是质数
-                # 将该质数的倍数全部标记
-                for i in range(v*v, n, v):
-                        tmp[i-1] = 0
-        return sum(tmp[2:])
+<pre><code>给定 n = 5，并且 version = 4 是第一个错误的版本。
+
+调用 isBadVersion(3) -&gt; false
+调用 isBadVersion(5) -&gt; true
+调用 isBadVersion(4) -&gt; true
+
+所以，4 是第一个错误的版本。 
+</code></pre><pre><code class="Python">
+    # The isBadVersion API is already defined for you.
+    # @param version, an integer
+    # @return a bool
+    # def isBadVersion(version):
+
+    class Solution(object):
+        def firstBadVersion(self, n):
+            &quot;&quot;&quot;
+            :type n: int
+            :rtype: int
+            &quot;&quot;&quot;
+            left = 1; right = n
+            while left &lt; right:
+                mid = (left + right)//2
+                if isBadVersion(mid) == True:
+                    right = mid
+                else:
+                    left = mid + 1
+            return left
 </code></pre>
 
           
@@ -1809,7 +1618,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/最小路径和/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/缺失数字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1828,7 +1637,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/最小路径和/" itemprop="url">LeetCode - 最小路径和</a></h1>
+                <a class="post-title-link" href="/2017/07/05/缺失数字/" itemprop="url">LeetCode - 缺失数字</a></h1>
         
 
         <div class="post-meta">
@@ -1903,67 +1712,214 @@
       
         
           
-            <p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p>
-<p>说明：每次只能向下或者向右移动一步。</p>
-<p>示例:</p>
-<p>输入:</p>
-<p>[<br>  [1,3,1],</p>
-<p>  [1,5,1],</p>
-<p>  [4,2,1]</p>
-<p>]</p>
-<p>输出: 7</p>
-<p>解释: 因为路径 1→3→1→1→1 的总和最小。</p>
+            <p>给定一个包含 0, 1, 2, …, n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。</p>
+<p>示例 1:</p>
+<pre><code>输入: [3,0,1]
+输出: 2
+</code></pre><p>示例 2:</p>
+<pre><code>输入: [9,6,4,2,3,5,7,0,1]
+输出: 8
+</code></pre><p>说明:<br>你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现?</p>
 <pre><code class="Python">
-    class Solution:
-        def minPathSum(self, grid):
+    class Solution(object):
+        def missingNumber(self, nums):
             &quot;&quot;&quot;
-            :type grid: List[List[int]]
+            :type nums: List[int]
             :rtype: int
             &quot;&quot;&quot;
-
-            m = len(grid[0])
-            n = len(grid)
-            tmp = []
-            for i in range(n+1):
-                tmp.append([-1]*(m+1))
-
-            return self.myAns(m, n, grid, tmp)
-
-        def myAns(self, m, n, grid, tmp):
-            if (m &lt;= 0) | (n &lt;= 0):
-                return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意
-            if (m == 1)&amp;(n == 1):
-                return grid[0][0]
-            if tmp[n][m] != -1:
-                return tmp[n][m]
-
-            tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1]            
-            return tmp[n][m]
+            nums = sorted(nums)
+            for i in range(len(nums)-1):
+                if nums[i+1] &gt; nums[i] + 1:
+                    return i + 1
+            if len(nums) == nums[-1]:
+                return 0
+            else: 
+                return len(nums)
 </code></pre>
-<h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
-<li>从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小；</li>
-<li>保持递归过程中的值</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def minPathSum(self, grid):
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/有效的括号/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/有效的括号/" itemprop="url">LeetCode - 有效的括号</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。</p>
+<p>有效字符串需满足：</p>
+<p>左括号必须用相同类型的右括号闭合。<br>左括号必须以正确的顺序闭合。<br>注意空字符串可被认为是有效字符串。</p>
+<p>示例 1:</p>
+<pre><code>输入: &quot;()&quot;
+输出: true
+</code></pre><p>示例 2:</p>
+<pre><code>输入: &quot;()[]{}&quot;
+输出: true
+</code></pre><p>示例 3:</p>
+<pre><code>输入: &quot;(]&quot;
+输出: false
+</code></pre><p>示例 4:</p>
+<pre><code>输入: &quot;([)]&quot;
+输出: false
+</code></pre><p>示例 5:</p>
+<pre><code>输入: &quot;{[]}&quot;
+输出: true
+</code></pre><pre><code class="Python">
+    class Solution(object):
+        def isValid(self, s):
             &quot;&quot;&quot;
-            :type grid: List[List[int]]
-            :rtype: int
+            :type s: str
+            :rtype: bool
             &quot;&quot;&quot;
-            m = len(grid)
-            n = len(grid[0])
-            for i in range(m):# 多少列 横轴
-                for j in range(n):# 多少行 纵轴
-                    if (i==0)&amp;(j==0):
-                        continue
-                    elif i == 0:
-                        grid[i][j] += grid[i][j-1]
-                    elif j == 0:
-                        grid[i][j] += grid[i-1][j]
-                    else:
-                        grid[i][j] += min(grid[i-1][j], grid[i][j-1])
-            return grid[m-1][n-1]
+            if len(s)&lt;1:
+                return True
+
+            d = {&#39;(&#39;:&#39;)&#39;,
+                &#39;[&#39;:&#39;]&#39;,
+                &#39;{&#39;:&#39;}&#39;}
+            # 当做栈
+            res = []
+            # 依次入栈
+            for v in s:
+                # 栈里有东西则进行比较，是否消除
+                if len(res) &gt; 0:
+                    # 必须是左括号才能消除
+                    if res[-1] in d.keys():
+                        if d[res[-1]] == v:
+                            res.pop()
+                            continue
+                res.append(v)
+            if len(res) &gt; 0:
+                return False
+            else:
+                return True
 </code></pre>
 
           
@@ -2248,7 +2204,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">96</span>
+                <span class="site-state-item-count">97</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
