@@ -27,20 +27,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[RBM学习笔记（八）RBM的评估]]></title>
-    <url>%2F2018%2F03%2F21%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BARBM%E8%AF%84%E4%BC%B0%2F</url>
-    <content type="text"><![CDATA[RBM学习笔记（八）RBM的评估 原博客地址http://blog.csdn.net/itplus/article/details/19408773]]></content>
-      <categories>
-        <category>深度学习</category>
-        <category>DBN</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>RBM</tag>
-        <tag>DBN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[RBM学习笔记（七）RBM训练算法]]></title>
     <url>%2F2018%2F03%2F21%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BARBM%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%2F</url>
     <content type="text"><![CDATA[RBM学习笔记（七）RBM训练算法 原博客地址http://blog.csdn.net/itplus/article/details/19408701]]></content>
@@ -55,9 +41,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[RBM学习笔记（六）对比散度算法]]></title>
-    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%AF%94%E6%95%A3%E5%BA%A6%E7%AE%97%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[RBM学习笔记（六）对比散度算法 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
+    <title><![CDATA[RBM学习笔记（八）RBM的评估]]></title>
+    <url>%2F2018%2F03%2F21%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BARBM%E8%AF%84%E4%BC%B0%2F</url>
+    <content type="text"><![CDATA[RBM学习笔记（八）RBM的评估 原博客地址http://blog.csdn.net/itplus/article/details/19408773]]></content>
       <categories>
         <category>深度学习</category>
         <category>DBN</category>
@@ -100,6 +86,20 @@
     <title><![CDATA[RBM学习笔记（五）梯度计算公式]]></title>
     <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[RBM学习笔记（五）梯度计算公式 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
+      <categories>
+        <category>深度学习</category>
+        <category>DBN</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>RBM</tag>
+        <tag>DBN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[RBM学习笔记（六）对比散度算法]]></title>
+    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%AF%94%E6%95%A3%E5%BA%A6%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[RBM学习笔记（六）对比散度算法 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
       <categories>
         <category>深度学习</category>
         <category>DBN</category>
@@ -356,9 +356,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Python3时间序列分析模型ARIMA的简单实用]]></title>
-    <url>%2F2017%2F09%2F29%2FTime%20Series%20Forecasting%20with%20ARIMA%20in%20Python3%2F</url>
-    <content type="text"><![CDATA[import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&#39;fivethirtyeight&#39;) %matplotlib inline #导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot; #收集了从1958年到2001年的，CO2变化 data=sm.datasets.co2.load_pandas() y=data.data #每周的数据很难工作，用每月的平均值代替 y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean() #使用缺失值前面的值来填充 y=y.fillna(y.bfill()) print(y) 1958-03-01 316.100000 1958-04-01 317.200000 1958-05-01 317.433333 1958-06-01 315.625000 1958-07-01 315.625000 1958-08-01 314.950000 1958-09-01 313.500000 1958-10-01 313.425000 1958-11-01 313.425000 1958-12-01 314.700000 1959-01-01 315.500000 1959-02-01 316.700000 1959-03-01 316.733333 1959-04-01 317.675000 1959-05-01 318.325000 1959-06-01 318.025000 1959-07-01 316.525000 1959-08-01 314.900000 1959-09-01 313.825000 1959-10-01 313.400000 1959-11-01 314.875000 1959-12-01 315.525000 1960-01-01 316.380000 1960-02-01 316.975000 1960-03-01 317.575000 1960-04-01 319.120000 1960-05-01 319.925000 1960-06-01 319.450000 1960-07-01 318.060000 1960-08-01 315.775000 ... 1999-07-01 369.000000 1999-08-01 366.700000 1999-09-01 364.675000 1999-10-01 365.140000 1999-11-01 366.650000 1999-12-01 367.900000 2000-01-01 369.020000 2000-02-01 369.375000 2000-03-01 370.400000 2000-04-01 371.540000 2000-05-01 371.650000 2000-06-01 371.625000 2000-07-01 369.940000 2000-08-01 367.950000 2000-09-01 366.540000 2000-10-01 366.725000 2000-11-01 368.125000 2000-12-01 369.440000 2001-01-01 370.175000 2001-02-01 371.325000 2001-03-01 372.060000 2001-04-01 372.775000 2001-05-01 373.800000 2001-06-01 373.060000 2001-07-01 371.300000 2001-08-01 369.425000 2001-09-01 367.880000 2001-10-01 368.050000 2001-11-01 369.375000 2001-12-01 371.020000 Freq: MS, Name: co2, Length: 526, dtype: float64 #可视化数据 y.plot(figsize=(15,6)) &lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt; 最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise. p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days. d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small. q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past. When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.). #Define the p,d,q parameters to take any value between 0 and 2 p=d=q=range(0,2) #产生不同的组合 pdq=list(itertools.product(p,d,q)) #加上季节 seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))] print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4])) Examples of parameter combinations for Seasonal ARIMA... SARIMAX: (0, 0, 1) x (0, 0, 1, 12) SARIMAX: (0, 0, 1) x (0, 1, 0, 12) SARIMAX: (0, 1, 0) x (0, 1, 1, 12) SARIMAX: (0, 1, 0) x (1, 0, 0, 12) 使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。 warnings.filterwarnings(&#39;ignore&#39;) for param in pdq: for param_seasonal in seasonal_pdq: try: mod=sm.tsa.statespace.SARIMAX(y,order=param, seasonal_order=param_seasonal, enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic)) except: continue ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514 ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955 ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035 ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077 ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545 ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444 ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609 ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488 ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783 ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884 ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123 ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135 ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242 ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801 ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082 ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724 ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303 ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172 ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419 ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214 ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316 ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715 ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042 ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721 ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874 ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157 ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964 ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518 ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054 ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267 ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374 ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998 ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694 ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544 ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341 ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134 ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588 ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976 ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977 ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118 ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662 ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821 ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868 ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384 ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459 ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794 ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837 ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677 ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254 ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126 ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399 ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544 ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744 ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113 ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746 ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897 ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253 ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126 ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924 ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222 #发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型 mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1), seasonal_order=(1,1,1,12), enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(results.summary().tables[1]) ============================================================================== coef std err z P&gt;|z| [0.025 0.975] ------------------------------------------------------------------------------ ar.L1 0.3181 0.092 3.441 0.001 0.137 0.499 ma.L1 -0.6254 0.077 -8.162 0.000 -0.776 -0.475 ar.S.L12 0.0010 0.001 1.732 0.083 -0.000 0.002 ma.S.L12 -0.8769 0.026 -33.806 0.000 -0.928 -0.826 sigma2 0.0972 0.004 22.632 0.000 0.089 0.106 ============================================================================== coef列显示了各个特征的权重，如何对时间序列产生影响。 results.plot_diagnostics(figsize=(15,12)) Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。 In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed. The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed. The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself. 这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间 #dynamic=False,ensures that we produce one-step ahead forecasts, #meaning that forecasts at each point are generated using the full history up to that point. pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False) pred_ci=pred.conf_int() #绘制出实际值 ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;) #预测值 pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7) #置信区间 ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0x66f26d8&gt; y_forecasted=pred.predicted_mean y_truth=y[&#39;1998-01-01&#39;:] #计算平方差 mse=((y_forecasted-y_truth)**2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2))) The Mean Squared Error of our forecasts is 0.07 #dynamic=True,利用指定时间点之前的数据进行预测？ pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True) pred_dynamic_ci = pred_dynamic.conf_int() ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15)) pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax) ax.fill_between(pred_dynamic_ci.index, pred_dynamic_ci.iloc[:, 0], pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25) ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1], alpha=.1, zorder=-1) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xdaddcf8&gt; # Extract the predicted and true values of our time series y_forecasted = pred_dynamic.predicted_mean y_truth = y[&#39;1998-01-01&#39;:] # Compute the mean square error mse = ((y_forecasted - y_truth) ** 2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2))) The Mean Squared Error of our forecasts is 1.01 #Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长 pred_uc=results.get_forecast(steps=500) #Get confidence intervals of forecasts pred_ci=pred_uc.conf_int() ax=y.plot(label=&#39;observed&#39;,figsize=(20,15)) pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;) ax.fill_between(pred_ci.index,pred_ci.iloc[:,0], pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xda122e8&gt; ##参考博客## https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3]]></content>
+    <title><![CDATA[机器学习实战第十四章学习笔记(利用SVD简化数据)]]></title>
+    <url>%2F2017%2F09%2F29%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[SVD的应用奇异值分解（SVD） 优点：简化数据，去除噪声，提高算法的结果 缺点：数据的转换可能难以理解 适用数据类型：数值型数据 利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。 隐性语义索引最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA). 在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。 推荐系统SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。 矩阵分解在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。 $$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$ ##利用Python实现SVD##利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。 import numpy as np In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]]) In[139]: U Out[139]: array([[-0.14142136, -0.98994949], [-0.98994949, 0.14142136]]) In[140]: Sigma Out[140]: array([ 10., 0.]) In[141]: VT Out[141]: array([[-0.70710678, -0.70710678], [-0.70710678, 0.70710678]]) 注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵 奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似： $$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$ 确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。 基于协同过滤的推荐引擎协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。 协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。 #### 相似度计算 #### 1. 欧式距离 2. 皮尔相关系数（Pearson correlation) 3. 余弦相似度(cosine similarity) #程序清单14-1 相似度计算 #欧式距离 def ecludSim(inA,inB): return 1.0/(1.0+la.norm(inA-inB)) #皮尔逊相关系数 def pearsSim(inA,inB): if len(inA)&lt;3: return 1.0 return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1] #余弦相似度 def cosSim(inA,inB): num=float(inA.T*inB) denom=la.norm(inA)*la.norm(inB) return 0.5+0.5*(num/denom) 示例：餐馆菜肴推荐引擎 寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。 在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。（根据相似度来计算） 对这些物品的评分从高到低进行排序，返回前N个物品 程序源码： &quot;&quot;&quot; 示例：餐馆菜肴推荐引擎 &quot;&quot;&quot; #程序清单14-2 基于物品相似度的推荐引擎 #基于给定相似度计算方法的条件下，用户对物品的估计评分值 &quot;&quot;&quot; dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品 &quot;&quot;&quot; def standEst(dataMat,user,simMeas,item): #物品数 n=np.shape(dataMat)[1] simTotal=0;ratSimTotal=0 #遍历每一个物品 for j in range(n): userRating=dataMat[user,j] #如果用户没有对该物品进行评分，则跳过 if userRating==0: continue #将item所在列与当前遍历列进行逻辑与 overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0, dataMat[:,j].A&gt;0))[0] #若结果为0，则相似度为0，说明item与当前物品毫无交集 if len(overLap)==0: similarity=0 else: #计算相似度 similarity=simMeas(dataMat[overLap,item], dataMat[overLap,j]) #总的相似度 simTotal+=similarity #考虑用户评分 ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: #归一化 return ratSimTotal/simTotal #返回最高N个推荐结果 def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst): unratedItems=np.nonzero(dataMat[user,:].A==0)[1] #所有物品都已经投过票，则不需要进行推荐 if len(unratedItems)==0: return &#39;you rated everything&#39; itemScores=[] #对未投票物品进行遍历 for item in unratedItems: estimatedScore=estMethod(dataMat,user,simMeas,item) itemScores.append((item,estimatedScore)) return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N] 利用SVD提高推荐的效果#程序清单14-3 基于SVD的评分估计 def svdEst(dataMat,user,simMeas,item): n=np.shape(dataMat)[1] simTotal=0.0;ratSimTotal=0.0 #奇异值分解 U,Sigma,VT=la.svd(dataMat) #构建对角矩阵 Sig4=np.mat(np.eye(4)*Sigma[:4]) #将物品转换到低维空间中 xformedItems=dataMat.T*U[:,:4]*Sig4.I for j in range(n): userRating=dataMat[user,j] if userRating==0 or j==item: continue similarity=simMeas(xformedItems[item,:].T, xformedItems[j,:].T) print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity)) simTotal+=similarity ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: return ratSimTotal/float(simTotal) 基于SVD的图像压缩原始的图像大小是3232=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要322+32*2+2=130个像素，相当于压缩了近10倍！ &quot;&quot;&quot; 基于SVD的图像压缩 &quot;&quot;&quot; #程序清单14-4 图像压缩函数 def printMat(inMat,thresh=0.8): for i in range(32): for k in range(32): if float(inMat[i,k])&gt;thresh: print(1,end=&#39;&#39;); else: print(0,end=&#39;&#39;); print(&#39;&#39;) def imgCompress(numSV=3,thresh=0.8): my1=[] for line in open(&#39;0_5.txt&#39;).readlines(): newRow=[] for i in range(32): newRow.append(int(line[i])) my1.append(newRow) myMat=np.mat(my1) print(&quot;****original matrix****&quot;) #打印原始数据 printMat(myMat,thresh) #SVD分解 U,Sigma,VT=la.svd(myMat) SigRecon=np.mat(np.zeros((numSV,numSV))) for k in range(numSV): SigRecon[k,k]=Sigma[k] #重构矩阵 reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:] print(&quot;****reconstructed matrix using %d singular values*****&quot; % numSV) printMat(reconMat,thresh) 小结SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。]]></content>
       <categories>
         <category>Python</category>
         <category>算法</category>
@@ -370,9 +370,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[机器学习实战第十四章学习笔记(利用SVD简化数据)]]></title>
-    <url>%2F2017%2F09%2F29%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[SVD的应用奇异值分解（SVD） 优点：简化数据，去除噪声，提高算法的结果 缺点：数据的转换可能难以理解 适用数据类型：数值型数据 利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。 隐性语义索引最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA). 在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。 推荐系统SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。 矩阵分解在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。 $$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$ ##利用Python实现SVD##利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。 import numpy as np In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]]) In[139]: U Out[139]: array([[-0.14142136, -0.98994949], [-0.98994949, 0.14142136]]) In[140]: Sigma Out[140]: array([ 10., 0.]) In[141]: VT Out[141]: array([[-0.70710678, -0.70710678], [-0.70710678, 0.70710678]]) 注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵 奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似： $$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$ 确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。 基于协同过滤的推荐引擎协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。 协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。 #### 相似度计算 #### 1. 欧式距离 2. 皮尔相关系数（Pearson correlation) 3. 余弦相似度(cosine similarity) #程序清单14-1 相似度计算 #欧式距离 def ecludSim(inA,inB): return 1.0/(1.0+la.norm(inA-inB)) #皮尔逊相关系数 def pearsSim(inA,inB): if len(inA)&lt;3: return 1.0 return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1] #余弦相似度 def cosSim(inA,inB): num=float(inA.T*inB) denom=la.norm(inA)*la.norm(inB) return 0.5+0.5*(num/denom) 示例：餐馆菜肴推荐引擎 寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。 在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。（根据相似度来计算） 对这些物品的评分从高到低进行排序，返回前N个物品 程序源码： &quot;&quot;&quot; 示例：餐馆菜肴推荐引擎 &quot;&quot;&quot; #程序清单14-2 基于物品相似度的推荐引擎 #基于给定相似度计算方法的条件下，用户对物品的估计评分值 &quot;&quot;&quot; dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品 &quot;&quot;&quot; def standEst(dataMat,user,simMeas,item): #物品数 n=np.shape(dataMat)[1] simTotal=0;ratSimTotal=0 #遍历每一个物品 for j in range(n): userRating=dataMat[user,j] #如果用户没有对该物品进行评分，则跳过 if userRating==0: continue #将item所在列与当前遍历列进行逻辑与 overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0, dataMat[:,j].A&gt;0))[0] #若结果为0，则相似度为0，说明item与当前物品毫无交集 if len(overLap)==0: similarity=0 else: #计算相似度 similarity=simMeas(dataMat[overLap,item], dataMat[overLap,j]) #总的相似度 simTotal+=similarity #考虑用户评分 ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: #归一化 return ratSimTotal/simTotal #返回最高N个推荐结果 def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst): unratedItems=np.nonzero(dataMat[user,:].A==0)[1] #所有物品都已经投过票，则不需要进行推荐 if len(unratedItems)==0: return &#39;you rated everything&#39; itemScores=[] #对未投票物品进行遍历 for item in unratedItems: estimatedScore=estMethod(dataMat,user,simMeas,item) itemScores.append((item,estimatedScore)) return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N] 利用SVD提高推荐的效果#程序清单14-3 基于SVD的评分估计 def svdEst(dataMat,user,simMeas,item): n=np.shape(dataMat)[1] simTotal=0.0;ratSimTotal=0.0 #奇异值分解 U,Sigma,VT=la.svd(dataMat) #构建对角矩阵 Sig4=np.mat(np.eye(4)*Sigma[:4]) #将物品转换到低维空间中 xformedItems=dataMat.T*U[:,:4]*Sig4.I for j in range(n): userRating=dataMat[user,j] if userRating==0 or j==item: continue similarity=simMeas(xformedItems[item,:].T, xformedItems[j,:].T) print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity)) simTotal+=similarity ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: return ratSimTotal/float(simTotal) 基于SVD的图像压缩原始的图像大小是3232=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要322+32*2+2=130个像素，相当于压缩了近10倍！ &quot;&quot;&quot; 基于SVD的图像压缩 &quot;&quot;&quot; #程序清单14-4 图像压缩函数 def printMat(inMat,thresh=0.8): for i in range(32): for k in range(32): if float(inMat[i,k])&gt;thresh: print(1,end=&#39;&#39;); else: print(0,end=&#39;&#39;); print(&#39;&#39;) def imgCompress(numSV=3,thresh=0.8): my1=[] for line in open(&#39;0_5.txt&#39;).readlines(): newRow=[] for i in range(32): newRow.append(int(line[i])) my1.append(newRow) myMat=np.mat(my1) print(&quot;****original matrix****&quot;) #打印原始数据 printMat(myMat,thresh) #SVD分解 U,Sigma,VT=la.svd(myMat) SigRecon=np.mat(np.zeros((numSV,numSV))) for k in range(numSV): SigRecon[k,k]=Sigma[k] #重构矩阵 reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:] print(&quot;****reconstructed matrix using %d singular values*****&quot; % numSV) printMat(reconMat,thresh) 小结SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。]]></content>
+    <title><![CDATA[Python3时间序列分析模型ARIMA的简单实用]]></title>
+    <url>%2F2017%2F09%2F29%2FTime%20Series%20Forecasting%20with%20ARIMA%20in%20Python3%2F</url>
+    <content type="text"><![CDATA[import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&#39;fivethirtyeight&#39;) %matplotlib inline #导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot; #收集了从1958年到2001年的，CO2变化 data=sm.datasets.co2.load_pandas() y=data.data #每周的数据很难工作，用每月的平均值代替 y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean() #使用缺失值前面的值来填充 y=y.fillna(y.bfill()) print(y) 1958-03-01 316.100000 1958-04-01 317.200000 1958-05-01 317.433333 1958-06-01 315.625000 1958-07-01 315.625000 1958-08-01 314.950000 1958-09-01 313.500000 1958-10-01 313.425000 1958-11-01 313.425000 1958-12-01 314.700000 1959-01-01 315.500000 1959-02-01 316.700000 1959-03-01 316.733333 1959-04-01 317.675000 1959-05-01 318.325000 1959-06-01 318.025000 1959-07-01 316.525000 1959-08-01 314.900000 1959-09-01 313.825000 1959-10-01 313.400000 1959-11-01 314.875000 1959-12-01 315.525000 1960-01-01 316.380000 1960-02-01 316.975000 1960-03-01 317.575000 1960-04-01 319.120000 1960-05-01 319.925000 1960-06-01 319.450000 1960-07-01 318.060000 1960-08-01 315.775000 ... 1999-07-01 369.000000 1999-08-01 366.700000 1999-09-01 364.675000 1999-10-01 365.140000 1999-11-01 366.650000 1999-12-01 367.900000 2000-01-01 369.020000 2000-02-01 369.375000 2000-03-01 370.400000 2000-04-01 371.540000 2000-05-01 371.650000 2000-06-01 371.625000 2000-07-01 369.940000 2000-08-01 367.950000 2000-09-01 366.540000 2000-10-01 366.725000 2000-11-01 368.125000 2000-12-01 369.440000 2001-01-01 370.175000 2001-02-01 371.325000 2001-03-01 372.060000 2001-04-01 372.775000 2001-05-01 373.800000 2001-06-01 373.060000 2001-07-01 371.300000 2001-08-01 369.425000 2001-09-01 367.880000 2001-10-01 368.050000 2001-11-01 369.375000 2001-12-01 371.020000 Freq: MS, Name: co2, Length: 526, dtype: float64 #可视化数据 y.plot(figsize=(15,6)) &lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt; 最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise. p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days. d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small. q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past. When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.). #Define the p,d,q parameters to take any value between 0 and 2 p=d=q=range(0,2) #产生不同的组合 pdq=list(itertools.product(p,d,q)) #加上季节 seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))] print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4])) Examples of parameter combinations for Seasonal ARIMA... SARIMAX: (0, 0, 1) x (0, 0, 1, 12) SARIMAX: (0, 0, 1) x (0, 1, 0, 12) SARIMAX: (0, 1, 0) x (0, 1, 1, 12) SARIMAX: (0, 1, 0) x (1, 0, 0, 12) 使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。 warnings.filterwarnings(&#39;ignore&#39;) for param in pdq: for param_seasonal in seasonal_pdq: try: mod=sm.tsa.statespace.SARIMAX(y,order=param, seasonal_order=param_seasonal, enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic)) except: continue ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514 ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955 ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035 ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077 ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545 ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444 ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609 ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488 ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783 ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884 ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123 ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135 ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242 ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801 ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082 ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724 ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303 ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172 ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419 ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214 ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316 ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715 ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042 ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721 ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874 ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157 ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964 ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518 ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054 ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267 ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374 ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998 ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694 ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544 ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341 ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134 ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588 ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976 ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977 ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118 ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662 ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821 ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868 ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384 ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459 ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794 ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837 ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677 ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254 ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126 ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399 ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544 ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744 ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113 ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746 ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897 ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253 ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126 ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924 ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222 #发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型 mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1), seasonal_order=(1,1,1,12), enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(results.summary().tables[1]) ============================================================================== coef std err z P&gt;|z| [0.025 0.975] ------------------------------------------------------------------------------ ar.L1 0.3181 0.092 3.441 0.001 0.137 0.499 ma.L1 -0.6254 0.077 -8.162 0.000 -0.776 -0.475 ar.S.L12 0.0010 0.001 1.732 0.083 -0.000 0.002 ma.S.L12 -0.8769 0.026 -33.806 0.000 -0.928 -0.826 sigma2 0.0972 0.004 22.632 0.000 0.089 0.106 ============================================================================== coef列显示了各个特征的权重，如何对时间序列产生影响。 results.plot_diagnostics(figsize=(15,12)) Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。 In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed. The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed. The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself. 这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间 #dynamic=False,ensures that we produce one-step ahead forecasts, #meaning that forecasts at each point are generated using the full history up to that point. pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False) pred_ci=pred.conf_int() #绘制出实际值 ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;) #预测值 pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7) #置信区间 ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0x66f26d8&gt; y_forecasted=pred.predicted_mean y_truth=y[&#39;1998-01-01&#39;:] #计算平方差 mse=((y_forecasted-y_truth)**2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2))) The Mean Squared Error of our forecasts is 0.07 #dynamic=True,利用指定时间点之前的数据进行预测？ pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True) pred_dynamic_ci = pred_dynamic.conf_int() ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15)) pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax) ax.fill_between(pred_dynamic_ci.index, pred_dynamic_ci.iloc[:, 0], pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25) ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1], alpha=.1, zorder=-1) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xdaddcf8&gt; # Extract the predicted and true values of our time series y_forecasted = pred_dynamic.predicted_mean y_truth = y[&#39;1998-01-01&#39;:] # Compute the mean square error mse = ((y_forecasted - y_truth) ** 2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2))) The Mean Squared Error of our forecasts is 1.01 #Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长 pred_uc=results.get_forecast(steps=500) #Get confidence intervals of forecasts pred_ci=pred_uc.conf_int() ax=y.plot(label=&#39;observed&#39;,figsize=(20,15)) pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;) ax.fill_between(pred_ci.index,pred_ci.iloc[:,0], pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xda122e8&gt; ##参考博客## https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3]]></content>
       <categories>
         <category>Python</category>
         <category>算法</category>
@@ -813,141 +813,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 编辑距离]]></title>
-    <url>%2F2017%2F07%2F05%2F%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB%2F</url>
-    <content type="text"><![CDATA[给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作： 插入一个字符 删除一个字符 替换一个字符 示例 1: 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot; 输出: 3 解释: horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;) rorse -&gt; rose (删除 &#39;r&#39;) rose -&gt; ros (删除 &#39;e&#39;) 示例 2: 输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot; 输出: 5 解释: intention -&gt; inention (删除 &#39;t&#39;) inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;) enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;) exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;) exection -&gt; execution (插入 &#39;u&#39;) class Solution: def minDistance(self, word1, word2): &quot;&quot;&quot; :type word1: str :type word2: str :rtype: int &quot;&quot;&quot; l1 = len(word1) l2 = len(word2) tmp = [] for i in range(l1+1): tmp.append([-1]*(l2+1)) return self.myMethod(word1, word2, l1, l2, tmp) def myMethod(self, word1, word2, l1, l2, tmp): if l1 == 0: return l2 if l2 == 0: return l1 if tmp[l1][l2] != -1: return tmp[l1][l2] if word1[l1-1] == word2[l2-1]: res = self.myMethod(word1,word2, l1-1, l2-1, tmp) else: res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp), min(self.myMethod(word1, word2, l1 - 1, l2, tmp), self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1 tmp[l1][l2] = res return res 思路 最后一位如果相等，则去掉后求子问题； 如不等，则至少需要一步，然后分情况讨论：]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 打家劫舍]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D%2F</url>
-    <content type="text"><![CDATA[你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。 示例 1: 输入: [1,2,3,1] 输出: 4 解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。 偷窃到的最高金额 = 1 + 3 = 4 。 示例 2: 输入: [2,7,9,3,1] 输出: 12 解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。 偷窃到的最高金额 = 2 + 9 + 1 = 12 。 class Solution: def rob(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; if len(nums) == 0: return 0 elif len(nums) &lt; 2: return max(nums[0], nums[-1]) tmp = [0]*len(nums) tmp[0], tmp[1] = nums[0], max(nums[0], nums[1]) for i in range(2, len(nums)): tmp[i] = max(nums[i]+tmp[i-2], tmp[i-1]) return tmp[-1]]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 寻找旋转排序数组中的最小值2]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC2%2F</url>
-    <content type="text"><![CDATA[假设按照升序排序的数组在预先未知的某个点上进行了旋转。 ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。 请找出其中最小的元素。 注意数组中可能存在重复的元素。 示例 1： 输入: [1,3,5] 输出: 1 示例 2： 输入: [2,2,2,0,1] 输出: 0 说明： 这道题是 寻找旋转排序数组中的最小值 的延伸题目。允许重复会影响算法的时间复杂度吗？会如何影响，为什么？ class Solution(object): def findMin(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; for i in range(1, len(nums)): if nums[i] &lt; nums[i-1]: return nums[i] return nums[0]]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 帕斯卡三角形]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%B8%95%E6%96%AF%E5%8D%A1%E4%B8%89%E8%A7%92%E5%BD%A2%2F</url>
-    <content type="text"><![CDATA[给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。 在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [ [1], [1,1], [1,2,1], [1,3,3,1], [1,4,6,4,1] ] class Solution(object): def generate(self, numRows): &quot;&quot;&quot; :type numRows: int :rtype: List[List[int]] &quot;&quot;&quot; res = [] for i in range(1, 1+numRows): res.append([1]*i) for i in range(2, numRows): for j in range(1, i): res[i][j] = res[i-1][j] + res[i-1][j-1] return res]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 存在重复元素2]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A02%2F</url>
-    <content type="text"><![CDATA[给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。 示例 1: 输入: nums = [1,2,3,1], k = 3 输出: true 示例 2: 输入: nums = [1,0,1,1], k = 1 输出: true 示例 3: 输入: nums = [1,2,3,1,2,3], k = 2 输出: false class Solution: def containsNearbyDuplicate(self, nums, k): &quot;&quot;&quot; :type nums: List[int] :type k: int :rtype: bool &quot;&quot;&quot; d = {} for i, num in enumerate(nums): if num in d and i - d[num] &lt;= k: return True d[num] = i return False]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 寻找旋转排序数组中的最小值]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%2F</url>
-    <content type="text"><![CDATA[假设按照升序排序的数组在预先未知的某个点上进行了旋转。 ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。 请找出其中最小的元素。 你可以假设数组中不存在重复元素。 示例 1: 输入: [3,4,5,1,2] 输出: 1 示例 2: 输入: [4,5,6,7,0,1,2] 输出: 0 class Solution(object): def findMin(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; for i in range(1, len(nums)): if nums[i] &lt; nums[i-1]: return nums[i] return nums[0]]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 汉明距离]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB%2F</url>
-    <content type="text"><![CDATA[两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &lt; 231. 示例: 输入: x = 1, y = 4 输出: 2 解释: 1 (0 0 0 1) 4 (0 1 0 0) ↑ ↑ 上面的箭头指出了对应二进制位不同的位置。 class Solution(object): def hammingDistance(self, x, y): &quot;&quot;&quot; :type x: int :type y: int :rtype: int &quot;&quot;&quot; bx = [v for v in bin(x)[2:]] by = [v for v in bin(y)[2:]] bx.reverse() by.reverse() i = 0; cnt = 0 while (i&lt;len(bx))&amp;(i&lt;len(by)): if bx[i] != by[i]: cnt += 1 i += 1 if len(bx)&gt;i: cnt += bx[i:].count(&#39;1&#39;) if len(by)&gt;i: cnt += by[i:].count(&#39;1&#39;) return cnt # return bin(x^y).count(&#39;1&#39;)]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 求众数]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%B1%82%E4%BC%97%E6%95%B0%2F</url>
-    <content type="text"><![CDATA[给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。 你可以假设数组是非空的，并且给定的数组总是存在众数。 示例 1: 输入: [3,2,3] 输出: 3 示例 2: 输入: [2,2,1,1,1,2,2] 输出: 2 class Solution(object): def majorityElement(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; m = int(len(nums)/2 + 0.5) # 取整 for i in set(nums): if nums.count(i) &gt; m: return i return nums[0]]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 寻找峰值]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E5%B3%B0%E5%80%BC%2F</url>
-    <content type="text"><![CDATA[峰值元素是指其值大于左右相邻值的元素。 给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。 数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。 你可以假设 nums[-1] = nums[n] = -∞。 示例 1: 输入: nums = [1,2,3,1] 输出: 2 解释: 3 是峰值元素，你的函数应该返回其索引 2。 示例 2: 输入: nums = [1,2,1,3,5,6,4] 输出: 1 或 5 解释: 你的函数可以返回索引 1，其峰值元素为 2； 或者返回索引 5， 其峰值元素为 6。 说明: 你的解法应该是 O(logN) 时间复杂度的。 class Solution(object): def findPeakElement(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; nums = [-1*float(&#39;inf&#39;)] + nums + [-1*float(&#39;inf&#39;)] for i in range(1, len(nums)-1): if (nums[i]&gt;nums[i-1])&amp;(nums[i]&gt;nums[i+1]): return i - 1 return 0]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 有效的括号]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%2F</url>
-    <content type="text"><![CDATA[给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。 有效字符串需满足： 左括号必须用相同类型的右括号闭合。左括号必须以正确的顺序闭合。注意空字符串可被认为是有效字符串。 示例 1: 输入: &quot;()&quot; 输出: true 示例 2: 输入: &quot;()[]{}&quot; 输出: true 示例 3: 输入: &quot;(]&quot; 输出: false 示例 4: 输入: &quot;([)]&quot; 输出: false 示例 5: 输入: &quot;{[]}&quot; 输出: true class Solution(object): def isValid(self, s): &quot;&quot;&quot; :type s: str :rtype: bool &quot;&quot;&quot; if len(s)&lt;1: return True d = {&#39;(&#39;:&#39;)&#39;, &#39;[&#39;:&#39;]&#39;, &#39;{&#39;:&#39;}&#39;} # 当做栈 res = [] # 依次入栈 for v in s: # 栈里有东西则进行比较，是否消除 if len(res) &gt; 0: # 必须是左括号才能消除 if res[-1] in d.keys(): if d[res[-1]] == v: res.pop() continue res.append(v) if len(res) &gt; 0: return False else: return True]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 爬楼梯]]></title>
-    <url>%2F2017%2F07%2F05%2F%E7%88%AC%E6%A5%BC%E6%A2%AF%2F</url>
-    <content type="text"><![CDATA[假设你正在爬楼梯。需要 n 步你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 输入： 2 输出： 2 解释： 有两种方法可以爬到楼顶。 1 步 + 1 步 2 步 示例 2： 输入： 3 输出： 3 解释： 有三种方法可以爬到楼顶。 1 步 + 1 步 + 1 步 1 步 + 2 步 2 步 + 1 步 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [0]*(n+1) tmp[0] = 1 tmp[1] = 1 for i in range(2, n+1): tmp[i] = tmp[i-1] + tmp[i-2] return tmp[n] 思路1(递推法求解) 首先求得递推公式 F(n) = F(n-1) + F(n-2) 实现 class Solution: def get_value(self, n, tmp): if n &lt;= 1: return 1 # 如果记忆过，则直接返回值 if tmp[n] != -1: return tmp[n] # 否则重新计算 tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp) return tmp[n] def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [-1]*(n+1) return self.get_value(n, tmp) 思路2(记忆性递归) 递推公式 F(n) = F(n-1) + F(n-2) 递归实现 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; first = 1 second = 1 cur = 1 for i in range(2, n+1): cur = first + second first = second second= cur return cur 思路3 使用两个变量保存前两个值]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - Fizz Buzz]]></title>
-    <url>%2F2017%2F07%2F05%2FFizz%20Buzz%2F</url>
-    <content type="text"><![CDATA[写一个程序，输出从 1 到 n 数字的字符串表示。 如果 n 是3的倍数，输出“Fizz”； 如果 n 是5的倍数，输出“Buzz”； 3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。 示例： n = 15, 返回: [ &quot;1&quot;, &quot;2&quot;, &quot;Fizz&quot;, &quot;4&quot;, &quot;Buzz&quot;, &quot;Fizz&quot;, &quot;7&quot;, &quot;8&quot;, &quot;Fizz&quot;, &quot;Buzz&quot;, &quot;11&quot;, &quot;Fizz&quot;, &quot;13&quot;, &quot;14&quot;, &quot;FizzBuzz&quot; ] 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和 class Solution: def fizzBuzz(self, n): &quot;&quot;&quot; :type n: int :rtype: List[str] &quot;&quot;&quot; tmp = [&quot;&quot; for v in range(n)] for v in range(2,n,3): tmp[v] += &#39;Fizz&#39; for v in range(4,n,5): tmp[v] += &#39;Buzz&#39; for v in range(n): if tmp[v] == &quot;&quot;: tmp[v] = str(v+1) return tmp]]></content>
+    <title><![CDATA[LeetCode - 缺失数字]]></title>
+    <url>%2F2017%2F07%2F05%2F%E7%BC%BA%E5%A4%B1%E6%95%B0%E5%AD%97%2F</url>
+    <content type="text"><![CDATA[给定一个包含 0, 1, 2, …, n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。 示例 1: 输入: [3,0,1] 输出: 2 示例 2: 输入: [9,6,4,2,3,5,7,0,1] 输出: 8 说明:你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现? class Solution(object): def missingNumber(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; nums = sorted(nums) for i in range(len(nums)-1): if nums[i+1] &gt; nums[i] + 1: return i + 1 if len(nums) == nums[-1]: return 0 else: return len(nums)]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -969,9 +837,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 长度最小的子数组]]></title>
-    <url>%2F2017%2F07%2F05%2F%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%2F</url>
-    <content type="text"><![CDATA[给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。 示例: 输入: s = 7, nums = [2,3,1,2,4,3] 输出: 2 解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。 进阶: 如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。 class Solution(object): def minSubArrayLen(self, s, nums): &quot;&quot;&quot; :type s: int :type nums: List[int] :rtype: int &quot;&quot;&quot; solution = float(&#39;inf&#39;) tmp_sum = 0 # j指向子数组的最前端 j = 0 for i, num in enumerate(nums): tmp_sum += num while tmp_sum &gt;= s: # 大于等于，都是将子数组最前端去掉 solution = min(solution, i-j+1) tmp_sum -= nums[j] j += 1 return 0 if solution == float(&#39;inf&#39;) else solution]]></content>
+    <title><![CDATA[LeetCode - 帕斯卡三角形]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%B8%95%E6%96%AF%E5%8D%A1%E4%B8%89%E8%A7%92%E5%BD%A2%2F</url>
+    <content type="text"><![CDATA[给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。 在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [ [1], [1,1], [1,2,1], [1,3,3,1], [1,4,6,4,1] ] class Solution(object): def generate(self, numRows): &quot;&quot;&quot; :type numRows: int :rtype: List[List[int]] &quot;&quot;&quot; res = [] for i in range(1, 1+numRows): res.append([1]*i) for i in range(2, numRows): for j in range(1, i): res[i][j] = res[i-1][j] + res[i-1][j-1] return res]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -981,9 +849,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 买卖股票的最佳时机]]></title>
-    <url>%2F2017%2F07%2F05%2F%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%2F</url>
-    <content type="text"><![CDATA[给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。 示例 2: 输入: [7,6,4,3,1] 输出: 0 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。 思路 遍历过程中记录最低股价； 同时记录最高差价； class Solution: def maxProfit(self, prices): &quot;&quot;&quot; :type prices: List[int] :rtype: int &quot;&quot;&quot; res = 0 buy = float(&#39;inf&#39;) for v in prices: buy = min(buy, v) res = max(res, v-buy) return res]]></content>
+    <title><![CDATA[LeetCode - 寻找旋转排序数组中的最小值]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%2F</url>
+    <content type="text"><![CDATA[假设按照升序排序的数组在预先未知的某个点上进行了旋转。 ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。 请找出其中最小的元素。 你可以假设数组中不存在重复元素。 示例 1: 输入: [3,4,5,1,2] 输出: 1 示例 2: 输入: [4,5,6,7,0,1,2] 输出: 0 class Solution(object): def findMin(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; for i in range(1, len(nums)): if nums[i] &lt; nums[i-1]: return nums[i] return nums[0]]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -993,9 +861,69 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 第一个错误的版本]]></title>
-    <url>%2F2017%2F07%2F05%2F%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E7%9A%84%E7%89%88%E6%9C%AC%2F</url>
-    <content type="text"><![CDATA[你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。 假设你有 n 个版本 [1, 2, …, n]，你想找出导致之后所有版本出错的第一个错误的版本。 你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。 示例: 给定 n = 5，并且 version = 4 是第一个错误的版本。 调用 isBadVersion(3) -&gt; false 调用 isBadVersion(5) -&gt; true 调用 isBadVersion(4) -&gt; true 所以，4 是第一个错误的版本。 # The isBadVersion API is already defined for you. # @param version, an integer # @return a bool # def isBadVersion(version): class Solution(object): def firstBadVersion(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; left = 1; right = n while left &lt; right: mid = (left + right)//2 if isBadVersion(mid) == True: right = mid else: left = mid + 1 return left]]></content>
+    <title><![CDATA[LeetCode - 汇总区间]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%B1%87%E6%80%BB%E5%8C%BA%E9%97%B4%2F</url>
+    <content type="text"><![CDATA[给定一个无重复元素的有序整数数组，返回数组区间范围的汇总。 示例 1: 输入: [0,1,2,4,5,7] 输出: [&quot;0-&gt;2&quot;,&quot;4-&gt;5&quot;,&quot;7&quot;] 解释: 0,1,2 可组成一个连续的区间; 4,5 可组成一个连续的区间。 示例 2: 输入: [0,2,3,4,6,8,9] 输出: [&quot;0&quot;,&quot;2-&gt;4&quot;,&quot;6&quot;,&quot;8-&gt;9&quot;] 解释: 2,3,4 可组成一个连续的区间; 8,9 可组成一个连续的区间。 class Solution: def summaryRanges(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[str] &quot;&quot;&quot; if len(nums)&lt;1: return [] tmp = []; res = [] j = 1; s = str(nums[0]) while j &lt; len(nums): if nums[j] &gt; nums[j-1] + 1: tmp.append(s) s = str(nums[j]) j += 1 else: s += &#39;+&#39; + str(nums[j]) j += 1 # 最后一个 tmp.append(s) for s in tmp: s = s.split(&#39;+&#39;) if len(s) &gt; 1: res.append(s[0]+&quot;-&gt;&quot;+s[-1]) else: res.append(s[0]) return res]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 存在重复元素2]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A02%2F</url>
+    <content type="text"><![CDATA[给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。 示例 1: 输入: nums = [1,2,3,1], k = 3 输出: true 示例 2: 输入: nums = [1,0,1,1], k = 1 输出: true 示例 3: 输入: nums = [1,2,3,1,2,3], k = 2 输出: false class Solution: def containsNearbyDuplicate(self, nums, k): &quot;&quot;&quot; :type nums: List[int] :type k: int :rtype: bool &quot;&quot;&quot; d = {} for i, num in enumerate(nums): if num in d and i - d[num] &lt;= k: return True d[num] = i return False]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 求众数]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%B1%82%E4%BC%97%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。 你可以假设数组是非空的，并且给定的数组总是存在众数。 示例 1: 输入: [3,2,3] 输出: 3 示例 2: 输入: [2,2,1,1,1,2,2] 输出: 2 class Solution(object): def majorityElement(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; m = int(len(nums)/2 + 0.5) # 取整 for i in set(nums): if nums.count(i) &gt; m: return i return nums[0]]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 汉明距离]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB%2F</url>
+    <content type="text"><![CDATA[两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &lt; 231. 示例: 输入: x = 1, y = 4 输出: 2 解释: 1 (0 0 0 1) 4 (0 1 0 0) ↑ ↑ 上面的箭头指出了对应二进制位不同的位置。 class Solution(object): def hammingDistance(self, x, y): &quot;&quot;&quot; :type x: int :type y: int :rtype: int &quot;&quot;&quot; bx = [v for v in bin(x)[2:]] by = [v for v in bin(y)[2:]] bx.reverse() by.reverse() i = 0; cnt = 0 while (i&lt;len(bx))&amp;(i&lt;len(by)): if bx[i] != by[i]: cnt += 1 i += 1 if len(bx)&gt;i: cnt += bx[i:].count(&#39;1&#39;) if len(by)&gt;i: cnt += by[i:].count(&#39;1&#39;) return cnt # return bin(x^y).count(&#39;1&#39;)]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 寻找旋转排序数组中的最小值2]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC2%2F</url>
+    <content type="text"><![CDATA[假设按照升序排序的数组在预先未知的某个点上进行了旋转。 ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。 请找出其中最小的元素。 注意数组中可能存在重复的元素。 示例 1： 输入: [1,3,5] 输出: 1 示例 2： 输入: [2,2,2,0,1] 输出: 0 说明： 这道题是 寻找旋转排序数组中的最小值 的延伸题目。允许重复会影响算法的时间复杂度吗？会如何影响，为什么？ class Solution(object): def findMin(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; for i in range(1, len(nums)): if nums[i] &lt; nums[i-1]: return nums[i] return nums[0]]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 寻找峰值]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E5%B3%B0%E5%80%BC%2F</url>
+    <content type="text"><![CDATA[峰值元素是指其值大于左右相邻值的元素。 给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。 数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。 你可以假设 nums[-1] = nums[n] = -∞。 示例 1: 输入: nums = [1,2,3,1] 输出: 2 解释: 3 是峰值元素，你的函数应该返回其索引 2。 示例 2: 输入: nums = [1,2,1,3,5,6,4] 输出: 1 或 5 解释: 你的函数可以返回索引 1，其峰值元素为 2； 或者返回索引 5， 其峰值元素为 6。 说明: 你的解法应该是 O(logN) 时间复杂度的。 class Solution(object): def findPeakElement(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; nums = [-1*float(&#39;inf&#39;)] + nums + [-1*float(&#39;inf&#39;)] for i in range(1, len(nums)-1): if (nums[i]&gt;nums[i-1])&amp;(nums[i]&gt;nums[i+1]): return i - 1 return 0]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1017,9 +945,81 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 缺失数字]]></title>
-    <url>%2F2017%2F07%2F05%2F%E7%BC%BA%E5%A4%B1%E6%95%B0%E5%AD%97%2F</url>
-    <content type="text"><![CDATA[给定一个包含 0, 1, 2, …, n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。 示例 1: 输入: [3,0,1] 输出: 2 示例 2: 输入: [9,6,4,2,3,5,7,0,1] 输出: 8 说明:你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现? class Solution(object): def missingNumber(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; nums = sorted(nums) for i in range(len(nums)-1): if nums[i+1] &gt; nums[i] + 1: return i + 1 if len(nums) == nums[-1]: return 0 else: return len(nums)]]></content>
+    <title><![CDATA[LeetCode - Fizz Buzz]]></title>
+    <url>%2F2017%2F07%2F05%2FFizz%20Buzz%2F</url>
+    <content type="text"><![CDATA[写一个程序，输出从 1 到 n 数字的字符串表示。 如果 n 是3的倍数，输出“Fizz”； 如果 n 是5的倍数，输出“Buzz”； 3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。 示例： n = 15, 返回: [ &quot;1&quot;, &quot;2&quot;, &quot;Fizz&quot;, &quot;4&quot;, &quot;Buzz&quot;, &quot;Fizz&quot;, &quot;7&quot;, &quot;8&quot;, &quot;Fizz&quot;, &quot;Buzz&quot;, &quot;11&quot;, &quot;Fizz&quot;, &quot;13&quot;, &quot;14&quot;, &quot;FizzBuzz&quot; ] 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和 class Solution: def fizzBuzz(self, n): &quot;&quot;&quot; :type n: int :rtype: List[str] &quot;&quot;&quot; tmp = [&quot;&quot; for v in range(n)] for v in range(2,n,3): tmp[v] += &#39;Fizz&#39; for v in range(4,n,5): tmp[v] += &#39;Buzz&#39; for v in range(n): if tmp[v] == &quot;&quot;: tmp[v] = str(v+1) return tmp]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 爬楼梯]]></title>
+    <url>%2F2017%2F07%2F05%2F%E7%88%AC%E6%A5%BC%E6%A2%AF%2F</url>
+    <content type="text"><![CDATA[假设你正在爬楼梯。需要 n 步你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 输入： 2 输出： 2 解释： 有两种方法可以爬到楼顶。 1 步 + 1 步 2 步 示例 2： 输入： 3 输出： 3 解释： 有三种方法可以爬到楼顶。 1 步 + 1 步 + 1 步 1 步 + 2 步 2 步 + 1 步 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [0]*(n+1) tmp[0] = 1 tmp[1] = 1 for i in range(2, n+1): tmp[i] = tmp[i-1] + tmp[i-2] return tmp[n] 思路1(递推法求解) 首先求得递推公式 F(n) = F(n-1) + F(n-2) 实现 class Solution: def get_value(self, n, tmp): if n &lt;= 1: return 1 # 如果记忆过，则直接返回值 if tmp[n] != -1: return tmp[n] # 否则重新计算 tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp) return tmp[n] def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [-1]*(n+1) return self.get_value(n, tmp) 思路2(记忆性递归) 递推公式 F(n) = F(n-1) + F(n-2) 递归实现 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; first = 1 second = 1 cur = 1 for i in range(2, n+1): cur = first + second first = second second= cur return cur 思路3 使用两个变量保存前两个值]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 打家劫舍]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D%2F</url>
+    <content type="text"><![CDATA[你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。 示例 1: 输入: [1,2,3,1] 输出: 4 解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。 偷窃到的最高金额 = 1 + 3 = 4 。 示例 2: 输入: [2,7,9,3,1] 输出: 12 解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。 偷窃到的最高金额 = 2 + 9 + 1 = 12 。 class Solution: def rob(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; if len(nums) == 0: return 0 elif len(nums) &lt; 2: return max(nums[0], nums[-1]) tmp = [0]*len(nums) tmp[0], tmp[1] = nums[0], max(nums[0], nums[1]) for i in range(2, len(nums)): tmp[i] = max(nums[i]+tmp[i-2], tmp[i-1]) return tmp[-1]]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 不同路径]]></title>
+    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%842%2F</url>
+    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？ 网格中的障碍物和空位置分别用 1 和 0 来表示。 说明：m 和 n 的值均不超过 100。 示例 1: 输入: [ [0,0,0], [0,1,0], [0,0,0]] 输出: 2 解释: 3x3 网格的正中间有一个障碍物。 从左上角到右下角一共有 2 条不同的路径： 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右 class Solution: def uniquePathsWithObstacles(self, obstacleGrid): &quot;&quot;&quot; :type obstacleGrid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(obstacleGrid[0]) n = len(obstacleGrid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, tmp, obstacleGrid) def myAns(self, m, n, tmp, obstacleGrid): if (m &lt;= 0) | (n &lt;= 0): return 0 if (m == 1) &amp; (n == 1): return 1 - obstacleGrid[0][0] if tmp[n][m] != -1: return tmp[n][m] # 障碍物的路径数为0 if obstacleGrid[n-1][m-1] == 1: tmp[n][m] = 0 else: # 左边路径数 left = self.myAns(m-1, n, tmp, obstacleGrid) # 上边路径数 up = self.myAns(m, n-1, tmp, obstacleGrid) tmp[n][m] = left + up return tmp[n][m] 思路(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；障碍点也认为是0； 保持递归过程的中间值；]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 第一个错误的版本]]></title>
+    <url>%2F2017%2F07%2F05%2F%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E7%9A%84%E7%89%88%E6%9C%AC%2F</url>
+    <content type="text"><![CDATA[你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。 假设你有 n 个版本 [1, 2, …, n]，你想找出导致之后所有版本出错的第一个错误的版本。 你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。 示例: 给定 n = 5，并且 version = 4 是第一个错误的版本。 调用 isBadVersion(3) -&gt; false 调用 isBadVersion(5) -&gt; true 调用 isBadVersion(4) -&gt; true 所以，4 是第一个错误的版本。 # The isBadVersion API is already defined for you. # @param version, an integer # @return a bool # def isBadVersion(version): class Solution(object): def firstBadVersion(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; left = 1; right = n while left &lt; right: mid = (left + right)//2 if isBadVersion(mid) == True: right = mid else: left = mid + 1 return left]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 长度最小的子数组]]></title>
+    <url>%2F2017%2F07%2F05%2F%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%2F</url>
+    <content type="text"><![CDATA[给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。 示例: 输入: s = 7, nums = [2,3,1,2,4,3] 输出: 2 解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。 进阶: 如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。 class Solution(object): def minSubArrayLen(self, s, nums): &quot;&quot;&quot; :type s: int :type nums: List[int] :rtype: int &quot;&quot;&quot; solution = float(&#39;inf&#39;) tmp_sum = 0 # j指向子数组的最前端 j = 0 for i, num in enumerate(nums): tmp_sum += num while tmp_sum &gt;= s: # 大于等于，都是将子数组最前端去掉 solution = min(solution, i-j+1) tmp_sum -= nums[j] j += 1 return 0 if solution == float(&#39;inf&#39;) else solution]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 有效的括号]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%2F</url>
+    <content type="text"><![CDATA[给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。 有效字符串需满足： 左括号必须用相同类型的右括号闭合。左括号必须以正确的顺序闭合。注意空字符串可被认为是有效字符串。 示例 1: 输入: &quot;()&quot; 输出: true 示例 2: 输入: &quot;()[]{}&quot; 输出: true 示例 3: 输入: &quot;(]&quot; 输出: false 示例 4: 输入: &quot;([)]&quot; 输出: false 示例 5: 输入: &quot;{[]}&quot; 输出: true class Solution(object): def isValid(self, s): &quot;&quot;&quot; :type s: str :rtype: bool &quot;&quot;&quot; if len(s)&lt;1: return True d = {&#39;(&#39;:&#39;)&#39;, &#39;[&#39;:&#39;]&#39;, &#39;{&#39;:&#39;}&#39;} # 当做栈 res = [] # 依次入栈 for v in s: # 栈里有东西则进行比较，是否消除 if len(res) &gt; 0: # 必须是左括号才能消除 if res[-1] in d.keys(): if d[res[-1]] == v: res.pop() continue res.append(v) if len(res) &gt; 0: return False else: return True]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1041,9 +1041,21 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 不同路径]]></title>
-    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%842%2F</url>
-    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？ 网格中的障碍物和空位置分别用 1 和 0 来表示。 说明：m 和 n 的值均不超过 100。 示例 1: 输入: [ [0,0,0], [0,1,0], [0,0,0]] 输出: 2 解释: 3x3 网格的正中间有一个障碍物。 从左上角到右下角一共有 2 条不同的路径： 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右 class Solution: def uniquePathsWithObstacles(self, obstacleGrid): &quot;&quot;&quot; :type obstacleGrid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(obstacleGrid[0]) n = len(obstacleGrid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, tmp, obstacleGrid) def myAns(self, m, n, tmp, obstacleGrid): if (m &lt;= 0) | (n &lt;= 0): return 0 if (m == 1) &amp; (n == 1): return 1 - obstacleGrid[0][0] if tmp[n][m] != -1: return tmp[n][m] # 障碍物的路径数为0 if obstacleGrid[n-1][m-1] == 1: tmp[n][m] = 0 else: # 左边路径数 left = self.myAns(m-1, n, tmp, obstacleGrid) # 上边路径数 up = self.myAns(m, n-1, tmp, obstacleGrid) tmp[n][m] = left + up return tmp[n][m] 思路(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；障碍点也认为是0； 保持递归过程的中间值；]]></content>
+    <title><![CDATA[LeetCode - 编辑距离]]></title>
+    <url>%2F2017%2F07%2F05%2F%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB%2F</url>
+    <content type="text"><![CDATA[给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作： 插入一个字符 删除一个字符 替换一个字符 示例 1: 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot; 输出: 3 解释: horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;) rorse -&gt; rose (删除 &#39;r&#39;) rose -&gt; ros (删除 &#39;e&#39;) 示例 2: 输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot; 输出: 5 解释: intention -&gt; inention (删除 &#39;t&#39;) inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;) enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;) exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;) exection -&gt; execution (插入 &#39;u&#39;) class Solution: def minDistance(self, word1, word2): &quot;&quot;&quot; :type word1: str :type word2: str :rtype: int &quot;&quot;&quot; l1 = len(word1) l2 = len(word2) tmp = [] for i in range(l1+1): tmp.append([-1]*(l2+1)) return self.myMethod(word1, word2, l1, l2, tmp) def myMethod(self, word1, word2, l1, l2, tmp): if l1 == 0: return l2 if l2 == 0: return l1 if tmp[l1][l2] != -1: return tmp[l1][l2] if word1[l1-1] == word2[l2-1]: res = self.myMethod(word1,word2, l1-1, l2-1, tmp) else: res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp), min(self.myMethod(word1, word2, l1 - 1, l2, tmp), self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1 tmp[l1][l2] = res return res 思路 最后一位如果相等，则去掉后求子问题； 如不等，则至少需要一步，然后分情况讨论：]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 买卖股票的最佳时机]]></title>
+    <url>%2F2017%2F07%2F05%2F%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%2F</url>
+    <content type="text"><![CDATA[给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。 示例 2: 输入: [7,6,4,3,1] 输出: 0 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。 思路 遍历过程中记录最低股价； 同时记录最高差价； class Solution: def maxProfit(self, prices): &quot;&quot;&quot; :type prices: List[int] :rtype: int &quot;&quot;&quot; res = 0 buy = float(&#39;inf&#39;) for v in prices: buy = min(buy, v) res = max(res, v-buy) return res]]></content>
       <categories>
         <category>编程</category>
       </categories>
