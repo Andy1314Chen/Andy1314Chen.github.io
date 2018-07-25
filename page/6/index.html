@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/替换空格/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/用两个栈实现队列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/替换空格/" itemprop="url">替换空格(剑指offer第二题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/用两个栈实现队列/" itemprop="url">用两个栈实现队列(剑指offer第五题)</a></h1>
         
 
         <div class="post-meta">
@@ -395,14 +395,25 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        # s 源字符串
-        def replaceSpace(self, s):
+        def __init__(self):
+            self.In = []
+            self.Out = []
+
+        def push(self, node):
             # write code here
-            return s.replace(&#39; &#39;, &#39;%20&#39;)
+            self.In.append(node)
+        def pop(self):
+            # return xx
+            if  self.Out:# Out为空，将In中反顺序装入Out,以实现先入先出
+                return self.Out.pop()
+            else:# 不为空，直接弹出
+                while self.In:
+                    self.Out.append(self.In.pop())
+                return self.Out.pop()
 </code></pre>
 
           
@@ -447,7 +458,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/旋转数组的最小数字/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/矩形覆盖/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -466,7 +477,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/旋转数组的最小数字/" itemprop="url">旋转数组的最小数字(剑指offer第六题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/矩形覆盖/" itemprop="url">矩形覆盖(剑指offer第十题)</a></h1>
         
 
         <div class="post-meta">
@@ -541,176 +552,25 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>我们可以用2<em>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2</em>1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def minNumberInRotateArray(self, rotateArray):
+        def rectCover(self, number):
             # write code here
-            if len(rotateArray) &lt; 1:
-                return 0
-            i = 1
-            while i &lt; len(rotateArray):
-                if rotateArray[i] &lt; rotateArray[i-1]:
-                    return rotateArray[i]
-                i += 1
-            return rotateArray[-1]
-</code></pre>
+            if number &lt;= 3:
+                return number
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/菲波那切数列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/菲波那切数列/" itemprop="url">菲波那切数列(剑指offer第七题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。<br>n&lt;=39</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def Fibonacci(self, n):
-            # write code here
-            if n &lt; 2:
-                return n
-
-            first = 1
-            second = 0
+            first = 3
+            second = 2
             res = 0
-            for i in range(1,n):
+            for i in range(3, number):
                 res = first + second
                 second = first
                 first = res
             return res
 </code></pre>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
 
           
         
@@ -1039,6 +899,318 @@
             return tmp[number]
 </code></pre>
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/从尾到头打印链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/从尾到头打印链表/" itemprop="url">从尾到头打印链表(剑指offer第三题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+
+    class Solution:
+        # 返回从尾部到头部的列表值序列，例如[1,2,3]
+        def printListFromTailToHead(self, listNode):
+            # write code here
+            if listNode == None:
+                return []
+            res = []
+            while listNode != None:
+                res.append(listNode.val)
+                listNode = listNode.next
+            return res[::-1]
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/菲波那切数列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/菲波那切数列/" itemprop="url">菲波那切数列(剑指offer第七题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。<br>n&lt;=39</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def Fibonacci(self, n):
+            # write code here
+            if n &lt; 2:
+                return n
+
+            first = 1
+            second = 0
+            res = 0
+            for i in range(1,n):
+                res = first + second
+                second = first
+                first = res
+            return res
+</code></pre>
 
           
         
@@ -2224,250 +2396,6 @@ def feature_ranking(score):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/16/Snowboy使用说明_Hotword Detection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/16/Snowboy使用说明_Hotword Detection/" itemprop="url">Snowboy使用说明_Hotword Detection</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-16T00:00:00+08:00">
-                2017-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/树莓派3/" itemprop="url" rel="index">
-                    <span itemprop="name">树莓派3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Snowboy是一个高度自定义的基于实时甚至离线情况的hotword detection engine(敏感词检测机制？)，兼容Raspberry Pi,Linux and Mac OS X.</p>
-<p>hotword也被称为唤醒词(wake word)或触发词(trigger word)通常是一个关键词或短语，计算机会一直监听作为一个信号用于触发其他操作。</p>
-<p>有一些例子，如Amazon Echo的“Alexa”、Google Assistant的”OK Google”和iPhone的“Hey Siri”. 这些关键词用于触发一个全面的语音交互。但是，hotwords同样可以用于其他方面，像是命令和控制等。</p>
-<p>一种简单的方案是，运行全ASR(Automatic Speech Recognition)来检测hotword detection.在这种方案中，设备会一直观察特定触发词。但是ASR也会消耗设备和带宽资源。同样的，如果基于云的应用，将不能保护你的隐私。（因为会一直开着麦克风来检测关键词，那么周围环境包括你说的话也会实时被监听了).幸运的是，Snowboy会用来解决此类问题。</p>
-<ul>
-<li>highly customizable(高度自定义）</li>
-<li>always listening but protects your privacy(总是检测但是不会泄露隐私）</li>
-<li>light-weight and embedded</li>
-<li>Apache licensed!</li>
-</ul>
-<p><img src="http://i.imgur.com/iJulCvp.jpg" alt="Snowboy"></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><p>准备工作：</p>
-<ol>
-<li>一台带有microphone的设备</li>
-<li>相应的解压软件 </li>
-<li>训练好的模型</li>
-</ol>
-<p><a href="https://s3-us-west-2.amazonaws.com/snowboy/snowboy-releases/rpi-arm-raspbian-8.0-1.1.1.tar.bz2" target="_blank" rel="external">树莓派pre-packaged</a></p>
-<h3 id="Access-Microphone"><a href="#Access-Microphone" class="headerlink" title="Access Microphone"></a>Access Microphone</h3><p>使用PortAudio作为一个跨平台的音频输入/输出。同样也使用sox快速检查microphone是否正确安装。</p>
-<ol>
-<li>Install Sox</li>
-</ol>
-<pre><code class="Python">  sudo apt-get install python-pyaudio python3-pyaudio sox
-</code></pre>
-<ol>
-<li>Install PortAudio’s Python bindings:</li>
-</ol>
-<pre><code class="Python">   pip install pyaudio
-   #pip-3.2 install pyaudio
-</code></pre>
-<ol>
-<li>To check whether you can record via your microphone, open a terminal and run:</li>
-</ol>
-<pre><code class="Python">   rec temp.wav
-   #记录个几秒中，ctrl+c,再play temp.wav,听声
-</code></pre>
-<h3 id="Decoder-Structures"><a href="#Decoder-Structures" class="headerlink" title="Decoder Structures"></a>Decoder Structures</h3><p>上面预安装包下载解压后，如下：</p>
-<blockquote>
-<p>├── README.md</p>
-<p>├── _snowboydetect.so</p>
-<p>├── demo.py</p>
-<p>├── demo2.py</p>
-<p>├── light.py</p>
-<p>├── requirements.txt</p>
-<p>├── resources</p>
-<p>│   ├── ding.wav</p>
-<p>│   ├── dong.wav</p>
-<p>│   ├── common.res</p>
-<p>│   └── snowboy.umdl</p>
-<p>├── snowboydecoder.py</p>
-<p>├── snowboydetect.py</p>
-<p>└── version</p>
-</blockquote>
-<p><strong>_snowboydetect.so</strong>是用SWIG编译的一个动态链接库，依赖于系统的Python2库。snowboy所有相关库都被静态连接在这个文件里。</p>
-<p><strong>snowboydetect.py</strong>是一个SWIG生成的python wrapper文件。因为不易阅读，我们创建了高等级的wrapper: <strong>snowboydecoder.py</strong></p>
-<p>应该在<a href="https://snowboy.kitt.ai" target="_blank" rel="external">https://snowboy.kitt.ai </a>上训练你的模型(snowboy.pmdl)，或者你也可以使用同一模型<strong>resources/snowboy.umdl</strong></p>
-<h3 id="Runing-a-Demo"><a href="#Runing-a-Demo" class="headerlink" title="Runing a Demo"></a>Runing a Demo</h3><ol>
-<li>To access the simple demo in <strong>main</strong> code of snowboydecoder.py, run the following command in your Terminal:</li>
-</ol>
-<pre><code class="Python">    python demo.py snowboy.pmdl
-    #snowboy.pmdl是你训练的hotword模型
-</code></pre>
-<ol>
-<li>When prompt,speak into your microphone to see whether snowboy detects your magic phrase.</li>
-</ol>
-<pre><code class="Python">
-    #demo.py
-
-    import snowboydecoder
-    import sys
-    import signal
-
-    interrupted = False
-
-    def signal_handler(signal, frame):
-        global interrupted
-        interrupted = True
-
-    def interrupt_callback():
-        global interrupted
-        return interrupted
-
-    if len(sys.argv) == 1:
-        print(&quot;Error: need to specify model name&quot;)
-        print(&quot;Usage: python demo.py your.model&quot;)
-        sys.exit(-1)
-
-    model = sys.argv[1]
-
-    signal.signal(signal.SIGINT, signal_handler)
-
-    detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
-    print(&#39;Listening... Press Ctrl+C to exit&#39;)
-
-    detector.start(detected_callback=snowboydecoder.ding_callback,
-                   interrupt_check=interrupt_callback,
-                   sleep_time=0.03)
-
-    detector.terminate()
-</code></pre>
-<p>主程序在<strong>detector.start()</strong>中循环，每<strong>sleep_time=0.03</strong>:</p>
-<ol>
-<li>检查ring buffer 是否有hotword, if <strong>YES</strong>,调用<strong>detected_callback</strong>函数</li>
-<li>调用<strong>interrupt_check</strong>函数，if <strong>True</strong>，中断主程序，返回.</li>
-</ol>
-<p>目前，在demo中令detected_callback=snowboydecoder.ding_callback,所以每当检测到关键词时，设备会“叮”一下。</p>
-<p><strong>原文出处</strong>：<a href="http://docs.kitt.ai/snowboy/#running-a-demo" target="_blank" rel="external">http://docs.kitt.ai/snowboy/#running-a-demo</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2518,7 +2446,7 @@ def feature_ranking(score):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">109</span>
+                <span class="site-state-item-count">110</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

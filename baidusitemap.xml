@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/01/%E7%9F%A9%E5%BD%A2%E8%A6%86%E7%9B%96/</loc>
+    <lastmod>2018-07-25T15:34:43.477Z</lastmod>
+    <data>
+        <display>
+        <title>矩形覆盖(剑指offer第十题)</title>
+        <pubTime>2017-08-31T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>剑指offer</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/09/01/%E5%8F%98%E6%80%81%E8%B7%B3%E5%8F%B0%E9%98%B6/</loc>
     <lastmod>2018-07-25T15:25:19.915Z</lastmod>
     <data>
@@ -1946,9 +1968,9 @@
          
         <tag>算法</tag>
          
-        <tag>Python</tag>
-         
         <tag>sklearn</tag>
+         
+        <tag>Python</tag>
          
          
            
