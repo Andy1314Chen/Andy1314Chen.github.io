@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python,Leetcode," />
+  <meta name="keywords" content="python,剑指offer," />
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="颠倒给定的 32 位无符号整数的二进制位。 示例: 输入: 43261596 输出: 964176192 解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，      返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。 进阶:如果多次调用这个函数，你将如何优化你的算法？">
-<meta name="keywords" content="python,Leetcode">
+<meta name="description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。 代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solution:         #">
+<meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode - 颠倒二进制位">
-<meta property="og:url" content="http://yoursite.com/2017/07/05/颠倒二进制位/index.html">
+<meta property="og:title" content="反转链表(剑指offer第十五题)">
+<meta property="og:url" content="http://yoursite.com/2017/09/01/2反转链表/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="颠倒给定的 32 位无符号整数的二进制位。 示例: 输入: 43261596 输出: 964176192 解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，      返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。 进阶:如果多次调用这个函数，你将如何优化你的算法？">
+<meta property="og:description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。 代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solution:         #">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-22T08:07:20.869Z">
+<meta property="og:updated_time" content="2018-07-26T06:38:38.299Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode - 颠倒二进制位">
-<meta name="twitter:description" content="颠倒给定的 32 位无符号整数的二进制位。 示例: 输入: 43261596 输出: 964176192 解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，      返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。 进阶:如果多次调用这个函数，你将如何优化你的算法？">
+<meta name="twitter:title" content="反转链表(剑指offer第十五题)">
+<meta name="twitter:description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。 代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solution:         #">
 
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/05/颠倒二进制位/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/01/2反转链表/"/>
 
 
 
@@ -141,7 +141,7 @@
 
 <link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
 
-  <title>LeetCode - 颠倒二进制位 | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>反转链表(剑指offer第十五题) | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -304,7 +304,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/颠倒二进制位/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2反转链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -321,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">LeetCode - 颠倒二进制位</h1>
+          <h1 class="post-title" itemprop="name headline">反转链表(剑指offer第十五题)</h1>
         
 
         <div class="post-meta">
@@ -333,8 +333,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
               </time>
             
 
@@ -358,8 +358,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
                   </a>
                 </span>
 
@@ -394,24 +394,28 @@
       
 
       
-        <p>颠倒给定的 32 位无符号整数的二进制位。</p>
-<p>示例:</p>
-<pre><code>输入: 43261596
-输出: 964176192
-解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，
-     返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。
-</code></pre><p>进阶:<br>如果多次调用这个函数，你将如何优化你的算法？</p>
-<pre><code class="Python">
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
     class Solution:
-        # @param n, an integer
-        # @return an integer
-        def reverseBits(self, n):
-            # 32位填充
-            bin_1 = bin(n)[2:].zfill(32)
-            bin_1 = [v for v in bin_1]
-            bin_1.reverse()
-            res = int(&#39;&#39;.join(bin_1), 2)
-            return res
+        # 返回ListNode
+        def ReverseList(self, pHead):
+            # write code here
+            if pHead == None:
+                return None
+
+            newList = None
+            while pHead != None:
+                nextNode = pHead
+                pHead = pHead.next
+                nextNode.next = newList
+                newList = nextNode
+
+            return newList
 </code></pre>
 
       
@@ -444,7 +448,7 @@
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/Leetcode/" rel="tag"># Leetcode</a>
+            <a href="/tags/剑指offer/" rel="tag"># 剑指offer</a>
           
         </div>
       
@@ -457,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/第一个错误的版本/" rel="next" title="LeetCode - 第一个错误的版本">
-                <i class="fa fa-chevron-left"></i> LeetCode - 第一个错误的版本
+              <a href="/2017/09/01/GBDT调参总结/" rel="next" title="GBDT调参总结">
+                <i class="fa fa-chevron-left"></i> GBDT调参总结
               </a>
             
           </div>
@@ -467,8 +471,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/2寻找重复数/" rel="prev" title="LeetCode - 寻找重复数">
-                LeetCode - 寻找重复数 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/菲波那切数列/" rel="prev" title="菲波那切数列(剑指offer第七题)">
+                菲波那切数列(剑指offer第七题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -517,8 +521,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -612,6 +625,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
