@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/GBDT调参总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" itemprop="url">调整数组顺序使奇数位于偶数前面(剑指offer第十三题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/GBDT调参总结/" itemprop="url">GBDT调参总结</a></h1>
         
 
         <div class="post-meta">
@@ -395,23 +395,312 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+            <h3 id="GBDT参数"><a href="#GBDT参数" class="headerlink" title="GBDT参数"></a>GBDT参数</h3><p>主要有三部分参数：</p>
+<ol>
+<li>Tree-Specific Parameters: 影响单棵决策树</li>
+<li>Boosting Parameters: 影响提升</li>
+<li>Misc Parameters: 整个模型其他参数</li>
+</ol>
+<h4 id="决策树相关参数"><a href="#决策树相关参数" class="headerlink" title="决策树相关参数"></a>决策树相关参数</h4><ul>
+<li><p><strong>min_samples_split</strong></p>
+<ul>
+<li>Defines the minimum number of samples (or observations) which are required in a node to be considered for splitting.</li>
+<li>Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree.</li>
+<li>Too high values can lead to under-fitting hence, it should be tuned using CV.</li>
+</ul>
+</li>
+<li><p><strong>min_samples_leaf</strong></p>
+<ul>
+<li>Defines the minimum samples (or observations) required in a terminal node or leaf.</li>
+<li>Used to control over-fitting similar to min_samples_split.</li>
+<li>Generally lower values should be chosen for imbalanced class problems because the regions in which the minority class will be in majority will be very small.</li>
+</ul>
+</li>
+<li><strong>min_weight_fraction_leaf</strong><ul>
+<li>Similar to min_samples_leaf but defined as a fraction of the total number of observations instead of an integer.</li>
+<li>Only one of #2 and #3 should be defined.</li>
+</ul>
+</li>
+<li><strong>max_depth</strong><ul>
+<li>The maximum depth of a tree.</li>
+<li>Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample.</li>
+<li>Should be tuned using CV.</li>
+</ul>
+</li>
+<li><strong>max_leaf_nodes</strong><ul>
+<li>The maximum number of terminal nodes or leaves in a tree.</li>
+<li>Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves.</li>
+<li>If this is defined, GBM will ignore max_depth.</li>
+</ul>
+</li>
+<li><strong>max_features</strong><ul>
+<li>The number of features to consider while searching for a best split. These will be <strong>randomly selected</strong>.</li>
+<li>As a thumb-rule, square root of the total number of features works great but we should check upto 30-40% of the total number of features.</li>
+<li>Higher values can lead to over-fitting but depends on case to case.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="Python">
+    # GBDT的基本过程：
+    1. Initialize the outcome
+    2. Iterate from 1 to total number of trees
+      2.1 Update the weights for targets based on previous run (higher for the ones mis-classified)
+      2.2 Fit the model on selected subsample of data(行采样?)
+      2.3 Make predictions on the full set of observations
+      2.4 Update the output with current results taking into account the learning rate
+    3. Return the final output.
+</code></pre>
+<h4 id="Boosting相关参数"><a href="#Boosting相关参数" class="headerlink" title="Boosting相关参数"></a>Boosting相关参数</h4><ul>
+<li><strong>learning_rate</strong><ul>
+<li>This determines the impact of each tree on the final outcome (step 2.4). GBM works by starting with an initial estimate which is updated using the output of each tree. The learning parameter controls the magnitude of this change in the estimates.</li>
+<li>Lower values are generally preferred as they make the model robust to the specific characteristics of tree and thus allowing it to generalize well.</li>
+<li>Lower values would require higher number of trees to model all the relations and will be computationally expensive.</li>
+</ul>
+</li>
+<li><strong>n_estimators</strong><ul>
+<li>The number of sequential trees to be modeled (step 2)</li>
+<li>Though GBM is fairly robust at higher number of trees but it can still overfit at a point. Hence, this should be tuned using CV for a particular learning rate.(先确定学习率，再确定树个数)</li>
+</ul>
+</li>
+<li><strong>subsample</strong><ul>
+<li>The fraction of observations to be selected for each tree. Selection is done by random sampling.</li>
+<li>Values slightly less than 1 make the model robust by reducing the variance.(行采样，可以减少方差)</li>
+<li>Typical values ~0.8 generally work fine but can be fine-tuned further.</li>
+</ul>
+</li>
+</ul>
+<h4 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h4><ul>
+<li><strong>loss</strong><ul>
+<li>It refers to the loss function to be minimized in each split.</li>
+<li>It can have various values for classification and regression case. Generally the default values work fine. Other values should be chosen only if you understand their impact on the model.</li>
+</ul>
+</li>
+<li><strong>init</strong><ul>
+<li>This affects initialization of the output.</li>
+<li>This can be used if we have made another model whose outcome is to be used as the initial estimates for GBM.</li>
+</ul>
+</li>
+<li><strong>random_state</strong><ul>
+<li>The random number seed so that same random numbers are generated every time.</li>
+<li>This is important for parameter tuning. If we don’t fix the random number, then we’ll have different outcomes for subsequent runs on the same parameters and it becomes difficult to compare models.</li>
+<li>It can potentially result in overfitting to a particular random sample selected. We can try running models for different random samples, which is computationally expensive and generally not used.</li>
+</ul>
+</li>
+<li><strong>verbose</strong><ul>
+<li>The type of output to be printed when the model fits. The different values can be:<ul>
+<li>0: no output generated (default)</li>
+<li>1: output generated for trees in certain intervals</li>
+<li><blockquote>
+<p>1: output generated for all trees</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>warm_start</strong><ul>
+<li>This parameter has an interesting application and can help a lot if used judicially.</li>
+<li>Using this, we can fit additional trees on previous fits of a model. It can save a lot of time and you should explore this option for advanced applications</li>
+</ul>
+</li>
+<li><strong>presort</strong> <ul>
+<li>Select whether to presort data for faster splits.<ul>
+<li>It makes the selection automatically by default but it can be changed if needed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="调参"><a href="#调参" class="headerlink" title="调参"></a>调参</h3><ol>
+<li>Choose a relatively <strong>high learning rate</strong>. Generally the default value of 0.1 works but somewhere between 0.05 to 0.2 should work for different problems</li>
+<li>Determine <strong>the optimum number of trees for this learning rate</strong>. This should range around 40-70. Remember to choose a value on which your system can work fairly fast. This is because it will be used for testing various scenarios and determining the tree parameters.</li>
+<li><strong>Tune tree-specific parameters</strong> for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.</li>
+<li><strong>Lower the learning rate and increase the estimators</strong> proportionally to get more robust models.</li>
+</ol>
+<h4 id="Fix-Learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters"><a href="#Fix-Learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters" class="headerlink" title="Fix Learning rate and number of estimators for tuning tree-based parameters"></a>Fix Learning rate and number of estimators for tuning tree-based parameters</h4><p>先固定相关参数，来网格搜索指定学习率下的决策树数量：</p>
+<ol>
+<li><strong>min_samples_split = 500</strong>: This should be <strong>~0.5-1% of total values</strong>. Since this is imbalanced class problem, we’ll take a small value from the range.</li>
+<li><strong>min_samples_leaf = 50</strong> : Can be selected based on intuition. This is just used for preventing overfitting and again a small value because of imbalanced classes.</li>
+<li><strong>max_depth = 8</strong> : Should be chosen (5-8) based on the number of observations and predictors. This has 87K rows and 49 columns so lets take 8 here.</li>
+<li><strong>max_features = ‘sqrt’</strong> : Its a general thumb-rule to start with square root.</li>
+<li><strong>subsample = 0.8 :</strong> This is a commonly used used start value</li>
+</ol>
+<p><strong>建议</strong></p>
+<ul>
+<li>If the value is around 20, you might want to try lowering the learning rate to 0.05 and re-run grid search</li>
+<li>If the values are too high ~100, tuning the other parameters will take long time and you can try a higher learning rate</li>
+</ul>
+<blockquote>
+<p>此步骤完成后，简单确定了Boosting相关的两个参数，1）learning_rate; 2) n_estimators</p>
+</blockquote>
+<h4 id="Tuning-tree-specific-parameters"><a href="#Tuning-tree-specific-parameters" class="headerlink" title="Tuning tree-specific parameters"></a>Tuning tree-specific parameters</h4><ol>
+<li>Tune max_depth and num_samples_split</li>
+<li>Tune min_samples_leaf</li>
+<li>Tune max_features</li>
+</ol>
+<p>调参的顺序一定要注意，首先应该调整对结果影响较大的几个参数，这里<strong>max_depth</strong>&amp;<strong>min_samples_split</strong>影响较大，故先确定他们。</p>
+<blockquote>
+<p>此时，确定了 1）max_depth 和 min_samples_split</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2反转链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/2反转链表/" itemprop="url">反转链表(剑指offer第十五题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
     class Solution:
-        def reOrderArray(self, array):
+        # 返回ListNode
+        def ReverseList(self, pHead):
             # write code here
-            if len(array) &lt; 1:
-                return []
-            array1 = []
-            array2 = []
-            for v in array:
-                if v%2:
-                    array1.append(v)
-                else:
-                    array2.append(v)
-            array = array1 + array2
-            return array
+            if pHead == None:
+                return None
+
+            newList = None
+            while pHead != None:
+                nextNode = pHead
+                pHead = pHead.next
+                nextNode.next = newList
+                newList = nextNode
+
+            return newList
 </code></pre>
 
           
@@ -456,7 +745,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二维数组中的查找/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/链表中倒数第K个结点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -475,7 +764,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/二维数组中的查找/" itemprop="url">二维数组中的查找(剑指offer第一题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/链表中倒数第K个结点/" itemprop="url">链表中倒数第K个节点(剑指offer第十四题)</a></h1>
         
 
         <div class="post-meta">
@@ -550,178 +839,7 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<h3 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*- 暴力解法
-    class Solution:
-        # array 二维列表
-        def Find(self, target, array):
-            # write code here
-            n = len(array)
-            m = len(array[0])
-            for i in range(n):
-                for j in range(m):
-                    if array[i][j] == target:
-                        return True
-            return False
-</code></pre>
-<h3 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-  每次查找右上角的值的大小
-    class Solution:
-        # array 二维列表
-        def Find(self, target, array):
-            # write code here
-            col = len(array[0])
-            row = len(array)
-            cur_col = col - 1
-            cur_row = 0
-            while (cur_row&lt;row)&amp;(cur_col&gt;=0):
-                if array[cur_row][cur_col] == target:
-                    return True
-                elif array[cur_row][cur_col] &gt; target: # 排除该列
-                    cur_col -= 1
-                elif array[cur_row][cur_col] &lt; target: # 排除该行
-                    cur_row += 1
-            return False
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/从尾到头打印链表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/从尾到头打印链表/" itemprop="url">从尾到头打印链表(剑指offer第三题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，输出该链表中倒数第k个结点。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     # class ListNode:
@@ -730,16 +848,24 @@
     #         self.next = None
 
     class Solution:
-        # 返回从尾部到头部的列表值序列，例如[1,2,3]
-        def printListFromTailToHead(self, listNode):
+        def FindKthToTail(self, head, k):
             # write code here
-            if listNode == None:
-                return []
-            res = []
-            while listNode != None:
-                res.append(listNode.val)
-                listNode = listNode.next
-            return res[::-1]
+            # 快慢指针，快指针先走k步
+            if k == 0:
+                return None
+
+            cnt = 1
+            first = head
+            while (first != None)&amp;(cnt &lt; k):
+                first = first.next
+                cnt += 1
+            if first == None: # 链表长度小于3
+                return None
+            second = head
+            while first.next != None:
+                first = first.next
+                second = second.next
+            return second
 </code></pre>
 
           
@@ -1118,6 +1244,157 @@ kNN.handwritingClassTest()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二进制中1的个数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/二进制中1的个数/" itemprop="url">二进制中1的个数(剑指offer第十一题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def NumberOf1(self, n):
+            # write code here
+            cnt = 0
+            if n &lt; 0:
+                n = n&amp;0xffffffff
+            while n:
+                cnt += 1
+                n = n&amp;(n-1)
+            return cnt
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/数值的整数次方/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1233,157 +1510,6 @@ kNN.handwritingClassTest()
                 return 1./res
             else:
                 return res
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二进制中1的个数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/二进制中1的个数/" itemprop="url">二进制中1的个数(剑指offer第十一题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def NumberOf1(self, n):
-            # write code here
-            cnt = 0
-            if n &lt; 0:
-                n = n&amp;0xffffffff
-            while n:
-                cnt += 1
-                n = n&amp;(n-1)
-            return cnt
 </code></pre>
 
           
@@ -1581,7 +1707,7 @@ kNN.handwritingClassTest()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/链表中倒数第K个结点/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/从尾到头打印链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1600,7 +1726,7 @@ kNN.handwritingClassTest()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/链表中倒数第K个结点/" itemprop="url">链表中倒数第K个节点(剑指offer第十四题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/从尾到头打印链表/" itemprop="url">从尾到头打印链表(剑指offer第三题)</a></h1>
         
 
         <div class="post-meta">
@@ -1675,7 +1801,7 @@ kNN.handwritingClassTest()
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，输出该链表中倒数第k个结点。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     # class ListNode:
@@ -1684,24 +1810,16 @@ kNN.handwritingClassTest()
     #         self.next = None
 
     class Solution:
-        def FindKthToTail(self, head, k):
+        # 返回从尾部到头部的列表值序列，例如[1,2,3]
+        def printListFromTailToHead(self, listNode):
             # write code here
-            # 快慢指针，快指针先走k步
-            if k == 0:
-                return None
-
-            cnt = 1
-            first = head
-            while (first != None)&amp;(cnt &lt; k):
-                first = first.next
-                cnt += 1
-            if first == None: # 链表长度小于3
-                return None
-            second = head
-            while first.next != None:
-                first = first.next
-                second = second.next
-            return second
+            if listNode == None:
+                return []
+            res = []
+            while listNode != None:
+                res.append(listNode.val)
+                listNode = listNode.next
+            return res[::-1]
 </code></pre>
 
           
@@ -1746,7 +1864,7 @@ kNN.handwritingClassTest()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/变态跳台阶/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/旋转数组的最小数字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1765,7 +1883,7 @@ kNN.handwritingClassTest()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/变态跳台阶/" itemprop="url">变态跳台阶(剑指offer第九题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/旋转数组的最小数字/" itemprop="url">旋转数组的最小数字(剑指offer第六题)</a></h1>
         
 
         <div class="post-meta">
@@ -1840,26 +1958,21 @@ kNN.handwritingClassTest()
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def jumpFloorII(self, number):
+        def minNumberInRotateArray(self, rotateArray):
             # write code here
-            tmp = [-1]*(number+1)
-            return self.myWays(number, tmp)
-
-        def myWays(self, number, tmp):
-            if number &lt;= 0:
+            if len(rotateArray) &lt; 1:
                 return 0
-            if number == 1:
-                return 1
-            if tmp[number] != -1:
-                return tmp[number]
-            tmp[number] = self.myWays(number-1, tmp)*2
-            return tmp[number]
+            i = 1
+            while i &lt; len(rotateArray):
+                if rotateArray[i] &lt; rotateArray[i-1]:
+                    return rotateArray[i]
+                i += 1
+            return rotateArray[-1]
 </code></pre>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
 
           
         
@@ -1903,7 +2016,7 @@ kNN.handwritingClassTest()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/替换空格/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1922,7 +2035,7 @@ kNN.handwritingClassTest()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/替换空格/" itemprop="url">替换空格(剑指offer第二题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" itemprop="url">调整数组顺序使奇数位于偶数前面(剑指offer第十三题)</a></h1>
         
 
         <div class="post-meta">
@@ -1997,14 +2110,23 @@ kNN.handwritingClassTest()
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        # s 源字符串
-        def replaceSpace(self, s):
+        def reOrderArray(self, array):
             # write code here
-            return s.replace(&#39; &#39;, &#39;%20&#39;)
+            if len(array) &lt; 1:
+                return []
+            array1 = []
+            array2 = []
+            for v in array:
+                if v%2:
+                    array1.append(v)
+                else:
+                    array2.append(v)
+            array = array1 + array2
+            return array
 </code></pre>
 
           
@@ -2090,7 +2212,7 @@ kNN.handwritingClassTest()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">116</span>
+                <span class="site-state-item-count">118</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
