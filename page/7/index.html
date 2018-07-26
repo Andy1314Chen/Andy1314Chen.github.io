@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/旋转数组的最小数字/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/旋转数组的最小数字/" itemprop="url">旋转数组的最小数字(剑指offer第六题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" itemprop="url">调整数组顺序使奇数位于偶数前面(剑指offer第十三题)</a></h1>
         
 
         <div class="post-meta">
@@ -395,20 +395,23 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def minNumberInRotateArray(self, rotateArray):
+        def reOrderArray(self, array):
             # write code here
-            if len(rotateArray) &lt; 1:
-                return 0
-            i = 1
-            while i &lt; len(rotateArray):
-                if rotateArray[i] &lt; rotateArray[i-1]:
-                    return rotateArray[i]
-                i += 1
-            return rotateArray[-1]
+            if len(array) &lt; 1:
+                return []
+            array1 = []
+            array2 = []
+            for v in array:
+                if v%2:
+                    array1.append(v)
+                else:
+                    array2.append(v)
+            array = array1 + array2
+            return array
 </code></pre>
 
           
@@ -453,7 +456,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2反转链表/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/包含min函数的栈/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -472,7 +475,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/2反转链表/" itemprop="url">反转链表(剑指offer第十五题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/包含min函数的栈/" itemprop="url">包含min函数的栈(剑指offer第二十题)</a></h1>
         
 
         <div class="post-meta">
@@ -547,28 +550,24 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
     class Solution:
-        # 返回ListNode
-        def ReverseList(self, pHead):
+        def __init__(self):
+            self.stack = []
+        def push(self, node):
             # write code here
-            if pHead == None:
-                return None
-
-            newList = None
-            while pHead != None:
-                nextNode = pHead
-                pHead = pHead.next
-                nextNode.next = newList
-                newList = nextNode
-
-            return newList
+            self.stack.append(node)
+        def pop(self):
+            # write code here
+            return self.stack.pop()
+        def top(self):
+            # write code here
+            return self.stack[-1]
+        def min(self):
+            # write code here
+            return min(self.stack)
 </code></pre>
 
           
@@ -613,7 +612,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/顺时针打印矩阵/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/青蛙台阶/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -632,7 +631,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/顺时针打印矩阵/" itemprop="url">顺时针打印矩阵(剑指offer第十九题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/青蛙台阶/" itemprop="url">青蛙台阶(剑指offer第八题)</a></h1>
         
 
         <div class="post-meta">
@@ -707,18 +706,21 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        # matrix类型为二维列表，需要返回列表
-        def printMatrix(self, matrix):
+        def jumpFloor(self, number):
             # write code here
-            ret = []
-            while len(matrix) &gt; 0:
-                ret += matrix[0] #将矩阵的首行放入 ret
-                matrix = [x for x in zip(*matrix[1:])][::-1] #去掉矩阵首行后逆时针旋转90度
-            return ret
+
+            first = 1
+            second = 1
+            res = 1
+            for i in range(1, number):
+                res = first + second
+                second = first
+                first = res
+            return res
 </code></pre>
 
           
@@ -920,7 +922,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/替换空格/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/菲波那切数列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -939,7 +941,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/替换空格/" itemprop="url">替换空格(剑指offer第二题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/菲波那切数列/" itemprop="url">菲波那切数列(剑指offer第七题)</a></h1>
         
 
         <div class="post-meta">
@@ -1014,14 +1016,23 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。<br>n&lt;=39</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        # s 源字符串
-        def replaceSpace(self, s):
+        def Fibonacci(self, n):
             # write code here
-            return s.replace(&#39; &#39;, &#39;%20&#39;)
+            if n &lt; 2:
+                return n
+
+            first = 1
+            second = 0
+            res = 0
+            for i in range(1,n):
+                res = first + second
+                second = first
+                first = res
+            return res
 </code></pre>
 
           
