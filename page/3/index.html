@@ -1786,6 +1786,345 @@ Day 7: 12.674730
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/01/GBDT调参总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/01/GBDT调参总结/" itemprop="url">GBDT调参总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-01T00:00:00+08:00">
+                2017-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="GBDT参数"><a href="#GBDT参数" class="headerlink" title="GBDT参数"></a>GBDT参数</h3><p>主要有三部分参数：</p>
+<ol>
+<li>Tree-Specific Parameters: 影响单棵决策树</li>
+<li>Boosting Parameters: 影响提升</li>
+<li>Misc Parameters: 整个模型其他参数</li>
+</ol>
+<h4 id="决策树相关参数"><a href="#决策树相关参数" class="headerlink" title="决策树相关参数"></a>决策树相关参数</h4><ul>
+<li><p><strong>min_samples_split</strong></p>
+<ul>
+<li>Defines the minimum number of samples (or observations) which are required in a node to be considered for splitting.</li>
+<li>Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree.</li>
+<li>Too high values can lead to under-fitting hence, it should be tuned using CV.</li>
+</ul>
+</li>
+<li><p><strong>min_samples_leaf</strong></p>
+<ul>
+<li>Defines the minimum samples (or observations) required in a terminal node or leaf.</li>
+<li>Used to control over-fitting similar to min_samples_split.</li>
+<li>Generally lower values should be chosen for imbalanced class problems because the regions in which the minority class will be in majority will be very small.</li>
+</ul>
+</li>
+<li><strong>min_weight_fraction_leaf</strong><ul>
+<li>Similar to min_samples_leaf but defined as a fraction of the total number of observations instead of an integer.</li>
+<li>Only one of #2 and #3 should be defined.</li>
+</ul>
+</li>
+<li><strong>max_depth</strong><ul>
+<li>The maximum depth of a tree.</li>
+<li>Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample.</li>
+<li>Should be tuned using CV.</li>
+</ul>
+</li>
+<li><strong>max_leaf_nodes</strong><ul>
+<li>The maximum number of terminal nodes or leaves in a tree.</li>
+<li>Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves.</li>
+<li>If this is defined, GBM will ignore max_depth.</li>
+</ul>
+</li>
+<li><strong>max_features</strong><ul>
+<li>The number of features to consider while searching for a best split. These will be <strong>randomly selected</strong>.</li>
+<li>As a thumb-rule, square root of the total number of features works great but we should check upto 30-40% of the total number of features.</li>
+<li>Higher values can lead to over-fitting but depends on case to case.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="Python">
+    # GBDT的基本过程：
+    1. Initialize the outcome
+    2. Iterate from 1 to total number of trees
+      2.1 Update the weights for targets based on previous run (higher for the ones mis-classified)
+      2.2 Fit the model on selected subsample of data(行采样?)
+      2.3 Make predictions on the full set of observations
+      2.4 Update the output with current results taking into account the learning rate
+    3. Return the final output.
+</code></pre>
+<h4 id="Boosting相关参数"><a href="#Boosting相关参数" class="headerlink" title="Boosting相关参数"></a>Boosting相关参数</h4><ul>
+<li><strong>learning_rate</strong><ul>
+<li>This determines the impact of each tree on the final outcome (step 2.4). GBM works by starting with an initial estimate which is updated using the output of each tree. The learning parameter controls the magnitude of this change in the estimates.</li>
+<li>Lower values are generally preferred as they make the model robust to the specific characteristics of tree and thus allowing it to generalize well.</li>
+<li>Lower values would require higher number of trees to model all the relations and will be computationally expensive.</li>
+</ul>
+</li>
+<li><strong>n_estimators</strong><ul>
+<li>The number of sequential trees to be modeled (step 2)</li>
+<li>Though GBM is fairly robust at higher number of trees but it can still overfit at a point. Hence, this should be tuned using CV for a particular learning rate.(先确定学习率，再确定树个数)</li>
+</ul>
+</li>
+<li><strong>subsample</strong><ul>
+<li>The fraction of observations to be selected for each tree. Selection is done by random sampling.</li>
+<li>Values slightly less than 1 make the model robust by reducing the variance.(行采样，可以减少方差)</li>
+<li>Typical values ~0.8 generally work fine but can be fine-tuned further.</li>
+</ul>
+</li>
+</ul>
+<h4 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h4><ul>
+<li><strong>loss</strong><ul>
+<li>It refers to the loss function to be minimized in each split.</li>
+<li>It can have various values for classification and regression case. Generally the default values work fine. Other values should be chosen only if you understand their impact on the model.</li>
+</ul>
+</li>
+<li><strong>init</strong><ul>
+<li>This affects initialization of the output.</li>
+<li>This can be used if we have made another model whose outcome is to be used as the initial estimates for GBM.</li>
+</ul>
+</li>
+<li><strong>random_state</strong><ul>
+<li>The random number seed so that same random numbers are generated every time.</li>
+<li>This is important for parameter tuning. If we don’t fix the random number, then we’ll have different outcomes for subsequent runs on the same parameters and it becomes difficult to compare models.</li>
+<li>It can potentially result in overfitting to a particular random sample selected. We can try running models for different random samples, which is computationally expensive and generally not used.</li>
+</ul>
+</li>
+<li><strong>verbose</strong><ul>
+<li>The type of output to be printed when the model fits. The different values can be:<ul>
+<li>0: no output generated (default)</li>
+<li>1: output generated for trees in certain intervals</li>
+<li><blockquote>
+<p>1: output generated for all trees</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>warm_start</strong><ul>
+<li>This parameter has an interesting application and can help a lot if used judicially.</li>
+<li>Using this, we can fit additional trees on previous fits of a model. It can save a lot of time and you should explore this option for advanced applications</li>
+</ul>
+</li>
+<li><strong>presort</strong> <ul>
+<li>Select whether to presort data for faster splits.<ul>
+<li>It makes the selection automatically by default but it can be changed if needed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="调参"><a href="#调参" class="headerlink" title="调参"></a>调参</h3><ol>
+<li>Choose a relatively <strong>high learning rate</strong>. Generally the default value of 0.1 works but somewhere between 0.05 to 0.2 should work for different problems</li>
+<li>Determine <strong>the optimum number of trees for this learning rate</strong>. This should range around 40-70. Remember to choose a value on which your system can work fairly fast. This is because it will be used for testing various scenarios and determining the tree parameters.</li>
+<li><strong>Tune tree-specific parameters</strong> for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.</li>
+<li><strong>Lower the learning rate and increase the estimators</strong> proportionally to get more robust models.</li>
+</ol>
+<h4 id="Fix-Learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters"><a href="#Fix-Learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters" class="headerlink" title="Fix Learning rate and number of estimators for tuning tree-based parameters"></a>Fix Learning rate and number of estimators for tuning tree-based parameters</h4><p>先固定相关参数，来网格搜索指定学习率下的决策树数量：</p>
+<ol>
+<li><strong>min_samples_split = 500</strong>: This should be <strong>~0.5-1% of total values</strong>. Since this is imbalanced class problem, we’ll take a small value from the range.</li>
+<li><strong>min_samples_leaf = 50</strong> : Can be selected based on intuition. This is just used for preventing overfitting and again a small value because of imbalanced classes.</li>
+<li><strong>max_depth = 8</strong> : Should be chosen (5-8) based on the number of observations and predictors. This has 87K rows and 49 columns so lets take 8 here.</li>
+<li><strong>max_features = ‘sqrt’</strong> : Its a general thumb-rule to start with square root.</li>
+<li><strong>subsample = 0.8 :</strong> This is a commonly used used start value</li>
+</ol>
+<p><strong>建议</strong></p>
+<ul>
+<li>If the value is around 20, you might want to try lowering the learning rate to 0.05 and re-run grid search</li>
+<li>If the values are too high ~100, tuning the other parameters will take long time and you can try a higher learning rate</li>
+</ul>
+<blockquote>
+<p>此步骤完成后，简单确定了Boosting相关的两个参数，1）learning_rate; 2) n_estimators</p>
+</blockquote>
+<h4 id="Tuning-tree-specific-parameters"><a href="#Tuning-tree-specific-parameters" class="headerlink" title="Tuning tree-specific parameters"></a>Tuning tree-specific parameters</h4><ol>
+<li>Tune max_depth and num_samples_split</li>
+<li>Tune min_samples_leaf</li>
+<li>Tune max_features</li>
+</ol>
+<p>调参的顺序一定要注意，首先应该调整对结果影响较大的几个参数，这里<strong>max_depth</strong>&amp;<strong>min_samples_split</strong>影响较大，故先确定他们。</p>
+<h2 id="泰坦尼克号数据集验证"><a href="#泰坦尼克号数据集验证" class="headerlink" title="泰坦尼克号数据集验证"></a>泰坦尼克号数据集验证</h2><ol>
+<li>使用默认learning_rate, 寻找对应的n_estimators</li>
+</ol>
+<pre><code class="Python">
+    # 首先确定learning_rate为默认， 寻找最优n_estimators
+    from sklearn.model_selection import GridSearchCV
+
+    # 寻找最优n_estimator
+    param_test1 = {&#39;n_estimators&#39;:range(20,81,10)}
+    gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(verbose=1, learning_rate=0.1,
+            min_samples_split=10,min_samples_leaf=5,max_depth=5,
+            max_features=&#39;sqrt&#39;,subsample=0.8,random_state=42), 
+    param_grid = param_test1, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
+    gsearch1.fit(train[predictors].values, y_train)
+    # 70
+</code></pre>
+<ol>
+<li>主要的Boosting参数确定(learning_rate &amp; n_estimators), 下面搜寻决策树相关参数</li>
+</ol>
+<pre><code class="Python">
+    param_test2 = {&#39;max_depth&#39;:range(3,10,1), &#39;min_samples_split&#39;:range(20,100,5)}
+    gsearch2 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70, max_features=&#39;sqrt&#39;, subsample=0.8, random_state=42), 
+    param_grid = param_test2, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
+    gsearch2.fit(train[predictors].values, y_train)
+    gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_
+    # max_depth = 9 , min_samples_split = 65
+</code></pre>
+<ul>
+<li>首先搞max_depth &amp; num_samples_split</li>
+<li>再搞min_samples_leaf</li>
+<li>max_features</li>
+</ul>
+<pre><code class="Python">
+
+    param_test3 = { &#39;min_samples_leaf&#39;:range(3,30,2)}
+    gsearch3 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9, min_samples_split=65, max_features=&#39;sqrt&#39;, subsample=0.8, random_state=42), 
+    param_grid = param_test3, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
+    gsearch3.fit(train[predictors].values, y_train)
+    gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_
+
+    # min_samples_leaf = 7
+</code></pre>
+<pre><code class="Python">
+    param_test4 = {&#39;max_features&#39;:range(3,13,2)}
+    gsearch4 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9, min_samples_split=65, min_samples_leaf=7, subsample=0.8, random_state=42),
+    param_grid = param_test4, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
+    gsearch4.fit(train[predictors].values, y_train)
+    gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_
+</code></pre>
+<pre><code class="Python">
+    param_test5 = {&#39;subsample&#39;:[0.5,0.6,0.7,0.75,0.8,0.85,0.9]}
+    gsearch5 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9,min_samples_split=65, min_samples_leaf=7,  random_state=42,max_features=3),
+    param_grid = param_test5, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
+    gsearch5.fit(train[predictors].values, y_train)
+    gsearch5.grid_scores_, gsearch5.best_params_, gsearch5.best_score_
+</code></pre>
+<p>等以上参数确定后，再调整learning_rate 和 n_estimators, learning_rate降，n_estimators升。</p>
+<p><img src="https://i.imgur.com/2KMrUOw.png" alt="分数提升"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2524,239 +2863,6 @@ plt.legend()
 <ol>
 <li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/机器学习实战第十三章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/28/机器学习实战第十三章学习笔记/" itemprop="url">机器学习实战第十三章学习笔记(利用PCA来简化数据)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T00:00:00+08:00">
-                2017-09-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>主要内容</p>
-<ul>
-<li>降维技术</li>
-<li>主成分分析(PCA)</li>
-<li>对半导体数据进行降维处理</li>
-</ul>
-<h2 id="降维技术"><a href="#降维技术" class="headerlink" title="降维技术"></a>降维技术</h2><ul>
-<li>使得数据集更易使用</li>
-<li>降低很多算法的计算开销</li>
-<li>去除噪声</li>
-<li>使得结果易懂</li>
-</ul>
-<p>有几种降维技术：</p>
-<ol>
-<li>主成分分析（Principal Component Analysis,PCA).在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标系轴选择的是原始数据中方差最大的方向，第二个新坐标轴的选择和第一个坐标轴正交且具有最大方差的方向。该过程一直重复，重复次数为原始数据中特征的数目。大部分方差都包含在最前面的几个新坐标轴中。因此，可以忽略余下的坐标轴，即对数据进行了降维处理。</li>
-</ol>
-<ol>
-<li>因子分析（Factor Analysis).在因子分析中，假设在观察数据的生成中有一些观察不到的隐变量（latent variable).假设观察数据是这些隐变量和某些噪声的线性组合。那么隐变量的数据可能比观察数据的数目少，也就是说通过找到隐变量就可以实现数据的降维。</li>
-<li>独立成分分析（Independent Component Analysis，ICA). ICA假设数据是从N个数据源生成的，并假设数据为多个数据源的混合观察结果，这些数据源之间在统计上是相互独立的，而在PCA中只假设数据是不相关的。</li>
-</ol>
-<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><p><strong>主成分分析</strong></p>
-<ul>
-<li>优点：降低数据的复杂性，识别最重要的多个特征</li>
-<li>缺点：不一定需要，且可能损失有用信息</li>
-<li>适用数据类型：数值型数据</li>
-</ul>
-<p>PCA的基本过程，第一个主成分是从数据差异性最大（即方差最大）的方向提取出来，第二个主成分则来自于数据差异性次大的方向，并且该方向与第一个主成分方向正交。通过数据集的协方差矩阵及其特征值分析，可以求得这些主成分的值。</p>
-<p>一旦得到了协方差矩阵的特征向量，就可以保留最大的N个值，通过将数据乘上这N个特征向量而将它转换到新的空间。</p>
-<pre><code>将数据转换成前N个主成分的伪代码：
-
-去除平均值
-计算协方差矩阵
-计算协方差矩阵的特征值和特征向量
-将特征值从大到小排序
-保留最上面的N个特征向量
-将数据转换到上述N个特征向量构建的新空间中
-
-#程序清单13-1 PCA算法
-
-import numpy as np
-
-def loadDataSet(fileName,delim=&#39;\t&#39;):
-    fr=open(fileName)
-    stringArr=[line.strip().split(delim) for line in fr.readlines()]
-    datArr=[list(map(float,line)) for line in stringArr]
-    return np.mat(datArr)
-
-def pca(dataMat,topNfeat=9999999):
-    #求取每个特征的平均值
-    meanVals=np.mean(dataMat,axis=0)
-    #减去平均值
-    meanRemoved=dataMat-meanVals
-    #计算协方差矩阵
-    covMat=np.cov(meanRemoved,rowvar=0)
-    #计算协方差矩阵特征值及特征向量
-    eigVals,eigVects=np.linalg.eig(np.mat(covMat))
-    #对特征值进行从小到大的排序
-    eigValInd=np.argsort(eigVals)
-    #进行逆序，
-    eigValInd=eigValInd[:-(topNfeat+1):-1]
-    #提取出前N个特征值对应的特征向量
-    redEigVects=eigVects[:,eigValInd]
-    #低维空间数据
-    lowDDataMat=meanRemoved*redEigVects
-    #重构原始数据
-    reconMat=(lowDDataMat*redEigVects.T)+meanVals
-    return lowDDataMat,reconMat
-
-
-
-&quot;&quot;&quot;
-    示例：利用PCA对半导体制造数据降维
-&quot;&quot;&quot;
-
-#程序清单13-2 将NaN替换成平均值的函数
-def replaceNanWithMean():
-    datMat=loadDataSet(&#39;secom.data&#39;,&#39; &#39;)
-    numFeat=np.shape(datMat)[1]
-    for i in range(numFeat):
-        meanVal=np.mean(datMat[np.nonzero(-np.isnan(datMat[:,i].A))[0],i])
-        #填充NaN为平均值
-        datMat[np.nonzero(np.isnan(datMat[:,i].A))[0],i]=meanVal
-    return datMat
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>降维技术使得数据变得更易使用，并且往往能够去除数据中的噪声，使得其他机器学习任务更加精确。降维往往作为预处理步骤，在数据应用到其他算法之前清洗数据。</p>
-<p>PCA可以从数据中识别其主要特征，通过沿着数据最大方差方向旋转坐标轴来实现。选择方差最大的方向作为第一条坐标轴，后续坐标轴则与前面的坐标轴正交。协方差矩阵上的特征值可以用一系列的正交坐标轴来获取。</p>
 
           
         
