@@ -301,6 +301,654 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/13/Numpy库学习总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/13/Numpy库学习总结/" itemprop="url">Numpy库学习总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-13T00:00:00+08:00">
+                2017-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>NumPy是用于Python进行科学计算，尤其是数据分析时，所用到的一个基础库。</p>
+<p>NumPy 是一个运行速度非常快的数学库，主要用于数组计算。它可以让你在 Python 中使用向量和数学矩阵，以及许多用 C 语言实现的底层函数，你还可以体验到从未在原生 Python 上体验过的运行速度。</p>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB8BPRgjXisY8quzaDWX9RbcsoggQy6eLkDqCIPVeE-xFW71Ctyw" alt=""></p>
+<h3 id="ndarray-NumPy库的心脏"><a href="#ndarray-NumPy库的心脏" class="headerlink" title="ndarray: NumPy库的心脏"></a>ndarray: NumPy库的心脏</h3><p>整个NumPy库的基础是ndarray(N-dimensional array,N维数组)对象。它是一种由<strong>同质</strong>元素组成的多维数组，元素数量是事先指定好的。同质指的是几乎所有元素的类型和大小都相同。事实上，数据类型由另外一个叫作dtype(data-type,数据类型)的NumPy对象来指定；每个ndarray只有一种dtype类型。</p>
+<h3 id="创建数组的几种方式"><a href="#创建数组的几种方式" class="headerlink" title="创建数组的几种方式"></a>创建数组的几种方式</h3><ol>
+<li><p>使用array()函数</p>
+<pre><code> a=np.array([[1,2,3],[4,5,6]])
+</code></pre></li>
+<li><p>NumPy自带函数</p>
+<pre><code> np.zeros((3,3))
+ np.ones((4,4))
+ np.arange(0,10)
+ np.arange(0,12).reshape(3,4)
+ np.linspace(0,10,5)
+ np.random.random((3,3))
+</code></pre></li>
+<li><p>可以指定dtype类型</p>
+<pre><code> np.array([[1,2,3],[4,5,6]],dtype=complex)
+</code></pre></li>
+</ol>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><ol>
+<li><p>算术运算符</p>
+<pre><code> a=np.arange(4)
+ #out: [0,1,2,3]
+ a+4
+ #out: [4,5,6,7]
+ a*2
+ #out: [0,2,4,6]
+
+ b=np.arange(4,8)
+ #out: [4,5,6,7]
+ a+b
+ #out: [4,6,8,10]
+ a-b
+ #out: [-4,-4,-4,-4]
+</code></pre></li>
+<li><p>矩阵积</p>
+<pre><code> np.dot(A,B)
+ #A,B为矩阵
+ #也可以用
+ A.dot(B)
+</code></pre></li>
+<li><p>自增和自减运算符</p>
+<pre><code> a=np.arange(4)
+ # [0,1,2,3]
+ a+=1
+ # [1,2,3,4]
+ a-=1
+ # [0,1,2,3]
+</code></pre></li>
+<li><p>通用函数</p>
+<pre><code> a=np.arange(1,5)
+ np.sqrt(a)
+ np.log(a)
+ np.sin(a)
+</code></pre></li>
+<li><p>聚合函数</p>
+</li>
+</ol>
+<blockquote>
+<p>聚合函数是指对一组值进行操作，返回一个单一值作为结果的函数。</p>
+</blockquote>
+<pre><code>    a=np.array([3.3,4.5,1.2,5.7,0.3])
+    a.sum()
+    # 15.0
+    a.min()
+    #0.2999999999999999999 不明白为啥不是0.3
+    a.max()
+    #5.7000000000000000000
+    a.mean()
+    #3.0
+    a.std()
+    #2.0079840636817816
+</code></pre><h3 id="索引机制、切片和迭代方法"><a href="#索引机制、切片和迭代方法" class="headerlink" title="索引机制、切片和迭代方法"></a>索引机制、切片和迭代方法</h3><ol>
+<li><p>索引机制</p>
+<pre><code> a=np.arange(10,16)
+ #[10,11,12,13,14,15]
+ a[2]
+ #12, 从0开始
+ a[-2]
+ #14，从-1开始
+
+ #可以索引多个值
+ a[[1,3,4]]
+ #[11,13,14]
+</code></pre></li>
+<li><p>切片操作</p>
+</li>
+</ol>
+<blockquote>
+<p>切片操作是抽取数组的一部分元素生成新数组。对Python列表进行切片操作得到的数据是原数组的副本，而对NumPy数组进行切片操作得到的数组则是指向同一缓冲区的视图。</p>
+</blockquote>
+<p><strong>视图和副本的区别：</strong></p>
+<p>视图改变，原数组也进行改变，而副本则不影响原数组。</p>
+<pre><code>a=np.arange(10,16)
+#[10,11,12,13,14,15]
+a[1:5]
+#[11,12,13,14]
+a[1:5:2]
+#[11,13]
+a[::2]
+#省略start和end,[10,12,14]
+a[:5:2]
+#省略start,[10,12,14]
+a[:5:]
+#省略start,step,[10,11,12,13,14]
+
+a=np.array([1,2,3,4])
+b=a
+#视图
+c=a.copy()
+#副本
+</code></pre><h3 id="条件和布尔数组"><a href="#条件和布尔数组" class="headerlink" title="条件和布尔数组"></a>条件和布尔数组</h3><pre><code>A=np.random.random((4,4))
+A[A&lt;0.5]
+#筛选出所有小于0.5的元素
+</code></pre><h3 id="形状变换"><a href="#形状变换" class="headerlink" title="形状变换"></a>形状变换</h3><pre><code>.reshape()
+.ravel()#重新变为一维数组
+.transpose()#转置
+</code></pre><h3 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h3><ol>
+<li><p>连接数组</p>
+<pre><code> A=np.ones((3,3))
+ B=np.zeros((3,3))
+ np.vstack((A,B))
+ #[[1,1,1],
+ #[1,1,1],
+ #[1,1,1],
+ #[0,0,0],
+ #[0,0,0],
+ #[0,0,0]]
+ np.hstack((A,B))
+ #[[1,1,1,0,0,0],
+ #[1,1,1,0,0,0],
+ #[1,1,1,0,0,0]]
+</code></pre></li>
+<li><p>数组切分</p>
+<pre><code> A=np.arange(16).reshape((4,4))
+ [B,C]=np.hsplit(A,2)
+ [B,C]=np.vsplit(A,2)
+ [A1,A2,A3]=np.split(A,[1,3],axis=1)
+ [A1,A2,A3]=np.split(A,[1,3],axis=0)
+</code></pre></li>
+</ol>
+<h3 id="数组数据文件的读写"><a href="#数组数据文件的读写" class="headerlink" title="数组数据文件的读写"></a>数组数据文件的读写</h3><ol>
+<li><p>二进制文件的读写</p>
+<pre><code> np.save(&#39;saved_data&#39;,data)#保存数组数据
+ np.load(&#39;saved_data.npy&#39;)#读取数组数据
+</code></pre></li>
+<li><p>读取文件中的列表形式数据</p>
+<pre><code> data=np.genfromtxt(&#39;data.csv&#39;,delimiter=&#39;,&#39;,names=True)
+</code></pre></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/mergeList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/01/mergeList/" itemprop="url">merge两个有序线性表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
+                2016-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>已知线性表LA和LB中的数据元素按值非递减有序排列，现要求将LA和LB归并为一个新的线性表LC，且LC中的数据元素仍按值非递减有序排列。</p>
+<h3 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h3><pre><code>// mergeList
+vector&lt;int&gt; mergeList(vector&lt;int&gt; a, vector&lt;int&gt; b)
+{
+    vector&lt;int&gt; c;
+    int i = 0, j = 0, aLen = a.size(), bLen = b.size();
+    while ((i &lt; aLen) &amp;&amp; (j &lt; bLen))
+    {
+        if (a[i] &gt; b[j])
+        {
+            c.push_back(b[j]);
+            j++;
+        }
+        else
+        {
+            c.push_back(a[i]);
+            i++;
+        }
+    }
+    while (i &lt; aLen)
+    {
+        c.push_back(a[i]);
+        i++;
+    }
+    while (j &lt; bLen)
+    {
+        c.push_back(b[j]);
+        j++;
+    }
+    return c;
+}
+</code></pre><h3 id="C代码-有序链表的合并"><a href="#C代码-有序链表的合并" class="headerlink" title="C代码(有序链表的合并)"></a>C代码(有序链表的合并)</h3><pre><code>typedef struct Node *PtrToNode;
+typedef int ElementType;
+
+struct Node
+{
+    ElementType Data;
+    PtrToNode Next;
+};
+typedef PtrToNode List;
+
+List Merge(List L1, List L2)
+{
+    List L3 = (List)malloc(sizeof(struct Node));
+    List p1 = L1-&gt;Next, p2 = L2-&gt;Next, p3 = L3;
+
+    while (p1 &amp;&amp; p2)
+    {
+        if (p1-&gt;Data &gt; p2-&gt;Data)
+        {
+            p3-&gt;Next = p2;
+            p3 = p2;
+            p2 = p2-&gt;Next;
+        }
+        else
+        {
+            p3-&gt;Next = p1;
+            p3 = p1;
+            p1 = p1-&gt;Next;
+        }
+    }
+
+    p3-&gt;Next = p1 ? p1 : p2;
+    L1-&gt;Next = NULL;
+    L2-&gt;Next = NULL;
+
+    return L3;
+}
+</code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>时间复杂度为\(O(length(LA) + length(LB))\).</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/二分查找/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/01/二分查找/" itemprop="url">二分查找</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
+                2016-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>给一个有序递增数组&amp;一个给定值，二分查找给定值在数组中的位置。</p>
+<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>// 二分查找递增数组
+int findValue(int A[], int N, int val)
+{
+    int low = 0, high = N - 1;
+    while (low &lt;= high)
+    {
+        int mid = (low + high) / 2;
+        if (A[mid] &gt; val)
+            high = mid - 1;
+        else if (A[mid] &lt; val)
+            low = mid + 1;
+        else
+            return mid;
+    }
+    return -1; // 没有找到
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/一元多项式加法与乘法运算/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -590,160 +1238,6 @@ int main(void)
   PrintPoly(Add(P1,P2));
 
   return 0;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/二分查找/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/二分查找/" itemprop="url">二分查找</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>给一个有序递增数组&amp;一个给定值，二分查找给定值在数组中的位置。</p>
-<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>// 二分查找递增数组
-int findValue(int A[], int N, int val)
-{
-    int low = 0, high = N - 1;
-    while (low &lt;= high)
-    {
-        int mid = (low + high) / 2;
-        if (A[mid] &gt; val)
-            high = mid - 1;
-        else if (A[mid] &lt; val)
-            low = mid + 1;
-        else
-            return mid;
-    }
-    return -1; // 没有找到
 }
 </code></pre>
           
@@ -1114,7 +1608,7 @@ int MazePath(){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">113</span>
+                <span class="site-state-item-count">115</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

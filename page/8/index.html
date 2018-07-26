@@ -301,6 +301,830 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/A Complete Tutorial(3)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/27/A Complete Tutorial(3)/" itemprop="url">A Complete Tutorial to Learn Data Science with Python from Scratch(3)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T00:00:00+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="4-Data-Munging-in-Python-Using-Pandas"><a href="#4-Data-Munging-in-Python-Using-Pandas" class="headerlink" title="4. Data Munging in Python : Using Pandas"></a>4. Data Munging in Python : Using Pandas</h2><p>For those, who have been following, here are your must wear shoes to start running.</p>
+<p>Data munging – recap of the need</p>
+<p>While our exploration of the data, we found a few problems in the data set, which needs to be solved before the data is ready for a good model. This exercise is typically referred as “Data Munging”. Here are the problems, we are already aware of:</p>
+<p>There are missing values in some variables. We should estimate those values wisely depending on the amount of missing values and the expected importance of variables.<br>While looking at the distributions, we saw that ApplicantIncome and LoanAmount seemed to contain extreme values at either end. Though they might make intuitive sense, but should be treated appropriately.<br>In addition to these problems with numerical fields, we should also look at the non-numerical fields i.e. Gender, Property_Area, Married, Education and Dependents to see, if they contain any useful information.</p>
+<p>If you are new to Pandas, I would recommend reading <a href="https://www.analyticsvidhya.com/blog/2016/01/12-pandas-techniques-python-data-manipulation/" target="_blank" rel="external">this article(Pandas的12种奇淫异巧)</a> before moving on. It details some useful techniques of data manipulation.</p>
+<p><strong>数据修复</strong></p>
+<p><img src="http://www.ynfzb.cn/upload/image/201111/20111115141602377484.jpg" alt="数据修复"></p>
+<pre><code class="python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+</code></pre>
+<pre><code class="python">df=pd.read_csv(&quot;G:/Datahack/Loanprediction/TrainFile/train.csv&quot;) #读取数据
+</code></pre>
+<h3 id="Check-missing-values-in-the-dataset"><a href="#Check-missing-values-in-the-dataset" class="headerlink" title="Check missing values in the dataset"></a>Check missing values in the dataset</h3><p>Let us look at missing values in all the variables because most of the models don’t work with missing data and even if they do, imputing them helps more often than not. So, let us check the number of nulls / NaNs in the dataset.<br>(检查一下数据集的缺失值)</p>
+<pre><code class="python">df.apply(lambda x:sum(x.isnull()),axis=0) # 匿名函数，axis=0表示针对每列应该用，可以看看
+#与 df.apply(lambda x:sum(x.isnull()),axis=1)的区别
+</code></pre>
+<pre><code>Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount           22
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64
+</code></pre><p>可以看到Gender丢失13个，Married丢失3个，Dependents丢失15个，Self_Employed丢失32个，LoanAmount丢失22个，Loan_Amount_Term丢失14个，Credit_History丢失50个。</p>
+<p>Though the missing values are not very high in number, but many variables have them and each one of these should be estimated and added in the data. Get a detailed view on different imputation techniques through <a href="https://www.analyticsvidhya.com/blog/2016/01/guide-data-exploration/" target="_blank" rel="external">this article(A Comprehensive Guide to Data Exploration)</a>.</p>
+<p>Note: Remember that missing values may not always be NaNs. For instance, if the Loan_Amount_Term is 0, does it makes sense or would you consider that missing? I suppose your answer is missing and you’re right. So we should check for values which are unpractical.(值得注意的是，并非所有丢失值都是NaN,也可能是0或者其他不合理的值)</p>
+<h3 id="How-to-fill-missing-values-in-LoanAmount"><a href="#How-to-fill-missing-values-in-LoanAmount" class="headerlink" title="How to fill missing values in LoanAmount?"></a>How to fill missing values in LoanAmount?</h3><p>如何填充丢失值是一个问题，下面以LoanAmount为例。</p>
+<p>There are numerous ways to fill the missing values of loan amount – the simplest being replacement by mean, which can be done by following code:（最简单的方法，以平均值进行填充）</p>
+<pre><code class="python">df[&#39;LoanAmount&#39;].fillna(df[&#39;LoanAmount&#39;].mean(),inplace=True)# 平均值填充
+</code></pre>
+<p>The other extreme could be to build a supervised learning model to predict loan amount on the basis of other variables and then use age along with other variables to predict survival.(另一个方法是建立一个有监督学习模型利用其他变量来预测未知值）</p>
+<p>Since, the purpose now is to bring out the steps in data munging, I’ll rather take an approach, which lies some where in between these 2 extremes. A key hypothesis is that the whether a person is educated or self-employed can combine to give a good estimate of loan amount.（但这里只是一个入门教程，采用一种介于上述两种方法之间的手段来填充丢失值）</p>
+<p>First, let’s look at the boxplot to see if a trend exists:</p>
+<pre><code class="python">df.boxplot(column=&#39;LoanAmount&#39;,by=[&#39;Education&#39;,&#39;Self_Employed&#39;])
+</code></pre>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x9d956d8&gt;
+</code></pre><p><img src="http://i.imgur.com/UBSLV9T.png" alt="picture1"></p>
+<p>Thus we see some variations in the median of loan amount for each group and this can be used to impute the values. But first, we have to ensure that each of Self_Employed and Education variables should not have a missing values.(由上面的Boxplot可以看出，不同Education和Self_Employed的组合对LoanAmount的中位数还是有影响的。因此，可以用Education和Self_Employed来进行推断。但在此之前，必须保证Education和Self_Employed是完整的)</p>
+<p>As we say earlier, Self_Employed has some missing values. Let’s look at the frequency table:</p>
+<pre><code class="python">df[&#39;Self_Employed&#39;].value_counts()
+</code></pre>
+<pre><code>No     500
+Yes     82
+Name: Self_Employed, dtype: int64
+</code></pre><p>Since ~86% values are “No”, it is safe to impute the missing values as “No” as there is a high probability of success. This can be done using the following code:</p>
+<pre><code class="python">df[&#39;Self_Employed&#39;].fillna(&#39;No&#39;,inplace=True)
+</code></pre>
+<p>Now, we will create a Pivot table, which provides us median values for all the groups of unique values of Self_Employed and Education features. Next, we define a function, which returns the values of these cells and apply it to fill the missing values of loan amount:<br>(由Education和Self_Employed两列所确定的LoanAmount的中位数来填充LoanAmount的丢失值)</p>
+<pre><code class="python">table = df.pivot_table(values=&#39;LoanAmount&#39;, index=&#39;Self_Employed&#39; ,
+                       columns=&#39;Education&#39;, aggfunc=np.median)
+# Define function to return value of this pivot_table
+def fage(x):
+ return table.loc[x[&#39;Self_Employed&#39;],x[&#39;Education&#39;]]
+# Replace missing values
+df[&#39;LoanAmount&#39;].fillna(df[df[&#39;LoanAmount&#39;].isnull()].apply(fage, axis=1), inplace=True)
+</code></pre>
+<h3 id="How-to-treat-for-extreme-values-in-distribution-of-LoanAmount-and-ApplicantIncome"><a href="#How-to-treat-for-extreme-values-in-distribution-of-LoanAmount-and-ApplicantIncome" class="headerlink" title="How to treat for extreme values in distribution of LoanAmount and ApplicantIncome ?"></a>How to treat for extreme values in distribution of LoanAmount and ApplicantIncome ?</h3><p>Let’s analyze LoanAmount first. Since the extreme values are practically possible, i.e. some people might apply for high value loans due to specific needs. So instead of treating them as outliers, let’s try a log transformation to nullify their effect:<br>(使用Log函数消除极端值的影响）</p>
+<pre><code class="python">df[&#39;LoanAmount_log&#39;]=np.log(df[&#39;LoanAmount&#39;])
+df[&#39;LoanAmount_log&#39;].hist(bins=20)
+</code></pre>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x9f000f0&gt;
+</code></pre><p><img src="http://i.imgur.com/gBbmlag.png" alt="picture2"></p>
+<p>Now the distribution looks much closer to normal and effect of extreme values has been significantly subsided.</p>
+<p>Coming to ApplicantIncome. One intuition can be that some applicants have lower income but strong support Co-applicants. So it might be a good idea to combine both incomes as total income and take a log transformation of the same.</p>
+<pre><code class="python">df[&#39;TotalIncome&#39;]=df[&#39;ApplicantIncome&#39;]+df[&#39;CoapplicantIncome&#39;]
+df[&#39;TotalIncome_log&#39;]=np.log(df[&#39;TotalIncome&#39;])
+df[&#39;LoanAmount_log&#39;].hist(bins=20)
+</code></pre>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0xa007da0&gt;
+</code></pre><p><img src="http://i.imgur.com/IPLEAsM.png" alt="picture3"></p>
+<p>Now we see that the distribution is much better than before. I will leave it upto you to impute the missing values for Gender, Married, Dependents, Loan_Amount_Term, Credit_History. Also, I encourage you to think about possible additional information which can be derived from the data. For example, creating a column for LoanAmount/TotalIncome might make sense as it gives an idea of how well the applicant is suited to pay back his loan.</p>
+<pre><code class="python">df.apply(lambda x:sum(x.isnull()),axis=0)
+</code></pre>
+<pre><code>Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed         0
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount            0
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+LoanAmount_log        0
+TotalIncome           0
+TotalIncome_log       0
+dtype: int64
+</code></pre><p>丢失的还有Gender,Married,Dependents,Loan_Amount_Term,Credit_History5个。其中Married比较好处理，直接以大多数类别填充，先把它处理啦。</p>
+<pre><code class="python">df[&#39;Married&#39;].value_counts()
+</code></pre>
+<pre><code>Yes    398
+No     213
+Name: Married, dtype: int64
+</code></pre><pre><code class="python">df[&#39;Married&#39;].fillna(&#39;Yes&#39;,inplace=True)
+</code></pre>
+<p>接着处理Gender(性别),缺了13个。直观上，先看看Gender和Married、Education、Self_Employed、Property_Area的关系。</p>
+<pre><code class="python">def percConvert(ser):
+    return ser/float(ser[-1])
+
+pd.crosstab(df[&#39;Married&#39;],df[&#39;Gender&#39;],margins=True).apply(percConvert,axis=1)
+</code></pre>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Married</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>No</th><br>      <td>0.380952</td><br>      <td>0.619048</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Yes</th><br>      <td>0.081841</td><br>      <td>0.918159</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出已婚人士中，Male占0.918，那假如某人性别未知，只知其已婚，是不是有0.918的概率判断其为男性呢？</p>
+<pre><code class="python">pd.crosstab(df[&#39;Education&#39;],df[&#39;Gender&#39;],margins=True).apply(percConvert,axis=1)
+</code></pre>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Education</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>Graduate</th><br>      <td>0.196581</td><br>      <td>0.803419</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Not Graduate</th><br>      <td>0.150376</td><br>      <td>0.849624</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出性别与其Education关系好像并不大。</p>
+<pre><code class="python">pd.crosstab(df[&#39;Self_Employed&#39;],df[&#39;Gender&#39;],margins=True).apply(percConvert,axis=1)
+</code></pre>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Self_Employed</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>No</th><br>      <td>0.185468</td><br>      <td>0.814532</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>Yes</th><br>      <td>0.192308</td><br>      <td>0.807692</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186356</td><br>      <td>0.813644</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>上表可以看出性别与其Self_Employed关系好像也并不大。</p>
+<pre><code class="python">pd.crosstab(df[&#39;Dependents&#39;],df[&#39;Gender&#39;],margins=True).apply(percConvert,axis=1)
+</code></pre>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th>Gender</th><br>      <th>Female</th><br>      <th>Male</th><br>      <th>All</th><br>    </tr><br>    <tr><br>      <th>Dependents</th><br>      <th></th><br>      <th></th><br>      <th></th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>0.236686</td><br>      <td>0.763314</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>0.188119</td><br>      <td>0.811881</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>0.070707</td><br>      <td>0.929293</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>3+</th><br>      <td>0.062500</td><br>      <td>0.937500</td><br>      <td>1.0</td><br>    </tr><br>    <tr><br>      <th>All</th><br>      <td>0.186007</td><br>      <td>0.813993</td><br>      <td>1.0</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+
+<pre><code class="python">def coding(col,codeDict):
+    colCoded=pd.Series(col,copy=True)
+    for key,value in codeDict.items():
+        colCoded.replace(key,value,inplace=True)
+    return colCoded
+df[&#39;Gender&#39;]=coding(df[&#39;Gender&#39;],{&#39;Male&#39;:1,&#39;Female&#39;:0}) #将‘Gender&#39;转换为0,1表示（男士：1，女生：0）
+table2=df.pivot_table(values=[&#39;Gender&#39;],index=[&#39;Married&#39;,&#39;Dependents&#39;],aggfunc=np.median)
+</code></pre>
+<pre><code class="python">#pd.crosstab(df[&#39;Married&#39;],df[&#39;Dependents&#39;],margins=True).apply(percConvert,axis=1)
+def dependent(x):
+    if x[&#39;Married&#39;]==&#39;No&#39;:
+        return &#39;0&#39;
+    else:
+        return &#39;1&#39;
+df[&#39;Dependents&#39;].fillna(df[df[&#39;Dependents&#39;].isnull()].apply(dependent,axis=1),inplace=True)
+</code></pre>
+<pre><code class="python"># Define function to return value of this pivot_table
+def fage(x):
+    if table2.loc[x[&#39;Married&#39;],x[&#39;Dependents&#39;]].values[0]==1.0:
+        return 1.0
+    else:
+        return 0.0
+# Replace missing values
+df[&#39;Gender&#39;].fillna(df[df[&#39;Gender&#39;].isnull()].apply(fage, axis=1), inplace=True)
+</code></pre>
+<pre><code class="python">df.apply(lambda x:sum(x.isnull()),axis=0)
+</code></pre>
+<pre><code>Loan_ID               0
+Gender                0
+Married               0
+Dependents            0
+Education             0
+Self_Employed         0
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount            0
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+LoanAmount_log        0
+TotalIncome           0
+TotalIncome_log       0
+dtype: int64
+</code></pre><p>可以看到只剩下Loan_Amount_Term和Credit_History没有处理啦，因为Credit_History由前面分析，对于结果来说是非常重要的，那么就放在最后处理好了。现在来对Loan_Amount_Term进行分析，Loan_Amount_Term是数值型。</p>
+<pre><code class="python">df.boxplot(column=&#39;Loan_Amount_Term&#39;,by=[&#39;Education&#39;,&#39;Self_Employed&#39;])
+</code></pre>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0xbc43d30&gt;
+</code></pre><p><img src="http://i.imgur.com/GQjJl4e.png" alt="picture5"></p>
+<pre><code class="python">termMedian=df[&#39;Loan_Amount_Term&#39;].median()
+df[&#39;Loan_Amount_Term&#39;].fillna(termMedian,inplace=True)#直接由中位数填充好了……
+</code></pre>
+<p>按理说，Credit_History应该是根据一个人的性别，婚姻，家属，教育等申请之前的状态有很大关系，而与当前该次申请贷款的数额、期限等业务关系不大。</p>
+<pre><code class="python">df.info()
+</code></pre>
+<pre><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 614 entries, 0 to 613
+Data columns (total 17 columns):
+Loan_ID                   614 non-null object
+Gender                    614 non-null float64
+Married                   614 non-null object
+Dependents                614 non-null object
+Education                 614 non-null object
+Self_Employed             614 non-null object
+ApplicantIncome           614 non-null int64
+CoapplicantIncome         614 non-null float64
+LoanAmount                614 non-null float64
+Loan_Amount_Term          614 non-null object
+Credit_History            564 non-null float64
+Property_Area             614 non-null object
+Loan_Status               614 non-null object
+LoanAmount_log            614 non-null float64
+TotalIncome               614 non-null float64
+TotalIncome_log           614 non-null float64
+LoanAmount/TotalIncome    614 non-null float64
+dtypes: float64(8), int64(1), object(8)
+memory usage: 81.6+ KB
+</code></pre><pre><code class="python">from sklearn.preprocessing import LabelEncoder
+var_mod=[&#39;Married&#39;,&#39;Dependents&#39;,&#39;Education&#39;,&#39;Self_Employed&#39;,&#39;Property_Area&#39;,&#39;Loan_Status&#39;]
+le=LabelEncoder()
+for i in var_mod:
+    df[i]=le.fit_transform(df[i])
+df.dtypes#将以上非数值型，转化为数值型量
+</code></pre>
+<pre><code>Loan_ID                    object
+Gender                    float64
+Married                     int64
+Dependents                  int64
+Education                   int64
+Self_Employed               int64
+ApplicantIncome             int64
+CoapplicantIncome         float64
+LoanAmount                float64
+Loan_Amount_Term           object
+Credit_History            float64
+Property_Area               int64
+Loan_Status                 int64
+LoanAmount_log            float64
+TotalIncome               float64
+TotalIncome_log           float64
+LoanAmount/TotalIncome    float64
+dtype: object
+</code></pre><h2 id="5-Building-a-Predictive-Model-in-Python"><a href="#5-Building-a-Predictive-Model-in-Python" class="headerlink" title="5. Building a Predictive Model in Python"></a>5. Building a Predictive Model in Python</h2><p>After, we have made the data useful for modeling, let’s now look at the python code to create a predictive model on our data set. Skicit-Learn (sklearn) is the most commonly used library in Python for this purpose and we will follow the trail. I encourage you to get a refresher on sklearn through <a href="https://www.analyticsvidhya.com/blog/2015/01/scikit-learn-python-machine-learning-tool/" target="_blank" rel="external">this article</a>.</p>
+<p>Next, we will import the required modules. Then we will define a generic classification function, which takes a model as input and determines the Accuracy and Cross-Validation scores. Since this is an introductory article, I will not go into the details of coding. Please refer to <a href="https://www.analyticsvidhya.com/blog/2015/08/common-machine-learning-algorithms/" target="_blank" rel="external">this article</a> for getting details of the algorithms with R and Python codes. Also, it’ll be good to get a refresher on cross-validation through <a href="https://www.analyticsvidhya.com/blog/2015/11/improve-model-performance-cross-validation-in-python-r/" target="_blank" rel="external">this article</a>, as it is a very important measure of power performance.</p>
+<pre><code class="python">#Import models from scikit learn module:
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import KFold
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
+from sklearn import metrics
+</code></pre>
+<pre><code class="python">#Generic function for making a classification model and accessing performance:
+def classification_model(model,data,predictors,outcome):
+    #Fit the model:
+    model.fit(data[predictors],data[outcome])
+
+    #Make predictions on training set:
+    predictions=model.predict(data[predictors])
+
+    #Print accuracy
+    accuracy=metrics.accuracy_score(predictions,data[outcome])
+    print(&quot;Accuracy : %s&quot; % &quot;{0:.3%}&quot;.format(accuracy))
+
+    #Perform k-fold cross-validation with 5 folds
+    kf=KFold(n_splits=5).split(data)
+    error=[]
+    for train,test in kf:
+        #Filter training data
+        train_predictors=(data[predictors].iloc[train,:])
+
+        #The target we&#39;re using to train the algorithm.
+        train_target=data[outcome].iloc[train]
+
+        #Training the algorithm using the predictors and target.
+        model.fit(train_predictors,train_target)
+
+        #Record error from each cross-validation run
+        error.append(model.score(data[predictors].iloc[test,:],data[outcome].iloc[test]))
+
+    print(&quot;Cross-Validation Score : %s&quot; % &quot;{0:.3%}&quot;.format(np.mean(error)))
+
+    #Fit the model again so that it can be refered outside the function:
+    model.fit(data[predictors],data[outcome])
+</code></pre>
+<pre><code class="python">creditTrain=df[df[&#39;Credit_History&#39;].notnull()] #以Credit_History为输出进行预测
+</code></pre>
+<pre><code class="python">outcome_var=&#39;Credit_History&#39;
+model=LogisticRegression()#模型选用普通的线性回归
+predictor_var=[&#39;Gender&#39;,&#39;Married&#39;,&#39;Education&#39;,&#39;TotalIncome&#39;]
+classification_model(model,creditTrain,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 84.220%
+Cross-Validation Score : 84.218%
+</code></pre><pre><code class="python">outcome_var=&#39;Credit_History&#39;
+model=DecisionTreeClassifier()#模型改为决策树
+predictor_var=[&#39;Gender&#39;,&#39;Married&#39;,&#39;Education&#39;,&#39;TotalIncome&#39;]
+classification_model(model,creditTrain,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 99.113%
+Cross-Validation Score : 74.651%
+</code></pre><pre><code class="python">outcome_var=&#39;Credit_History&#39;
+model=RandomForestClassifier(n_estimators=25,min_samples_split=25,max_depth=7,max_features=1)#模型改为Random Forest
+predictor_var=[&#39;Gender&#39;,&#39;Married&#39;,&#39;Education&#39;,&#39;TotalIncome&#39;]
+classification_model(model,creditTrain,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 84.929%
+Cross-Validation Score : 83.864%
+</code></pre><pre><code class="python">creditTest=df[df[&#39;Credit_History&#39;].isnull()]#以Credit_History丢失值作为测试集，进行预测填充丢失值
+creditPredictions=model.predict(creditTest[predictor_var])
+</code></pre>
+<pre><code class="python">df.loc[df[&#39;Credit_History&#39;].isnull(),&#39;Credit_History&#39;]=creditPredictions #以预测值进行填充
+</code></pre>
+<h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><p>Let’s make our first Logistic Regression model. One way would be to take all the variables into the model but this might result in overfitting (don’t worry if you’re unaware of this terminology yet). In simple words, taking all variables might result in the model understanding complex relations specific to the data and will not generalize well. Read more about <a href="https://www.analyticsvidhya.com/blog/2015/11/beginners-guide-on-logistic-regression-in-r/" target="_blank" rel="external">Logistic Regression</a>.</p>
+<p>We can easily make some intuitive hypothesis to set the ball rolling. The chances of getting a loan will be higher for:</p>
+<ul>
+<li>Applicants having a credit history (remember we observed this in exploration?)</li>
+<li>Applicants with higher applicant and co-applicant incomes</li>
+<li>Applicants with higher education level</li>
+<li>Properties in urban areas with high growth perspectives</li>
+</ul>
+<p>So let’s make our first model with ‘Credit_History’.</p>
+<pre><code class="python">outcome_var=&#39;Loan_Status&#39;
+model=LogisticRegression()
+predictor_var=[&#39;Credit_History&#39;]#仅仅使用一个特征来预测
+classification_model(model,df,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><pre><code class="python">#再加上一些特征
+predictor_var=[&#39;Credit_History&#39;,&#39;Education&#39;,&#39;Married&#39;,&#39;Self_Employed&#39;,&#39;Property_Area&#39;,&#39;LoanAmount/TotalIncome&#39;]
+classification_model(model,df,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><p>Generally we expect the accuracy to increase on adding variables. But this is a more challenging case. The accuracy and cross-validation score are not getting impacted by less important variables. Credit_History is dominating the mode. We have two options now:(可以看到使用线性回归方法，在增加更多特征的时候，预测效果并没有很好改变，几乎和原来一样。这时候就需要考虑以下两种方法。）</p>
+<ul>
+<li>Feature Engineering: dereive new information and try to predict those. I will leave this to your creativity.</li>
+<li>Better modeling techniques. Let’s explore this next.</li>
+</ul>
+<h3 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a>Decision Tree</h3><p>Decision tree is another method for making a predictive model. It is known to provide higher accuracy than logistic regression model. Read more about <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="external">Decision Trees</a>.</p>
+<pre><code class="python">model=DecisionTreeClassifier()#换模型
+predictor_var=[&#39;Credit_History&#39;,&#39;Gender&#39;,&#39;Married&#39;,&#39;Education&#39;]
+classification_model(model,df,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 80.945%
+Cross-Validation Score : 80.946%
+</code></pre><p>Here the model based on categorical variables is unable to have an impact because Credit History is dominating over them. Let’s try a few numerical variables:</p>
+<pre><code class="python">predictor_var=[&#39;Credit_History&#39;,&#39;Loan_Amount_Term&#39;,&#39;LoanAmount_log&#39;]
+classification_model(model,df,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 88.925%
+Cross-Validation Score : 69.371%
+</code></pre><p>Here we observed that although the accuracy went up on adding variables, the cross-validation error went down. This is the result of model over-fitting the data. Let’s try an even more sophisticated algorithm and see if it helps:</p>
+<h3 id="Random-Forest"><a href="#Random-Forest" class="headerlink" title="Random Forest"></a>Random Forest</h3><p>Random forest is another algorithm for solving the classification problem. Read more about <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="external">Random Forest</a>.</p>
+<p>An advantage with Random Forest is that we can make it work with all the features and it returns a feature importance matrix which can be used to select features.</p>
+<pre><code class="python">model=RandomForestClassifier(n_estimators=100)
+predictor_var=[&#39;Gender&#39;,&#39;Married&#39;,&#39;Dependents&#39;,&#39;Education&#39;,&#39;Self_Employed&#39;,&#39;Loan_Amount_Term&#39;,&#39;Credit_History&#39;,
+              &#39;Property_Area&#39;,&#39;LoanAmount_log&#39;,&#39;TotalIncome_log&#39;,&#39;LoanAmount/TotalIncome&#39;]
+classification_model(model,df,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 100.000%
+Cross-Validation Score : 78.665%
+</code></pre><p>Here we see that the accuracy is 100% for the training set(显然过拟合). This is the ultimate case of overfitting and can be resolved in two ways:</p>
+<ul>
+<li>Reducing the number of predictors</li>
+<li>Tuning the model parameters</li>
+</ul>
+<p>Let’s try both of these. First we see the feature importance matrix from which we’ll take the most important features.</p>
+<pre><code class="python">#Create a series with feature importances:
+featimp=pd.Series(model.feature_importances_,index=predictor_var).sort_values(ascending=False)
+print(featimp)
+</code></pre>
+<pre><code>Credit_History            0.263870
+LoanAmount/TotalIncome    0.192546
+TotalIncome_log           0.182355
+LoanAmount_log            0.164331
+Property_Area             0.041543
+Dependents                0.041328
+Loan_Amount_Term          0.035326
+Married                   0.023571
+Gender                    0.019269
+Education                 0.018238
+Self_Employed             0.017623
+dtype: float64
+</code></pre><p>Let’s use the top 6 variables for creating a model. Also, we will modify the parameters of random forest model a little bit:</p>
+<pre><code class="python">model=RandomForestClassifier(n_estimators=25,min_samples_split=25,max_depth=7,max_features=1)
+predictor_var=[&#39;TotalIncome_log&#39;,&#39;LoanAmount_log&#39;,&#39;Credit_History&#39;,&#39;LoanAmount/TotalIncome&#39;,&#39;Property_Area&#39;,
+              &#39;Dependents&#39;]
+classification_model(model,df,predictor_var,outcome_var)
+</code></pre>
+<pre><code>Accuracy : 83.550%
+Cross-Validation Score : 80.782%
+</code></pre><p>Notice that although accuracy reduced, but the cross-validation score is improving showing that the model is generalizing well. Remember that random forest models are not exactly repeatable. Different runs will result in slight variations because of randomization. But the output should stay in the ballpark.</p>
+<p>You would have noticed that even after some basic parameter tuning on random forest, we have reached a cross-validation accuracy only slightly better than the original logistic regression model. This exercise gives us some very interesting and unique learning:</p>
+<ol>
+<li>Using a more sophisticated model does not guarantee better results.</li>
+<li>Avoid using complex modeling techniques as a black box without understanding the underlying concepts. Doing so would increase the tendency of overfitting thus making your models less interpretable</li>
+<li>Feature Engineering is the key to success. Everyone can use an Xgboost models but the real art and creativity lies in enhancing your features to better suit the model.</li>
+</ol>
+<p>So are you ready to take on the challenge? Start your data science journey with Loan Prediction Problem.</p>
+<p><a href="https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/" target="_blank" rel="external">参考文章：</a><br><a href="https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/" title="参考链接" target="_blank" rel="external">https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(2)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/25/A Complete Tutorail(2)/" itemprop="url">A Complete Tutorial to Learn Data Science with Python from Scratch(2)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T00:00:00+08:00">
+                2017-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="3-Exploratory-analysis-in-Python-using-Pandas"><a href="#3-Exploratory-analysis-in-Python-using-Pandas" class="headerlink" title="3. Exploratory analysis in Python using Pandas"></a>3. Exploratory analysis in Python using Pandas</h2><p>Pandas是Python中最为实用的一种数据分析库，接下来会简单介绍Pandas，然后利用Pandas读取Analytics Vidhya竞赛中的一个数据集进行探索分析，建立一个简单的分类算法来解决这个问题。</p>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ23hIYcOBOMyLBsC1knJS9lBo0Xx-oQ1O1YoTFFlND0FZHeeYrg" alt="可爱的Pandas"></p>
+<h3 id="Introduction-to-Series-and-Dataframe"><a href="#Introduction-to-Series-and-Dataframe" class="headerlink" title="Introduction to Series and Dataframe"></a>Introduction to Series and Dataframe</h3><p>开始读取数据集之前，先来理解Pandas的两个关键数据结构-Series &amp; DataFrame</p>
+<p><strong>Series</strong> 可以理解为一个1维带标签（labelled）或索引(indexed)的数组,可以通过labels来读取series中的元素（elements).</p>
+<p><strong>DataFrame</strong> 则与Excel表格很相像，可以通过Column names来引用某一列，可以使用Row numbers 来引用某一行。区别在于，在DataFrame中，Column names被称为Column,Row numbers被称为row index.</p>
+<p>Series and dataframes form the core data model for Pandas in Python. The data sets are first read into these dataframes and then various operations (e.g. group by, aggregation etc.) can be applied very easily to its columns.</p>
+<p>More: + <a href="http://pandas.pydata.org/pandas-docs/stable/10min.html" target="_blank" rel="external">10 Minutes to Pandas(亲身经历，感觉10分钟根本没看完，可能英语渣吧……)</a></p>
+<h3 id="Practice-data-set-—-Loan-Prediction-Problem"><a href="#Practice-data-set-—-Loan-Prediction-Problem" class="headerlink" title="Practice data set — Loan Prediction Problem"></a>Practice data set — Loan Prediction Problem</h3><ul>
+<li><a href="https://datahack.analyticsvidhya.com/contest/practice-problem-loan-prediction-iii/" target="_blank" rel="external">数据集下载地址</a></li>
+</ul>
+<p>貌似是Analytics Vidhya举办的一个竞赛吧，贷款预测问题（Loan Prediction Problem).</p>
+<pre><code class="Python">VARIABLE DESCRIPTIONS:(数据集变量描述)
+
+Variable              Description
+
+Loan_ID(贷款人标识)                      Unique Loan ID
+
+Gender(性别)                      Male/ Female
+
+Married(婚姻)                      Applicant married (Y/N)
+
+Dependents(家属)              Number of dependents
+
+Education(教育)              Applicant Education (Graduate/ Under Graduate)
+
+Self_Employed(自营)              Self employed (Y/N)
+
+ApplicantIncome(申请人收入)              Applicant income
+
+CoapplicantIncome      Coapplicant income
+
+LoanAmount(贷款金额)              Loan amount in thousands
+
+Loan_Amount_Term(贷款期限)      Term of loan in months
+
+Credit_History(信用记录)              credit history meets guidelines
+
+Property_Area(居住地)              Urban/ Semi Urban/ Rural
+
+Loan_Status(贷款状况)              Loan approved (Y/N)
+</code></pre>
+<h3 id="Importing-libraries-and-the-data-set"><a href="#Importing-libraries-and-the-data-set" class="headerlink" title="Importing libraries and the data set"></a>Importing libraries and the data set</h3><ul>
+<li>numpy</li>
+<li>matploylib</li>
+<li>pandas</li>
+</ul>
+<pre><code class="python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df=pd.read_csv(&quot;G:/Datahack/Loanprediction/TrainFile/train.csv&quot;)
+</code></pre>
+<h3 id="Quick-Data-Exploration"><a href="#Quick-Data-Exploration" class="headerlink" title="Quick Data Exploration"></a>Quick Data Exploration</h3><p>Once you have read the dataset, you can have a look at few top rows by using the function <strong>head()</strong></p>
+<pre><code class="python">df.head() #print first 5 rows of dataset
+</code></pre>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>Loan_ID</th><br>      <th>Gender</th><br>      <th>Married</th><br>      <th>Dependents</th><br>      <th>Education</th><br>      <th>Self_Employed</th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>      <th>Property_Area</th><br>      <th>Loan_Status</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>LP001002</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>5849</td><br>      <td>0.0</td><br>      <td>NaN</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>LP001003</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>1</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>4583</td><br>      <td>1508.0</td><br>      <td>128.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Rural</td><br>      <td>N</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>LP001005</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>Yes</td><br>      <td>3000</td><br>      <td>0.0</td><br>      <td>66.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>LP001006</td><br>      <td>Male</td><br>      <td>Yes</td><br>      <td>0</td><br>      <td>Not Graduate</td><br>      <td>No</td><br>      <td>2583</td><br>      <td>2358.0</td><br>      <td>120.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>LP001008</td><br>      <td>Male</td><br>      <td>No</td><br>      <td>0</td><br>      <td>Graduate</td><br>      <td>No</td><br>      <td>6000</td><br>      <td>0.0</td><br>      <td>141.0</td><br>      <td>360.0</td><br>      <td>1.0</td><br>      <td>Urban</td><br>      <td>Y</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>Next, you can look at summary of numerical fields by using <strong>describe()</strong> function.</p>
+<p>describe() function would provide count,mean,standard deviation(std),min,quartiles and max in its output. </p>
+<p>More: + <a href="https://www.analyticsvidhya.com/blog/2014/07/statistics/" target="_blank" rel="external">basic statistics to understand population distribution</a></p>
+<p>同时，可以看到部分列还有缺失值。</p>
+<pre><code class="python">df.describe() #Get summary of numerical variables
+</code></pre>
+<div><br><style><br>    .dataframe thead tr:only-child th {<br>        text-align: right;<br>    }<br><br>    .dataframe thead th {<br>        text-align: left;<br>    }<br><br>    .dataframe tbody tr th {<br>        vertical-align: top;<br>    }<br></style><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>ApplicantIncome</th><br>      <th>CoapplicantIncome</th><br>      <th>LoanAmount</th><br>      <th>Loan_Amount_Term</th><br>      <th>Credit_History</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>count</th><br>      <td>614.000000</td><br>      <td>614.000000</td><br>      <td>592.000000</td><br>      <td>600.00000</td><br>      <td>564.000000</td><br>    </tr><br>    <tr><br>      <th>mean</th><br>      <td>5403.459283</td><br>      <td>1621.245798</td><br>      <td>146.412162</td><br>      <td>342.00000</td><br>      <td>0.842199</td><br>    </tr><br>    <tr><br>      <th>std</th><br>      <td>6109.041673</td><br>      <td>2926.248369</td><br>      <td>85.587325</td><br>      <td>65.12041</td><br>      <td>0.364878</td><br>    </tr><br>    <tr><br>      <th>min</th><br>      <td>150.000000</td><br>      <td>0.000000</td><br>      <td>9.000000</td><br>      <td>12.00000</td><br>      <td>0.000000</td><br>    </tr><br>    <tr><br>      <th>25%</th><br>      <td>2877.500000</td><br>      <td>0.000000</td><br>      <td>100.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>50%</th><br>      <td>3812.500000</td><br>      <td>1188.500000</td><br>      <td>128.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>75%</th><br>      <td>5795.000000</td><br>      <td>2297.250000</td><br>      <td>168.000000</td><br>      <td>360.00000</td><br>      <td>1.000000</td><br>    </tr><br>    <tr><br>      <th>max</th><br>      <td>81000.000000</td><br>      <td>41667.000000</td><br>      <td>700.000000</td><br>      <td>480.00000</td><br>      <td>1.000000</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+
+<p>For the non-numerical values, we can look at frequency distribution to understand whether they make sense or not. The frequency table can be printed by following command:</p>
+<pre><code class="python">df[&#39;Property_Area&#39;].value_counts()
+</code></pre>
+<pre><code>Semiurban    233
+Urban        202
+Rural        179
+Name: Property_Area, dtype: int64
+</code></pre><h3 id="Distribution-analysis"><a href="#Distribution-analysis" class="headerlink" title="Distribution analysis"></a>Distribution analysis</h3><p>通过前面的操作已经熟悉了基本数据特征，下面开始研究各个变量的分布情况。</p>
+<p>Lets start by plotting the histogram of ApplicantIncome using the follow commands:</p>
+<pre><code class="python">df[&#39;ApplicantIncome&#39;].hist(bins=50,figsize=(15,5))
+plt.show()
+</code></pre>
+<p><img src="http://i.imgur.com/feIfwDI.png" alt="picture1"></p>
+<p>可以看到上图中有少数的极端值。</p>
+<p>Next, we look at box plots to understand the distributions.</p>
+<pre><code class="python">df.boxplot(column=&#39;ApplicantIncome&#39;)
+plt.show()
+</code></pre>
+<p><img src="http://i.imgur.com/DbJAesM.png" alt="Picture2"></p>
+<p>This confirms the presence of a lot of outliers/extreme values. This can be attributed to the income disparity in the society. Part of this can be driven by the fact that we are looking at people with different education levels. Let us segregate them by Education:</p>
+<pre><code class="python">df.boxplot(column=&#39;ApplicantIncome&#39;,by=&#39;Education&#39;)
+plt.show()
+</code></pre>
+<p><img src="http://i.imgur.com/rIwMoMP.png" alt="picture3"></p>
+<p>We can see that there is no substantial different between the mean income of graduate and non-graduates. But there are a higher number of graduates with very high incomes, which are appearing to be the outliers.可以看出，大学毕业和大学未毕业人数平均收入是差不多的，但是大学毕业会有部分高收入值，形成离群值。</p>
+<p>Now, Let’s look at the histogram and boxplot of LoanAmount using the following command:</p>
+<pre><code class="python">df[&#39;LoanAmount&#39;].hist(bins=50,figsize=(15,5))
+plt.show()
+</code></pre>
+<p><img src="http://i.imgur.com/4Spv377.png" alt="picture4"></p>
+<pre><code class="python">df.boxplot(column=&#39;LoanAmount&#39;)
+plt.show()
+</code></pre>
+<p><img src="http://i.imgur.com/9O0IfEJ.png" alt="picture5"></p>
+<p>Again, there are some extreme values. Clearly, both ApplicantIncome and LoanAmount require some amount of data munging.（小白表示懵逼啊，有很多离群值就不能用了？需要数据修复？好像吴恩达的视频是提到过） LoanAmount has missing and well as extreme values values, while ApplicantIncome has a few extreme values, which demand deeper understanding. We will take this up in coming sections.</p>
+<h3 id="Categorical-variable-analysis"><a href="#Categorical-variable-analysis" class="headerlink" title="Categorical variable analysis"></a>Categorical variable analysis</h3><p>Now that we understand distributions for ApplicantIncome and LoanIncome, let us understand categorical variables in more details. We will use Excel style pivot table and cross-tabulation. For instance, let us look at the chances of getting a loan based on credit history. This can be achieved in MS Excel using a pivot table as:</p>
+<p>Now we will look at the steps required to generate a similar insight using Python. Please refer to <a href="https://www.analyticsvidhya.com/blog/2016/01/12-pandas-techniques-python-data-manipulation/" target="_blank" rel="external">this article(12种奇淫异巧)</a> for getting a hang of the different data manipulation techniques in Pandas.</p>
+<pre><code class="python">temp1=df[&#39;Credit_History&#39;].value_counts(ascending=True)
+temp2=df.pivot_table(values=&#39;Loan_Status&#39;,index=[&#39;Credit_History&#39;],
+                     aggfunc=lambda x:x.map({&#39;Y&#39;:1,&#39;N&#39;:0}).mean())
+print(&quot;Frequency Table for Credit History:&quot;)
+print(temp1)
+print(&quot;\nProbility of getting loan for each Credit History class:&quot;)
+print(temp2)
+</code></pre>
+<pre><code>Frequency Table for Credit History:
+0.0     89
+1.0    475
+Name: Credit_History, dtype: int64
+
+Probility of getting loan for each Credit History class:
+                Loan_Status
+Credit_History             
+0.0                0.078652
+1.0                0.795789
+</code></pre><pre><code class="python">temp1.plot(kind=&#39;bar&#39;)
+plt.xlabel(&#39;Credit_History&#39;)
+plt.ylabel(&#39;Count of Applicants&#39;)
+plt.title(&#39;Applicants by Credit_History&#39;)
+
+temp2.plot(kind=&#39;bar&#39;)
+plt.xlabel(&#39;Credit_History&#39;)
+plt.ylabel(&#39;Probability of getting loan&#39;)
+plt.title(&#39;Probability of getting loan by credit history&#39;)
+
+plt.show()
+</code></pre>
+<p><img src="http://i.imgur.com/pfVVcHX.png" alt="picture6"></p>
+<p><img src="http://i.imgur.com/Bb0d3I5.png" alt="picture7"></p>
+<p>This shows that the chances of getting a loan are eight-fold if the applicant has a valid credit history.(在有Credit_History的人获得贷款的概率是无Credit_History的8倍)You can plot similar graphs by Married, Self-Employed, Property_Area, etc.</p>
+<p>Alternately, these two plots can also be visualized by combining them in a stacked chart::</p>
+<pre><code class="python">temp3=pd.crosstab(df[&#39;Credit_History&#39;],df[&#39;Loan_Status&#39;])
+temp3.plot(kind=&#39;bar&#39;,stacked=True,color=[&#39;red&#39;,&#39;blue&#39;],grid=False)
+plt.show()
+</code></pre>
+<p><img src="http://i.imgur.com/KLQod2u.png" alt="picture8"></p>
+<p>You can also add gender into the mix.</p>
+<p>If you have not realized already, we have just created two basic classification algorithms here, one based on credit history, while other on 2 categorical variables (including gender). You can quickly code this to create your first submission on AV Datahacks.</p>
+<p>We just saw how we can do exploratory analysis in Python using Pandas. I hope your love for pandas (the animal) would have increased by now – given the amount of help, the library can provide you in analyzing datasets.</p>
+<p>Next let’s explore ApplicantIncome and LoanStatus variables further, perform <a href="https://www.analyticsvidhya.com/blog/2014/09/data-munging-python-using-pandas-baby-steps-python/" target="_blank" rel="external">data munging</a> and create a dataset for applying various modeling techniques. I would strongly urge that you take another dataset and problem and go through an independent example before reading further.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1208,7 +2032,7 @@ extensions
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/2寻找重复数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/买卖股票的最佳时机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1227,7 +2051,7 @@ extensions
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/2寻找重复数/" itemprop="url">LeetCode - 寻找重复数</a></h1>
+                <a class="post-title-link" href="/2017/07/05/买卖股票的最佳时机/" itemprop="url">LeetCode - 买卖股票的最佳时机</a></h1>
         
 
         <div class="post-meta">
@@ -1302,196 +2126,34 @@ extensions
       
         
           
-            <p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
+            <p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p>
+<p>如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</p>
+<p>注意你不能在买入股票前卖出股票。</p>
 <p>示例 1:</p>
-<pre><code>输入: [1,3,4,2,2]
-输出: 2
+<pre><code>输入: [7,1,5,3,6,4]
+输出: 5
+解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
 </code></pre><p>示例 2:</p>
-<pre><code>输入: [3,1,3,4,2]
-输出: 3
-</code></pre><p>说明：</p>
-<p>不能更改原数组（假设数组是只读的）。<br>只能使用额外的 O(1) 的空间。<br>时间复杂度小于 O(n2) 。<br>数组中只有一个重复的数字，但它可能不止重复出现一次。</p>
+<pre><code>输入: [7,6,4,3,1]
+输出: 0
+解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>遍历过程中记录最低股价；</li>
+<li>同时记录最高差价；</li>
+</ol>
 <pre><code class="Python">
     class Solution:
-        def findDuplicate(self, nums):
+        def maxProfit(self, prices):
             &quot;&quot;&quot;
-            :type nums: List[int]
+            :type prices: List[int]
             :rtype: int
             &quot;&quot;&quot;
-            left = 0; right = len(nums)-1
-
-            while left+1 &lt; right:
-                mid = (left + right)//2
-                cnt = 0
-                for v in nums:
-                    if (v &gt; mid) &amp; (v &lt;= right):
-                        cnt += 1
-                if cnt &gt; (right - mid):
-                    left = mid
-                else:
-                    right = mid
-
-            return  int(right)
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/除自身以外数组的乘积/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/除自身以外数组的乘积/" itemprop="url">LeetCode - 除自身以外数组的乘积</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定长度为 n 的整数数组 nums，其中 n &gt; 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。</p>
-<p>示例:</p>
-<pre><code>输入: [1,2,3,4]
-输出: [24,12,8,6]
-</code></pre><p>说明: 请不要使用除法，且在 O(n) 时间复杂度内完成此题。</p>
-<p>进阶：<br>你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。）</p>
-<pre><code class="Python">
-    class Solution:
-        def productExceptSelf(self, nums):
-            &quot;&quot;&quot;
-            :type nums: List[int]
-            :rtype: List[int]
-            &quot;&quot;&quot;
-            res = []
-            p = 1
-            for v in nums:
-                res.append(p)
-                p *= v
-            p = 1
-            for i in range(len(nums)-1,-1,-1):
-                res[i] *= p
-                p *= nums[i]
+            res = 0
+            buy = float(&#39;inf&#39;)
+            for v in prices:
+                buy = min(buy, v)
+                res = max(res, v-buy)
             return res
 </code></pre>
 
@@ -1537,7 +2199,7 @@ extensions
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/存在重复元素2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/打家劫舍/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1556,7 +2218,7 @@ extensions
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/存在重复元素2/" itemprop="url">LeetCode - 存在重复元素2</a></h1>
+                <a class="post-title-link" href="/2017/07/05/打家劫舍/" itemprop="url">LeetCode - 打家劫舍</a></h1>
         
 
         <div class="post-meta">
@@ -1631,33 +2293,38 @@ extensions
       
         
           
-            <p>给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。</p>
+            <p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
+<p>给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
 <p>示例 1:</p>
-<pre><code>输入: nums = [1,2,3,1], k = 3
-输出: true
+<pre><code>输入: [1,2,3,1]
+输出: 4
+解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。
+     偷窃到的最高金额 = 1 + 3 = 4 。
 </code></pre><p>示例 2:</p>
-<pre><code>输入: nums = [1,0,1,1], k = 1
-输出: true
-</code></pre><p>示例 3:</p>
-<pre><code>输入: nums = [1,2,3,1,2,3], k = 2
-输出: false
-</code></pre><pre><code class="Python">
-    class Solution:
-    def containsNearbyDuplicate(self, nums, k):
+<pre><code>输入: [2,7,9,3,1]
+输出: 12
+解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。
+     偷窃到的最高金额 = 2 + 9 + 1 = 12 。
+
+
+class Solution:
+    def rob(self, nums):
         &quot;&quot;&quot;
         :type nums: List[int]
-        :type k: int
-        :rtype: bool
+        :rtype: int
         &quot;&quot;&quot;
-        d = {}
-        for i, num in enumerate(nums):
-            if num in d and i - d[num] &lt;= k:
-                return True
-            d[num] = i
+        if len(nums) == 0:
+            return 0
+        elif len(nums) &lt; 2:
+            return max(nums[0], nums[-1])
 
-        return False
+        tmp = [0]*len(nums)
+        tmp[0], tmp[1] = nums[0], max(nums[0], nums[1])
+        for i in range(2, len(nums)):
+            tmp[i] = max(nums[i]+tmp[i-2], tmp[i-1])
+
+        return tmp[-1]
 </code></pre>
-
           
         
       
@@ -1880,7 +2547,7 @@ extensions
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/求众数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/帕斯卡三角形/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1899,7 +2566,7 @@ extensions
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/求众数/" itemprop="url">LeetCode - 求众数</a></h1>
+                <a class="post-title-link" href="/2017/07/05/帕斯卡三角形/" itemprop="url">LeetCode - 帕斯卡三角形</a></h1>
         
 
         <div class="post-meta">
@@ -1974,205 +2641,33 @@ extensions
       
         
           
-            <p>给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。</p>
-<p>你可以假设数组是非空的，并且给定的数组总是存在众数。</p>
-<p>示例 1:</p>
-<pre><code>输入: [3,2,3]
-输出: 3
-</code></pre><p>示例 2:</p>
-<pre><code>输入: [2,2,1,1,1,2,2]
-输出: 2
-
-
-
-class Solution(object):
-    def majorityElement(self, nums):
-        &quot;&quot;&quot;
-        :type nums: List[int]
-        :rtype: int
-        &quot;&quot;&quot;
-        m = int(len(nums)/2 + 0.5) # 取整
-        for i in set(nums):
-            if nums.count(i) &gt; m:
-                return i
-        return nums[0]
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汉明距离/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/汉明距离/" itemprop="url">LeetCode - 汉明距离</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。</p>
-<p>给出两个整数 x 和 y，计算它们之间的汉明距离。</p>
-<p>注意：<br>0 ≤ x, y &lt; 231.</p>
+            <p>给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif" alt="帕斯卡三角形"></p>
+<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
 <p>示例:</p>
-<pre><code>输入: x = 1, y = 4
-
-输出: 2
-
-解释:
-1   (0 0 0 1)
-4   (0 1 0 0)
-       ↑   ↑
-</code></pre><p>上面的箭头指出了对应二进制位不同的位置。</p>
-<pre><code class="Python">
+<pre><code>输入: 5
+输出:
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+</code></pre><pre><code class="Python">
     class Solution(object):
-        def hammingDistance(self, x, y):
+        def generate(self, numRows):
             &quot;&quot;&quot;
-            :type x: int
-            :type y: int
-            :rtype: int
+            :type numRows: int
+            :rtype: List[List[int]]
             &quot;&quot;&quot;
-            bx = [v for v in bin(x)[2:]]
-            by = [v for v in bin(y)[2:]]
-
-            bx.reverse()
-            by.reverse()
-            i = 0; cnt = 0
-            while (i&lt;len(bx))&amp;(i&lt;len(by)):
-                if bx[i] != by[i]:
-                    cnt += 1
-                i += 1
-
-            if len(bx)&gt;i:
-                cnt += bx[i:].count(&#39;1&#39;)
-            if len(by)&gt;i:
-                cnt += by[i:].count(&#39;1&#39;)
-
-            return cnt
-
-            # return bin(x^y).count(&#39;1&#39;)
+            res = []
+            for i in range(1, 1+numRows):
+                res.append([1]*i)
+            for i in range(2, numRows):
+                for j in range(1, i):
+                    res[i][j] = res[i-1][j] + res[i-1][j-1]
+            return res
 </code></pre>
 
           
@@ -2258,7 +2753,7 @@ class Solution(object):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">113</span>
+                <span class="site-state-item-count">115</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
