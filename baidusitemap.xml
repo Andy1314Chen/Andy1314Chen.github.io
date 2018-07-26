@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/01/%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88/</loc>
+    <lastmod>2018-07-26T07:36:32.308Z</lastmod>
+    <data>
+        <display>
+        <title>包含min函数的栈(剑指offer第二十题)</title>
+        <pubTime>2017-08-31T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>剑指offer</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/09/01/%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/</loc>
     <lastmod>2018-07-26T07:32:46.310Z</lastmod>
     <data>
@@ -1517,9 +1539,9 @@
         
         <tag>python</tag>
          
-        <tag>书籍</tag>
-         
         <tag>sklearn</tag>
+         
+        <tag>书籍</tag>
          
          
            
@@ -1541,9 +1563,9 @@
         
         <tag>python</tag>
          
-        <tag>书籍</tag>
-         
         <tag>sklearn</tag>
+         
+        <tag>书籍</tag>
          
          
            
