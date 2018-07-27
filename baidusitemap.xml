@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/11/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2018-07-27T07:02:18.487Z</lastmod>
+    <data>
+        <display>
+        <title>机器学习面试问题总结</title>
+        <pubTime>2017-11-02T16:00:00.000Z</pubTime>
+        
+        <tag>ML</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/10/01/GBDT%E8%B0%83%E5%8F%82%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2018-07-26T13:00:09.902Z</lastmod>
     <data>
@@ -1539,9 +1559,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -1563,9 +1583,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -2640,9 +2660,9 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
-        <tag>Leetcode</tag>
-         
         <tag>C</tag>
+         
+        <tag>Leetcode</tag>
          
         <tag>算法</tag>
          

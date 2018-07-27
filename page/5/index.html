@@ -301,6 +301,204 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/英特尔两道编程题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/14/英特尔两道编程题/" itemprop="url">英特尔校招两道编程题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T00:00:00+08:00">
+                2017-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>英特尔一上来共有A,B,C,D好几个部分的选择题、编程题、简答题等等。<br>师兄做的是B类，共有两道编程题，和A类是一致的。</p>
+<p>第一道是，单链表删除相同值。主要考查的是单链表相关操作，第一次没有通过，原因是没有给节点分配空间。</p>
+<pre><code>D_LIST* remove(D_LIST* head, int val)
+{
+    if(head==NULL)
+        return head;
+    D_LIST* preNode=(D_LIST*)malloc(sizeof(D_LIST));//就是这里没有分配
+    preNode-&gt;next=head;
+    D_LIST* curNode=preNode;
+    while(curNode-&gt;next!=NULL)
+    {
+        if(curNode-&gt;next-&gt;data==val)
+        {
+            D_LIST* nextNode=curNode-&gt;next;
+            curNode-&gt;next=nextNode-&gt;next;
+
+        }
+        else
+            curNode=curNode-&gt;next;
+    }
+    D_LIST* result=preNode-&gt;next;
+    free(preNode);
+    return result; 
+}
+</code></pre><p>第二道是，删除字符串中/**/包围的字符，也很简单，但是没有AC，原因在于写的太混乱，总是报错。</p>
+<pre><code>void remove_comments(char *txt)
+{
+    char *str=txt;
+    if(str==NULL)
+        return;
+    int n=strlen(txt);
+    int ind1=0,ind2=0;
+    for(int i=0;i&lt;n;i++)
+    {
+        if(str[i]==&#39;/&#39;)
+        {
+            if(!ind1)
+            {
+                ind1=i;
+                continue;
+            }
+            else
+            {
+                ind2=i;
+                break;
+            }
+        }
+    }
+    int i=0,j=0;
+    if(ind1&amp;&amp;ind2)
+    { 
+        for( i=0,j=0;i&lt;n;i++)
+        {
+            if((i&lt;ind1)||(i&gt;ind2))
+            {
+                txt[j++]=str[i];
+            }
+        }
+    }
+    txt[j]=&#39;\0&#39;;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/10/Hands-on第二章学习笔记(2)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2521,7 +2719,7 @@ def grabTree(filename):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/顺时针打印矩阵/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/旋转数组的最小数字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2540,7 +2738,7 @@ def grabTree(filename):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/顺时针打印矩阵/" itemprop="url">顺时针打印矩阵(剑指offer第十九题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/旋转数组的最小数字/" itemprop="url">旋转数组的最小数字(剑指offer第六题)</a></h1>
         
 
         <div class="post-meta">
@@ -2615,18 +2813,20 @@ def grabTree(filename):
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        # matrix类型为二维列表，需要返回列表
-        def printMatrix(self, matrix):
+        def minNumberInRotateArray(self, rotateArray):
             # write code here
-            ret = []
-            while len(matrix) &gt; 0:
-                ret += matrix[0] #将矩阵的首行放入 ret
-                matrix = [x for x in zip(*matrix[1:])][::-1] #去掉矩阵首行后逆时针旋转90度
-            return ret
+            if len(rotateArray) &lt; 1:
+                return 0
+            i = 1
+            while i &lt; len(rotateArray):
+                if rotateArray[i] &lt; rotateArray[i-1]:
+                    return rotateArray[i]
+                i += 1
+            return rotateArray[-1]
 </code></pre>
 
           
@@ -2671,7 +2871,7 @@ def grabTree(filename):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/青蛙台阶/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/菲波那切数列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2690,7 +2890,7 @@ def grabTree(filename):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/青蛙台阶/" itemprop="url">青蛙台阶(剑指offer第八题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/菲波那切数列/" itemprop="url">菲波那切数列(剑指offer第七题)</a></h1>
         
 
         <div class="post-meta">
@@ -2765,178 +2965,24 @@ def grabTree(filename):
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。<br>n&lt;=39</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def jumpFloor(self, number):
+        def Fibonacci(self, n):
             # write code here
+            if n &lt; 2:
+                return n
 
             first = 1
-            second = 1
-            res = 1
-            for i in range(1, number):
-                res = first + second
-                second = first
-                first = res
-            return res
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/矩形覆盖/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/矩形覆盖/" itemprop="url">矩形覆盖(剑指offer第十题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>我们可以用2<em>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2</em>1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def rectCover(self, number):
-            # write code here
-            if number &lt;= 3:
-                return number
-
-            first = 3
-            second = 2
+            second = 0
             res = 0
-            for i in range(3, number):
+            for i in range(1,n):
                 res = first + second
                 second = first
                 first = res
             return res
 </code></pre>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
 
           
         
@@ -3021,7 +3067,7 @@ def grabTree(filename):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">119</span>
+                <span class="site-state-item-count">120</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
