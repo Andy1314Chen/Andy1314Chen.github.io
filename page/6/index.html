@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二进制中1的个数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/机器学习实战第四章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/二进制中1的个数/" itemprop="url">二进制中1的个数(剑指offer第十一题)</a></h1>
+                <a class="post-title-link" href="/2017/09/05/机器学习实战第四章学习笔记/" itemprop="url">机器学习实战第四章学习笔记(朴素贝叶斯分类器)</a></h1>
         
 
         <div class="post-meta">
@@ -332,8 +332,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
+                2017-09-05
               </time>
             
 
@@ -357,8 +357,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -395,20 +406,279 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def NumberOf1(self, n):
-            # write code here
-            cnt = 0
-            if n &lt; 0:
-                n = n&amp;0xffffffff
-            while n:
-                cnt += 1
-                n = n&amp;(n-1)
-            return cnt
-</code></pre>
+            <p>之前两章，k-NN近邻算法和决策树算法构建的分类器都是对测试数据给出一种具体的类别，即‘非黑即白’。而朴素贝叶斯分类器会给出每个类别的概率，将概率最大的类别作为最优类别猜测结果。</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201703/58b978fa8bdb6.png?imageMogr2/format/jpg/quality/90" alt="贝叶斯概率公式"></p>
+<h2 id="基于贝叶斯决策理论的分类方法"><a href="#基于贝叶斯决策理论的分类方法" class="headerlink" title="基于贝叶斯决策理论的分类方法"></a>基于贝叶斯决策理论的分类方法</h2><ul>
+<li>优点：在数据较少的情况下仍然有效，可以处理多类别问题。</li>
+<li>缺点：对于输入数据的准备方式较为敏感</li>
+<li>适用数据类型：离散型</li>
+</ul>
+<h4 id="贝叶斯决策理论"><a href="#贝叶斯决策理论" class="headerlink" title="贝叶斯决策理论"></a>贝叶斯决策理论</h4><p>举个简单的小例子：</p>
+<p>假设有一个数据集，每条数据样本都有两个特征(x,y)和一个类别标签(0,1).目标是把一条新的数据贴上准确的标签。</p>
+<p>用p1(x,y)表示数据(x,y)属于类别1的概率，用p2(x,y)表示数据(x,y)属于类别2的概率。那么，用条件概率公式来表示这两个概率，就分别是P(c1|x,y)和P(c2|x,y),具体意义就是：由x和y这两个属性值确定的数据，其属于类别1、类别2的概率。</p>
+<p>由<a href="https://zh.wikipedia.org/wiki/%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%A6%82%E7%8E%87" target="_blank" rel="external">贝叶斯定理</a>，可得到：</p>
+<p><img src="http://img.blog.csdn.net/20170418192042562" alt=""></p>
+<p>p(x,y|c<em>i</em>):基于一个样本数据集，在c<em>i</em>这个类中，数据(x,y)出现的概率。</p>
+<p>p(c<em>i</em>):基于这个样本数据集，属于c<em>i</em>这个类别的数据，占所有数据的数量。</p>
+<p>p(x,y):在所有样本数据中，数据(x,y)出现的概率。</p>
+<p><em>用具体的数字说明一下：</em></p>
+<p>该样本数据集中共有20个样本，标签为c<em>1</em>的为15个，标签c<em>2</em>的为5个，(X0,Y0)是该样本集中独特的一个，标签为c<em>1</em>。</p>
+<p>则p(X0,Y0|c<em>1</em>)=1/15,</p>
+<p>p(c<em>1</em>)=2/3,</p>
+<p>p(X0,Y0)=1/20</p>
+<p>对于数据集中任意一个样本数据(x,y)来说，用p1(x,y)表示数据点(x,y)属于类别1的概率，用p2(x,y)表示数据点(x,y)属于类别2的概率，那么对于一个新数据点(x,y)，可以用下面的规则判断它的类别：</p>
+<ul>
+<li>如果p1(x,y)=p(c<em>1</em>|x,y) &gt; p2(x,y)=p(c<em>2</em>|x,y),那么类别为1.</li>
+<li>如果p1(x,y)=p(c<em>1</em>|x,y) &lt; p2(x,y)=p(c<em>2</em>|x,y),那么类别为2.</li>
+</ul>
+<p>简单的讲，我们会选择高概率对应的类别，这也是贝叶斯决策理论的核心思想。</p>
+<h2 id="使用朴素贝叶斯进行文档分类"><a href="#使用朴素贝叶斯进行文档分类" class="headerlink" title="使用朴素贝叶斯进行文档分类"></a>使用朴素贝叶斯进行文档分类</h2><p>朴素贝叶斯的一般过程：</p>
+<ol>
+<li>收集数据：可以使用任何方法，这里使用RSS源</li>
+<li>准备数据：需要数值型或者布尔型数据。</li>
+<li>分析数据：有大量特征时，绘制特征作用不大，此时使用直方图效果更好。</li>
+<li>训练算法：计算不同的独立特征的条件概率。</li>
+<li>测试算法：计算错误率。</li>
+<li>使用算法：一个常见的朴素贝叶斯应用是文档分类。</li>
+</ol>
+<p>由统计学知识：</p>
+<p><strong>如果每个特征需要N个样本，那么对于10个特征将需要N^10个样本，对于包含1000个特征的词汇表将需要N^1000个样本。</strong></p>
+<p>如果特征之间相互独立，那么样本数就可以从N^1000减少到1000<em>N. </em>那么什么是独立呢？？*</p>
+<p>所谓独立指的是统计意义上的独立，即一个特征或者单词出现的可能性与它和其他单词相邻没有关系。</p>
+<p>而这正是朴素贝叶斯分类器的一个假设，即<strong>特征之间相互统计独立</strong>。朴素贝叶斯分类器的另一个假设是，<strong>每个特征同等重要</strong>。</p>
+<p>而这两个<strong>天真</strong>的假设正是朴素贝叶斯分类器中朴素(naive)一词的来源。这个假设虽然看起来很不靠谱，但在实际运用的时候，往往能达到比较好的效果。</p>
+<p>朴素贝叶斯分类器通常有两种实现方式：一种基于贝努力模型实现，一种基于多项式模型实现。区别在于，是否考虑词在文档中出现的次数。</p>
+<h2 id="使用Python进行文本分类"><a href="#使用Python进行文本分类" class="headerlink" title="使用Python进行文本分类"></a>使用Python进行文本分类</h2><p>首先给出将文本转换为数字向量的过程，然后介绍如何基于这些向量来计算条件概率，并在此基础上构建分类器，最后还要介绍一些利用Python实现朴素贝叶斯过程中需要考虑的问题。</p>
+<h4 id="从文本中构建词向量"><a href="#从文本中构建词向量" class="headerlink" title="从文本中构建词向量"></a>从文本中构建词向量</h4><pre><code>#词表到向量的转换函数
+def loadDataSet():        
+    postingList=[[&#39;my&#39;,&#39;dog&#39;,&#39;has&#39;,&#39;flea&#39;,&#39;problems&#39;,&#39;help&#39;,&#39;please&#39;],
+                 [&#39;maybe&#39;,&#39;not&#39;,&#39;take&#39;,&#39;him&#39;,&#39;to&#39;,&#39;dog&#39;,&#39;park&#39;,&#39;stupid&#39;],
+                 [&#39;my&#39;,&#39;dalmation&#39;,&#39;is&#39;,&#39;so&#39;,&#39;cute&#39;,&#39;I&#39;,&#39;love&#39;,&#39;him&#39;],
+                 [&#39;stop&#39;,&#39;posting&#39;,&#39;stupid&#39;,&#39;worthless&#39;,&#39;garbage&#39;],
+                 [&#39;mr&#39;,&#39;licks&#39;,&#39;ate&#39;,&#39;my&#39;,&#39;steak&#39;,&#39;how&#39;,&#39;to&#39;,&#39;stop&#39;,&#39;him&#39;],
+                 [&#39;quit&#39;,&#39;buying&#39;,&#39;worthless&#39;,&#39;dog&#39;,&#39;food&#39;,&#39;stupid&#39;]]
+
+    classVec=[0,1,0,1,0,1]
+    #1，代表侮辱性文字，0，代表正常言论
+    return postingList,classVec
+#创建词汇表
+def createVocabList(dataSet):
+    vocabSet=set([])
+    for document in dataSet:
+        vocabSet=vocabSet|set(document)
+    return list(vocabSet)
+#将文本转换为向量
+#依据词汇表中单词的有无，输出向量相应位置置1或置0
+def setOfWords2Vec(vocabList,inputSet):
+    returnVec=[0]*len(vocabList)
+    for word in inputSet:
+        if word in vocabList:
+            returnVec[vocabList.index(word)]=1
+        else:
+            print(&quot;the word: %s is not in my Vocabulary!&quot; % word)
+    return returnVec
+</code></pre><p>第一个函数创建的是数据样本，第二个函数合并所有样本文档，生成一个词汇表，这个不重复词表可看做是一个一维向量。第三个函数，根据样本文档，参考词汇表向量，若样本文档中含有某些词汇，则输出向量相应位置会置1.</p>
+<h4 id="训练算法：从词向量计算概率"><a href="#训练算法：从词向量计算概率" class="headerlink" title="训练算法：从词向量计算概率"></a>训练算法：从词向量计算概率</h4><p><img src="http://img.blog.csdn.net/20170418214530308" alt=""></p>
+<p>将之前的x,y替换为w,w在这里是一个词向量。</p>
+<p>这个公式，等号右边的p(c<em>i</em>)是最好计算的，用类别<em>i</em>中文档树除以总的文档数，就可以得到类别c<em>i</em>的概率。接着计算p(w|c<em>i</em>),这里使用朴素贝叶斯假设，如果将w展开为一个个独立特征，则p(w|c<em>i</em>)等于p(w0,w1,w2,…,wN|c<em>i</em>),即等于p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)…p(wN|c<em>i</em>).</p>
+<pre><code>#基于条件独立性假设
+#朴素贝叶斯分类器训练函数
+def trainNB0(trainMatrix,trainCategory):
+    numTrainDocs=len(trainMatrix)#训练样本数量
+    numWords=len(trainMatrix[0])#每个训练样本的特征数
+    pAbusive=sum(trainCategory)/float(numTrainDocs)#侮辱性概率
+    p0Num=np.ones(numWords);p1Num=np.ones(numWords)
+    p0Denom=2.0;p1Denom=2.0
+    for i in range(numTrainDocs):
+        if trainCategory[i]==1:
+            p1Num+=trainMatrix[i]#标签为abusive的文档中，词汇表的单词出现过多少次
+            p1Denom+=sum(trainMatrix[i])#到目前为止，标签为abusive的文档中出现过单词的总量
+        else:
+            p0Num+=trainMatrix[i]#到目前为止，标签为normal的文档中，词汇表的单词出现过多少次
+            p0Denom+=sum(trainMatrix[i])#到目前为止，标签为normal的文档中出现过单词的总量
+    p1Vect=np.log(p1Num/p1Denom)#标签为abusive的文档中，词汇的各个单词的出现概率
+    #计算的是p(w*j*|c*i*)
+    p0Vect=np.log(p0Num/p0Denom)#取自然对数，防止下溢
+    return p0Vect,p1Vect,pAbusive
+</code></pre><p>函数的伪代码如下：</p>
+<pre><code>计算每个类别中的文档数目
+对每篇训练文档：
+    对每个类别：
+        如果词条出现文档中--&gt;增加该词条的计数值
+        增加所有词条的计数值
+    对每个类别：
+        对每个词条：
+            将该词条的数目除以总词条数目得到条件概率
+    返回每个类别的条件概率
+</code></pre><p>函数返回结果是：</p>
+<pre><code>#类别0的各个词条条件概率
+p0Vect=[p(w0|c*0*),p(w1|c*0*),p(w2|c*0*),...,p(wN|c*0*)]
+#类别1的各个词条条件概率
+p1Vect=[p(w0|c*1*),p(w1|c*1*),p(w2|c*1*),...,p(wN|c*1*)]
+#类别为Abusive的概率
+pAbusive
+</code></pre><h4 id="测试算法：根据现实情况修改分类器"><a href="#测试算法：根据现实情况修改分类器" class="headerlink" title="测试算法：根据现实情况修改分类器"></a>测试算法：根据现实情况修改分类器</h4><p>利用贝叶斯分类器对文档进行分类时，要计算多个概率的乘积以获得文档属于某个类别，即计算p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)。若其中一个概率值为0，那么最后的乘积也为0.为降低这种影响，可以将所有词的出现次数初始化为1，并将分母初始化为2.（因为要计算的是概率，若样本词条数较大的话，这样处理对结果的影响并不是很大）。</p>
+<p>另一个问题，下溢出。当计算p(w0|c<em>i</em>)p(w1|c<em>i</em>)p(w2|c<em>i</em>)…p(wN|c<em>i</em>)时，可能大部分因子都是非常小的，所以程序会产生下溢出或者得不到正确答案（结果非常接近0，计算机精度有限，而直接将其近似为0）。一种解决办法是对乘积取自然对数，<em>ln(a\</em>b)=ln(a)+ln(b)*. 因为最终判决时，是比较两个类别概率的大小，对他们取自然对数并不影响他们的相对大小关系。</p>
+<pre><code>#朴素贝叶斯分类器
+def classifyNB(vec2Classify,p0Vec,p1Vec,pClass1):
+    p1=sum(vec2Classify*p1Vec)+np.log(pClass1)
+    #因为取自然对数，所以原来的乘积运算转换为加法运算
+    p0=sum(vec2Classify*p0Vec)+np.log(1.0-pClass1)
+    if p1&gt;p0:
+        return 1
+    else:
+        return 0
+
+def testingNB():
+    listOPosts,listClasses=loadDataSet()
+    myVocabList=createVocabList(listOPosts)#词汇表
+
+    trainMat=[]
+    for postinDoc in listOPosts:#获取训练样本集
+        trainMat.append(setOfWords2Vec(myVocabList,postinDoc))
+    p0V,p1V,pAb=trainNB0(np.array(trainMat),np.array(listClasses))#训练
+
+    testEntry=[&#39;love&#39;,&#39;my&#39;,&#39;dalmation&#39;]
+    thisDoc=np.array(setOfWords2Vec(myVocabList,testEntry))
+    print(testEntry,&#39;classified as: &#39;,classifyNB(thisDoc,p0V,p1V,pAb))
+
+    testEntry=[&#39;stupid&#39;,&#39;garbage&#39;]
+    thisDoc=np.array(setOfWords2Vec(myVocabList,testEntry))
+    print(testEntry,&#39;classified as: &#39;,classifyNB(thisDoc,p0V,p1V,pAb))
+</code></pre><p>做个简单的小结：</p>
+<p>首先将文档合并提取出一个不重复的词汇表，对每个文档依据这个不重复词汇表转换为一维向量，向量的长度就是词汇表的个数。接下来，根据文档的类别标签，计算p(w<em>j</em>|c<em>i</em>),计算过程是：在c<em>i</em>类别中，词条w<em>j</em>出现的次数除以c<em>i</em>中总词条数目。得到p(w<em>j</em>|c<em>i</em>)后，基于朴素贝叶斯分类器的假设，可以计算p(<strong>w</strong>|c<em>i</em>).而p(c<em>i</em>)可以很容易求出来。然后比较p(<strong>w</strong>|c<em>0</em>)p(c<em>0</em>)和p(<strong>w</strong>|c<em>1</em>)p(c<em>1</em>)的大小，就可以判定属于哪个类别。</p>
+<h4 id="文档词袋模型"><a href="#文档词袋模型" class="headerlink" title="文档词袋模型"></a>文档词袋模型</h4><p>目前为止，我们是将每个词的出现与否作为一个特征的，这可以被描述为词集模型（set-of-words model).如果一个词在文档中出现不止一次，这可能意味着包含该词是否出现在文档中所不能表达的某种信息，这种方法被称为词袋模型(bag-of-words model).显然，词条出现的次数应该也要被考虑在内，因此，将函数setOfWords2Vec()修改为bagOfWords2Vec().</p>
+<pre><code>#词集模型--》词袋模型
+#朴素贝叶斯词袋模型
+def bagOfWords2VecMN(vocabList,inputSet):
+    returnVec=[0]*len(vocabList)
+    for word in inputSet:
+        if word in vocabList:
+            returnVec[vocabList.index(word)]+=1
+    return returnVec
+</code></pre><h2 id="示例：使用朴素贝叶斯过滤垃圾邮件"><a href="#示例：使用朴素贝叶斯过滤垃圾邮件" class="headerlink" title="示例：使用朴素贝叶斯过滤垃圾邮件"></a>示例：使用朴素贝叶斯过滤垃圾邮件</h2><ol>
+<li>收集数据：提供文本文件</li>
+<li>准备数据：将文本文件解析成词条向量</li>
+<li>分析数据：检查词条确保解析的正确性</li>
+<li>训练算法：使用我们之前建立的trainNB0()函数</li>
+<li>测试算法：使用classifyNB(),并且构建一个新的测试函数来计算文档集的错误率</li>
+<li>使用算法：构建一个完整的程序对一组文档进行分类，将错分的文档输出到屏幕上。</li>
+</ol>
+<h4 id="测试算法：使用朴素贝叶斯进行交叉验证"><a href="#测试算法：使用朴素贝叶斯进行交叉验证" class="headerlink" title="测试算法：使用朴素贝叶斯进行交叉验证"></a>测试算法：使用朴素贝叶斯进行交叉验证</h4><pre><code>#文件解析及完整的垃圾邮件测试函数
+def textParse(bigString):
+    import re
+    listOfTokens=re.split(r&#39;\W*&#39;,bigString)
+    return [tok.lower() for tok in listOfTokens if len(tok)&gt;2]
+#垃圾邮件分类测试
+def spamTest():
+    docList=[];classList=[];fullText=[]
+    for i in range(1,26):
+        wordList=textParse(open(&#39;email/spam/%d.txt&#39; % i).read())
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(1)
+        wordList=textParse(open(&#39;email/ham/%d.txt&#39; % i).read())
+        #第23个文件有些问题，需要修改
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(0)
+    vocabList=createVocabList(docList)#构建词汇表
+    trainingSet=list(range(50));testSet=[]
+    for i in range(10):#随机挑选10个邮件作为测试集
+        randIndex=int(np.random.uniform(0,len(trainingSet)))
+        testSet.append(trainingSet[randIndex])
+        del(trainingSet[randIndex])
+    trainMat=[];trainClasses=[]
+    for docIndex in trainingSet:
+        trainMat.append(setOfWords2Vec(vocabList,docList[docIndex]))
+        trainClasses.append(classList[docIndex])
+    p0V,p1V,pSpam=trainNB0(np.array(trainMat),np.array(trainClasses))#进行训练
+    errorCount=0
+    for docIndex in testSet:
+        wordVector=setOfWords2Vec(vocabList,docList[docIndex])
+        if classifyNB(np.array(wordVector),p0V,p1V,pSpam)!= classList[docIndex]:
+            errorCount+=1
+    print(&#39;the error rate is: &#39;,float(errorCount)/len(testSet))
+</code></pre><h2 id="示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向"><a href="#示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向" class="headerlink" title="示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向"></a>示例：使用朴素贝叶斯分类器从个人广告中获取区域倾向</h2><ol>
+<li>收集数据：从RSS源收集内容，这里需要对RSS源构建一个借口</li>
+<li>准备数据：将文本文件解析成词条向量</li>
+<li>分析数据：检查词条确保解析的正确性</li>
+<li>训练算法：使用我们之前建立的trainNB0()函数</li>
+<li>测试算法：观察错误率，确保分类器可用。可以修改切分程序，以降低错误率，提高分类结果。</li>
+<li>使用算法：构建一个完整的程序，封装所有内容。给定两个RSS源，该程序会显示最常用的公共词。</li>
+</ol>
+<h4 id="收集数据：导入RSS源"><a href="#收集数据：导入RSS源" class="headerlink" title="收集数据：导入RSS源"></a>收集数据：导入RSS源</h4><p>安装feedparser包</p>
+<pre><code>pip install feedparser
+
+#RSS源分类器及高频词去除函数
+def calcMostFreq(vocabList,fullText):
+    import operator
+    freqDict={}
+    for token in vocabList:
+        freqDict[token]=fullText.count(token)
+    sortedFreq=sorted(freqDict.items(),key=operator.itemgetter(1),\
+                      reverse=True)
+    return sortedFreq[:30]
+#返回前30个高频词条
+
+
+def localWords(feed1,feed0):
+    import feedparser
+    docList=[];classList=[];fullText=[]
+    minLen=min(len(feed1[&#39;entries&#39;]),len(feed0[&#39;entries&#39;]))#帖子数量
+    for i in range(minLen):
+        wordList=textParse(feed1[&#39;entries&#39;][i][&#39;summary&#39;])#帖子内容解析
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(1)
+        wordList=textParse(feed0[&#39;entries&#39;][i][&#39;summary&#39;])
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(0)
+    vocabList=createVocabList(docList)#创建词汇表
+    top30words=calcMostFreq(vocabList,fullText)
+    for pairW in top30words:
+        if pairW[0] in vocabList:
+            vocabList.remove(pairW[0])#去除出现次数最高的那些词
+    trainingSet=list(range(2*minLen));testSet=[]
+    for i in range(int(minLen/10)):#选取10%的数据，建立测试集
+        randIndex=int(np.random.uniform(0,len(trainingSet)))
+        testSet.append(trainingSet[randIndex])
+        del(trainingSet[randIndex])
+    trainMat=[];trainClasses=[]
+    for docIndex in trainingSet:
+        trainMat.append(bagOfWords2VecMN(vocabList,docList[docIndex]))
+        trainClasses.append(classList[docIndex])
+    p0V,p1V,pSpam=trainNB0(np.array(trainMat),np.array(trainClasses))
+    errorCount=0
+    for docIndex in testSet:
+        wordVector=bagOfWords2VecMN(vocabList,docList[docIndex])
+        if classifyNB(np.array(wordVector),p0V,p1V,pSpam) !=\
+            classList[docIndex]:
+                errorCount+=1
+    print(&#39;the error rate is: &#39;,float(errorCount)/len(testSet))
+    return vocabList,p0V,p1V
+</code></pre><p>这个分类器的作用是给出一个帖子，判断它是来自哪个地区的（东部还是西部，因为两地的语言用词可能不太一样）。<br>前30个高频词去掉的原因是，一般很多词都是虚词，如“maybe”、”yes”、“will”、”can”等等。当然这样处理是比较粗糙的，一般会根据停用词表来进行处理。</p>
+<pre><code>#最具表征性的词汇显示函数
+def getTopWords(ny,sf):
+    import operator
+    vocabList,p0V,p1V=localWords(ny,sf)
+    topNY=[];topSF=[]
+    for i in range(len(p0V)):
+        if p0V[i]&gt;-6.0:topSF.append((vocabList[i],p0V[i]))
+        if p1V[i]&gt;-6.0:topNY.append((vocabList[i],p1V[i]))
+    sortedSF=sorted(topSF,key=lambda pair:pair[1],reverse=True)
+    print(&quot;SF**&quot;*10)
+    for item in sortedSF:
+        print(item[0])
+    sortedNY=sorted(topNY,key=lambda pair:pair[1],reverse=True)
+    print(&quot;NY**&quot;*10)
+    for item in sortedNY:
+        print(item[0])
+</code></pre><p>Craigslist这个网站是分地区的，比如纽约（New York，美国东部）和旧金山（San Francisco，美国西部）。我们从这两个地区的Ctaigslist里面选取一些帖子，通过分析这些帖子里的征婚广告信息，来比较这两个城市的人们在广告用词上是否存在差异。如果确实存在差异，那么两个地区的人各自常用的词是哪些？</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/70244028" target="_blank" rel="external">《机器学习实战》第四章：朴素贝叶斯（2）两个实例</a></li>
+</ol>
 
           
         
@@ -452,7 +722,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2合并两个排序的链表/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/XGBoost调参指南/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -471,7 +741,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/2合并两个排序的链表/" itemprop="url">合并两个排序的链表(剑指offer第十六题)</a></h1>
+                <a class="post-title-link" href="/2017/09/05/XGBoost调参指南/" itemprop="url">XGBoost调参指南</a></h1>
         
 
         <div class="post-meta">
@@ -483,8 +753,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
+                2017-09-05
               </time>
             
 
@@ -546,33 +816,350 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+            <h2 id="The-XGBoost-Advantage"><a href="#The-XGBoost-Advantage" class="headerlink" title="The XGBoost Advantage"></a>The XGBoost Advantage</h2><ul>
+<li><strong>Regularization</strong> 正则</li>
+<li><strong>Parallel Processing</strong> 并行处理</li>
+<li><strong>High Flexibility</strong> 高灵活性</li>
+<li><strong>Handing Missing Values</strong> 处理缺失值</li>
+<li><strong>Tree Pruning</strong>树的剪枝</li>
+<li><strong>Built-in Cross-Validation</strong>内置交叉验证</li>
+<li><strong>Continue on Existing Model</strong>可以在已有的模型上继续训练</li>
+</ul>
+<h2 id="XGBoost-Parameters"><a href="#XGBoost-Parameters" class="headerlink" title="XGBoost Parameters"></a>XGBoost Parameters</h2><ol>
+<li>General Parameters: Guide the overall functioning</li>
+<li>Booster Parameters: Guide the individual booster(tree/regression) at each step</li>
+<li>Learning Task Parameters: Guide the optimization performed</li>
+</ol>
+<h3 id="General-Parameters"><a href="#General-Parameters" class="headerlink" title="General Parameters"></a>General Parameters</h3><p>These define the overall functionality of XGBoost.</p>
+<ul>
+<li><strong>booster [default=gbtree]</strong><ul>
+<li>Select the type of model to run at each iteration. It has 2 options:<ul>
+<li>gbtree: tree-based models</li>
+<li>gblinear: linear models</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>silent [default=0]:</strong><ul>
+<li>Silent mode is activated is set to 1, i.e. no running messages will be printed.</li>
+<li>It’s generally good to keep it 0 as the messages might help in understanding the model.</li>
+</ul>
+</li>
+<li><strong>nthread [default to maximum number of threads available if not set]</strong><ul>
+<li>This is used for parallel processing and number of cores in the system should be entered</li>
+<li>If you wish to run on all cores, value should not be entered and algorithm will detect automatically</li>
+</ul>
+</li>
+</ul>
+<h3 id="Booster-Parameters"><a href="#Booster-Parameters" class="headerlink" title="Booster Parameters"></a>Booster Parameters</h3><p>Though there are 2 types of boosters, I’ll consider only <strong>tree booster</strong> here because it always outperforms the linear booster and thus the later is rarely used.</p>
+<ol>
+<li><p><strong>eta[default=0.3]</strong></p>
+<ul>
+<li>Analogous to learning rate in GBM</li>
+<li>Makes the model more robust by shrinking the weights on each step</li>
+<li>Typical final values to be used: 0.01-0.2</li>
+</ul>
+</li>
+<li><p><strong>min_child_weight[default=1]</strong></p>
+<ul>
+<li>Defines the minimum sum of weights of all observations required in a child.</li>
+<li>This is similar to min_child_leaf in GBM but not exactly. This refers to min “sum of weights” of observations while GBM has min “number of observations”.</li>
+<li>Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree.</li>
+<li>Too high values can lead to under-fitting hence, it should be tuned using CV.</li>
+</ul>
+</li>
+<li><p><strong>max_depth[default=6]</strong></p>
+<ul>
+<li>The maximum depth of a tree, same as GBM.</li>
+<li>Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample.</li>
+<li>Should be tuned using CV.</li>
+<li>Typical values: 3-10</li>
+</ul>
+</li>
+<li><p><strong>max_leaf_nodes</strong></p>
+<ul>
+<li>The maximum number of terminal nodes or leaves in a tree.</li>
+<li>Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves.</li>
+<li>If this is defined, GBM will ignore max_depth.</li>
+</ul>
+</li>
+<li><p><strong>gamma [default=0]</strong></p>
+<ul>
+<li>A node is split only when the resulting split gives a positive reduction in the loss function. Gamma specifies the minimum loss reduction required to make a split.</li>
+<li>Makes the algorithm conservative. The values can vary depending on the loss function and should be tuned.</li>
+</ul>
+</li>
+<li><p><strong>max_depta_step[default=0]</strong></p>
+<ul>
+<li>In maximum delta step we allow each tree’s weight estimation to be. If the value is set to 0, it means there is no constraint. If it is set to a positive value, it can help making the update step more conservative.</li>
+<li>Usually this parameter is not needed, but it might help in logistic regression when class is extremely imbalanced.</li>
+<li>This is generally not used but you can explore further if you wish.</li>
+</ul>
+</li>
+<li><p><strong>subsample [default=1]</strong></p>
+<ul>
+<li>Same as the subsample of GBM. Denotes the fraction of observations to be randomly samples for each tree.</li>
+<li>Lower values make the algorithm more conservative and prevents overfitting but too small values might lead to under-fitting.</li>
+<li>Typical values: 0.5-1</li>
+</ul>
+</li>
+<li><p><strong>colsample_bytree [default=1]</strong></p>
+<ul>
+<li>Similar to max_features in GBM. Denotes the fraction of columns to be randomly samples for each tree.</li>
+<li>Typical values: 0.5-1</li>
+</ul>
+</li>
+<li><p><strong>colsample_bylevel[default=1]</strong></p>
+<ul>
+<li>Denotes the subsample ratio of columns for each split, in each level.</li>
+<li>I don’t use this often because subsample and colsample_bytree will do the job for you. but you can explore further if you feel so.</li>
+</ul>
+</li>
+<li><p><strong>lambda [default=1]</strong></p>
+<ul>
+<li>L2 regularization term on weights (analogous to Ridge regression)</li>
+<li>This used to handle the regularization part of XGBoost. Though many data scientists don’t use it often, it should be explored to reduce overfitting.</li>
+</ul>
+</li>
+<li><p><strong>alpha [default=0]</strong></p>
+<ul>
+<li>L1 regularization term on weight (analogous to Lasso regression)</li>
+<li>Can be used in case of very high dimensionality so that the algorithm runs faster when implemented</li>
+</ul>
+</li>
+<li><strong>scale_pos_weight[default=1]</strong><ul>
+<li>A value greater than 0 should be used in case of high class imbalance as it helps in faster convergence.</li>
+</ul>
+</li>
+</ol>
+<h3 id="Learning-Task-Parameters"><a href="#Learning-Task-Parameters" class="headerlink" title="Learning Task Parameters"></a>Learning Task Parameters</h3><p>These parameters are used to define the optimization objective the metric to be calculated at each step.</p>
+<ol>
+<li><strong>objective [default=reg:linear]</strong><ul>
+<li>This defines the loss function to be minimized. Mostly used values are:<ul>
+<li>binary:logistic –logistic regression for binary classification, returns predicted probability (not class)</li>
+<li>multi:softmax –multiclass classification using the softmax objective, returns predicted class (not probabilities)<ul>
+<li>you also need to set an additional num_class (number of classes) parameter defining the number of unique classes</li>
+</ul>
+</li>
+<li>multi:softprob –same as softmax, but returns predicted probability of each data point belonging to each class.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><strong>eval_metric [default according to objective]</strong>    </p>
+<ul>
+<li>The metric to be used for validation data.</li>
+<li>The default values are rmse for regression and error for classification.</li>
+<li>Typical values are:<ul>
+<li>rmse – root mean square error</li>
+<li>mae – mean absolute error</li>
+<li>logloss – negative log-likelihood</li>
+<li>error – Binary classification error rate (0.5 threshold)</li>
+<li>merror – Multiclass classification error rate</li>
+<li>mlogloss – Multiclass logloss</li>
+<li>auc: Area under the curve</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>seed [default=0]</strong></p>
+<ul>
+<li>The random number seed.</li>
+<li>Can be used for generating reproducible results and also for parameter tuning.</li>
+</ul>
+</li>
+</ol>
+<p>If you’ve been using Scikit-Learn till now, these parameter names might not look familiar. A good news is that xgboost module in python has an sklearn wrapper called XGBClassifier. It uses sklearn style naming convention. The parameters names which will change are:</p>
+<ol>
+<li>eta –&gt; learning_rate</li>
+<li>lambda –&gt; reg_lambda</li>
+<li>alpha –&gt; reg_alpha</li>
+</ol>
+<p>You must be wondering that we have defined everything except something similar to the “n_estimators” parameter in GBM. Well this exists as a parameter in XGBClassifier. However, it has to be passed as “num_boosting_rounds” while calling the fit function in the standard xgboost implementation.</p>
+<h4 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h4><ul>
+<li><a href="http://xgboost.readthedocs.org/en/latest/parameter.html#general-parameters" target="_blank" rel="external">XGBoost Parameters (official guide)</a></li>
+<li><a href="https://github.com/dmlc/xgboost/tree/master/demo/guide-python" target="_blank" rel="external">XGBoost Demo Codes (xgboost GitHub repository)</a></li>
+<li><a href="http://xgboost.readthedocs.org/en/latest/python/python_api.html" target="_blank" rel="external">Python API Reference (official guide)</a></li>
+</ul>
+<h2 id="General-Approach-for-Parameter-Tuning"><a href="#General-Approach-for-Parameter-Tuning" class="headerlink" title="General Approach for Parameter Tuning"></a>General Approach for Parameter Tuning</h2><p>We will use an approach similar to that of GBM here. The various steps to be performed are:</p>
+<ol>
+<li>Choose a relatively <strong>high learning rate</strong>. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the <strong>optimum number of trees for this learning rate</strong>. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required.</li>
+<li><strong>Tune tree-specific parameters</strong> ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.</li>
+<li>Tune <strong>regularization parameters</strong> (lambda, alpha) for xgboost which can help reduce model complexity and enhance performance.</li>
+<li><strong>Lower the learning rate</strong> and decide the optimal parameters .</li>
+</ol>
+<h3 id="Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters"><a href="#Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters" class="headerlink" title="Step1: Fix learning rate and number of estimators for tuning tree-based parameters"></a>Step1: Fix learning rate and number of estimators for tuning tree-based parameters</h3><p>In order to decide on boosting parameters, we need to set some initial values of other parameters. Lets take the following values:</p>
+<ol>
+<li><strong>max_depth = 5 </strong>: This should be between 3-10. I’ve started with 5 but you can choose a different number as well. 4-6 can be good starting points.</li>
+<li><strong>min_child_weight = 1 </strong>: A smaller value is chosen because it is a highly imbalanced class problem and leaf nodes can have smaller size groups.</li>
+<li><strong>gamma = 0 </strong>: A smaller value like 0.1-0.2 can also be chosen for starting. This will anyways be tuned later.</li>
+<li><strong>subsample, colsample_bytree = 0.8 </strong>: This is a commonly used used start value. Typical values range between 0.5-0.9.</li>
+<li><strong>scale_pos_weight = 1</strong>: Because of high class imbalance. 样本不均衡</li>
+</ol>
+<p>Please note that all the above are just initial estimates and will be tuned later. Lets take the default learning rate of 0.1 here and check the optimum number of trees using cv function of xgboost. The function defined above will do it for us.</p>
+<h3 id="Step2-Tune-max-depth-and-min-child-weight"><a href="#Step2-Tune-max-depth-and-min-child-weight" class="headerlink" title="Step2: Tune max_depth and min_child_weight"></a>Step2: Tune max_depth and min_child_weight</h3><p>We tune these first as they will have the highest impact on model outcome. To start with, let’s set wider ranges and then we will perform another iteration for smaller ranges.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/删除链表中重复的结点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/04/删除链表中重复的结点/" itemprop="url">删除链表中重复的结点（剑指Offer)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T00:00:00+08:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5 处理后为 1-&gt;2-&gt;5</p>
+<h3 id="解法-递归解法"><a href="#解法-递归解法" class="headerlink" title="解法 递归解法"></a>解法 递归解法</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     # class ListNode:
     #     def __init__(self, x):
     #         self.val = x
     #         self.next = None
     class Solution:
-        # 返回合并后列表
-        def Merge(self, pHead1, pHead2):
+        def deleteDuplication(self, pHead):
             # write code here
-            pHead3 = ListNode(3)
-            tmp = pHead3
-            while (pHead1 != None) &amp; (pHead2 != None):
-                if pHead1.val &gt; pHead2.val:
-                    tmp.next = ListNode(pHead2.val)
-                    tmp = tmp.next
-                    pHead2 = pHead2.next
-                else:
-                    tmp.next = ListNode(pHead1.val)
-                    tmp = tmp.next
-                    pHead1 = pHead1.next
-            if pHead1:
-                tmp.next = pHead1
-            elif pHead2:
-                tmp.next = pHead2
-            return pHead3.next
+            # 链表为单结点或为空
+            if (pHead==None) or (pHead.next==None):
+                return pHead
+            # 对链表开头是重复结点的进行处理
+            if pHead.val == pHead.next.val:
+                p = pHead.next.next
+                # 一直循环到非重复值为止
+                while p and p.val == pHead.val: 
+                    p = p.next
+                # 对剩余链表继续处理
+                return self.deleteDuplication(p)
+            pHead.next = self.deleteDuplication(pHead.next)
+            return pHead
 </code></pre>
 
           
@@ -617,7 +1204,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/用两个栈实现队列/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/03/数据流中的中位数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -636,7 +1223,596 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/用两个栈实现队列/" itemprop="url">用两个栈实现队列(剑指offer第五题)</a></h1>
+                <a class="post-title-link" href="/2017/09/03/数据流中的中位数/" itemprop="url">数据流中的中位数(剑指offer第六十三题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T00:00:00+08:00">
+                2017-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。</p>
+<h3 id="解法1-普通解法"><a href="#解法1-普通解法" class="headerlink" title="解法1(普通解法)"></a>解法1(普通解法)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def __init__(self):
+            self.array = []
+        def Insert(self, num):
+            # write code here
+            self.array.append(num)
+        def GetMedian(self, fucking):
+            # write code here
+            if len(self.array) == 0:
+                return None
+            self.array = sorted(self.array)
+            if len(self.array)&amp;1 == 0: # 偶数
+                mid = len(self.array)/2
+                return (self.array[mid] + self.array[mid-1])/2.0
+            else: # 奇数
+                mid = len(self.array)/2
+                return self.array[mid]
+</code></pre>
+<h3 id="解法2-堆思想"><a href="#解法2-堆思想" class="headerlink" title="解法2(堆思想)"></a>解法2(堆思想)</h3><p>在偶数时插入最小堆，奇数时插入最大堆。始终保持最大堆最大值小于最小堆最小值。</p>
+<pre><code class="Python">
+# -*- coding:utf-8 -*-
+class Solution:
+    def __init__(self):
+        self.left = [] # 最大堆，堆顶值最大
+        self.right = [] # 最小堆，堆顶值最小
+        self.cnt = 0 # 计数
+    def Insert(self, num):
+        # write code here
+        self.cnt += 1
+        if self.cnt &amp; 1 == 1: # 奇数
+            if len(self.right)&gt;0 :
+                if self.right[0] &lt; num:
+                    self.right.append(num)
+                    self.right.sort()
+                    num = self.right.pop(0)
+            self.left.append(num)
+            self.left.sort(reverse=True)
+        else:
+            if len(self.left)&gt;0 :
+                if  self.left[0] &gt; num:
+                    self.left.append(num)
+                    self.left.sort(reverse=True)
+                    num = self.left.pop(0)
+            self.right.append(num)
+            self.right.sort()
+    def GetMedian(self, fucking):
+        # write code here
+        if self.cnt == 1:
+            return self.left[0]
+        if self.cnt &amp; 1:
+            return self.left[0]
+        else:
+            return (self.left[0]+self.right[0])/2.0
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/03/机器学习实战第三章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/03/机器学习实战第三章学习笔记/" itemprop="url">机器学习实战第三章学习笔记(决策树-Decision Tree)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T00:00:00+08:00">
+                2017-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="决策树-Decision-Tree-的概念"><a href="#决策树-Decision-Tree-的概念" class="headerlink" title="决策树(Decision Tree)的概念"></a>决策树(Decision Tree)的概念</h2><p><strong>基本思想：</strong>决策树是一种树结构，其中的每个内部节点代表对某一特征的一次测试，每条边代表一个测试结果，叶节点代表某个类或类的分布。决策树的决策过程需要从决策树的根节点开始，待测试数据与决策树中的特征节点进行比较，并按照比较结果选择下一个比较分支，直到叶子节点作为最终的决策结果。</p>
+<p>决策树算法是一个分类算法，较k-近邻算法(无法给出数据的内在含义)的主要优势在于数据形式非常容易理解。</p>
+<p>优点：计算复杂度不高，输出结果易于理解，对中间值的缺失不敏感，可以处理不相关特征数据。</p>
+<p>缺点：可能会产生过度匹配问题。</p>
+<p>适用数据类型：数值型和标称型</p>
+<p><img src="https://i.imgur.com/34kfLZ3.jpg" alt=""></p>
+<h2 id="决策树的构造"><a href="#决策树的构造" class="headerlink" title="决策树的构造"></a>决策树的构造</h2><p>构造决策树时，首先面临的问题是，当前数据集上哪个特征在划分数据分类时起决定性作用。根据决定性的特征，进行划分，这样原始数据集就被划分为几个数据子集。这些数据子集会分布在第一个决策点的所有分支上。如果某个分支下的数据属于同一类型，则无需进一步对数据集进行分割。如果数据子集内的数据不属于同一类型，则需要重复划分数据子集的过程。直到所有具有相同类型的数据均在一个数据子集内。</p>
+<h4 id="决策树的一般流程"><a href="#决策树的一般流程" class="headerlink" title="决策树的一般流程"></a>决策树的一般流程</h4><ol>
+<li>收集数据：可以使用任何方法。</li>
+<li>准备数据：树构造算法只适用于标称型数据，因此数值型数据必须离散化。</li>
+<li>分析数据：可以使用任何方法，构造树完成之后，应该检查图形是否符合预期。</li>
+<li>训练算法：构造树的数据结构。</li>
+<li>测试算法：使用经验树计算错误率</li>
+<li>使用算法：此步骤可以适用于任何监督学习算法，而使用决策树可以更好地理解数据的内在含义。</li>
+</ol>
+<p>这里使用<a href="https://zh.wikipedia.org/wiki/ID3%E7%AE%97%E6%B3%95" target="_blank" rel="external">ID3算法</a>划分数据集，相关算法还有C4.5算法等。</p>
+<h4 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h4><p><strong>划分数据集的大原则是：将无序的数据变得更加有序</strong></p>
+<p>？(数据的无序和有序如何度量呢，用熵！)</p>
+<p>在划分数据集之前之后信息发生的变化称为信息增益，知道如何计算信息增益，就可以计算每个特征值划分数据集获得的信息增益，获得信息增益最高的特征就是最好的选择，就是起决定性作用的特征！</p>
+<p>集合信息的度量方式被称为香农熵或简称熵，来源于信息论之父克劳德.香农。</p>
+<p>克劳德.香农是被公认是20世纪最聪明的人之一，威廉.庞德斯通在2005年出版的《财富公式》一书中是这样描述克劳德.香农的:</p>
+<blockquote>
+<p>“贝尔实验室和MIT有很多人将香农和爱因斯坦相提并论，而其他人则认为这种对比是不公平的—对香农是不公平的。”</p>
+</blockquote>
+<p>信息增益(information gain)和熵(entropy)</p>
+<p>熵是指信息的期望值，信息增益是数据集划分之前的熵减去划分之后的熵。</p>
+<p>如果待分类事务可能划分在多个分类之中，假设X<em>i</em>是其中的一个类，则符号X<em>i</em>的信息定义为：<br><img src="http://img.blog.csdn.net/20170406145216705" alt=""></p>
+<p>p(X<em>i</em>)是选择该分类的概率。</p>
+<p>为了计算熵，我们需要计算所有类别所有可能值包含的信息期望值，通过下面的公式得到：<br><img src="http://img.blog.csdn.net/20170406145221063" alt=""></p>
+<p>其中，n是分类的数目。</p>
+<pre><code>from math import log
+import operator
+
+#计算给定数据集的香农熵
+def calcShannonEnt(dataSet):
+    numEntries=len(dataSet)
+    labelCounts={}
+    for featVec in dataSet:
+        currentLabel=featVec[-1]
+        if currentLabel not in labelCounts.keys():
+            labelCounts[currentLabel]=0
+        labelCounts[currentLabel]+=1
+    shannonEnt=0.0
+    for key in labelCounts:
+        prob=float(labelCounts[key])/numEntries
+        shannonEnt-=prob*log(prob,2.0)
+    return shannonEnt
+#创建简单数据集
+def createDataSet():
+    dataSet=[[1,1,&#39;yes&#39;],
+             [1,1,&#39;yes&#39;],
+             [1,0,&#39;no&#39;],
+             [0,1,&#39;no&#39;],
+             [0,1,&#39;no&#39;]]
+    labels=[&#39;no surfacing&#39;,&#39;flippers&#39;]
+    return dataSet, labels
+</code></pre><h4 id="划分数据集"><a href="#划分数据集" class="headerlink" title="划分数据集"></a>划分数据集</h4><p>对每个特征划分数据集的结果计算一次信息熵，然后判断按照哪个特征划分数据集是最好的划分方式。</p>
+<pre><code>#按照给定特征划分数据集
+def splitDataSet(dataSet,axis,value):
+#&quot;&quot;&quot;
+#   待划分的数据集、划分数据集的特征，特征的返回值
+#&quot;&quot;&quot;
+#对数据集进行划分，数据子集的个数由该特征所有可能值个数
+    retDataSet=[]
+    for featVec in dataSet:
+        if featVec[axis]== value:
+            reducedFeatVec=featVec[:axis]
+            reducedFeatVec.extend(featVec[axis+1:])
+            retDataSet.append(reducedFeatVec)
+    return retDataSet
+
+#选择最好的数据集划分方式
+def chooseBestFeatureToSplit(dataSet):
+    numFeatures=len(dataSet[0])-1
+    baseEntropy=calcShannonEnt(dataSet)
+    bestInfoGain=0.0;bestFeature=-1
+    for i in range(numFeatures):
+        featList=[example[i] for example in dataSet]
+        uniqueVals=set(featList)
+        newEntropy=0.0
+        for value in uniqueVals:
+            subDatSet=splitDataSet(dataSet,i,value)
+            prob=len(subDatSet)/float(len(dataSet))
+            newEntropy+=prob*calcShannonEnt(subDatSet)
+        infoGain=baseEntropy-newEntropy
+        if(infoGain&gt;bestInfoGain):
+            bestInfoGain=infoGain
+            bestFeature=i
+    return bestFeature
+</code></pre><h4 id="递归构建决策树"><a href="#递归构建决策树" class="headerlink" title="递归构建决策树"></a>递归构建决策树</h4><p>决策树构建过程大致如下：</p>
+<p>得到原始数据集，然后基于最好的属性值（特征）划分数据集，由于特征值可能多于两个，因此可能存在大于两个分支的数据集划分。第一次划分之后，数据将被向下传递到树分支的下一个节点，在这个节点上，我们可以再次划分数据集。因此我们可以采用递归的原则处理数据集。</p>
+<p>递归结束的条件是：程序遍历完所有划分数据集的属性，或者每个分支下的所有实例都具有相同的分类。</p>
+<pre><code>#返回出现次数最多的分类名称
+def majorityCnt(classList):
+    classCount={}
+    for vote in classList:
+        if vote not in classCount.keys():
+            classCount[vote]=0
+        classCount[vote]+=1
+    sortedClassCount=sorted(classCount.items(),
+                            key=operator.itemgetter(1),
+                            reverse=True)
+    return sortedClassCount[0][0]
+
+#创建树的函数代码
+def createTree(dataSet,labels):
+    #dataSet:数据集
+    #labels:标签列表
+    classList=[example[-1] for example in dataSet]
+    if classList.count(classList[0])==len(classList):
+        return classList[0]#递归结束条件2，类别完全相同
+    if len(dataSet[0])==1:
+        return majorityCnt(classList)#递归结束条件3，遍历完所有特征后，类别还未完全相同，返回出现次数最多的
+
+    bestFeat=chooseBestFeatureToSplit(dataSet)
+    bestFeatLabel=labels[bestFeat]
+    myTree={bestFeatLabel:{}}
+    del(labels[bestFeat])
+    featValues=[example[bestFeat] for example in dataSet]
+    uniqueVals=set(featValues)
+    for value in uniqueVals:
+        subLabels=labels[:]
+        myTree[bestFeatLabel][value]=createTree(splitDataSet\
+              (dataSet,bestFeat,value),subLabels)
+    #构建最佳属性的值为Value的子树
+    return myTree
+</code></pre><p>该函数有3个return，前两个返回类型是‘标签’对应叶子节点，而第3个返回类型是一棵树（dict).</p>
+<h2 id="利用Matplotlib注解绘制树形图"><a href="#利用Matplotlib注解绘制树形图" class="headerlink" title="利用Matplotlib注解绘制树形图"></a>利用Matplotlib注解绘制树形图</h2><h4 id="Matplotlib注解"><a href="#Matplotlib注解" class="headerlink" title="Matplotlib注解"></a>Matplotlib注解</h4><p>Matplotlib提供了一个注解工具annotations,可以在数据图形上添加文本注释，注解通常用于解释数据的内容。</p>
+<pre><code>import matplotlib.pyplot as plt
+
+#文本框
+decisionNode = dict(boxstyle=&#39;sawtooth&#39;,fc=&#39;0.8&#39;)
+leafNode=dict(boxstyle=&#39;round4&#39;,fc=&#39;0.8&#39;)
+#箭头格式
+arrow_args=dict(arrowstyle=&#39;&lt;-&#39;)
+
+绘制带箭头的注解
+def plotNode(nodeTxt,centerPt,parentPt,nodeType):
+    createPlot.ax1.annotate(nodeTxt,xy=parentPt,
+                            xycoords=&#39;axes fraction&#39;,
+                            xytext=centerPt,
+                            textcoords=&#39;axes fraction&#39;,
+    va=&#39;center&#39;,ha=&#39;center&#39;,bbox=nodeType,arrowprops=
+    arrow_args)
+
+def createPlot(inTree):
+    fig=plt.figure(1,facecolor=&#39;white&#39;)
+    fig.clf()
+    axprops=dict(xticks=[],yticks=[])
+    createPlot.ax1=plt.subplot(111,frameon=False,**axprops)
+    plotTree.totalW=float(getNumLeafs(inTree))
+    plotTree.totalD=float(getTreeDepth(inTree))
+    plotTree.xOff=-0.5/plotTree.totalW;plotTree.yOff=1.0;
+    plotTree(inTree,(0.5,1.0),&#39;&#39;)
+
+#    plotNode(&#39;a decision node&#39;,(0.5,0.1),(0.1,0.5),decisionNode)
+#    plotNode(&#39;a leaf node&#39;,(0.8,0.1),(0.3,0.8),leafNode)
+    plt.show()
+</code></pre><h4 id="构造注解树"><a href="#构造注解树" class="headerlink" title="构造注解树"></a>构造注解树</h4><p>定义两个新函数getNumLeafs()和getTreeDepth()，来获取叶节点的数目和树的层数，以确定图x轴和y轴。</p>
+<pre><code>#获取叶节点的数目
+def getNumLeafs(myTree):
+    numLeafs=0
+    firstStr=list(myTree.keys())[0]
+    secondDict=myTree[firstStr]
+    for key in secondDict.keys():
+        #测试节点的类型是否为字典，不是则为叶子节点
+        if type(secondDict[key]).__name__==&#39;dict&#39;:
+            numLeafs+=getNumLeafs(secondDict[key])
+        else:
+            numLeafs+=1
+    return numLeafs
+
+#获取树的层数
+def getTreeDepth(myTree):
+    maxDepth=0
+    firstStr=list(myTree.keys())[0]
+    secondDict=myTree[firstStr]
+    for key in secondDict.keys():
+        if type(secondDict[key]).__name__==&#39;dict&#39;:
+            thisDepth=1+getTreeDepth(secondDict[key])
+        else:
+            thisDepth=1
+        if thisDepth&gt;maxDepth:
+            maxDepth=thisDepth
+    return maxDepth
+
+def retrieveTree(i):
+    listOfTrees=[{&#39;no surfacing&#39;:{0:&#39;no&#39;,1:{&#39;flippers&#39;:\
+                                            {0:&#39;no&#39;,1:&#39;yes&#39;}}}},
+    {&#39;no surfacing&#39;:{0:&#39;no&#39;,1:{&#39;flippers&#39;:\
+                               {0:{&#39;head&#39;:{0:&#39;no&#39;,1:&#39;yes&#39;}},1: &#39;no&#39;}}}}]
+    return listOfTrees[i]
+</code></pre><p>函数retrieveTree输出预先存储的树信息，避免了每次测试代码时都要从数据中创建树的麻烦。</p>
+<pre><code>def plotMidText(cntrPt,parentPt,txtString):
+    xMid=(parentPt[0]-cntrPt[0])/2.0+cntrPt[0]
+    yMid=(parentPt[1]-cntrPt[1])/2.0+cntrPt[1]
+    createPlot.ax1.text(xMid,yMid,txtString)
+
+def plotTree(myTree,parentPt,nodeTxt):
+    numLeafs=getNumLeafs(myTree)
+    depth=getTreeDepth(myTree)
+    firstStr=list(myTree.keys())[0]
+    cntrPt=(plotTree.xOff+(1.0+float(numLeafs))/2.0/plotTree.totalW,
+            plotTree.yOff)
+    plotMidText(cntrPt,parentPt,nodeTxt)
+    plotNode(firstStr,cntrPt,parentPt,decisionNode)
+    secondDict=myTree[firstStr]
+    plotTree.yOff=plotTree.yOff-1.0/plotTree.totalD
+    for key in secondDict.keys():
+        if type(secondDict[key]).__name__==&#39;dict&#39;:
+            plotTree(secondDict[key],cntrPt,str(key))
+        else:
+            plotTree.xOff=plotTree.xOff+1.0/plotTree.totalW
+            plotNode(secondDict[key],(plotTree.xOff,plotTree.yOff),
+                     cntrPt,leafNode)
+            plotMidText((plotTree.xOff,plotTree.yOff),cntrPt,str(key))
+    plotTree.yOff=plotTree.yOff+1.0/plotTree.totalD
+</code></pre><p>绘制的树形图<br><img src="https://i.imgur.com/FTBCVsg.jpg" alt=""></p>
+<h2 id="测试和存储分类器"><a href="#测试和存储分类器" class="headerlink" title="测试和存储分类器"></a>测试和存储分类器</h2><p>依靠训练数据构造了决策树之后，我们可以将它用于实际数据的分类，在执行数据分类时，需要决策树以及用于构造树的标签向量。然后，程序比较测试数据与决策树上的数值，递归执行该过程直到进入叶子节点；最后将测试数据定义为叶子节点所属的类型。</p>
+<h4 id="测试算法："><a href="#测试算法：" class="headerlink" title="测试算法："></a>测试算法：</h4><pre><code>#使用决策树的分类函数
+def classify(inputTree,featLabels,testVec):
+    firstStr=list(inputTree.keys())[0]
+    secondDict=inputTree[firstStr]
+    featIndex=featLabels.index(firstStr)
+    for key in secondDict.keys():
+        if testVec[featIndex]==key:
+            if type(secondDict[key]).__name__==&#39;dict&#39;:
+                classLabel=classify(secondDict[key],featLabels,testVec)
+            else:
+                classLabel=secondDict[key]
+    return classLabel
+</code></pre><h4 id="使用算法：决策树的存储"><a href="#使用算法：决策树的存储" class="headerlink" title="使用算法：决策树的存储"></a>使用算法：决策树的存储</h4><p>构造决策树是很耗时的任务，即使处理很小的数据集，如前面的样本数据，也要花费几秒的时间，如果数据集很大，将会耗费很多计算时间。然而用创建好的决策树解决分类问题，则可以很快完成。为了解决这个问题，需要使用Python模块pickle序列化对象，可以在磁盘上保存对象，并在需要的时候读取出来。</p>
+<p>#使用pickle模块存储决策树<br>    def storeTree(inputTree,filename):<br>        import pickle<br>        fw=open(filename,’wb’)<br>        pickle.dump(inputTree,fw)<br>        fw.close()</p>
+<pre><code>#读取决策树
+def grabTree(filename):
+    import pickle
+    fr=open(filename)
+    return pickle.load(fr)
+</code></pre><h2 id="示例：使用决策树预测隐形眼镜类型"><a href="#示例：使用决策树预测隐形眼镜类型" class="headerlink" title="示例：使用决策树预测隐形眼镜类型"></a>示例：使用决策树预测隐形眼镜类型</h2><p>由ID3算法产生的决策树<br><img src="https://i.imgur.com/Ygs4Kwd.jpg" alt=""></p>
+<p>上图所示的决策树可以非常好地匹配实验数据，然而这些匹配选项可能太多了，造成<strong>过度匹配</strong>问题。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>决策树分类器就像带有终止块的流程图，终止块表示分类结果。开始处理数据集时，首先需要测量集合中数据的不一致性，也就是熵，然后寻找最优方案划分数据集，直到数据集中的所有数据属于同一分类。ID3算法可以用于划分标称型数据集。构建决策树时，通常采用递归的方法将数据集转化为决策树。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://lib.csdn.net/article/datastructure/9208?knId=813" target="_blank" rel="external">机器学习：决策树ID3\C4.5\CART\随机森林总结及python上的实现 (2)</a></li>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/69301490" target="_blank" rel="external">《机器学习实战》第三章：决策树（1）基本概念</a></li>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/69525051" target="_blank" rel="external">《机器学习实战》第三章：决策树（2）树的构造</a></li>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/69831446" target="_blank" rel="external">《机器学习实战》第三章：决策树（3）测试、存储、实例</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/从尾到头打印链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/从尾到头打印链表/" itemprop="url">从尾到头打印链表(剑指offer第三题)</a></h1>
         
 
         <div class="post-meta">
@@ -711,25 +1887,495 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+
+    class Solution:
+        # 返回从尾部到头部的列表值序列，例如[1,2,3]
+        def printListFromTailToHead(self, listNode):
+            # write code here
+            if listNode == None:
+                return []
+            res = []
+            while listNode != None:
+                res.append(listNode.val)
+                listNode = listNode.next
+            return res[::-1]
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" itemprop="url">调整数组顺序使奇数位于偶数前面(剑指offer第十三题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def reOrderArray(self, array):
+            # write code here
+            if len(array) &lt; 1:
+                return []
+            array1 = []
+            array2 = []
+            for v in array:
+                if v%2:
+                    array1.append(v)
+                else:
+                    array2.append(v)
+            array = array1 + array2
+            return array
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/包含min函数的栈/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/包含min函数的栈/" itemprop="url">包含min函数的栈(剑指offer第二十题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
         def __init__(self):
-            self.In = []
-            self.Out = []
-
+            self.stack = []
         def push(self, node):
             # write code here
-            self.In.append(node)
+            self.stack.append(node)
         def pop(self):
-            # return xx
-            if  self.Out:# Out为空，将In中反顺序装入Out,以实现先入先出
-                return self.Out.pop()
-            else:# 不为空，直接弹出
-                while self.In:
-                    self.Out.append(self.In.pop())
-                return self.Out.pop()
+            # write code here
+            return self.stack.pop()
+        def top(self):
+            # write code here
+            return self.stack[-1]
+        def min(self):
+            # write code here
+            return min(self.stack)
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/数值的整数次方/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/数值的整数次方/" itemprop="url">数值的整数次方(剑指offer第十二题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def Power(self, base, exponent):
+            # write code here
+            res = base
+            if exponent == 0:
+                return 1
+            elif exponent &gt; 0:
+                flag = 0
+            else:
+                flag = 1
+            exponent = abs(exponent)
+            while exponent &gt; 1:
+                res *= base
+                exponent -= 1
+            if flag:
+                return 1./res
+            else:
+                return res
 </code></pre>
 
           
@@ -1099,957 +2745,11 @@ kNN.handwritingClassTest()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二维数组中的查找/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/二维数组中的查找/" itemprop="url">二维数组中的查找(剑指offer第一题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<h3 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*- 暴力解法
-    class Solution:
-        # array 二维列表
-        def Find(self, target, array):
-            # write code here
-            n = len(array)
-            m = len(array[0])
-            for i in range(n):
-                for j in range(m):
-                    if array[i][j] == target:
-                        return True
-            return False
-</code></pre>
-<h3 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-  每次查找右上角的值的大小
-    class Solution:
-        # array 二维列表
-        def Find(self, target, array):
-            # write code here
-            col = len(array[0])
-            row = len(array)
-            cur_col = col - 1
-            cur_row = 0
-            while (cur_row&lt;row)&amp;(cur_col&gt;=0):
-                if array[cur_row][cur_col] == target:
-                    return True
-                elif array[cur_row][cur_col] &gt; target: # 排除该列
-                    cur_col -= 1
-                elif array[cur_row][cur_col] &lt; target: # 排除该行
-                    cur_row += 1
-            return False
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/矩形覆盖/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/矩形覆盖/" itemprop="url">矩形覆盖(剑指offer第十题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>我们可以用2<em>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2</em>1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def rectCover(self, number):
-            # write code here
-            if number &lt;= 3:
-                return number
-
-            first = 3
-            second = 2
-            res = 0
-            for i in range(3, number):
-                res = first + second
-                second = first
-                first = res
-            return res
-</code></pre>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/从尾到头打印链表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/从尾到头打印链表/" itemprop="url">从尾到头打印链表(剑指offer第三题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-
-    class Solution:
-        # 返回从尾部到头部的列表值序列，例如[1,2,3]
-        def printListFromTailToHead(self, listNode):
-            # write code here
-            if listNode == None:
-                return []
-            res = []
-            while listNode != None:
-                res.append(listNode.val)
-                listNode = listNode.next
-            return res[::-1]
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/数值的整数次方/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/数值的整数次方/" itemprop="url">数值的整数次方(剑指offer第十二题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def Power(self, base, exponent):
-            # write code here
-            res = base
-            if exponent == 0:
-                return 1
-            elif exponent &gt; 0:
-                flag = 0
-            else:
-                flag = 1
-            exponent = abs(exponent)
-            while exponent &gt; 1:
-                res *= base
-                exponent -= 1
-            if flag:
-                return 1./res
-            else:
-                return res
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/变态跳台阶/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/变态跳台阶/" itemprop="url">变态跳台阶(剑指offer第九题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def jumpFloorII(self, number):
-            # write code here
-            tmp = [-1]*(number+1)
-            return self.myWays(number, tmp)
-
-        def myWays(self, number, tmp):
-            if number &lt;= 0:
-                return 0
-            if number == 1:
-                return 1
-            if tmp[number] != -1:
-                return tmp[number]
-            tmp[number] = self.myWays(number-1, tmp)*2
-            return tmp[number]
-</code></pre>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/替换空格/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/替换空格/" itemprop="url">替换空格(剑指offer第二题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        # s 源字符串
-        def replaceSpace(self, s):
-            # write code here
-            return s.replace(&#39; &#39;, &#39;%20&#39;)
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2095,7 +2795,7 @@ kNN.handwritingClassTest()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">120</span>
+                <span class="site-state-item-count">127</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2117,7 +2817,7 @@ kNN.handwritingClassTest()
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
