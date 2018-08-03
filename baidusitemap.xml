@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/11/KMP%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2018-08-03T03:43:58.321Z</lastmod>
+    <data>
+        <display>
+        <title>KMP算法</title>
+        <pubTime>2017-09-10T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>数据结构</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/09/05/XGBoost%E8%B0%83%E5%8F%82%E6%8C%87%E5%8D%97/</loc>
     <lastmod>2018-07-31T14:24:42.648Z</lastmod>
     <data>

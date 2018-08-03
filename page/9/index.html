@@ -301,6 +301,155 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/百度之星开发者大赛-资格赛2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/10/百度之星开发者大赛-资格赛2/" itemprop="url">2017百度之星开发者大赛--资格赛2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T00:00:00+08:00">
+                2017-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UNIT/" itemprop="url" rel="index">
+                    <span itemprop="name">UNIT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>7月28日，百度之星小姐姐给打过电话后，连着搞了两天，其实也没两天，还帮老板整理了好些文档资料。前一篇博客上也说了，搞了69.06分，第9名。然后想着反正肯定可以进前100啦，就没怎么管理了。优化方案也是按着百度AI开发论坛上提供的<a href="http://developer.baidu.com/forum/topic/show?topicId=241520" target="_blank" rel="external">UNIT机器人优化指南</a>结合UNIT使用手册做的。</p>
+<p>最后结果：</p>
+<p><img src="http://i.imgur.com/R6cgjjZ.png" alt="第六名"></p>
+<p>事先，基本的意图、词槽、Bot回应等等按照规定做好。实际中，我开始就没认真搞好，漏了一个错误的词槽。但是在最后资格赛结束之前发现了，改正之后提高了1点几个分数。</p>
+<p>基本的对话系统搞定之后，后期的优化主要分为两块：</p>
+<ul>
+<li>增加对话样本集</li>
+<li>增加对话模板集</li>
+</ul>
+<p>对话样本集对应着样本学习，假设对话样本足够多、样本质量非常高，那通过神经网络学习得到的模型自然也不会差。</p>
+<p>对话模板集则是对应着规则学习，正常人对话时，会有一定的语言结构，如，主语+谓语+宾语结构。特别是在一个特定的场景下，可以充分考虑到用户的对话的模板，进行一些提炼，得到一些语言“公式”。显然这种对话模板集方式的泛化能力是有限的，但是它的优点在于可以保证在符合“公式”的对话时不会出现错误。</p>
+<p>我所侧重的是第一个方法，即增加对话样本集。使用了目前UNIT的隐藏功能，推荐对话样本。自己可以先整一个小的对话样本，然后让UNIT平台根据自己DIY的对话样本生成一些样本，然后自己去标注。大约标注了3500个样本吧，自己整的样本比例是按照百度提供的对话样本中各个意图的比例整的，保证同分布吧。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/百度之星开发者大赛-资格赛/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2400,7 +2549,7 @@ plt.show()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/拼多多笔试题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/寻找旋转排序数组中的最小值/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2419,7 +2568,7 @@ plt.show()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/拼多多笔试题/" itemprop="url">LeetCode - 拼多多四道编程题</a></h1>
+                <a class="post-title-link" href="/2017/07/05/寻找旋转排序数组中的最小值/" itemprop="url">LeetCode - 寻找旋转排序数组中的最小值</a></h1>
         
 
         <div class="post-meta">
@@ -2494,213 +2643,30 @@ plt.show()
       
         
           
-            <p><img src="https://i.imgur.com/zI0q01K.png" alt="第一题"></p>
-<h3 id="思路参考：Leetcode845"><a href="#思路参考：Leetcode845" class="headerlink" title="思路参考：Leetcode845"></a>思路参考：Leetcode845</h3><p><img src="https://i.imgur.com/sZKwzJG.png" alt="第二题"></p>
-<h3 id="思路：暴力求解"><a href="#思路：暴力求解" class="headerlink" title="思路：暴力求解"></a>思路：暴力求解</h3><pre><code class="Python">
-    def repeatedSubstringPattern(s):
-        if len(s) &lt; 2:
-            return s
-        length = len(s)
-        for i in range(1, len(s)):
-            sub = s[:i]
-            # 包含多少个子串
-            tmp = length//i
-            # 剩余部分
-            tmp2 = length%i
-            if sub[:tmp2] == s[tmp*i:]:
-                if tmp*sub == s[:tmp*i]:
-                    return sub
-        return s
+            <p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
+<p>( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。</p>
+<p>请找出其中最小的元素。</p>
+<p>你可以假设数组中不存在重复元素。</p>
+<p>示例 1:</p>
+<pre><code>输入: [3,4,5,1,2]
+输出: 1
+</code></pre><p>示例 2:</p>
+<pre><code>输入: [4,5,6,7,0,1,2]
+输出: 0
 
-    if __name__ == &quot;__main__&quot;:
-        s = input()
-        print(repeatedSubstringPattern(s))
+class Solution(object):
+def findMin(self, nums):
+    &quot;&quot;&quot;
+    :type nums: List[int]
+    :rtype: int
+    &quot;&quot;&quot;
+
+    for i in range(1, len(nums)):
+        if nums[i] &lt; nums[i-1]:
+            return nums[i]
+
+    return nums[0]
 </code></pre>
-<p><img src="https://i.imgur.com/5z8R4CW.png" alt="第三题"></p>
-<h3 id="思路：参考下面链接"><a href="#思路：参考下面链接" class="headerlink" title="思路：参考下面链接"></a>思路：参考下面链接</h3><p><a href="https://www.geeksforgeeks.org/find-minimum-moves-reach-target-infinite-line/" target="_blank" rel="external">https://www.geeksforgeeks.org/find-minimum-moves-reach-target-infinite-line/</a></p>
-<p><img src="https://i.imgur.com/4trR0O4.png" alt="第四题"></p>
-<h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><h3 id="参考下面链接"><a href="#参考下面链接" class="headerlink" title="参考下面链接"></a>参考下面链接</h3><ol>
-<li><a href="https://www.nowcoder.com/discuss/87694?type=0&amp;order=0&amp;pos=11&amp;page=1" target="_blank" rel="external">https://www.nowcoder.com/discuss/87694?type=0&amp;order=0&amp;pos=11&amp;page=1</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汉明距离/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/汉明距离/" itemprop="url">LeetCode - 汉明距离</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。</p>
-<p>给出两个整数 x 和 y，计算它们之间的汉明距离。</p>
-<p>注意：<br>0 ≤ x, y &lt; 231.</p>
-<p>示例:</p>
-<pre><code>输入: x = 1, y = 4
-
-输出: 2
-
-解释:
-1   (0 0 0 1)
-4   (0 1 0 0)
-       ↑   ↑
-</code></pre><p>上面的箭头指出了对应二进制位不同的位置。</p>
-<pre><code class="Python">
-    class Solution(object):
-        def hammingDistance(self, x, y):
-            &quot;&quot;&quot;
-            :type x: int
-            :type y: int
-            :rtype: int
-            &quot;&quot;&quot;
-            bx = [v for v in bin(x)[2:]]
-            by = [v for v in bin(y)[2:]]
-
-            bx.reverse()
-            by.reverse()
-            i = 0; cnt = 0
-            while (i&lt;len(bx))&amp;(i&lt;len(by)):
-                if bx[i] != by[i]:
-                    cnt += 1
-                i += 1
-
-            if len(bx)&gt;i:
-                cnt += bx[i:].count(&#39;1&#39;)
-            if len(by)&gt;i:
-                cnt += by[i:].count(&#39;1&#39;)
-
-            return cnt
-
-            # return bin(x^y).count(&#39;1&#39;)
-</code></pre>
-
           
         
       
@@ -2784,7 +2750,7 @@ plt.show()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">127</span>
+                <span class="site-state-item-count">128</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2806,7 +2772,7 @@ plt.show()
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
