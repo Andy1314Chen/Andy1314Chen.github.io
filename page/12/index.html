@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/寻找旋转排序数组中的最小值2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/解码方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/寻找旋转排序数组中的最小值2/" itemprop="url">LeetCode - 寻找旋转排序数组中的最小值2</a></h1>
+                <a class="post-title-link" href="/2017/07/05/解码方法/" itemprop="url">LeetCode - 解码方法</a></h1>
         
 
         <div class="post-meta">
@@ -395,30 +395,53 @@
       
         
           
-            <p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
-<p>( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。</p>
-<p>请找出其中最小的元素。</p>
-<p>注意数组中可能存在重复的元素。</p>
-<p>示例 1：</p>
-<pre><code>输入: [1,3,5]
-输出: 1
-</code></pre><p>示例 2：</p>
-<pre><code>输入: [2,2,2,0,1]
-输出: 0
-</code></pre><p>说明：</p>
-<p>这道题是 寻找旋转排序数组中的最小值 的延伸题目。<br>允许重复会影响算法的时间复杂度吗？会如何影响，为什么？</p>
-<pre><code>class Solution(object):
-def findMin(self, nums):
-    &quot;&quot;&quot;
-    :type nums: List[int]
-    :rtype: int
-    &quot;&quot;&quot;
+            <p>一条包含字母 A-Z 的消息通过以下方式进行了编码：</p>
+<pre><code>&#39;A&#39; -&gt; 1
+&#39;B&#39; -&gt; 2
+...
+&#39;Z&#39; -&gt; 26
+</code></pre><p>给定一个只包含数字的非空字符串，请计算解码方法的总数。</p>
+<p>示例 1:</p>
+<pre><code>输入: &quot;12&quot;
+输出: 2
+解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。
+</code></pre><p>示例 2:</p>
+<pre><code>输入: &quot;226&quot;
+输出: 3
+解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。
 
-    for i in range(1, len(nums)):
-        if nums[i] &lt; nums[i-1]:
-            return nums[i]
 
-    return nums[0]
+class Solution:
+    def numDecodings(self, s):
+        &quot;&quot;&quot;
+        :type s: str
+        :rtype: int
+        &quot;&quot;&quot;
+        if len(s) == 0:
+            return 0
+        d = {}
+        d[&quot;&quot;] = 1
+        return self.ways(s,d)
+
+    # 记忆形递归
+    def ways(self, s, d):
+        # 已经计算过
+        if s in d.keys():
+            return d[s]
+        # 首位为0不可解码
+        if s[0] == &#39;0&#39;:
+            return 0
+        # 长度为1
+        if len(s) == 1:
+            return 1
+        # 去掉一位后的子问题
+        first = self.ways(s[1:], d) # 去掉第一位
+        tmp = int(s[:2]) # 看看前两位是否符合解码标准
+        # 去掉两位后的子问题
+        if (tmp &gt; 9)&amp;(tmp &lt;= 26):
+            first += self.ways(s[2:], d)
+        d[s] = first
+        return first
 </code></pre>
           
         
@@ -462,7 +485,7 @@ def findMin(self, nums):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/长度最小的子数组/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/Fizz Buzz/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -481,7 +504,7 @@ def findMin(self, nums):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/长度最小的子数组/" itemprop="url">LeetCode - 长度最小的子数组</a></h1>
+                <a class="post-title-link" href="/2017/07/05/Fizz Buzz/" itemprop="url">LeetCode - Fizz Buzz</a></h1>
         
 
         <div class="post-meta">
@@ -556,33 +579,55 @@ def findMin(self, nums):
       
         
           
-            <p>给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。</p>
-<p>示例: </p>
-<pre><code>输入: s = 7, nums = [2,3,1,2,4,3]
-输出: 2
-解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。
-</code></pre><p>进阶:</p>
-<p>如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。</p>
-<pre><code class="Python">
-    class Solution(object):
-        def minSubArrayLen(self, s, nums):
-            &quot;&quot;&quot;
-            :type s: int
-            :type nums: List[int]
-            :rtype: int
-            &quot;&quot;&quot;
-            solution = float(&#39;inf&#39;)
+            <p>写一个程序，输出从 1 到 n 数字的字符串表示。</p>
+<ol>
+<li><p>如果 n 是3的倍数，输出“Fizz”；</p>
+</li>
+<li><p>如果 n 是5的倍数，输出“Buzz”；</p>
+</li>
+</ol>
+<p>3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。</p>
+<p>示例：</p>
+<pre><code>n = 15,
 
-            tmp_sum = 0
-            # j指向子数组的最前端
-            j = 0
-            for i, num in enumerate(nums):
-                tmp_sum += num
-                while tmp_sum &gt;= s: # 大于等于，都是将子数组最前端去掉
-                    solution = min(solution, i-j+1)
-                    tmp_sum -= nums[j]
-                    j += 1
-            return 0 if solution == float(&#39;inf&#39;) else solution
+返回:
+[
+    &quot;1&quot;,
+    &quot;2&quot;,
+    &quot;Fizz&quot;,
+    &quot;4&quot;,
+    &quot;Buzz&quot;,
+    &quot;Fizz&quot;,
+    &quot;7&quot;,
+    &quot;8&quot;,
+    &quot;Fizz&quot;,
+    &quot;Buzz&quot;,
+    &quot;11&quot;,
+    &quot;Fizz&quot;,
+    &quot;13&quot;,
+    &quot;14&quot;,
+    &quot;FizzBuzz&quot;
+]
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>从2开始遍历，将其平方，及平方+v的数，倍数全部置0</li>
+<li>求和</li>
+</ol>
+<pre><code class="Python">
+    class Solution:
+        def fizzBuzz(self, n):
+            &quot;&quot;&quot;
+            :type n: int
+            :rtype: List[str]
+            &quot;&quot;&quot;
+            tmp = [&quot;&quot; for v in range(n)]
+            for v in range(2,n,3):
+                tmp[v] += &#39;Fizz&#39;
+            for v in range(4,n,5):
+                tmp[v] += &#39;Buzz&#39;
+            for v in range(n):
+                if tmp[v] == &quot;&quot;:
+                    tmp[v] = str(v+1)
+            return tmp
 </code></pre>
 
           
@@ -789,174 +834,6 @@ def findMin(self, nums):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/打家劫舍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/打家劫舍/" itemprop="url">LeetCode - 打家劫舍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
-<p>给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
-<p>示例 1:</p>
-<pre><code>输入: [1,2,3,1]
-输出: 4
-解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。
-     偷窃到的最高金额 = 1 + 3 = 4 。
-</code></pre><p>示例 2:</p>
-<pre><code>输入: [2,7,9,3,1]
-输出: 12
-解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。
-     偷窃到的最高金额 = 2 + 9 + 1 = 12 。
-
-
-class Solution:
-    def rob(self, nums):
-        &quot;&quot;&quot;
-        :type nums: List[int]
-        :rtype: int
-        &quot;&quot;&quot;
-        if len(nums) == 0:
-            return 0
-        elif len(nums) &lt; 2:
-            return max(nums[0], nums[-1])
-
-        tmp = [0]*len(nums)
-        tmp[0], tmp[1] = nums[0], max(nums[0], nums[1])
-        for i in range(2, len(nums)):
-            tmp[i] = max(nums[i]+tmp[i-2], tmp[i-1])
-
-        return tmp[-1]
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/求众数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1074,6 +951,368 @@ class Solution(object):
                 return i
         return nums[0]
 </code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/最小路径和/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/最小路径和/" itemprop="url">LeetCode - 最小路径和</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p>
+<p>说明：每次只能向下或者向右移动一步。</p>
+<p>示例:</p>
+<p>输入:</p>
+<p>[<br>  [1,3,1],</p>
+<p>  [1,5,1],</p>
+<p>  [4,2,1]</p>
+<p>]</p>
+<p>输出: 7</p>
+<p>解释: 因为路径 1→3→1→1→1 的总和最小。</p>
+<pre><code class="Python">
+    class Solution:
+        def minPathSum(self, grid):
+            &quot;&quot;&quot;
+            :type grid: List[List[int]]
+            :rtype: int
+            &quot;&quot;&quot;
+
+            m = len(grid[0])
+            n = len(grid)
+            tmp = []
+            for i in range(n+1):
+                tmp.append([-1]*(m+1))
+
+            return self.myAns(m, n, grid, tmp)
+
+        def myAns(self, m, n, grid, tmp):
+            if (m &lt;= 0) | (n &lt;= 0):
+                return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意
+            if (m == 1)&amp;(n == 1):
+                return grid[0][0]
+            if tmp[n][m] != -1:
+                return tmp[n][m]
+
+            tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1]            
+            return tmp[n][m]
+</code></pre>
+<h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
+<li>从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小；</li>
+<li>保持递归过程中的值</li>
+</ol>
+<pre><code class="Python">
+    class Solution:
+        def minPathSum(self, grid):
+            &quot;&quot;&quot;
+            :type grid: List[List[int]]
+            :rtype: int
+            &quot;&quot;&quot;
+            m = len(grid)
+            n = len(grid[0])
+            for i in range(m):# 多少列 横轴
+                for j in range(n):# 多少行 纵轴
+                    if (i==0)&amp;(j==0):
+                        continue
+                    elif i == 0:
+                        grid[i][j] += grid[i][j-1]
+                    elif j == 0:
+                        grid[i][j] += grid[i-1][j]
+                    else:
+                        grid[i][j] += min(grid[i-1][j], grid[i][j-1])
+            return grid[m-1][n-1]
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/存在重复元素2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/存在重复元素2/" itemprop="url">LeetCode - 存在重复元素2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。</p>
+<p>示例 1:</p>
+<pre><code>输入: nums = [1,2,3,1], k = 3
+输出: true
+</code></pre><p>示例 2:</p>
+<pre><code>输入: nums = [1,0,1,1], k = 1
+输出: true
+</code></pre><p>示例 3:</p>
+<pre><code>输入: nums = [1,2,3,1,2,3], k = 2
+输出: false
+</code></pre><pre><code class="Python">
+    class Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        &quot;&quot;&quot;
+        d = {}
+        for i, num in enumerate(nums):
+            if num in d and i - d[num] &lt;= k:
+                return True
+            d[num] = i
+
+        return False
+</code></pre>
+
           
         
       
@@ -1296,7 +1535,7 @@ class Solution(object):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/颠倒二进制位/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/2寻找重复数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1315,7 +1554,7 @@ class Solution(object):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/颠倒二进制位/" itemprop="url">LeetCode - 颠倒二进制位</a></h1>
+                <a class="post-title-link" href="/2017/07/05/2寻找重复数/" itemprop="url">LeetCode - 寻找重复数</a></h1>
         
 
         <div class="post-meta">
@@ -1390,24 +1629,36 @@ class Solution(object):
       
         
           
-            <p>颠倒给定的 32 位无符号整数的二进制位。</p>
-<p>示例:</p>
-<pre><code>输入: 43261596
-输出: 964176192
-解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，
-     返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。
-</code></pre><p>进阶:<br>如果多次调用这个函数，你将如何优化你的算法？</p>
+            <p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
+<p>示例 1:</p>
+<pre><code>输入: [1,3,4,2,2]
+输出: 2
+</code></pre><p>示例 2:</p>
+<pre><code>输入: [3,1,3,4,2]
+输出: 3
+</code></pre><p>说明：</p>
+<p>不能更改原数组（假设数组是只读的）。<br>只能使用额外的 O(1) 的空间。<br>时间复杂度小于 O(n2) 。<br>数组中只有一个重复的数字，但它可能不止重复出现一次。</p>
 <pre><code class="Python">
     class Solution:
-        # @param n, an integer
-        # @return an integer
-        def reverseBits(self, n):
-            # 32位填充
-            bin_1 = bin(n)[2:].zfill(32)
-            bin_1 = [v for v in bin_1]
-            bin_1.reverse()
-            res = int(&#39;&#39;.join(bin_1), 2)
-            return res
+        def findDuplicate(self, nums):
+            &quot;&quot;&quot;
+            :type nums: List[int]
+            :rtype: int
+            &quot;&quot;&quot;
+            left = 0; right = len(nums)-1
+
+            while left+1 &lt; right:
+                mid = (left + right)//2
+                cnt = 0
+                for v in nums:
+                    if (v &gt; mid) &amp; (v &lt;= right):
+                        cnt += 1
+                if cnt &gt; (right - mid):
+                    left = mid
+                else:
+                    right = mid
+
+            return  int(right)
 </code></pre>
 
           
@@ -1452,7 +1703,7 @@ class Solution(object):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/04/动态规划/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/长度最小的子数组/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1471,7 +1722,7 @@ class Solution(object):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/04/动态规划/" itemprop="url">动态规划</a></h1>
+                <a class="post-title-link" href="/2017/07/05/长度最小的子数组/" itemprop="url">LeetCode - 长度最小的子数组</a></h1>
         
 
         <div class="post-meta">
@@ -1483,181 +1734,8 @@ class Solution(object):
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
-                2017-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h4 id="递归到动态规划的一般转化方法"><a href="#递归到动态规划的一般转化方法" class="headerlink" title="递归到动态规划的一般转化方法"></a>递归到动态规划的一般转化方法</h4><p>递归函数有n个参数，就定义一个n维的数组，数组的下标是递归函数参数的取值范围，数组元素的值是递归函数的返回值，这样就可以从边界值开始， 逐步填充数组，相当于计算递归函数值的逆过程。</p>
-<h4 id="动态规划的一般思路"><a href="#动态规划的一般思路" class="headerlink" title="动态规划的一般思路"></a>动态规划的一般思路</h4><ol>
-<li><p>将原问题分解为子问题</p>
-<ul>
-<li>把原问题分解为若干个子问题，子问题和原问题形式相同或类似，只不过规模变小了。子问题都解决，原问题即解决(数字三角形例）。</li>
-<li>子问题的解一旦求出就会被保存，所以每个子问题只需求 解一次。</li>
-</ul>
-</li>
-<li><p>确定状态</p>
-<ul>
-<li>在用动态规划解题时，我们往往将和子问题相关的各个变量的一组取值，称之为一个“状 态”。一个“状态”对应于一个或多个子问题， 所谓某个“状态”下的“值”，就是这个“状 态”所对应的子问题的解。</li>
-<li>所有“状态”的集合，构成问题的“状态空间”。“状态空间”的大小，与用动态规划解决问题的时间复杂度直接相关。 在数字三角形的例子里，一共有N×(N+1)/2个数字，所以这个问题的状态空间里一共就有N×(N+1)/2个状态。</li>
-<li>整个问题的时间复杂度是状态数目乘以计算每个状态所需时间。在数字三角形里每个“状态”只需要经过一次，且在每个状态上作计算所花的时间都是和N无关的常数。</li>
-</ul>
-</li>
-<li>确定一些初始状态(边界状态)的值<ul>
-<li>以“数字三角形”为例，初始状态就是底边数字，值就是底边数字值。</li>
-</ul>
-</li>
-<li>确定状态转移方程<ul>
-<li>定义出什么是“状态”，以及在该“状态”下的“值”后，就要找出不同的状态之间如何迁移――即如何从一个或多个“值”已知的 “状态”，求出另一个“状态”的“值”(递推型)。状态的迁移可以用递推公式表示，此递推公式也可被称作“状态转移方程”。</li>
-</ul>
-</li>
-</ol>
-<p>数字三角形的状态转移方程:</p>
-<p><img src="https://i.imgur.com/IUkr6kp.png" alt=""></p>
-<h4 id="能用动规解决的问题的特点"><a href="#能用动规解决的问题的特点" class="headerlink" title="能用动规解决的问题的特点"></a>能用动规解决的问题的特点</h4><ul>
-<li>问题具有最优子结构性质。如果问题的最优解所包含的 子问题的解也是最优的，我们就称该问题具有最优子结 构性质。</li>
-<li>无后效性。当前的若干个状态值一旦确定，则此后过程的演变就只和这若干个状态的值有关，和之前是采取哪种手段或经过哪条路径演变到当前的这若干个状态，没有关系。</li>
-</ul>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><p><a href="https://blog.csdn.net/baidu_28312631/article/details/47418773" target="_blank" rel="external">教你彻底学会动态规划–入门篇</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/u013309870/article/details/75193592" target="_blank" rel="external">算法-动态规划 Dynamic Programming–从菜鸟到老鸟</a></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/回文链表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/03/回文链表/" itemprop="url">LeetCode - 回文链表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
-                2017-07-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
               </time>
             
 
@@ -1719,310 +1797,256 @@ class Solution(object):
       
         
           
-            <p>请判断一个链表是否为回文链表。</p>
+            <p>给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。</p>
+<p>示例: </p>
+<pre><code>输入: s = 7, nums = [2,3,1,2,4,3]
+输出: 2
+解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。
+</code></pre><p>进阶:</p>
+<p>如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。</p>
+<pre><code class="Python">
+    class Solution(object):
+        def minSubArrayLen(self, s, nums):
+            &quot;&quot;&quot;
+            :type s: int
+            :type nums: List[int]
+            :rtype: int
+            &quot;&quot;&quot;
+            solution = float(&#39;inf&#39;)
+
+            tmp_sum = 0
+            # j指向子数组的最前端
+            j = 0
+            for i, num in enumerate(nums):
+                tmp_sum += num
+                while tmp_sum &gt;= s: # 大于等于，都是将子数组最前端去掉
+                    solution = min(solution, i-j+1)
+                    tmp_sum -= nums[j]
+                    j += 1
+            return 0 if solution == float(&#39;inf&#39;) else solution
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/不同路径/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/不同路径/" itemprop="url">LeetCode - 不同路径</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
+<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
+<p>问总共有多少条不同的路径？</p>
+<p><img src="https://leetcode-cn.com/static/images/problemset/robot_maze.png" alt="路径图片"></p>
+<p>例如，上图是一个7 x 3 的网格。有多少可能的路径？</p>
+<p>说明：m 和 n 的值均不超过 100。</p>
 <p>示例 1:</p>
-<p>输入: 1-&gt;2</p>
-<p>输出: false</p>
+<p>输入: m = 3, n = 2</p>
+<p>输出: 3</p>
+<p>解释:</p>
+<p>从左上角开始，总共有 3 条路径可以到达右下角。</p>
+<ol>
+<li><p>向右 -&gt; 向右 -&gt; 向下</p>
+</li>
+<li><p>向右 -&gt; 向下 -&gt; 向右</p>
+</li>
+<li><p>向下 -&gt; 向右 -&gt; 向右</p>
+</li>
+</ol>
 <p>示例 2:</p>
-<p>输入: 1-&gt;2-&gt;2-&gt;1</p>
-<p>输出: true</p>
-<p>进阶：</p>
-<p>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
-<pre><code># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    # 原地反转链表
-    def reverseList(self, head):
+<p>输入: m = 7, n = 3</p>
+<p>输出: 28</p>
+<pre><code>class Solution:
+    def uniquePaths(self, m, n):
         &quot;&quot;&quot;
-        :type head: ListNode
-        :rtype: ListNode
+        :type m: int
+        :type n: int
+        :rtype: int
         &quot;&quot;&quot;
-        newHead = None
-        while head != None:
-            nextNode = ListNode(0)
-            nextNode = head.next
+        # m是纵，n是横
+        # 保持递归中间结果
+        tmp = []
+        for i in range(n+1):
+            tmp.append([-1]*(m+1))
+        # 递归调用
+        return self.myAns(m, n, tmp)
 
-            head.next = newHead
-            newHead = head
-            head = nextNode
-        return newHead
-    # 是否是回文链表
-    def isPalindrome(self, head):
-        &quot;&quot;&quot;
-        :type head: ListNode
-        :rtype: bool
-        &quot;&quot;&quot;
-        if head == None:
-            return True
-        elif head.next == None:
-            return True
+    def myAns(self, m, n, tmp):
+        # 出界认为是0
+        if (m &lt;= 0) | (n &lt;= 0):
+            return 0
+        # 起点
+        if (m == 1) &amp; (n == 1):
+            return 1
+        # 已经递归过直接返回
+        if tmp[n][m] != -1:
+            return tmp[n][m]
+        # 由结果往回走，左边部分，上边部分
+        left = self.myAns(m-1, n, tmp)
+        up = self.myAns(m, n-1, tmp)
+        # 保持结果
+        tmp[n][m] = left + up
+        # 返回
+        return tmp[n][m]
+</code></pre><h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
+<li>从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和；</li>
+<li>m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；</li>
+<li>保持递归过程的中间值；</li>
+</ol>
+<pre><code class="Python">
+    class Solution:
+        def uniquePaths(self, m, n):
+            &quot;&quot;&quot;
+            :type m: int
+            :type n: int
+            :rtype: int
+            &quot;&quot;&quot;
+            # 递推解法
+            tmp = []
+            for i in range(n+1):
+                tmp.append([0]*(m+1))
+            tmp[1][1] = 1
 
-        # 快慢指针找中点
-        firstPtr = head
-        secondPtr = head
-        while firstPtr != None:
-            if firstPtr.next != None:
-                firstPtr = firstPtr.next.next
-                secondPtr = secondPtr.next
-            else:
-                break
+            for y in range(1, n+1):
+                for x in range(1, m+1):
+                    if (x==1) &amp; (y==1):
+                        continue
+                    tmp[y][x] = tmp[y-1][x] + tmp[y][x-1]
 
-        # 长度为奇数的时候，此时慢指针指向中点
-        if firstPtr != None:
-            # 原地反转链表
-            secondPtr.next = self.reverseList(secondPtr.next)
-            secondPtr = secondPtr.next
-
-        # 长度为偶数的时候，慢指针指向后半段的开头
-        else:
-            # 原地反转链表
-            secondPtr = self.reverseList(secondPtr)
-
-        # 从开头和中间依次比较
-        firstPtr = head
-        while secondPtr != None:
-            if firstPtr.val != secondPtr.val:
-                return False
-            else:
-                firstPtr = firstPtr.next
-                secondPtr = secondPtr.next
-
-        return True
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位；</li>
-<li>根据快指针最后的状态，确定慢指针；</li>
-<li>将后半段原地反转；</li>
-<li>从开头和中间依次比较；</li>
+            return tmp[n][m]
+</code></pre>
+<h2 id="思路2-递推解法"><a href="#思路2-递推解法" class="headerlink" title="思路2(递推解法)"></a>思路2(递推解法)</h2><ol>
+<li>与递归相反，从上到下，递推求解；</li>
 </ol>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/03/ValidParentheses/" itemprop="url">Leetcode 20 Valid Parentheses</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
-                2017-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>LeetCode 20.Valid Parentheses问题如下：</p>
-<blockquote>
-<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.</p>
-<p>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
-</blockquote>
-<p>仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。</p>
-<pre><code>typedef struct{
-int *base;//栈底指针
-int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置
-int stackSize;//栈长度
-}SqStack;//定义结构体
-
-int Push(SqStack *S,int e)
-{
-    *(*S).top++ = e;//入栈操作
-    return 1;
-}
-
-int Pop(SqStack *S, int *e)
-{
-    *e = *--(*S).top;//出栈
-    return 1;
-}
-
-int StackEmpty(SqStack S)
-{
-    return S.top == S.base;//栈空
-}
-
-bool isValid(char* s) {
-if(s==NULL)
-    return true;
-SqStack S;
-int N = strlen(s);
-if(N==1)
-    return false;
-if(N%2)
-    return false;
-S.base = (int *)malloc(N*sizeof(int));//分配空间
-S.top = S.base;//空栈，栈顶指针等于栈底指针
-S.stackSize = N;//栈长度，本例中，假设不会超过初始长度
-
-int table[128] = { 10 };
-int e=0;
-table[&#39;(&#39;] = &#39;)&#39;;
-table[&#39;{&#39;] = &#39;}&#39;;
-table[&#39;[&#39;] = &#39;]&#39;;
-table[&#39;]&#39;] = &#39;-&#39;;
-table[&#39;}&#39;] = &#39;-&#39;;
-table[&#39;)&#39;] = &#39;-&#39;;
-for (int i = 0; i &lt; N; i++)
-{
-    if (!StackEmpty(S))
-    {
-        Pop(&amp;S, &amp;e);
-        if (table[e] == s[i])
-        {
-            continue;
-        }
-        else
-            Push(&amp;S, e);
-    }
-    if (table[s[i]] == s[i + 1])
-    {
-        i++;
-        continue;
-    }
-    else
-    {
-        Push(&amp;S, s[i]);
-    }
-}
-int result = StackEmpty(S);
-free(S.base);
-return result;
-}
-</code></pre>
           
         
       
@@ -2060,7 +2084,7 @@ return result;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2106,7 +2130,7 @@ return result;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">130</span>
+                <span class="site-state-item-count">133</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

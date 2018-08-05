@@ -301,6 +301,908 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/sklearn库LogisticRegression使用及简单调参/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/sklearn库LogisticRegression使用及简单调参/" itemprop="url">sklearn库LogisticRegression使用及简单调参</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>刚刚学习了《机器学习实战》这本书的第五章，LogisticRegression分类器，使用python自己实现的分类器。但是sklearn库里有同样功能的LogisticRegression分类器。</p>
+<p>因此，在这里做一个对比，所用数据集是《机器学习实战》里第五章里病马存活预测。</p>
+<p><img src="http://p2.pstatp.com/large/1868/242024643" alt=""></p>
+<p>在《机器学习实战》第五章中，作者说通过调节alpha和迭代次数，可以将错误率降低到20%左右。而我调节的结果是：</p>
+<blockquote>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.238806</p>
+<p>the error rate of this test is: 0.283582</p>
+<p>the error rate of this test is: 0.477612</p>
+<p>the error rate of this test is: 0.283582</p>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.388060</p>
+<p>the error rate of this test is: 0.313433</p>
+<p>the error rate of this test is: 0.417910</p>
+<p>the error rate of this test is: 0.343284</p>
+<p>after 10 iterations the average error rate is: 0.337313</p>
+</blockquote>
+<p>而使用sklearn库中LogisticRegression的结果如下：</p>
+<ol>
+<li>默认配置下，多次运行错误率均为0.268657</li>
+<li>对样本数据及训练数据进行归一化 0.283582</li>
+<li>使用sag随机梯度下降算法，500次迭代 0.253731</li>
+<li>使用lbfgs算法，500次迭代 0.283582</li>
+</ol>
+<h2 id="Python3测试程序"><a href="#Python3测试程序" class="headerlink" title="Python3测试程序"></a>Python3测试程序</h2><pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+def calcError():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+
+    #训练样本集
+    trainSet=[];trainLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        trainSet.append(lineArr)
+        trainLabels.append(float(currLine[21]))
+    #测试集
+    testSet=[];testLabels=[]
+    for line in frTest.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        testSet.append(lineArr)
+        testLabels.append(float(currLine[21]))
+
+    #Logistic回归
+    classifier=LogisticRegression(solver=&#39;sag&#39;,max_iter=700)
+    #拟合
+    classifier.fit(np.array(trainSet),np.array(trainLabels))
+    #默认配置预测
+    yPredict=classifier.predict(np.array(testSet))
+
+    #计算错误率
+    errorCount=0.0
+    for i in range(len(yPredict)):
+        if int(yPredict[i]) == int(testLabels[i]):
+            pass
+        else:
+            errorCount+=1
+    errorRate=errorCount/float(len(yPredict))
+    #打印错误率
+    print(&quot;Error rate: %f&quot; % errorRate)
+
+    #1. 默认配置下，多次运行错误率均为0.268657
+    #2. 对样本数据及训练数据进行归一化 0.283582
+    #3. 使用sag随机梯度下降算法，500次迭代 0.253731
+    #4. 使用lbfgs算法，500次迭代 0.283582
+
+def calcError2():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+
+    #训练样本集
+    trainSet=[];trainLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        trainSet.append(lineArr)
+        trainLabels.append(float(currLine[21]))
+    #测试集
+    testSet=[];testLabels=[]
+    for line in frTest.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        testSet.append(lineArr)
+        testLabels.append(float(currLine[21]))
+
+    #Logistic回归
+    classifier=LogisticRegression()
+    #拟合
+    #对训练数据进行归一化处理
+    X=np.array(trainSet)
+    scaler=StandardScaler().fit(X)
+    X=scaler.transform(X)
+    classifier.fit(X,np.array(trainLabels))
+    #测试集归一化处理
+    Xtest=scaler.transform(np.array(testSet))
+    #默认配置预测
+    yPredict=classifier.predict(Xtest)
+
+    #计算错误率
+    errorCount=0.0
+    for i in range(len(yPredict)):
+        if int(yPredict[i]) == int(testLabels[i]):
+            pass
+        else:
+            errorCount+=1
+    errorRate=errorCount/float(len(yPredict))
+    #打印错误率
+    print(&quot;Error rate: %f&quot; % errorRate)
+</code></pre><h2 id="scikit-learn-LogisticRegression库调参"><a href="#scikit-learn-LogisticRegression库调参" class="headerlink" title="scikit-learn LogisticRegression库调参"></a>scikit-learn LogisticRegression库调参</h2><p>默认参数：</p>
+<pre><code>LogisticRegression(penalty=’l2’, dual=False, tol=0.0001, C=1.0, 
+fit_intercept=True, intercept_scaling=1, class_weight=None, 
+random_state=None, solver=’liblinear’, max_iter=100, 
+multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)
+</code></pre><blockquote>
+<p>penalty : str, ‘l1’ or ‘l2’, default: ‘l2’<br>Used to specify the norm used in the penalization. The ‘newton-cg’, ‘sag’ and ‘lbfgs’ solvers support only l2 penalties.<br>New in version 0.19: l1 penalty with SAGA solver (allowing ‘multinomial’ + L1)</p>
+<p>dual : bool, default: False<br>Dual or primal formulation. Dual formulation is only implemented for l2 penalty with liblinear solver. Prefer dual=False when n_samples &gt; n_features.</p>
+<p>tol : float, default: 1e-4<br>Tolerance for stopping criteria.</p>
+<p>C : float, default: 1.0<br>Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.</p>
+<p>fit_intercept : bool, default: True<br>Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.</p>
+<p>intercept_scaling : float, default 1.<br>Useful only when the solver ‘liblinear’ is used and self.fit_intercept is set to True. In this case, x becomes [x, self.intercept_scaling], i.e. a “synthetic” feature with constant value equal to </p>
+<p>intercept_scaling is appended to the instance vector. The intercept becomes intercept_scaling * synthetic_feature_weight.<br>Note! the synthetic feature weight is subject to l1/l2 regularization as all other features. To lessen the effect of regularization on synthetic feature weight (and therefore on the intercept) intercept_scaling has to be increased.</p>
+<p>class_weight : dict or ‘balanced’, default: None<br>Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one.<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y)).<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.<br>New in version 0.17: class_weight=’balanced’</p>
+<p>random_state : int, RandomState instance or None, optional, default: None<br>The seed of the pseudo random number generator to use when shuffling the data. If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random. Used when solver == ‘sag’ or ‘liblinear’.</p>
+<p>solver : {‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’, ‘saga’},<br>default: ‘liblinear’ Algorithm to use in the optimization problem.<br>For small datasets, ‘liblinear’ is a good choice, whereas ‘sag’ and<br>‘saga’ are faster for large ones.<br>For multiclass problems, only ‘newton-cg’, ‘sag’, ‘saga’ and ‘lbfgs’<br>handle multinomial loss; ‘liblinear’ is limited to one-versus-rest schemes.<br>‘newton-cg’, ‘lbfgs’ and ‘sag’ only handle L2 penalty, whereas<br>‘liblinear’ and ‘saga’ handle L1 penalty.<br>Note that ‘sag’ and ‘saga’ fast convergence is only guaranteed on features with approximately the same scale. You can preprocess the data with a scaler from sklearn.preprocessing.<br>New in version 0.17: Stochastic Average Gradient descent solver.<br>New in version 0.19: SAGA solver.</p>
+<p>max_iter : int, default: 100<br>Useful only for the newton-cg, sag and lbfgs solvers. Maximum number of iterations taken for the solvers to converge.</p>
+<p>multi_class : str, {‘ovr’, ‘multinomial’}, default: ‘ovr’<br>Multiclass option can be either ‘ovr’ or ‘multinomial’. If the option chosen is ‘ovr’, then a binary problem is fit for each label. Else the loss minimised is the multinomial loss fit across the entire probability distribution. Does not work for liblinear solver.<br>New in version 0.18: Stochastic Average Gradient descent solver for ‘multinomial’ case.</p>
+<p>verbose : int, default: 0<br>For the liblinear and lbfgs solvers set verbose to any positive number for verbosity.</p>
+<p>warm_start : bool, default: False<br>When set to True, reuse the solution of the previous call to fit as initialization, otherwise, just erase the previous solution. Useless for liblinear solver.<br>New in version 0.17: warm_start to support lbfgs, newton-cg, sag, saga solvers.</p>
+<p>n_jobs : int, default: 1<br>Number of CPU cores used when parallelizing over classes if multi_class=’ovr’”. This parameter is ignored when the <code>solver</code>is set to ‘liblinear’ regardless of whether ‘multi_class’ is specified or not. If given a value of -1, all cores are used.</p>
+</blockquote>
+<h4 id="penalty-正则化选择参数"><a href="#penalty-正则化选择参数" class="headerlink" title="penalty 正则化选择参数"></a>penalty 正则化选择参数</h4><p>LogisticRegression和LogisticRegressionCV默认就带了正则化项。penalty参数可选择的值为”l1”和”l2”.分别对应L1的正则化和L2的正则化，默认是L2的正则化。</p>
+<p>在调参时如果我们主要的目的只是为了解决过拟合，一般penalty选择L2正则化就够了。但是如果选择L2正则化发现还是过拟合，即预测效果差的时候，就可以考虑L1正则化。另外，如果模型的特征非常多，我们希望一些不重要的特征系数归零，从而让模型系数稀疏化的话，也可以使用L1正则化。</p>
+<p>penalty参数的选择会影响我们损失函数优化算法的选择。即参数solver的选择，如果是L2正则化，那么4种可选的算法{‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’}都可以选择。但是如果penalty是L1正则化的话，就只能选择‘liblinear’了。这是因为L1正则化的损失函数不是连续可导的，而{‘newton-cg’, ‘lbfgs’,‘sag’}这三种优化算法时都需要损失函数的一阶或者二阶连续导数。而‘liblinear’并没有这个依赖。</p>
+<h4 id="solver-优化算法选择参数"><a href="#solver-优化算法选择参数" class="headerlink" title="solver 优化算法选择参数"></a>solver 优化算法选择参数</h4><p>solver参数决定了我们对逻辑回归损失函数的优化方法，有4种算法可以选择，分别是：</p>
+<ol>
+<li><p>liblinear：使用了开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数。</p>
+</li>
+<li><p>lbfgs：拟牛顿法的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
+</li>
+<li><p>newton-cg：也是牛顿法家族的一种，利用损失函数二阶导数矩阵即海森矩阵来迭代优化损失函数。</p>
+</li>
+<li><p>sag：即随机平均梯度下降，是梯度下降法的变种，和普通梯度下降法的区别是每次迭代仅仅用一部分的样本来计算梯度，适合于样本数据多的时候。</p>
+</li>
+</ol>
+<p>从上面的描述可以看出，newton-cg, lbfgs和sag这三种优化算法时都需要损失函数的一阶或者二阶连续导数，因此不能用于没有连续导数的L1正则化，只能用于L2正则化。而liblinear通吃L1正则化和L2正则化。</p>
+<p>同时，sag每次仅仅使用了部分样本进行梯度迭代，所以当样本量少的时候不要选择它，而如果样本量非常大，比如大于10万，sag是第一选择。但是sag不能用于L1正则化，所以当你有大量的样本，又需要L1正则化的话就要自己做取舍了。要么通过对样本采样来降低样本量，要么回到L2正则化。</p>
+<p>从上面的描述，大家可能觉得，既然newton-cg, lbfgs和sag这么多限制，如果不是大样本，我们选择liblinear不就行了嘛！错，因为liblinear也有自己的弱点！我们知道，逻辑回归有二元逻辑回归和多元逻辑回归。对于多元逻辑回归常见的有one-vs-rest(OvR)和many-vs-many(MvM)两种。而MvM一般比OvR分类相对准确一些。郁闷的是liblinear只支持OvR，不支持MvM，这样如果我们需要相对精确的多元逻辑回归时，就不能选择liblinear了。也意味着如果我们需要相对精确的多元逻辑回归不能使用L1正则化了。</p>
+<h4 id="multi-class-分类方式选择参数"><a href="#multi-class-分类方式选择参数" class="headerlink" title="multi_class 分类方式选择参数"></a>multi_class 分类方式选择参数</h4><p>multi_class参数决定了我们分类方式的选择，有 ovr和multinomial两个值可以选择，默认是 ovr。</p>
+<p>ovr即前面提到的one-vs-rest(OvR)，而multinomial即前面提到的many-vs-many(MvM)。如果是二元逻辑回归，ovr和multinomial并没有任何区别，区别主要在多元逻辑回归上。</p>
+<p>OvR的思想很简单，无论你是多少元逻辑回归，我们都可以看做二元逻辑回归。具体做法是，对于第K类的分类决策，我们把所有第K类的样本作为正例，除了第K类样本以外的所有样本都作为负例，然后在上面做二元逻辑回归，得到第K类的分类模型。其他类的分类模型获得以此类推。</p>
+<p>而MvM则相对复杂，这里举MvM的特例one-vs-one(OvO)作讲解。如果模型有T类，我们每次在所有的T类样本里面选择两类样本出来，不妨记为T1类和T2类，把所有的输出为T1和T2的样本放在一起，把T1作为正例，T2作为负例，进行二元逻辑回归，得到模型参数。我们一共需要T(T-1)/2次分类。</p>
+<p>从上面的描述可以看出OvR相对简单，但分类效果相对略差（这里指大多数样本分布情况，某些样本分布下OvR可能更好）。而MvM分类相对精确，但是分类速度没有OvR快。</p>
+<p>如果选择了ovr，则4种损失函数的优化方法liblinear，newton-cg, lbfgs和sag都可以选择。但是如果选择了multinomial,则只能选择newton-cg, lbfgs和sag了。</p>
+<h4 id="class-weight-类型权重参数"><a href="#class-weight-类型权重参数" class="headerlink" title="class_weight 类型权重参数"></a>class_weight 类型权重参数</h4><p>class_weight参数用于标示分类模型中各种类型的权重，可以不输入，即不考虑权重，或者说所有类型的权重一样。如果选择输入的话，可以选择balanced让类库自己计算类型权重，或者我们自己输入各个类型的权重，比如对于0,1的二元模型，我们可以定义class_weight={0:0.9, 1:0.1}，这样类型0的权重为90%，而类型1的权重为10%。</p>
+<p>如果class_weight选择balanced，那么类库会根据训练样本量来计算权重。某种类型样本量越多，则权重越低，样本量越少，则权重越高。</p>
+<p>那么class_weight有什么作用呢？在分类模型中，我们经常会遇到两类问题：</p>
+<p>第一种是误分类的代价很高。比如对合法用户和非法用户进行分类，将非法用户分类为合法用户的代价很高，我们宁愿将合法用户分类为非法用户，这时可以人工再甄别，但是却不愿将非法用户分类为合法用户。这时，我们可以适当提高非法用户的权重。</p>
+<p>第二种是样本是高度失衡的，比如我们有合法用户和非法用户的二元样本数据10000条，里面合法用户有9995条，非法用户只有5条，如果我们不考虑权重，则我们可以将所有的测试集都预测为合法用户，这样预测准确率理论上有99.95%，但是却没有任何意义。这时，我们可以选择balanced，让类库自动提高非法用户样本的权重。</p>
+<p>提高了某种分类的权重，相比不考虑权重，会有更多的样本分类划分到高权重的类别，从而可以解决上面两类问题。</p>
+<h4 id="sample-weight-样本权重参数"><a href="#sample-weight-样本权重参数" class="headerlink" title="sample_weight 样本权重参数"></a>sample_weight 样本权重参数</h4><p>由于样本不平衡，导致样本不是总体样本的无偏估计，从而可能导致我们的模型预测能力下降。遇到这种情况，我们可以通过调节样本权重来尝试解决这个问题。调节样本权重的方法有两种，第一种是在class_weight使用balanced。第二种是在调用fit函数时，通过sample_weight来自己调节每个样本权重。</p>
+<p>在scikit-learn做逻辑回归时，如果上面两种方法都用到了，那么样本的真正权重是class_weight*sample_weight.</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html</a></li>
+<li><a href="http://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="external">http://www.cnblogs.com/pinard/p/6035872.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/LeetCode第95场周赛/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/LeetCode第95场周赛/" itemprop="url">LeetCode第95场周赛</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><strong>876. 链表的中间结点</strong></p>
+<p>给定一个带有头结点 head 的非空单链表，返回链表的中间结点。</p>
+<p>如果有两个中间结点，则返回第二个中间结点。</p>
+<p>示例 1：</p>
+<pre><code>输入：[1,2,3,4,5]
+输出：此列表中的结点 3 (序列化形式：[3,4,5])
+返回的结点值为 3 。 (测评系统对该结点序列化表述是 [3,4,5])。
+注意，我们返回了一个 ListNode 类型的对象 ans，这样：
+ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next = NULL.
+</code></pre><p>示例 2：</p>
+<pre><code>输入：[1,2,3,4,5,6]
+输出：此列表中的结点 4 (序列化形式：[4,5,6])
+由于该列表有两个中间结点，值分别为 3 和 4，我们返回第二个结点。
+</code></pre><p>提示：</p>
+<p>给定链表的结点数介于 1 和 100 之间。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+
+    class Solution:
+        def middleNode(self, head):
+            &quot;&quot;&quot;
+            :type head: ListNode
+            :rtype: ListNode
+            &quot;&quot;&quot;
+            if head.next == None:
+                return head
+
+            fastPtr = head.next
+            slowPtr = head
+            while fastPtr and fastPtr.next :
+                fastPtr = fastPtr.next.next
+                slowPtr = slowPtr.next
+            if fastPtr :
+                return slowPtr.next
+            else:
+                return slowPtr
+</code></pre>
+<p><strong>877. 石子游戏</strong></p>
+<p>亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。</p>
+<p>游戏以谁手中的石子最多来决出胜负。石子的总数是奇数，所以没有平局。</p>
+<p>亚历克斯和李轮流进行，亚历克斯先开始。 每回合，玩家从行的开始或结束处取走整堆石头。 这种情况一直持续到没有更多的石子堆为止，此时手中石子最多的玩家获胜。</p>
+<p>假设亚历克斯和李都发挥出最佳水平，当亚历克斯赢得比赛时返回 true ，当李赢得比赛时返回 false 。</p>
+<p>示例：</p>
+<pre><code>输入：[5,3,4,5]
+输出：true
+解释：
+亚历克斯先开始，只能拿前 5 颗或后 5 颗石子 。
+假设他取了前 5 颗，这一行就变成了 [3,4,5] 。
+如果李拿走前 3 颗，那么剩下的是 [4,5]，亚历克斯拿走后 5 颗赢得 10 分。
+如果李拿走后 5 颗，那么剩下的是 [3,4]，亚历克斯拿走后 4 颗赢得 9 分。
+这表明，取前 5 颗石子对亚历克斯来说是一个胜利的举动，所以我们返回 true 。
+</code></pre><p>提示：</p>
+<pre><code>2 &lt;= piles.length &lt;= 500
+piles.length 是偶数。
+1 &lt;= piles[i] &lt;= 500
+sum(piles) 是奇数。
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/机器学习实战第五章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/机器学习实战第五章学习笔记/" itemprop="url">机器学习实战第五章学习笔记(Logistic回归)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。</p>
+<p>利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要<br>寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。</p>
+<p>Logistic的一般过程：</p>
+<ol>
+<li>收集数据：采用任意方法收集数据。</li>
+<li>准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。</li>
+<li>分析数据：采用任意方法对数据进行分析。</li>
+<li>训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。</li>
+<li>测试数据：一旦训练步骤完成，分类将会很快。</li>
+<li>使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。</li>
+</ol>
+<p><img src="http://images2015.cnblogs.com/blog/1015872/201609/1015872-20160904123448491-2104213729.png" alt=""></p>
+<h2 id="基于Logistic回归和Sigmoid函数的分类"><a href="#基于Logistic回归和Sigmoid函数的分类" class="headerlink" title="基于Logistic回归和Sigmoid函数的分类"></a>基于Logistic回归和Sigmoid函数的分类</h2><ul>
+<li>优点：计算代价不高，易于理解和实现。</li>
+<li>缺点：容易欠拟合，分类精度可能不高。</li>
+<li>适用数据类型：数值型和标称型数据。</li>
+</ul>
+<p>我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function).</p>
+<p><img src="http://img.blog.csdn.net/20161116083548612" alt=""></p>
+<p>而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。</p>
+<p>说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。</p>
+<p>由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。</p>
+<p><img src="http://img.blog.csdn.net/20170425225033129" alt=""></p>
+<p>那么，现在的关键在于，如何确定上述的最佳回归系数？</p>
+<h2 id="基于最优化方法的最佳回归系数确定"><a href="#基于最优化方法的最佳回归系数确定" class="headerlink" title="基于最优化方法的最佳回归系数确定"></a>基于最优化方法的最佳回归系数确定</h2><p>Sigmoid函数：<br><img src="http://img.blog.csdn.net/20170426142819918" alt=""></p>
+<p><img src="http://img.blog.csdn.net/20170426144754539" alt=""></p>
+<p>这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。</p>
+<p><img src="http://img.blog.csdn.net/20170426145716228" alt=""></p>
+<h4 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h4><p>梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。</p>
+<p><img src="http://img.blog.csdn.net/20170426152948300" alt=""></p>
+<p>梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。</p>
+<h4 id="梯度下降算法和梯度上升算法的区别"><a href="#梯度下降算法和梯度上升算法的区别" class="headerlink" title="梯度下降算法和梯度上升算法的区别"></a>梯度下降算法和梯度上升算法的区别</h4><p><img src="http://img.blog.csdn.net/20170426154316798" alt=""></p>
+<p>梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山).</p>
+<h4 id="训练算法：使用梯度上升找到最佳参数"><a href="#训练算法：使用梯度上升找到最佳参数" class="headerlink" title="训练算法：使用梯度上升找到最佳参数"></a>训练算法：使用梯度上升找到最佳参数</h4><pre><code>#梯度上升法的伪代码：
+每个回归系数初始化为1
+重复R次：
+    计算整个数据集的梯度
+    使用α*gradient更新回归系数的向量
+    返回回归系数
+
+import numpy as np
+
+#Logistic回归梯度上升法优化算法
+def loadDataSet():#读取样本数据
+    dataMat=[];labelMat=[]
+    fr=open(&#39;testSet.txt&#39;)
+    for line in fr.readlines():
+        lineArr=line.strip().split()#除去空格后划分
+        dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征
+        labelMat.append(int(lineArr[2]))#标签
+    return dataMat,labelMat
+
+def sigmoid(inX):
+    return 1.0/(1+np.exp(-inX))
+
+def gradAscent(dataMatIn,classLabels):
+    dataMatrix=np.mat(dataMatIn)#100*3
+    labelMat=np.mat(classLabels).transpose()
+    m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数
+    alpha=0.001#步长
+    maxCycles=500#最大迭代次数
+    weights=np.ones((n,1))#回归系数初始化为1
+    for k in range(maxCycles):
+        h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1
+        error=(labelMat-h)#
+        weights=weights+alpha*dataMatrix.transpose()*error
+    return weights
+
+
+#画出数据集和Logistic回归最佳拟合直线的函数
+def plotBestFit(wei):
+    import matplotlib.pyplot as plt
+    weights=wei#.getA()
+    dataMat,labelMat=loadDataSet()
+    dataArr=np.array(dataMat)
+
+    n=np.shape(dataArr)[0]
+    xcord1=[];ycord1=[]
+    xcord2=[];ycord2=[] 
+    for i in range(n):
+        if int(labelMat[i])==1:
+            xcord1.append(dataArr[i,1])
+            ycord1.append(dataArr[i,2])
+        else:
+            xcord2.append(dataArr[i,1])
+            ycord2.append(dataArr[i,2])
+    fig=plt.figure()
+    ax=fig.add_subplot(111)
+    print(len(xcord1),len(ycord1))
+    ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;)
+    ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;)
+    x=np.arange(-3.0,3.0,0.1)
+    y=(-weights[0]-weights[1]*x)/weights[2]
+    ax.plot(x,y)
+    plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;);
+    plt.show()
+</code></pre><p><img src="http://img.blog.csdn.net/20170502140250228" alt=""></p>
+<h4 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h4><p>回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是<img src="http://img.blog.csdn.net/20150414211501282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTHU1OTcyMDM5MzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。</p>
+<p>那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数：<img src="http://img.blog.csdn.net/20170427114316036" alt=""></p>
+<p>观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。</p>
+<p>这个分段函数还可以简写为：<img src="http://img.blog.csdn.net/20170427120139821" alt=""></p>
+<p>那么对于m条训练样本而言，代价函数就是m个预测代价的累加和：<br><img src="http://img.blog.csdn.net/20170427160158802" alt=""></p>
+<p>为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导：<br><img src="http://img.blog.csdn.net/20170427125124391" alt=""></p>
+<p>所以结果就是:<img src="http://img.blog.csdn.net/20170427160242364" alt=""></p>
+<pre><code>weights=weights+alpha*dataMatrix.transpose()*error
+</code></pre><p><img src="http://img.blog.csdn.net/20170427163508100" alt=""></p>
+<p>是一致的！！</p>
+<p><img src="http://img.blog.csdn.net/20170427162423610" alt=""></p>
+<h4 id="训练算法：随机梯度上升"><a href="#训练算法：随机梯度上升" class="headerlink" title="训练算法：随机梯度上升"></a>训练算法：随机梯度上升</h4><p>梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。</p>
+<pre><code>#随机梯度上升算法伪代码：
+所有回归系数初始化为1
+对数据集中每个样本
+    计算该样本的梯度
+    使用alpha*gradient更新回归系数值
+返回回归系数值
+
+#随机梯度上升算法
+def stocGradAscent0(dataMatrix,classLabels):
+    m,n=np.shape(dataMatrix)
+    alpha=0.01#步长
+    weights=np.ones(n)#1*n
+    X=[]#保持weights的历史数据
+    for j in range(300):#迭代300次
+        for i in range(m):
+            h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = 
+            error=classLabels[i]-h
+            weights=weights+alpha*error*dataMatrix[i]
+            X.append(weights)
+    return weights
+</code></pre><p>这段代码与梯度上升算法很相似，但是也有些区别：</p>
+<ol>
+<li>这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本)</li>
+<li>没有矩阵的转换过程，所有变量的数据类型都是NumPy数组</li>
+</ol>
+<p><strong>但是有个问题，为什么随机梯度上升算法也可以达到最优呢？</strong>书中并没有给出相关解释。</p>
+<p><img src="http://img.blog.csdn.net/20170502170148006" alt=""></p>
+<p>在迭代200次过程中，weights=[X0,X1,X2]变化曲线；<br>而我自己的300次跌打过程中，变化曲线是：</p>
+<p>X0:<br><img src="https://i.imgur.com/QgNPopg.png" alt=""></p>
+<p>X1:<img src="https://i.imgur.com/iAz1YYD.png" alt=""></p>
+<p>X2:<img src="https://i.imgur.com/Kug7oOn.png" alt=""></p>
+<p>从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。</p>
+<p>因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。</p>
+<p>代码如下：</p>
+<pre><code>#改进的随机梯度上升算法
+def stocGradAscent1(dataMatrix,classLabels,numIter=150):
+    m,n=np.shape(dataMatrix)
+    weights=np.ones(n)
+    X=[]
+    for j in range(numIter):
+        dataIndex=list(range(m))
+        for i in range(m):
+            alpha=4/(1.0+j+i)+0.01
+            randIndex=int(np.random.uniform(0,len(dataIndex)))
+            h=sigmoid(sum(dataMatrix[randIndex]*weights))
+            error=classLabels[randIndex]-h
+            weights=weights+alpha*error*dataMatrix[randIndex]
+            X.append(weights)
+            del dataIndex[randIndex]
+    X=np.array(X)
+    return weights
+</code></pre><p>改进之处有两个方面，<strong>每次迭代时调整alpha</strong>和<strong>随机选取更新</strong>。</p>
+<p>步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。</p>
+<p>通过随机选取样本来更新回归系数，可以减少周期性的波动。</p>
+<p><img src="http://img.blog.csdn.net/20170502193141309" alt=""></p>
+<h2 id="示例：从疝气病症预测病马的死亡率"><a href="#示例：从疝气病症预测病马的死亡率" class="headerlink" title="示例：从疝气病症预测病马的死亡率"></a>示例：从疝气病症预测病马的死亡率</h2><p>使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。</p>
+<p>使用Logistic回归估计马疝气病的死亡率</p>
+<ol>
+<li>收集数据：UCI机器学习数据库</li>
+<li>准备数据：用Python解析文本文件并填充缺失值</li>
+<li>分析数据：可视化并观察数据</li>
+<li>训练算法：使用优化算法，找到最佳的系数</li>
+<li>测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。</li>
+<li>使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。</li>
+</ol>
+<p>(数据集中有30%的值是缺失的)</p>
+<h4 id="准备数据：处理数据中的缺失值"><a href="#准备数据：处理数据中的缺失值" class="headerlink" title="准备数据：处理数据中的缺失值"></a>准备数据：处理数据中的缺失值</h4><p>由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题：</p>
+<ul>
+<li>使用可用特征的均值来填充缺失值；</li>
+<li>使用特殊值来填补缺失值，如-1；</li>
+<li>忽略有缺失值的样本；</li>
+<li>使用相似样本的均值添补缺失值；</li>
+<li>使用另外的机器学习算法预测缺失值；</li>
+</ul>
+<p>在数据预处理阶段，所有缺失值用实数0代替。原因有二：</p>
+<ol>
+<li>根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新；</li>
+<li>sigmoid(0)=0.5,对结果不具有任何倾向性；</li>
+</ol>
+<p>对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。</p>
+<h4 id="测试算法：用Logistic回归进行分类"><a href="#测试算法：用Logistic回归进行分类" class="headerlink" title="测试算法：用Logistic回归进行分类"></a>测试算法：用Logistic回归进行分类</h4><pre><code>#Logistic回归分类函数
+def classifyVector(inX,weights):
+    prob=sigmoid(sum(inX*weights))
+    if prob&gt;0.5:
+        return 1.0
+    else:
+        return 0.0
+
+def colicTest():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+    trainingSet=[];trainingLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):#21个特征
+            lineArr.append(float(currLine[i]))
+        trainingSet.append(lineArr)
+        trainingLabels.append(float(currLine[21])) #标签               
+    trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500)
+    errorCount=0;numTestVec=0.0
+    for line in frTest.readlines():
+        numTestVec+=1.0
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]):
+                errorCount+=1
+    errorRate=(float(errorCount)/numTestVec)
+    print(&quot;the error rate of this test is: %f&quot; % errorRate)
+    return errorRate
+
+def multiTest():
+    numTests=10;errorSum=0.0
+    for k in range(numTests):
+        errorSum+=colicTest()
+    print(&quot;after %d iterations the average error rate is: %f&quot; 
+          % (numTests,errorSum/float(numTests)))
+</code></pre><h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://blog.csdn.net/lu597203933/article/details/38468303#comments" target="_blank" rel="external">http://blog.csdn.net/lu597203933/article/details/38468303#comments</a></li>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/70767791#comments" target="_blank" rel="external">http://blog.csdn.net/CharlieLincy/article/details/70767791#comments</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/数组中重复的数字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -412,356 +1314,6 @@
                     return True
                 numbers[idx] += length
             return False
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/链表中环的入口结点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/05/链表中环的入口结点/" itemprop="url">链表中环的入口结点（剑指Offer)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。</p>
-<h3 id="解法-递归解法"><a href="#解法-递归解法" class="headerlink" title="解法 递归解法"></a>解法 递归解法</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-    class Solution:
-        def EntryNodeOfLoop(self, pHead):
-            # write code here
-
-            endPtr = pHead   # 慢指针
-            startPtr = pHead # 快指针
-            while startPtr and startPtr.next :
-                startPtr = startPtr.next.next
-                endPtr = endPtr.next
-                if startPtr == endPtr:
-                    break
-            if startPtr == None or startPtr.next == None: # 无环
-                return None
-
-            startPtr = pHead
-            while startPtr != endPtr:
-                endPtr = endPtr.next
-                startPtr = startPtr.next
-            return startPtr
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/字符流中第一个不重复的字符/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/05/字符流中第一个不重复的字符/" itemprop="url">字符流中第一个不重复的字符（剑指Offer)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。</p>
-<p>如果当前字符流没有存在出现一次的字符，返回#字符。</p>
-<h3 id="解法1-暴力法"><a href="#解法1-暴力法" class="headerlink" title="解法1(暴力法)"></a>解法1(暴力法)</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        # 返回对应char
-        def __init__(self):
-            self.save = []
-            self.dicT = {}
-        def FirstAppearingOnce(self):
-            # write code here
-            self.dicT = {}
-            for v in self.save:
-                if v in self.dicT:
-                    self.dicT[v] += 1
-                else:
-                    self.dicT[v] = 1
-            for v in self.save:
-                if self.dicT[v] == 1:
-                    return v
-            return &#39;#&#39;
-        def Insert(self, char):
-            # write code here
-            self.save.append(char)
-</code></pre>
-<h3 id="解法2-队列存储"><a href="#解法2-队列存储" class="headerlink" title="解法2(队列存储)"></a>解法2(队列存储)</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        # 返回对应char
-        def __init__(self):
-            # 统计各个字符出现的次数
-            self.save = [0]*256
-            # 保存只出现一次的字符
-            self.quen = []
-        def FirstAppearingOnce(self):
-            # write code here
-            while len(self.quen) &gt; 0:
-                if self.save[ord(self.quen[0])] &gt; 1:
-                    self.quen.pop(0)
-                else:
-                    return self.quen[0]
-            return &#39;#&#39;
-        def Insert(self, char):
-            # write code here
-            idx = ord(char)
-            self.save[idx] += 1
-            if self.save[idx] == 1:
-                self.quen.append(char)
 </code></pre>
 
           
@@ -1548,6 +2100,356 @@ def getTopWords(ny,sf):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/字符流中第一个不重复的字符/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/05/字符流中第一个不重复的字符/" itemprop="url">字符流中第一个不重复的字符（剑指Offer)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。</p>
+<p>如果当前字符流没有存在出现一次的字符，返回#字符。</p>
+<h3 id="解法1-暴力法"><a href="#解法1-暴力法" class="headerlink" title="解法1(暴力法)"></a>解法1(暴力法)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # 返回对应char
+        def __init__(self):
+            self.save = []
+            self.dicT = {}
+        def FirstAppearingOnce(self):
+            # write code here
+            self.dicT = {}
+            for v in self.save:
+                if v in self.dicT:
+                    self.dicT[v] += 1
+                else:
+                    self.dicT[v] = 1
+            for v in self.save:
+                if self.dicT[v] == 1:
+                    return v
+            return &#39;#&#39;
+        def Insert(self, char):
+            # write code here
+            self.save.append(char)
+</code></pre>
+<h3 id="解法2-队列存储"><a href="#解法2-队列存储" class="headerlink" title="解法2(队列存储)"></a>解法2(队列存储)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # 返回对应char
+        def __init__(self):
+            # 统计各个字符出现的次数
+            self.save = [0]*256
+            # 保存只出现一次的字符
+            self.quen = []
+        def FirstAppearingOnce(self):
+            # write code here
+            while len(self.quen) &gt; 0:
+                if self.save[ord(self.quen[0])] &gt; 1:
+                    self.quen.pop(0)
+                else:
+                    return self.quen[0]
+            return &#39;#&#39;
+        def Insert(self, char):
+            # write code here
+            idx = ord(char)
+            self.save[idx] += 1
+            if self.save[idx] == 1:
+                self.quen.append(char)
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/链表中环的入口结点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/05/链表中环的入口结点/" itemprop="url">链表中环的入口结点（剑指Offer)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。</p>
+<h3 id="解法-递归解法"><a href="#解法-递归解法" class="headerlink" title="解法 递归解法"></a>解法 递归解法</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    class Solution:
+        def EntryNodeOfLoop(self, pHead):
+            # write code here
+
+            endPtr = pHead   # 慢指针
+            startPtr = pHead # 快指针
+            while startPtr and startPtr.next :
+                startPtr = startPtr.next.next
+                endPtr = endPtr.next
+                if startPtr == endPtr:
+                    break
+            if startPtr == None or startPtr.next == None: # 无环
+                return None
+
+            startPtr = pHead
+            while startPtr != endPtr:
+                endPtr = endPtr.next
+                startPtr = startPtr.next
+            return startPtr
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/删除链表中重复的结点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1894,713 +2796,11 @@ class Solution:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/03/机器学习实战第三章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/03/机器学习实战第三章学习笔记/" itemprop="url">机器学习实战第三章学习笔记(决策树-Decision Tree)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T00:00:00+08:00">
-                2017-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="决策树-Decision-Tree-的概念"><a href="#决策树-Decision-Tree-的概念" class="headerlink" title="决策树(Decision Tree)的概念"></a>决策树(Decision Tree)的概念</h2><p><strong>基本思想：</strong>决策树是一种树结构，其中的每个内部节点代表对某一特征的一次测试，每条边代表一个测试结果，叶节点代表某个类或类的分布。决策树的决策过程需要从决策树的根节点开始，待测试数据与决策树中的特征节点进行比较，并按照比较结果选择下一个比较分支，直到叶子节点作为最终的决策结果。</p>
-<p>决策树算法是一个分类算法，较k-近邻算法(无法给出数据的内在含义)的主要优势在于数据形式非常容易理解。</p>
-<p>优点：计算复杂度不高，输出结果易于理解，对中间值的缺失不敏感，可以处理不相关特征数据。</p>
-<p>缺点：可能会产生过度匹配问题。</p>
-<p>适用数据类型：数值型和标称型</p>
-<p><img src="https://i.imgur.com/34kfLZ3.jpg" alt=""></p>
-<h2 id="决策树的构造"><a href="#决策树的构造" class="headerlink" title="决策树的构造"></a>决策树的构造</h2><p>构造决策树时，首先面临的问题是，当前数据集上哪个特征在划分数据分类时起决定性作用。根据决定性的特征，进行划分，这样原始数据集就被划分为几个数据子集。这些数据子集会分布在第一个决策点的所有分支上。如果某个分支下的数据属于同一类型，则无需进一步对数据集进行分割。如果数据子集内的数据不属于同一类型，则需要重复划分数据子集的过程。直到所有具有相同类型的数据均在一个数据子集内。</p>
-<h4 id="决策树的一般流程"><a href="#决策树的一般流程" class="headerlink" title="决策树的一般流程"></a>决策树的一般流程</h4><ol>
-<li>收集数据：可以使用任何方法。</li>
-<li>准备数据：树构造算法只适用于标称型数据，因此数值型数据必须离散化。</li>
-<li>分析数据：可以使用任何方法，构造树完成之后，应该检查图形是否符合预期。</li>
-<li>训练算法：构造树的数据结构。</li>
-<li>测试算法：使用经验树计算错误率</li>
-<li>使用算法：此步骤可以适用于任何监督学习算法，而使用决策树可以更好地理解数据的内在含义。</li>
-</ol>
-<p>这里使用<a href="https://zh.wikipedia.org/wiki/ID3%E7%AE%97%E6%B3%95" target="_blank" rel="external">ID3算法</a>划分数据集，相关算法还有C4.5算法等。</p>
-<h4 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h4><p><strong>划分数据集的大原则是：将无序的数据变得更加有序</strong></p>
-<p>？(数据的无序和有序如何度量呢，用熵！)</p>
-<p>在划分数据集之前之后信息发生的变化称为信息增益，知道如何计算信息增益，就可以计算每个特征值划分数据集获得的信息增益，获得信息增益最高的特征就是最好的选择，就是起决定性作用的特征！</p>
-<p>集合信息的度量方式被称为香农熵或简称熵，来源于信息论之父克劳德.香农。</p>
-<p>克劳德.香农是被公认是20世纪最聪明的人之一，威廉.庞德斯通在2005年出版的《财富公式》一书中是这样描述克劳德.香农的:</p>
-<blockquote>
-<p>“贝尔实验室和MIT有很多人将香农和爱因斯坦相提并论，而其他人则认为这种对比是不公平的—对香农是不公平的。”</p>
-</blockquote>
-<p>信息增益(information gain)和熵(entropy)</p>
-<p>熵是指信息的期望值，信息增益是数据集划分之前的熵减去划分之后的熵。</p>
-<p>如果待分类事务可能划分在多个分类之中，假设X<em>i</em>是其中的一个类，则符号X<em>i</em>的信息定义为：<br><img src="http://img.blog.csdn.net/20170406145216705" alt=""></p>
-<p>p(X<em>i</em>)是选择该分类的概率。</p>
-<p>为了计算熵，我们需要计算所有类别所有可能值包含的信息期望值，通过下面的公式得到：<br><img src="http://img.blog.csdn.net/20170406145221063" alt=""></p>
-<p>其中，n是分类的数目。</p>
-<pre><code>from math import log
-import operator
-
-#计算给定数据集的香农熵
-def calcShannonEnt(dataSet):
-    numEntries=len(dataSet)
-    labelCounts={}
-    for featVec in dataSet:
-        currentLabel=featVec[-1]
-        if currentLabel not in labelCounts.keys():
-            labelCounts[currentLabel]=0
-        labelCounts[currentLabel]+=1
-    shannonEnt=0.0
-    for key in labelCounts:
-        prob=float(labelCounts[key])/numEntries
-        shannonEnt-=prob*log(prob,2.0)
-    return shannonEnt
-#创建简单数据集
-def createDataSet():
-    dataSet=[[1,1,&#39;yes&#39;],
-             [1,1,&#39;yes&#39;],
-             [1,0,&#39;no&#39;],
-             [0,1,&#39;no&#39;],
-             [0,1,&#39;no&#39;]]
-    labels=[&#39;no surfacing&#39;,&#39;flippers&#39;]
-    return dataSet, labels
-</code></pre><h4 id="划分数据集"><a href="#划分数据集" class="headerlink" title="划分数据集"></a>划分数据集</h4><p>对每个特征划分数据集的结果计算一次信息熵，然后判断按照哪个特征划分数据集是最好的划分方式。</p>
-<pre><code>#按照给定特征划分数据集
-def splitDataSet(dataSet,axis,value):
-#&quot;&quot;&quot;
-#   待划分的数据集、划分数据集的特征，特征的返回值
-#&quot;&quot;&quot;
-#对数据集进行划分，数据子集的个数由该特征所有可能值个数
-    retDataSet=[]
-    for featVec in dataSet:
-        if featVec[axis]== value:
-            reducedFeatVec=featVec[:axis]
-            reducedFeatVec.extend(featVec[axis+1:])
-            retDataSet.append(reducedFeatVec)
-    return retDataSet
-
-#选择最好的数据集划分方式
-def chooseBestFeatureToSplit(dataSet):
-    numFeatures=len(dataSet[0])-1
-    baseEntropy=calcShannonEnt(dataSet)
-    bestInfoGain=0.0;bestFeature=-1
-    for i in range(numFeatures):
-        featList=[example[i] for example in dataSet]
-        uniqueVals=set(featList)
-        newEntropy=0.0
-        for value in uniqueVals:
-            subDatSet=splitDataSet(dataSet,i,value)
-            prob=len(subDatSet)/float(len(dataSet))
-            newEntropy+=prob*calcShannonEnt(subDatSet)
-        infoGain=baseEntropy-newEntropy
-        if(infoGain&gt;bestInfoGain):
-            bestInfoGain=infoGain
-            bestFeature=i
-    return bestFeature
-</code></pre><h4 id="递归构建决策树"><a href="#递归构建决策树" class="headerlink" title="递归构建决策树"></a>递归构建决策树</h4><p>决策树构建过程大致如下：</p>
-<p>得到原始数据集，然后基于最好的属性值（特征）划分数据集，由于特征值可能多于两个，因此可能存在大于两个分支的数据集划分。第一次划分之后，数据将被向下传递到树分支的下一个节点，在这个节点上，我们可以再次划分数据集。因此我们可以采用递归的原则处理数据集。</p>
-<p>递归结束的条件是：程序遍历完所有划分数据集的属性，或者每个分支下的所有实例都具有相同的分类。</p>
-<pre><code>#返回出现次数最多的分类名称
-def majorityCnt(classList):
-    classCount={}
-    for vote in classList:
-        if vote not in classCount.keys():
-            classCount[vote]=0
-        classCount[vote]+=1
-    sortedClassCount=sorted(classCount.items(),
-                            key=operator.itemgetter(1),
-                            reverse=True)
-    return sortedClassCount[0][0]
-
-#创建树的函数代码
-def createTree(dataSet,labels):
-    #dataSet:数据集
-    #labels:标签列表
-    classList=[example[-1] for example in dataSet]
-    if classList.count(classList[0])==len(classList):
-        return classList[0]#递归结束条件2，类别完全相同
-    if len(dataSet[0])==1:
-        return majorityCnt(classList)#递归结束条件3，遍历完所有特征后，类别还未完全相同，返回出现次数最多的
-
-    bestFeat=chooseBestFeatureToSplit(dataSet)
-    bestFeatLabel=labels[bestFeat]
-    myTree={bestFeatLabel:{}}
-    del(labels[bestFeat])
-    featValues=[example[bestFeat] for example in dataSet]
-    uniqueVals=set(featValues)
-    for value in uniqueVals:
-        subLabels=labels[:]
-        myTree[bestFeatLabel][value]=createTree(splitDataSet\
-              (dataSet,bestFeat,value),subLabels)
-    #构建最佳属性的值为Value的子树
-    return myTree
-</code></pre><p>该函数有3个return，前两个返回类型是‘标签’对应叶子节点，而第3个返回类型是一棵树（dict).</p>
-<h2 id="利用Matplotlib注解绘制树形图"><a href="#利用Matplotlib注解绘制树形图" class="headerlink" title="利用Matplotlib注解绘制树形图"></a>利用Matplotlib注解绘制树形图</h2><h4 id="Matplotlib注解"><a href="#Matplotlib注解" class="headerlink" title="Matplotlib注解"></a>Matplotlib注解</h4><p>Matplotlib提供了一个注解工具annotations,可以在数据图形上添加文本注释，注解通常用于解释数据的内容。</p>
-<pre><code>import matplotlib.pyplot as plt
-
-#文本框
-decisionNode = dict(boxstyle=&#39;sawtooth&#39;,fc=&#39;0.8&#39;)
-leafNode=dict(boxstyle=&#39;round4&#39;,fc=&#39;0.8&#39;)
-#箭头格式
-arrow_args=dict(arrowstyle=&#39;&lt;-&#39;)
-
-绘制带箭头的注解
-def plotNode(nodeTxt,centerPt,parentPt,nodeType):
-    createPlot.ax1.annotate(nodeTxt,xy=parentPt,
-                            xycoords=&#39;axes fraction&#39;,
-                            xytext=centerPt,
-                            textcoords=&#39;axes fraction&#39;,
-    va=&#39;center&#39;,ha=&#39;center&#39;,bbox=nodeType,arrowprops=
-    arrow_args)
-
-def createPlot(inTree):
-    fig=plt.figure(1,facecolor=&#39;white&#39;)
-    fig.clf()
-    axprops=dict(xticks=[],yticks=[])
-    createPlot.ax1=plt.subplot(111,frameon=False,**axprops)
-    plotTree.totalW=float(getNumLeafs(inTree))
-    plotTree.totalD=float(getTreeDepth(inTree))
-    plotTree.xOff=-0.5/plotTree.totalW;plotTree.yOff=1.0;
-    plotTree(inTree,(0.5,1.0),&#39;&#39;)
-
-#    plotNode(&#39;a decision node&#39;,(0.5,0.1),(0.1,0.5),decisionNode)
-#    plotNode(&#39;a leaf node&#39;,(0.8,0.1),(0.3,0.8),leafNode)
-    plt.show()
-</code></pre><h4 id="构造注解树"><a href="#构造注解树" class="headerlink" title="构造注解树"></a>构造注解树</h4><p>定义两个新函数getNumLeafs()和getTreeDepth()，来获取叶节点的数目和树的层数，以确定图x轴和y轴。</p>
-<pre><code>#获取叶节点的数目
-def getNumLeafs(myTree):
-    numLeafs=0
-    firstStr=list(myTree.keys())[0]
-    secondDict=myTree[firstStr]
-    for key in secondDict.keys():
-        #测试节点的类型是否为字典，不是则为叶子节点
-        if type(secondDict[key]).__name__==&#39;dict&#39;:
-            numLeafs+=getNumLeafs(secondDict[key])
-        else:
-            numLeafs+=1
-    return numLeafs
-
-#获取树的层数
-def getTreeDepth(myTree):
-    maxDepth=0
-    firstStr=list(myTree.keys())[0]
-    secondDict=myTree[firstStr]
-    for key in secondDict.keys():
-        if type(secondDict[key]).__name__==&#39;dict&#39;:
-            thisDepth=1+getTreeDepth(secondDict[key])
-        else:
-            thisDepth=1
-        if thisDepth&gt;maxDepth:
-            maxDepth=thisDepth
-    return maxDepth
-
-def retrieveTree(i):
-    listOfTrees=[{&#39;no surfacing&#39;:{0:&#39;no&#39;,1:{&#39;flippers&#39;:\
-                                            {0:&#39;no&#39;,1:&#39;yes&#39;}}}},
-    {&#39;no surfacing&#39;:{0:&#39;no&#39;,1:{&#39;flippers&#39;:\
-                               {0:{&#39;head&#39;:{0:&#39;no&#39;,1:&#39;yes&#39;}},1: &#39;no&#39;}}}}]
-    return listOfTrees[i]
-</code></pre><p>函数retrieveTree输出预先存储的树信息，避免了每次测试代码时都要从数据中创建树的麻烦。</p>
-<pre><code>def plotMidText(cntrPt,parentPt,txtString):
-    xMid=(parentPt[0]-cntrPt[0])/2.0+cntrPt[0]
-    yMid=(parentPt[1]-cntrPt[1])/2.0+cntrPt[1]
-    createPlot.ax1.text(xMid,yMid,txtString)
-
-def plotTree(myTree,parentPt,nodeTxt):
-    numLeafs=getNumLeafs(myTree)
-    depth=getTreeDepth(myTree)
-    firstStr=list(myTree.keys())[0]
-    cntrPt=(plotTree.xOff+(1.0+float(numLeafs))/2.0/plotTree.totalW,
-            plotTree.yOff)
-    plotMidText(cntrPt,parentPt,nodeTxt)
-    plotNode(firstStr,cntrPt,parentPt,decisionNode)
-    secondDict=myTree[firstStr]
-    plotTree.yOff=plotTree.yOff-1.0/plotTree.totalD
-    for key in secondDict.keys():
-        if type(secondDict[key]).__name__==&#39;dict&#39;:
-            plotTree(secondDict[key],cntrPt,str(key))
-        else:
-            plotTree.xOff=plotTree.xOff+1.0/plotTree.totalW
-            plotNode(secondDict[key],(plotTree.xOff,plotTree.yOff),
-                     cntrPt,leafNode)
-            plotMidText((plotTree.xOff,plotTree.yOff),cntrPt,str(key))
-    plotTree.yOff=plotTree.yOff+1.0/plotTree.totalD
-</code></pre><p>绘制的树形图<br><img src="https://i.imgur.com/FTBCVsg.jpg" alt=""></p>
-<h2 id="测试和存储分类器"><a href="#测试和存储分类器" class="headerlink" title="测试和存储分类器"></a>测试和存储分类器</h2><p>依靠训练数据构造了决策树之后，我们可以将它用于实际数据的分类，在执行数据分类时，需要决策树以及用于构造树的标签向量。然后，程序比较测试数据与决策树上的数值，递归执行该过程直到进入叶子节点；最后将测试数据定义为叶子节点所属的类型。</p>
-<h4 id="测试算法："><a href="#测试算法：" class="headerlink" title="测试算法："></a>测试算法：</h4><pre><code>#使用决策树的分类函数
-def classify(inputTree,featLabels,testVec):
-    firstStr=list(inputTree.keys())[0]
-    secondDict=inputTree[firstStr]
-    featIndex=featLabels.index(firstStr)
-    for key in secondDict.keys():
-        if testVec[featIndex]==key:
-            if type(secondDict[key]).__name__==&#39;dict&#39;:
-                classLabel=classify(secondDict[key],featLabels,testVec)
-            else:
-                classLabel=secondDict[key]
-    return classLabel
-</code></pre><h4 id="使用算法：决策树的存储"><a href="#使用算法：决策树的存储" class="headerlink" title="使用算法：决策树的存储"></a>使用算法：决策树的存储</h4><p>构造决策树是很耗时的任务，即使处理很小的数据集，如前面的样本数据，也要花费几秒的时间，如果数据集很大，将会耗费很多计算时间。然而用创建好的决策树解决分类问题，则可以很快完成。为了解决这个问题，需要使用Python模块pickle序列化对象，可以在磁盘上保存对象，并在需要的时候读取出来。</p>
-<p>#使用pickle模块存储决策树<br>    def storeTree(inputTree,filename):<br>        import pickle<br>        fw=open(filename,’wb’)<br>        pickle.dump(inputTree,fw)<br>        fw.close()</p>
-<pre><code>#读取决策树
-def grabTree(filename):
-    import pickle
-    fr=open(filename)
-    return pickle.load(fr)
-</code></pre><h2 id="示例：使用决策树预测隐形眼镜类型"><a href="#示例：使用决策树预测隐形眼镜类型" class="headerlink" title="示例：使用决策树预测隐形眼镜类型"></a>示例：使用决策树预测隐形眼镜类型</h2><p>由ID3算法产生的决策树<br><img src="https://i.imgur.com/Ygs4Kwd.jpg" alt=""></p>
-<p>上图所示的决策树可以非常好地匹配实验数据，然而这些匹配选项可能太多了，造成<strong>过度匹配</strong>问题。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>决策树分类器就像带有终止块的流程图，终止块表示分类结果。开始处理数据集时，首先需要测量集合中数据的不一致性，也就是熵，然后寻找最优方案划分数据集，直到数据集中的所有数据属于同一分类。ID3算法可以用于划分标称型数据集。构建决策树时，通常采用递归的方法将数据集转化为决策树。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
-<li><a href="http://lib.csdn.net/article/datastructure/9208?knId=813" target="_blank" rel="external">机器学习：决策树ID3\C4.5\CART\随机森林总结及python上的实现 (2)</a></li>
-<li><a href="http://blog.csdn.net/CharlieLincy/article/details/69301490" target="_blank" rel="external">《机器学习实战》第三章：决策树（1）基本概念</a></li>
-<li><a href="http://blog.csdn.net/CharlieLincy/article/details/69525051" target="_blank" rel="external">《机器学习实战》第三章：决策树（2）树的构造</a></li>
-<li><a href="http://blog.csdn.net/CharlieLincy/article/details/69831446" target="_blank" rel="external">《机器学习实战》第三章：决策树（3）测试、存储、实例</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/旋转数组的最小数字/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/旋转数组的最小数字/" itemprop="url">旋转数组的最小数字(剑指offer第六题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def minNumberInRotateArray(self, rotateArray):
-            # write code here
-            if len(rotateArray) &lt; 1:
-                return 0
-            i = 1
-            while i &lt; len(rotateArray):
-                if rotateArray[i] &lt; rotateArray[i-1]:
-                    return rotateArray[i]
-                i += 1
-            return rotateArray[-1]
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" itemprop="url">调整数组顺序使奇数位于偶数前面(剑指offer第十三题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def reOrderArray(self, array):
-            # write code here
-            if len(array) &lt; 1:
-                return []
-            array1 = []
-            array2 = []
-            for v in array:
-                if v%2:
-                    array1.append(v)
-                else:
-                    array2.append(v)
-            array = array1 + array2
-            return array
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2646,7 +2846,7 @@ def grabTree(filename):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">130</span>
+                <span class="site-state-item-count">133</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
