@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/15/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/</loc>
+    <lastmod>2018-08-05T03:29:16.137Z</lastmod>
+    <data>
+        <display>
+        <title>重建二叉树(剑指offer第四题)</title>
+        <pubTime>2017-09-14T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>剑指offer</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/09/11/KMP%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2018-08-03T03:43:58.321Z</lastmod>
     <data>
@@ -1735,9 +1757,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -1759,9 +1781,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -2630,11 +2652,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
          
            
@@ -2656,9 +2678,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
          
            
@@ -2836,11 +2858,11 @@
         <title>Leetcode 20 Valid Parentheses</title>
         <pubTime>2017-07-02T16:00:00.000Z</pubTime>
         
-        <tag>Leetcode</tag>
-         
         <tag>C</tag>
          
         <tag>算法</tag>
+         
+        <tag>Leetcode</tag>
          
          
            
