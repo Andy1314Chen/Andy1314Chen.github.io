@@ -713,6 +713,163 @@ print(index_i)
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/20/阿里天池平台盐城上牌量预测总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/20/阿里天池平台盐城上牌量预测总结/" itemprop="url">阿里天池平台盐城上牌量预测</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-20T00:00:00+08:00">
+                2018-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="题目：印象盐城·数创未来大数据竞赛-盐城汽车上牌量预测"><a href="#题目：印象盐城·数创未来大数据竞赛-盐城汽车上牌量预测" class="headerlink" title="题目：印象盐城·数创未来大数据竞赛-盐城汽车上牌量预测"></a>题目：印象盐城·数创未来大数据竞赛-盐城汽车上牌量预测</h2><h3 id="赛题：已知历史某三年的汽车上牌数据，预测某2年每天的汽车上牌数。初赛是预测五个品牌的上牌总数，复赛预测10个品牌每天的上牌数。"><a href="#赛题：已知历史某三年的汽车上牌数据，预测某2年每天的汽车上牌数。初赛是预测五个品牌的上牌总数，复赛预测10个品牌每天的上牌数。" class="headerlink" title="赛题：已知历史某三年的汽车上牌数据，预测某2年每天的汽车上牌数。初赛是预测五个品牌的上牌总数，复赛预测10个品牌每天的上牌数。"></a>赛题：已知历史某三年的汽车上牌数据，预测某2年每天的汽车上牌数。初赛是预测五个品牌的上牌总数，复赛预测10个品牌每天的上牌数。</h3><h3 id="难点：对未来每天上牌量长期预测，时间跨度超过一年；"><a href="#难点：对未来每天上牌量长期预测，时间跨度超过一年；" class="headerlink" title="难点：对未来每天上牌量长期预测，时间跨度超过一年；"></a>难点：对未来每天上牌量长期预测，时间跨度超过一年；</h3><h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><ol>
+<li><p>数据预处理</p>
+<ul>
+<li>缺失值填充；通过分析发现缺失时段都是节假日，以0填充；</li>
+<li>根据星期结合节假日将真实日期推算出来；</li>
+<li>异常值处理；</li>
+</ul>
+</li>
+<li><p>特征工程</p>
+<ul>
+<li>年、星期、是否节假日；存在自相关性</li>
+<li>节假日前后几天；</li>
+<li>节假日后第一个工作日，节假日前最后一个工作日；</li>
+</ul>
+<p>基础数据特征：上牌日期，总日期，品牌，工作情况，年第几天，月第几天，周几，年份，月份，年第几周，总第几周，总第几月等等。 </p>
+<p>衍生数据特征：节假日前后第几天，春节相关的系数（试过春节距离新年的天数及一些衍生的系数），放假第几天，去年当日上牌量（本天减364，因为要周对齐）及一些衍生，去年当周上牌量（本周减52）及一些衍生（比如本品牌在当周的排行，日期平均、品牌平均等），平均当周在一年的占比，平均周几在1周的占比，时序预测(fbprohpet, auto.arima, tbats …)的结果等。 </p>
+<p>外部数据特征：网上爬取了盐城地区的汽车产量，消费情况等数据，以及乘用车比赛的月汇总销量等等。 </p>
+<p>目标值处理：尝试过对上牌量进行开方，取Log等变换。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/19/Tensorflow的可视化工具tensorboard简单使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1035,156 +1192,6 @@ test_writer.close()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM评估/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/21/限制玻尔兹曼机RBM评估/" itemprop="url">RBM学习笔记（八）RBM的评估</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
-                2018-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
-                    <span itemprop="name">DBN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RBM学习笔记（八）RBM的评估"><a href="#RBM学习笔记（八）RBM的评估" class="headerlink" title="RBM学习笔记（八）RBM的评估"></a>RBM学习笔记（八）RBM的评估</h3><p><img src="http://img.blog.csdn.net/20140218142642578" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19408773" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19408773</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM训练算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1336,6 +1343,156 @@ test_writer.close()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM评估/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/限制玻尔兹曼机RBM评估/" itemprop="url">RBM学习笔记（八）RBM的评估</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
+                    <span itemprop="name">DBN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="RBM学习笔记（八）RBM的评估"><a href="#RBM学习笔记（八）RBM的评估" class="headerlink" title="RBM学习笔记（八）RBM的评估"></a>RBM学习笔记（八）RBM的评估</h3><p><img src="http://img.blog.csdn.net/20140218142642578" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19408773" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19408773</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机梯度计算公式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1442,6 +1599,156 @@ test_writer.close()
         
           
             <h3 id="RBM学习笔记（五）梯度计算公式"><a href="#RBM学习笔记（五）梯度计算公式" class="headerlink" title="RBM学习笔记（五）梯度计算公式"></a>RBM学习笔记（五）梯度计算公式</h3><p><img src="http://img.blog.csdn.net/20140214180006531" alt=""><br><img src="http://img.blog.csdn.net/20140214180015046" alt=""><br><img src="http://img.blog.csdn.net/20140214180023156" alt=""><br><img src="http://img.blog.csdn.net/20140214182009515" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机对数似然函数/" itemprop="url">RBM学习笔记（四）对数似然函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
+                    <span itemprop="name">DBN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="RBM学习笔记（四）对数似然函数"><a href="#RBM学习笔记（四）对数似然函数" class="headerlink" title="RBM学习笔记（四）对数似然函数"></a>RBM学习笔记（四）对数似然函数</h3><p><img src="http://img.blog.csdn.net/20140213230041656" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
 <h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
 
           
@@ -1779,306 +2086,6 @@ test_writer.close()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机对数似然函数/" itemprop="url">RBM学习笔记（四）对数似然函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
-                2018-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
-                    <span itemprop="name">DBN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RBM学习笔记（四）对数似然函数"><a href="#RBM学习笔记（四）对数似然函数" class="headerlink" title="RBM学习笔记（四）对数似然函数"></a>RBM学习笔记（四）对数似然函数</h3><p><img src="http://img.blog.csdn.net/20140213230041656" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/限制玻尔兹曼机网络结构/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/19/限制玻尔兹曼机网络结构/" itemprop="url">RBM学习笔记（二）RBM的网络结构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T00:00:00+08:00">
-                2018-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
-                    <span itemprop="name">DBN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RBM学习笔记（二）RBM的网络结构"><a href="#RBM学习笔记（二）RBM的网络结构" class="headerlink" title="RBM学习笔记（二）RBM的网络结构"></a>RBM学习笔记（二）RBM的网络结构</h3><p><img src="http://img.blog.csdn.net/20140213225742921" alt=""><br><img src="http://img.blog.csdn.net/20140213225751890" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2129,7 +2136,7 @@ test_writer.close()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">133</span>
+                <span class="site-state-item-count">137</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

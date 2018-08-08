@@ -4,6 +4,94 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/04/20/%E9%98%BF%E9%87%8C%E5%A4%A9%E6%B1%A0%E5%B9%B3%E5%8F%B0%E7%9B%90%E5%9F%8E%E4%B8%8A%E7%89%8C%E9%87%8F%E9%A2%84%E6%B5%8B%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2018-08-08T08:00:32.137Z</lastmod>
+    <data>
+        <display>
+        <title>阿里天池平台盐城上牌量预测</title>
+        <pubTime>2018-04-19T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>机器学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="机器学习" url="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/09/20/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84/</loc>
+    <lastmod>2018-08-06T03:40:46.784Z</lastmod>
+    <data>
+        <display>
+        <title>二叉树中和为某一值的路径(剑指offer第二十四题)</title>
+        <pubTime>2017-09-19T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>剑指offer</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/09/19/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97/</loc>
+    <lastmod>2018-08-06T02:36:42.566Z</lastmod>
+    <data>
+        <display>
+        <title>二叉搜索树的后序遍历序列(剑指offer第二十三题)</title>
+        <pubTime>2017-09-18T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>剑指offer</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/09/18/%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91/</loc>
+    <lastmod>2018-08-06T02:01:46.897Z</lastmod>
+    <data>
+        <display>
+        <title>从上往下打印二叉树(剑指offer第二十二题)</title>
+        <pubTime>2017-09-17T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>剑指offer</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/08/05/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E7%AC%94%E8%AF%95%E9%A2%980805/</loc>
     <lastmod>2018-08-05T13:56:32.828Z</lastmod>
     <data>
@@ -1843,9 +1931,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -1867,9 +1955,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -2738,11 +2826,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
          
            
@@ -2764,9 +2852,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
          
            
