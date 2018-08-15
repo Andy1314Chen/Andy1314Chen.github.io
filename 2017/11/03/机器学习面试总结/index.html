@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Andy&#39;s blog">
 <meta property="og:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中(只用到了训练集),设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-14T09:08:36.079Z">
+<meta property="og:updated_time" content="2018-08-15T03:46:56.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习面试问题总结">
 <meta name="twitter:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中(只用到了训练集),设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组">
@@ -454,6 +454,19 @@
 <li>对于均值为零的高斯随机变量，“独立”和“不相关”等价；</li>
 <li>简单讲，不相关就是两者没有线性关系，但是不排除其他关系存在，独立就是互不相关没有关联；看来朴素贝叶斯里的“特征条件独立”是挺强的假设；</li>
 </ul>
+<p><strong>10. 决策树如何处理连续值</strong><br>连续特征离散化，将连续特征值从小到大排序, 取相邻两个数的平均数作为离散值。</p>
+<p><strong>11. 决策树如何处理缺失值</strong></p>
+<p>西瓜书里介绍较为详细，主要涉及下面两个问题：</p>
+<ul>
+<li>如何在属性值缺失的情况下进行划分属性的选择？（比如“色泽”这个属性有的样本在该属性上的值是缺失的，那么该如何计算“色泽”的信息增益？）<ul>
+<li>在未缺失值的子集上计算信息增益或者Gini指数，然后乘以权重|D缺|/|D|</li>
+</ul>
+</li>
+<li>给定划分属性，若样本在该属性上的值是缺失的，那么该如何对这个样本进行划分？（即到底把这个样本划分到哪个结点里？）<ul>
+<li>若样本x在划分属性a上的取值未知，则将x同时划分到所有子节点，只不过此刻要调整该样本x的权重值(初始时均为1.0)，直观的看，就是让同一样本以不同的概率划入到不同的子节点中去。</li>
+</ul>
+</li>
+</ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/6279498/" target="_blank" rel="external">十道海量数据处理面试题与十个方法大总结</a></li>
 </ol>
@@ -499,8 +512,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/27/Boxplot/" rel="next" title="盒图(boxplot)">
-                <i class="fa fa-chevron-left"></i> 盒图(boxplot)
+              <a href="/2017/11/03/各种排序方法总结/" rel="next" title="各种排序方法总结">
+                <i class="fa fa-chevron-left"></i> 各种排序方法总结
               </a>
             
           </div>
@@ -584,7 +597,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">138</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

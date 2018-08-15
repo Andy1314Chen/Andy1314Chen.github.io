@@ -1966,10 +1966,370 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
 <li>对于均值为零的高斯随机变量，“独立”和“不相关”等价；</li>
 <li>简单讲，不相关就是两者没有线性关系，但是不排除其他关系存在，独立就是互不相关没有关联；看来朴素贝叶斯里的“特征条件独立”是挺强的假设；</li>
 </ul>
+<p><strong>10. 决策树如何处理连续值</strong><br>连续特征离散化，将连续特征值从小到大排序, 取相邻两个数的平均数作为离散值。</p>
+<p><strong>11. 决策树如何处理缺失值</strong></p>
+<p>西瓜书里介绍较为详细，主要涉及下面两个问题：</p>
+<ul>
+<li>如何在属性值缺失的情况下进行划分属性的选择？（比如“色泽”这个属性有的样本在该属性上的值是缺失的，那么该如何计算“色泽”的信息增益？）<ul>
+<li>在未缺失值的子集上计算信息增益或者Gini指数，然后乘以权重|D缺|/|D|</li>
+</ul>
+</li>
+<li>给定划分属性，若样本在该属性上的值是缺失的，那么该如何对这个样本进行划分？（即到底把这个样本划分到哪个结点里？）<ul>
+<li>若样本x在划分属性a上的取值未知，则将x同时划分到所有子节点，只不过此刻要调整该样本x的权重值(初始时均为1.0)，直观的看，就是让同一样本以不同的概率划入到不同的子节点中去。</li>
+</ul>
+</li>
+</ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/6279498/" target="_blank" rel="external">十道海量数据处理面试题与十个方法大总结</a></li>
 </ol>
 
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/各种排序方法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/03/各种排序方法总结/" itemprop="url">各种排序方法总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T00:00:00+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>分治思想</li>
+<li>不稳定</li>
+<li><a href="https://blog.csdn.net/MoreWindows/article/details/6684558" target="_blank" rel="external">https://blog.csdn.net/MoreWindows/article/details/6684558</a><h4 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h4></li>
+</ul>
+<ol>
+<li>先从数列中取出一个数作为基准数；</li>
+<li>分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边；</li>
+<li>再对左右区间重复步骤2，直到各区间只有一个数；</li>
+</ol>
+<pre><code>    # 快速排序
+    def QuickSort(nums, left, right):
+        if left &lt; right:
+            i, j, x = left, right, nums[left]
+            while i &lt; j:
+                # 从后端开始
+                while i &lt; j and nums[j] &gt;= x:
+                    j -= 1
+                if i &lt; j:
+                    nums[i] = nums[j]        
+                    i += 1
+                # 从前端开始
+                while i &lt; j and nums[i] &lt; x:
+                    i += 1
+                if i &lt; j:
+                    nums[j] = nums[i]        
+                    j -= 1
+            nums[i] = x
+            QuickSort(nums, left, i - 1)
+            QuickSort(nums, i + 1, right)
+        return nums
+</code></pre><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-1"><a href="#基本思路-1" class="headerlink" title="基本思路"></a>基本思路</h4><ol>
+<li>比较相邻的前后两个数据，如果前面数据大于后面数据，就将两个数据交换；</li>
+<li>这样对数组的第0个数据到第N-1个数据进行一次遍历后，最大的一个数据就“沉”到数组第N-1个位置；</li>
+<li><p>N=N-1,如果N!=0则继续前面两步</p>
+<pre><code> def bubbleSort1(nums):
+ &quot;&quot;&quot;
+ 冒泡排序1
+ &quot;&quot;&quot;
+ for i in range(len(nums)):
+     for j in range(1, len(nums)-i):
+         if nums[j] &lt; nums[j-1]:
+             nums[j], nums[j-1] = nums[j-1], nums[j]
+ return nums
+</code></pre></li>
+</ol>
+<pre><code>    def bubbleSort2(nums):
+        &quot;&quot;&quot;
+        冒泡排序2  改进1
+        &quot;&quot;&quot;
+        flag = False
+        for i in range(len(nums)):
+            if flag != False:
+                break 
+            flag = True 
+            for j in range(1, len(nums)-i):
+                if nums[j] &lt; nums[j-1]:
+                    nums[j], nums[j-1] = nums[j-1], nums[j]
+                    flag = False 
+        return nums
+
+    def bubbleSort3(nums):
+        &quot;&quot;&quot;
+        冒泡排序3  改进2
+        &quot;&quot;&quot;
+        flag = len(nums)
+        while flag &gt; 0:
+            k = flag 
+            flag = 0
+            for j in range(1, k):
+                if nums[j] &lt; nums[j-1]:
+                    nums[j], nums[j-1] = nums[j-1], nums[j]
+                    flag = j 
+        return nums
+</code></pre><h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-2"><a href="#基本思路-2" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次将一个待排序的记录，按其关键字大小插入到前面已经排好序的子序列中的适当位置，直到全部记录插入完成为止。</p>
+<ol>
+<li>初始时，a[0]自成一个有序区，a[1…n-1]为无序区；</li>
+<li>将a[i]并入当前的有序区a[0…i-1]中形成a[0…i]有序区；</li>
+<li><p>i++并重复第二步，直到i == n-1;</p>
+<pre><code> def insertSort1(nums):
+     &quot;&quot;&quot;
+     插入排序
+     &quot;&quot;&quot;
+     i = 1
+     while i &lt; len(nums):
+         tmp = nums[i]
+         j = i - 1
+         while j &gt;= 0 and nums[j] &gt; tmp:
+             nums[j+1] = nums[j]
+             j -= 1
+         nums[j+1] = tmp
+         i += 1
+     return nums
+</code></pre></li>
+</ol>
+<pre><code>    def insertSort2(nums):
+        &quot;&quot;&quot;
+        插入排序2 改进1
+        &quot;&quot;&quot;
+        for i in range(1, len(nums)):
+            for j in range(i-1, -1, -1):
+                if nums[j] &gt; nums[j+1]:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+                else:
+                    break
+        return nums
+</code></pre><h2 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-3"><a href="#基本思路-3" class="headerlink" title="基本思路"></a>基本思路</h4><p>直接选择排序和直接插入排序类似，都将数据分为有序区和无序区，所不同的是直接将无序区的第一个元素直接插入到有序区以形成一个更大的有序区，而直接选择排序是从无序区选一个最小的元素直接放到有序区的最后；</p>
+<ol>
+<li>初始时，数组全为无序区a[0…n-1],令i=0;</li>
+<li>在无序区a[i…n-1]中选取一个最小的元素，将其与a[i]交换，交换之后a[0…i]就形成了一个有序区；</li>
+<li><p>i++并重复第二步，直到i == n-1;</p>
+<pre><code> def selectionSort1(nums):
+     &quot;&quot;&quot;
+     选择排序
+     &quot;&quot;&quot;
+     for i in range(len(nums)):
+         min_idx = i 
+         for j in range(i+1, len(nums)):
+             if nums[j] &lt; nums[min_idx]:
+                 min_idx = j 
+         if min_idx != i:
+             nums[i], nums[min_idx] = nums[min_idx], nums[i]
+     return nums
+</code></pre></li>
+</ol>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-4"><a href="#基本思路-4" class="headerlink" title="基本思路"></a>基本思路</h4><p>将数组分为二组A,B,如果这两组都是有序的，则直接合并。若不是，可以将A,B组各自再分成两组，依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后合并相邻的两个小组即可。</p>
+<pre><code># 归并排序
+def mergeArray(nums, left, mid, right):
+    tmp = []
+    i, j = left, mid + 1
+    m, n = mid, right
+    while i &lt;= m and j &lt;= n:
+        if nums[i] &gt; nums[j]:
+            tmp.append(nums[j])
+            j += 1
+        else:
+            tmp.append(nums[i])
+            i += 1
+    while i &lt;= m:
+        tmp.append(nums[i])
+        i += 1
+    while j &lt;= n:
+        tmp.append(nums[j])
+        j += 1
+    # 排好序的值写入原数组
+    nums[left:left+len(tmp)] = tmp
+
+def mergesort(nums, left, right):
+    if left &lt; right:
+        mid = (left + right)//2
+        mergesort(nums, left, mid)
+        mergesort(nums, mid + 1, right)
+        mergeArray(nums, left, mid, right)
+
+def MergeSort(nums):
+    mergesort(nums, 0, len(nums)-1)
+    return nums
+</code></pre><h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>不稳定</li>
+</ul>
+<h4 id="基本思路-5"><a href="#基本思路-5" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次先将数组构成最大堆，然后交换堆顶元素(即nums[0])与最后一个元素，然后隔离最后一个元素重新构建最大堆，依次迭代重复，直到数组中只有一个元素；</p>
+<pre><code># 堆排序
+def MaxHeapFixDown(nums, i, n):
+    tmp = nums[i]
+    j = 2*i + 1 # 左孩子
+    while j &lt; n :
+        # 右孩子
+        if j &lt; n - 1 and nums[j] &lt; nums[j+1]:
+            j += 1
+        # 比最大的都大
+        if tmp &gt; nums[j]:
+            break
+        nums[i] = nums[j]
+        i = j 
+        j = 2*i + 1
+    nums[i] = tmp
+
+
+def MakeMaxHeap(nums, n):
+    for i in range(n//2, -1, -1):
+        MaxHeapFixDown(nums, i, n)
+
+def MaxHeapDeleteNumber(nums, n):
+    nums[0], nums[n-1] = nums[n-1], nums[0]
+    MaxHeapFixDown(nums, 0, n - 1)
+
+def MaxHeapSort(nums):
+    n = len(nums)
+    MakeMaxHeap(nums, n)
+    for i in range(n, 0, -1):
+        MaxHeapDeleteNumber(nums, i)
+    return nums
+</code></pre>
           
         
       
@@ -2158,393 +2518,6 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/08/How to Make Out-of-Sample Forecasts with ARIMA in Python/" itemprop="url">How to Make Out-of-sample Forecast with ARIMA in Python3</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T00:00:00+08:00">
-                2017-10-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在看时间序列分析这一块，因为不会用R语言（R语言做时间序列分析很是方便！），只能用Python吭哧吭哧的搞，搞了好多天，在网上找了一些资料，比较乱，基本上抄来抄去，到最后也没有搞出个眉目。</p>
-<p>今天看到一篇老外写的博客，国内没发现有类似的，打算翻译一下，顺带加深Python下ARIMA的使用。</p>
-<p><img src="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/How-to-Make-Out-of-Sample-Forecasts-with-ARIMA-in-Python.jpg" alt=""></p>
-<p><em>没错，图片也是从人家博客里copy的</em></p>
-<p>作者说的一点没错，</p>
-<blockquote>
-<p>Making out-of-sample forecasts can be confusing when getting started with time series data. </p>
-</blockquote>
-<p>的确困扰了我好久，总看到in-of-sample forecast &amp; out-of-sampl e forecast，但也没人去解释。</p>
-<p>in-of-sample forecast是指利用建模的那些时间序列数据去做预测，没错就是这样，和其他机器学习模型不太一样。而out-of-sample forecast是利用训练集训练好的数据去预测未来的数据。</p>
-<p>python下里的时间序列库最常见的是<strong>statsmodels</strong>,最常用的模型是ARIMA. </p>
-<p>这篇博客里，老外主要是以一个简单数据集为例，讲解了一下3个东西（ARIMA模型的）</p>
-<ul>
-<li>How to make a one-step out-of-sample forecast</li>
-<li>How to make a multi-step out-of-sample forecast</li>
-<li>The difference between the forecast() &amp; predict()</li>
-</ul>
-<h2 id="数据集下载"><a href="#数据集下载" class="headerlink" title="数据集下载"></a>数据集下载</h2><p>数据集是澳大利亚，墨尔本从1981-1990年10年间每日最低温度的一个数据集。</p>
-<p><a href="https://datamarket.com/data/set/2324/daily-minimum-temperatures-in-melbourne-australia-1981-1990" target="_blank" rel="external">下载地址</a></p>
-<p><em>这个数据集中有一些“？”需要去除。</em></p>
-<h2 id="分割数据集"><a href="#分割数据集" class="headerlink" title="分割数据集"></a>分割数据集</h2><p>将数据集分为两个部分，最后7天的数据分出来作为验证集，前面的一部分作为训练集。</p>
-<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>从下面的图中可以看到，该时间序列有明显的季节特性，通过简单的差分可以去掉。季节特性是以年为周期的，365天。其实，差分之后应该还要进行统计检验的，确保差分后的时间序列为平稳序列。</p>
-<p>使用ARIMA模型，通过网格搜索法找到最佳参数（7,0,1）。</p>
-<h2 id="One-Step-Out-of-Sample-Forecast"><a href="#One-Step-Out-of-Sample-Forecast" class="headerlink" title="One-Step Out-of-Sample Forecast"></a>One-Step Out-of-Sample Forecast</h2><p>ARIMA模型提供了两种方法</p>
-<ol>
-<li>Forecast Function</li>
-<li>Predict Function</li>
-</ol>
-<p>对out-of-sample预测结果都是一样的，但是predict()可以in-of-sample预测，好像更为先进一些，但是好像也没太大用处，只是验证模型。</p>
-<p>预测之后，还需要对预测值进行还原处理，因为之前对数据进行了差分处理。</p>
-<h2 id="Multi-Step-Out-of-Sample-Forecast"><a href="#Multi-Step-Out-of-Sample-Forecast" class="headerlink" title="Multi-Step Out-of-Sample Forecast"></a>Multi-Step Out-of-Sample Forecast</h2><p>同单步预测差不多，都是两个函数可以用，但是还原时要注意。</p>
-<h2 id="Python3程序"><a href="#Python3程序" class="headerlink" title="Python3程序"></a>Python3程序</h2><pre><code>from pandas import tseries
-import requests,pandas as pd,numpy as np
-from pandas import DataFrame
-from io import StringIO
-import time,json
-from datetime import date
-from statsmodels.tsa.stattools import adfuller,acf,pacf
-from statsmodels.tsa.arima_model import ARIMA
-from statsmodels.tsa.seasonal import seasonal_decompose
-from sklearn.metrics import mean_squared_error
-import matplotlib.pylab as plt
-%matplotlib inline
-from matplotlib.pylab import rcParams
-rcParams[&#39;figure.figsize&#39;]=15,6
-
-series=pd.Series.from_csv(&#39;daily-minimum-temperatures.csv&#39;,header=0)
-print(series.head(20))
-
-Date
-1981-01-01    20.7
-1981-01-02    17.9
-1981-01-03    18.8
-1981-01-04    14.6
-1981-01-05    15.8
-1981-01-06    15.8
-1981-01-07    15.8
-1981-01-08    17.4
-1981-01-09    21.8
-1981-01-10    20.0
-1981-01-11    16.2
-1981-01-12    13.3
-1981-01-13    16.7
-1981-01-14    21.5
-1981-01-15    25.0
-1981-01-16    20.7
-1981-01-17    20.6
-1981-01-18    24.8
-1981-01-19    17.7
-1981-01-20    15.5
-Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
-
-series.plot()
-
-&lt;matplotlib.axes._subplots.AxesSubplot at 0xbe34b38&gt;
-</code></pre><p><img src="https://i.imgur.com/7iBRt7B.png" alt=""></p>
-<pre><code>#将最后7个数据分裂出去作为验证集
-split_point=len(series)-7
-dataset,validation=series[0:split_point],series[split_point:]
-print(&#39;Dataset %d, Validation %d&#39; % (len(dataset),len(validation)))
-dataset.to_csv(&#39;tempdataset.csv&#39;)
-validation.to_csv(&#39;tempvalidation.csv&#39;)
-
-Dataset 3643, Validation 7
-
-#create a differenced series
-def difference(dataset,interval=1):
-    diff=list()
-    for i in range(interval,len(dataset)):
-        value=dataset[i]-dataset[i-interval]
-        diff.append(value)
-    return np.array(diff)
-
-#invert differenced value
-def inverse_difference(history,yhat,interval=1):
-    return yhat+history[-interval]
-
-from statsmodels.tsa.arima_model import ARIMA
-
-#测试集数据
-X=dataset.values
-#观察得到周期性为一年，365天
-days_in_year=365
-#差分
-differenced=difference(X,days_in_year)
-#拟合模型,(p,d,q)是由网格搜索法确定，作者另一篇文章有介绍
-model=ARIMA(differenced,order=(7,0,1))
-model_fit=model.fit(disp=0)
-#print summary of fit model
-print(model_fit.summary())
-
-                              ARMA Model Results                              
-==============================================================================
-Dep. Variable:                      y   No. Observations:                 3278
-Model:                     ARMA(7, 1)   Log Likelihood               -8673.748
-Method:                       css-mle   S.D. of innovations              3.411
-Date:                Sun, 08 Oct 2017   AIC                          17367.497
-Time:                        20:01:58   BIC                          17428.447
-Sample:                             0   HQIC                         17389.322
-
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const          0.0132      0.132      0.100      0.921      -0.246       0.273
-ar.L1.y        1.1426      0.287      3.977      0.000       0.580       1.706
-ar.L2.y       -0.4347      0.154     -2.830      0.005      -0.736      -0.134
-ar.L3.y        0.0961      0.042      2.290      0.022       0.014       0.178
-ar.L4.y        0.0125      0.029      0.434      0.664      -0.044       0.069
-ar.L5.y       -0.0101      0.029     -0.343      0.731      -0.068       0.047
-ar.L6.y        0.0119      0.027      0.448      0.654      -0.040       0.064
-ar.L7.y        0.0088      0.024      0.368      0.713      -0.038       0.056
-ma.L1.y       -0.6159      0.287     -2.147      0.032      -1.178      -0.054
-                                    Roots                                    
-=============================================================================
-                 Real           Imaginary           Modulus         Frequency
------------------------------------------------------------------------------
-AR.1            1.2234           -0.0000j            1.2234           -0.0000
-AR.2            1.2563           -1.0676j            1.6487           -0.1121
-AR.3            1.2563           +1.0676j            1.6487            0.1121
-AR.4            0.0349           -2.0162j            2.0165           -0.2472
-AR.5            0.0349           +2.0162j            2.0165            0.2472
-AR.6           -2.5780           -1.3111j            2.8923           -0.4251
-AR.7           -2.5780           +1.3111j            2.8923            0.4251
-MA.1            1.6237           +0.0000j            1.6237            0.0000
------------------------------------------------------------------------------
-
-dataset.tail(5)
-
-Date
-1990-12-20    15.4
-1990-12-21    13.1
-1990-12-22    13.2
-1990-12-23    13.9
-1990-12-24    10.0
-Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
-</code></pre><h2 id="One-Step-Out-of-Sample-Forecast-1"><a href="#One-Step-Out-of-Sample-Forecast-1" class="headerlink" title="One-Step Out-of-Sample Forecast"></a>One-Step Out-of-Sample Forecast</h2><p>ARIMA模型进行一步预测是很好用的。<br>在这里，一步预测的是1990-12-25日的最低气温。</p>
-<p>statsmodel库提供了<em>forecast() function</em>进行预测。默认，这个函数就会进行一步预测（out-of-sample forecast）.<em>forecast()</em>返回值包含</p>
-<p><strong>the forecast value,the standard error of the forecast, and the confidence interval information</strong></p>
-<pre><code>#one-step out-of-sample forecast
-forecast=model_fit.forecast()[0]
-
-#前面为了消除时间序列的季节特性，进行了差分，这里得到的预测值必须要还原
-forecast=inverse_difference(X,forecast,days_in_year)
-
-print(&quot;Forecast: %f&quot; % forecast)
-
-Forecast: 14.861660
-
-#真实值是12.9
-validation
-
-Date
-1990-12-25    12.9
-1990-12-26    14.6
-1990-12-27    14.0
-1990-12-28    13.6
-1990-12-29    13.5
-1990-12-30    15.7
-1990-12-31    13.0
-Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: float64
-</code></pre><p>statsmodel库同样提供了<em>predict() function</em>函数用于预测，可以进行任意in-of-sample &amp; out-of-sample的预测。但是<em>predict()</em>需要提供一个start和end.</p>
-<pre><code>#one-step out of sample forecast
-start_index=len(differenced)
-end_index=len(differenced)
-forecast=model_fit.predict(start=start_index,end=end_index)
-#forecast=model_fit.predict(&#39;1990-12-25&#39;,&#39;1990-12-25&#39;)
-
-#invert the differenced forecast to something usable
-forecast=inverse_difference(X,forecast,days_in_year)
-print(&quot;Forecast: %f&quot; % forecast)
-
-Forecast: 14.861660
-</code></pre><p>可以看到<em>predict()</em>预测结果和<em>forecast()</em>是一样的，不过<em>predict()</em>即可以in-of-sample也可以out-of-sample.</p>
-<h2 id="Multi-Step-Out-of-Sample-Forecast-1"><a href="#Multi-Step-Out-of-Sample-Forecast-1" class="headerlink" title="Multi-Step Out-of-Sample Forecast"></a>Multi-Step Out-of-Sample Forecast</h2><p>同样可以使用<em>predict()&amp;forecast()</em>函数进行多步预测。</p>
-<pre><code>#multi-step out-of-sample forecast
-forecast=model_fit.forecast(steps=7)[0]
-#invert the differenced forecast to something usable
-history=[x for x in X]
-day=1
-result=[]
-for yhat in forecast:
-    inverted=inverse_difference(history,yhat,days_in_year)
-    print(&quot;Day %d: %f&quot; % (day,inverted))
-    history.append(inverted)
-    result.append(inverted)
-    day+=1
-
-Day 1: 14.861660
-Day 2: 15.628799
-Day 3: 13.331348
-Day 4: 11.722410
-Day 5: 10.421526
-Day 6: 14.415543
-Day 7: 12.674730
-
-
-#multi-step out-of-sample forecast By predict() function
-start_index=len(differenced)
-end_index=start_index+6
-forecast=model_fit.predict(start=start_index,end=end_index)
-
-history=[x for x in X]
-day=1
-result=[]
-for yhat in forecast:
-    inverted=inverse_difference(history,yhat,days_in_year)
-    print(&quot;Day %d: %f&quot; % (day,inverted))
-    history.append(inverted)
-    result.append(inverted)
-    day+=1
-
-Day 1: 14.861660
-Day 2: 15.628799
-Day 3: 13.331348
-Day 4: 11.722410
-Day 5: 10.421526
-Day 6: 14.415543
-Day 7: 12.674730
-</code></pre><h2 id="原文地址："><a href="#原文地址：" class="headerlink" title="原文地址："></a>原文地址：</h2><p> <a href="https://machinelearningmastery.com/make-sample-forecasts-arima-python/" target="_blank" rel="external">https://machinelearningmastery.com/make-sample-forecasts-arima-python/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2595,7 +2568,7 @@ Day 7: 12.674730
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">138</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

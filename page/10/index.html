@@ -301,6 +301,155 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/百度之星开发者大赛-资格赛2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/10/百度之星开发者大赛-资格赛2/" itemprop="url">2017百度之星开发者大赛--资格赛2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T00:00:00+08:00">
+                2017-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UNIT/" itemprop="url" rel="index">
+                    <span itemprop="name">UNIT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>7月28日，百度之星小姐姐给打过电话后，连着搞了两天，其实也没两天，还帮老板整理了好些文档资料。前一篇博客上也说了，搞了69.06分，第9名。然后想着反正肯定可以进前100啦，就没怎么管理了。优化方案也是按着百度AI开发论坛上提供的<a href="http://developer.baidu.com/forum/topic/show?topicId=241520" target="_blank" rel="external">UNIT机器人优化指南</a>结合UNIT使用手册做的。</p>
+<p>最后结果：</p>
+<p><img src="http://i.imgur.com/R6cgjjZ.png" alt="第六名"></p>
+<p>事先，基本的意图、词槽、Bot回应等等按照规定做好。实际中，我开始就没认真搞好，漏了一个错误的词槽。但是在最后资格赛结束之前发现了，改正之后提高了1点几个分数。</p>
+<p>基本的对话系统搞定之后，后期的优化主要分为两块：</p>
+<ul>
+<li>增加对话样本集</li>
+<li>增加对话模板集</li>
+</ul>
+<p>对话样本集对应着样本学习，假设对话样本足够多、样本质量非常高，那通过神经网络学习得到的模型自然也不会差。</p>
+<p>对话模板集则是对应着规则学习，正常人对话时，会有一定的语言结构，如，主语+谓语+宾语结构。特别是在一个特定的场景下，可以充分考虑到用户的对话的模板，进行一些提炼，得到一些语言“公式”。显然这种对话模板集方式的泛化能力是有限的，但是它的优点在于可以保证在符合“公式”的对话时不会出现错误。</p>
+<p>我所侧重的是第一个方法，即增加对话样本集。使用了目前UNIT的隐藏功能，推荐对话样本。自己可以先整一个小的对话样本，然后让UNIT平台根据自己DIY的对话样本生成一些样本，然后自己去标注。大约标注了3500个样本吧，自己整的样本比例是按照百度提供的对话样本中各个意图的比例整的，保证同分布吧。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/百度之星开发者大赛-资格赛/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2400,7 +2549,7 @@ extensions
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/颠倒二进制位/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/解码方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2419,7 +2568,7 @@ extensions
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/颠倒二进制位/" itemprop="url">LeetCode - 颠倒二进制位</a></h1>
+                <a class="post-title-link" href="/2017/07/05/解码方法/" itemprop="url">LeetCode - 解码方法</a></h1>
         
 
         <div class="post-meta">
@@ -2494,245 +2643,54 @@ extensions
       
         
           
-            <p>颠倒给定的 32 位无符号整数的二进制位。</p>
-<p>示例:</p>
-<pre><code>输入: 43261596
-输出: 964176192
-解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，
-     返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。
-</code></pre><p>进阶:<br>如果多次调用这个函数，你将如何优化你的算法？</p>
-<pre><code class="Python">
-    class Solution:
-        # @param n, an integer
-        # @return an integer
-        def reverseBits(self, n):
-            # 32位填充
-            bin_1 = bin(n)[2:].zfill(32)
-            bin_1 = [v for v in bin_1]
-            bin_1.reverse()
-            res = int(&#39;&#39;.join(bin_1), 2)
-            return res
+            <p>一条包含字母 A-Z 的消息通过以下方式进行了编码：</p>
+<pre><code>&#39;A&#39; -&gt; 1
+&#39;B&#39; -&gt; 2
+...
+&#39;Z&#39; -&gt; 26
+</code></pre><p>给定一个只包含数字的非空字符串，请计算解码方法的总数。</p>
+<p>示例 1:</p>
+<pre><code>输入: &quot;12&quot;
+输出: 2
+解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。
+</code></pre><p>示例 2:</p>
+<pre><code>输入: &quot;226&quot;
+输出: 3
+解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。
+
+
+class Solution:
+    def numDecodings(self, s):
+        &quot;&quot;&quot;
+        :type s: str
+        :rtype: int
+        &quot;&quot;&quot;
+        if len(s) == 0:
+            return 0
+        d = {}
+        d[&quot;&quot;] = 1
+        return self.ways(s,d)
+
+    # 记忆形递归
+    def ways(self, s, d):
+        # 已经计算过
+        if s in d.keys():
+            return d[s]
+        # 首位为0不可解码
+        if s[0] == &#39;0&#39;:
+            return 0
+        # 长度为1
+        if len(s) == 1:
+            return 1
+        # 去掉一位后的子问题
+        first = self.ways(s[1:], d) # 去掉第一位
+        tmp = int(s[:2]) # 看看前两位是否符合解码标准
+        # 去掉两位后的子问题
+        if (tmp &gt; 9)&amp;(tmp &lt;= 26):
+            first += self.ways(s[2:], d)
+        d[s] = first
+        return first
 </code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/爬楼梯/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/爬楼梯/" itemprop="url">LeetCode - 爬楼梯</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>假设你正在爬楼梯。需要 n 步你才能到达楼顶。</p>
-<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
-<p>注意：给定 n 是一个正整数。</p>
-<p>示例 1：</p>
-<p>输入： 2</p>
-<p>输出： 2</p>
-<p>解释： 有两种方法可以爬到楼顶。</p>
-<ol>
-<li>1 步 + 1 步</li>
-<li>2 步</li>
-</ol>
-<p>示例 2：</p>
-<p>输入： 3</p>
-<p>输出： 3</p>
-<p>解释： 有三种方法可以爬到楼顶。</p>
-<ol>
-<li>1 步 + 1 步 + 1 步</li>
-<li>1 步 + 2 步</li>
-<li>2 步 + 1 步</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            tmp = [0]*(n+1)
-            tmp[0] = 1
-            tmp[1] = 1
-            for i in range(2, n+1):
-                tmp[i] = tmp[i-1] + tmp[i-2]
-            return tmp[n]
-</code></pre>
-<h2 id="思路1-递推法求解"><a href="#思路1-递推法求解" class="headerlink" title="思路1(递推法求解)"></a>思路1(递推法求解)</h2><ol>
-<li>首先求得递推公式 F(n) = F(n-1) + F(n-2)</li>
-<li>实现</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def get_value(self, n, tmp):
-            if n &lt;= 1:
-                return 1
-            # 如果记忆过，则直接返回值
-            if tmp[n] != -1:
-                return tmp[n]
-            # 否则重新计算
-            tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp)
-            return tmp[n]
-
-
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            tmp = [-1]*(n+1)
-            return self.get_value(n, tmp)
-</code></pre>
-<h2 id="思路2-记忆性递归"><a href="#思路2-记忆性递归" class="headerlink" title="思路2(记忆性递归)"></a>思路2(记忆性递归)</h2><ol>
-<li>递推公式 F(n) = F(n-1) + F(n-2)</li>
-<li>递归实现</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            first = 1
-            second = 1
-            cur = 1
-            for i in range(2, n+1):
-                cur = first + second
-                first = second
-                second= cur
-            return cur
-</code></pre>
-<h2 id="思路3"><a href="#思路3" class="headerlink" title="思路3"></a>思路3</h2><ol>
-<li>使用两个变量保存前两个值</li>
-</ol>
-
           
         
       
@@ -2816,7 +2774,7 @@ extensions
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">138</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

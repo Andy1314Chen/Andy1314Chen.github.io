@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/11/03/%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2018-08-15T08:22:46.804Z</lastmod>
+    <data>
+        <display>
+        <title>各种排序方法总结</title>
+        <pubTime>2017-11-02T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/11/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2018-08-14T09:08:36.079Z</lastmod>
+    <lastmod>2018-08-15T03:46:56.413Z</lastmod>
     <data>
         <display>
         <title>机器学习面试问题总结</title>
@@ -2826,11 +2846,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
          
            
@@ -2852,9 +2872,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
          
            
