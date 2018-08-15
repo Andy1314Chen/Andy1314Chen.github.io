@@ -301,6 +301,279 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/16/好未来人工智能训练营总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/16/好未来人工智能训练营总结/" itemprop="url">好未来人工智能训练营总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T00:00:00+08:00">
+                2018-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>两周时间，2018-07-30至2018-08-13，TALAL LAB数据挖掘训练营，学习到了不少知识。两周的作业都是优，最后拿到了数据挖掘训练营优秀营员。</p>
+<p><img src="https://i.imgur.com/y4PZN3w.jpg" alt="week1"></p>
+<p>先放一个训练营论坛链接，<a href="https://future.ailab.100tal.com/camp/detail/3/forum" target="_blank" rel="external">https://future.ailab.100tal.com/camp/detail/3/forum</a>.</p>
+<h2 id="第一周"><a href="#第一周" class="headerlink" title="第一周"></a>第一周</h2><h3 id="一、-Week1学习目标："><a href="#一、-Week1学习目标：" class="headerlink" title="一、    Week1学习目标："></a>一、    Week1学习目标：</h3><ul>
+<li>利用Python进行数据分析</li>
+<li>推荐系统基础、了解常见评估方法</li>
+<li>实现推荐算法(协同过滤、基于内容推荐等)</li>
+<li>Exact KNN Search &amp; Approximated KNN Search</li>
+<li>矩阵分解在推荐系统中的应用</li>
+<li><strong>(week1任务) 基于Movielens数据集进行电影推荐</strong></li>
+</ul>
+<h3 id="二、-实现任务基本思路："><a href="#二、-实现任务基本思路：" class="headerlink" title="二、    实现任务基本思路："></a>二、    实现任务基本思路：</h3><ol>
+<li>最基本的推荐方法，用户评分Top-K、评分人数Top-K、发行时间等进行推荐；</li>
+<li>基于内容进行推荐，每部电影都有导演、主演、流派、标签等等属性特征，根据用户最近所看电影的特征向量，与数据库中所有电影进行相似度计算，推荐Top-K;人工检验推荐是否合理。</li>
+<li>协同过滤推荐，包括User-based CF &amp; Item-based CF；User-based利用相似用户通常会有相似品味，利用某用户对电影的评分向量进行相似度计算；Item-based则认为相似电影会有相似的评分，利用某电影的评分向量进行相似度计算；</li>
+<li>评分矩阵进行矩阵分解，得到用户矩阵和电影矩阵，表达了不同用户和电影的隐含特征；基于此，NMF/SVD/SVD++可用于推荐；</li>
+</ol>
+<h3 id="三、-基本实现步骤："><a href="#三、-基本实现步骤：" class="headerlink" title="三、    基本实现步骤："></a>三、    基本实现步骤：</h3><h4 id="1-利用Python对movielens进行数据探索-可视化分析；"><a href="#1-利用Python对movielens进行数据探索-可视化分析；" class="headerlink" title="1)利用Python对movielens进行数据探索,可视化分析；"></a>1)利用Python对movielens进行数据探索,可视化分析；</h4><p>程序包含在“DM_Day1_play_with_data.ipynb”文件中。选择了“MovieLens”数据集(ml-latest版本), 该数据集包含了 1995 年 01 月 9 日至 2017 年 08 月 04 日期间， 270896位用户对45843 部电影的评分和标签信息，260242289条评分，753170个标签，数据集中涉及用户是随机抽取的，每位用户至少有过一次评分、标签过程。</p>
+<p><img src="https://i.imgur.com/O86zmd9.png" alt="表1"></p>
+<p><img src="https://i.imgur.com/RVh4uL0.png" alt="图1">图1 各评分段(0-5)条形图</p>
+<p>从各分数段的评分人数来看，评分小于3.0的用户属于较少的，4.0评分较多，整体评分较高。</p>
+<p><img src="https://i.imgur.com/p6Q6heu.png" alt="图2"><br>图2 tag数量Top20占比</p>
+<p><img src="https://i.imgur.com/StqCmps.png" alt="图3"><br>图3 tag词云</p>
+<p>tag在该数据集中是比较重要的，后面会根据tag向量进行基于内容的推荐算法实现。更巧妙的是，该数据集提供了tag与movie的相关分数，这样根据movie*tag矩阵，就可以方便的计算相似度，而不需要我们自己再去TF-IDF向量计算。比较感兴趣的是，tag与movie的分数是如何计算的. </p>
+<p><img src="https://i.imgur.com/D1EoQgd.png" alt="图4"></p>
+<p>图4 电影发行数量趋势图</p>
+<p><img src="https://i.imgur.com/CQMBKFO.png" alt="图5"></p>
+<p>图5 1995-2017年用户的评分数量趋势图</p>
+<p>整体看，随着时间的发展，电影发行数量是增加的，特别是20世纪90年代后，近似指数增长。但是用户的评分数量增长并不是这么强烈，这也说明了，电影的发行数量是比较大的。</p>
+<h4 id="2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K"><a href="#2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K" class="headerlink" title="2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;"></a>2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;</h4><h5 id="-推荐总评分数Top-10"><a href="#-推荐总评分数Top-10" class="headerlink" title="    推荐总评分数Top-10"></a>    推荐总评分数Top-10</h5><pre><code>    Top    Title    中文名    年份
+    1    Toy Story    玩具总动员    1995
+    2    Usual Suspects, The    普通嫌疑犯    1995
+    3    Braveheart    勇敢的心    1995
+    4    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
+    5    Pulp Fiction    低俗小说    1994
+    6    Shawshank Redemption, The    肖申克的救赎    1994
+    7    Forrest Gump    阿甘正传    1994
+    8    Jurassic Park    侏罗纪公园    1993
+    9    Schindler&#39;s List    辛德勒的名单    1993
+    10    Silence of the Lambs, The    沉默的羔羊    1991
+</code></pre><h5 id="-推荐总评分人数-Top-10"><a href="#-推荐总评分人数-Top-10" class="headerlink" title="    推荐总评分人数 Top-10"></a>    推荐总评分人数 Top-10</h5><pre><code>    Top    Title    中文名    年份
+    1    Toy Story    玩具总动员    1995
+    2    Braveheart    勇敢的心    1995
+    3    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
+    4    Pulp Fiction    低俗小说    1994
+    5    Shawshank Redemption, The    肖申克的救赎    1994
+    6    Forrest Gump    阿甘正传    1994
+    7    Jurassic Park    侏罗纪公园    1993
+    8    Schindler&#39;s List    辛德勒的名单    1993
+    9    Terminator 2: Judgment Day    终结者2：审判日    1991
+    10    Silence of the Lambs, The    沉默的羔羊    1991
+</code></pre><p>最为简单的推荐算法，Top10、Most Popular、Recent Uploads等等，虽然可以推荐质量较高的电影给用户，但是无法做到针对性、有目的性，所有用户得到的推荐信息都是相同的。上面两个Top10推荐的都是最为经典的电影，但是如果电影网站每次总是都推荐这些，用户体验肯定不会好，下面继续一些更复杂，但是也更有效的推荐算法。</p>
+<h4 id="3-基于内容推荐算法；"><a href="#3-基于内容推荐算法；" class="headerlink" title="3)    基于内容推荐算法；"></a>3)    基于内容推荐算法；</h4><p>在Day01中对数据分析，发现对每个movie共有1128个tags, 对每个tag共有10993个movies, 将这些movie的tag看作是该movie的属性特征，构建10993<em>1128的movies</em>tags矩阵，计算相似度。这样不用我们对movie提取属性特征，再根据TFIDE进行向量化，十分方便。</p>
+<pre><code>具体过程如下：
+    建立tfidf_matrix矩阵的行与movieId一一对应关系；
+    获得与该movieId余弦相似度list, 第一个是movieId本身；
+    对list按照相似度分数进行排序，第一个为1，第二个是最为相似的电影；
+    取得list Top10(忽略第一个);
+    返回Top 10的movieId.    
+
+
+相似度计算方法考虑三种：
+    欧式距离
+    皮尔逊相关系数
+    余弦相似度
+</code></pre><p>使用余弦相似度计算时，采用sklearn库中sklearn.metrics.pairwise.linear_kernel进行近似可以加速计算。(<a href="http://scikit-learn.org/stable/modules/metrics.html#linear-kernel" target="_blank" rel="external">http://scikit-learn.org/stable/modules/metrics.html#linear-kernel</a>)</p>
+<p>基于内容的推荐算法，输入用户最近看的一部电影的tag向量，推荐Top-K相似电影；这里采用人工验证方法，检验推荐的合理性。</p>
+<pre><code># 基于内容推荐的Top10电影
+Top    Title    中文名    年份
+1    Usual Suspects, The    普通嫌疑犯    1995
+2    Pulp Fiction    低俗小说    1995
+3    Shawshank Redemption, The    肖申克的救赎    1994
+4    Reservoir Dogs    落水狗    1992
+5    Goodfellas    好家伙    1990
+6    Godfather: Part II, The    教父2    1974
+7    Fight Club    搏击俱乐部    1999
+8    City of God (Cidade de Deus)    上帝之城    2002
+9    Departed, The    无间行者    2006
+10    Jim Gaffigan: Obsessed    吉姆加菲根：迷恋    2014
+</code></pre><p>输入电影《教父》的ID, 推荐了上述10部相关的电影，可以看出大部分都是犯罪/动作类型电影，而且《教父2》也被推荐了出来，这里用的是电影的tags作为电影的属性特征进行相似度计算。在IMDB电影网站上搜索该部电影，也会推荐出12部相关电影，这里与基于内容的推荐重合了5部。</p>
+<p><img src="https://i.imgur.com/XQagEO4.png" alt="图6"><br>图6 IMDB网站推荐的12部电影</p>
+<p>KNN用于基于内容的推荐，这里主要使用sklearn库, KNN在这里需要确定两个参数，K值和距离度量。</p>
+<pre><code># (KNN)基于内容推荐的Top10电影
+Top    Title    中文名    年份
+1    Bug&#39;s Life, A    虫虫特工队    1995
+2    Toy Story 2    玩具总动员2    1998
+3    Shrek    怪物史莱克    1999
+4    Monsters, Inc.    怪兽电力公司    2001
+5    Ice Age    冰河时代    2002
+6    Finding Nemo    海底总动员    2003
+7    Luxo Jr.    顽皮跳跳灯    1986
+8    Ratatouille    美食总动员    2007
+9    Toy Story 3    玩具总动员3    2010
+10    The Lego Movie    乐高大电影    2014
+</code></pre><p>输入量是《玩具总动员》，可以明显的看出，推荐的10部电影全是动画片相关电影，而且还把《玩具总动员2》和《玩具总动员3》也推荐出来了。</p>
+<h4 id="4-协同过滤推荐算法；"><a href="#4-协同过滤推荐算法；" class="headerlink" title="4)    协同过滤推荐算法；"></a>4)    协同过滤推荐算法；</h4><ul>
+<li>    User-based CF</li>
+<li>    Item-based CF</li>
+</ul>
+<pre><code>User-based CF与Item-based CF过程类似，具体步骤如下：
+-    构建user-item评分矩阵；
+-    划分训练集train set、测试集test set;
+-    计算相似度(欧式距离、余弦相似度、Pearson相似度)
+-    基于相似度矩阵进行推荐
+-    评估推荐优劣(RMSE, MAE, Recall@K)
+
+        # 表6 User-based CF不同相似度方法结果对比
+            RMSE    MAE    Pecision@5    Recall@5
+        欧式距离相似度    3.0027    2.7816    1.0    0.3034
+        皮尔逊系数相似度    2.7449    2.5089    1.0    0.4118
+        余弦相似度    2.7668    2.5309    1.0    0.4085
+</code></pre><p>Train set 与 test set的比例7:3， 从RMSE、MAE、Precision@5、Recall@5几项评估指标看，欧式距离相似度都是较差的，皮尔逊系数和余弦相似度结果相差不大，皮尔逊系数相似度整体要好一些。</p>
+<pre><code>        # 表7 Item-based CF不同相似度方法结果对比
+            RMSE    MAE    Pecision@5    Recall@5
+        欧式距离相似度    3.5100    3.3105    1.0    0.0884
+        皮尔逊系数相似度    3.3133    3.112    1.0    0.1943
+        余弦相似度    3.3037    3.0926    1.0    0.2183
+</code></pre><p>从Item-based CF结果看，整体要比User-based CF差一些，3种相似度计算方法中欧式距离相似度仍然是较差的，而皮尔逊系数相似度与余弦相似度类似，但这里余弦相似度要更好一些。</p>
+<p>Collaborative Filtering协同过滤的改进算法，有Top-k collaborative、Bias-subtracted Collaborative Filtering、Top-k &amp; Bias-subtracted Collaborative Filtering等。</p>
+<pre><code># 表8 几种User-based Collaborative Filtering对比结果
+    RMSE    MAE    Pecision@5    Recall@5
+CF    2.7668    2.5309    1.0    0.4081
+Top-k CF    1.8755    1.5747    1.0    0.4968
+Bias-subtracted CF    2.798    2.5644    1.0    0.4042
+Top-k &amp; Bias-subtracted CF    1.945    1.6489    1.0    0.4965
+
+# 表9 几种Item-based Collaborative Filtering对比结果
+    RMSE    MAE    Pecision@5    Recall@5
+CF    3.3037    3.0926    1.0    0.2183
+Top-k CF    2.019    1.7255    1.0    0.5702
+Bias-subtracted CF    2.9823    2.7605    1.0    0.1774
+Top-k &amp; Bias-subtracted CF    2.1538    1.8744    1.0    0.5324
+</code></pre><p>从表8和表9结果来看，Top-k CF算法的精度要更高一些，其次是Top-k &amp; Bias-subtracted CF混合算法，但此时模型复杂度上升了。Bias-subtracted CF与CF差不多，说明实际中用户对电影的评分大致还是区分度的。</p>
+<h4 id="5-矩阵分解推荐算法；"><a href="#5-矩阵分解推荐算法；" class="headerlink" title="5)    矩阵分解推荐算法；"></a>5)    矩阵分解推荐算法；</h4><p><img src="https://i.imgur.com/YHJUYKo.png" alt="图7"><br>图7 矩阵分解图示</p>
+<p>简单地讲，每位user和每个item都有自己的特性，用矩阵分解可以从原来user-item评分矩阵中分解出user-feature矩阵、feature-item矩阵，对user来说，feature是偏好，对item来说，是特性。另外，矩阵分解还可以用来降低维度。</p>
+<p><img src="https://i.imgur.com/Qr3yZCT.png" alt="图8"><br>图8 NMF搜索K值</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/05/拼多多笔试题0805/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1192,156 +1465,6 @@ test_writer.close()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM评估/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/21/限制玻尔兹曼机RBM评估/" itemprop="url">RBM学习笔记（八）RBM的评估</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
-                2018-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
-                    <span itemprop="name">DBN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RBM学习笔记（八）RBM的评估"><a href="#RBM学习笔记（八）RBM的评估" class="headerlink" title="RBM学习笔记（八）RBM的评估"></a>RBM学习笔记（八）RBM的评估</h3><p><img src="http://img.blog.csdn.net/20140218142642578" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19408773" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19408773</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM训练算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1493,7 +1616,7 @@ test_writer.close()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机能量函数和概率分布/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM评估/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1512,7 +1635,157 @@ test_writer.close()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机能量函数和概率分布/" itemprop="url">RBM学习笔记（三）RBM能量函数和概率分布</a></h1>
+                <a class="post-title-link" href="/2018/03/21/限制玻尔兹曼机RBM评估/" itemprop="url">RBM学习笔记（八）RBM的评估</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
+                    <span itemprop="name">DBN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="RBM学习笔记（八）RBM的评估"><a href="#RBM学习笔记（八）RBM的评估" class="headerlink" title="RBM学习笔记（八）RBM的评估"></a>RBM学习笔记（八）RBM的评估</h3><p><img src="http://img.blog.csdn.net/20140218142642578" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19408773" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19408773</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机对数似然函数/" itemprop="url">RBM学习笔记（四）对数似然函数</a></h1>
         
 
         <div class="post-meta">
@@ -1598,8 +1871,7 @@ test_writer.close()
       
         
           
-            <h3 id="RBM学习笔记（三）RBM能量函数和概率分布"><a href="#RBM学习笔记（三）RBM能量函数和概率分布" class="headerlink" title="RBM学习笔记（三）RBM能量函数和概率分布"></a>RBM学习笔记（三）RBM能量函数和概率分布</h3><p><img src="http://img.blog.csdn.net/20140213225857671" alt=""><br><img src="http://img.blog.csdn.net/20140213225910500" alt=""><br><img src="http://img.blog.csdn.net/20140213225926906" alt=""></p>
-<p><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+            <h3 id="RBM学习笔记（四）对数似然函数"><a href="#RBM学习笔记（四）对数似然函数" class="headerlink" title="RBM学习笔记（四）对数似然函数"></a>RBM学习笔记（四）对数似然函数</h3><p><img src="http://img.blog.csdn.net/20140213230041656" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
 <h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
 
           
@@ -1936,156 +2208,6 @@ test_writer.close()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机对数似然函数/" itemprop="url">RBM学习笔记（四）对数似然函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
-                2018-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
-                    <span itemprop="name">DBN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RBM学习笔记（四）对数似然函数"><a href="#RBM学习笔记（四）对数似然函数" class="headerlink" title="RBM学习笔记（四）对数似然函数"></a>RBM学习笔记（四）对数似然函数</h3><p><img src="http://img.blog.csdn.net/20140213230041656" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2136,7 +2258,7 @@ test_writer.close()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">139</span>
+                <span class="site-state-item-count">140</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2147,7 +2269,7 @@ test_writer.close()
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
