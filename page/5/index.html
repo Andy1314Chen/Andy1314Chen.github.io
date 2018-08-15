@@ -471,176 +471,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/二叉搜索树的后序遍历序列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/二叉搜索树的后序遍历序列/" itemprop="url">二叉搜索树的后序遍历序列(剑指offer第二十三题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def VerifySquenceOfBST(self, sequence):
-            # write code here
-            if len(sequence) &lt; 1:
-                return False
-            if len(sequence) == 1:
-                return True
-            # 根节点
-            root = sequence[-1]
-            # 左子树
-            for i, v in enumerate(sequence):
-                if v &gt; root:
-                    break
-            left_seq = sequence[:i]
-            # 右子树
-            for v in sequence[i:-1]:
-                if v &lt; root:
-                    return False
-            right_seq = sequence[i:-1]
-            # 存在左子树
-            left_flag = True
-            if i &gt; 0:
-                left_flag = self.VerifySquenceOfBST(left_seq)
-            # 存在右子树
-            right_flag = True
-            if i &lt; len(sequence)-1:
-                right_flag = self.VerifySquenceOfBST(right_seq)
-
-            return left_flag and right_flag
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1274,7 +1104,7 @@ def plotROC(predStrengths,classLabels):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/栈的压入弹出序列/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/二叉搜索树的后序遍历序列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1293,7 +1123,7 @@ def plotROC(predStrengths,classLabels):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/18/栈的压入弹出序列/" itemprop="url">栈的压入、弹出序列(剑指offer第二十一题)</a></h1>
+                <a class="post-title-link" href="/2017/09/19/二叉搜索树的后序遍历序列/" itemprop="url">二叉搜索树的后序遍历序列(剑指offer第二十三题)</a></h1>
         
 
         <div class="post-meta">
@@ -1305,8 +1135,8 @@ def plotROC(predStrengths,classLabels):
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
-                2017-09-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
+                2017-09-19
               </time>
             
 
@@ -1368,26 +1198,38 @@ def plotROC(predStrengths,classLabels):
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def IsPopOrder(self, pushV, popV):
+        def VerifySquenceOfBST(self, sequence):
             # write code here
-            # 备份
-            backupV = []
-            # 弹出序列
-            while popV:
-                # 备份序列中有
-                if len(backupV) &gt; 0 and backupV[-1] == popV[0]:
-                    backupV.pop()
-                    popV.pop(0)
-                # 备份序列中没有
-                elif len(pushV) &gt; 0: 
-                    backupV.append(pushV.pop(0))
-                else:
+            if len(sequence) &lt; 1:
+                return False
+            if len(sequence) == 1:
+                return True
+            # 根节点
+            root = sequence[-1]
+            # 左子树
+            for i, v in enumerate(sequence):
+                if v &gt; root:
+                    break
+            left_seq = sequence[:i]
+            # 右子树
+            for v in sequence[i:-1]:
+                if v &lt; root:
                     return False
-            return True
+            right_seq = sequence[i:-1]
+            # 存在左子树
+            left_flag = True
+            if i &gt; 0:
+                left_flag = self.VerifySquenceOfBST(left_seq)
+            # 存在右子树
+            right_flag = True
+            if i &lt; len(sequence)-1:
+                right_flag = self.VerifySquenceOfBST(right_seq)
+
+            return left_flag and right_flag
 </code></pre>
 
           
@@ -1550,6 +1392,164 @@ def plotROC(predStrengths,classLabels):
                 if node.right:
                     queue.append(node.right)
             return res
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/栈的压入弹出序列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/18/栈的压入弹出序列/" itemprop="url">栈的压入、弹出序列(剑指offer第二十一题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def IsPopOrder(self, pushV, popV):
+            # write code here
+            # 备份
+            backupV = []
+            # 弹出序列
+            while popV:
+                # 备份序列中有
+                if len(backupV) &gt; 0 and backupV[-1] == popV[0]:
+                    backupV.pop()
+                    popV.pop(0)
+                # 备份序列中没有
+                elif len(pushV) &gt; 0: 
+                    backupV.append(pushV.pop(0))
+                else:
+                    return False
+            return True
 </code></pre>
 
           
@@ -2338,7 +2338,7 @@ def plotROC(predStrengths,classLabels):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">138</span>
+                <span class="site-state-item-count">139</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2360,7 +2360,7 @@ def plotROC(predStrengths,classLabels):
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

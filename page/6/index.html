@@ -905,6 +905,214 @@ final_rmse = np.sqrt(final_mse)
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/09/网易一道算法题/" itemprop="url">网易校招一道算法题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-09T00:00:00+08:00">
+                2017-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>题目是：</p>
+<pre><code>小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行
+，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标
+(x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪
+物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。
+
+1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。
+
+2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。
+
+小易要进行一次射击，小易在进行射击前，可以使用这两种特权
+
+操作任意次。
+
+小易想知道在他射击的时候最多可以同时消灭多少只怪物。
+</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0427/141746_2boq_3454401.png" alt=""></p>
+<p>看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。</p>
+<p>想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。</p>
+<p>真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。</p>
+<p>后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1；</p>
+<p>C++代码如下：</p>
+<pre><code>作者：雨baby
+链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2
+来源：牛客网
+
+#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+const int maxn = 50 + 5;
+
+int x[maxn], y[maxn];
+int n;
+int solve() {
+    if(n &lt;= 2) return n;
+    int res = 1;
+    for(int i = 0; i &lt; n; i++) {
+        for(int j = 0; j &lt; n; j++) {
+            if(i != j) {
+                int dx1 = x[j] - x[i];
+                int dy1 = y[j] - y[i];
+                for(int k = 0; k &lt; n; k++) {
+                    int cnt = 0;
+                    if(i != k &amp;&amp; j != k) {
+                        for(int r = 0; r &lt; n; r++) {
+                            int dx2 = x[r] - x[i];
+                            int dy2 = y[r] - y[i];
+                            if(dy1 * dx2 == dy2 * dx1) {
+                                cnt++;
+                            } else {
+                                dx2 = x[r] - x[k];
+                                dy2 = y[r] - y[k];
+                                if(dy1 * dy2 == -dx2 * dx1) {
+                                    cnt++;
+                                }
+                            }
+                        }
+                    }
+                    res = max(res, cnt);
+                }
+            }
+        }
+    }
+    return res;
+}
+int main() {
+    cin &gt;&gt; n;
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i];
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i];
+    cout &lt;&lt; solve() &lt;&lt; endl;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/Hands-on第二章学习笔记(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1162,411 +1370,6 @@ full_pipeline = FeatureUnion(trainsformer_list=[
     (&#39;num_pipeline&#39;, num_pipeline),
     (&#39;cat_pipeline&#39;, cat_pipeline),
     ])
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/网易一道算法题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/09/网易一道算法题/" itemprop="url">网易校招一道算法题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-09T00:00:00+08:00">
-                2017-09-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目是：</p>
-<pre><code>小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行
-，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标
-(x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪
-物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。
-
-1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。
-
-2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。
-
-小易要进行一次射击，小易在进行射击前，可以使用这两种特权
-
-操作任意次。
-
-小易想知道在他射击的时候最多可以同时消灭多少只怪物。
-</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0427/141746_2boq_3454401.png" alt=""></p>
-<p>看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。</p>
-<p>想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。</p>
-<p>真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。</p>
-<p>后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1；</p>
-<p>C++代码如下：</p>
-<pre><code>作者：雨baby
-链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2
-来源：牛客网
-
-#include &lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-const int maxn = 50 + 5;
-
-int x[maxn], y[maxn];
-int n;
-int solve() {
-    if(n &lt;= 2) return n;
-    int res = 1;
-    for(int i = 0; i &lt; n; i++) {
-        for(int j = 0; j &lt; n; j++) {
-            if(i != j) {
-                int dx1 = x[j] - x[i];
-                int dy1 = y[j] - y[i];
-                for(int k = 0; k &lt; n; k++) {
-                    int cnt = 0;
-                    if(i != k &amp;&amp; j != k) {
-                        for(int r = 0; r &lt; n; r++) {
-                            int dx2 = x[r] - x[i];
-                            int dy2 = y[r] - y[i];
-                            if(dy1 * dx2 == dy2 * dx1) {
-                                cnt++;
-                            } else {
-                                dx2 = x[r] - x[k];
-                                dy2 = y[r] - y[k];
-                                if(dy1 * dy2 == -dx2 * dx1) {
-                                    cnt++;
-                                }
-                            }
-                        }
-                    }
-                    res = max(res, cnt);
-                }
-            }
-        }
-    }
-    return res;
-}
-int main() {
-    cin &gt;&gt; n;
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i];
-    for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i];
-    cout &lt;&lt; solve() &lt;&lt; endl;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/LeetCode第95场周赛/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/07/LeetCode第95场周赛/" itemprop="url">LeetCode第95场周赛</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
-                2017-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><strong>876. 链表的中间结点</strong></p>
-<p>给定一个带有头结点 head 的非空单链表，返回链表的中间结点。</p>
-<p>如果有两个中间结点，则返回第二个中间结点。</p>
-<p>示例 1：</p>
-<pre><code>输入：[1,2,3,4,5]
-输出：此列表中的结点 3 (序列化形式：[3,4,5])
-返回的结点值为 3 。 (测评系统对该结点序列化表述是 [3,4,5])。
-注意，我们返回了一个 ListNode 类型的对象 ans，这样：
-ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next = NULL.
-</code></pre><p>示例 2：</p>
-<pre><code>输入：[1,2,3,4,5,6]
-输出：此列表中的结点 4 (序列化形式：[4,5,6])
-由于该列表有两个中间结点，值分别为 3 和 4，我们返回第二个结点。
-</code></pre><p>提示：</p>
-<p>给定链表的结点数介于 1 和 100 之间。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # Definition for singly-linked list.
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-
-    class Solution:
-        def middleNode(self, head):
-            &quot;&quot;&quot;
-            :type head: ListNode
-            :rtype: ListNode
-            &quot;&quot;&quot;
-            if head.next == None:
-                return head
-
-            fastPtr = head.next
-            slowPtr = head
-            while fastPtr and fastPtr.next :
-                fastPtr = fastPtr.next.next
-                slowPtr = slowPtr.next
-            if fastPtr :
-                return slowPtr.next
-            else:
-                return slowPtr
-</code></pre>
-<p><strong>877. 石子游戏</strong></p>
-<p>亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。</p>
-<p>游戏以谁手中的石子最多来决出胜负。石子的总数是奇数，所以没有平局。</p>
-<p>亚历克斯和李轮流进行，亚历克斯先开始。 每回合，玩家从行的开始或结束处取走整堆石头。 这种情况一直持续到没有更多的石子堆为止，此时手中石子最多的玩家获胜。</p>
-<p>假设亚历克斯和李都发挥出最佳水平，当亚历克斯赢得比赛时返回 true ，当李赢得比赛时返回 false 。</p>
-<p>示例：</p>
-<pre><code>输入：[5,3,4,5]
-输出：true
-解释：
-亚历克斯先开始，只能拿前 5 颗或后 5 颗石子 。
-假设他取了前 5 颗，这一行就变成了 [3,4,5] 。
-如果李拿走前 3 颗，那么剩下的是 [4,5]，亚历克斯拿走后 5 颗赢得 10 分。
-如果李拿走后 5 颗，那么剩下的是 [3,4]，亚历克斯拿走后 4 颗赢得 9 分。
-这表明，取前 5 颗石子对亚历克斯来说是一个胜利的举动，所以我们返回 true 。
-</code></pre><p>提示：</p>
-<pre><code>2 &lt;= piles.length &lt;= 500
-piles.length 是偶数。
-1 &lt;= piles[i] &lt;= 500
-sum(piles) 是奇数。
 </code></pre>
           
         
@@ -1893,6 +1696,389 @@ multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)
 <li><a href="http://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="external">http://www.cnblogs.com/pinard/p/6035872.html</a></li>
 </ol>
 
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/LeetCode第95场周赛/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/LeetCode第95场周赛/" itemprop="url">LeetCode第95场周赛</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><strong>876. 链表的中间结点</strong></p>
+<p>给定一个带有头结点 head 的非空单链表，返回链表的中间结点。</p>
+<p>如果有两个中间结点，则返回第二个中间结点。</p>
+<p>示例 1：</p>
+<pre><code>输入：[1,2,3,4,5]
+输出：此列表中的结点 3 (序列化形式：[3,4,5])
+返回的结点值为 3 。 (测评系统对该结点序列化表述是 [3,4,5])。
+注意，我们返回了一个 ListNode 类型的对象 ans，这样：
+ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next = NULL.
+</code></pre><p>示例 2：</p>
+<pre><code>输入：[1,2,3,4,5,6]
+输出：此列表中的结点 4 (序列化形式：[4,5,6])
+由于该列表有两个中间结点，值分别为 3 和 4，我们返回第二个结点。
+</code></pre><p>提示：</p>
+<p>给定链表的结点数介于 1 和 100 之间。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+
+    class Solution:
+        def middleNode(self, head):
+            &quot;&quot;&quot;
+            :type head: ListNode
+            :rtype: ListNode
+            &quot;&quot;&quot;
+            if head.next == None:
+                return head
+
+            fastPtr = head.next
+            slowPtr = head
+            while fastPtr and fastPtr.next :
+                fastPtr = fastPtr.next.next
+                slowPtr = slowPtr.next
+            if fastPtr :
+                return slowPtr.next
+            else:
+                return slowPtr
+</code></pre>
+<p><strong>877. 石子游戏</strong></p>
+<p>亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。</p>
+<p>游戏以谁手中的石子最多来决出胜负。石子的总数是奇数，所以没有平局。</p>
+<p>亚历克斯和李轮流进行，亚历克斯先开始。 每回合，玩家从行的开始或结束处取走整堆石头。 这种情况一直持续到没有更多的石子堆为止，此时手中石子最多的玩家获胜。</p>
+<p>假设亚历克斯和李都发挥出最佳水平，当亚历克斯赢得比赛时返回 true ，当李赢得比赛时返回 false 。</p>
+<p>示例：</p>
+<pre><code>输入：[5,3,4,5]
+输出：true
+解释：
+亚历克斯先开始，只能拿前 5 颗或后 5 颗石子 。
+假设他取了前 5 颗，这一行就变成了 [3,4,5] 。
+如果李拿走前 3 颗，那么剩下的是 [4,5]，亚历克斯拿走后 5 颗赢得 10 分。
+如果李拿走后 5 颗，那么剩下的是 [3,4]，亚历克斯拿走后 4 颗赢得 9 分。
+这表明，取前 5 颗石子对亚历克斯来说是一个胜利的举动，所以我们返回 true 。
+</code></pre><p>提示：</p>
+<pre><code>2 &lt;= piles.length &lt;= 500
+piles.length 是偶数。
+1 &lt;= piles[i] &lt;= 500
+sum(piles) 是奇数。
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/LeetCode148排序链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/LeetCode148排序链表/" itemprop="url">LeetCode148排序链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><strong>148. 排序链表</strong></p>
+<p>在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。</p>
+<p>示例 1:</p>
+<pre><code>输入: 4-&gt;2-&gt;1-&gt;3
+输出: 1-&gt;2-&gt;3-&gt;4
+</code></pre><p>示例 2:</p>
+<pre><code>输入: -1-&gt;5-&gt;3-&gt;4-&gt;0
+输出: -1-&gt;0-&gt;3-&gt;4-&gt;5
+</code></pre><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>归并排序，先将链表分段，再合并</p>
+<pre><code># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def sortList(self, head):
+        # 分段返回条件
+        if head == None or head.next == None:
+            return head
+        mid = self.getMid(head)
+        right = mid.next
+        mid.next = None
+        return self.mergeSort(self.sortList(head), self.sortList(right))
+
+    def getMid(self, head):
+        if head == None:
+            return None
+        quick, slow = head, head
+        while quick.next and quick.next.next:
+            slow = slow.next
+            quick = quick.next.next
+        return slow
+
+    def mergeSort(self, left, right):
+        tmp = ListNode(0); res = tmp
+        while left != None and right != None:
+            if left.val &gt; right.val:
+                tmp.next = right
+                right = right.next
+            else:
+                tmp.next = left
+                left = left.next
+            tmp = tmp.next
+        if left != None:
+            tmp.next = left
+        if right != None:
+            tmp.next = right
+        return res.next
+</code></pre>
           
         
       
@@ -2461,327 +2647,6 @@ def multiTest():
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/XGBoost调参指南/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/05/XGBoost调参指南/" itemprop="url">XGBoost调参指南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="The-XGBoost-Advantage"><a href="#The-XGBoost-Advantage" class="headerlink" title="The XGBoost Advantage"></a>The XGBoost Advantage</h2><ul>
-<li><strong>Regularization</strong> 正则</li>
-<li><strong>Parallel Processing</strong> 并行处理</li>
-<li><strong>High Flexibility</strong> 高灵活性</li>
-<li><strong>Handing Missing Values</strong> 处理缺失值</li>
-<li><strong>Tree Pruning</strong>树的剪枝</li>
-<li><strong>Built-in Cross-Validation</strong>内置交叉验证</li>
-<li><strong>Continue on Existing Model</strong>可以在已有的模型上继续训练</li>
-</ul>
-<h2 id="XGBoost-Parameters"><a href="#XGBoost-Parameters" class="headerlink" title="XGBoost Parameters"></a>XGBoost Parameters</h2><ol>
-<li>General Parameters: Guide the overall functioning</li>
-<li>Booster Parameters: Guide the individual booster(tree/regression) at each step</li>
-<li>Learning Task Parameters: Guide the optimization performed</li>
-</ol>
-<h3 id="General-Parameters"><a href="#General-Parameters" class="headerlink" title="General Parameters"></a>General Parameters</h3><p>These define the overall functionality of XGBoost.</p>
-<ul>
-<li><strong>booster [default=gbtree]</strong><ul>
-<li>Select the type of model to run at each iteration. It has 2 options:<ul>
-<li>gbtree: tree-based models</li>
-<li>gblinear: linear models</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>silent [default=0]:</strong><ul>
-<li>Silent mode is activated is set to 1, i.e. no running messages will be printed.</li>
-<li>It’s generally good to keep it 0 as the messages might help in understanding the model.</li>
-</ul>
-</li>
-<li><strong>nthread [default to maximum number of threads available if not set]</strong><ul>
-<li>This is used for parallel processing and number of cores in the system should be entered</li>
-<li>If you wish to run on all cores, value should not be entered and algorithm will detect automatically</li>
-</ul>
-</li>
-</ul>
-<h3 id="Booster-Parameters"><a href="#Booster-Parameters" class="headerlink" title="Booster Parameters"></a>Booster Parameters</h3><p>Though there are 2 types of boosters, I’ll consider only <strong>tree booster</strong> here because it always outperforms the linear booster and thus the later is rarely used.</p>
-<ol>
-<li><p><strong>eta[default=0.3]</strong></p>
-<ul>
-<li>Analogous to learning rate in GBM</li>
-<li>Makes the model more robust by shrinking the weights on each step</li>
-<li>Typical final values to be used: 0.01-0.2</li>
-</ul>
-</li>
-<li><p><strong>min_child_weight[default=1]</strong></p>
-<ul>
-<li>Defines the minimum sum of weights of all observations required in a child.</li>
-<li>This is similar to min_child_leaf in GBM but not exactly. This refers to min “sum of weights” of observations while GBM has min “number of observations”.</li>
-<li>Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree.</li>
-<li>Too high values can lead to under-fitting hence, it should be tuned using CV.</li>
-</ul>
-</li>
-<li><p><strong>max_depth[default=6]</strong></p>
-<ul>
-<li>The maximum depth of a tree, same as GBM.</li>
-<li>Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample.</li>
-<li>Should be tuned using CV.</li>
-<li>Typical values: 3-10</li>
-</ul>
-</li>
-<li><p><strong>max_leaf_nodes</strong></p>
-<ul>
-<li>The maximum number of terminal nodes or leaves in a tree.</li>
-<li>Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves.</li>
-<li>If this is defined, GBM will ignore max_depth.</li>
-</ul>
-</li>
-<li><p><strong>gamma [default=0]</strong></p>
-<ul>
-<li>A node is split only when the resulting split gives a positive reduction in the loss function. Gamma specifies the minimum loss reduction required to make a split.</li>
-<li>Makes the algorithm conservative. The values can vary depending on the loss function and should be tuned.</li>
-</ul>
-</li>
-<li><p><strong>max_depta_step[default=0]</strong></p>
-<ul>
-<li>In maximum delta step we allow each tree’s weight estimation to be. If the value is set to 0, it means there is no constraint. If it is set to a positive value, it can help making the update step more conservative.</li>
-<li>Usually this parameter is not needed, but it might help in logistic regression when class is extremely imbalanced.</li>
-<li>This is generally not used but you can explore further if you wish.</li>
-</ul>
-</li>
-<li><p><strong>subsample [default=1]</strong></p>
-<ul>
-<li>Same as the subsample of GBM. Denotes the fraction of observations to be randomly samples for each tree.</li>
-<li>Lower values make the algorithm more conservative and prevents overfitting but too small values might lead to under-fitting.</li>
-<li>Typical values: 0.5-1</li>
-</ul>
-</li>
-<li><p><strong>colsample_bytree [default=1]</strong></p>
-<ul>
-<li>Similar to max_features in GBM. Denotes the fraction of columns to be randomly samples for each tree.</li>
-<li>Typical values: 0.5-1</li>
-</ul>
-</li>
-<li><p><strong>colsample_bylevel[default=1]</strong></p>
-<ul>
-<li>Denotes the subsample ratio of columns for each split, in each level.</li>
-<li>I don’t use this often because subsample and colsample_bytree will do the job for you. but you can explore further if you feel so.</li>
-</ul>
-</li>
-<li><p><strong>lambda [default=1]</strong></p>
-<ul>
-<li>L2 regularization term on weights (analogous to Ridge regression)</li>
-<li>This used to handle the regularization part of XGBoost. Though many data scientists don’t use it often, it should be explored to reduce overfitting.</li>
-</ul>
-</li>
-<li><p><strong>alpha [default=0]</strong></p>
-<ul>
-<li>L1 regularization term on weight (analogous to Lasso regression)</li>
-<li>Can be used in case of very high dimensionality so that the algorithm runs faster when implemented</li>
-</ul>
-</li>
-<li><strong>scale_pos_weight[default=1]</strong><ul>
-<li>A value greater than 0 should be used in case of high class imbalance as it helps in faster convergence.</li>
-</ul>
-</li>
-</ol>
-<h3 id="Learning-Task-Parameters"><a href="#Learning-Task-Parameters" class="headerlink" title="Learning Task Parameters"></a>Learning Task Parameters</h3><p>These parameters are used to define the optimization objective the metric to be calculated at each step.</p>
-<ol>
-<li><strong>objective [default=reg:linear]</strong><ul>
-<li>This defines the loss function to be minimized. Mostly used values are:<ul>
-<li>binary:logistic –logistic regression for binary classification, returns predicted probability (not class)</li>
-<li>multi:softmax –multiclass classification using the softmax objective, returns predicted class (not probabilities)<ul>
-<li>you also need to set an additional num_class (number of classes) parameter defining the number of unique classes</li>
-</ul>
-</li>
-<li>multi:softprob –same as softmax, but returns predicted probability of each data point belonging to each class.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p><strong>eval_metric [default according to objective]</strong>    </p>
-<ul>
-<li>The metric to be used for validation data.</li>
-<li>The default values are rmse for regression and error for classification.</li>
-<li>Typical values are:<ul>
-<li>rmse – root mean square error</li>
-<li>mae – mean absolute error</li>
-<li>logloss – negative log-likelihood</li>
-<li>error – Binary classification error rate (0.5 threshold)</li>
-<li>merror – Multiclass classification error rate</li>
-<li>mlogloss – Multiclass logloss</li>
-<li>auc: Area under the curve</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>seed [default=0]</strong></p>
-<ul>
-<li>The random number seed.</li>
-<li>Can be used for generating reproducible results and also for parameter tuning.</li>
-</ul>
-</li>
-</ol>
-<p>If you’ve been using Scikit-Learn till now, these parameter names might not look familiar. A good news is that xgboost module in python has an sklearn wrapper called XGBClassifier. It uses sklearn style naming convention. The parameters names which will change are:</p>
-<ol>
-<li>eta –&gt; learning_rate</li>
-<li>lambda –&gt; reg_lambda</li>
-<li>alpha –&gt; reg_alpha</li>
-</ol>
-<p>You must be wondering that we have defined everything except something similar to the “n_estimators” parameter in GBM. Well this exists as a parameter in XGBClassifier. However, it has to be passed as “num_boosting_rounds” while calling the fit function in the standard xgboost implementation.</p>
-<h4 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h4><ul>
-<li><a href="http://xgboost.readthedocs.org/en/latest/parameter.html#general-parameters" target="_blank" rel="external">XGBoost Parameters (official guide)</a></li>
-<li><a href="https://github.com/dmlc/xgboost/tree/master/demo/guide-python" target="_blank" rel="external">XGBoost Demo Codes (xgboost GitHub repository)</a></li>
-<li><a href="http://xgboost.readthedocs.org/en/latest/python/python_api.html" target="_blank" rel="external">Python API Reference (official guide)</a></li>
-</ul>
-<h2 id="General-Approach-for-Parameter-Tuning"><a href="#General-Approach-for-Parameter-Tuning" class="headerlink" title="General Approach for Parameter Tuning"></a>General Approach for Parameter Tuning</h2><p>We will use an approach similar to that of GBM here. The various steps to be performed are:</p>
-<ol>
-<li>Choose a relatively <strong>high learning rate</strong>. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the <strong>optimum number of trees for this learning rate</strong>. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required.</li>
-<li><strong>Tune tree-specific parameters</strong> ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.</li>
-<li>Tune <strong>regularization parameters</strong> (lambda, alpha) for xgboost which can help reduce model complexity and enhance performance.</li>
-<li><strong>Lower the learning rate</strong> and decide the optimal parameters .</li>
-</ol>
-<h3 id="Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters"><a href="#Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters" class="headerlink" title="Step1: Fix learning rate and number of estimators for tuning tree-based parameters"></a>Step1: Fix learning rate and number of estimators for tuning tree-based parameters</h3><p>In order to decide on boosting parameters, we need to set some initial values of other parameters. Lets take the following values:</p>
-<ol>
-<li><strong>max_depth = 5 </strong>: This should be between 3-10. I’ve started with 5 but you can choose a different number as well. 4-6 can be good starting points.</li>
-<li><strong>min_child_weight = 1 </strong>: A smaller value is chosen because it is a highly imbalanced class problem and leaf nodes can have smaller size groups.</li>
-<li><strong>gamma = 0 </strong>: A smaller value like 0.1-0.2 can also be chosen for starting. This will anyways be tuned later.</li>
-<li><strong>subsample, colsample_bytree = 0.8 </strong>: This is a commonly used used start value. Typical values range between 0.5-0.9.</li>
-<li><strong>scale_pos_weight = 1</strong>: Because of high class imbalance. 样本不均衡</li>
-</ol>
-<p>Please note that all the above are just initial estimates and will be tuned later. Lets take the default learning rate of 0.1 here and check the optimum number of trees using cv function of xgboost. The function defined above will do it for us.</p>
-<h3 id="Step2-Tune-max-depth-and-min-child-weight"><a href="#Step2-Tune-max-depth-and-min-child-weight" class="headerlink" title="Step2: Tune max_depth and min_child_weight"></a>Step2: Tune max_depth and min_child_weight</h3><p>We tune these first as they will have the highest impact on model outcome. To start with, let’s set wider ranges and then we will perform another iteration for smaller ranges.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2832,7 +2697,7 @@ def multiTest():
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">138</span>
+                <span class="site-state-item-count">139</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2854,7 +2719,7 @@ def multiTest():
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
