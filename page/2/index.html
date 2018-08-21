@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机能量函数和概率分布/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机梯度计算公式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机能量函数和概率分布/" itemprop="url">RBM学习笔记（三）RBM能量函数和概率分布</a></h1>
+                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机梯度计算公式/" itemprop="url">RBM学习笔记（五）梯度计算公式</a></h1>
         
 
         <div class="post-meta">
@@ -406,8 +406,7 @@
       
         
           
-            <h3 id="RBM学习笔记（三）RBM能量函数和概率分布"><a href="#RBM学习笔记（三）RBM能量函数和概率分布" class="headerlink" title="RBM学习笔记（三）RBM能量函数和概率分布"></a>RBM学习笔记（三）RBM能量函数和概率分布</h3><p><img src="http://img.blog.csdn.net/20140213225857671" alt=""><br><img src="http://img.blog.csdn.net/20140213225910500" alt=""><br><img src="http://img.blog.csdn.net/20140213225926906" alt=""></p>
-<p><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+            <h3 id="RBM学习笔记（五）梯度计算公式"><a href="#RBM学习笔记（五）梯度计算公式" class="headerlink" title="RBM学习笔记（五）梯度计算公式"></a>RBM学习笔记（五）梯度计算公式</h3><p><img src="http://img.blog.csdn.net/20140214180006531" alt=""><br><img src="http://img.blog.csdn.net/20140214180015046" alt=""><br><img src="http://img.blog.csdn.net/20140214180023156" alt=""><br><img src="http://img.blog.csdn.net/20140214182009515" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
 <h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
 
           
@@ -1863,7 +1862,7 @@ def pca(dataMat,topNfeat=9999999):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/pandas绘图/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/深度学习第二章课程(吴恩达)学习笔记（3）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1882,7 +1881,7 @@ def pca(dataMat,topNfeat=9999999):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/16/pandas绘图/" itemprop="url">使用pandas绘制图形</a></h1>
+                <a class="post-title-link" href="/2017/12/16/深度学习第二章课程(吴恩达)学习笔记（3）/" itemprop="url">深度学习第二章课程(吴恩达)学习笔记（3）</a></h1>
         
 
         <div class="post-meta">
@@ -1919,8 +1918,19 @@ def pca(dataMat,topNfeat=9999999):
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -1957,14 +1967,147 @@ def pca(dataMat,topNfeat=9999999):
       
         
           
-            <p>数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。</p>
-<pre><code>housing.plot(kind = &#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;,
-            alpha =0.4, s = housing[&#39;population&#39;]/100,  label=&#39;population&#39;, figsize=(10,7), c=&#39;median_house_value&#39;, cmap = plt.get_cmap(&#39;jet&#39;),
-            colorbar=True, sharex = False)
-plt.legend()
-</code></pre><p><strong> alpha=0.4,表示透明度；s=housing[‘population’]/100,表示圆圈半径大小；c=”median_house_value”,表示颜色代表的信息； </strong></p>
-<p><img src="https://i.imgur.com/SMOXeLo.png" alt=""></p>
+            <pre><code>import numpy as np
 
+# sigmoid函数
+def sigmoid(z):
+    s = 1 / (1 + np.exp(-z))
+    return s
+
+# initializing parameters
+def initialize_with_zeros(dim):
+    W = np.zeros((dim, 1))
+    b = 0
+    assert(W.shape == (dim, 1))
+    assert(isinstance(b, float) or isinstance(b, int))
+    return W,b
+
+# 传播
+def propagate(w, b, X, Y):
+    m = X.shape[1] # 样本数 X:(nx特征数, m样本数) Y: (1,m)
+    # FORWARD PROPAGATION
+    A = sigmoid(np.dot(w.T, X)+b)
+    cost = -1/m*np.sum(Y*np.log(A)+(1-Y)*np.log(1-A))
+
+    # BACKWARD PROPAGATION
+    dw = 1/m * np.dot(X, (A-Y).T)
+    db = 1/m * np.sum(A-Y)
+
+    assert(dw.shape == w.shape)
+    assert(db.dtype == float)
+
+    cost = np.squeeze(cost)
+    assert(cost.shape == ())
+
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
+    return grads, cost
+
+# GRADED FUNCTION: optimize
+def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost=False):
+    costs = []
+    for i in range(num_iterations):
+        # 正向传播计算cost, 反向传播计算grad
+        grads, cost = propagate(w, b, X, Y)
+
+        dw = grads[&#39;dw&#39;]
+        db = grads[&#39;db&#39;]
+        # 负梯度方向下降
+        w = w - learning_rate*dw
+        b = b - learning_rate*db
+
+        if i%100 == 0:
+            costs.append(cost)
+
+        if print_cost and i%100 == 0:
+            print(&quot;Cost after iteration %i: %f&quot; % (i, cost))
+    params = {&#39;w&#39;:w,
+              &#39;b&#39;:b}
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
+    return params, grads, costs
+
+# 预测    
+def predict(w, b, X):
+    m = X.shape[1]
+    Y_prediction = np.zeros((1,m))
+    w = w.reshape(X.shape[0], 1)
+
+    A = sigmoid(np.dot(w.T, X)+b)
+
+    for i in range(A.shape[1]):
+        if A[0, i] &lt;= 0.5:
+            Y_prediction[0, i] = 0
+        else:
+            Y_prediction[0, i] = 1
+    assert(Y_prediction.shape == (1, m))
+    return Y_prediction
+
+# 迭代100次，梯度下降法训练参数
+#params, grads, costs = optimize(w, b, X, Y, num_iterations=100, learning_rate=0.009,
+#                                print_cost=True)
+
+
+def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate=0.5,
+          print_cost = False):
+    # 初始化参数
+    w, b = initialize_with_zeros(X_train.shape[0])
+    # 梯度下降法优化
+    parameters, grads, costs = optimize(w, b, X_train, Y_train,
+                                        num_iterations, learning_rate, print_cost)
+    # 得到参数
+    w = parameters[&#39;w&#39;]
+    b = parameters[&#39;b&#39;]
+
+    # 预测
+    Y_prediction_test = predict(w, b, X_test)
+    Y_prediction_train = predict(w,b, X_train)
+
+    # 误差
+    print(&quot;train accuracy: {} %&quot;.format(100 - np.mean(np.abs(Y_prediction_train - Y_train)) * 100))
+    print(&quot;test accuracy: {} %&quot;.format(100 - np.mean(np.abs(Y_prediction_test - Y_test)) * 100))
+
+    # 
+    d = {&quot;costs&quot;: costs,
+         &quot;Y_prediction_test&quot;: Y_prediction_test, 
+         &quot;Y_prediction_train&quot; : Y_prediction_train, 
+         &quot;w&quot; : w, 
+         &quot;b&quot; : b,
+         &quot;learning_rate&quot; : learning_rate,
+         &quot;num_iterations&quot;: num_iterations}
+
+    return d
+
+
+
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+
+# iris数据集
+iris = load_iris()
+# 样本
+samples = iris.data
+samples = samples[:-50]
+# 标签
+target = iris.target
+target = target[:-50]
+
+clf_lr = LogisticRegression()
+clf_lr.fit(samples, target)
+
+y_train = clf_lr.predict(samples)
+print(sum(y_train == target)/len(target))
+
+# 上面的model输入，X(特征数，样本数)，Y(1,样本数)与sklearn库不太一样
+samples2 = samples.T
+target2 = target.reshape((1, len(target)))
+model(samples2, target2, samples2, target2, num_iterations=1000, learning_rate=0.001)
+
+&quot;&quot;&quot;
+train accuracy: 100.0 %
+test accuracy: 100.0 %
+&quot;&quot;&quot;
+</code></pre>
           
         
       

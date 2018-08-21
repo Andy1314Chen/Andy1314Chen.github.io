@@ -102,10 +102,12 @@
 <meta property="og:site_name" content="Andy&#39;s blog">
 <meta property="og:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中,设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组节点可以合并一个节">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-15T13:39:37.687Z">
+<meta property="og:image" content="https://i.imgur.com/WXW9mNK.png">
+<meta property="og:updated_time" content="2018-08-20T07:19:33.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习面试问题总结">
 <meta name="twitter:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中,设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组节点可以合并一个节">
+<meta name="twitter:image" content="https://i.imgur.com/WXW9mNK.png">
 
 
 
@@ -411,6 +413,15 @@
 </ul>
 <p><strong>2. XGBoost与传统GBDT有什么区别？</strong></p>
 <p>不同于传统的GBDT方式，只利用了一阶的导数信息，XGB进行了二阶的泰勒展开，并在目标函数之外加入了正则项整体求最优解，用以权衡目标函数的下降和模型的复杂程度，避免过拟合。<br>(还有一些工程实践上有很多区别，XGB更适于工业应用)</p>
+<p>分条回答：</p>
+<ol>
+<li>传统的GBDT以CART回归树作为基学习器，XGBoost还支持线性分类器；</li>
+<li>传统的GBDT在优化时只用到了一阶梯度，而XGBoost用到了二阶梯度；</li>
+<li>XGBoost在损失函数中加入了叶子节点个数和叶子节点分数的L2范数作为正则项；</li>
+<li>XGBoost加入了缩减(Shrinkage), 即每次更新fm之前，把叶子节点的输出乘以一个系数；</li>
+<li>XGBoost支持列采样，借鉴了随机森林，每次分裂一个树节点时只考虑一部分特征；</li>
+<li>XGBoost在每棵树的每个节点需要选择最优特征时，使用多线程并行地计算各个特征的损失，从而减少了运算时间； </li>
+</ol>
 <p><strong>3. ROC, AUC的物理意义是什么？</strong></p>
 <p><strong>4. Boosting框架下，为什么线性函数不可以作为弱学习器？</strong><br>同神经网络中一样，线性函数是无法作为激活函数的，因为，集成方法中，线性函数作为弱学习器，最终进行线性组合(AdaBoost)时，仍然是一个线性模型。</p>
 <p><strong>5. GBDT防止过拟合的方法</strong><br>GBDT有非常快速降低Loss的能力，这也会造成过拟合问题：Loss迅速下降，模型低bias, 高variance。</p>
@@ -501,9 +512,94 @@
 <li>CART与ID,C4.5不同之处在于CART生成的树必须是二叉树，既可以用于分类，也可以用于回归问题。回归问题是利用平方误差最小化准则进行特征选择，而分类问题是Gini系数为准则。</li>
 <li>Gini指数与熵：都可以表示不确定性，不纯度；Gini指数的计算不需要对数运算，更加高效；Gini指数更偏向于连续属性，熵更偏向于离散属性；</li>
 </ul>
+<p><strong>17. 逻辑回归和支持向量机的区别</strong></p>
+<ul>
+<li>Linear SVM和LR都是线性分类器</li>
+<li>Linear SVM和LR都是判别模型</li>
+<li>Linear SVM不直接依赖数据分布，分类平面不受一类点的影响；LR则受所有数据点的影响，如果数据不同类别处于极其不平衡的状态，一般需要先对数据做平衡处理；</li>
+<li>Linear SVM依赖数据表达的距离测度，所以需要对数据做标准化，LR不受影响；</li>
+<li>Linear SVM依赖惩罚项的系数，实用中需要做交叉验证；</li>
+<li>Linear SVM和LR的执行都受异常值的影响，其敏感程度而言，谁更好难以下明确结论；</li>
+<li>Linear SVM和LR损失函数不同，LR为logloss, SVM是hinge loss.</li>
+</ul>
+<p><strong>18. SVM的优缺点</strong></p>
+<ul>
+<li>优点：<ul>
+<li>在小训练集上往往得到比较好的结果；</li>
+<li>使用核函数避开了高维空间的复杂性；</li>
+<li>泛化能力强；</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>时空开销大，训练时间长</li>
+<li>核函数的选取比较难，主要靠经验 <ul>
+<li>常用核函数：高斯核、多项式核、线性核</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>19. 树模型的优缺点</strong></p>
+<ul>
+<li>优点<ul>
+<li>可解释性强；</li>
+<li>可处理混合类型特征；</li>
+<li>具有伸缩不变性，不同归一化特征；</li>
+<li>有特征组合的作用；</li>
+<li>可自然地处理缺失值；</li>
+<li>对异常点鲁棒；</li>
+<li>有特征选择作用；</li>
+<li>可扩展性强，容易并行；</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>缺乏平滑性(回归预测时输出值只能输出有限的若干数值)</li>
+<li>不适合处理高维稀疏特征；</li>
+</ul>
+</li>
+</ul>
+<p><strong>20. 决策树启发式学习过程</strong></p>
+<ul>
+<li>Split by information gain -&gt; training loss</li>
+<li>Prune the tree -&gt; regularization defined by #nodes</li>
+<li>Max depth -&gt; constraint on the function space</li>
+<li>Smoothing leaf values -&gt; L2 regularization on leaf weights</li>
+</ul>
+<p><strong>21. 随机森林和GBDT有什么异同？</strong></p>
+<p>相同点：</p>
+<ul>
+<li>两者都是基于决策树；</li>
+<li>两者都能处理缺失值(？随机森林可以）</li>
+<li>两者都能给出特征重要性；</li>
+<li>两者都是bootstrap的思想；</li>
+</ul>
+<p>两者的不同点包括：</p>
+<ul>
+<li>随机森林采用bagging的思想，有放回地均匀采样训练样本；GBDT采用boosting的思想，根据错误率来采样；(相当于采样，只是对误分率大的给予更多的关注);</li>
+<li>GBDT的精度优于随机森林；</li>
+<li>随机森林可以由分类树或者回归树组成，而GBDT由回归树组成；</li>
+<li>随机森林可以使用并行运算，GBDT使用串行计算；</li>
+<li>随机森林对所有结果取多数投票或平均，GBDT将每棵树的输出相加；</li>
+<li>随机森林对异常值不敏感，GBDT对异常值非常敏感；</li>
+<li>随机森林方差小，而GBDT偏差小；</li>
+<li>随机森林不需要限制树的深度，GBDT需要限制树的深度；</li>
+</ul>
+<p><strong>22. GBDT的正则化</strong></p>
+<ol>
+<li>设置步长，相当于给每颗树增加一个小于1的系数；</li>
+<li>行采样；</li>
+<li>对CART回归树进行剪枝；</li>
+</ol>
+<p><strong>23. 数据预处理之去偏度</strong></p>
+<ol>
+<li>通过log, 开根号等方式</li>
+<li>Box-Cox通用方法</li>
+</ol>
+<p><img src="https://i.imgur.com/WXW9mNK.png" alt="Boxcox"></p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/6279498/" target="_blank" rel="external">十道海量数据处理面试题与十个方法大总结</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/32877396" target="_blank" rel="external">总结的比较好的博客</a></li>
+<li><a href="https://www.cnblogs.com/futurehau/p/6707895.html" target="_blank" rel="external">几种常见的损失函数</a></li>
 </ol>
 
       
@@ -547,8 +643,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/27/Boxplot/" rel="next" title="盒图(boxplot)">
-                <i class="fa fa-chevron-left"></i> 盒图(boxplot)
+              <a href="/2017/11/03/各种排序方法总结/" rel="next" title="各种排序方法总结">
+                <i class="fa fa-chevron-left"></i> 各种排序方法总结
               </a>
             
           </div>
@@ -557,8 +653,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/03/各种排序方法总结/" rel="prev" title="各种排序方法总结">
-                各种排序方法总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/10/python保存模型/" rel="prev" title="使用sklearn.externals.joblib保存模型">
+                使用sklearn.externals.joblib保存模型 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
