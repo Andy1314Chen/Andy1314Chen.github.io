@@ -103,7 +103,7 @@
 <meta property="og:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中,设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组节点可以合并一个节">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/WXW9mNK.png">
-<meta property="og:updated_time" content="2018-08-20T07:19:33.004Z">
+<meta property="og:updated_time" content="2018-08-21T14:07:30.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习面试问题总结">
 <meta name="twitter:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中,设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组节点可以合并一个节">
@@ -421,6 +421,7 @@
 <li>XGBoost加入了缩减(Shrinkage), 即每次更新fm之前，把叶子节点的输出乘以一个系数；</li>
 <li>XGBoost支持列采样，借鉴了随机森林，每次分裂一个树节点时只考虑一部分特征；</li>
 <li>XGBoost在每棵树的每个节点需要选择最优特征时，使用多线程并行地计算各个特征的损失，从而减少了运算时间； </li>
+<li>XGBoost支持自定义损失函数(需要二阶可导)</li>
 </ol>
 <p><strong>3. ROC, AUC的物理意义是什么？</strong></p>
 <p><strong>4. Boosting框架下，为什么线性函数不可以作为弱学习器？</strong><br>同神经网络中一样，线性函数是无法作为激活函数的，因为，集成方法中，线性函数作为弱学习器，最终进行线性组合(AdaBoost)时，仍然是一个线性模型。</p>
@@ -446,13 +447,15 @@
 </ul>
 <p><strong>8. XGBoost与LightGBM的区别？</strong></p>
 <ul>
+<li>LigthGBM在速度和内存性能上都更优</li>
 <li>树的切分策略不同<ul>
-<li>XGBoost是level-wise, 而LightGBM是leaf-wise</li>
+<li>XGBoost是level-wise,同一层所有节点都做分裂，最后剪枝；而LightGBM是leaf-wise，选取具有最大增益的节点分裂，容易过拟合，通过max_depth限制</li>
 </ul>
 </li>
 <li>实现并行方式不同<ul>
 <li>XGBoost是通过预排序的方式</li>
 <li>LightGBM是通过直方图算法，直方图差加速</li>
+<li>LightGBM把连续的浮点特征值离散化成K个整数，同时构造一个宽度为K的直方图，在遍历数据的时候，根据离散化后的值作为索引在直方图中累计统计量，当遍历一次数据后，直方图累积了需要的统计量，然后根据直方图的离散值，遍历寻找最优的分割点</li>
 </ul>
 </li>
 <li>LightGBM直接支持类别特征，对类别特征不用单独one-hot编码</li>
@@ -511,6 +514,7 @@
 <li>C4.5克服了ID3仅能够处理离散属性的问题，以及信息增益偏向选择取值较多特征的问题，使用信息增益比来选择特征；</li>
 <li>CART与ID,C4.5不同之处在于CART生成的树必须是二叉树，既可以用于分类，也可以用于回归问题。回归问题是利用平方误差最小化准则进行特征选择，而分类问题是Gini系数为准则。</li>
 <li>Gini指数与熵：都可以表示不确定性，不纯度；Gini指数的计算不需要对数运算，更加高效；Gini指数更偏向于连续属性，熵更偏向于离散属性；</li>
+<li>XGBoost通过使用特有的打分函数进行增益计算</li>
 </ul>
 <p><strong>17. 逻辑回归和支持向量机的区别</strong></p>
 <ul>
@@ -540,6 +544,7 @@
 </li>
 </ul>
 <p><strong>19. 树模型的优缺点</strong></p>
+<p>XGBoost、RandomForest、GBDT、lightGBM等</p>
 <ul>
 <li>优点<ul>
 <li>可解释性强；</li>
@@ -596,6 +601,20 @@
 <li>Box-Cox通用方法</li>
 </ol>
 <p><img src="https://i.imgur.com/WXW9mNK.png" alt="Boxcox"></p>
+<p><strong>24. L1正则项不可导，如何求解</strong></p>
+<p>以LASSO回归为例，Lasso回归使一些系数变小，甚至还是一些系数为0，可以用来进行特征选择；<br>Lasso回归的损失函数不是连续可导的，由于L1范数用的是绝对值之和，导致损失函数有不可导的点。就是说，梯度下降法、牛顿法、拟牛顿法等等都无法使用了。这时采用的是坐标轴下降法和最小角回归法。</p>
+<p>主要介绍坐标轴下降法，顾名思义，就是沿着坐标轴下降，也是迭代求解。</p>
+<p>其数据依据是：</p>
+<blockquote>
+<p>一个可微凸函数J(θ),其中θ是n*1的向量，即有n个维度，如果在某一点θ0，使得J(θ)在每个坐标轴上都是最小值，那么J(θ0)， 就是全局最小值。</p>
+</blockquote>
+<p>与梯度下降法进行比较：</p>
+<ul>
+<li>坐标轴下降法在每次迭代中在当前点处沿一个坐标方向进行一维搜索，固定其他的坐标方向，找到一个函数的局部极小值。而梯度下降总是沿着梯度的负方向求函数的局部最小值；</li>
+<li>坐标轴下降法是一种非梯度优化算法，在整个过程中依次循环使用不同的坐标方向进行迭代，一个周期的一维搜索过程相当于一个梯度下降的迭代。</li>
+<li>梯度下降是利用目标函数的导数来确定搜索方向的，该梯度方向可能不与任何坐标轴平行。而坐标轴下降法利用当前坐标方向进行搜索，不需要求解目标函数的导数，只按照某一坐标方向进行搜索最小值。</li>
+<li>两者都是迭代方法，且每一轮迭代，都需要O(mn)的计算量；</li>
+</ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/6279498/" target="_blank" rel="external">十道海量数据处理面试题与十个方法大总结</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/32877396" target="_blank" rel="external">总结的比较好的博客</a></li>
@@ -643,8 +662,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/03/各种排序方法总结/" rel="next" title="各种排序方法总结">
-                <i class="fa fa-chevron-left"></i> 各种排序方法总结
+              <a href="/2017/10/27/Boxplot/" rel="next" title="盒图(boxplot)">
+                <i class="fa fa-chevron-left"></i> 盒图(boxplot)
               </a>
             
           </div>
@@ -653,8 +672,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/10/python保存模型/" rel="prev" title="使用sklearn.externals.joblib保存模型">
-                使用sklearn.externals.joblib保存模型 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/03/各种排序方法总结/" rel="prev" title="各种排序方法总结">
+                各种排序方法总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

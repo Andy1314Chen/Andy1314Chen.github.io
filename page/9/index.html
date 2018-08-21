@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/变态跳台阶/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/包含min函数的栈/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/变态跳台阶/" itemprop="url">变态跳台阶(剑指offer第九题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/包含min函数的栈/" itemprop="url">包含min函数的栈(剑指offer第二十题)</a></h1>
         
 
         <div class="post-meta">
@@ -395,26 +395,186 @@
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def jumpFloorII(self, number):
+        def __init__(self):
+            self.stack = []
+        def push(self, node):
             # write code here
-            tmp = [-1]*(number+1)
-            return self.myWays(number, tmp)
-
-        def myWays(self, number, tmp):
-            if number &lt;= 0:
-                return 0
-            if number == 1:
-                return 1
-            if tmp[number] != -1:
-                return tmp[number]
-            tmp[number] = self.myWays(number-1, tmp)*2
-            return tmp[number]
+            self.stack.append(node)
+        def pop(self):
+            # write code here
+            return self.stack.pop()
+        def top(self):
+            # write code here
+            return self.stack[-1]
+        def min(self):
+            # write code here
+            return min(self.stack)
 </code></pre>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2反转链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/2反转链表/" itemprop="url">反转链表(剑指offer第十五题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
+<p><img src="https://i.imgur.com/60rmm33.jpg" alt=""></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    class Solution:
+        # 返回ListNode
+        def ReverseList(self, pHead):
+            # write code here
+            if pHead == None:
+                return None
+
+            newList = None
+            while pHead != None:
+                nextNode = pHead
+                pHead = pHead.next
+                nextNode.next = newList
+                newList = nextNode
+
+            return newList
+</code></pre>
 
           
         
@@ -792,7 +952,7 @@ kNN.handwritingClassTest()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二进制中1的个数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/青蛙台阶/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -811,7 +971,7 @@ kNN.handwritingClassTest()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/二进制中1的个数/" itemprop="url">二进制中1的个数(剑指offer第十一题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/青蛙台阶/" itemprop="url">青蛙台阶(剑指offer第八题)</a></h1>
         
 
         <div class="post-meta">
@@ -886,19 +1046,21 @@ kNN.handwritingClassTest()
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def NumberOf1(self, n):
+        def jumpFloor(self, number):
             # write code here
-            cnt = 0
-            if n &lt; 0:
-                n = n&amp;0xffffffff
-            while n:
-                cnt += 1
-                n = n&amp;(n-1)
-            return cnt
+
+            first = 1
+            second = 1
+            res = 1
+            for i in range(1, number):
+                res = first + second
+                second = first
+                first = res
+            return res
 </code></pre>
 
           
@@ -943,7 +1105,7 @@ kNN.handwritingClassTest()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/链表中倒数第K个结点/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -962,7 +1124,7 @@ kNN.handwritingClassTest()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/链表中倒数第K个结点/" itemprop="url">链表中倒数第K个节点(剑指offer第十四题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" itemprop="url">调整数组顺序使奇数位于偶数前面(剑指offer第十三题)</a></h1>
         
 
         <div class="post-meta">
@@ -1037,204 +1199,23 @@ kNN.handwritingClassTest()
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，输出该链表中倒数第k个结点。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-
     class Solution:
-        def FindKthToTail(self, head, k):
+        def reOrderArray(self, array):
             # write code here
-            # 快慢指针，快指针先走k步
-            if k == 0:
-                return None
-
-            cnt = 1
-            first = head
-            while (first != None)&amp;(cnt &lt; k):
-                first = first.next
-                cnt += 1
-            if first == None: # 链表长度小于3
-                return None
-            second = head
-            while first.next != None:
-                first = first.next
-                second = second.next
-            return second
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二维数组中的查找/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/二维数组中的查找/" itemprop="url">二维数组中的查找(剑指offer第一题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<h3 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*- 暴力解法
-    class Solution:
-        # array 二维列表
-        def Find(self, target, array):
-            # write code here
-            n = len(array)
-            m = len(array[0])
-            for i in range(n):
-                for j in range(m):
-                    if array[i][j] == target:
-                        return True
-            return False
-</code></pre>
-<h3 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-  每次查找右上角的值的大小
-    class Solution:
-        # array 二维列表
-        def Find(self, target, array):
-            # write code here
-            col = len(array[0])
-            row = len(array)
-            cur_col = col - 1
-            cur_row = 0
-            while (cur_row&lt;row)&amp;(cur_col&gt;=0):
-                if array[cur_row][cur_col] == target:
-                    return True
-                elif array[cur_row][cur_col] &gt; target: # 排除该列
-                    cur_col -= 1
-                elif array[cur_row][cur_col] &lt; target: # 排除该行
-                    cur_row += 1
-            return False
+            if len(array) &lt; 1:
+                return []
+            array1 = []
+            array2 = []
+            for v in array:
+                if v%2:
+                    array1.append(v)
+                else:
+                    array2.append(v)
+            array = array1 + array2
+            return array
 </code></pre>
 
           
