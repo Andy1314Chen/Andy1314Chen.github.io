@@ -301,6 +301,230 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/ValidParentheses/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/03/ValidParentheses/" itemprop="url">Leetcode 20 Valid Parentheses</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T00:00:00+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>LeetCode 20.Valid Parentheses问题如下：</p>
+<blockquote>
+<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.</p>
+<p>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
+</blockquote>
+<p>仔细思考 ，发现用栈来处理是很好做的，但C语言没有栈这种数据类型，只能自己构建了。</p>
+<pre><code>typedef struct{
+int *base;//栈底指针
+int *top;//栈顶指针，非空栈中的栈顶指针始终在栈顶元素的下一个位置
+int stackSize;//栈长度
+}SqStack;//定义结构体
+
+int Push(SqStack *S,int e)
+{
+    *(*S).top++ = e;//入栈操作
+    return 1;
+}
+
+int Pop(SqStack *S, int *e)
+{
+    *e = *--(*S).top;//出栈
+    return 1;
+}
+
+int StackEmpty(SqStack S)
+{
+    return S.top == S.base;//栈空
+}
+
+bool isValid(char* s) {
+if(s==NULL)
+    return true;
+SqStack S;
+int N = strlen(s);
+if(N==1)
+    return false;
+if(N%2)
+    return false;
+S.base = (int *)malloc(N*sizeof(int));//分配空间
+S.top = S.base;//空栈，栈顶指针等于栈底指针
+S.stackSize = N;//栈长度，本例中，假设不会超过初始长度
+
+int table[128] = { 10 };
+int e=0;
+table[&#39;(&#39;] = &#39;)&#39;;
+table[&#39;{&#39;] = &#39;}&#39;;
+table[&#39;[&#39;] = &#39;]&#39;;
+table[&#39;]&#39;] = &#39;-&#39;;
+table[&#39;}&#39;] = &#39;-&#39;;
+table[&#39;)&#39;] = &#39;-&#39;;
+for (int i = 0; i &lt; N; i++)
+{
+    if (!StackEmpty(S))
+    {
+        Pop(&amp;S, &amp;e);
+        if (table[e] == s[i])
+        {
+            continue;
+        }
+        else
+            Push(&amp;S, e);
+    }
+    if (table[s[i]] == s[i + 1])
+    {
+        i++;
+        continue;
+    }
+    else
+    {
+        Push(&amp;S, s[i]);
+    }
+}
+int result = StackEmpty(S);
+free(S.base);
+return result;
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/环形链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -623,6 +847,146 @@ class Solution(object):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电脑/" itemprop="url" rel="index">
+                    <span itemprop="name">电脑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
+<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
+<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/FastSqrt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -751,146 +1115,6 @@ class Solution(object):
 <li><p><a href="http://www.azillionmonkeys.com/qed/ulerysqroot.pdf" title="参考文章3" target="_blank" rel="external">http://www.azillionmonkeys.com/qed/ulerysqroot.pdf</a></p>
 </li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/28/chromefiex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/28/chromefiex/" itemprop="url">Chrome浏览器总是崩溃的一种解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
-                2017-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/电脑/" itemprop="url" rel="index">
-                    <span itemprop="name">电脑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>更新过Chrome浏览器后，任何网页都无法打开，包括设置页面！重新安装过好多次，各种版本也都尝试过了，都是崩溃页面。后来在知乎上找到了一种解决办法。</p>
-<p>原因在于<strong>C:\Windows\System32\drivers\bd0001.sys</strong>这个文件，不管用什么方法，只要把该文件移除当前目录或者直接删除，重启电脑，Chrome浏览器就恢复正常咯！</p>
-<p>bd0001.sys不知道是不是百度干的，好无耻~</p>
 
           
         
@@ -1394,339 +1618,6 @@ A[A&lt;0.5]
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/一元多项式加法与乘法运算/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/一元多项式加法与乘法运算/" itemprop="url">一元多项式的乘法与加法运算</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>设计函数分别求两个一元多项式的乘积与和。</p>
-<h4 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h4><p>输入分2行，每行分别先给出多项式非零项的个数，再以指数递降方式输入一个多项式非零项系数和指数(绝对值均为不超过1000的整数).数字间以空格分隔。</p>
-<h4 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h4><p>输出分2行，分别以指数递降方式输出乘积多项式以及和多项式非零项的系数和指数。数字间以空格分隔，但结尾不能有多余空格。零多项式应输出为0 0.</p>
-<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-
-typedef struct PolyNode *Polynomial;
-// 多项式结构体
-struct PolyNode
-{
-    int coef;
-    int expon;
-    Polynomial link;
-};
-
-// 添加新节点
-void Attach(int c, int e, Polynomial *pRear)
-{
-    // Polynomial*表示指针的指针，
-    Polynomial P;
-
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;coef = c;
-    P-&gt;expon = e;
-    P-&gt;link = NULL;
-    (*pRear)-&gt;link = P;
-    // 指向单链表的尾部，
-    *pRear = P;
-}
-
-// 读入数据
-Polynomial ReadPoly()
-{
-    Polynomial P, Rear, t;
-    int c, e, N;
-    // 多项式非零项个数
-    scanf(&quot;%d&quot;, &amp;N);
-    // 链表头指针
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    // 链表尾指针，初始时，头指针和尾指针相同
-    Rear = P;
-    while (N--)
-    {
-        scanf(&quot;%d %d&quot;, &amp;c, &amp;e);
-        // 根据Rear尾指针，创建新节点，并连接在Rear后面，再移动Rear指向新节点
-        Attach(c, e, &amp;Rear);
-    }
-    t = P;
-    P = P-&gt;link;
-    free(t);
-    // 没有头节点的单链表
-    return P;
-}
-
-Polynomial Add(Polynomial P1, Polynomial P2)
-{
-    Polynomial t1 = P1, t2 = P2;
-    // 单独搞一个空间存放和多项式
-    Polynomial P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    Polynomial Rear = P;
-
-    while (t1 &amp;&amp; t2)
-    {
-        if (t1-&gt;expon == t2-&gt;expon)
-        {
-            if ((t1-&gt;coef + t2-&gt;coef))
-            {
-                Attach(t1-&gt;coef + t2-&gt;coef, t1-&gt;expon, &amp;Rear);
-            }
-            t1 = t1-&gt;link;
-            t2 = t2-&gt;link;
-        }
-        else if (t1-&gt;expon &gt; t2-&gt;expon)
-        {
-            Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
-            t1 = t1-&gt;link;
-        }
-        else
-        {
-            Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
-            t2 = t2-&gt;link;
-        }
-    }
-    while (t1)
-    {
-        Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
-        t1 = t1-&gt;link;
-    }
-    while (t2)
-    {
-        Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
-        t2 = t2-&gt;link;
-    }
-
-    Polynomial t = P;
-    P = P-&gt;link;
-    free(t);
-    // 没有头节点的单链表
-    return P;
-}
-
-Polynomial Mult(Polynomial P1, Polynomial P2)
-{
-    Polynomial P, Rear, t1, t2, t;
-    int c, e;
-    // 有一个为NULL,乘积为NULL
-    if (!P1 || !P2)
-        return NULL;
-
-    t1 = P1;
-    t2 = P2;
-
-    // 存放乘积结果
-    P = (Polynomial)malloc(sizeof(struct PolyNode));
-    P-&gt;link = NULL;
-    Rear = P;
-    // P1第一个非零项乘以P2中每一项
-    while (t2)
-    {
-        Attach(t1-&gt;coef * t2-&gt;coef, t1-&gt;expon + t2-&gt;expon, &amp;Rear);
-        t2 = t2-&gt;link;
-    }
-
-    t1 = t1-&gt;link;
-    // 依次将P1后面的所有非零项均乘以P2中的每一项
-    while (t1)
-    {
-        t2 = P2;
-        Rear = P;
-        while (t2)
-        {
-            e = t1-&gt;expon + t2-&gt;expon;
-            c = t1-&gt;coef * t2-&gt;coef;
-            // 查找在P中的位置
-            while (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon &gt; e)
-                Rear = Rear-&gt;link;
-            if (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon == e)
-            {
-                if (Rear-&gt;link-&gt;coef + c)
-                    Rear-&gt;link-&gt;coef += c;
-                else
-                {
-                    t = Rear-&gt;link;
-                    Rear-&gt;link = t-&gt;link;
-                    free(t);
-                }
-            }
-            else
-            {
-                t = (Polynomial)malloc(sizeof(struct PolyNode));
-                t-&gt;coef = c;
-                t-&gt;expon = e;
-                t-&gt;link = Rear-&gt;link;
-                Rear-&gt;link = t;
-                Rear = Rear-&gt;link;
-            }
-            t2 = t2-&gt;link;
-        }
-        t1 = t1-&gt;link;
-    }
-    t2 = P;
-    P = P-&gt;link;
-    free(t2);
-    return P;
-}
-void PrintPoly(Polynomial P)
-{
-    int flag = 0;
-    if (!P)
-    {
-        printf(&quot;0 0\n&quot;);
-        return;
-    }
-    while (P)
-    {
-        if (!flag)
-            flag = 1;
-        else
-        {
-            printf(&quot; &quot;);
-        }
-        printf(&quot;%d %d&quot;, P-&gt;coef, P-&gt;expon);
-        P = P-&gt;link;
-    }
-    printf(&quot;\n&quot;);
-}
-int main(void)
-{
-  Polynomial P1=ReadPoly(),P2=ReadPoly();
-  PrintPoly(Mult(P1,P2));
-  PrintPoly(Add(P1,P2));
-
-  return 0;
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/mergeList/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2087,7 +1978,7 @@ int findValue(int A[], int N, int val)
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/03/迷宫问题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/一元多项式加法与乘法运算/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2106,7 +1997,7 @@ int findValue(int A[], int N, int val)
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/07/03/迷宫问题/" itemprop="url">迷宫问题</a></h1>
+                <a class="post-title-link" href="/2016/09/01/一元多项式加法与乘法运算/" itemprop="url">一元多项式的乘法与加法运算</a></h1>
         
 
         <div class="post-meta">
@@ -2118,8 +2009,8 @@ int findValue(int A[], int N, int val)
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-03T00:00:00+08:00">
-                2016-07-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
+                2016-09-01
               </time>
             
 
@@ -2143,8 +2034,8 @@ int findValue(int A[], int N, int val)
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
                   </a>
                 </span>
 
@@ -2181,155 +2072,203 @@ int findValue(int A[], int N, int val)
       
         
           
-            <p>求迷宫中从入口到出口的所有路径是一个经典的程序设计问题。最简单方法是穷举法，即从某一入口出发，顺着某一方向向前探索，若能走通，则继续往前走；否则沿原路返回，换个方向继续尝试。因此，使用栈结构来处理较为合适。栈结构存储从入口到出口的路径。</p>
-<p> <img src="http://i.imgur.com/QQTrZqp.png" alt=""></p>
-<p>比较简单的迷宫，‘+’表示墙壁，不能通过；‘o’表示通道，可以通过；但是从入口到出口路径上不能两次通过同一块通道。</p>
-<p>求迷宫中一条路径的算法的基本思想是：</p>
-<p><strong>若当前位置“可通”，则入栈“当前路径”，并继续朝下一位置探索，如此重复；若当前位置“不可通”，则应顺着“来向”退回到“前一通道块”，然后朝着除“来向”之外的其他方向继续探索；若该通道块的四周4个方块均“不可通”，则应从“当前路径”上删除该通道块。</strong></p>
-<p>C语言代码如下：</p>
-<pre><code>typedef struct{
-    int x;
-    int y;
-}PosType;//坐标
+            <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>设计函数分别求两个一元多项式的乘积与和。</p>
+<h4 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h4><p>输入分2行，每行分别先给出多项式非零项的个数，再以指数递降方式输入一个多项式非零项系数和指数(绝对值均为不超过1000的整数).数字间以空格分隔。</p>
+<h4 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h4><p>输出分2行，分别以指数递降方式输出乘积多项式以及和多项式非零项的系数和指数。数字间以空格分隔，但结尾不能有多余空格。零多项式应输出为0 0.</p>
+<h3 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h3><pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
 
-typedef struct{
-    int ord;
-    PosType seat;
-    int di;
-}SElemType;//栈基本元素
+typedef struct PolyNode *Polynomial;
+// 多项式结构体
+struct PolyNode
+{
+    int coef;
+    int expon;
+    Polynomial link;
+};
 
-//---------栈相关操作------------------//
-#define STACK_INIT_SIZE 100
-typedef struct{
-    SElemType *base;
-    SElemType *top;
-    int stacksize;
-}SqStack;
-int InitStack(SqStack &amp;S)
+// 添加新节点
+void Attach(int c, int e, Polynomial *pRear)
 {
-    S.base = (SElemType *)malloc(STACK_INIT_SIZE*sizeof(SElemType));
-    S.top = S.base;
-    S.stacksize = STACK_INIT_SIZE;
-    return 1;
-}
-int Push(SqStack &amp;S, SElemType e){
-    *S.top++ = e;
-    return 1;
-}
-int Pop(SqStack &amp;S, SElemType &amp;e)
-{
-    e = *--S.top;
-    return 1;
-}
-int StackEmpty(SqStack S)
-{
-    return S.top == S.base;
-}
-//---------栈相关操作------------------//
+    // Polynomial*表示指针的指针，
+    Polynomial P;
 
-int maze[10][10] = {
-{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-{-1, 0, 0, 0, 0, 0, 0, 0,-1,-1},
-{-1, 0, 0, 0,-1, 0,-1,-1, 0,-1},
-{-1,-1,-1, 0,-1, 0, 0,-1, 0,-1},
-{-1, 0, 0, 0,-1,-1, 0,-1, 0,-1},
-{-1, 0, 0,-1, 0, 0, 0, 0, 0,-1},
-{-1, 0, 0,-1, 0, 0,-1,-1, 0,-1},
-{-1,-1,-1, 0, 0, 0, 0,-1, 0,-1},
-{-1, 0, 0, 0, 0, 0, 0, 0, 0,-1},
-{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
-};//迷宫
-PosType start = { 1, 1 };//迷宫起点
-PosType end = { 8, 8 };//迷宫终点
+    P = (Polynomial)malloc(sizeof(struct PolyNode));
+    P-&gt;coef = c;
+    P-&gt;expon = e;
+    P-&gt;link = NULL;
+    (*pRear)-&gt;link = P;
+    // 指向单链表的尾部，
+    *pRear = P;
+}
 
-int Pass(PosType pos)//当前位置是否可通过
+// 读入数据
+Polynomial ReadPoly()
 {
-    return (maze[pos.x][pos.y] != -1) &amp;&amp; (maze[pos.x][pos.y] != 1);
-}
-void FootPrint(PosType pos)//走过的通道块
-{
-    maze[pos.x][pos.y] = 1;//走过
-}
-PosType NextPos(PosType pos, int di)//顺时钟方向尝试
-{
-    PosType resultPos;
-    switch (di)
+    Polynomial P, Rear, t;
+    int c, e, N;
+    // 多项式非零项个数
+    scanf(&quot;%d&quot;, &amp;N);
+    // 链表头指针
+    P = (Polynomial)malloc(sizeof(struct PolyNode));
+    P-&gt;link = NULL;
+    // 链表尾指针，初始时，头指针和尾指针相同
+    Rear = P;
+    while (N--)
     {
-    case 1://东
-        resultPos.x = pos.x + 1;
-        resultPos.y = pos.y;
-        break;
-    case 2://南
-        resultPos.x = pos.x;
-        resultPos.y = pos.y + 1;
-        break;
-    case 3://西
-        resultPos.x = pos.x - 1;
-        resultPos.y = pos.y;
-        break;
-    case 4://北
-        resultPos.x = pos.x;
-        resultPos.y = pos.y - 1;
-        break;
-    default:
-        printf(&quot;Error!\n&quot;);
+        scanf(&quot;%d %d&quot;, &amp;c, &amp;e);
+        // 根据Rear尾指针，创建新节点，并连接在Rear后面，再移动Rear指向新节点
+        Attach(c, e, &amp;Rear);
     }
-    return resultPos;
-}
-void MarkPrint(PosType pos)//标记不可通过的位置
-{
-    maze[pos.x][pos.y] = -1;
+    t = P;
+    P = P-&gt;link;
+    free(t);
+    // 没有头节点的单链表
+    return P;
 }
 
-int MazePath(){
-    SqStack S;
-    InitStack(S);//初始化栈
-    PosType curpos = start;
-    int curstep = 1;
-    SElemType e;
-    do{
-        if (Pass(curpos)){
-            FootPrint(curpos);
-            e.ord = curstep;
-            e.seat.x = curpos.x;
-            e.seat.y = curpos.y;
-            e.di = 1;
-            Push(S, e);
-            if ((curpos.x == end.x) &amp;&amp; (curpos.y == end.y))
-            {//到达终点，逐一打印栈中保持的路径；
-                while (!StackEmpty(S))
-                {
-                    Pop(S, e);
-                    printf(&quot;(%d, %d)\n&quot;, e.seat.x, e.seat.y);
-                }
-                free(S.base);
-                return true;
+Polynomial Add(Polynomial P1, Polynomial P2)
+{
+    Polynomial t1 = P1, t2 = P2;
+    // 单独搞一个空间存放和多项式
+    Polynomial P = (Polynomial)malloc(sizeof(struct PolyNode));
+    P-&gt;link = NULL;
+    Polynomial Rear = P;
+
+    while (t1 &amp;&amp; t2)
+    {
+        if (t1-&gt;expon == t2-&gt;expon)
+        {
+            if ((t1-&gt;coef + t2-&gt;coef))
+            {
+                Attach(t1-&gt;coef + t2-&gt;coef, t1-&gt;expon, &amp;Rear);
             }
-            curpos = NextPos(curpos, 1);
-            curstep++;
+            t1 = t1-&gt;link;
+            t2 = t2-&gt;link;
+        }
+        else if (t1-&gt;expon &gt; t2-&gt;expon)
+        {
+            Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
+            t1 = t1-&gt;link;
         }
         else
         {
-            if (!StackEmpty(S))
+            Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
+            t2 = t2-&gt;link;
+        }
+    }
+    while (t1)
+    {
+        Attach(t1-&gt;coef, t1-&gt;expon, &amp;Rear);
+        t1 = t1-&gt;link;
+    }
+    while (t2)
+    {
+        Attach(t2-&gt;coef, t2-&gt;expon, &amp;Rear);
+        t2 = t2-&gt;link;
+    }
+
+    Polynomial t = P;
+    P = P-&gt;link;
+    free(t);
+    // 没有头节点的单链表
+    return P;
+}
+
+Polynomial Mult(Polynomial P1, Polynomial P2)
+{
+    Polynomial P, Rear, t1, t2, t;
+    int c, e;
+    // 有一个为NULL,乘积为NULL
+    if (!P1 || !P2)
+        return NULL;
+
+    t1 = P1;
+    t2 = P2;
+
+    // 存放乘积结果
+    P = (Polynomial)malloc(sizeof(struct PolyNode));
+    P-&gt;link = NULL;
+    Rear = P;
+    // P1第一个非零项乘以P2中每一项
+    while (t2)
+    {
+        Attach(t1-&gt;coef * t2-&gt;coef, t1-&gt;expon + t2-&gt;expon, &amp;Rear);
+        t2 = t2-&gt;link;
+    }
+
+    t1 = t1-&gt;link;
+    // 依次将P1后面的所有非零项均乘以P2中的每一项
+    while (t1)
+    {
+        t2 = P2;
+        Rear = P;
+        while (t2)
+        {
+            e = t1-&gt;expon + t2-&gt;expon;
+            c = t1-&gt;coef * t2-&gt;coef;
+            // 查找在P中的位置
+            while (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon &gt; e)
+                Rear = Rear-&gt;link;
+            if (Rear-&gt;link &amp;&amp; Rear-&gt;link-&gt;expon == e)
             {
-                Pop(S, e);
-                while (e.di == 4 &amp;&amp; !StackEmpty(S)){
-                    MarkPrint(e.seat); Pop(S, e);
-                }
-                if (e.di &lt; 4){
-                    e.di++; Push(S, e);
-                    curpos = NextPos(e.seat, e.di);
+                if (Rear-&gt;link-&gt;coef + c)
+                    Rear-&gt;link-&gt;coef += c;
+                else
+                {
+                    t = Rear-&gt;link;
+                    Rear-&gt;link = t-&gt;link;
+                    free(t);
                 }
             }
+            else
+            {
+                t = (Polynomial)malloc(sizeof(struct PolyNode));
+                t-&gt;coef = c;
+                t-&gt;expon = e;
+                t-&gt;link = Rear-&gt;link;
+                Rear-&gt;link = t;
+                Rear = Rear-&gt;link;
+            }
+            t2 = t2-&gt;link;
         }
-    } while (!StackEmpty(S));
-    free(S.base);
-    return false;
+        t1 = t1-&gt;link;
+    }
+    t2 = P;
+    P = P-&gt;link;
+    free(t2);
+    return P;
 }
-</code></pre><p>运行结果：</p>
-<p><img src="http://i.imgur.com/f0IXs5b.png" alt=""></p>
-<p>红色是正确路径，蓝色是尝试路径。</p>
+void PrintPoly(Polynomial P)
+{
+    int flag = 0;
+    if (!P)
+    {
+        printf(&quot;0 0\n&quot;);
+        return;
+    }
+    while (P)
+    {
+        if (!flag)
+            flag = 1;
+        else
+        {
+            printf(&quot; &quot;);
+        }
+        printf(&quot;%d %d&quot;, P-&gt;coef, P-&gt;expon);
+        P = P-&gt;link;
+    }
+    printf(&quot;\n&quot;);
+}
+int main(void)
+{
+  Polynomial P1=ReadPoly(),P2=ReadPoly();
+  PrintPoly(Mult(P1,P2));
+  PrintPoly(Add(P1,P2));
 
+  return 0;
+}
+</code></pre>
           
         
       
@@ -2367,7 +2306,7 @@ int MazePath(){
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2413,7 +2352,7 @@ int MazePath(){
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">140</span>
+                <span class="site-state-item-count">141</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

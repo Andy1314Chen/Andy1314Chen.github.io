@@ -5,13 +5,33 @@
     
   <url>
     <loc>http://yoursite.com/2017/11/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2018-08-21T14:07:30.983Z</lastmod>
+    <lastmod>2018-08-29T12:32:01.534Z</lastmod>
     <data>
         <display>
         <title>机器学习面试问题总结</title>
         <pubTime>2017-11-02T16:00:00.000Z</pubTime>
         
         <tag>ML</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据结构" url="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/11/05/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2018-08-23T02:57:07.505Z</lastmod>
+    <data>
+        <display>
+        <title>海量数据处理面试问题总结</title>
+        <pubTime>2017-11-04T16:00:00.000Z</pubTime>
+        
+        <tag>数据结构</tag>
          
          
            
@@ -971,9 +991,9 @@
         <title>深度学习第二章课程(吴恩达)学习笔记（3）</title>
         <pubTime>2017-12-15T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>深度学习</tag>
          
@@ -998,9 +1018,9 @@
         <title>深度学习第二章课程(吴恩达)学习笔记（2）</title>
         <pubTime>2017-12-14T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>深度学习</tag>
          
@@ -2041,9 +2061,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2088,9 +2108,9 @@
         <title>深度学习第二章课程(吴恩达)学习笔记（1）</title>
         <pubTime>2017-12-13T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>深度学习</tag>
          
@@ -2251,9 +2271,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>时间序列分析</tag>
          
@@ -2280,9 +2300,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2307,9 +2327,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2334,9 +2354,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2361,9 +2381,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2388,9 +2408,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2415,9 +2435,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2442,9 +2462,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2469,9 +2489,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2496,9 +2516,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2523,9 +2543,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2618,11 +2638,11 @@
         
         <tag>机器学习</tag>
          
+        <tag>算法</tag>
+         
         <tag>sklearn</tag>
          
         <tag>Python</tag>
-         
-        <tag>算法</tag>
          
          
            
@@ -2647,9 +2667,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2674,9 +2694,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2701,9 +2721,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2728,9 +2748,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -2818,9 +2838,9 @@
         <title>Relief特征选择算法Python实现</title>
         <pubTime>2017-08-21T16:00:00.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>算法</tag>
+         
+        <tag>Python</tag>
          
         <tag>Relief</tag>
          
@@ -2888,11 +2908,11 @@
         <title>Snowboy使用说明_Hotword Detection</title>
         <pubTime>2017-08-15T16:00:00.000Z</pubTime>
         
-        <tag>UNIT</tag>
+        <tag>语音识别</tag>
          
         <tag>树莓派3</tag>
          
-        <tag>语音识别</tag>
+        <tag>UNIT</tag>
          
          
            
@@ -2914,9 +2934,9 @@
         
         <tag>机器学习</tag>
          
-        <tag>UNIT</tag>
-         
         <tag>树莓派3</tag>
+         
+        <tag>UNIT</tag>
          
          
            
