@@ -103,7 +103,7 @@
 <meta property="og:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中,设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组节点可以合并一个节">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/WXW9mNK.png">
-<meta property="og:updated_time" content="2018-08-29T12:32:01.534Z">
+<meta property="og:updated_time" content="2018-09-18T15:22:45.212Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习面试问题总结">
 <meta name="twitter:description" content="1. 决策树预剪枝和后剪枝区别： 剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；  预剪枝：在树的构建过程中,设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；  后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组节点可以合并一个节">
@@ -739,6 +739,9 @@
 <li>GAIN;</li>
 <li>转换为异常检测问题来进行处理；</li>
 </ol>
+<p><strong>37. 维数灾难</strong></p>
+<p>许多算法在低维空间表现很好，但输入为高维空间时，算法往往失效，计算增加；在机器学习领域的意义是，随着样本维度的增加，正确泛化的难度会以指数级增加，这是因为样本数量固定时，覆盖的输入空间比例指数级减少，样本越来越稀疏，样本密度降低。</p>
+<p>SVM为什么可以避免维数灾难，RBF kernel可以看做是无限维的kernel, 数据影响力更集中在训练数据周围，对于局部数据集中区域，“维数灾难”更不容易发生。</p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/6279498/" target="_blank" rel="external">十道海量数据处理面试题与十个方法大总结</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/32877396" target="_blank" rel="external">总结的比较好的博客</a></li>
@@ -757,6 +760,17 @@
 <li>先进行排序，找到第k个数, 时间复杂度O(NlogN)</li>
 <li>最小堆TopK, 适用于海量数据， O(Nlog2k)</li>
 </ol>
+<h2 id="HR面试"><a href="#HR面试" class="headerlink" title="HR面试"></a>HR面试</h2><p><strong>1. 自我介绍</strong></p>
+<p>姓名、年龄、爱好、专业等一些基本情况；职位匹配程度，所掌握的技能、深入研究领域、为工作所做的一些准备；</p>
+<p><strong>2. 性格上的优点</strong></p>
+<p>自律、勤奋、乐观</p>
+<p><strong>3. 性格上的缺点</strong></p>
+<p>不懂的如何拒绝，同学请求帮忙；在公共场合讲话会紧张的；</p>
+<p><strong>4. 加班的看法</strong></p>
+<p><strong>5. 三五年之内，职业规划</strong></p>
+<p>首先，是准备走技术这条路线，因为本身对编程有一定的兴趣；在刚毕业的前三年内，还是要完成技术积累，去一个技术型公司，向周围优秀的同事学习，让自己成为一个更加职业、专业化的职业人，让自己在专业领域更有影响力，独挡一面。</p>
+<p><strong>6. 还有什么问题？</strong></p>
+<p>1）对于新员工的培养机制；<br>2）如果走技术岗位，公司的晋升制度是怎样的；</p>
 
       
     </div>
@@ -799,8 +813,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/03/各种排序方法总结/" rel="next" title="各种排序方法总结">
-                <i class="fa fa-chevron-left"></i> 各种排序方法总结
+              <a href="/2017/10/27/Boxplot/" rel="next" title="盒图(boxplot)">
+                <i class="fa fa-chevron-left"></i> 盒图(boxplot)
               </a>
             
           </div>
@@ -809,8 +823,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/05/海量数据处理面试问题总结/" rel="prev" title="海量数据处理面试问题总结">
-                海量数据处理面试问题总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/03/各种排序方法总结/" rel="prev" title="各种排序方法总结">
+                各种排序方法总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -884,7 +898,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">141</span>
+                <span class="site-state-item-count">142</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -973,7 +987,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率题"><span class="nav-number">2.</span> <span class="nav-text">概率题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法题"><span class="nav-number">3.</span> <span class="nav-text">算法题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率题"><span class="nav-number">2.</span> <span class="nav-text">概率题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法题"><span class="nav-number">3.</span> <span class="nav-text">算法题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HR面试"><span class="nav-number">4.</span> <span class="nav-text">HR面试</span></a></li></ol></div>
             
 
           </div>

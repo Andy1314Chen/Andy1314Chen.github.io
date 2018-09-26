@@ -445,6 +445,294 @@ plt.legend()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/深度学习第二章课程(吴恩达)学习笔记（3）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/16/深度学习第二章课程(吴恩达)学习笔记（3）/" itemprop="url">深度学习第二章课程(吴恩达)学习笔记（3）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-16T00:00:00+08:00">
+                2017-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <pre><code>import numpy as np
+
+# sigmoid函数
+def sigmoid(z):
+    s = 1 / (1 + np.exp(-z))
+    return s
+
+# initializing parameters
+def initialize_with_zeros(dim):
+    W = np.zeros((dim, 1))
+    b = 0
+    assert(W.shape == (dim, 1))
+    assert(isinstance(b, float) or isinstance(b, int))
+    return W,b
+
+# 传播
+def propagate(w, b, X, Y):
+    m = X.shape[1] # 样本数 X:(nx特征数, m样本数) Y: (1,m)
+    # FORWARD PROPAGATION
+    A = sigmoid(np.dot(w.T, X)+b)
+    cost = -1/m*np.sum(Y*np.log(A)+(1-Y)*np.log(1-A))
+
+    # BACKWARD PROPAGATION
+    dw = 1/m * np.dot(X, (A-Y).T)
+    db = 1/m * np.sum(A-Y)
+
+    assert(dw.shape == w.shape)
+    assert(db.dtype == float)
+
+    cost = np.squeeze(cost)
+    assert(cost.shape == ())
+
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
+    return grads, cost
+
+# GRADED FUNCTION: optimize
+def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost=False):
+    costs = []
+    for i in range(num_iterations):
+        # 正向传播计算cost, 反向传播计算grad
+        grads, cost = propagate(w, b, X, Y)
+
+        dw = grads[&#39;dw&#39;]
+        db = grads[&#39;db&#39;]
+        # 负梯度方向下降
+        w = w - learning_rate*dw
+        b = b - learning_rate*db
+
+        if i%100 == 0:
+            costs.append(cost)
+
+        if print_cost and i%100 == 0:
+            print(&quot;Cost after iteration %i: %f&quot; % (i, cost))
+    params = {&#39;w&#39;:w,
+              &#39;b&#39;:b}
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
+    return params, grads, costs
+
+# 预测    
+def predict(w, b, X):
+    m = X.shape[1]
+    Y_prediction = np.zeros((1,m))
+    w = w.reshape(X.shape[0], 1)
+
+    A = sigmoid(np.dot(w.T, X)+b)
+
+    for i in range(A.shape[1]):
+        if A[0, i] &lt;= 0.5:
+            Y_prediction[0, i] = 0
+        else:
+            Y_prediction[0, i] = 1
+    assert(Y_prediction.shape == (1, m))
+    return Y_prediction
+
+# 迭代100次，梯度下降法训练参数
+#params, grads, costs = optimize(w, b, X, Y, num_iterations=100, learning_rate=0.009,
+#                                print_cost=True)
+
+
+def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate=0.5,
+          print_cost = False):
+    # 初始化参数
+    w, b = initialize_with_zeros(X_train.shape[0])
+    # 梯度下降法优化
+    parameters, grads, costs = optimize(w, b, X_train, Y_train,
+                                        num_iterations, learning_rate, print_cost)
+    # 得到参数
+    w = parameters[&#39;w&#39;]
+    b = parameters[&#39;b&#39;]
+
+    # 预测
+    Y_prediction_test = predict(w, b, X_test)
+    Y_prediction_train = predict(w,b, X_train)
+
+    # 误差
+    print(&quot;train accuracy: {} %&quot;.format(100 - np.mean(np.abs(Y_prediction_train - Y_train)) * 100))
+    print(&quot;test accuracy: {} %&quot;.format(100 - np.mean(np.abs(Y_prediction_test - Y_test)) * 100))
+
+    # 
+    d = {&quot;costs&quot;: costs,
+         &quot;Y_prediction_test&quot;: Y_prediction_test, 
+         &quot;Y_prediction_train&quot; : Y_prediction_train, 
+         &quot;w&quot; : w, 
+         &quot;b&quot; : b,
+         &quot;learning_rate&quot; : learning_rate,
+         &quot;num_iterations&quot;: num_iterations}
+
+    return d
+
+
+
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+
+# iris数据集
+iris = load_iris()
+# 样本
+samples = iris.data
+samples = samples[:-50]
+# 标签
+target = iris.target
+target = target[:-50]
+
+clf_lr = LogisticRegression()
+clf_lr.fit(samples, target)
+
+y_train = clf_lr.predict(samples)
+print(sum(y_train == target)/len(target))
+
+# 上面的model输入，X(特征数，样本数)，Y(1,样本数)与sklearn库不太一样
+samples2 = samples.T
+target2 = target.reshape((1, len(target)))
+model(samples2, target2, samples2, target2, num_iterations=1000, learning_rate=0.001)
+
+&quot;&quot;&quot;
+train accuracy: 100.0 %
+test accuracy: 100.0 %
+&quot;&quot;&quot;
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/15/深度学习第二章课程(吴恩达)学习笔记（2）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2128,504 +2416,6 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/机器学习面试总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/03/机器学习面试总结/" itemprop="url">机器学习面试问题总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T00:00:00+08:00">
-                2017-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>1. 决策树预剪枝和后剪枝区别</strong>：</p>
-<p>剪枝是为了树复杂度过高，过拟合而进行的操作；分为预剪枝和后剪枝；</p>
-<ul>
-<li><p>预剪枝：在树的构建过程中,设置一个阈值，使得内部节点分裂中，分裂前后的信息增益超过阈值则分裂，否则不进行分裂操作；</p>
-</li>
-<li><p>后剪枝：在生成一颗决策树后，利用验证集进行操作；剪枝的过程是对拥有同样父节点的一组节点进行检查，判断如果将其合并，熵的增加量是否小于某一阈值。如果确实小，则这一组节点可以合并一个节点，其中包含了所有可能的结果。后剪枝是目前最普遍的做法。后剪枝的剪枝过程是删除一些子树，然后用其叶子节点代替，这个叶子节点所标识的类别通过大多数原则(majority class criterion)确定。所谓大多数原则，是指剪枝过程中, 将一些子树删除而用叶节点代替,这个叶节点所标识的类别用这棵子树中大多数训练样本所属的类别来标识,所标识的类 称为majority class ，（majority class 在很多英文文献中也多次出现）。</p>
-</li>
-<li><p>两者的比较(这一点在面试中容易忽略):</p>
-<ul>
-<li>预剪枝阈值的设定很敏感，一点点的变动，会引起整棵树非常大的变动；</li>
-<li>前剪枝生成比后剪枝简洁的树；</li>
-<li>一般用后剪枝得到的结果比较好(预剪枝过程中，虽然当前剪枝负增益，但是后续继续剪枝效果更好)</li>
-</ul>
-</li>
-</ul>
-<p><strong>2. XGBoost与传统GBDT有什么区别？</strong></p>
-<p>不同于传统的GBDT方式，只利用了一阶的导数信息，XGB进行了二阶的泰勒展开，并在目标函数之外加入了正则项整体求最优解，用以权衡目标函数的下降和模型的复杂程度，避免过拟合。<br>(还有一些工程实践上有很多区别，XGB更适于工业应用)</p>
-<p>分条回答：</p>
-<ol>
-<li>传统的GBDT以CART回归树作为基学习器，XGBoost还支持线性分类器；</li>
-<li>传统的GBDT在优化时只用到了一阶梯度，而XGBoost用到了二阶梯度；</li>
-<li>XGBoost在损失函数中加入了叶子节点个数和叶子节点分数的L2范数作为正则项；</li>
-<li>XGBoost加入了缩减(Shrinkage), 即每次更新fm之前，把叶子节点的输出乘以一个系数；</li>
-<li>XGBoost支持列采样，借鉴了随机森林，每次分裂一个树节点时只考虑一部分特征；</li>
-<li>XGBoost在每棵树的每个节点需要选择最优特征时，使用多线程并行地计算各个特征的损失，从而减少了运算时间； </li>
-<li>XGBoost支持自定义损失函数(需要二阶可导)</li>
-</ol>
-<p><strong>3. ROC, AUC的物理意义是什么？</strong></p>
-<p>ROC曲线横轴是FPR假阳率，TPR真阳率。AUC的几何意义是指ROC曲线下的面积，该指标能够较好的概括不平衡样本分类器的性能而成为很多数据挖掘竞赛的判定标准。</p>
-<p>AUC的物理意义: 假设分类器的输出是样本属于正类的score(概率), 则AUC的物理意义是，任取一对(正、负)样本，正样本的score大于负样本的score的概率。</p>
-<p>AUC就是从所有正样本中随机选取一个样本，从所有负样本中随机选取一个样本，然后根据你的分类器对两个随机样本进行预测，把正样本预测为正的概率值为p1, 把负样本预测为正的概率为p0, p1&gt;p0的概率就等于AUC. 所以AUC其实反应了分类器对样本的排序能力。</p>
-<p>随机二分类器，AUC约为0.5，且AUC对样本类别是否均衡并不敏感。</p>
-<p><strong>4. Boosting框架下，为什么线性函数不可以作为弱学习器？</strong></p>
-<p>同神经网络中一样，线性函数是无法作为激活函数的，因为，集成方法中，线性函数作为弱学习器，最终进行线性组合(AdaBoost)时，仍然是一个线性模型。</p>
-<p><strong>5. GBDT防止过拟合的方法</strong></p>
-<p>GBDT有非常快速降低Loss的能力，这也会造成过拟合问题：Loss迅速下降，模型低bias, 高variance。</p>
-<ul>
-<li>树的深度或者叶子节点个数</li>
-<li>采样(行采样),只使用一部分样本进行训练决策树；</li>
-<li>列采样，训练每棵树的时候，只使用一部分的特征，这里借用的随机森林的思想；(??)</li>
-<li>Shrinkage(缩减): 对每个得到的Fk，给一个小于1的系数，控制学习的步长；</li>
-<li>Early stop: 根据验证集的情况，提前停止训练；</li>
-</ul>
-<p><strong>6. 决策树分裂停止条件</strong></p>
-<ul>
-<li>叶子节点最大数</li>
-<li>树的最大深度</li>
-<li>最小分裂样本数</li>
-<li>叶子节点最小个数</li>
-<li>分裂后信息增益为负或者增益小于阈值</li>
-</ul>
-<p><strong>7. XGBoost找分裂点时的方法是什么</strong></p>
-<ul>
-<li>两种方法， 精确查找Exact Greedy Algorithm(迭代所有特征所有值);Approximate Algorithm(分位点近似查找) 对特征的分位点进行划分</li>
-<li>LightGBM: bin &amp; histogram近似查找，不是十分精确但是速度非常之快，精度和XGB效果差不多。直方图算法近似，把连续的浮点型特征值离散化为k个整数，同时构造一个宽度为k的直方图。在遍历数据时，根据离散化的值作为索引在直方图中累计统计量，当遍历一次数据后，直方图累积了需要的统计量，然后根据直方图的离散值，遍历寻找最优分割点。</li>
-</ul>
-<p><strong>8. XGBoost与LightGBM的区别？</strong></p>
-<ul>
-<li>LigthGBM在速度和内存性能上都更优</li>
-<li>树的切分策略不同<ul>
-<li>XGBoost是level-wise,同一层所有节点都做分裂，最后剪枝；而LightGBM是leaf-wise，选取具有最大增益的节点分裂，容易过拟合，通过max_depth限制</li>
-</ul>
-</li>
-<li>实现并行方式不同<ul>
-<li>XGBoost是通过预排序的方式</li>
-<li>LightGBM是通过直方图算法，直方图差加速</li>
-<li>LightGBM把连续的浮点特征值离散化成K个整数，同时构造一个宽度为K的直方图，在遍历数据的时候，根据离散化后的值作为索引在直方图中累计统计量，当遍历一次数据后，直方图累积了需要的统计量，然后根据直方图的离散值，遍历寻找最优的分割点</li>
-</ul>
-</li>
-<li>LightGBM直接支持类别特征，对类别特征不用单独one-hot编码</li>
-<li>更多的是工程实现上的优化区别</li>
-</ul>
-<p>更详细：<a href="https://www.imooc.com/article/29530" target="_blank" rel="external">https://www.imooc.com/article/29530</a></p>
-<p><strong>9. 独立和不相关的区别</strong></p>
-<ul>
-<li>独立一定不相关，不相关不一定独立(高斯过程里二者等价);</li>
-<li>对于均值为零的高斯随机变量，“独立”和“不相关”等价；</li>
-<li>简单讲，不相关就是两者没有线性关系，但是不排除其他关系存在，独立就是互不相关没有关联；看来朴素贝叶斯里的“特征条件独立”是挺强的假设；</li>
-</ul>
-<p><strong>10. 决策树如何处理连续值</strong></p>
-<p>连续特征离散化，将连续特征值从小到大排序, 取相邻两个数的平均数作为离散值。</p>
-<p><strong>11. 决策树如何处理缺失值</strong></p>
-<p>西瓜书里介绍较为详细，主要涉及下面两个问题：</p>
-<ul>
-<li>如何在属性值缺失的情况下进行划分属性的选择？（比如“色泽”这个属性有的样本在该属性上的值是缺失的，那么该如何计算“色泽”的信息增益？）<ul>
-<li>在未缺失值的子集上计算信息增益或者Gini指数，然后乘以权重|D缺|/|D|</li>
-</ul>
-</li>
-<li>给定划分属性，若样本在该属性上的值是缺失的，那么该如何对这个样本进行划分？（即到底把这个样本划分到哪个结点里？）<ul>
-<li>若样本x在划分属性a上的取值未知，则将x同时划分到所有子节点，只不过此刻要调整该样本x的权重值(初始时均为1.0)，直观的看，就是让同一样本以不同的概率划入到不同的子节点中去。</li>
-</ul>
-</li>
-</ul>
-<p><strong>12. 为什么LR的输入特征一般是离散的而不是连续的？</strong></p>
-<p>在工业界，很少直接将连续值作为逻辑回归模型的特征输入，而是将连续特征离散化为一系列0、1特征交给逻辑回归模型，这样做的优势有以下几点：</p>
-<p>海量离散特征+LR 和 少量连续特征+复杂模型。</p>
-<ol>
-<li><strong>离散特征的增加和减少都很容易</strong>，易于模型的快速迭代；</li>
-<li>稀疏向量内积乘法运算速度快，计算结果方便存储，容易扩展；</li>
-<li><strong>离散化后的特征对异常数据有很强的鲁棒性</strong>：比如一个特征是年龄&gt;30是1，否则0。如果特征没有离散化，一个异常数据“年龄300岁”会给模型造成很大的干扰；</li>
-<li><strong>逻辑回归属于广义线性模型，表达能力受限；单变量离散化为N个后，每个变量有单独的权重，相当于为模型引入了非线性，能够提升模型表达能力，加大拟合；</strong></li>
-<li>离散化后可以进行特征交叉，由M+N个变量变为M*N个变量，进一步引入非线性，提升表达能力；</li>
-<li>特征离散化后，模型会更稳定，比如如果对用户年龄离散化，20-30作为一个区间，不会因为一个用户年龄长了一岁就变成一个完全不同的人。当然处于区间相邻处的样本会刚好相反，所以怎么划分区间是门学问；</li>
-<li>特征离散化以后，起到了简化了逻辑回归模型的作用，降低了模型过拟合的风险。</li>
-</ol>
-<p><strong>13. 逻辑回归模型 vs 线性回归</strong></p>
-<ul>
-<li>逻辑回归比线性回归要好</li>
-<li>线性回归优化目标函数用的是最小二乘法，而逻辑回归用的是最大似然估计。逻辑回归只是在线性回归的基础上，将加权和通过sigmoid函数，映射到0-1范围内空间；</li>
-<li>线性回归在整个实数范围内进行预测，敏感度一致，而分类范围，需要在【0,1】。逻辑回归是一种减小预测范围，将预测值限定在【0,1】间的一种回归模型。</li>
-<li>逻辑回归的鲁棒性要好于线性回归模型。在z=0时，比较敏感，在z&gt;&gt;0或z&lt;&lt;0处，都不敏感，将预测值限定为(0,1)。</li>
-</ul>
-<p><strong>14. 逻辑回归模型 vs 最大熵模型</strong></p>
-<ul>
-<li>简单粗暴的说：逻辑回归跟最大熵模型没有本质区别。逻辑回归是最大熵对应为二类时的特殊情况，也就是说，当逻辑回归扩展为多类别的时候，就是最大熵模型。</li>
-<li>最大熵原理：学习概率模型的时候，在所有可能的概率模型（分布）中，熵最大的模型是最好的模型。</li>
-<li>最大熵模型与逻辑斯蒂回归模型有类似的形式，统称为对数线性模型(log linear model),模型学习就是在给定的训练数据条件下对模型进行极大似然估计或者正则化的极大似然估计。</li>
-</ul>
-<p><strong>15. 梯度下降法和其他无约束优化算法的比较</strong></p>
-<p>在机器学习中的无约束优化算法，除了梯度下降法以外，还有最小二乘法，此外还有牛顿法和拟牛顿法。</p>
-<p>梯度下降法和最小二乘法相比，梯度下降法需要选择步长，而最小二乘法不需要。梯度下降法是迭代求解，<br>最小二乘法是计算解析解。如果样本量不大，且存在解析解，最小二乘法比起梯度下降法要有优势，计算速度<br>很快。但是如果样本量很大，用最小二乘法由于需要求一个超级大的逆矩阵，这时就很慢，使用迭代的梯度下降<br>法比较有优势。</p>
-<p>梯度下降法和牛顿法/拟牛顿法相比，两者都是迭代求解，不过梯度下降是梯度求解，而牛顿法/拟牛顿法是用二阶的海森矩阵的拟矩阵或伪逆矩阵求解。相对而言，使用牛顿/拟牛顿法收敛更快，但是每次迭代的时间比梯度下降法长。</p>
-<p><strong>16. ID3、C4.5、CART</strong></p>
-<ul>
-<li>ID3以信息增益作为特征选择准则，仅仅能够处理离散属性，没有剪枝过程；</li>
-<li>C4.5克服了ID3仅能够处理离散属性的问题，以及信息增益偏向选择取值较多特征的问题，使用信息增益比来选择特征；</li>
-<li>CART与ID,C4.5不同之处在于CART生成的树必须是二叉树，既可以用于分类，也可以用于回归问题。回归问题是利用平方误差最小化准则进行特征选择，而分类问题是Gini系数为准则。</li>
-<li>Gini指数与熵：都可以表示不确定性，不纯度；Gini指数的计算<strong>不需要对数运算</strong>，更加高效；Gini指数更偏向于连续属性，熵更偏向于离散属性；</li>
-<li>XGBoost通过使用特有的打分函数进行增益计算</li>
-</ul>
-<p><strong>17. 逻辑回归和支持向量机的区别</strong></p>
-<ul>
-<li>Linear SVM和LR都是线性分类器</li>
-<li>Linear SVM和LR都是判别模型</li>
-<li>Linear SVM不直接依赖数据分布，分类平面不受一类点的影响；LR则受所有数据点的影响，如果数据不同类别处于极其不平衡的状态，一般需要先对数据做平衡处理；支持向量机只考虑局部的边界线附近的点，而逻辑回归考虑全局(远离的点对边界线的确定也起作用);</li>
-<li>Linear SVM依赖数据表达的距离测度，所以需要对数据做标准化，LR不受影响；</li>
-<li>Linear SVM依赖惩罚项的系数，实用中需要做交叉验证；</li>
-<li>Linear SVM和LR的执行都受异常值的影响，其敏感程度而言，谁更好难以下明确结论；</li>
-<li>Linear SVM和LR损失函数不同，LR为logloss, SVM是hinge loss.损失函数自带正则；</li>
-</ul>
-<p><strong>18. SVM的优缺点</strong></p>
-<ul>
-<li>优点：<ul>
-<li>在小训练集上往往得到比较好的结果；</li>
-<li>使用核函数避开了高维空间的复杂性；</li>
-<li>SVM的最终模型只取决于支持向量，减少了过拟合；</li>
-<li>SVM损失函数相当于自带l2正则项，减少了过拟合；</li>
-<li>泛化能力强；</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>时空开销大，训练时间长</li>
-<li>核函数的选取比较难，主要靠经验 <ul>
-<li>常用核函数：高斯核、多项式核、线性核</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>解释核函数的原理</strong></p>
-<p>在很多应用场景中，数据和目标变量的关系都是非线性的，因此考虑将数据进行非线性变换，然后对变换后的数据使用线性SVM来分隔，为了减少计算复杂度，无需显性计算出每个数据点变换后的变量，通过核函数隐式映射。</p>
-<p><strong>19. 树模型的优缺点</strong></p>
-<p>XGBoost、RandomForest、GBDT、lightGBM等</p>
-<ul>
-<li>优点<ul>
-<li>可解释性强；</li>
-<li>可处理混合类型特征；</li>
-<li>具有伸缩不变性，不同归一化特征；</li>
-<li>有特征组合的作用；</li>
-<li>可自然地处理缺失值；</li>
-<li>对异常点鲁棒；</li>
-<li>有特征选择作用；</li>
-<li>可扩展性强，容易并行；</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>缺乏平滑性(回归预测时输出值只能输出有限的若干数值)</li>
-<li>不适合处理高维稀疏特征；</li>
-</ul>
-</li>
-</ul>
-<p><strong>20. 决策树启发式学习过程</strong></p>
-<ul>
-<li>Split by information gain -&gt; training loss</li>
-<li>Prune the tree -&gt; regularization defined by #nodes</li>
-<li>Max depth -&gt; constraint on the function space</li>
-<li>Smoothing leaf values -&gt; L2 regularization on leaf weights</li>
-</ul>
-<p><strong>21. 随机森林和GBDT有什么异同？</strong></p>
-<p>相同点：</p>
-<ul>
-<li>两者都是基于决策树；</li>
-<li>两者都能处理缺失值(？随机森林可以）</li>
-<li>两者都能给出特征重要性；</li>
-<li>两者都是bootstrap的思想；</li>
-</ul>
-<p>两者的不同点包括：</p>
-<ul>
-<li>随机森林采用bagging的思想，有放回地均匀采样训练样本；GBDT采用boosting的思想，根据错误率来采样；(相当于采样，只是对误分率大的给予更多的关注);</li>
-<li>GBDT的精度优于随机森林；</li>
-<li>随机森林可以由分类树或者回归树组成，而GBDT由回归树组成；</li>
-<li>随机森林可以使用并行运算，GBDT使用串行计算；</li>
-<li>随机森林对所有结果取多数投票或平均，GBDT将每棵树的输出相加；</li>
-<li>随机森林对异常值不敏感，GBDT对异常值非常敏感；</li>
-<li>随机森林方差小，而GBDT偏差小；</li>
-<li>随机森林不需要限制树的深度，GBDT需要限制树的深度；</li>
-<li>GBDT进行多分类处理时比较麻烦，不如使用随机森林好；</li>
-</ul>
-<p>优缺点：</p>
-<ul>
-<li>随机森林优点较多，1)在数据集上表现良好，相对于其他算法有较大优势；2)能够处理很高维的数据，而且不用特征选择，而且在训练完成后，给出特征重要性；3)容易做成并行化方法； 缺点：在噪声较大的分类或者回归问题上过拟合。</li>
-<li>GBDT优点是：1）灵活处理各种类型的数据；2）在相对较少的调参时间下，预测的准确度较高。缺点：难以并行训练数据；</li>
-</ul>
-<p><strong>22. GBDT的正则化</strong></p>
-<ol>
-<li>设置步长，相当于给每颗树增加一个小于1的系数；</li>
-<li>行采样；</li>
-<li>对CART回归树进行剪枝；</li>
-</ol>
-<p><strong>23. 数据预处理之去偏度</strong></p>
-<ol>
-<li>通过log, 开根号等方式</li>
-<li>Box-Cox通用方法</li>
-</ol>
-<p><img src="https://i.imgur.com/WXW9mNK.png" alt="Boxcox"></p>
-<p><strong>24. L1正则项不可导，如何求解</strong></p>
-<p>以LASSO回归为例，Lasso回归使一些系数变小，甚至还是一些系数为0，可以用来进行特征选择；<br>Lasso回归的损失函数不是连续可导的，由于L1范数用的是绝对值之和，导致损失函数有不可导的点。就是说，梯度下降法、牛顿法、拟牛顿法等等都无法使用了。这时采用的是坐标轴下降法和最小角回归法。</p>
-<p>主要介绍坐标轴下降法，顾名思义，就是沿着坐标轴下降，也是迭代求解。</p>
-<p>其数据依据是：</p>
-<blockquote>
-<p>一个可微凸函数J(θ),其中θ是n*1的向量，即有n个维度，如果在某一点θ0，使得J(θ)在每个坐标轴上都是最小值，那么J(θ0)， 就是全局最小值。</p>
-</blockquote>
-<p>与梯度下降法进行比较：</p>
-<ul>
-<li>坐标轴下降法在每次迭代中在当前点处沿一个坐标方向进行一维搜索，固定其他的坐标方向，找到一个函数的局部极小值。而梯度下降总是沿着梯度的负方向求函数的局部最小值；</li>
-<li>坐标轴下降法是一种非梯度优化算法，在整个过程中依次循环使用不同的坐标方向进行迭代，一个周期的一维搜索过程相当于一个梯度下降的迭代。</li>
-<li>梯度下降是利用目标函数的导数来确定搜索方向的，该梯度方向可能不与任何坐标轴平行。而坐标轴下降法利用当前坐标方向进行搜索，不需要求解目标函数的导数，只按照某一坐标方向进行搜索最小值。</li>
-<li>两者都是迭代方法，且每一轮迭代，都需要O(mn)的计算量；</li>
-</ul>
-<p><strong>25. 偏差与方差</strong></p>
-<p>一般认为泛化误差=偏差+方差，偏差表示的是输出与真值的误差，即模型的准确度。方差指的是模型在不同数据集上的预测值与所有数据集平均预测值之间的差异，即模型稳定性。</p>
-<p><strong>26. 过拟合和欠拟合的定义</strong></p>
-<p>根据学习误差曲线，训练集误差增大测试集误差减小说明在学习，属于欠拟合。测试集误差变大，训练集误差很小属于过拟合</p>
-<pre><code>   过拟合
-
-   定义：学习到的模型在训练样本中表现的过于优越，导致在测试集或验证集上泛化能力差表现不佳。即学习得过于彻底，将噪声也学到了。
-
-   情况：参数过多；模型过大；训练样本过少；数据不纯；
-
-   措施：加入正则项；dropout；（训练的时候让神经元以一定的概率不工作）扩大训练样本集；清洗数据；
-
-   欠拟合
-
-    定义：模型不能很好的捕捉到数据特征，不能很好的拟合数据。
-
-   情况：特征不够好或者维度不够，训练时间不够
-
-   措施：更换更好的特征；增加网络复杂度；减少正则化参数；增大训练时间
-</code></pre><p><strong>27. LR逻辑回归有哪些优缺点？</strong></p>
-<p>优点：</p>
-<ul>
-<li>可解释强：如果各个特征的范围差不多且数据没有共线性，则权重可以衡量特征的重要性；</li>
-<li>训练速度快，适合作为基础模型；</li>
-<li>输出概率值，可以使用不同的阈值得到不同的模型，适用风险模型等应用场景；</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>要求数据满足线性可分，否则准确率低；</li>
-<li>只能处理数值特征，对于类别特征需要进行哑编码</li>
-<li>不适合高维问题？</li>
-<li><p>无法处理缺失值</p>
-<p><strong>28. 逻辑回归为何不常使用类似SVM核函数的方法？</strong></p>
-</li>
-</ul>
-<p>逻辑回归实际上可以使用核函数。对于逻辑回归，每一个样本都对分类有贡献；而SVM中只有支持向量有贡献，逻辑回归的求解复杂度和参数的空间复杂度都比较高，因而不常用；</p>
-<p> <strong>29. 朴素贝叶斯有哪些优缺点？</strong></p>
-<p>优点：</p>
-<ul>
-<li>对小规模数据效果好；</li>
-<li>能够解决多分类；</li>
-<li>适合并行计算；</li>
-<li>训练速度快；</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>假设过强，对大多数数据不适用；</li>
-<li><p>分类精度不高；</p>
-<p><strong>30. 集成学习两个流派, Boosting和Bagging</strong></p>
-</li>
-<li><p>Boosting，各个弱学习器之间有依赖关系；</p>
-</li>
-<li><p>Bagging, 各个弱学习器之间没有依赖关系，可以并行拟合；</p>
-<p><strong>31. 随机森林小结</strong></p>
-</li>
-</ul>
-<p>优点：</p>
-<ul>
-<li>训练可以高度并行化，对于大数据时代的大样本训练速度有优势；</li>
-<li>由于可以随机选择决策树节点划分特征，这样在样本特征维度很高的时候，仍然能高效的训练模型；</li>
-<li>在训练后，可以给出各个特征对于输出的重要性；</li>
-<li>由于采用了随机采样，训练出的模型的方差小，泛化能力强；</li>
-<li>相对于Boosting系列的Adaboost和GBDT, RF实现比较简单；</li>
-<li>对部分特征缺失不敏感；？？</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>在某些噪音比较大的样本集上，RF模型容易陷入过拟合；</li>
-<li>取值划分比较多的特征容易对RF的决策树产生更大的影响，从而影响拟合的模型的效果；</li>
-</ul>
-<p> <strong>32. 因子分解机FM</strong></p>
-<p>主要优点：</p>
-<ul>
-<li>可用于高度稀疏数据场景；</li>
-<li><p>具有线性的计算复杂度；</p>
-<p><strong>33. K-means的计算过程及复杂度</strong></p>
-</li>
-</ul>
-<ol>
-<li>预先指定数值k, 将数据集分成k个簇；</li>
-<li>随机确定k个中心位置点；</li>
-<li>计算各个数据点与k个中心点的距离；</li>
-<li>根据距离排序将该数据点分配给最近邻的中心，形成k个簇；</li>
-<li>计算每个簇的平均位置，作为新的中心点；</li>
-<li>重复步骤3-5直到簇不发生变化或达到最大迭代次数；</li>
-</ol>
-<p>样本为n个，聚类中心k个，每次比较时间复杂度为d, 则<br>单次迭代复杂度为 n*k*d. 迭代t次，则整体计算复杂度为O(nkdt)</p>
-<p> <strong>34. GBDT调参、RF调参、XGB调参、SVM调参</strong></p>
-<p> <strong>35. GBDT多分类如何实现？</strong></p>
-<p><a href="https://www.cnblogs.com/pinard/p/6140514.html" target="_blank" rel="external">https://www.cnblogs.com/pinard/p/6140514.html</a>比较详细</p>
-<ul>
-<li>对于多分类任务，GBDT采用一对多的策略；对每个类别训练M个分类器，假设有K个类别，最后训练完有M*K颗树；</li>
-</ul>
-<p>简单来说，区别是二分类是用sigmoid进行映射，多分类用softmax, 损失函数不一样，二分类就是logloss, 多分类也是logloss，</p>
-<p>在sklearn中实现是，OneVsAll 每次迭代学习K颗树，利用softmax输出概率值。</p>
-<p> <strong>36. 分类问题，样本不均衡怎么办？</strong></p>
-<ol>
-<li>调整训练样本权重，使得两类的总权重相等；</li>
-<li>过采样；</li>
-<li>欠采样； </li>
-<li>数据合成，利用已有样本生成更多样本；</li>
-<li>GAIN;</li>
-<li>转换为异常检测问题来进行处理；</li>
-</ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li><a href="https://blog.csdn.net/v_july_v/article/details/6279498/" target="_blank" rel="external">十道海量数据处理面试题与十个方法大总结</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/32877396" target="_blank" rel="external">总结的比较好的博客</a></li>
-<li><a href="https://www.cnblogs.com/futurehau/p/6707895.html" target="_blank" rel="external">几种常见的损失函数</a></li>
-<li><a href="https://github.com/frank-lam/2019_campus_apply/blob/master/notes/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95.md" target="_blank" rel="external">数据结构简单总结</a></li>
-</ol>
-<h2 id="概率题"><a href="#概率题" class="headerlink" title="概率题"></a>概率题</h2><p><strong>1. 从rand5变到rand8？</strong></p>
-<ul>
-<li><p>rand8可以生成rand5, 如果rand5可以产生更大的随机数randX（X&gt; 8)，那么就可以产生rand8.</p>
-</li>
-<li><p>5*rand5 - rand5 产生1-25等概率随机数，然后小于等于8的输出。</p>
-</li>
-</ul>
-<h2 id="算法题"><a href="#算法题" class="headerlink" title="算法题"></a>算法题</h2><p><strong>1. 无序整数数组中找第K大的数</strong></p>
-<ol>
-<li>先进行排序，找到第k个数, 时间复杂度O(NlogN)</li>
-<li>最小堆TopK, 适用于海量数据， O(Nlog2k)</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2676,7 +2466,7 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">141</span>
+                <span class="site-state-item-count">142</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

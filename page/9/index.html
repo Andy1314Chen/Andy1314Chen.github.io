@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/机器学习实战第二章笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/菲波那切数列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/机器学习实战第二章笔记/" itemprop="url">机器学习实战第二章学习笔记(k-NN)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/菲波那切数列/" itemprop="url">菲波那切数列(剑指offer第七题)</a></h1>
         
 
         <div class="post-meta">
@@ -357,19 +357,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
                   </a>
                 </span>
 
@@ -406,192 +395,641 @@
       
         
           
-            <p>k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。</p>
-<ul>
-<li>优点： 精度高、对异常值不敏感、无数据输入假定</li>
-<li>缺点： 计算复杂度高、空间复杂度高</li>
-</ul>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算法中k的出处，通常k是不大于20的整数。最后，选择k个最相似数据中出现次数最多的分类，作为新数据的分类。</p>
-<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHdNJrDq4rkAaAucglnuDjOujx_RZeG0qzAVUQwXb7fWNy0EH_" alt=""></p>
-<h3 id="k-近邻算法的一般流程"><a href="#k-近邻算法的一般流程" class="headerlink" title="k-近邻算法的一般流程"></a>k-近邻算法的一般流程</h3><ol>
-<li>收集数据：可以使用任何方法</li>
-<li>准备数据：距离计算所需要的数值，最好是结构化的数据格式</li>
-<li>分析数据：可以使用任何方法</li>
-<li>训练算法：此步骤不适用于k-近邻算法</li>
-<li>测试算法：计算错误率</li>
-<li>使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k-近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理。</li>
-</ol>
-<h3 id="kNN代码实现"><a href="#kNN代码实现" class="headerlink" title="kNN代码实现"></a>kNN代码实现</h3><p><strong>伪代码：</strong></p>
-<ol>
-<li>计算已知类别数据集中的点和当前点之间的距离；</li>
-<li>按照距离递增次序排序；</li>
-<li>选取与当前点距离最小的k个点；</li>
-<li>确定前k个点所在类别的出行频率；</li>
-<li>返回前k个点出行频率最高的类别作为当前点的预测分类。</li>
-</ol>
-<p><strong>Python代码：</strong></p>
-<pre><code>#python3.6
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。<br>n&lt;=39</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def Fibonacci(self, n):
+            # write code here
+            if n &lt; 2:
+                return n
 
-import numpy as np
-import operator
-from os import listdir
+            first = 1
+            second = 0
+            res = 0
+            for i in range(1,n):
+                res = first + second
+                second = first
+                first = res
+            return res
+</code></pre>
 
-def createDataSet():
-    group=np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
-    labels=[&#39;A&#39;,&#39;A&#39;,&#39;B&#39;,&#39;B&#39;]
-    return group,labels
+          
+        
+      
+    </div>
 
-    # inX: input
-    # dataSet: train data set
-    # labels: labels of dataSet
-    # k:  k of kNN
+    <div>
+      
+    </div>
 
-def classify0(inX,dataSet,labels,k):
-    dataSetSize=dataSet.shape[0]#样本个数
-    diffMat=np.tile(inX,(dataSetSize,1))-dataSet
-    #np.tile()函数用法
-    sqDiffMat=diffMat**2
-    sqDistances=sqDiffMat.sum(axis=1)#欧式距离
-    distances=sqDistances**0.5
-    sortedDistIndicies=distances.argsort()#按距离排序，返回从小到大的索引值
+    <div>
+      
+    </div>
 
-    classCount={}
-    for i in range(k):
-        voteIlabel=labels[sortedDistIndicies[i]]
-        classCount[voteIlabel]=classCount.get(voteIlabel,0)+1#计算前k个，各个类别的个数
-    sortedClassCount=sorted(classCount.items(),
-                            key=operator.itemgetter(1),
-                            reverse=True)
-    #Python3中没有.iteritems(),更换为.items()
-    #print(sortedClassCount)
-    return sortedClassCount[0][0]
+    <div>
+      
+    </div>
 
-    #测试
-import kNN
-group,labels=kNN.createDataSet()
-kNN.classify0([0,0],group,labels,3)
-#结果应该是B,可以改变输入[0,0]
-</code></pre><h3 id="示例1、改进约会网站的配对效果"><a href="#示例1、改进约会网站的配对效果" class="headerlink" title="示例1、改进约会网站的配对效果"></a>示例1、改进约会网站的配对效果</h3><p>约会数据存放在datingTestSet2.txt中，每个样本占一行，共有1000行，即1000个样本。主要特征：</p>
-<ul>
-<li>每年获得的飞行常客里程数</li>
-<li>玩视频游戏所耗时间百分比</li>
-<li>每周消费的冰淇淋公升数</li>
-</ul>
-<p><a href="https://github.com/pbharrin/machinelearninginaction" target="_blank" rel="external">数据下载</a></p>
-<h4 id="将文本记录到转换NumPy的解析程序"><a href="#将文本记录到转换NumPy的解析程序" class="headerlink" title="将文本记录到转换NumPy的解析程序"></a>将文本记录到转换NumPy的解析程序</h4><pre><code>#输入文件名，输出训练样本矩阵和类标签向量
-def file2matrix(filename):
-    #打开文件
-    fr=open(filename)
-    #按行全部读取数据
-    arrayOLines=fr.readlines()
-    #行数
-    numberOfLines=len(arrayOLines)
-    #用于存放样本，主要有3个特征
-    returnMat=np.zeros((numberOfLines,3))
-    #分类标签
-    classLabelVector=[]
-    index=0
-    for line in arrayOLines:
-        line=line.strip()
-        listFromLine=line.split(&#39;\t&#39;)
-        returnMat[index,:]=listFromLine[0:3]
-        classLabelVector.append(int(listFromLine[-1]))
-        index+=1
-    return returnMat,classLabelVector
+    <footer class="post-footer">
+      
 
-#测试
-reload(kNN)#重新加载kNN
-#python3中没有内置该函数，需要from imp import reload
-datingDataMat,datingLabels=kNN.file2matrix(&#39;datingTestSet2.txt&#39;)
-</code></pre><h4 id="归一化数值"><a href="#归一化数值" class="headerlink" title="归一化数值"></a>归一化数值</h4><p>因为kNN是依赖样本间距离进行分类的，欧式距离的计算中，数字差值最大的特征对计算结果的影响要大一些。但是，一般来说，每个特征视为同等重要的。这样就需要对特征值进行处理，通常采用的方法是将数值归一化，如将取值范围处理为0-1或-1-1之间。</p>
-<blockquote>
-<p>newValue=(oldValue-min)/(max-min)</p>
-</blockquote>
-<p>公式可以将任意取值范围的特征值转化为0到1区间内的值。</p>
-<h4 id="归一化特征值Python3程序"><a href="#归一化特征值Python3程序" class="headerlink" title="归一化特征值Python3程序"></a>归一化特征值Python3程序</h4><pre><code>#输入样本集，输出归一化后的样本集、ranges，minVals
-def autoNorm(dataSet):
-#newValue=(oldValue-min)/(max-min)
-    minVals=dataSet.min(0)
-    maxVals=dataSet.max(0)
-    ranges=maxVals-minVals
-    normDataSet=np.zeros(np.shape(dataSet))
-    m=dataSet.shape[0]
-    normDataSet=dataSet-np.tile(minVals,(m,1))
-    normDataSet=normDataSet/np.tile(ranges,(m,1))
-    return normDataSet,ranges,minVals
-#测试
-reload(kNN)
-normMat,ranges,minVals=kNN.autoNorm(datingDataMat)
-</code></pre><h4 id="kNN约会网站测试代码"><a href="#kNN约会网站测试代码" class="headerlink" title="kNN约会网站测试代码"></a>kNN约会网站测试代码</h4><pre><code>def datingClassTest():
-    hoRatio=0.10
-    datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;)
-    normMat,ranges,minVals=autoNorm(datingDataMat)
-    m=normMat.shape[0]
-    numTestVecs=int(m*hoRatio)
-    errorCount=0.0
-    for i in range(numTestVecs):
-        classifierResult=classify0(normMat[i,:],normMat[numTestVecs:m,:],
-        datingLabels[numTestVecs:m],5)
-        print(&#39;the classifier came back with: %d, the real answer is: %d&#39; % (classifierResult,datingLabels[i]))
-        if (classifierResult != datingLabels[i]):
-            errorCount+=1.0
-    print(&#39;the total error rate is : %f&#39; % (errorCount/float(numTestVecs)))
+      
 
-#测试
-kNN.datingClassTest()
-</code></pre><h4 id="约会网站预测函数"><a href="#约会网站预测函数" class="headerlink" title="约会网站预测函数"></a>约会网站预测函数</h4><pre><code>def classifyPerson():
-    resultList=[&#39;not at all&#39;,&#39;in small doses&#39;,&#39;in large doses&#39;]
-    percentTats=float(input(&#39;percentage of time spent playing video games?&#39;))
-    ffMiles=float(input(&#39;frequent fliter miles earned per year?&#39;))
-    iceCream=float(input(&#39;liters of ice cream consumed per year?&#39;))
-    datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;)
-    normMat,ranges,minVals=autoNorm(datingDataMat)
-    inArr=np.array([ffMiles,percentTats,iceCream])
-    classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
-    print(&#39;You will probably like this person: &#39;,\
-        resultList[classifierResult-1])
-    #python2中的raw_input()，python3中为input()
-</code></pre><h3 id="示例2、手写识别系统"><a href="#示例2、手写识别系统" class="headerlink" title="示例2、手写识别系统"></a>示例2、手写识别系统</h3><h4 id="将32-32的二进制图像矩阵转化为1-1024向量"><a href="#将32-32的二进制图像矩阵转化为1-1024向量" class="headerlink" title="将32*32的二进制图像矩阵转化为1*1024向量"></a>将32*32的二进制图像矩阵转化为1*1024向量</h4><pre><code>def img2vector(filename):
-    returnVect=np.zeros((1,1024))
-    fr=open(filename)
-    for i in range(32):
-        lineStr=fr.readline()
-        for j in range(32):
-            returnVect[0,32*i+j]=int(lineStr[j])
-    return returnVect
-#测试
-testVector=kNN.img2vector(&#39;testDigits/0_13.txt&#39;)
-</code></pre><h4 id="手写数字识别系统的测试代码"><a href="#手写数字识别系统的测试代码" class="headerlink" title="手写数字识别系统的测试代码"></a>手写数字识别系统的测试代码</h4><pre><code>from os import listdir
-def handwritingClassTest():
-    hwLabels=[]
-    trainingFileList=listdir(&#39;trainingDigits&#39;)
-    m=len(trainingFileList)
-    trainingMat=np.zeros((m,1024))
-    for i in range(m):
-        fileNameStr=trainingFileList[i]
-        fileStr=fileNameStr.split(&#39;.&#39;)[0]
-        classNumStr=int(fileStr.split(&#39;_&#39;)[0])#文件名是标签
-        hwLabels.append(classNumStr)
-        trainingMat[i,:]=img2vector(&#39;trainingDigits/%s&#39; % fileNameStr)
-    testFileList=listdir(&#39;testDigits&#39;)
-    errorCount=0.0
-    mTest=len(testFileList)
-    for i in range(mTest):
-        fileNameStr=testFileList[i]
-        fileStr=fileNameStr.split(&#39;.&#39;)[0]
-        classNumStr=int(fileStr.split(&#39;_&#39;)[0])
-        vectorUnderTest=img2vector(&#39;testDigits/%s&#39; % fileNameStr)
-        classifierResult=classify0(vectorUnderTest,\
-            trainingMat,hwLabels,3)
-        print(&#39;the classifier came back with: %d, the real anser is: %d&#39; \
-            % (classifierResult,classNumStr))
-        if    classifierResult != classNumStr:
-            errorCount+=1.0
-    print(&#39;the total number of errors is: %d&#39; % errorCount)
-#测试
-kNN.handwritingClassTest()
-</code></pre><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>k-近邻算法是分类数据最简单最有效的算法。k-近邻算法是基于实例的学习，使用算法时必须有接近实际数据的训练样本数据。k-近邻算法必须保存全部数据集，如果训练数据集很大，必须使用大量的存储空间。此外，由于必须对数据集中的每个数据计算距离值，实际使用时可能非常耗时。</p>
-<p>k-近邻算法的另一个缺陷是它无法给出任何数据的基础结构信息，因此无法知晓平均实例样本和典型实例样本具有什么特征。</p>
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/顺时针打印矩阵/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/顺时针打印矩阵/" itemprop="url">顺时针打印矩阵(剑指offer第十九题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # matrix类型为二维列表，需要返回列表
+        def printMatrix(self, matrix):
+            # write code here
+            ret = []
+            while len(matrix) &gt; 0:
+                ret += matrix[0] #将矩阵的首行放入 ret
+                matrix = [x for x in zip(*matrix[1:])][::-1] #去掉矩阵首行后逆时针旋转90度
+            return ret
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/矩形覆盖/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/矩形覆盖/" itemprop="url">矩形覆盖(剑指offer第十题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>我们可以用2<em>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2</em>1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def rectCover(self, number):
+            # write code here
+            if number &lt;= 3:
+                return number
+
+            first = 3
+            second = 2
+            res = 0
+            for i in range(3, number):
+                res = first + second
+                second = first
+                first = res
+            return res
+</code></pre>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2合并两个排序的链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/2合并两个排序的链表/" itemprop="url">合并两个排序的链表(剑指offer第十六题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    class Solution:
+        # 返回合并后列表
+        def Merge(self, pHead1, pHead2):
+            # write code here
+            pHead3 = ListNode(3)
+            tmp = pHead3
+            while (pHead1 != None) &amp; (pHead2 != None):
+                if pHead1.val &gt; pHead2.val:
+                    tmp.next = ListNode(pHead2.val)
+                    tmp = tmp.next
+                    pHead2 = pHead2.next
+                else:
+                    tmp.next = ListNode(pHead1.val)
+                    tmp = tmp.next
+                    pHead1 = pHead1.next
+            if pHead1:
+                tmp.next = pHead1
+            elif pHead2:
+                tmp.next = pHead2
+            return pHead3.next
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/替换空格/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/替换空格/" itemprop="url">替换空格(剑指offer第二题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # s 源字符串
+        def replaceSpace(self, s):
+            # write code here
+            return s.replace(&#39; &#39;, &#39;%20&#39;)
+</code></pre>
 
           
         
@@ -792,6 +1230,167 @@ kNN.handwritingClassTest()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2反转链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/2反转链表/" itemprop="url">反转链表(剑指offer第十五题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
+<p><img src="https://i.imgur.com/60rmm33.jpg" alt=""></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    class Solution:
+        # 返回ListNode
+        def ReverseList(self, pHead):
+            # write code here
+            if pHead == None:
+                return None
+
+            newList = None
+            while pHead != None:
+                nextNode = pHead
+                pHead = pHead.next
+                nextNode.next = newList
+                newList = nextNode
+
+            return newList
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -903,636 +1502,6 @@ kNN.handwritingClassTest()
                     array2.append(v)
             array = array1 + array2
             return array
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二进制中1的个数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/二进制中1的个数/" itemprop="url">二进制中1的个数(剑指offer第十一题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def NumberOf1(self, n):
-            # write code here
-            cnt = 0
-            if n &lt; 0:
-                n = n&amp;0xffffffff
-            while n:
-                cnt += 1
-                n = n&amp;(n-1)
-            return cnt
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/菲波那切数列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/菲波那切数列/" itemprop="url">菲波那切数列(剑指offer第七题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。<br>n&lt;=39</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def Fibonacci(self, n):
-            # write code here
-            if n &lt; 2:
-                return n
-
-            first = 1
-            second = 0
-            res = 0
-            for i in range(1,n):
-                res = first + second
-                second = first
-                first = res
-            return res
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/数值的整数次方/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/数值的整数次方/" itemprop="url">数值的整数次方(剑指offer第十二题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def Power(self, base, exponent):
-            # write code here
-            res = base
-            if exponent == 0:
-                return 1
-            elif exponent &gt; 0:
-                flag = 0
-            else:
-                flag = 1
-            exponent = abs(exponent)
-            while exponent &gt; 1:
-                res *= base
-                exponent -= 1
-            if flag:
-                return 1./res
-            else:
-                return res
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/链表中倒数第K个结点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/链表中倒数第K个结点/" itemprop="url">链表中倒数第K个节点(剑指offer第十四题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，输出该链表中倒数第k个结点。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-
-    class Solution:
-        def FindKthToTail(self, head, k):
-            # write code here
-            # 快慢指针，快指针先走k步
-            if k == 0:
-                return None
-
-            cnt = 1
-            first = head
-            while (first != None)&amp;(cnt &lt; k):
-                first = first.next
-                cnt += 1
-            if first == None: # 链表长度小于3
-                return None
-            second = head
-            while first.next != None:
-                first = first.next
-                second = second.next
-            return second
 </code></pre>
 
           
@@ -1967,249 +1936,6 @@ bst.dump_model(&#39;dump.raw.txt&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/22/ReliefF特征选择(python)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/22/ReliefF特征选择(python)/" itemprop="url">Relief特征选择算法Python实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-22T00:00:00+08:00">
-                2017-08-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Relief算法"><a href="#Relief算法" class="headerlink" title="Relief算法"></a>Relief算法</h2><p>Relief算法最早由Kira在1992年提出，最初局限于两类数据的分类问题。Relief算法是一种特征权重算法(Feature weighting algorithms)，根据各个特征和类别的相关性赋予特征不同的权重，权重小于某个阈值的特征将被移除。Relief算法中特征和类别的相关性是基于特征对近距离样本的区分能力。</p>
-<p><img src="https://www.gia.edu/images/Gold-Diggers-195648-636x358.jpg" alt="特征提取"></p>
-<p><strong>基本思想：</strong>算法从训练集D中随机选择一个样本R，然后从和R同类的样本中寻找最近邻样本H，称为NearHit，从和R不同类的样本中寻找最近邻样本M，称为NearMiss，然后根据以下规则更新每个特征的权重：如果R和NearHit在某个特征上的距离小于R和NearMiss上的距离，则说明该特征对区分同类和不同类的最近邻是有益的，则增加该特征的权重；反之，如果R和NearHit在某个特征的距离大于R和NearMiss上的距离，说明该特征对区分同类和不同类的最近邻起负面作用，则降低该特征的权重。以上过程重复m次，最后得到各特征的平均权重。特征的权重越大，表示该特征的分类能力越强，反之，表示该特征分类能力越弱。Relief算法的运行时间随着样本的抽样次数m和原始特征个数N的增加线性增加，因而运行效率非常高。</p>
-<p><strong>具体算法：</strong></p>
-<p><img src="http://images.cnitblog.com/blog/79603/201308/29173431-34ed1713754f42e9a875eaa2e4049f8e.jpg" alt="Relief具体算法"></p>
-<h2 id="ReliefF算法"><a href="#ReliefF算法" class="headerlink" title="ReliefF算法"></a>ReliefF算法</h2><p>虽然Relief算法比较简单，但运行效率高，并且结果也比较令人满意，因此得到广泛应用，但是其局限性在于只能处理两类别数据，因此1994年Kononeill对其进行了扩展，得到了ReliefF算法，可以处理多类别问题。ReliefF算法在处理多类问题时，每次从训练样本集中随机取出一个样本R，然后从和R同类的样本集中找出R的k个近邻样本(near Hits)，从每个R的不同类的样本集中均找出k个近邻样本(near Misses)，然后更新每个特征的权重，如下式所示：</p>
-<p><img src="http://images.cnitblog.com/blog/79603/201308/29173617-b9db490cd1b84472a5583ac52d3df72b.jpg" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/79603/201308/29173649-320dfe76b46e4c1097edb518dacea888.jpg" alt=""></p>
-<h2 id="ReliefF算法python程序"><a href="#ReliefF算法python程序" class="headerlink" title="ReliefF算法python程序"></a>ReliefF算法python程序</h2><pre><code>import numpy as np
-from sklearn.metrics.pairwise import pairwise_distances
-def reliefF(X,y,**kwargs):
-   if &quot;k&quot; not in kwargs.keys():
-        k=5
-   else:
-        k=kwargs[&quot;k&quot;]
-n_samples,n_features=X.shape
-
-#计算两两距离，曼哈顿距离
-distance=pairwise_distances(X,metric=&#39;manhattan&#39;)
-
-score=np.zeros(n_features)
-
-for idx in range(n_samples):
-    #同类最近邻
-    near_hit=[]
-    #异类最近邻
-    near_miss=dict()
-
-    self_fea=X[idx,:]
-    #类别数
-    c=np.unique(y).tolist()
-
-    stop_dict=dict()
-    for label in c:
-        stop_dict[label]=0
-    del c[c.index(y[idx])]
-
-    P_dict=dict()
-    p_label_idx=float(len(y[y==y[idx]]))/float(n_samples)
-
-    for label in c:
-        p_label_c=float(len(y[y==label]))/float(n_samples)
-        p_dict[label]=p_label_c/(1-p_label_idx)
-        near_miss[label]=[]
-
-    distance_sort=[]
-    distance[idx,idx]=np.max(distance[idx,:])
-
-    for i in range(n_samples):
-            distance_sort.append([distance[idx,i],int(i),y[i]])
-    distance_sort.sort(key=lambda x: x[0])
-
-    for i in range(n_samples):
-        #找到同类最近邻
-        if distance_sort[i][2]==y[idx]:
-            if len(near_hit) &lt;k:
-                near_hit.append(distance_sort[i][1])
-            elif len(near_hit)==k:
-                stop_dict[y[idx]]=1
-        else:
-        #异类最近邻
-            if len(near_miss[distance_sort[i][2])&lt;k:
-                near_miss[distance_sort[i][2].append(distance_sort[i][1])
-            else:
-                if len(near_miss[distance_sort[i][2]]) == k:
-                    stop_dict[distance_sort[i][2]] = 1
-        stop = True
-        for (key, value) in stop_dict.items():
-                if value != 1:
-                    stop = False
-        if stop:
-            break
-
-    #更新reliefF分数
-    for ele in near_hit:
-        near_hit_term = np.array(abs(self_fea-X[ele, :]))+np.array(near_hit_term)
-
-    near_miss_term = dict()
-    for (label, miss_list) in near_miss.items():
-        near_miss_term[label] = np.zeros(n_features)
-        for ele in miss_list:
-            near_miss_term[label] = np.array(abs(self_fea-X[ele, :]))+np.array(near_miss_term[label])
-        score += near_miss_term[label]/(k*p_dict[label])
-    score -= near_hit_term/k
-return score
-
-def feature_ranking(score):
-    idx = np.argsort(score, 0)
-    return idx[::-1]
-</code></pre><p>参考博文：</p>
-<ol>
-<li><a href="http://www.cnblogs.com/asxinyu/archive/2013/08/29/3289682.html" target="_blank" rel="external">http://www.cnblogs.com/asxinyu/archive/2013/08/29/3289682.html</a></li>
-<li><a href="https://github.com/jundongl/scikit-feature" target="_blank" rel="external">https://github.com/jundongl/scikit-feature</a></li>
-</ol>
-<p>特征提取Python库：<br><a href="http://featureselection.asu.edu/" target="_blank" rel="external">http://featureselection.asu.edu/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2260,7 +1986,7 @@ def feature_ranking(score):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">141</span>
+                <span class="site-state-item-count">142</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
