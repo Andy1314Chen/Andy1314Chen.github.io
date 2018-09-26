@@ -301,6 +301,386 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/机器学习实战第五章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/07/机器学习实战第五章学习笔记/" itemprop="url">机器学习实战第五章学习笔记(Logistic回归)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。</p>
+<p>利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要<br>寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。</p>
+<p>Logistic的一般过程：</p>
+<ol>
+<li>收集数据：采用任意方法收集数据。</li>
+<li>准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。</li>
+<li>分析数据：采用任意方法对数据进行分析。</li>
+<li>训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。</li>
+<li>测试数据：一旦训练步骤完成，分类将会很快。</li>
+<li>使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。</li>
+</ol>
+<p><img src="http://images2015.cnblogs.com/blog/1015872/201609/1015872-20160904123448491-2104213729.png" alt=""></p>
+<h2 id="基于Logistic回归和Sigmoid函数的分类"><a href="#基于Logistic回归和Sigmoid函数的分类" class="headerlink" title="基于Logistic回归和Sigmoid函数的分类"></a>基于Logistic回归和Sigmoid函数的分类</h2><ul>
+<li>优点：计算代价不高，易于理解和实现。</li>
+<li>缺点：容易欠拟合，分类精度可能不高。</li>
+<li>适用数据类型：数值型和标称型数据。</li>
+</ul>
+<p>我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function).</p>
+<p><img src="http://img.blog.csdn.net/20161116083548612" alt=""></p>
+<p>而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。</p>
+<p>说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。</p>
+<p>由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。</p>
+<p><img src="http://img.blog.csdn.net/20170425225033129" alt=""></p>
+<p>那么，现在的关键在于，如何确定上述的最佳回归系数？</p>
+<h2 id="基于最优化方法的最佳回归系数确定"><a href="#基于最优化方法的最佳回归系数确定" class="headerlink" title="基于最优化方法的最佳回归系数确定"></a>基于最优化方法的最佳回归系数确定</h2><p>Sigmoid函数：<br><img src="http://img.blog.csdn.net/20170426142819918" alt=""></p>
+<p><img src="http://img.blog.csdn.net/20170426144754539" alt=""></p>
+<p>这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。</p>
+<p><img src="http://img.blog.csdn.net/20170426145716228" alt=""></p>
+<h4 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h4><p>梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。</p>
+<p><img src="http://img.blog.csdn.net/20170426152948300" alt=""></p>
+<p>梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。</p>
+<h4 id="梯度下降算法和梯度上升算法的区别"><a href="#梯度下降算法和梯度上升算法的区别" class="headerlink" title="梯度下降算法和梯度上升算法的区别"></a>梯度下降算法和梯度上升算法的区别</h4><p><img src="http://img.blog.csdn.net/20170426154316798" alt=""></p>
+<p>梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山).</p>
+<h4 id="训练算法：使用梯度上升找到最佳参数"><a href="#训练算法：使用梯度上升找到最佳参数" class="headerlink" title="训练算法：使用梯度上升找到最佳参数"></a>训练算法：使用梯度上升找到最佳参数</h4><pre><code>#梯度上升法的伪代码：
+每个回归系数初始化为1
+重复R次：
+    计算整个数据集的梯度
+    使用α*gradient更新回归系数的向量
+    返回回归系数
+
+import numpy as np
+
+#Logistic回归梯度上升法优化算法
+def loadDataSet():#读取样本数据
+    dataMat=[];labelMat=[]
+    fr=open(&#39;testSet.txt&#39;)
+    for line in fr.readlines():
+        lineArr=line.strip().split()#除去空格后划分
+        dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征
+        labelMat.append(int(lineArr[2]))#标签
+    return dataMat,labelMat
+
+def sigmoid(inX):
+    return 1.0/(1+np.exp(-inX))
+
+def gradAscent(dataMatIn,classLabels):
+    dataMatrix=np.mat(dataMatIn)#100*3
+    labelMat=np.mat(classLabels).transpose()
+    m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数
+    alpha=0.001#步长
+    maxCycles=500#最大迭代次数
+    weights=np.ones((n,1))#回归系数初始化为1
+    for k in range(maxCycles):
+        h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1
+        error=(labelMat-h)#
+        weights=weights+alpha*dataMatrix.transpose()*error
+    return weights
+
+
+#画出数据集和Logistic回归最佳拟合直线的函数
+def plotBestFit(wei):
+    import matplotlib.pyplot as plt
+    weights=wei#.getA()
+    dataMat,labelMat=loadDataSet()
+    dataArr=np.array(dataMat)
+
+    n=np.shape(dataArr)[0]
+    xcord1=[];ycord1=[]
+    xcord2=[];ycord2=[] 
+    for i in range(n):
+        if int(labelMat[i])==1:
+            xcord1.append(dataArr[i,1])
+            ycord1.append(dataArr[i,2])
+        else:
+            xcord2.append(dataArr[i,1])
+            ycord2.append(dataArr[i,2])
+    fig=plt.figure()
+    ax=fig.add_subplot(111)
+    print(len(xcord1),len(ycord1))
+    ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;)
+    ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;)
+    x=np.arange(-3.0,3.0,0.1)
+    y=(-weights[0]-weights[1]*x)/weights[2]
+    ax.plot(x,y)
+    plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;);
+    plt.show()
+</code></pre><p><img src="http://img.blog.csdn.net/20170502140250228" alt=""></p>
+<h4 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h4><p>回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是<img src="http://img.blog.csdn.net/20150414211501282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTHU1OTcyMDM5MzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。</p>
+<p>那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数：<img src="http://img.blog.csdn.net/20170427114316036" alt=""></p>
+<p>观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。</p>
+<p>这个分段函数还可以简写为：<img src="http://img.blog.csdn.net/20170427120139821" alt=""></p>
+<p>那么对于m条训练样本而言，代价函数就是m个预测代价的累加和：<br><img src="http://img.blog.csdn.net/20170427160158802" alt=""></p>
+<p>为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导：<br><img src="http://img.blog.csdn.net/20170427125124391" alt=""></p>
+<p>所以结果就是:<img src="http://img.blog.csdn.net/20170427160242364" alt=""></p>
+<pre><code>weights=weights+alpha*dataMatrix.transpose()*error
+</code></pre><p><img src="http://img.blog.csdn.net/20170427163508100" alt=""></p>
+<p>是一致的！！</p>
+<p><img src="http://img.blog.csdn.net/20170427162423610" alt=""></p>
+<h4 id="训练算法：随机梯度上升"><a href="#训练算法：随机梯度上升" class="headerlink" title="训练算法：随机梯度上升"></a>训练算法：随机梯度上升</h4><p>梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。</p>
+<pre><code>#随机梯度上升算法伪代码：
+所有回归系数初始化为1
+对数据集中每个样本
+    计算该样本的梯度
+    使用alpha*gradient更新回归系数值
+返回回归系数值
+
+#随机梯度上升算法
+def stocGradAscent0(dataMatrix,classLabels):
+    m,n=np.shape(dataMatrix)
+    alpha=0.01#步长
+    weights=np.ones(n)#1*n
+    X=[]#保持weights的历史数据
+    for j in range(300):#迭代300次
+        for i in range(m):
+            h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = 
+            error=classLabels[i]-h
+            weights=weights+alpha*error*dataMatrix[i]
+            X.append(weights)
+    return weights
+</code></pre><p>这段代码与梯度上升算法很相似，但是也有些区别：</p>
+<ol>
+<li>这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本)</li>
+<li>没有矩阵的转换过程，所有变量的数据类型都是NumPy数组</li>
+</ol>
+<p><strong>但是有个问题，为什么随机梯度上升算法也可以达到最优呢？</strong>书中并没有给出相关解释。</p>
+<p><img src="http://img.blog.csdn.net/20170502170148006" alt=""></p>
+<p>在迭代200次过程中，weights=[X0,X1,X2]变化曲线；<br>而我自己的300次跌打过程中，变化曲线是：</p>
+<p>X0:<br><img src="https://i.imgur.com/QgNPopg.png" alt=""></p>
+<p>X1:<img src="https://i.imgur.com/iAz1YYD.png" alt=""></p>
+<p>X2:<img src="https://i.imgur.com/Kug7oOn.png" alt=""></p>
+<p>从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。</p>
+<p>因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。</p>
+<p>代码如下：</p>
+<pre><code>#改进的随机梯度上升算法
+def stocGradAscent1(dataMatrix,classLabels,numIter=150):
+    m,n=np.shape(dataMatrix)
+    weights=np.ones(n)
+    X=[]
+    for j in range(numIter):
+        dataIndex=list(range(m))
+        for i in range(m):
+            alpha=4/(1.0+j+i)+0.01
+            randIndex=int(np.random.uniform(0,len(dataIndex)))
+            h=sigmoid(sum(dataMatrix[randIndex]*weights))
+            error=classLabels[randIndex]-h
+            weights=weights+alpha*error*dataMatrix[randIndex]
+            X.append(weights)
+            del dataIndex[randIndex]
+    X=np.array(X)
+    return weights
+</code></pre><p>改进之处有两个方面，<strong>每次迭代时调整alpha</strong>和<strong>随机选取更新</strong>。</p>
+<p>步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。</p>
+<p>通过随机选取样本来更新回归系数，可以减少周期性的波动。</p>
+<p><img src="http://img.blog.csdn.net/20170502193141309" alt=""></p>
+<h2 id="示例：从疝气病症预测病马的死亡率"><a href="#示例：从疝气病症预测病马的死亡率" class="headerlink" title="示例：从疝气病症预测病马的死亡率"></a>示例：从疝气病症预测病马的死亡率</h2><p>使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。</p>
+<p>使用Logistic回归估计马疝气病的死亡率</p>
+<ol>
+<li>收集数据：UCI机器学习数据库</li>
+<li>准备数据：用Python解析文本文件并填充缺失值</li>
+<li>分析数据：可视化并观察数据</li>
+<li>训练算法：使用优化算法，找到最佳的系数</li>
+<li>测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。</li>
+<li>使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。</li>
+</ol>
+<p>(数据集中有30%的值是缺失的)</p>
+<h4 id="准备数据：处理数据中的缺失值"><a href="#准备数据：处理数据中的缺失值" class="headerlink" title="准备数据：处理数据中的缺失值"></a>准备数据：处理数据中的缺失值</h4><p>由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题：</p>
+<ul>
+<li>使用可用特征的均值来填充缺失值；</li>
+<li>使用特殊值来填补缺失值，如-1；</li>
+<li>忽略有缺失值的样本；</li>
+<li>使用相似样本的均值添补缺失值；</li>
+<li>使用另外的机器学习算法预测缺失值；</li>
+</ul>
+<p>在数据预处理阶段，所有缺失值用实数0代替。原因有二：</p>
+<ol>
+<li>根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新；</li>
+<li>sigmoid(0)=0.5,对结果不具有任何倾向性；</li>
+</ol>
+<p>对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。</p>
+<h4 id="测试算法：用Logistic回归进行分类"><a href="#测试算法：用Logistic回归进行分类" class="headerlink" title="测试算法：用Logistic回归进行分类"></a>测试算法：用Logistic回归进行分类</h4><pre><code>#Logistic回归分类函数
+def classifyVector(inX,weights):
+    prob=sigmoid(sum(inX*weights))
+    if prob&gt;0.5:
+        return 1.0
+    else:
+        return 0.0
+
+def colicTest():
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
+    trainingSet=[];trainingLabels=[]
+    for line in frTrain.readlines():
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):#21个特征
+            lineArr.append(float(currLine[i]))
+        trainingSet.append(lineArr)
+        trainingLabels.append(float(currLine[21])) #标签               
+    trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500)
+    errorCount=0;numTestVec=0.0
+    for line in frTest.readlines():
+        numTestVec+=1.0
+        currLine=line.strip().split(&#39;\t&#39;)
+        lineArr=[]
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]):
+                errorCount+=1
+    errorRate=(float(errorCount)/numTestVec)
+    print(&quot;the error rate of this test is: %f&quot; % errorRate)
+    return errorRate
+
+def multiTest():
+    numTests=10;errorSum=0.0
+    for k in range(numTests):
+        errorSum+=colicTest()
+    print(&quot;after %d iterations the average error rate is: %f&quot; 
+          % (numTests,errorSum/float(numTests)))
+</code></pre><h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
+<li><a href="http://blog.csdn.net/lu597203933/article/details/38468303#comments" target="_blank" rel="external">http://blog.csdn.net/lu597203933/article/details/38468303#comments</a></li>
+<li><a href="http://blog.csdn.net/CharlieLincy/article/details/70767791#comments" target="_blank" rel="external">http://blog.csdn.net/CharlieLincy/article/details/70767791#comments</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/LeetCode第95场周赛/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -455,192 +835,6 @@ ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next 
 piles.length 是偶数。
 1 &lt;= piles[i] &lt;= 500
 sum(piles) 是奇数。
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/LeetCode148排序链表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/07/LeetCode148排序链表/" itemprop="url">LeetCode148排序链表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
-                2017-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><strong>148. 排序链表</strong></p>
-<p>在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。</p>
-<p>示例 1:</p>
-<pre><code>输入: 4-&gt;2-&gt;1-&gt;3
-输出: 1-&gt;2-&gt;3-&gt;4
-</code></pre><p>示例 2:</p>
-<pre><code>输入: -1-&gt;5-&gt;3-&gt;4-&gt;0
-输出: -1-&gt;0-&gt;3-&gt;4-&gt;5
-</code></pre><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>归并排序，先将链表分段，再合并</p>
-<pre><code># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    def sortList(self, head):
-        # 分段返回条件
-        if head == None or head.next == None:
-            return head
-        mid = self.getMid(head)
-        right = mid.next
-        mid.next = None
-        return self.mergeSort(self.sortList(head), self.sortList(right))
-
-    def getMid(self, head):
-        if head == None:
-            return None
-        quick, slow = head, head
-        while quick.next and quick.next.next:
-            slow = slow.next
-            quick = quick.next.next
-        return slow
-
-    def mergeSort(self, left, right):
-        tmp = ListNode(0); res = tmp
-        while left != None and right != None:
-            if left.val &gt; right.val:
-                tmp.next = right
-                right = right.next
-            else:
-                tmp.next = left
-                left = left.next
-            tmp = tmp.next
-        if left != None:
-            tmp.next = left
-        if right != None:
-            tmp.next = right
-        return res.next
 </code></pre>
           
         
@@ -1004,7 +1198,7 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/字符流中第一个不重复的字符/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/XGBoost调参指南/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1023,7 +1217,7 @@ class Solution:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/05/字符流中第一个不重复的字符/" itemprop="url">字符流中第一个不重复的字符（剑指Offer)</a></h1>
+                <a class="post-title-link" href="/2017/09/05/XGBoost调参指南/" itemprop="url">XGBoost调参指南</a></h1>
         
 
         <div class="post-meta">
@@ -1098,55 +1292,190 @@ class Solution:
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。</p>
-<p>如果当前字符流没有存在出现一次的字符，返回#字符。</p>
-<h3 id="解法1-暴力法"><a href="#解法1-暴力法" class="headerlink" title="解法1(暴力法)"></a>解法1(暴力法)</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        # 返回对应char
-        def __init__(self):
-            self.save = []
-            self.dicT = {}
-        def FirstAppearingOnce(self):
-            # write code here
-            self.dicT = {}
-            for v in self.save:
-                if v in self.dicT:
-                    self.dicT[v] += 1
-                else:
-                    self.dicT[v] = 1
-            for v in self.save:
-                if self.dicT[v] == 1:
-                    return v
-            return &#39;#&#39;
-        def Insert(self, char):
-            # write code here
-            self.save.append(char)
-</code></pre>
-<h3 id="解法2-队列存储"><a href="#解法2-队列存储" class="headerlink" title="解法2(队列存储)"></a>解法2(队列存储)</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        # 返回对应char
-        def __init__(self):
-            # 统计各个字符出现的次数
-            self.save = [0]*256
-            # 保存只出现一次的字符
-            self.quen = []
-        def FirstAppearingOnce(self):
-            # write code here
-            while len(self.quen) &gt; 0:
-                if self.save[ord(self.quen[0])] &gt; 1:
-                    self.quen.pop(0)
-                else:
-                    return self.quen[0]
-            return &#39;#&#39;
-        def Insert(self, char):
-            # write code here
-            idx = ord(char)
-            self.save[idx] += 1
-            if self.save[idx] == 1:
-                self.quen.append(char)
-</code></pre>
+            <h2 id="The-XGBoost-Advantage"><a href="#The-XGBoost-Advantage" class="headerlink" title="The XGBoost Advantage"></a>The XGBoost Advantage</h2><ul>
+<li><strong>Regularization</strong> 正则</li>
+<li><strong>Parallel Processing</strong> 并行处理</li>
+<li><strong>High Flexibility</strong> 高灵活性</li>
+<li><strong>Handing Missing Values</strong> 处理缺失值</li>
+<li><strong>Tree Pruning</strong>树的剪枝</li>
+<li><strong>Built-in Cross-Validation</strong>内置交叉验证</li>
+<li><strong>Continue on Existing Model</strong>可以在已有的模型上继续训练</li>
+</ul>
+<h2 id="XGBoost-Parameters"><a href="#XGBoost-Parameters" class="headerlink" title="XGBoost Parameters"></a>XGBoost Parameters</h2><ol>
+<li>General Parameters: Guide the overall functioning</li>
+<li>Booster Parameters: Guide the individual booster(tree/regression) at each step</li>
+<li>Learning Task Parameters: Guide the optimization performed</li>
+</ol>
+<h3 id="General-Parameters"><a href="#General-Parameters" class="headerlink" title="General Parameters"></a>General Parameters</h3><p>These define the overall functionality of XGBoost.</p>
+<ul>
+<li><strong>booster [default=gbtree]</strong><ul>
+<li>Select the type of model to run at each iteration. It has 2 options:<ul>
+<li>gbtree: tree-based models</li>
+<li>gblinear: linear models</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>silent [default=0]:</strong><ul>
+<li>Silent mode is activated is set to 1, i.e. no running messages will be printed.</li>
+<li>It’s generally good to keep it 0 as the messages might help in understanding the model.</li>
+</ul>
+</li>
+<li><strong>nthread [default to maximum number of threads available if not set]</strong><ul>
+<li>This is used for parallel processing and number of cores in the system should be entered</li>
+<li>If you wish to run on all cores, value should not be entered and algorithm will detect automatically</li>
+</ul>
+</li>
+</ul>
+<h3 id="Booster-Parameters"><a href="#Booster-Parameters" class="headerlink" title="Booster Parameters"></a>Booster Parameters</h3><p>Though there are 2 types of boosters, I’ll consider only <strong>tree booster</strong> here because it always outperforms the linear booster and thus the later is rarely used.</p>
+<ol>
+<li><p><strong>eta[default=0.3]</strong></p>
+<ul>
+<li>Analogous to learning rate in GBM</li>
+<li>Makes the model more robust by shrinking the weights on each step</li>
+<li>Typical final values to be used: 0.01-0.2</li>
+</ul>
+</li>
+<li><p><strong>min_child_weight[default=1]</strong></p>
+<ul>
+<li>Defines the minimum sum of weights of all observations required in a child.</li>
+<li>This is similar to min_child_leaf in GBM but not exactly. This refers to min “sum of weights” of observations while GBM has min “number of observations”.</li>
+<li>Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree.</li>
+<li>Too high values can lead to under-fitting hence, it should be tuned using CV.</li>
+</ul>
+</li>
+<li><p><strong>max_depth[default=6]</strong></p>
+<ul>
+<li>The maximum depth of a tree, same as GBM.</li>
+<li>Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample.</li>
+<li>Should be tuned using CV.</li>
+<li>Typical values: 3-10</li>
+</ul>
+</li>
+<li><p><strong>max_leaf_nodes</strong></p>
+<ul>
+<li>The maximum number of terminal nodes or leaves in a tree.</li>
+<li>Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves.</li>
+<li>If this is defined, GBM will ignore max_depth.</li>
+</ul>
+</li>
+<li><p><strong>gamma [default=0]</strong></p>
+<ul>
+<li>A node is split only when the resulting split gives a positive reduction in the loss function. Gamma specifies the minimum loss reduction required to make a split.</li>
+<li>Makes the algorithm conservative. The values can vary depending on the loss function and should be tuned.</li>
+</ul>
+</li>
+<li><p><strong>max_depta_step[default=0]</strong></p>
+<ul>
+<li>In maximum delta step we allow each tree’s weight estimation to be. If the value is set to 0, it means there is no constraint. If it is set to a positive value, it can help making the update step more conservative.</li>
+<li>Usually this parameter is not needed, but it might help in logistic regression when class is extremely imbalanced.</li>
+<li>This is generally not used but you can explore further if you wish.</li>
+</ul>
+</li>
+<li><p><strong>subsample [default=1]</strong></p>
+<ul>
+<li>Same as the subsample of GBM. Denotes the fraction of observations to be randomly samples for each tree.</li>
+<li>Lower values make the algorithm more conservative and prevents overfitting but too small values might lead to under-fitting.</li>
+<li>Typical values: 0.5-1</li>
+</ul>
+</li>
+<li><p><strong>colsample_bytree [default=1]</strong></p>
+<ul>
+<li>Similar to max_features in GBM. Denotes the fraction of columns to be randomly samples for each tree.</li>
+<li>Typical values: 0.5-1</li>
+</ul>
+</li>
+<li><p><strong>colsample_bylevel[default=1]</strong></p>
+<ul>
+<li>Denotes the subsample ratio of columns for each split, in each level.</li>
+<li>I don’t use this often because subsample and colsample_bytree will do the job for you. but you can explore further if you feel so.</li>
+</ul>
+</li>
+<li><p><strong>lambda [default=1]</strong></p>
+<ul>
+<li>L2 regularization term on weights (analogous to Ridge regression)</li>
+<li>This used to handle the regularization part of XGBoost. Though many data scientists don’t use it often, it should be explored to reduce overfitting.</li>
+</ul>
+</li>
+<li><p><strong>alpha [default=0]</strong></p>
+<ul>
+<li>L1 regularization term on weight (analogous to Lasso regression)</li>
+<li>Can be used in case of very high dimensionality so that the algorithm runs faster when implemented</li>
+</ul>
+</li>
+<li><strong>scale_pos_weight[default=1]</strong><ul>
+<li>A value greater than 0 should be used in case of high class imbalance as it helps in faster convergence.</li>
+</ul>
+</li>
+</ol>
+<h3 id="Learning-Task-Parameters"><a href="#Learning-Task-Parameters" class="headerlink" title="Learning Task Parameters"></a>Learning Task Parameters</h3><p>These parameters are used to define the optimization objective the metric to be calculated at each step.</p>
+<ol>
+<li><strong>objective [default=reg:linear]</strong><ul>
+<li>This defines the loss function to be minimized. Mostly used values are:<ul>
+<li>binary:logistic –logistic regression for binary classification, returns predicted probability (not class)</li>
+<li>multi:softmax –multiclass classification using the softmax objective, returns predicted class (not probabilities)<ul>
+<li>you also need to set an additional num_class (number of classes) parameter defining the number of unique classes</li>
+</ul>
+</li>
+<li>multi:softprob –same as softmax, but returns predicted probability of each data point belonging to each class.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><strong>eval_metric [default according to objective]</strong>    </p>
+<ul>
+<li>The metric to be used for validation data.</li>
+<li>The default values are rmse for regression and error for classification.</li>
+<li>Typical values are:<ul>
+<li>rmse – root mean square error</li>
+<li>mae – mean absolute error</li>
+<li>logloss – negative log-likelihood</li>
+<li>error – Binary classification error rate (0.5 threshold)</li>
+<li>merror – Multiclass classification error rate</li>
+<li>mlogloss – Multiclass logloss</li>
+<li>auc: Area under the curve</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>seed [default=0]</strong></p>
+<ul>
+<li>The random number seed.</li>
+<li>Can be used for generating reproducible results and also for parameter tuning.</li>
+</ul>
+</li>
+</ol>
+<p>If you’ve been using Scikit-Learn till now, these parameter names might not look familiar. A good news is that xgboost module in python has an sklearn wrapper called XGBClassifier. It uses sklearn style naming convention. The parameters names which will change are:</p>
+<ol>
+<li>eta –&gt; learning_rate</li>
+<li>lambda –&gt; reg_lambda</li>
+<li>alpha –&gt; reg_alpha</li>
+</ol>
+<p>You must be wondering that we have defined everything except something similar to the “n_estimators” parameter in GBM. Well this exists as a parameter in XGBClassifier. However, it has to be passed as “num_boosting_rounds” while calling the fit function in the standard xgboost implementation.</p>
+<h4 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h4><ul>
+<li><a href="http://xgboost.readthedocs.org/en/latest/parameter.html#general-parameters" target="_blank" rel="external">XGBoost Parameters (official guide)</a></li>
+<li><a href="https://github.com/dmlc/xgboost/tree/master/demo/guide-python" target="_blank" rel="external">XGBoost Demo Codes (xgboost GitHub repository)</a></li>
+<li><a href="http://xgboost.readthedocs.org/en/latest/python/python_api.html" target="_blank" rel="external">Python API Reference (official guide)</a></li>
+</ul>
+<h2 id="General-Approach-for-Parameter-Tuning"><a href="#General-Approach-for-Parameter-Tuning" class="headerlink" title="General Approach for Parameter Tuning"></a>General Approach for Parameter Tuning</h2><p>We will use an approach similar to that of GBM here. The various steps to be performed are:</p>
+<ol>
+<li>Choose a relatively <strong>high learning rate</strong>. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the <strong>optimum number of trees for this learning rate</strong>. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required.</li>
+<li><strong>Tune tree-specific parameters</strong> ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.</li>
+<li>Tune <strong>regularization parameters</strong> (lambda, alpha) for xgboost which can help reduce model complexity and enhance performance.</li>
+<li><strong>Lower the learning rate</strong> and decide the optimal parameters .</li>
+</ol>
+<h3 id="Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters"><a href="#Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters" class="headerlink" title="Step1: Fix learning rate and number of estimators for tuning tree-based parameters"></a>Step1: Fix learning rate and number of estimators for tuning tree-based parameters</h3><p>In order to decide on boosting parameters, we need to set some initial values of other parameters. Lets take the following values:</p>
+<ol>
+<li><strong>max_depth = 5 </strong>: This should be between 3-10. I’ve started with 5 but you can choose a different number as well. 4-6 can be good starting points.</li>
+<li><strong>min_child_weight = 1 </strong>: A smaller value is chosen because it is a highly imbalanced class problem and leaf nodes can have smaller size groups.</li>
+<li><strong>gamma = 0 </strong>: A smaller value like 0.1-0.2 can also be chosen for starting. This will anyways be tuned later.</li>
+<li><strong>subsample, colsample_bytree = 0.8 </strong>: This is a commonly used used start value. Typical values range between 0.5-0.9.</li>
+<li><strong>scale_pos_weight = 1</strong>: Because of high class imbalance. 样本不均衡</li>
+</ol>
+<p>Please note that all the above are just initial estimates and will be tuned later. Lets take the default learning rate of 0.1 here and check the optimum number of trees using cv function of xgboost. The function defined above will do it for us.</p>
+<h3 id="Step2-Tune-max-depth-and-min-child-weight"><a href="#Step2-Tune-max-depth-and-min-child-weight" class="headerlink" title="Step2: Tune max_depth and min_child_weight"></a>Step2: Tune max_depth and min_child_weight</h3><p>We tune these first as they will have the highest impact on model outcome. To start with, let’s set wider ranges and then we will perform another iteration for smaller ranges.</p>
 
           
         
@@ -1611,7 +1940,7 @@ def getTopWords(ny,sf):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/XGBoost调参指南/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/字符流中第一个不重复的字符/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1630,7 +1959,7 @@ def getTopWords(ny,sf):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/05/XGBoost调参指南/" itemprop="url">XGBoost调参指南</a></h1>
+                <a class="post-title-link" href="/2017/09/05/字符流中第一个不重复的字符/" itemprop="url">字符流中第一个不重复的字符（剑指Offer)</a></h1>
         
 
         <div class="post-meta">
@@ -1705,190 +2034,55 @@ def getTopWords(ny,sf):
       
         
           
-            <h2 id="The-XGBoost-Advantage"><a href="#The-XGBoost-Advantage" class="headerlink" title="The XGBoost Advantage"></a>The XGBoost Advantage</h2><ul>
-<li><strong>Regularization</strong> 正则</li>
-<li><strong>Parallel Processing</strong> 并行处理</li>
-<li><strong>High Flexibility</strong> 高灵活性</li>
-<li><strong>Handing Missing Values</strong> 处理缺失值</li>
-<li><strong>Tree Pruning</strong>树的剪枝</li>
-<li><strong>Built-in Cross-Validation</strong>内置交叉验证</li>
-<li><strong>Continue on Existing Model</strong>可以在已有的模型上继续训练</li>
-</ul>
-<h2 id="XGBoost-Parameters"><a href="#XGBoost-Parameters" class="headerlink" title="XGBoost Parameters"></a>XGBoost Parameters</h2><ol>
-<li>General Parameters: Guide the overall functioning</li>
-<li>Booster Parameters: Guide the individual booster(tree/regression) at each step</li>
-<li>Learning Task Parameters: Guide the optimization performed</li>
-</ol>
-<h3 id="General-Parameters"><a href="#General-Parameters" class="headerlink" title="General Parameters"></a>General Parameters</h3><p>These define the overall functionality of XGBoost.</p>
-<ul>
-<li><strong>booster [default=gbtree]</strong><ul>
-<li>Select the type of model to run at each iteration. It has 2 options:<ul>
-<li>gbtree: tree-based models</li>
-<li>gblinear: linear models</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>silent [default=0]:</strong><ul>
-<li>Silent mode is activated is set to 1, i.e. no running messages will be printed.</li>
-<li>It’s generally good to keep it 0 as the messages might help in understanding the model.</li>
-</ul>
-</li>
-<li><strong>nthread [default to maximum number of threads available if not set]</strong><ul>
-<li>This is used for parallel processing and number of cores in the system should be entered</li>
-<li>If you wish to run on all cores, value should not be entered and algorithm will detect automatically</li>
-</ul>
-</li>
-</ul>
-<h3 id="Booster-Parameters"><a href="#Booster-Parameters" class="headerlink" title="Booster Parameters"></a>Booster Parameters</h3><p>Though there are 2 types of boosters, I’ll consider only <strong>tree booster</strong> here because it always outperforms the linear booster and thus the later is rarely used.</p>
-<ol>
-<li><p><strong>eta[default=0.3]</strong></p>
-<ul>
-<li>Analogous to learning rate in GBM</li>
-<li>Makes the model more robust by shrinking the weights on each step</li>
-<li>Typical final values to be used: 0.01-0.2</li>
-</ul>
-</li>
-<li><p><strong>min_child_weight[default=1]</strong></p>
-<ul>
-<li>Defines the minimum sum of weights of all observations required in a child.</li>
-<li>This is similar to min_child_leaf in GBM but not exactly. This refers to min “sum of weights” of observations while GBM has min “number of observations”.</li>
-<li>Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree.</li>
-<li>Too high values can lead to under-fitting hence, it should be tuned using CV.</li>
-</ul>
-</li>
-<li><p><strong>max_depth[default=6]</strong></p>
-<ul>
-<li>The maximum depth of a tree, same as GBM.</li>
-<li>Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample.</li>
-<li>Should be tuned using CV.</li>
-<li>Typical values: 3-10</li>
-</ul>
-</li>
-<li><p><strong>max_leaf_nodes</strong></p>
-<ul>
-<li>The maximum number of terminal nodes or leaves in a tree.</li>
-<li>Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves.</li>
-<li>If this is defined, GBM will ignore max_depth.</li>
-</ul>
-</li>
-<li><p><strong>gamma [default=0]</strong></p>
-<ul>
-<li>A node is split only when the resulting split gives a positive reduction in the loss function. Gamma specifies the minimum loss reduction required to make a split.</li>
-<li>Makes the algorithm conservative. The values can vary depending on the loss function and should be tuned.</li>
-</ul>
-</li>
-<li><p><strong>max_depta_step[default=0]</strong></p>
-<ul>
-<li>In maximum delta step we allow each tree’s weight estimation to be. If the value is set to 0, it means there is no constraint. If it is set to a positive value, it can help making the update step more conservative.</li>
-<li>Usually this parameter is not needed, but it might help in logistic regression when class is extremely imbalanced.</li>
-<li>This is generally not used but you can explore further if you wish.</li>
-</ul>
-</li>
-<li><p><strong>subsample [default=1]</strong></p>
-<ul>
-<li>Same as the subsample of GBM. Denotes the fraction of observations to be randomly samples for each tree.</li>
-<li>Lower values make the algorithm more conservative and prevents overfitting but too small values might lead to under-fitting.</li>
-<li>Typical values: 0.5-1</li>
-</ul>
-</li>
-<li><p><strong>colsample_bytree [default=1]</strong></p>
-<ul>
-<li>Similar to max_features in GBM. Denotes the fraction of columns to be randomly samples for each tree.</li>
-<li>Typical values: 0.5-1</li>
-</ul>
-</li>
-<li><p><strong>colsample_bylevel[default=1]</strong></p>
-<ul>
-<li>Denotes the subsample ratio of columns for each split, in each level.</li>
-<li>I don’t use this often because subsample and colsample_bytree will do the job for you. but you can explore further if you feel so.</li>
-</ul>
-</li>
-<li><p><strong>lambda [default=1]</strong></p>
-<ul>
-<li>L2 regularization term on weights (analogous to Ridge regression)</li>
-<li>This used to handle the regularization part of XGBoost. Though many data scientists don’t use it often, it should be explored to reduce overfitting.</li>
-</ul>
-</li>
-<li><p><strong>alpha [default=0]</strong></p>
-<ul>
-<li>L1 regularization term on weight (analogous to Lasso regression)</li>
-<li>Can be used in case of very high dimensionality so that the algorithm runs faster when implemented</li>
-</ul>
-</li>
-<li><strong>scale_pos_weight[default=1]</strong><ul>
-<li>A value greater than 0 should be used in case of high class imbalance as it helps in faster convergence.</li>
-</ul>
-</li>
-</ol>
-<h3 id="Learning-Task-Parameters"><a href="#Learning-Task-Parameters" class="headerlink" title="Learning Task Parameters"></a>Learning Task Parameters</h3><p>These parameters are used to define the optimization objective the metric to be calculated at each step.</p>
-<ol>
-<li><strong>objective [default=reg:linear]</strong><ul>
-<li>This defines the loss function to be minimized. Mostly used values are:<ul>
-<li>binary:logistic –logistic regression for binary classification, returns predicted probability (not class)</li>
-<li>multi:softmax –multiclass classification using the softmax objective, returns predicted class (not probabilities)<ul>
-<li>you also need to set an additional num_class (number of classes) parameter defining the number of unique classes</li>
-</ul>
-</li>
-<li>multi:softprob –same as softmax, but returns predicted probability of each data point belonging to each class.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p><strong>eval_metric [default according to objective]</strong>    </p>
-<ul>
-<li>The metric to be used for validation data.</li>
-<li>The default values are rmse for regression and error for classification.</li>
-<li>Typical values are:<ul>
-<li>rmse – root mean square error</li>
-<li>mae – mean absolute error</li>
-<li>logloss – negative log-likelihood</li>
-<li>error – Binary classification error rate (0.5 threshold)</li>
-<li>merror – Multiclass classification error rate</li>
-<li>mlogloss – Multiclass logloss</li>
-<li>auc: Area under the curve</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>seed [default=0]</strong></p>
-<ul>
-<li>The random number seed.</li>
-<li>Can be used for generating reproducible results and also for parameter tuning.</li>
-</ul>
-</li>
-</ol>
-<p>If you’ve been using Scikit-Learn till now, these parameter names might not look familiar. A good news is that xgboost module in python has an sklearn wrapper called XGBClassifier. It uses sklearn style naming convention. The parameters names which will change are:</p>
-<ol>
-<li>eta –&gt; learning_rate</li>
-<li>lambda –&gt; reg_lambda</li>
-<li>alpha –&gt; reg_alpha</li>
-</ol>
-<p>You must be wondering that we have defined everything except something similar to the “n_estimators” parameter in GBM. Well this exists as a parameter in XGBClassifier. However, it has to be passed as “num_boosting_rounds” while calling the fit function in the standard xgboost implementation.</p>
-<h4 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h4><ul>
-<li><a href="http://xgboost.readthedocs.org/en/latest/parameter.html#general-parameters" target="_blank" rel="external">XGBoost Parameters (official guide)</a></li>
-<li><a href="https://github.com/dmlc/xgboost/tree/master/demo/guide-python" target="_blank" rel="external">XGBoost Demo Codes (xgboost GitHub repository)</a></li>
-<li><a href="http://xgboost.readthedocs.org/en/latest/python/python_api.html" target="_blank" rel="external">Python API Reference (official guide)</a></li>
-</ul>
-<h2 id="General-Approach-for-Parameter-Tuning"><a href="#General-Approach-for-Parameter-Tuning" class="headerlink" title="General Approach for Parameter Tuning"></a>General Approach for Parameter Tuning</h2><p>We will use an approach similar to that of GBM here. The various steps to be performed are:</p>
-<ol>
-<li>Choose a relatively <strong>high learning rate</strong>. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the <strong>optimum number of trees for this learning rate</strong>. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required.</li>
-<li><strong>Tune tree-specific parameters</strong> ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.</li>
-<li>Tune <strong>regularization parameters</strong> (lambda, alpha) for xgboost which can help reduce model complexity and enhance performance.</li>
-<li><strong>Lower the learning rate</strong> and decide the optimal parameters .</li>
-</ol>
-<h3 id="Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters"><a href="#Step1-Fix-learning-rate-and-number-of-estimators-for-tuning-tree-based-parameters" class="headerlink" title="Step1: Fix learning rate and number of estimators for tuning tree-based parameters"></a>Step1: Fix learning rate and number of estimators for tuning tree-based parameters</h3><p>In order to decide on boosting parameters, we need to set some initial values of other parameters. Lets take the following values:</p>
-<ol>
-<li><strong>max_depth = 5 </strong>: This should be between 3-10. I’ve started with 5 but you can choose a different number as well. 4-6 can be good starting points.</li>
-<li><strong>min_child_weight = 1 </strong>: A smaller value is chosen because it is a highly imbalanced class problem and leaf nodes can have smaller size groups.</li>
-<li><strong>gamma = 0 </strong>: A smaller value like 0.1-0.2 can also be chosen for starting. This will anyways be tuned later.</li>
-<li><strong>subsample, colsample_bytree = 0.8 </strong>: This is a commonly used used start value. Typical values range between 0.5-0.9.</li>
-<li><strong>scale_pos_weight = 1</strong>: Because of high class imbalance. 样本不均衡</li>
-</ol>
-<p>Please note that all the above are just initial estimates and will be tuned later. Lets take the default learning rate of 0.1 here and check the optimum number of trees using cv function of xgboost. The function defined above will do it for us.</p>
-<h3 id="Step2-Tune-max-depth-and-min-child-weight"><a href="#Step2-Tune-max-depth-and-min-child-weight" class="headerlink" title="Step2: Tune max_depth and min_child_weight"></a>Step2: Tune max_depth and min_child_weight</h3><p>We tune these first as they will have the highest impact on model outcome. To start with, let’s set wider ranges and then we will perform another iteration for smaller ranges.</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。</p>
+<p>如果当前字符流没有存在出现一次的字符，返回#字符。</p>
+<h3 id="解法1-暴力法"><a href="#解法1-暴力法" class="headerlink" title="解法1(暴力法)"></a>解法1(暴力法)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # 返回对应char
+        def __init__(self):
+            self.save = []
+            self.dicT = {}
+        def FirstAppearingOnce(self):
+            # write code here
+            self.dicT = {}
+            for v in self.save:
+                if v in self.dicT:
+                    self.dicT[v] += 1
+                else:
+                    self.dicT[v] = 1
+            for v in self.save:
+                if self.dicT[v] == 1:
+                    return v
+            return &#39;#&#39;
+        def Insert(self, char):
+            # write code here
+            self.save.append(char)
+</code></pre>
+<h3 id="解法2-队列存储"><a href="#解法2-队列存储" class="headerlink" title="解法2(队列存储)"></a>解法2(队列存储)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # 返回对应char
+        def __init__(self):
+            # 统计各个字符出现的次数
+            self.save = [0]*256
+            # 保存只出现一次的字符
+            self.quen = []
+        def FirstAppearingOnce(self):
+            # write code here
+            while len(self.quen) &gt; 0:
+                if self.save[ord(self.quen[0])] &gt; 1:
+                    self.quen.pop(0)
+                else:
+                    return self.quen[0]
+            return &#39;#&#39;
+        def Insert(self, char):
+            # write code here
+            idx = ord(char)
+            self.save[idx] += 1
+            if self.save[idx] == 1:
+                self.quen.append(char)
+</code></pre>
 
           
         
