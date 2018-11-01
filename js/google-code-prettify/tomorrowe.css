@@ -1,19 +1,19 @@
 /*! Color themes for Google Code Prettify | MIT License | github.com/jmblog/color-themes-for-google-code-prettify */
 .prettyprint {
-  background: #002451;
+  background: #fefbec;
   font-family: Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", Monaco, Consolas, monospace;
   border: 0 !important;
 }
 
 .pln {
-  color: #ffffff;
+  color: #20201d;
 }
 
 /* Specify class=linenums on a pre to get line numbering */
 ol.linenums {
   margin-top: 0;
   margin-bottom: 0;
-  color: #7285b7;
+  color: #999580;
 }
 
 li.L0,
@@ -27,7 +27,7 @@ li.L7,
 li.L8,
 li.L9 {
   padding-left: 1em;
-  background-color: #002451;
+  background-color: #fefbec;
   list-style-type: decimal;
 }
 
@@ -36,84 +36,84 @@ li.L9 {
   /* string content */
 
   .str {
-    color: #d1f1a9;
+    color: #60ac39;
   }
 
   /* keyword */
 
   .kwd {
-    color: #ebbbff;
+    color: #b854d4;
   }
 
   /* comment */
 
   .com {
-    color: #7285b7;
+    color: #999580;
   }
 
   /* type name */
 
   .typ {
-    color: #bbdaff;
+    color: #6684e1;
   }
 
   /* literal value */
 
   .lit {
-    color: #ffc58f;
+    color: #b65611;
   }
 
   /* punctuation */
 
   .pun {
-    color: #ffffff;
+    color: #20201d;
   }
 
   /* lisp open bracket */
 
   .opn {
-    color: #ffffff;
+    color: #20201d;
   }
 
   /* lisp close bracket */
 
   .clo {
-    color: #ffffff;
+    color: #20201d;
   }
 
   /* markup tag name */
 
   .tag {
-    color: #ff9da4;
+    color: #d73737;
   }
 
   /* markup attribute name */
 
   .atn {
-    color: #ffc58f;
+    color: #b65611;
   }
 
   /* markup attribute value */
 
   .atv {
-    color: #99ffff;
+    color: #1fad83;
   }
 
   /* declaration */
 
   .dec {
-    color: #ffc58f;
+    color: #b65611;
   }
 
   /* variable name */
 
   .var {
-    color: #ff9da4;
+    color: #d73737;
   }
 
   /* function name */
 
   .fun {
-    color: #bbdaff;
+    color: #6684e1;
   }
 }
