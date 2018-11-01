@@ -452,9 +452,9 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pylab as plt
 %matplotlib inline
 from matplotlib.pylab import rcParams
-rcParams[&#39;figure.figsize&#39;]=15,6
+rcParams[&apos;figure.figsize&apos;]=15,6
 
-series=pd.Series.from_csv(&#39;daily-minimum-temperatures.csv&#39;,header=0)
+series=pd.Series.from_csv(&apos;daily-minimum-temperatures.csv&apos;,header=0)
 print(series.head(20))
 
 Date
@@ -487,9 +487,9 @@ series.plot()
 <pre><code>#将最后7个数据分裂出去作为验证集
 split_point=len(series)-7
 dataset,validation=series[0:split_point],series[split_point:]
-print(&#39;Dataset %d, Validation %d&#39; % (len(dataset),len(validation)))
-dataset.to_csv(&#39;tempdataset.csv&#39;)
-validation.to_csv(&#39;tempvalidation.csv&#39;)
+print(&apos;Dataset %d, Validation %d&apos; % (len(dataset),len(validation)))
+dataset.to_csv(&apos;tempdataset.csv&apos;)
+validation.to_csv(&apos;tempvalidation.csv&apos;)
 
 Dataset 3643, Validation 7
 
@@ -593,7 +593,7 @@ Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: floa
 start_index=len(differenced)
 end_index=len(differenced)
 forecast=model_fit.predict(start=start_index,end=end_index)
-#forecast=model_fit.predict(&#39;1990-12-25&#39;,&#39;1990-12-25&#39;)
+#forecast=model_fit.predict(&apos;1990-12-25&apos;,&apos;1990-12-25&apos;)
 
 #invert the differenced forecast to something usable
 forecast=inverse_difference(X,forecast,days_in_year)

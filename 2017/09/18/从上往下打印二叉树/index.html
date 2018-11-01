@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述从上往下打印出二叉树的每个节点，同层节点从左至右打印。 代码     # -*- coding:utf-8 -*-     # class TreeNode:     #     def __init__(self, x):     #         self.val = x     #         self.left = None     #         self.right">
+<meta name="description" content="题目描述从上往下打印出二叉树的每个节点，同层节点从左至右打印。 代码1234567891011121314151617181920212223# -*- coding:utf-8 -*-# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从上往下打印二叉树(剑指offer第二十二题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/18/从上往下打印二叉树/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述从上往下打印出二叉树的每个节点，同层节点从左至右打印。 代码     # -*- coding:utf-8 -*-     # class TreeNode:     #     def __init__(self, x):     #         self.val = x     #         self.left = None     #         self.right">
+<meta property="og:description" content="题目描述从上往下打印出二叉树的每个节点，同层节点从左至右打印。 代码1234567891011121314151617181920212223# -*- coding:utf-8 -*-# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-08-06T02:01:46.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从上往下打印二叉树(剑指offer第二十二题)">
-<meta name="twitter:description" content="题目描述从上往下打印出二叉树的每个节点，同层节点从左至右打印。 代码     # -*- coding:utf-8 -*-     # class TreeNode:     #     def __init__(self, x):     #         self.val = x     #         self.left = None     #         self.right">
+<meta name="twitter:description" content="题目描述从上往下打印出二叉树的每个节点，同层节点从左至右打印。 代码1234567891011121314151617181920212223# -*- coding:utf-8 -*-# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self">
 
 
 
@@ -395,30 +395,7 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class TreeNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.left = None
-    #         self.right = None
-    class Solution:
-        # 返回从上到下每个节点值列表，例：[1,2,3]
-        def PrintFromTopToBottom(self, root):
-            # write code here
-            res = []
-            if not root:
-                return []
-            queue = []; queue.append(root)
-            while len(queue) &gt; 0:
-                node = queue.pop(0)
-                res.append(node.val)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            return res
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class TreeNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.left = None</span></div><div class="line"><span class="comment">#         self.right = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回从上到下每个节点值列表，例：[1,2,3]</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">PrintFromTopToBottom</span><span class="params">(self, root)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        res = []</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</div><div class="line">            <span class="keyword">return</span> []</div><div class="line">        queue = []; queue.append(root)</div><div class="line">        <span class="keyword">while</span> len(queue) &gt; <span class="number">0</span>:</div><div class="line">            node = queue.pop(<span class="number">0</span>)</div><div class="line">            res.append(node.val)</div><div class="line">            <span class="keyword">if</span> node.left:</div><div class="line">                queue.append(node.left)</div><div class="line">            <span class="keyword">if</span> node.right:</div><div class="line">                queue.append(node.right)</div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -463,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/17/二叉树的镜像/" rel="next" title="二叉树的镜像(剑指offer第十八题)">
-                <i class="fa fa-chevron-left"></i> 二叉树的镜像(剑指offer第十八题)
+              <a href="/2017/09/18/栈的压入弹出序列/" rel="next" title="栈的压入、弹出序列(剑指offer第二十一题)">
+                <i class="fa fa-chevron-left"></i> 栈的压入、弹出序列(剑指offer第二十一题)
               </a>
             
           </div>
@@ -473,8 +450,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/18/栈的压入弹出序列/" rel="prev" title="栈的压入、弹出序列(剑指offer第二十一题)">
-                栈的压入、弹出序列(剑指offer第二十一题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/19/机器学习实战第七章学习笔记2/" rel="prev" title="机器学习算法常用指标">
+                机器学习算法常用指标 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

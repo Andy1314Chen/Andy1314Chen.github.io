@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。 housing.plot(kind = &amp;#39;scatter&amp;#39;, x=&amp;#39;longitude&amp;#39;, y=&amp;#39;latitude&amp;#39;,             alpha =0.4, s = housing[&amp;#3">
+<meta name="description" content="数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。 housing.plot(kind = &amp;apos;scatter&amp;apos;, x=&amp;apos;longitude&amp;apos;, y=&amp;apos;latitude&amp;apos;,             alpha =0.4, s = housi">
 <meta name="keywords" content="python,pandas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用pandas绘制图形">
 <meta property="og:url" content="http://yoursite.com/2017/12/16/pandas绘图/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。 housing.plot(kind = &amp;#39;scatter&amp;#39;, x=&amp;#39;longitude&amp;#39;, y=&amp;#39;latitude&amp;#39;,             alpha =0.4, s = housing[&amp;#3">
+<meta property="og:description" content="数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。 housing.plot(kind = &amp;apos;scatter&amp;apos;, x=&amp;apos;longitude&amp;apos;, y=&amp;apos;latitude&amp;apos;,             alpha =0.4, s = housi">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/SMOXeLo.png">
 <meta property="og:updated_time" content="2017-12-15T09:15:37.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用pandas绘制图形">
-<meta name="twitter:description" content="数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。 housing.plot(kind = &amp;#39;scatter&amp;#39;, x=&amp;#39;longitude&amp;#39;, y=&amp;#39;latitude&amp;#39;,             alpha =0.4, s = housing[&amp;#3">
+<meta name="twitter:description" content="数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。 housing.plot(kind = &amp;apos;scatter&amp;apos;, x=&amp;apos;longitude&amp;apos;, y=&amp;apos;latitude&amp;apos;,             alpha =0.4, s = housi">
 <meta name="twitter:image" content="https://i.imgur.com/SMOXeLo.png">
 
 
@@ -397,8 +397,8 @@
 
       
         <p>数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。</p>
-<pre><code>housing.plot(kind = &#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;,
-            alpha =0.4, s = housing[&#39;population&#39;]/100,  label=&#39;population&#39;, figsize=(10,7), c=&#39;median_house_value&#39;, cmap = plt.get_cmap(&#39;jet&#39;),
+<pre><code>housing.plot(kind = &apos;scatter&apos;, x=&apos;longitude&apos;, y=&apos;latitude&apos;,
+            alpha =0.4, s = housing[&apos;population&apos;]/100,  label=&apos;population&apos;, figsize=(10,7), c=&apos;median_house_value&apos;, cmap = plt.get_cmap(&apos;jet&apos;),
             colorbar=True, sharex = False)
 plt.legend()
 </code></pre><p><strong> alpha=0.4,表示透明度；s=housing[‘population’]/100,表示圆圈半径大小；c=”median_house_value”,表示颜色代表的信息； </strong></p>

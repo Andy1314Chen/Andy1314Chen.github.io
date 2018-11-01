@@ -403,41 +403,7 @@
 <pre><code>输入: [0,2,3,4,6,8,9]
 输出: [&quot;0&quot;,&quot;2-&gt;4&quot;,&quot;6&quot;,&quot;8-&gt;9&quot;]
 解释: 2,3,4 可组成一个连续的区间; 8,9 可组成一个连续的区间。
-</code></pre><pre><code class="Python">
-    class Solution:
-        def summaryRanges(self, nums):
-            &quot;&quot;&quot;
-            :type nums: List[int]
-            :rtype: List[str]
-            &quot;&quot;&quot;
-            if len(nums)&lt;1:
-                return []
-
-            tmp = []; res = []
-            j = 1; s = str(nums[0])
-
-            while j &lt; len(nums):
-                if nums[j] &gt; nums[j-1] + 1:
-                    tmp.append(s)
-                    s = str(nums[j])
-                    j += 1
-                else:
-                    s += &#39;+&#39; + str(nums[j])
-                    j += 1
-
-            # 最后一个
-            tmp.append(s)
-
-            for s in tmp:
-                s = s.split(&#39;+&#39;)
-                if len(s) &gt; 1:
-                    res.append(s[0]+&quot;-&gt;&quot;+s[-1])
-                else:
-                    res.append(s[0])
-
-            return res
-</code></pre>
-
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">summaryRanges</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[str]</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> len(nums)&lt;<span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> []</div><div class="line">        </div><div class="line">        tmp = []; res = []</div><div class="line">        j = <span class="number">1</span>; s = str(nums[<span class="number">0</span>])</div><div class="line"></div><div class="line">        <span class="keyword">while</span> j &lt; len(nums):</div><div class="line">            <span class="keyword">if</span> nums[j] &gt; nums[j<span class="number">-1</span>] + <span class="number">1</span>:</div><div class="line">                tmp.append(s)</div><div class="line">                s = str(nums[j])</div><div class="line">                j += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                s += <span class="string">'+'</span> + str(nums[j])</div><div class="line">                j += <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="comment"># 最后一个</span></div><div class="line">        tmp.append(s)</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> tmp:</div><div class="line">            s = s.split(<span class="string">'+'</span>)</div><div class="line">            <span class="keyword">if</span> len(s) &gt; <span class="number">1</span>:</div><div class="line">                res.append(s[<span class="number">0</span>]+<span class="string">"-&gt;"</span>+s[<span class="number">-1</span>])</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                res.append(s[<span class="number">0</span>])</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -481,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/存在重复元素2/" rel="next" title="LeetCode - 存在重复元素2">
-                <i class="fa fa-chevron-left"></i> LeetCode - 存在重复元素2
+              <a href="/2017/07/05/汉明距离/" rel="next" title="LeetCode - 汉明距离">
+                <i class="fa fa-chevron-left"></i> LeetCode - 汉明距离
               </a>
             
           </div>
@@ -491,8 +457,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/求众数/" rel="prev" title="LeetCode - 求众数">
-                LeetCode - 求众数 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/Fizz Buzz/" rel="prev" title="LeetCode - Fizz Buzz">
+                LeetCode - Fizz Buzz <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

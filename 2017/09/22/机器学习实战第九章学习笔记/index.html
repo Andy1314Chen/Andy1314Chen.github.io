@@ -454,7 +454,7 @@ def loadDataSet(fileName):
     dataMat=[]
     fr=open(fileName)
     for line in fr.readlines():
-        curLine=line.strip().split(&#39;\t&#39;)
+        curLine=line.strip().split(&apos;\t&apos;)
         #将每行映射成浮点型
         fltLine=list(map(float,curLine))
         dataMat.append(fltLine)
@@ -481,14 +481,14 @@ def createTree(dataSet,leafType=regLeaf,errType=regErr,ops=(1,4)):
     if feat==None:
         return val
     retTree={}
-    retTree[&#39;spInd&#39;]=feat
-    retTree[&#39;spVal&#39;]=val
+    retTree[&apos;spInd&apos;]=feat
+    retTree[&apos;spVal&apos;]=val
     #根据最佳划分特征，划分成左右两个数据集
     lSet,rSet=binSplitDataSet(dataSet,feat,val)
     #左子树继续递归调用
-    retTree[&#39;left&#39;]=createTree(lSet,leafType,errType,ops)
+    retTree[&apos;left&apos;]=createTree(lSet,leafType,errType,ops)
     #右子树继续递归调用
-    retTree[&#39;right&#39;]=createTree(rSet,leafType,errType,ops)
+    retTree[&apos;right&apos;]=createTree(rSet,leafType,errType,ops)
     return retTree
 </code></pre><h2 id="将CART算法用于回归"><a href="#将CART算法用于回归" class="headerlink" title="将CART算法用于回归"></a>将CART算法用于回归</h2><p>要对数据的复杂关系建模，已经决定借用树结构来帮助切分数据，那么如何实现数据的切分呢？<br>怎么才能知道是否已经充分切分呢？这些问题的答案取决于叶节点的建模方式。回归树假设叶节点是常数值，这种策略认为数据中的复杂关系可以用树结构来概括。</p>
 <p>使用数据集的总方差。</p>
@@ -557,34 +557,34 @@ def chooseBestSplit(dataSet,leafType=regLeaf,errType=regErr,ops=(1,4)):
 
 #用于判断obj是否是一棵树
 def isTree(obj):
-    return (type(obj).__name__==&#39;dict&#39;)
+    return (type(obj).__name__==&apos;dict&apos;)
 
 def getMean(tree):
-    if isTree(tree[&#39;right&#39;]):
-        tree[&#39;right&#39;]=getMean(tree[&#39;right&#39;])
-    if isTree(tree[&#39;left&#39;]):
-        tree[&#39;left&#39;]=getMean(tree[&#39;left&#39;])
-    return (tree[&#39;left&#39;]+tree[&#39;right&#39;])/2.0
+    if isTree(tree[&apos;right&apos;]):
+        tree[&apos;right&apos;]=getMean(tree[&apos;right&apos;])
+    if isTree(tree[&apos;left&apos;]):
+        tree[&apos;left&apos;]=getMean(tree[&apos;left&apos;])
+    return (tree[&apos;left&apos;]+tree[&apos;right&apos;])/2.0
 
 def prune(tree, testData):
     if np.shape(testData)[0] == 0: 
         return getMean(tree) #if we have no test data collapse the tree
 
-    if (isTree(tree[&#39;right&#39;]) or isTree(tree[&#39;left&#39;])):#if the branches are not trees try to prune them
-        lSet, rSet = binSplitDataSet(testData, tree[&#39;spInd&#39;], tree[&#39;spVal&#39;])
+    if (isTree(tree[&apos;right&apos;]) or isTree(tree[&apos;left&apos;])):#if the branches are not trees try to prune them
+        lSet, rSet = binSplitDataSet(testData, tree[&apos;spInd&apos;], tree[&apos;spVal&apos;])
 
-    if isTree(tree[&#39;left&#39;]): 
-        tree[&#39;left&#39;] = prune(tree[&#39;left&#39;], lSet)
+    if isTree(tree[&apos;left&apos;]): 
+        tree[&apos;left&apos;] = prune(tree[&apos;left&apos;], lSet)
 
-    if isTree(tree[&#39;right&#39;]):
-        tree[&#39;right&#39;] =  prune(tree[&#39;right&#39;], rSet)
+    if isTree(tree[&apos;right&apos;]):
+        tree[&apos;right&apos;] =  prune(tree[&apos;right&apos;], rSet)
 
     #if they are now both leafs, see if we can merge them
-    if (not isTree(tree[&#39;left&#39;])) and (not isTree(tree[&#39;right&#39;])):
-        lSet, rSet = binSplitDataSet(testData, tree[&#39;spInd&#39;], tree[&#39;spVal&#39;])
-        errorNoMerge = np.sum(np.power(lSet[:,-1] - tree[&#39;left&#39;],2)) +\
-            np.sum(np.power(rSet[:,-1] - tree[&#39;right&#39;],2))
-        treeMean = (tree[&#39;left&#39;]+tree[&#39;right&#39;])/2.0
+    if (not isTree(tree[&apos;left&apos;])) and (not isTree(tree[&apos;right&apos;])):
+        lSet, rSet = binSplitDataSet(testData, tree[&apos;spInd&apos;], tree[&apos;spVal&apos;])
+        errorNoMerge = np.sum(np.power(lSet[:,-1] - tree[&apos;left&apos;],2)) +\
+            np.sum(np.power(rSet[:,-1] - tree[&apos;right&apos;],2))
+        treeMean = (tree[&apos;left&apos;]+tree[&apos;right&apos;])/2.0
 
         errorMerge = np.sum(np.power(testData[:,-1] - treeMean,2))
         if errorMerge &lt; errorNoMerge: 
@@ -604,8 +604,8 @@ def linearSolve(dataSet):
     X[:,1:n]=dataSet[:,0:n-1];Y=dataSet[:,-1]
     xTx=X.T*X
     if np.linalg.det(xTx)==0.0:
-        raise NameError(&#39;This matrix is singular, cannot do inverse,\n\
-                        try increasing the second value of ops&#39;)
+        raise NameError(&apos;This matrix is singular, cannot do inverse,\n\
+                        try increasing the second value of ops&apos;)
     ws=xTx.I*(X.T*Y)
     return ws,X,Y
 
@@ -631,16 +631,16 @@ def modelTreeEval(model,inDat):
 def treeForeCast(tree,inData,modelEval=regTreeEval):
     if not isTree(tree):
         return modelEval(tree,inData)
-    if inData[tree[&#39;spInd&#39;]]&gt;tree[&#39;spVal&#39;]:
-        if isTree(tree[&#39;left&#39;]):
-            return treeForeCast(tree[&#39;left&#39;],inData,modelEval)
+    if inData[tree[&apos;spInd&apos;]]&gt;tree[&apos;spVal&apos;]:
+        if isTree(tree[&apos;left&apos;]):
+            return treeForeCast(tree[&apos;left&apos;],inData,modelEval)
         else:
-            return modelEval(tree[&#39;left&#39;],inData)
+            return modelEval(tree[&apos;left&apos;],inData)
     else:
-        if isTree(tree[&#39;right&#39;]):
-            return treeForeCast(tree[&#39;right&#39;],inData,modelEval)
+        if isTree(tree[&apos;right&apos;]):
+            return treeForeCast(tree[&apos;right&apos;],inData,modelEval)
         else:
-            return modelEval(tree[&#39;right&#39;],inData)
+            return modelEval(tree[&apos;right&apos;],inData)
 
 def createForeCast(tree,testData,modelEval=regTreeEval):
     m=len(testData)
@@ -664,7 +664,7 @@ import numpy as np
 from tkinter import *
 import regTrees
 import matplotlib
-matplotlib.use(&#39;TkAgg&#39;)
+matplotlib.use(&apos;TkAgg&apos;)
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
@@ -691,14 +691,14 @@ def getInputs():
         tolN=10
         print(&quot;enter Integer for tolN&quot;)
         tolNentry.delete(0,END)
-        tolNentry.insert(0,&#39;10&#39;)
+        tolNentry.insert(0,&apos;10&apos;)
     try:
         tolS=float(tolSentry.get())
     except:
         tolS=1.0
         print(&quot;enter Float for tols&quot;)
         tolSentry.delete(0,END)
-        tolSentry.insert(0,&#39;1.0&#39;)
+        tolSentry.insert(0,&apos;1.0&apos;)
     return tolN,tolS
 
 
@@ -717,11 +717,11 @@ reDraw.canvas.get_tk_widget().grid(row=0,columnspan=3)
 Label(root,text=&quot;tolN&quot;).grid(row=1,column=0)
 tolNentry=Entry(root)
 tolNentry.grid(row=1,column=1)
-tolNentry.insert(0,&#39;10&#39;)
-Label(root,text=&#39;tolS&#39;).grid(row=2,column=0)
+tolNentry.insert(0,&apos;10&apos;)
+Label(root,text=&apos;tolS&apos;).grid(row=2,column=0)
 tolSentry=Entry(root)
 tolSentry.grid(row=2,column=1)
-tolSentry.insert(0,&#39;1.0&#39;)
+tolSentry.insert(0,&apos;1.0&apos;)
 Button(root,text=&quot;ReDraw&quot;,command=drawNewTree).grid(row=1,column=2,\
       rowspan=3)
 
@@ -729,7 +729,7 @@ chkBtnVar=IntVar()
 chkBtn=Checkbutton(root,text=&quot;Model Tree&quot;,variable=chkBtnVar)
 chkBtn.grid(row=3,column=0,columnspan=2)
 
-reDraw.rawDat=np.mat(regTrees.loadDataSet(&#39;sine.txt&#39;))
+reDraw.rawDat=np.mat(regTrees.loadDataSet(&apos;sine.txt&apos;))
 reDraw.testDat=np.arange(np.min(reDraw.rawDat[:,0]),\
                          np.max(reDraw.rawDat[:,0]),0.01)
 reDraw(1.0,10)

@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;#39;fivethirtyeight&amp;#39;) %matplotlib inline  #导入数据集">
+<meta name="description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;apos;fivethirtyeight&amp;apos;) %matplotlib inline  #导入数">
 <meta name="keywords" content="机器学习,算法,Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python3时间序列分析模型ARIMA的简单实用">
 <meta property="og:url" content="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;#39;fivethirtyeight&amp;#39;) %matplotlib inline  #导入数据集">
+<meta property="og:description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;apos;fivethirtyeight&amp;apos;) %matplotlib inline  #导入数">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/rjbrTh2.png">
 <meta property="og:image" content="https://i.imgur.com/CX8ezlB.png">
@@ -110,7 +110,7 @@
 <meta property="og:updated_time" content="2017-09-29T12:48:41.012Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python3时间序列分析模型ARIMA的简单实用">
-<meta name="twitter:description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;#39;fivethirtyeight&amp;#39;) %matplotlib inline  #导入数据集">
+<meta name="twitter:description" content="import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&amp;apos;fivethirtyeight&amp;apos;) %matplotlib inline  #导入数">
 <meta name="twitter:image" content="https://i.imgur.com/rjbrTh2.png">
 
 
@@ -417,7 +417,7 @@ import pandas as pd
 import numpy as np
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
-plt.style.use(&#39;fivethirtyeight&#39;)
+plt.style.use(&apos;fivethirtyeight&apos;)
 %matplotlib inline
 
 #导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot;
@@ -426,7 +426,7 @@ data=sm.datasets.co2.load_pandas()
 y=data.data
 
 #每周的数据很难工作，用每月的平均值代替
-y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean()
+y=y[&apos;co2&apos;].resample(&apos;MS&apos;).mean()
 
 
 
@@ -521,11 +521,11 @@ pdq=list(itertools.product(p,d,q))
 #加上季节
 seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))]
 
-print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;)
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1]))
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2]))
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3]))
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4]))
+print(&apos;Examples of parameter combinations for Seasonal ARIMA...&apos;)
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[1],seasonal_pdq[1]))
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[1],seasonal_pdq[2]))
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[2],seasonal_pdq[3]))
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[2],seasonal_pdq[4]))
 
 
 Examples of parameter combinations for Seasonal ARIMA...
@@ -534,7 +534,7 @@ SARIMAX: (0, 0, 1) x (0, 1, 0, 12)
 SARIMAX: (0, 1, 0) x (0, 1, 1, 12)
 SARIMAX: (0, 1, 0) x (1, 0, 0, 12)
 </code></pre><p>使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。</p>
-<pre><code>warnings.filterwarnings(&#39;ignore&#39;)
+<pre><code>warnings.filterwarnings(&apos;ignore&apos;)
 for param in pdq:
     for param_seasonal in seasonal_pdq:
         try:
@@ -543,7 +543,7 @@ for param in pdq:
                                          enforce_stationarity=False,
                                          enforce_invertibility=False)
             results=mod.fit()
-            print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic))
+            print(&apos;ARIMA{} x {}12 - AIC:{}&apos;.format(param,param_seasonal,results.aic))
         except:
             continue
 
@@ -642,49 +642,49 @@ sigma2         0.0972      0.004     22.632      0.000       0.089       0.106
 <p>这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间</p>
 <pre><code>#dynamic=False,ensures that we produce one-step ahead forecasts, 
 #meaning that forecasts at each point are generated using the full history up to that point.
-pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False)
+pred=results.get_prediction(start=pd.to_datetime(&apos;1998-01-01&apos;),dynamic=False)
 pred_ci=pred.conf_int()
 
 #绘制出实际值
-ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;)
+ax=y[&apos;1990&apos;:].plot(label=&apos;observed&apos;)
 #预测值
-pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7)
+pred.predicted_mean.plot(ax=ax,label=&apos;One-step ahead Forecast&apos;,alpha=.7)
 #置信区间
-ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2)
-ax.set_xlabel(&#39;Date&#39;)
-ax.set_ylabel(&#39;CO2 Levels&#39;)
+ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&apos;k&apos;,alpha=.2)
+ax.set_xlabel(&apos;Date&apos;)
+ax.set_ylabel(&apos;CO2 Levels&apos;)
 plt.legend()
 
 &lt;matplotlib.legend.Legend at 0x66f26d8&gt;
 </code></pre><p><img src="https://i.imgur.com/dMU02LT.png" alt=""></p>
 <pre><code>y_forecasted=pred.predicted_mean
-y_truth=y[&#39;1998-01-01&#39;:]
+y_truth=y[&apos;1998-01-01&apos;:]
 
 #计算平方差
 mse=((y_forecasted-y_truth)**2).mean()
-print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2)))
+print(&apos;The Mean Squared Error of our forecasts is {}&apos;.format(round(mse,2)))
 
 
 The Mean Squared Error of our forecasts is 0.07
 
 
 #dynamic=True,利用指定时间点之前的数据进行预测？
-pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True)
+pred_dynamic = results.get_prediction(start=pd.to_datetime(&apos;1998-01-01&apos;), dynamic=True, full_results=True)
 pred_dynamic_ci = pred_dynamic.conf_int()
 
 
-ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15))
-pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax)
+ax = y[&apos;1990&apos;:].plot(label=&apos;observed&apos;, figsize=(20, 15))
+pred_dynamic.predicted_mean.plot(label=&apos;Dynamic Forecast&apos;, ax=ax)
 
 ax.fill_between(pred_dynamic_ci.index,
                 pred_dynamic_ci.iloc[:, 0],
-                pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25)
+                pred_dynamic_ci.iloc[:, 1], color=&apos;k&apos;, alpha=.25)
 
-ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1],
+ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&apos;1998-01-01&apos;), y.index[-1],
                  alpha=.1, zorder=-1)
 
-ax.set_xlabel(&#39;Date&#39;)
-ax.set_ylabel(&#39;CO2 Levels&#39;)
+ax.set_xlabel(&apos;Date&apos;)
+ax.set_ylabel(&apos;CO2 Levels&apos;)
 
 plt.legend()
 
@@ -692,11 +692,11 @@ plt.legend()
 </code></pre><p><img src="https://i.imgur.com/EH4nXRx.png" alt=""></p>
 <pre><code># Extract the predicted and true values of our time series
 y_forecasted = pred_dynamic.predicted_mean
-y_truth = y[&#39;1998-01-01&#39;:]
+y_truth = y[&apos;1998-01-01&apos;:]
 
 # Compute the mean square error
 mse = ((y_forecasted - y_truth) ** 2).mean()
-print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2)))
+print(&apos;The Mean Squared Error of our forecasts is {}&apos;.format(round(mse, 2)))
 
 The Mean Squared Error of our forecasts is 1.01
 
@@ -706,12 +706,12 @@ pred_uc=results.get_forecast(steps=500)
 #Get confidence intervals of forecasts
 pred_ci=pred_uc.conf_int()
 
-ax=y.plot(label=&#39;observed&#39;,figsize=(20,15))
-pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;)
+ax=y.plot(label=&apos;observed&apos;,figsize=(20,15))
+pred_uc.predicted_mean.plot(ax=ax,label=&apos;Forecast&apos;)
 ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],
-               pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25)
-ax.set_xlabel(&#39;Date&#39;)
-ax.set_ylabel(&#39;CO2 Levels&#39;)
+               pred_ci.iloc[:,1],color=&apos;k&apos;,alpha=.25)
+ax.set_xlabel(&apos;Date&apos;)
+ax.set_ylabel(&apos;CO2 Levels&apos;)
 plt.legend()
 
 &lt;matplotlib.legend.Legend at 0xda122e8&gt;
@@ -766,8 +766,8 @@ plt.legend()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/28/机器学习实战第十三章学习笔记/" rel="next" title="机器学习实战第十三章学习笔记(利用PCA来简化数据)">
-                <i class="fa fa-chevron-left"></i> 机器学习实战第十三章学习笔记(利用PCA来简化数据)
+              <a href="/2017/09/29/机器学习实战第十四章学习笔记/" rel="next" title="机器学习实战第十四章学习笔记(利用SVD简化数据)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第十四章学习笔记(利用SVD简化数据)
               </a>
             
           </div>
@@ -776,8 +776,8 @@ plt.legend()
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/29/机器学习实战第十四章学习笔记/" rel="prev" title="机器学习实战第十四章学习笔记(利用SVD简化数据)">
-                机器学习实战第十四章学习笔记(利用SVD简化数据) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/01/GBDT调参总结/" rel="prev" title="GBDT调参总结">
+                GBDT调参总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

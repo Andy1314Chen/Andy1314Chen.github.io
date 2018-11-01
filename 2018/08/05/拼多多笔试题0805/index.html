@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="第一题      # 输入     s = input()     length = len(s)     k = length // 4      s1 = s[:k]; s2 = s[k:2*k]     s3 = s[2*k:3*k]; s4 = s[3*k:4*k]     s3 = s3[::-1]; s4 = s4[::-1]      res = []     for i in ra">
+<meta name="description" content="第一题 123456789101112131415161718192021222324252627282930313233# 输入s = input()length = len(s)k = length // 4s1 = s[:k]; s2 = s[k:2*k]s3 = s[2*k:3*k]; s4 = s[3*k:4*k]s3 = s3[::-1]; s4 = s4[::-1]res = []f">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="拼多多笔试题0805">
 <meta property="og:url" content="http://yoursite.com/2018/08/05/拼多多笔试题0805/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="第一题      # 输入     s = input()     length = len(s)     k = length // 4      s1 = s[:k]; s2 = s[k:2*k]     s3 = s[2*k:3*k]; s4 = s[3*k:4*k]     s3 = s3[::-1]; s4 = s4[::-1]      res = []     for i in ra">
+<meta property="og:description" content="第一题 123456789101112131415161718192021222324252627282930313233# 输入s = input()length = len(s)k = length // 4s1 = s[:k]; s2 = s[k:2*k]s3 = s[2*k:3*k]; s4 = s[3*k:4*k]s3 = s3[::-1]; s4 = s4[::-1]res = []f">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/i3fRuKG.png">
 <meta property="og:image" content="https://i.imgur.com/LGqy5EK.png">
@@ -113,7 +113,7 @@
 <meta property="og:updated_time" content="2018-08-05T13:56:32.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="拼多多笔试题0805">
-<meta name="twitter:description" content="第一题      # 输入     s = input()     length = len(s)     k = length // 4      s1 = s[:k]; s2 = s[k:2*k]     s3 = s[2*k:3*k]; s4 = s[3*k:4*k]     s3 = s3[::-1]; s4 = s4[::-1]      res = []     for i in ra">
+<meta name="twitter:description" content="第一题 123456789101112131415161718192021222324252627282930313233# 输入s = input()length = len(s)k = length // 4s1 = s[:k]; s2 = s[k:2*k]s3 = s[2*k:3*k]; s4 = s[3*k:4*k]s3 = s3[::-1]; s4 = s4[::-1]res = []f">
 <meta name="twitter:image" content="https://i.imgur.com/i3fRuKG.png">
 
 
@@ -404,40 +404,7 @@
 
       
         <h2 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h2><p><img src="https://i.imgur.com/i3fRuKG.png" alt="第一题"><br><img src="https://i.imgur.com/LGqy5EK.png" alt=""></p>
-<pre><code class="Python">
-    # 输入
-    s = input()
-    length = len(s)
-    k = length // 4
-
-    s1 = s[:k]; s2 = s[k:2*k]
-    s3 = s[2*k:3*k]; s4 = s[3*k:4*k]
-    s3 = s3[::-1]; s4 = s4[::-1]
-
-    res = []
-    for i in range(k+1):
-        res.append([&#39; &#39;]*(k+1))
-
-    # 第一行
-    for i in range(k):
-        res[0][i] = s1[i]
-    # 最后一列
-    for i in range(k):
-        res[i][k] = s2[i]
-    # 最后一行
-    for i in range(k,0,-1):
-        res[k][i] = s3[i-1]
-    # 第一列
-    for i in range(k,0,-1):
-        res[i][0] = s4[i-1]
-    # 输出
-    for i in range(k+1):
-        for j in range(k+1):
-            if j != k:
-                print(res[i][j],end=&quot;&quot;)
-            else:
-                print(res[i][j])
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 输入</span></div><div class="line">s = input()</div><div class="line">length = len(s)</div><div class="line">k = length // <span class="number">4</span></div><div class="line"></div><div class="line">s1 = s[:k]; s2 = s[k:<span class="number">2</span>*k]</div><div class="line">s3 = s[<span class="number">2</span>*k:<span class="number">3</span>*k]; s4 = s[<span class="number">3</span>*k:<span class="number">4</span>*k]</div><div class="line">s3 = s3[::<span class="number">-1</span>]; s4 = s4[::<span class="number">-1</span>]</div><div class="line"></div><div class="line">res = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k+<span class="number">1</span>):</div><div class="line">    res.append([<span class="string">' '</span>]*(k+<span class="number">1</span>))</div><div class="line"></div><div class="line"><span class="comment"># 第一行</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">    res[<span class="number">0</span>][i] = s1[i]</div><div class="line"><span class="comment"># 最后一列</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">    res[i][k] = s2[i]</div><div class="line"><span class="comment"># 最后一行</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k,<span class="number">0</span>,<span class="number">-1</span>):</div><div class="line">    res[k][i] = s3[i<span class="number">-1</span>]</div><div class="line"><span class="comment"># 第一列</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k,<span class="number">0</span>,<span class="number">-1</span>):</div><div class="line">    res[i][<span class="number">0</span>] = s4[i<span class="number">-1</span>]</div><div class="line"><span class="comment"># 输出</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k+<span class="number">1</span>):</div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(k+<span class="number">1</span>):</div><div class="line">        <span class="keyword">if</span> j != k:</div><div class="line">            print(res[i][j],end=<span class="string">""</span>)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(res[i][j])</div></pre></td></tr></table></figure>
 <h2 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h2><p><img src="https://i.imgur.com/pD3Kwmp.png" alt=""><br><img src="https://i.imgur.com/JBuJ0wa.png" alt=""></p>
 <pre><code>import sys
 import math
@@ -445,13 +412,13 @@ import math
 def helper(s):
     if len(s) == 1:
         return 1
-    if s[0] == &#39;0&#39; and s[-1] == &#39;0&#39;:
+    if s[0] == &apos;0&apos; and s[-1] == &apos;0&apos;:
         return 0
-    if s[0] == &#39;0&#39; or s[-1] == &#39;0&#39;:
+    if s[0] == &apos;0&apos; or s[-1] == &apos;0&apos;:
         return 1
     return len(s)
 
-if __name__ == &#39;__main__&#39;:
+if __name__ == &apos;__main__&apos;:
 
     # 输入
     s = input()
@@ -466,7 +433,7 @@ if __name__ == &#39;__main__&#39;:
 <pre><code>import sys
 
 s = input()
-rows, index = map(int,s.split(&#39; &#39;))
+rows, index = map(int,s.split(&apos; &apos;))
 if rows == 0 or index &gt;= rows:
     print(-1)
     sys.exit()
@@ -474,7 +441,7 @@ if rows == 0 or index &gt;= rows:
 re = []
 for i in range(rows):
     s = input()
-    re.append(list(map(int,s.split(&#39; &#39;))))
+    re.append(list(map(int,s.split(&apos; &apos;))))
 
 max_length = 0
 index_i = 0

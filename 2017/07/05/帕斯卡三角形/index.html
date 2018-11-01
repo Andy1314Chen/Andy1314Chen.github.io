@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。  在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [      [1],     [1,1],    [1,2,1],   [1,3,3,1],  [1,4,6,4,1] ]      class Solution(object):         def generate(self, numR">
+<meta name="description" content="给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。  在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [      [1],     [1,1],    [1,2,1],   [1,3,3,1],  [1,4,6,4,1] ] 1234567891011121314class Solution(object):    def generate(s">
 <meta name="keywords" content="python,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode - 帕斯卡三角形">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/帕斯卡三角形/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。  在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [      [1],     [1,1],    [1,2,1],   [1,3,3,1],  [1,4,6,4,1] ]      class Solution(object):         def generate(self, numR">
+<meta property="og:description" content="给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。  在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [      [1],     [1,1],    [1,2,1],   [1,3,3,1],  [1,4,6,4,1] ] 1234567891011121314class Solution(object):    def generate(s">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif">
 <meta property="og:updated_time" content="2018-07-22T08:18:27.093Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode - 帕斯卡三角形">
-<meta name="twitter:description" content="给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。  在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [      [1],     [1,1],    [1,2,1],   [1,3,3,1],  [1,4,6,4,1] ]      class Solution(object):         def generate(self, numR">
+<meta name="twitter:description" content="给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。  在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [      [1],     [1,1],    [1,2,1],   [1,3,3,1],  [1,4,6,4,1] ] 1234567891011121314class Solution(object):    def generate(s">
 <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif">
 
 
@@ -409,22 +409,7 @@
   [1,3,3,1],
  [1,4,6,4,1]
 ]
-</code></pre><pre><code class="Python">
-    class Solution(object):
-        def generate(self, numRows):
-            &quot;&quot;&quot;
-            :type numRows: int
-            :rtype: List[List[int]]
-            &quot;&quot;&quot;
-            res = []
-            for i in range(1, 1+numRows):
-                res.append([1]*i)
-            for i in range(2, numRows):
-                for j in range(1, i):
-                    res[i][j] = res[i-1][j] + res[i-1][j-1]
-            return res
-</code></pre>
-
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generate</span><span class="params">(self, numRows)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type numRows: int</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        """</div><div class="line">        res = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">1</span>+numRows):</div><div class="line">            res.append([<span class="number">1</span>]*i)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, numRows):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, i):</div><div class="line">                res[i][j] = res[i<span class="number">-1</span>][j] + res[i<span class="number">-1</span>][j<span class="number">-1</span>]</div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -468,8 +453,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/打家劫舍/" rel="next" title="LeetCode - 打家劫舍">
-                <i class="fa fa-chevron-left"></i> LeetCode - 打家劫舍
+              <a href="/2017/07/05/爬楼梯/" rel="next" title="LeetCode - 爬楼梯">
+                <i class="fa fa-chevron-left"></i> LeetCode - 爬楼梯
               </a>
             
           </div>
@@ -478,8 +463,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/爬楼梯/" rel="prev" title="LeetCode - 爬楼梯">
-                LeetCode - 爬楼梯 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/打家劫舍/" rel="prev" title="LeetCode - 打家劫舍">
+                LeetCode - 打家劫舍 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

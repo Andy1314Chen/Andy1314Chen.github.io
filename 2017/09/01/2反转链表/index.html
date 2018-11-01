@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。  代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solution:         #">
+<meta name="description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。  代码123456789101112131415161718192021# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Noneclass Solution:    # 返">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="反转链表(剑指offer第十五题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/2反转链表/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。  代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solution:         #">
+<meta property="og:description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。  代码123456789101112131415161718192021# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Noneclass Solution:    # 返">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/60rmm33.jpg">
 <meta property="og:updated_time" content="2018-08-18T07:22:23.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反转链表(剑指offer第十五题)">
-<meta name="twitter:description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。  代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solution:         #">
+<meta name="twitter:description" content="题目描述输入一个链表，反转链表后，输出新链表的表头。  代码123456789101112131415161718192021# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Noneclass Solution:    # 返">
 <meta name="twitter:image" content="https://i.imgur.com/60rmm33.jpg">
 
 
@@ -398,28 +398,7 @@
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
 <p><img src="https://i.imgur.com/60rmm33.jpg" alt=""></p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-    class Solution:
-        # 返回ListNode
-        def ReverseList(self, pHead):
-            # write code here
-            if pHead == None:
-                return None
-
-            newList = None
-            while pHead != None:
-                nextNode = pHead
-                pHead = pHead.next
-                nextNode.next = newList
-                newList = nextNode
-
-            return newList
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class ListNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.next = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回ListNode</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ReverseList</span><span class="params">(self, pHead)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> pHead == <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        </div><div class="line">        newList = <span class="keyword">None</span></div><div class="line">        <span class="keyword">while</span> pHead != <span class="keyword">None</span>:</div><div class="line">            nextNode = pHead</div><div class="line">            pHead = pHead.next</div><div class="line">            nextNode.next = newList</div><div class="line">            newList = nextNode</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> newList</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -464,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/2合并两个排序的链表/" rel="next" title="合并两个排序的链表(剑指offer第十六题)">
-                <i class="fa fa-chevron-left"></i> 合并两个排序的链表(剑指offer第十六题)
+              <a href="/2017/09/01/包含min函数的栈/" rel="next" title="包含min函数的栈(剑指offer第二十题)">
+                <i class="fa fa-chevron-left"></i> 包含min函数的栈(剑指offer第二十题)
               </a>
             
           </div>
@@ -474,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/数值的整数次方/" rel="prev" title="数值的整数次方(剑指offer第十二题)">
-                数值的整数次方(剑指offer第十二题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/用两个栈实现队列/" rel="prev" title="用两个栈实现队列(剑指offer第五题)">
+                用两个栈实现队列(剑指offer第五题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -449,7 +449,7 @@ def loadDataSet(fileName):
     dataMat=[]
     fr=open(fileName)
     for line in fr.readlines():
-        curLine=line.strip().split(&#39;\t&#39;)
+        curLine=line.strip().split(&apos;\t&apos;)
         fltLine=list(map(float,curLine))
         dataMat.append(fltLine)
     return dataMat
@@ -553,8 +553,8 @@ def biKmeans(dataSet,k,distMeas=distEclud):
             len(centList)
         bestClustAss[np.nonzero(bestClustAss[:,0].A==0)[0],0]=\
             bestCentToSplit
-        print(&#39;the bestCentToSplit is: &#39;,bestCentToSplit)
-        print(&#39;the len of bestClustAss is: &#39;,len(bestClustAss))
+        print(&apos;the bestCentToSplit is: &apos;,bestCentToSplit)
+        print(&apos;the len of bestClustAss is: &apos;,len(bestClustAss))
         centList[bestCentToSplit]=bestNewCents[0,:]
         centList.append((bestNewCents[1,:]))
         clusterAssment[np.nonzero(clusterAssment[:,0].A==\
@@ -567,11 +567,11 @@ import json
 import urllib.request
 
 def geoGrab(stAddress,city):
-    apiStem=&#39;http://where.yahooapis.com/geocode?&#39;
+    apiStem=&apos;http://where.yahooapis.com/geocode?&apos;
     params={}
-    params[&#39;flags&#39;]=&#39;J&#39;
-    params[&#39;appid&#39;]=&#39;aaa0VN6k&#39;
-    params[&#39;location&#39;]=&#39;%s %s&#39; % (stAddress,city)
+    params[&apos;flags&apos;]=&apos;J&apos;
+    params[&apos;appid&apos;]=&apos;aaa0VN6k&apos;
+    params[&apos;location&apos;]=&apos;%s %s&apos; % (stAddress,city)
     url_params=urllib.parse.urlencode(params)
     yahooApi=apiStem+url_params
     print(yahooApi)
@@ -581,18 +581,18 @@ def geoGrab(stAddress,city):
 
 from time import sleep
 def massPlaceFind(fileName):
-    fw=open(&#39;places.txt&#39;,&#39;w&#39;)
+    fw=open(&apos;places.txt&apos;,&apos;w&apos;)
     for line in open(fileName).readlines():
         line=line.strip()
-        lineArr=line.split(&#39;\t&#39;)
+        lineArr=line.split(&apos;\t&apos;)
         #用地址查询经度、维度
         retDict=geoGrab(lineArr[1],lineArr[2])
         #解析结果
-        if retDict[&#39;ResultSet&#39;][&#39;Error&#39;]==0:
-            lat=float(retDict[&#39;ResultSet&#39;][&#39;Results&#39;][0][&#39;latitude&#39;])
-            lng=float(retDict[&#39;ResultSet&#39;][&#39;Results&#39;][0][&#39;longitude&#39;])
+        if retDict[&apos;ResultSet&apos;][&apos;Error&apos;]==0:
+            lat=float(retDict[&apos;ResultSet&apos;][&apos;Results&apos;][0][&apos;latitude&apos;])
+            lng=float(retDict[&apos;ResultSet&apos;][&apos;Results&apos;][0][&apos;longitude&apos;])
             print(&quot;%s\t%f\t%f&quot; % (lineArr[0],lat,lng))
-            fw.write(&#39;%s\t%f\t%f\n&#39; % (line,lat,lng))
+            fw.write(&apos;%s\t%f\t%f\n&apos; % (line,lat,lng))
         else:
             print(&quot;error fetching&quot;)
         sleep(1)
@@ -612,20 +612,20 @@ import matplotlib.pyplot as plt
 #聚类并画出结果
 def clusterClubs(numClust=5):
     datList=[]
-    for line in open(&#39;places.txt&#39;).readlines():
-        lineArr=line.split(&#39;\t&#39;)
+    for line in open(&apos;places.txt&apos;).readlines():
+        lineArr=line.split(&apos;\t&apos;)
         datList.append([float(lineArr[4]),float(lineArr[3])])
     datMat=np.mat(datList)
     myCentroids,clustAssing=biKmeans(datMat,numClust,distMeas=distSLC)
     fig=plt.figure()
     rect=[0.1,0.1,1.0,1.0]
-    scatterMarkers=[&#39;s&#39;,&#39;o&#39;,&#39;^&#39;,&#39;8&#39;,&#39;p&#39;,\
-                    &#39;d&#39;,&#39;v&#39;,&#39;h&#39;,&#39;&gt;&#39;,&#39;&lt;&#39;]
+    scatterMarkers=[&apos;s&apos;,&apos;o&apos;,&apos;^&apos;,&apos;8&apos;,&apos;p&apos;,\
+                    &apos;d&apos;,&apos;v&apos;,&apos;h&apos;,&apos;&gt;&apos;,&apos;&lt;&apos;]
     axprops=dict(xticks=[],yticks=[])
-    ax0=fig.add_axes(rect,label=&#39;ax0&#39;,**axprops)
-    imgP=plt.imread(&#39;Portland.png&#39;)
+    ax0=fig.add_axes(rect,label=&apos;ax0&apos;,**axprops)
+    imgP=plt.imread(&apos;Portland.png&apos;)
     ax0.imshow(imgP)
-    ax1=fig.add_axes(rect,label=&#39;ax1&#39;,frameon=False)
+    ax1=fig.add_axes(rect,label=&apos;ax1&apos;,frameon=False)
     for i in range(numClust):
         ptsInCurrCluster=datMat[np.nonzero(clustAssing[:,0].A==i)[0],:]
         markerStyle=scatterMarkers[i % len(scatterMarkers)]
@@ -638,7 +638,7 @@ def clusterClubs(numClust=5):
         x.extend(myCentroids[i].A[:,0])
         y.extend(myCentroids[i].A[:,1])
 
-    ax1.scatter(np.array(x),np.array(y),marker=&#39;+&#39;,s=300)
+    ax1.scatter(np.array(x),np.array(y),marker=&apos;+&apos;,s=300)
     plt.show()
 </code></pre><p><img src="https://i.imgur.com/mbKpVAs.png" alt=""></p>
 <p>这里是聚类为5类，十字箭头是每个簇的聚类中心。</p>

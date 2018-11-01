@@ -457,18 +457,7 @@ def kmp_search(s, t):
 </ul>
 </li>
 </ol>
-<pre><code class="Python">
-    next = [-1]*length
-    k = -1; j = 0 # 初始化
-    while j &lt; length - 1:
-        # s[k]是前缀，s[j]是后缀
-        # k == -1 表示退回到子串最开始，s[j] == s[k]表示匹配
-        if k == -1 or s[j] == s[k]:
-            k += 1; j += 1
-            next[j] = k
-        else:
-            k = next[k]
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  next = [<span class="number">-1</span>]*length</div><div class="line">  k = <span class="number">-1</span>; j = <span class="number">0</span> <span class="comment"># 初始化</span></div><div class="line">  <span class="keyword">while</span> j &lt; length - <span class="number">1</span>:</div><div class="line">      <span class="comment"># s[k]是前缀，s[j]是后缀</span></div><div class="line"><span class="comment"># k == -1 表示退回到子串最开始，s[j] == s[k]表示匹配</span></div><div class="line">      <span class="keyword">if</span> k == <span class="number">-1</span> <span class="keyword">or</span> s[j] == s[k]:</div><div class="line">          k += <span class="number">1</span>; j += <span class="number">1</span></div><div class="line">          next[j] = k</div><div class="line">      <span class="keyword">else</span>:</div><div class="line">          k = next[k]</div></pre></td></tr></table></figure>
 <h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="external">从头到尾彻底理解KMP（2014年8月22日版）</a></li>
 </ol>

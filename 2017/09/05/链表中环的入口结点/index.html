@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="题目描述给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 解法      # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solu">
+<meta name="description" content="题目描述给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 解法 12345678910111213141516171819202122232425# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Non">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="链表中环的入口结点（剑指Offer)">
 <meta property="og:url" content="http://yoursite.com/2017/09/05/链表中环的入口结点/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 解法      # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solu">
+<meta property="og:description" content="题目描述给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 解法 12345678910111213141516171819202122232425# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Non">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/4f0s3Vu.jpg">
 <meta property="og:updated_time" content="2018-08-18T06:48:49.194Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="链表中环的入口结点（剑指Offer)">
-<meta name="twitter:description" content="题目描述给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 解法      # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None     class Solu">
+<meta name="twitter:description" content="题目描述给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 解法 12345678910111213141516171819202122232425# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Non">
 <meta name="twitter:image" content="https://i.imgur.com/4f0s3Vu.jpg">
 
 
@@ -398,32 +398,7 @@
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。</p>
 <h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p><img src="https://i.imgur.com/4f0s3Vu.jpg" alt=""></p>
-<pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-    class Solution:
-        def EntryNodeOfLoop(self, pHead):
-            # write code here
-
-            endPtr = pHead   # 慢指针
-            startPtr = pHead # 快指针
-            while startPtr and startPtr.next :
-                startPtr = startPtr.next.next
-                endPtr = endPtr.next
-                if startPtr == endPtr:
-                    break
-            if startPtr == None or startPtr.next == None: # 无环
-                return None
-
-            startPtr = pHead
-            while startPtr != endPtr:
-                endPtr = endPtr.next
-                startPtr = startPtr.next
-            return startPtr
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class ListNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.next = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">EntryNodeOfLoop</span><span class="params">(self, pHead)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line"></div><div class="line">        endPtr = pHead   <span class="comment"># 慢指针</span></div><div class="line">        startPtr = pHead <span class="comment"># 快指针</span></div><div class="line">        <span class="keyword">while</span> startPtr <span class="keyword">and</span> startPtr.next :</div><div class="line">            startPtr = startPtr.next.next</div><div class="line">            endPtr = endPtr.next</div><div class="line">            <span class="keyword">if</span> startPtr == endPtr:</div><div class="line">                <span class="keyword">break</span></div><div class="line">        <span class="keyword">if</span> startPtr == <span class="keyword">None</span> <span class="keyword">or</span> startPtr.next == <span class="keyword">None</span>: <span class="comment"># 无环</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        </div><div class="line">        startPtr = pHead</div><div class="line">        <span class="keyword">while</span> startPtr != endPtr:</div><div class="line">            endPtr = endPtr.next</div><div class="line">            startPtr = startPtr.next</div><div class="line">        <span class="keyword">return</span> startPtr</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -478,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/05/机器学习实战第四章学习笔记/" rel="prev" title="机器学习实战第四章学习笔记(朴素贝叶斯分类器)">
-                机器学习实战第四章学习笔记(朴素贝叶斯分类器) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/06/数组中重复的数字/" rel="prev" title="数组中重复的数字(剑指Offer)">
+                数组中重复的数字(剑指Offer) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -441,16 +441,7 @@
 </ul>
 </li>
 </ul>
-<pre><code class="Python">
-    # GBDT的基本过程：
-    1. Initialize the outcome
-    2. Iterate from 1 to total number of trees
-      2.1 Update the weights for targets based on previous run (higher for the ones mis-classified)
-      2.2 Fit the model on selected subsample of data(行采样?)
-      2.3 Make predictions on the full set of observations
-      2.4 Update the output with current results taking into account the learning rate
-    3. Return the final output.
-</code></pre>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># GBDT的基本过程：</div><div class="line">1. Initialize the outcome</div><div class="line">2. Iterate from 1 to total number of trees</div><div class="line">  2.1 Update the weights for targets based on previous run (higher for the ones mis-classified)</div><div class="line">  2.2 Fit the model on selected subsample of data(行采样?)</div><div class="line">  2.3 Make predictions on the full set of observations</div><div class="line">  2.4 Update the output with current results taking into account the learning rate</div><div class="line">3. Return the final output.</div></pre></td></tr></table></figure>
 <h4 id="Boosting相关参数"><a href="#Boosting相关参数" class="headerlink" title="Boosting相关参数"></a>Boosting相关参数</h4><ul>
 <li><strong>learning_rate</strong><ul>
 <li>This determines the impact of each tree on the final outcome (step 2.4). GBM works by starting with an initial estimate which is updated using the output of each tree. The learning parameter controls the magnitude of this change in the estimates.</li>
@@ -543,59 +534,19 @@
 <h2 id="泰坦尼克号数据集验证"><a href="#泰坦尼克号数据集验证" class="headerlink" title="泰坦尼克号数据集验证"></a>泰坦尼克号数据集验证</h2><ol>
 <li>使用默认learning_rate, 寻找对应的n_estimators</li>
 </ol>
-<pre><code class="Python">
-    # 首先确定learning_rate为默认， 寻找最优n_estimators
-    from sklearn.model_selection import GridSearchCV
-
-    # 寻找最优n_estimator
-    param_test1 = {&#39;n_estimators&#39;:range(20,81,10)}
-    gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(verbose=1, learning_rate=0.1,
-            min_samples_split=10,min_samples_leaf=5,max_depth=5,
-            max_features=&#39;sqrt&#39;,subsample=0.8,random_state=42), 
-    param_grid = param_test1, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch1.fit(train[predictors].values, y_train)
-    # 70
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 首先确定learning_rate为默认， 寻找最优n_estimators</span></div><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</div><div class="line"></div><div class="line"><span class="comment"># 寻找最优n_estimator</span></div><div class="line">param_test1 = &#123;<span class="string">'n_estimators'</span>:range(<span class="number">20</span>,<span class="number">81</span>,<span class="number">10</span>)&#125;</div><div class="line">gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(verbose=<span class="number">1</span>, learning_rate=<span class="number">0.1</span>,</div><div class="line">        min_samples_split=<span class="number">10</span>,min_samples_leaf=<span class="number">5</span>,max_depth=<span class="number">5</span>,</div><div class="line">        max_features=<span class="string">'sqrt'</span>,subsample=<span class="number">0.8</span>,random_state=<span class="number">42</span>), </div><div class="line">param_grid = param_test1, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch1.fit(train[predictors].values, y_train)</div><div class="line"><span class="comment"># 70</span></div></pre></td></tr></table></figure>
 <ol>
 <li>主要的Boosting参数确定(learning_rate &amp; n_estimators), 下面搜寻决策树相关参数</li>
 </ol>
-<pre><code class="Python">
-    param_test2 = {&#39;max_depth&#39;:range(3,10,1), &#39;min_samples_split&#39;:range(20,100,5)}
-    gsearch2 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70, max_features=&#39;sqrt&#39;, subsample=0.8, random_state=42), 
-    param_grid = param_test2, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch2.fit(train[predictors].values, y_train)
-    gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_
-    # max_depth = 9 , min_samples_split = 65
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">param_test2 = &#123;<span class="string">'max_depth'</span>:range(<span class="number">3</span>,<span class="number">10</span>,<span class="number">1</span>), <span class="string">'min_samples_split'</span>:range(<span class="number">20</span>,<span class="number">100</span>,<span class="number">5</span>)&#125;</div><div class="line">gsearch2 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>, max_features=<span class="string">'sqrt'</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">42</span>), </div><div class="line">param_grid = param_test2, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch2.fit(train[predictors].values, y_train)</div><div class="line">gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_</div><div class="line"><span class="comment"># max_depth = 9 , min_samples_split = 65</span></div></pre></td></tr></table></figure>
 <ul>
 <li>首先搞max_depth &amp; num_samples_split</li>
 <li>再搞min_samples_leaf</li>
 <li>max_features</li>
 </ul>
-<pre><code class="Python">
-
-    param_test3 = { &#39;min_samples_leaf&#39;:range(3,30,2)}
-    gsearch3 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9, min_samples_split=65, max_features=&#39;sqrt&#39;, subsample=0.8, random_state=42), 
-    param_grid = param_test3, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch3.fit(train[predictors].values, y_train)
-    gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_
-
-    # min_samples_leaf = 7
-</code></pre>
-<pre><code class="Python">
-    param_test4 = {&#39;max_features&#39;:range(3,13,2)}
-    gsearch4 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9, min_samples_split=65, min_samples_leaf=7, subsample=0.8, random_state=42),
-    param_grid = param_test4, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch4.fit(train[predictors].values, y_train)
-    gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_
-</code></pre>
-<pre><code class="Python">
-    param_test5 = {&#39;subsample&#39;:[0.5,0.6,0.7,0.75,0.8,0.85,0.9]}
-    gsearch5 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9,min_samples_split=65, min_samples_leaf=7,  random_state=42,max_features=3),
-    param_grid = param_test5, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch5.fit(train[predictors].values, y_train)
-    gsearch5.grid_scores_, gsearch5.best_params_, gsearch5.best_score_
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">param_test3 = &#123; <span class="string">'min_samples_leaf'</span>:range(<span class="number">3</span>,<span class="number">30</span>,<span class="number">2</span>)&#125;</div><div class="line">gsearch3 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>,max_depth=<span class="number">9</span>, min_samples_split=<span class="number">65</span>, max_features=<span class="string">'sqrt'</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">42</span>), </div><div class="line">param_grid = param_test3, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch3.fit(train[predictors].values, y_train)</div><div class="line">gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_</div><div class="line"></div><div class="line"><span class="comment"># min_samples_leaf = 7</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">param_test4 = &#123;<span class="string">'max_features'</span>:range(<span class="number">3</span>,<span class="number">13</span>,<span class="number">2</span>)&#125;</div><div class="line">gsearch4 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>,max_depth=<span class="number">9</span>, min_samples_split=<span class="number">65</span>, min_samples_leaf=<span class="number">7</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">42</span>),</div><div class="line">param_grid = param_test4, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch4.fit(train[predictors].values, y_train)</div><div class="line">gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">param_test5 = &#123;<span class="string">'subsample'</span>:[<span class="number">0.5</span>,<span class="number">0.6</span>,<span class="number">0.7</span>,<span class="number">0.75</span>,<span class="number">0.8</span>,<span class="number">0.85</span>,<span class="number">0.9</span>]&#125;</div><div class="line">gsearch5 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>,max_depth=<span class="number">9</span>,min_samples_split=<span class="number">65</span>, min_samples_leaf=<span class="number">7</span>,  random_state=<span class="number">42</span>,max_features=<span class="number">3</span>),</div><div class="line">param_grid = param_test5, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch5.fit(train[predictors].values, y_train)</div><div class="line">gsearch5.grid_scores_, gsearch5.best_params_, gsearch5.best_score_</div></pre></td></tr></table></figure>
 <p>等以上参数确定后，再调整learning_rate 和 n_estimators, learning_rate降，n_estimators升。</p>
 <p><img src="https://i.imgur.com/2KMrUOw.png" alt="分数提升"></p>
 
@@ -642,8 +593,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/29/机器学习实战第十四章学习笔记/" rel="next" title="机器学习实战第十四章学习笔记(利用SVD简化数据)">
-                <i class="fa fa-chevron-left"></i> 机器学习实战第十四章学习笔记(利用SVD简化数据)
+              <a href="/2017/09/29/Time Series Forecasting with ARIMA in Python3/" rel="next" title="Python3时间序列分析模型ARIMA的简单实用">
+                <i class="fa fa-chevron-left"></i> Python3时间序列分析模型ARIMA的简单实用
               </a>
             
           </div>

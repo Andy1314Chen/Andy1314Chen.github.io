@@ -434,28 +434,28 @@
 <p><img src="https://i.imgur.com/CQMBKFO.png" alt="图5"></p>
 <p>图5 1995-2017年用户的评分数量趋势图</p>
 <p>整体看，随着时间的发展，电影发行数量是增加的，特别是20世纪90年代后，近似指数增长。但是用户的评分数量增长并不是这么强烈，这也说明了，电影的发行数量是比较大的。</p>
-<h4 id="2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K"><a href="#2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K" class="headerlink" title="2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;"></a>2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;</h4><h5 id="-推荐总评分数Top-10"><a href="#-推荐总评分数Top-10" class="headerlink" title="    推荐总评分数Top-10"></a>    推荐总评分数Top-10</h5><pre><code>    Top    Title    中文名    年份
-    1    Toy Story    玩具总动员    1995
-    2    Usual Suspects, The    普通嫌疑犯    1995
-    3    Braveheart    勇敢的心    1995
-    4    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
-    5    Pulp Fiction    低俗小说    1994
-    6    Shawshank Redemption, The    肖申克的救赎    1994
-    7    Forrest Gump    阿甘正传    1994
-    8    Jurassic Park    侏罗纪公园    1993
-    9    Schindler&#39;s List    辛德勒的名单    1993
-    10    Silence of the Lambs, The    沉默的羔羊    1991
-</code></pre><h5 id="-推荐总评分人数-Top-10"><a href="#-推荐总评分人数-Top-10" class="headerlink" title="    推荐总评分人数 Top-10"></a>    推荐总评分人数 Top-10</h5><pre><code>    Top    Title    中文名    年份
-    1    Toy Story    玩具总动员    1995
-    2    Braveheart    勇敢的心    1995
-    3    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
-    4    Pulp Fiction    低俗小说    1994
-    5    Shawshank Redemption, The    肖申克的救赎    1994
-    6    Forrest Gump    阿甘正传    1994
-    7    Jurassic Park    侏罗纪公园    1993
-    8    Schindler&#39;s List    辛德勒的名单    1993
-    9    Terminator 2: Judgment Day    终结者2：审判日    1991
-    10    Silence of the Lambs, The    沉默的羔羊    1991
+<h4 id="2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K"><a href="#2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K" class="headerlink" title="2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;"></a>2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;</h4><h5 id="-推荐总评分数Top-10"><a href="#-推荐总评分数Top-10" class="headerlink" title="    推荐总评分数Top-10"></a>    推荐总评分数Top-10</h5><pre><code>Top    Title    中文名    年份
+1    Toy Story    玩具总动员    1995
+2    Usual Suspects, The    普通嫌疑犯    1995
+3    Braveheart    勇敢的心    1995
+4    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
+5    Pulp Fiction    低俗小说    1994
+6    Shawshank Redemption, The    肖申克的救赎    1994
+7    Forrest Gump    阿甘正传    1994
+8    Jurassic Park    侏罗纪公园    1993
+9    Schindler&apos;s List    辛德勒的名单    1993
+10    Silence of the Lambs, The    沉默的羔羊    1991
+</code></pre><h5 id="-推荐总评分人数-Top-10"><a href="#-推荐总评分人数-Top-10" class="headerlink" title="    推荐总评分人数 Top-10"></a>    推荐总评分人数 Top-10</h5><pre><code>Top    Title    中文名    年份
+1    Toy Story    玩具总动员    1995
+2    Braveheart    勇敢的心    1995
+3    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
+4    Pulp Fiction    低俗小说    1994
+5    Shawshank Redemption, The    肖申克的救赎    1994
+6    Forrest Gump    阿甘正传    1994
+7    Jurassic Park    侏罗纪公园    1993
+8    Schindler&apos;s List    辛德勒的名单    1993
+9    Terminator 2: Judgment Day    终结者2：审判日    1991
+10    Silence of the Lambs, The    沉默的羔羊    1991
 </code></pre><p>最为简单的推荐算法，Top10、Most Popular、Recent Uploads等等，虽然可以推荐质量较高的电影给用户，但是无法做到针对性、有目的性，所有用户得到的推荐信息都是相同的。上面两个Top10推荐的都是最为经典的电影，但是如果电影网站每次总是都推荐这些，用户体验肯定不会好，下面继续一些更复杂，但是也更有效的推荐算法。</p>
 <h4 id="3-基于内容推荐算法；"><a href="#3-基于内容推荐算法；" class="headerlink" title="3)    基于内容推荐算法；"></a>3)    基于内容推荐算法；</h4><p>在Day01中对数据分析，发现对每个movie共有1128个tags, 对每个tag共有10993个movies, 将这些movie的tag看作是该movie的属性特征，构建10993<em>1128的movies</em>tags矩阵，计算相似度。这样不用我们对movie提取属性特征，再根据TFIDE进行向量化，十分方便。</p>
 <pre><code>具体过程如下：
@@ -489,7 +489,7 @@ Top    Title    中文名    年份
 <p>KNN用于基于内容的推荐，这里主要使用sklearn库, KNN在这里需要确定两个参数，K值和距离度量。</p>
 <pre><code># (KNN)基于内容推荐的Top10电影
 Top    Title    中文名    年份
-1    Bug&#39;s Life, A    虫虫特工队    1995
+1    Bug&apos;s Life, A    虫虫特工队    1995
 2    Toy Story 2    玩具总动员2    1998
 3    Shrek    怪物史莱克    1999
 4    Monsters, Inc.    怪兽电力公司    2001
@@ -517,11 +517,11 @@ Top    Title    中文名    年份
         皮尔逊系数相似度    2.7449    2.5089    1.0    0.4118
         余弦相似度    2.7668    2.5309    1.0    0.4085
 </code></pre><p>Train set 与 test set的比例7:3， 从RMSE、MAE、Precision@5、Recall@5几项评估指标看，欧式距离相似度都是较差的，皮尔逊系数和余弦相似度结果相差不大，皮尔逊系数相似度整体要好一些。</p>
-<pre><code>        # 表7 Item-based CF不同相似度方法结果对比
-            RMSE    MAE    Pecision@5    Recall@5
-        欧式距离相似度    3.5100    3.3105    1.0    0.0884
-        皮尔逊系数相似度    3.3133    3.112    1.0    0.1943
-        余弦相似度    3.3037    3.0926    1.0    0.2183
+<pre><code># 表7 Item-based CF不同相似度方法结果对比
+    RMSE    MAE    Pecision@5    Recall@5
+欧式距离相似度    3.5100    3.3105    1.0    0.0884
+皮尔逊系数相似度    3.3133    3.112    1.0    0.1943
+余弦相似度    3.3037    3.0926    1.0    0.2183
 </code></pre><p>从Item-based CF结果看，整体要比User-based CF差一些，3种相似度计算方法中欧式距离相似度仍然是较差的，而皮尔逊系数相似度与余弦相似度类似，但这里余弦相似度要更好一些。</p>
 <p>Collaborative Filtering协同过滤的改进算法，有Top-k collaborative、Bias-subtracted Collaborative Filtering、Top-k &amp; Bias-subtracted Collaborative Filtering等。</p>
 <pre><code># 表8 几种User-based Collaborative Filtering对比结果

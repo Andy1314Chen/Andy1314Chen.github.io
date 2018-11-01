@@ -448,12 +448,12 @@
 
 #标准回归函数和数据导入函数
 def loadDataSet(fileName):
-    numFeat=len(open(fileName).readline().split(&#39;\t&#39;))-1
+    numFeat=len(open(fileName).readline().split(&apos;\t&apos;))-1
     dataMat=[];labelMat=[]
     fr=open(fileName)
     for line in fr.readlines():
         lineArr=[]
-        curLine=line.strip().split(&#39;\t&#39;)
+        curLine=line.strip().split(&apos;\t&apos;)
         for i in range(numFeat):
             lineArr.append(float(curLine[i]))
         dataMat.append(lineArr)
@@ -633,20 +633,20 @@ import urllib.request
 def searchForSet(retX,retY,setNum,yr,numPce,origPrc):
     sleep(10)
     myAPIstr=&quot;AIzaSyD2cR2KFyx12hXu6PFU-wrWot3NXvko8vY&quot;
-    searchURL=&#39;https://www.googleapis.com/shopping/search/v1/public/products?\
-        key=%s&amp;country=US&amp;q=lego+%d&amp;alt=json&#39; % (myAPIstr,setNum)
+    searchURL=&apos;https://www.googleapis.com/shopping/search/v1/public/products?\
+        key=%s&amp;country=US&amp;q=lego+%d&amp;alt=json&apos; % (myAPIstr,setNum)
     pg=urllib.request.urlopen(searchURL)
     retDict=json.loads(pg.read())
-    for i in range(len(retDict[&#39;items&#39;])):
+    for i in range(len(retDict[&apos;items&apos;])):
         try:
-            currItem=retDict[&#39;items&#39;][i]
-            if currItem[&#39;product&#39;][&#39;condition&#39;]==&#39;new&#39;:
+            currItem=retDict[&apos;items&apos;][i]
+            if currItem[&apos;product&apos;][&apos;condition&apos;]==&apos;new&apos;:
                 newFlag=1
             else:
                 newFlag=0
-            listOfInv=currItem[&#39;product&#39;][&#39;inventories&#39;]
+            listOfInv=currItem[&apos;product&apos;][&apos;inventories&apos;]
             for item in listOfInv:
-                sellingPrice=item[&#39;price&#39;]
+                sellingPrice=item[&apos;price&apos;]
                 if sellingPrice&gt;origPrc*0.5:
                     print(&quot;%d\t%d\t%d\t%f\t%f&quot; % \
                           (yr,numPce,newFlag,origPrc,sellingPrice))

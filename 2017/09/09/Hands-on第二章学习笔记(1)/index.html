@@ -423,7 +423,7 @@ def split_train_test(data, test_ratio):
     return data.iloc[train_indices], data.iloc[test_indices]
 
 train_set, test_set = split_train_test(housing, 0.2)
-print(len(train_set), &#39;train +&#39;, len(test_set), &#39;test&#39;)
+print(len(train_set), &apos;train +&apos;, len(test_set), &apos;test&apos;)
 
 # sklearn库中也有对应的函数
 from sklearn.model_selection import train_test_split
@@ -431,41 +431,41 @@ from sklearn.model_selection import train_test_split
 train_set, test_set = train_test_split(housing, test_size=0.2, 
                                             random_state=42)
 </code></pre><p>有时候，test set的划分也不是完全随机的，在数据集非常大时，没有问题。但小数据时，应该保证与原始大环境同分布，避免采样偏差。</p>
-<pre><code>housing[&#39;income_cat&#39;] = np.ceil(housing[&#39;median_income&#39;] / 1.5)
-housing[&#39;income_cat&#39;].where(housing[&#39;income_cat&#39;] &lt; 5, 5.0, inplace=True)
+<pre><code>housing[&apos;income_cat&apos;] = np.ceil(housing[&apos;median_income&apos;] / 1.5)
+housing[&apos;income_cat&apos;].where(housing[&apos;income_cat&apos;] &lt; 5, 5.0, inplace=True)
 
 # 分层采样(stratified sampling)
 from sklearn.model_selection import StratifiedShuffleSplit
 
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
-for train_index, test_index in split.split(housing, housing[&#39;income_cat&#39;]):
+for train_index, test_index in split.split(housing, housing[&apos;income_cat&apos;]):
     strat_train_set = housing.loc[train_index]
     strat_test_set = housing.loc[test_index]
 </code></pre><h4 id="Discover-and-Visualize-the-Data-to-Gain-Insights"><a href="#Discover-and-Visualize-the-Data-to-Gain-Insights" class="headerlink" title="Discover and Visualize the Data to Gain Insights"></a>Discover and Visualize the Data to Gain Insights</h4><pre><code># 创建副本
 housing = strat_train_set.copy()
-housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;)
+housing.plot(kind=&apos;scatter&apos;, x=&apos;longitude&apos;, y=&apos;latitude&apos;)
 </code></pre><p>The radius of each circle represents the district’s population (option s), and the color represents the price (option c). We will use a predefined color map (option cmap) called jet, which ranges from blue (low values) to red (high prices).</p>
-<pre><code>housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;, alpha=0.4,
-    s=housing[&#39;population&#39;]/100, label=&#39;population&#39;,
-    c=&#39;median_house_value&#39;, cmap=plt.get_cmap(&#39;jet&#39;), colorbar=True)
+<pre><code>housing.plot(kind=&apos;scatter&apos;, x=&apos;longitude&apos;, y=&apos;latitude&apos;, alpha=0.4,
+    s=housing[&apos;population&apos;]/100, label=&apos;population&apos;,
+    c=&apos;median_house_value&apos;, cmap=plt.get_cmap(&apos;jet&apos;), colorbar=True)
 plt.legend()
 </code></pre><p><img src="https://i.imgur.com/YeTsaDK.png" alt="California housing prices"></p>
-<pre><code># 相关系数或者说Pearsons&#39;r系数
+<pre><code># 相关系数或者说Pearsons&apos;r系数
 corr_matrix = housing.corr()
-corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False)
+corr_matrix[&apos;median_house_value&apos;].sort_values(ascending=False)
 
 from pandas.tools.plotting import scatter_matrix
 
-attributes = [&#39;median_house_value&#39;,&#39;median_income&#39;,&#39;total_rooms&#39;,
-&#39;housing_median_age&#39;]
+attributes = [&apos;median_house_value&apos;,&apos;median_income&apos;,&apos;total_rooms&apos;,
+&apos;housing_median_age&apos;]
 scatter_matrix(housing[attributes], figsize=(12,8))
 </code></pre><p><img src="https://i.imgur.com/QgLzjhz.png" alt="scatter_matrix"></p>
-<h4 id="Experimenting-with-Attribute-Combinations"><a href="#Experimenting-with-Attribute-Combinations" class="headerlink" title="Experimenting with Attribute Combinations"></a>Experimenting with Attribute Combinations</h4><pre><code>housing[&#39;rooms_per_household&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;households&#39;]
-housing[&#39;bedrooms_per_room&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;total_rooms&#39;]
-housing[&#39;population_per_household&#39;] = housing[&#39;population&#39;]/housing[&#39;households&#39;]
+<h4 id="Experimenting-with-Attribute-Combinations"><a href="#Experimenting-with-Attribute-Combinations" class="headerlink" title="Experimenting with Attribute Combinations"></a>Experimenting with Attribute Combinations</h4><pre><code>housing[&apos;rooms_per_household&apos;] = housing[&apos;total_rooms&apos;]/housing[&apos;households&apos;]
+housing[&apos;bedrooms_per_room&apos;] = housing[&apos;total_rooms&apos;]/housing[&apos;total_rooms&apos;]
+housing[&apos;population_per_household&apos;] = housing[&apos;population&apos;]/housing[&apos;households&apos;]
 
 corr_matrix = housing.corr()
-corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False)
+corr_matrix[&apos;median_house_value&apos;].sort_values(ascending=False)
 </code></pre><h4 id="Data-Cleaning"><a href="#Data-Cleaning" class="headerlink" title="Data Cleaning"></a>Data Cleaning</h4><p>对于缺失值，有3种处理办法</p>
 <ul>
 <li>Get rid of the corresponding districts(丢弃该条样本)</li>
@@ -479,7 +479,7 @@ corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False)
 <h4 id="Handling-Text-and-Categorical-Attributes"><a href="#Handling-Text-and-Categorical-Attributes" class="headerlink" title="Handling Text and Categorical Attributes"></a>Handling Text and Categorical Attributes</h4><pre><code>from sklearn.preprocessing import LabelEncoder
 
 encoder = LabelEncoder()
-housing_cat = housing[&#39;ocean_proximity&#39;]
+housing_cat = housing[&apos;ocean_proximity&apos;]
 housing_cat_encoded = encoder.fit_transform(housing_cat)
 housing_cat_encoded
 
@@ -536,29 +536,29 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 num_pipeline = Pipeline([
-    (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)),
-    (&#39;attribs_adder&#39;, CombinedAttributesAdder()),
-    (&#39;std_scaler&#39;, StandardScaler()),
+    (&apos;imputer&apos;, Imputer(strategy=&apos;median&apos;)),
+    (&apos;attribs_adder&apos;, CombinedAttributesAdder()),
+    (&apos;std_scaler&apos;, StandardScaler()),
 ])
 
 from sklearn.pipeline import FeatureUnion
 
 num_attribs = list(housing_num)
-cat_attribs = [&#39;ocean_proximity&#39;]
+cat_attribs = [&apos;ocean_proximity&apos;]
 
 num_pipeline = Pipeline([
-        (&#39;selector&#39;, DataFrameSelector(num_attribs)),
-        (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)),
-        (&#39;attribs_adder&#39;, CombinedAttributesAdder()),
-        (&#39;std_scaler&#39;, StandardScaler()),
+        (&apos;selector&apos;, DataFrameSelector(num_attribs)),
+        (&apos;imputer&apos;, Imputer(strategy=&apos;median&apos;)),
+        (&apos;attribs_adder&apos;, CombinedAttributesAdder()),
+        (&apos;std_scaler&apos;, StandardScaler()),
     ])
 cat_pipeline = Pipeline([    
-        (&#39;selector&#39;, DataFrameSelector(cat_attribs)),
-        (&#39;label_binarizer&#39;, LabelBinarizer()),
+        (&apos;selector&apos;, DataFrameSelector(cat_attribs)),
+        (&apos;label_binarizer&apos;, LabelBinarizer()),
     ])
 full_pipeline = FeatureUnion(trainsformer_list=[
-    (&#39;num_pipeline&#39;, num_pipeline),
-    (&#39;cat_pipeline&#39;, cat_pipeline),
+    (&apos;num_pipeline&apos;, num_pipeline),
+    (&apos;cat_pipeline&apos;, cat_pipeline),
     ])
 </code></pre>
       
@@ -606,8 +606,8 @@ full_pipeline = FeatureUnion(trainsformer_list=[
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/07/机器学习实战第五章学习笔记/" rel="next" title="机器学习实战第五章学习笔记(Logistic回归)">
-                <i class="fa fa-chevron-left"></i> 机器学习实战第五章学习笔记(Logistic回归)
+              <a href="/2017/09/07/LeetCode148排序链表/" rel="next" title="LeetCode148排序链表">
+                <i class="fa fa-chevron-left"></i> LeetCode148排序链表
               </a>
             
           </div>

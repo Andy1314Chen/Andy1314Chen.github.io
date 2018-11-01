@@ -437,8 +437,8 @@ def propagate(w, b, X, Y):
     cost = np.squeeze(cost)
     assert(cost.shape == ())
 
-    grads = {&#39;dw&#39;:dw,
-             &#39;db&#39;:db}
+    grads = {&apos;dw&apos;:dw,
+             &apos;db&apos;:db}
     return grads, cost
 
 # GRADED FUNCTION: optimize
@@ -448,8 +448,8 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost=False):
         # 正向传播计算cost, 反向传播计算grad
         grads, cost = propagate(w, b, X, Y)
 
-        dw = grads[&#39;dw&#39;]
-        db = grads[&#39;db&#39;]
+        dw = grads[&apos;dw&apos;]
+        db = grads[&apos;db&apos;]
         # 负梯度方向下降
         w = w - learning_rate*dw
         b = b - learning_rate*db
@@ -459,10 +459,10 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost=False):
 
         if print_cost and i%100 == 0:
             print(&quot;Cost after iteration %i: %f&quot; % (i, cost))
-    params = {&#39;w&#39;:w,
-              &#39;b&#39;:b}
-    grads = {&#39;dw&#39;:dw,
-             &#39;db&#39;:db}
+    params = {&apos;w&apos;:w,
+              &apos;b&apos;:b}
+    grads = {&apos;dw&apos;:dw,
+             &apos;db&apos;:db}
     return params, grads, costs
 
 # 预测    
@@ -494,8 +494,8 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
     parameters, grads, costs = optimize(w, b, X_train, Y_train,
                                         num_iterations, learning_rate, print_cost)
     # 得到参数
-    w = parameters[&#39;w&#39;]
-    b = parameters[&#39;b&#39;]
+    w = parameters[&apos;w&apos;]
+    b = parameters[&apos;b&apos;]
 
     # 预测
     Y_prediction_test = predict(w, b, X_test)

@@ -408,11 +408,10 @@
 <p>$$ \frac{\partial {\theta}_j}{\partial \theta} = {\theta}_j + \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j $$</p>
 <p>從上面公式可以注意到，得到的是一個全局最優解，但是每迭代一次，都要用到訓練集所有的數據，如果樣本數目\(m\)很大，那麼可想而知這種方法的迭代速度！所以，<br>這就引入了另外一種方法，隨機梯度下降。</p>
 <p>具體的偽代碼形式為：</p>
-<pre><code>repeat
-{
-</code></pre><p>\( \frac{\partial {\theta}_j}{\partial \theta} = {\theta}_j + \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j \)<br> (for every \( j=0, … , n\) )</p>
-<pre><code>}
-</code></pre><p><strong>優點</strong>：全局最優解；易於並行實現；</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">repeat</span></div><div class="line">&#123;</div></pre></td></tr></table></figure>
+<p>\( \frac{\partial {\theta}_j}{\partial \theta} = {\theta}_j + \frac{1}{m} \sum^{m}_{i=1} (y^i - h_{\theta}(x^i))x^i_j \)<br> (for every \( j=0, … , n\) )</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>優點</strong>：全局最優解；易於並行實現；</p>
 <p><strong>缺點</strong>：當樣本數目很多時，訓練過程會很慢。</p>
 <ol>
 <li>隨機梯度下降法SGD</li>

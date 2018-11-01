@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/寻找旋转排序数组中的最小值2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/2寻找重复数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/寻找旋转排序数组中的最小值2/" itemprop="url">LeetCode - 寻找旋转排序数组中的最小值2</a></h1>
+                <a class="post-title-link" href="/2017/07/05/2寻找重复数/" itemprop="url">LeetCode - 寻找重复数</a></h1>
         
 
         <div class="post-meta">
@@ -395,383 +395,16 @@
       
         
           
-            <p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
-<p>( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。</p>
-<p>请找出其中最小的元素。</p>
-<p>注意数组中可能存在重复的元素。</p>
-<p>示例 1：</p>
-<pre><code>输入: [1,3,5]
-输出: 1
-</code></pre><p>示例 2：</p>
-<pre><code>输入: [2,2,2,0,1]
-输出: 0
-</code></pre><p>说明：</p>
-<p>这道题是 寻找旋转排序数组中的最小值 的延伸题目。<br>允许重复会影响算法的时间复杂度吗？会如何影响，为什么？</p>
-<pre><code>class Solution(object):
-def findMin(self, nums):
-    &quot;&quot;&quot;
-    :type nums: List[int]
-    :rtype: int
-    &quot;&quot;&quot;
-
-    for i in range(1, len(nums)):
-        if nums[i] &lt; nums[i-1]:
-            return nums[i]
-
-    return nums[0]
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/寻找峰值/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/寻找峰值/" itemprop="url">LeetCode - 寻找峰值</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>峰值元素是指其值大于左右相邻值的元素。</p>
-<p>给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。</p>
-<p>数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。</p>
-<p>你可以假设 nums[-1] = nums[n] = -∞。</p>
+            <p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
 <p>示例 1:</p>
-<pre><code>输入: nums = [1,2,3,1]
+<pre><code>输入: [1,3,4,2,2]
 输出: 2
-解释: 3 是峰值元素，你的函数应该返回其索引 2。
 </code></pre><p>示例 2:</p>
-<pre><code>输入: nums = [1,2,1,3,5,6,4]
-输出: 1 或 5 
-解释: 你的函数可以返回索引 1，其峰值元素为 2；
-     或者返回索引 5， 其峰值元素为 6。
-</code></pre><p>说明:</p>
-<p>你的解法应该是 O(logN) 时间复杂度的。</p>
-<pre><code>class Solution(object):
-    def findPeakElement(self, nums):
-        &quot;&quot;&quot;
-        :type nums: List[int]
-        :rtype: int
-        &quot;&quot;&quot;
-        nums = [-1*float(&#39;inf&#39;)] + nums + [-1*float(&#39;inf&#39;)]
-
-        for i in range(1, len(nums)-1):
-            if (nums[i]&gt;nums[i-1])&amp;(nums[i]&gt;nums[i+1]):
-                return i - 1
-
-        return 0
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/Fizz Buzz/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/Fizz Buzz/" itemprop="url">LeetCode - Fizz Buzz</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>写一个程序，输出从 1 到 n 数字的字符串表示。</p>
-<ol>
-<li><p>如果 n 是3的倍数，输出“Fizz”；</p>
-</li>
-<li><p>如果 n 是5的倍数，输出“Buzz”；</p>
-</li>
-</ol>
-<p>3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。</p>
-<p>示例：</p>
-<pre><code>n = 15,
-
-返回:
-[
-    &quot;1&quot;,
-    &quot;2&quot;,
-    &quot;Fizz&quot;,
-    &quot;4&quot;,
-    &quot;Buzz&quot;,
-    &quot;Fizz&quot;,
-    &quot;7&quot;,
-    &quot;8&quot;,
-    &quot;Fizz&quot;,
-    &quot;Buzz&quot;,
-    &quot;11&quot;,
-    &quot;Fizz&quot;,
-    &quot;13&quot;,
-    &quot;14&quot;,
-    &quot;FizzBuzz&quot;
-]
-</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
-<li>从2开始遍历，将其平方，及平方+v的数，倍数全部置0</li>
-<li>求和</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def fizzBuzz(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: List[str]
-            &quot;&quot;&quot;
-            tmp = [&quot;&quot; for v in range(n)]
-            for v in range(2,n,3):
-                tmp[v] += &#39;Fizz&#39;
-            for v in range(4,n,5):
-                tmp[v] += &#39;Buzz&#39;
-            for v in range(n):
-                if tmp[v] == &quot;&quot;:
-                    tmp[v] = str(v+1)
-            return tmp
-</code></pre>
-
+<pre><code>输入: [3,1,3,4,2]
+输出: 3
+</code></pre><p>说明：</p>
+<p>不能更改原数组（假设数组是只读的）。<br>只能使用额外的 O(1) 的空间。<br>时间复杂度小于 O(n2) 。<br>数组中只有一个重复的数字，但它可能不止重复出现一次。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findDuplicate</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        left = <span class="number">0</span>; right = len(nums)<span class="number">-1</span></div><div class="line">        </div><div class="line">        <span class="keyword">while</span> left+<span class="number">1</span> &lt; right:</div><div class="line">            mid = (left + right)//<span class="number">2</span></div><div class="line">            cnt = <span class="number">0</span></div><div class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> nums:</div><div class="line">                <span class="keyword">if</span> (v &gt; mid) &amp; (v &lt;= right):</div><div class="line">                    cnt += <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> cnt &gt; (right - mid):</div><div class="line">                left = mid</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                right = mid</div><div class="line">        </div><div class="line">        <span class="keyword">return</span>  int(right)</div></pre></td></tr></table></figure>
           
         
       
@@ -973,6 +606,321 @@ class Solution(object):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/缺失数字/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/缺失数字/" itemprop="url">LeetCode - 缺失数字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个包含 0, 1, 2, …, n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。</p>
+<p>示例 1:</p>
+<pre><code>输入: [3,0,1]
+输出: 2
+</code></pre><p>示例 2:</p>
+<pre><code>输入: [9,6,4,2,3,5,7,0,1]
+输出: 8
+</code></pre><p>说明:<br>你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现?</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">missingNumber</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        nums = sorted(nums)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)<span class="number">-1</span>):</div><div class="line">            <span class="keyword">if</span> nums[i+<span class="number">1</span>] &gt; nums[i] + <span class="number">1</span>:</div><div class="line">                <span class="keyword">return</span> i + <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> len(nums) == nums[<span class="number">-1</span>]:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        <span class="keyword">else</span>: </div><div class="line">            <span class="keyword">return</span> len(nums)</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/Fizz Buzz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/Fizz Buzz/" itemprop="url">LeetCode - Fizz Buzz</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>写一个程序，输出从 1 到 n 数字的字符串表示。</p>
+<ol>
+<li><p>如果 n 是3的倍数，输出“Fizz”；</p>
+</li>
+<li><p>如果 n 是5的倍数，输出“Buzz”；</p>
+</li>
+</ol>
+<p>3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。</p>
+<p>示例：</p>
+<pre><code>n = 15,
+
+返回:
+[
+    &quot;1&quot;,
+    &quot;2&quot;,
+    &quot;Fizz&quot;,
+    &quot;4&quot;,
+    &quot;Buzz&quot;,
+    &quot;Fizz&quot;,
+    &quot;7&quot;,
+    &quot;8&quot;,
+    &quot;Fizz&quot;,
+    &quot;Buzz&quot;,
+    &quot;11&quot;,
+    &quot;Fizz&quot;,
+    &quot;13&quot;,
+    &quot;14&quot;,
+    &quot;FizzBuzz&quot;
+]
+</code></pre><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>从2开始遍历，将其平方，及平方+v的数，倍数全部置0</li>
+<li>求和</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fizzBuzz</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: List[str]</div><div class="line">        """</div><div class="line">        tmp = [<span class="string">""</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(n)]</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">2</span>,n,<span class="number">3</span>):</div><div class="line">            tmp[v] += <span class="string">'Fizz'</span></div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">4</span>,n,<span class="number">5</span>):</div><div class="line">            tmp[v] += <span class="string">'Buzz'</span></div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> range(n):</div><div class="line">            <span class="keyword">if</span> tmp[v] == <span class="string">""</span>:</div><div class="line">                tmp[v] = str(v+<span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> tmp</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汇总区间/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1076,204 +1024,7 @@ class Solution(object):
 <pre><code>输入: [0,2,3,4,6,8,9]
 输出: [&quot;0&quot;,&quot;2-&gt;4&quot;,&quot;6&quot;,&quot;8-&gt;9&quot;]
 解释: 2,3,4 可组成一个连续的区间; 8,9 可组成一个连续的区间。
-</code></pre><pre><code class="Python">
-    class Solution:
-        def summaryRanges(self, nums):
-            &quot;&quot;&quot;
-            :type nums: List[int]
-            :rtype: List[str]
-            &quot;&quot;&quot;
-            if len(nums)&lt;1:
-                return []
-
-            tmp = []; res = []
-            j = 1; s = str(nums[0])
-
-            while j &lt; len(nums):
-                if nums[j] &gt; nums[j-1] + 1:
-                    tmp.append(s)
-                    s = str(nums[j])
-                    j += 1
-                else:
-                    s += &#39;+&#39; + str(nums[j])
-                    j += 1
-
-            # 最后一个
-            tmp.append(s)
-
-            for s in tmp:
-                s = s.split(&#39;+&#39;)
-                if len(s) &gt; 1:
-                    res.append(s[0]+&quot;-&gt;&quot;+s[-1])
-                else:
-                    res.append(s[0])
-
-            return res
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/存在重复元素2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/存在重复元素2/" itemprop="url">LeetCode - 存在重复元素2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。</p>
-<p>示例 1:</p>
-<pre><code>输入: nums = [1,2,3,1], k = 3
-输出: true
-</code></pre><p>示例 2:</p>
-<pre><code>输入: nums = [1,0,1,1], k = 1
-输出: true
-</code></pre><p>示例 3:</p>
-<pre><code>输入: nums = [1,2,3,1,2,3], k = 2
-输出: false
-</code></pre><pre><code class="Python">
-    class Solution:
-    def containsNearbyDuplicate(self, nums, k):
-        &quot;&quot;&quot;
-        :type nums: List[int]
-        :type k: int
-        :rtype: bool
-        &quot;&quot;&quot;
-        d = {}
-        for i, num in enumerate(nums):
-            if num in d and i - d[num] &lt;= k:
-                return True
-            d[num] = i
-
-        return False
-</code></pre>
-
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">summaryRanges</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[str]</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> len(nums)&lt;<span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> []</div><div class="line">        </div><div class="line">        tmp = []; res = []</div><div class="line">        j = <span class="number">1</span>; s = str(nums[<span class="number">0</span>])</div><div class="line"></div><div class="line">        <span class="keyword">while</span> j &lt; len(nums):</div><div class="line">            <span class="keyword">if</span> nums[j] &gt; nums[j<span class="number">-1</span>] + <span class="number">1</span>:</div><div class="line">                tmp.append(s)</div><div class="line">                s = str(nums[j])</div><div class="line">                j += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                s += <span class="string">'+'</span> + str(nums[j])</div><div class="line">                j += <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="comment"># 最后一个</span></div><div class="line">        tmp.append(s)</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> tmp:</div><div class="line">            s = s.split(<span class="string">'+'</span>)</div><div class="line">            <span class="keyword">if</span> len(s) &gt; <span class="number">1</span>:</div><div class="line">                res.append(s[<span class="number">0</span>]+<span class="string">"-&gt;"</span>+s[<span class="number">-1</span>])</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                res.append(s[<span class="number">0</span>])</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
           
         
       
@@ -1423,35 +1174,7 @@ class Solution(object):
 4   (0 1 0 0)
        ↑   ↑
 </code></pre><p>上面的箭头指出了对应二进制位不同的位置。</p>
-<pre><code class="Python">
-    class Solution(object):
-        def hammingDistance(self, x, y):
-            &quot;&quot;&quot;
-            :type x: int
-            :type y: int
-            :rtype: int
-            &quot;&quot;&quot;
-            bx = [v for v in bin(x)[2:]]
-            by = [v for v in bin(y)[2:]]
-
-            bx.reverse()
-            by.reverse()
-            i = 0; cnt = 0
-            while (i&lt;len(bx))&amp;(i&lt;len(by)):
-                if bx[i] != by[i]:
-                    cnt += 1
-                i += 1
-
-            if len(bx)&gt;i:
-                cnt += bx[i:].count(&#39;1&#39;)
-            if len(by)&gt;i:
-                cnt += by[i:].count(&#39;1&#39;)
-
-            return cnt
-
-            # return bin(x^y).count(&#39;1&#39;)
-</code></pre>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hammingDistance</span><span class="params">(self, x, y)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type x: int</div><div class="line">        :type y: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        bx = [v <span class="keyword">for</span> v <span class="keyword">in</span> bin(x)[<span class="number">2</span>:]]</div><div class="line">        by = [v <span class="keyword">for</span> v <span class="keyword">in</span> bin(y)[<span class="number">2</span>:]]</div><div class="line">        </div><div class="line">        bx.reverse()</div><div class="line">        by.reverse()</div><div class="line">        i = <span class="number">0</span>; cnt = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> (i&lt;len(bx))&amp;(i&lt;len(by)):</div><div class="line">            <span class="keyword">if</span> bx[i] != by[i]:</div><div class="line">                cnt += <span class="number">1</span></div><div class="line">            i += <span class="number">1</span></div><div class="line">            </div><div class="line">        <span class="keyword">if</span> len(bx)&gt;i:</div><div class="line">            cnt += bx[i:].count(<span class="string">'1'</span>)</div><div class="line">        <span class="keyword">if</span> len(by)&gt;i:</div><div class="line">            cnt += by[i:].count(<span class="string">'1'</span>)</div><div class="line">            </div><div class="line">        <span class="keyword">return</span> cnt</div><div class="line">    </div><div class="line">        <span class="comment"># return bin(x^y).count('1')</span></div></pre></td></tr></table></figure>
           
         
       
@@ -1595,28 +1318,7 @@ class Solution(object):
 解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。
 </code></pre><p>进阶:</p>
 <p>如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。</p>
-<pre><code class="Python">
-    class Solution(object):
-        def minSubArrayLen(self, s, nums):
-            &quot;&quot;&quot;
-            :type s: int
-            :type nums: List[int]
-            :rtype: int
-            &quot;&quot;&quot;
-            solution = float(&#39;inf&#39;)
-
-            tmp_sum = 0
-            # j指向子数组的最前端
-            j = 0
-            for i, num in enumerate(nums):
-                tmp_sum += num
-                while tmp_sum &gt;= s: # 大于等于，都是将子数组最前端去掉
-                    solution = min(solution, i-j+1)
-                    tmp_sum -= nums[j]
-                    j += 1
-            return 0 if solution == float(&#39;inf&#39;) else solution
-</code></pre>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minSubArrayLen</span><span class="params">(self, s, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: int</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        solution = float(<span class="string">'inf'</span>)</div><div class="line">        </div><div class="line">        tmp_sum = <span class="number">0</span></div><div class="line">        <span class="comment"># j指向子数组的最前端</span></div><div class="line">        j = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i, num <span class="keyword">in</span> enumerate(nums):</div><div class="line">            tmp_sum += num</div><div class="line">            <span class="keyword">while</span> tmp_sum &gt;= s: <span class="comment"># 大于等于，都是将子数组最前端去掉</span></div><div class="line">                solution = min(solution, i-j+<span class="number">1</span>)</div><div class="line">                tmp_sum -= nums[j]</div><div class="line">                j += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> <span class="number">0</span> <span class="keyword">if</span> solution == float(<span class="string">'inf'</span>) <span class="keyword">else</span> solution</div></pre></td></tr></table></figure>
           
         
       
@@ -1763,59 +1465,157 @@ class Solution(object):
 <p>]</p>
 <p>输出: 7</p>
 <p>解释: 因为路径 1→3→1→1→1 的总和最小。</p>
-<pre><code class="Python">
-    class Solution:
-        def minPathSum(self, grid):
-            &quot;&quot;&quot;
-            :type grid: List[List[int]]
-            :rtype: int
-            &quot;&quot;&quot;
-
-            m = len(grid[0])
-            n = len(grid)
-            tmp = []
-            for i in range(n+1):
-                tmp.append([-1]*(m+1))
-
-            return self.myAns(m, n, grid, tmp)
-
-        def myAns(self, m, n, grid, tmp):
-            if (m &lt;= 0) | (n &lt;= 0):
-                return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意
-            if (m == 1)&amp;(n == 1):
-                return grid[0][0]
-            if tmp[n][m] != -1:
-                return tmp[n][m]
-
-            tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1]            
-            return tmp[n][m]
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minPathSum</span><span class="params">(self, grid)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type grid: List[List[int]]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">		</div><div class="line">        m = len(grid[<span class="number">0</span>])</div><div class="line">        n = len(grid)</div><div class="line">        tmp = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</div><div class="line">            tmp.append([<span class="number">-1</span>]*(m+<span class="number">1</span>))</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> self.myAns(m, n, grid, tmp)</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">myAns</span><span class="params">(self, m, n, grid, tmp)</span>:</span></div><div class="line">        <span class="keyword">if</span> (m &lt;= <span class="number">0</span>) | (n &lt;= <span class="number">0</span>):</div><div class="line">            <span class="keyword">return</span> float(<span class="string">'inf'</span>) <span class="comment"># 最小路径，不应该设置为0， 这里需要特别注意</span></div><div class="line">        <span class="keyword">if</span> (m == <span class="number">1</span>)&amp;(n == <span class="number">1</span>):</div><div class="line">            <span class="keyword">return</span> grid[<span class="number">0</span>][<span class="number">0</span>]</div><div class="line">        <span class="keyword">if</span> tmp[n][m] != <span class="number">-1</span>:</div><div class="line">            <span class="keyword">return</span> tmp[n][m]</div><div class="line"></div><div class="line">        tmp[n][m] = min(self.myAns(m<span class="number">-1</span>, n, grid, tmp), self.myAns(m, n<span class="number">-1</span>, grid, tmp)) + grid[n<span class="number">-1</span>][m<span class="number">-1</span>]            </div><div class="line">        <span class="keyword">return</span> tmp[n][m]</div></pre></td></tr></table></figure>
 <h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
 <li>从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小；</li>
 <li>保持递归过程中的值</li>
 </ol>
-<pre><code class="Python">
-    class Solution:
-        def minPathSum(self, grid):
-            &quot;&quot;&quot;
-            :type grid: List[List[int]]
-            :rtype: int
-            &quot;&quot;&quot;
-            m = len(grid)
-            n = len(grid[0])
-            for i in range(m):# 多少列 横轴
-                for j in range(n):# 多少行 纵轴
-                    if (i==0)&amp;(j==0):
-                        continue
-                    elif i == 0:
-                        grid[i][j] += grid[i][j-1]
-                    elif j == 0:
-                        grid[i][j] += grid[i-1][j]
-                    else:
-                        grid[i][j] += min(grid[i-1][j], grid[i][j-1])
-            return grid[m-1][n-1]
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minPathSum</span><span class="params">(self, grid)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type grid: List[List[int]]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        m = len(grid)</div><div class="line">        n = len(grid[<span class="number">0</span>])</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m):<span class="comment"># 多少列 横轴</span></div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n):<span class="comment"># 多少行 纵轴</span></div><div class="line">                <span class="keyword">if</span> (i==<span class="number">0</span>)&amp;(j==<span class="number">0</span>):</div><div class="line">                    <span class="keyword">continue</span></div><div class="line">                <span class="keyword">elif</span> i == <span class="number">0</span>:</div><div class="line">                    grid[i][j] += grid[i][j<span class="number">-1</span>]</div><div class="line">                <span class="keyword">elif</span> j == <span class="number">0</span>:</div><div class="line">                    grid[i][j] += grid[i<span class="number">-1</span>][j]</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    grid[i][j] += min(grid[i<span class="number">-1</span>][j], grid[i][j<span class="number">-1</span>])</div><div class="line">        <span class="keyword">return</span> grid[m<span class="number">-1</span>][n<span class="number">-1</span>]</div></pre></td></tr></table></figure>
 
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/颠倒二进制位/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/颠倒二进制位/" itemprop="url">LeetCode - 颠倒二进制位</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>颠倒给定的 32 位无符号整数的二进制位。</p>
+<p>示例:</p>
+<pre><code>输入: 43261596
+输出: 964176192
+解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，
+     返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。
+</code></pre><p>进阶:<br>如果多次调用这个函数，你将如何优化你的算法？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># @param n, an integer</span></div><div class="line">    <span class="comment"># @return an integer</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseBits</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="comment"># 32位填充</span></div><div class="line">        bin_1 = bin(n)[<span class="number">2</span>:].zfill(<span class="number">32</span>)</div><div class="line">        bin_1 = [v <span class="keyword">for</span> v <span class="keyword">in</span> bin_1]</div><div class="line">        bin_1.reverse()</div><div class="line">        res = int(<span class="string">''</span>.join(bin_1), <span class="number">2</span>)</div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
           
         
       

@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码     # -*- coding:utf-8 -*-     class Solution:">
+<meta name="description" content="题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码12345678910111213# -*- coding:utf-8 -*-class Solution:">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="旋转数组的最小数字(剑指offer第六题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/旋转数组的最小数字/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码     # -*- coding:utf-8 -*-     class Solution:">
+<meta property="og:description" content="题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码12345678910111213# -*- coding:utf-8 -*-class Solution:">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-25T15:00:58.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="旋转数组的最小数字(剑指offer第六题)">
-<meta name="twitter:description" content="题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码     # -*- coding:utf-8 -*-     class Solution:">
+<meta name="twitter:description" content="题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码12345678910111213# -*- coding:utf-8 -*-class Solution:">
 
 
 
@@ -395,20 +395,7 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def minNumberInRotateArray(self, rotateArray):
-            # write code here
-            if len(rotateArray) &lt; 1:
-                return 0
-            i = 1
-            while i &lt; len(rotateArray):
-                if rotateArray[i] &lt; rotateArray[i-1]:
-                    return rotateArray[i]
-                i += 1
-            return rotateArray[-1]
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minNumberInRotateArray</span><span class="params">(self, rotateArray)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> len(rotateArray) &lt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt; len(rotateArray):</div><div class="line">            <span class="keyword">if</span> rotateArray[i] &lt; rotateArray[i<span class="number">-1</span>]:</div><div class="line">                <span class="keyword">return</span> rotateArray[i]</div><div class="line">            i += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> rotateArray[<span class="number">-1</span>]</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -453,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/顺时针打印矩阵/" rel="next" title="顺时针打印矩阵(剑指offer第十九题)">
-                <i class="fa fa-chevron-left"></i> 顺时针打印矩阵(剑指offer第十九题)
+              <a href="/2017/09/01/菲波那切数列/" rel="next" title="菲波那切数列(剑指offer第七题)">
+                <i class="fa fa-chevron-left"></i> 菲波那切数列(剑指offer第七题)
               </a>
             
           </div>
@@ -463,8 +450,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/菲波那切数列/" rel="prev" title="菲波那切数列(剑指offer第七题)">
-                菲波那切数列(剑指offer第七题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/二进制中1的个数/" rel="prev" title="二进制中1的个数(剑指offer第十一题)">
+                二进制中1的个数(剑指offer第十一题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

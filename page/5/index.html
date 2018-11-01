@@ -447,7 +447,7 @@ def loadDataSet(fileName):
     dataMat=[]
     fr=open(fileName)
     for line in fr.readlines():
-        curLine=line.strip().split(&#39;\t&#39;)
+        curLine=line.strip().split(&apos;\t&apos;)
         fltLine=list(map(float,curLine))
         dataMat.append(fltLine)
     return dataMat
@@ -551,8 +551,8 @@ def biKmeans(dataSet,k,distMeas=distEclud):
             len(centList)
         bestClustAss[np.nonzero(bestClustAss[:,0].A==0)[0],0]=\
             bestCentToSplit
-        print(&#39;the bestCentToSplit is: &#39;,bestCentToSplit)
-        print(&#39;the len of bestClustAss is: &#39;,len(bestClustAss))
+        print(&apos;the bestCentToSplit is: &apos;,bestCentToSplit)
+        print(&apos;the len of bestClustAss is: &apos;,len(bestClustAss))
         centList[bestCentToSplit]=bestNewCents[0,:]
         centList.append((bestNewCents[1,:]))
         clusterAssment[np.nonzero(clusterAssment[:,0].A==\
@@ -565,11 +565,11 @@ import json
 import urllib.request
 
 def geoGrab(stAddress,city):
-    apiStem=&#39;http://where.yahooapis.com/geocode?&#39;
+    apiStem=&apos;http://where.yahooapis.com/geocode?&apos;
     params={}
-    params[&#39;flags&#39;]=&#39;J&#39;
-    params[&#39;appid&#39;]=&#39;aaa0VN6k&#39;
-    params[&#39;location&#39;]=&#39;%s %s&#39; % (stAddress,city)
+    params[&apos;flags&apos;]=&apos;J&apos;
+    params[&apos;appid&apos;]=&apos;aaa0VN6k&apos;
+    params[&apos;location&apos;]=&apos;%s %s&apos; % (stAddress,city)
     url_params=urllib.parse.urlencode(params)
     yahooApi=apiStem+url_params
     print(yahooApi)
@@ -579,18 +579,18 @@ def geoGrab(stAddress,city):
 
 from time import sleep
 def massPlaceFind(fileName):
-    fw=open(&#39;places.txt&#39;,&#39;w&#39;)
+    fw=open(&apos;places.txt&apos;,&apos;w&apos;)
     for line in open(fileName).readlines():
         line=line.strip()
-        lineArr=line.split(&#39;\t&#39;)
+        lineArr=line.split(&apos;\t&apos;)
         #用地址查询经度、维度
         retDict=geoGrab(lineArr[1],lineArr[2])
         #解析结果
-        if retDict[&#39;ResultSet&#39;][&#39;Error&#39;]==0:
-            lat=float(retDict[&#39;ResultSet&#39;][&#39;Results&#39;][0][&#39;latitude&#39;])
-            lng=float(retDict[&#39;ResultSet&#39;][&#39;Results&#39;][0][&#39;longitude&#39;])
+        if retDict[&apos;ResultSet&apos;][&apos;Error&apos;]==0:
+            lat=float(retDict[&apos;ResultSet&apos;][&apos;Results&apos;][0][&apos;latitude&apos;])
+            lng=float(retDict[&apos;ResultSet&apos;][&apos;Results&apos;][0][&apos;longitude&apos;])
             print(&quot;%s\t%f\t%f&quot; % (lineArr[0],lat,lng))
-            fw.write(&#39;%s\t%f\t%f\n&#39; % (line,lat,lng))
+            fw.write(&apos;%s\t%f\t%f\n&apos; % (line,lat,lng))
         else:
             print(&quot;error fetching&quot;)
         sleep(1)
@@ -610,20 +610,20 @@ import matplotlib.pyplot as plt
 #聚类并画出结果
 def clusterClubs(numClust=5):
     datList=[]
-    for line in open(&#39;places.txt&#39;).readlines():
-        lineArr=line.split(&#39;\t&#39;)
+    for line in open(&apos;places.txt&apos;).readlines():
+        lineArr=line.split(&apos;\t&apos;)
         datList.append([float(lineArr[4]),float(lineArr[3])])
     datMat=np.mat(datList)
     myCentroids,clustAssing=biKmeans(datMat,numClust,distMeas=distSLC)
     fig=plt.figure()
     rect=[0.1,0.1,1.0,1.0]
-    scatterMarkers=[&#39;s&#39;,&#39;o&#39;,&#39;^&#39;,&#39;8&#39;,&#39;p&#39;,\
-                    &#39;d&#39;,&#39;v&#39;,&#39;h&#39;,&#39;&gt;&#39;,&#39;&lt;&#39;]
+    scatterMarkers=[&apos;s&apos;,&apos;o&apos;,&apos;^&apos;,&apos;8&apos;,&apos;p&apos;,\
+                    &apos;d&apos;,&apos;v&apos;,&apos;h&apos;,&apos;&gt;&apos;,&apos;&lt;&apos;]
     axprops=dict(xticks=[],yticks=[])
-    ax0=fig.add_axes(rect,label=&#39;ax0&#39;,**axprops)
-    imgP=plt.imread(&#39;Portland.png&#39;)
+    ax0=fig.add_axes(rect,label=&apos;ax0&apos;,**axprops)
+    imgP=plt.imread(&apos;Portland.png&apos;)
     ax0.imshow(imgP)
-    ax1=fig.add_axes(rect,label=&#39;ax1&#39;,frameon=False)
+    ax1=fig.add_axes(rect,label=&apos;ax1&apos;,frameon=False)
     for i in range(numClust):
         ptsInCurrCluster=datMat[np.nonzero(clustAssing[:,0].A==i)[0],:]
         markerStyle=scatterMarkers[i % len(scatterMarkers)]
@@ -636,7 +636,7 @@ def clusterClubs(numClust=5):
         x.extend(myCentroids[i].A[:,0])
         y.extend(myCentroids[i].A[:,1])
 
-    ax1.scatter(np.array(x),np.array(y),marker=&#39;+&#39;,s=300)
+    ax1.scatter(np.array(x),np.array(y),marker=&apos;+&apos;,s=300)
     plt.show()
 </code></pre><p><img src="https://i.imgur.com/mbKpVAs.png" alt=""></p>
 <p>这里是聚类为5类，十字箭头是每个簇的聚类中心。</p>
@@ -833,7 +833,7 @@ def loadDataSet(fileName):
     dataMat=[]
     fr=open(fileName)
     for line in fr.readlines():
-        curLine=line.strip().split(&#39;\t&#39;)
+        curLine=line.strip().split(&apos;\t&apos;)
         #将每行映射成浮点型
         fltLine=list(map(float,curLine))
         dataMat.append(fltLine)
@@ -860,14 +860,14 @@ def createTree(dataSet,leafType=regLeaf,errType=regErr,ops=(1,4)):
     if feat==None:
         return val
     retTree={}
-    retTree[&#39;spInd&#39;]=feat
-    retTree[&#39;spVal&#39;]=val
+    retTree[&apos;spInd&apos;]=feat
+    retTree[&apos;spVal&apos;]=val
     #根据最佳划分特征，划分成左右两个数据集
     lSet,rSet=binSplitDataSet(dataSet,feat,val)
     #左子树继续递归调用
-    retTree[&#39;left&#39;]=createTree(lSet,leafType,errType,ops)
+    retTree[&apos;left&apos;]=createTree(lSet,leafType,errType,ops)
     #右子树继续递归调用
-    retTree[&#39;right&#39;]=createTree(rSet,leafType,errType,ops)
+    retTree[&apos;right&apos;]=createTree(rSet,leafType,errType,ops)
     return retTree
 </code></pre><h2 id="将CART算法用于回归"><a href="#将CART算法用于回归" class="headerlink" title="将CART算法用于回归"></a>将CART算法用于回归</h2><p>要对数据的复杂关系建模，已经决定借用树结构来帮助切分数据，那么如何实现数据的切分呢？<br>怎么才能知道是否已经充分切分呢？这些问题的答案取决于叶节点的建模方式。回归树假设叶节点是常数值，这种策略认为数据中的复杂关系可以用树结构来概括。</p>
 <p>使用数据集的总方差。</p>
@@ -936,34 +936,34 @@ def chooseBestSplit(dataSet,leafType=regLeaf,errType=regErr,ops=(1,4)):
 
 #用于判断obj是否是一棵树
 def isTree(obj):
-    return (type(obj).__name__==&#39;dict&#39;)
+    return (type(obj).__name__==&apos;dict&apos;)
 
 def getMean(tree):
-    if isTree(tree[&#39;right&#39;]):
-        tree[&#39;right&#39;]=getMean(tree[&#39;right&#39;])
-    if isTree(tree[&#39;left&#39;]):
-        tree[&#39;left&#39;]=getMean(tree[&#39;left&#39;])
-    return (tree[&#39;left&#39;]+tree[&#39;right&#39;])/2.0
+    if isTree(tree[&apos;right&apos;]):
+        tree[&apos;right&apos;]=getMean(tree[&apos;right&apos;])
+    if isTree(tree[&apos;left&apos;]):
+        tree[&apos;left&apos;]=getMean(tree[&apos;left&apos;])
+    return (tree[&apos;left&apos;]+tree[&apos;right&apos;])/2.0
 
 def prune(tree, testData):
     if np.shape(testData)[0] == 0: 
         return getMean(tree) #if we have no test data collapse the tree
 
-    if (isTree(tree[&#39;right&#39;]) or isTree(tree[&#39;left&#39;])):#if the branches are not trees try to prune them
-        lSet, rSet = binSplitDataSet(testData, tree[&#39;spInd&#39;], tree[&#39;spVal&#39;])
+    if (isTree(tree[&apos;right&apos;]) or isTree(tree[&apos;left&apos;])):#if the branches are not trees try to prune them
+        lSet, rSet = binSplitDataSet(testData, tree[&apos;spInd&apos;], tree[&apos;spVal&apos;])
 
-    if isTree(tree[&#39;left&#39;]): 
-        tree[&#39;left&#39;] = prune(tree[&#39;left&#39;], lSet)
+    if isTree(tree[&apos;left&apos;]): 
+        tree[&apos;left&apos;] = prune(tree[&apos;left&apos;], lSet)
 
-    if isTree(tree[&#39;right&#39;]):
-        tree[&#39;right&#39;] =  prune(tree[&#39;right&#39;], rSet)
+    if isTree(tree[&apos;right&apos;]):
+        tree[&apos;right&apos;] =  prune(tree[&apos;right&apos;], rSet)
 
     #if they are now both leafs, see if we can merge them
-    if (not isTree(tree[&#39;left&#39;])) and (not isTree(tree[&#39;right&#39;])):
-        lSet, rSet = binSplitDataSet(testData, tree[&#39;spInd&#39;], tree[&#39;spVal&#39;])
-        errorNoMerge = np.sum(np.power(lSet[:,-1] - tree[&#39;left&#39;],2)) +\
-            np.sum(np.power(rSet[:,-1] - tree[&#39;right&#39;],2))
-        treeMean = (tree[&#39;left&#39;]+tree[&#39;right&#39;])/2.0
+    if (not isTree(tree[&apos;left&apos;])) and (not isTree(tree[&apos;right&apos;])):
+        lSet, rSet = binSplitDataSet(testData, tree[&apos;spInd&apos;], tree[&apos;spVal&apos;])
+        errorNoMerge = np.sum(np.power(lSet[:,-1] - tree[&apos;left&apos;],2)) +\
+            np.sum(np.power(rSet[:,-1] - tree[&apos;right&apos;],2))
+        treeMean = (tree[&apos;left&apos;]+tree[&apos;right&apos;])/2.0
 
         errorMerge = np.sum(np.power(testData[:,-1] - treeMean,2))
         if errorMerge &lt; errorNoMerge: 
@@ -983,8 +983,8 @@ def linearSolve(dataSet):
     X[:,1:n]=dataSet[:,0:n-1];Y=dataSet[:,-1]
     xTx=X.T*X
     if np.linalg.det(xTx)==0.0:
-        raise NameError(&#39;This matrix is singular, cannot do inverse,\n\
-                        try increasing the second value of ops&#39;)
+        raise NameError(&apos;This matrix is singular, cannot do inverse,\n\
+                        try increasing the second value of ops&apos;)
     ws=xTx.I*(X.T*Y)
     return ws,X,Y
 
@@ -1010,16 +1010,16 @@ def modelTreeEval(model,inDat):
 def treeForeCast(tree,inData,modelEval=regTreeEval):
     if not isTree(tree):
         return modelEval(tree,inData)
-    if inData[tree[&#39;spInd&#39;]]&gt;tree[&#39;spVal&#39;]:
-        if isTree(tree[&#39;left&#39;]):
-            return treeForeCast(tree[&#39;left&#39;],inData,modelEval)
+    if inData[tree[&apos;spInd&apos;]]&gt;tree[&apos;spVal&apos;]:
+        if isTree(tree[&apos;left&apos;]):
+            return treeForeCast(tree[&apos;left&apos;],inData,modelEval)
         else:
-            return modelEval(tree[&#39;left&#39;],inData)
+            return modelEval(tree[&apos;left&apos;],inData)
     else:
-        if isTree(tree[&#39;right&#39;]):
-            return treeForeCast(tree[&#39;right&#39;],inData,modelEval)
+        if isTree(tree[&apos;right&apos;]):
+            return treeForeCast(tree[&apos;right&apos;],inData,modelEval)
         else:
-            return modelEval(tree[&#39;right&#39;],inData)
+            return modelEval(tree[&apos;right&apos;],inData)
 
 def createForeCast(tree,testData,modelEval=regTreeEval):
     m=len(testData)
@@ -1043,7 +1043,7 @@ import numpy as np
 from tkinter import *
 import regTrees
 import matplotlib
-matplotlib.use(&#39;TkAgg&#39;)
+matplotlib.use(&apos;TkAgg&apos;)
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
@@ -1070,14 +1070,14 @@ def getInputs():
         tolN=10
         print(&quot;enter Integer for tolN&quot;)
         tolNentry.delete(0,END)
-        tolNentry.insert(0,&#39;10&#39;)
+        tolNentry.insert(0,&apos;10&apos;)
     try:
         tolS=float(tolSentry.get())
     except:
         tolS=1.0
         print(&quot;enter Float for tols&quot;)
         tolSentry.delete(0,END)
-        tolSentry.insert(0,&#39;1.0&#39;)
+        tolSentry.insert(0,&apos;1.0&apos;)
     return tolN,tolS
 
 
@@ -1096,11 +1096,11 @@ reDraw.canvas.get_tk_widget().grid(row=0,columnspan=3)
 Label(root,text=&quot;tolN&quot;).grid(row=1,column=0)
 tolNentry=Entry(root)
 tolNentry.grid(row=1,column=1)
-tolNentry.insert(0,&#39;10&#39;)
-Label(root,text=&#39;tolS&#39;).grid(row=2,column=0)
+tolNentry.insert(0,&apos;10&apos;)
+Label(root,text=&apos;tolS&apos;).grid(row=2,column=0)
 tolSentry=Entry(root)
 tolSentry.grid(row=2,column=1)
-tolSentry.insert(0,&#39;1.0&#39;)
+tolSentry.insert(0,&apos;1.0&apos;)
 Button(root,text=&quot;ReDraw&quot;,command=drawNewTree).grid(row=1,column=2,\
       rowspan=3)
 
@@ -1108,7 +1108,7 @@ chkBtnVar=IntVar()
 chkBtn=Checkbutton(root,text=&quot;Model Tree&quot;,variable=chkBtnVar)
 chkBtn.grid(row=3,column=0,columnspan=2)
 
-reDraw.rawDat=np.mat(regTrees.loadDataSet(&#39;sine.txt&#39;))
+reDraw.rawDat=np.mat(regTrees.loadDataSet(&apos;sine.txt&apos;))
 reDraw.testDat=np.arange(np.min(reDraw.rawDat[:,0]),\
                          np.max(reDraw.rawDat[:,0]),0.01)
 reDraw(1.0,10)
@@ -1303,12 +1303,12 @@ root.mainloop()
 
 #标准回归函数和数据导入函数
 def loadDataSet(fileName):
-    numFeat=len(open(fileName).readline().split(&#39;\t&#39;))-1
+    numFeat=len(open(fileName).readline().split(&apos;\t&apos;))-1
     dataMat=[];labelMat=[]
     fr=open(fileName)
     for line in fr.readlines():
         lineArr=[]
-        curLine=line.strip().split(&#39;\t&#39;)
+        curLine=line.strip().split(&apos;\t&apos;)
         for i in range(numFeat):
             lineArr.append(float(curLine[i]))
         dataMat.append(lineArr)
@@ -1488,20 +1488,20 @@ import urllib.request
 def searchForSet(retX,retY,setNum,yr,numPce,origPrc):
     sleep(10)
     myAPIstr=&quot;AIzaSyD2cR2KFyx12hXu6PFU-wrWot3NXvko8vY&quot;
-    searchURL=&#39;https://www.googleapis.com/shopping/search/v1/public/products?\
-        key=%s&amp;country=US&amp;q=lego+%d&amp;alt=json&#39; % (myAPIstr,setNum)
+    searchURL=&apos;https://www.googleapis.com/shopping/search/v1/public/products?\
+        key=%s&amp;country=US&amp;q=lego+%d&amp;alt=json&apos; % (myAPIstr,setNum)
     pg=urllib.request.urlopen(searchURL)
     retDict=json.loads(pg.read())
-    for i in range(len(retDict[&#39;items&#39;])):
+    for i in range(len(retDict[&apos;items&apos;])):
         try:
-            currItem=retDict[&#39;items&#39;][i]
-            if currItem[&#39;product&#39;][&#39;condition&#39;]==&#39;new&#39;:
+            currItem=retDict[&apos;items&apos;][i]
+            if currItem[&apos;product&apos;][&apos;condition&apos;]==&apos;new&apos;:
                 newFlag=1
             else:
                 newFlag=0
-            listOfInv=currItem[&#39;product&#39;][&#39;inventories&#39;]
+            listOfInv=currItem[&apos;product&apos;][&apos;inventories&apos;]
             for item in listOfInv:
-                sellingPrice=item[&#39;price&#39;]
+                sellingPrice=item[&apos;price&apos;]
                 if sellingPrice&gt;origPrc*0.5:
                     print(&quot;%d\t%d\t%d\t%f\t%f&quot; % \
                           (yr,numPce,newFlag,origPrc,sellingPrice))
@@ -1698,38 +1698,7 @@ def crossValidation(xArr,yArr,numVal=10):
         
           
             <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一颗二叉树的跟节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class TreeNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.left = None
-    #         self.right = None
-    class Solution:
-        # 返回二维列表，内部每个列表表示找到的路径
-        def FindPath(self, root, expectNumber):
-            # write code here
-            tmp = []; res = []
-            return self.myWay(root, expectNumber, res, tmp)
-
-        def myWay(self, root, expectNumber, res, tmp):
-            if root == None:
-                return res
-            # 前序遍历
-            tmp.append(root.val)
-            # 叶子节点
-            if root.left == None and root.right == None:
-                if sum(tmp) == expectNumber:
-                    res.append(tmp[:])
-            # 非叶子节点
-            else:
-                if root.left:
-                    self.myWay(root.left, expectNumber, res, tmp)
-                if root.right:
-                    self.myWay(root.right, expectNumber, res, tmp)
-            tmp.pop()
-            return res
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class TreeNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.left = None</span></div><div class="line"><span class="comment">#         self.right = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回二维列表，内部每个列表表示找到的路径</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindPath</span><span class="params">(self, root, expectNumber)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        tmp = []; res = []</div><div class="line">        <span class="keyword">return</span> self.myWay(root, expectNumber, res, tmp)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">myWay</span><span class="params">(self, root, expectNumber, res, tmp)</span>:</span></div><div class="line">        <span class="keyword">if</span> root == <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">return</span> res</div><div class="line">        <span class="comment"># 前序遍历</span></div><div class="line">        tmp.append(root.val)</div><div class="line">        <span class="comment"># 叶子节点</span></div><div class="line">        <span class="keyword">if</span> root.left == <span class="keyword">None</span> <span class="keyword">and</span> root.right == <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">if</span> sum(tmp) == expectNumber:</div><div class="line">                res.append(tmp[:])</div><div class="line">        <span class="comment"># 非叶子节点</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> root.left:</div><div class="line">                self.myWay(root.left, expectNumber, res, tmp)</div><div class="line">            <span class="keyword">if</span> root.right:</div><div class="line">                self.myWay(root.right, expectNumber, res, tmp)</div><div class="line">        tmp.pop()</div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
 
           
         
@@ -1868,38 +1837,7 @@ def crossValidation(xArr,yArr,numVal=10):
         
           
             <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def VerifySquenceOfBST(self, sequence):
-            # write code here
-            if len(sequence) &lt; 1:
-                return False
-            if len(sequence) == 1:
-                return True
-            # 根节点
-            root = sequence[-1]
-            # 左子树
-            for i, v in enumerate(sequence):
-                if v &gt; root:
-                    break
-            left_seq = sequence[:i]
-            # 右子树
-            for v in sequence[i:-1]:
-                if v &lt; root:
-                    return False
-            right_seq = sequence[i:-1]
-            # 存在左子树
-            left_flag = True
-            if i &gt; 0:
-                left_flag = self.VerifySquenceOfBST(left_seq)
-            # 存在右子树
-            right_flag = True
-            if i &lt; len(sequence)-1:
-                right_flag = self.VerifySquenceOfBST(right_seq)
-
-            return left_flag and right_flag
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">VerifySquenceOfBST</span><span class="params">(self, sequence)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> len(sequence) &lt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">if</span> len(sequence) == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="comment"># 根节点</span></div><div class="line">        root = sequence[<span class="number">-1</span>]</div><div class="line">        <span class="comment"># 左子树</span></div><div class="line">        <span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(sequence):</div><div class="line">            <span class="keyword">if</span> v &gt; root:</div><div class="line">                <span class="keyword">break</span></div><div class="line">        left_seq = sequence[:i]</div><div class="line">        <span class="comment"># 右子树</span></div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> sequence[i:<span class="number">-1</span>]:</div><div class="line">            <span class="keyword">if</span> v &lt; root:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        right_seq = sequence[i:<span class="number">-1</span>]</div><div class="line">        <span class="comment"># 存在左子树</span></div><div class="line">        left_flag = <span class="keyword">True</span></div><div class="line">        <span class="keyword">if</span> i &gt; <span class="number">0</span>:</div><div class="line">            left_flag = self.VerifySquenceOfBST(left_seq)</div><div class="line">        <span class="comment"># 存在右子树</span></div><div class="line">        right_flag = <span class="keyword">True</span></div><div class="line">        <span class="keyword">if</span> i &lt; len(sequence)<span class="number">-1</span>:</div><div class="line">            right_flag = self.VerifySquenceOfBST(right_seq)</div><div class="line">            </div><div class="line">        <span class="keyword">return</span> left_flag <span class="keyword">and</span> right_flag</div></pre></td></tr></table></figure>
 
           
         
@@ -2122,7 +2060,7 @@ def loadSimpData():
 def stumpClassify(dataMatrix,dimen,threshVal,threshIneq):
     retArray=np.ones((np.shape(dataMatrix)[0],1))
     #该特征小于等于阈值
-    if threshIneq==&#39;lt&#39;:
+    if threshIneq==&apos;lt&apos;:
         retArray[dataMatrix[:,dimen]&lt;=threshVal]=-1.0
     else:
         retArray[dataMatrix[:,dimen]&gt;threshVal]=-1.0
@@ -2143,7 +2081,7 @@ def buildStump(dataArr,classLabels,D):
         #在特征的不同阈值上遍历
         for j in range(-1,int(numSteps)+1):
             #区别大于阈值和小于阈值两种情况
-            for inequal in [&#39;lt&#39;,&#39;gt&#39;]:
+            for inequal in [&apos;lt&apos;,&apos;gt&apos;]:
                 threshVal=(rangeMin+float(j)*stepSize)
                 predictedVals=stumpClassify(dataMatrix,i,threshVal,inequal)
                 errArr=np.mat(np.ones((m,1)))
@@ -2158,9 +2096,9 @@ def buildStump(dataArr,classLabels,D):
                 if weightedError&lt;minError:
                     minError=weightedError
                     bestClassEst=predictedVals.copy()
-                    bestStump[&#39;dim&#39;]=i
-                    bestStump[&#39;thresh&#39;]=threshVal
-                    bestStump[&#39;ineq&#39;]=inequal
+                    bestStump[&apos;dim&apos;]=i
+                    bestStump[&apos;thresh&apos;]=threshVal
+                    bestStump[&apos;ineq&apos;]=inequal
     return bestStump,minError,bestClassEst
 </code></pre><h2 id="完整AdaBoost算法的实现"><a href="#完整AdaBoost算法的实现" class="headerlink" title="完整AdaBoost算法的实现"></a>完整AdaBoost算法的实现</h2><p>这一节中，将使用多个弱分类器来构建AdaBoost分类器。</p>
 <p>整个实现的伪代码如下：</p>
@@ -2186,7 +2124,7 @@ def buildStump(dataArr,classLabels,D):
        # print(&quot;D:&quot;,D.T)
         #alpha表示该次分类器的权重
         alpha=float(0.5*np.log((1.0-error)/max(error,1e-16)))
-        bestStump[&#39;alpha&#39;]=alpha
+        bestStump[&apos;alpha&apos;]=alpha
         #保存该次迭代分类器的信息
         weakClassArr.append(bestStump)
         #该次迭代分类器对样本的估计值
@@ -2213,11 +2151,11 @@ def adaClassify(datToClass,classifierArr):
     m=np.shape(dataMatrix)[0]
     aggClassEst=np.mat(np.zeros((m,1)))
     for i in range(len(classifierArr)):
-        classEst=stumpClassify(dataMatrix,classifierArr[i][&#39;dim&#39;],\
-                               classifierArr[i][&#39;thresh&#39;],\
-                               classifierArr[i][&#39;ineq&#39;])
+        classEst=stumpClassify(dataMatrix,classifierArr[i][&apos;dim&apos;],\
+                               classifierArr[i][&apos;thresh&apos;],\
+                               classifierArr[i][&apos;ineq&apos;])
         #由各个分类器加权确定
-        aggClassEst+=classifierArr[i][&#39;alpha&#39;]*classEst
+        aggClassEst+=classifierArr[i][&apos;alpha&apos;]*classEst
         print(aggClassEst)
     return np.sign(aggClassEst)
 #用【0,0】进行测试，随着迭代的进行，分类结果会越来越强 
@@ -2232,12 +2170,12 @@ def adaClassify(datToClass,classifierArr):
 </ol>
 <p>自适应数据加载函数</p>
 <pre><code>def loadDataSet(fileName):
-numFeat=len(open(fileName).readline().split(&#39;\t&#39;))
+numFeat=len(open(fileName).readline().split(&apos;\t&apos;))
 dataMat=[];labelMat=[]
 fr=open(fileName)
 for line in fr.readlines():
     lineArr=[]
-    curLine=line.strip().split(&#39;\t&#39;)
+    curLine=line.strip().split(&apos;\t&apos;)
     for i in range(numFeat-1):
         lineArr.append(float(curLine[i]))
     dataMat.append(lineArr)
@@ -2519,12 +2457,12 @@ def plotROC(predStrengths,classLabels):
         else:
             delX=xStep;delY=0;
             ySum+=cur[1]
-        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
+        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&apos;b&apos;)
         cur=(cur[0]-delX,cur[1]-delY)
-    ax.plot([0,1],[0,1],&#39;b--&#39;)
-    plt.xlabel(&#39;False Positive Rate&#39;);
-    plt.ylabel(&#39;True Positive Rate&#39;)
-    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
+    ax.plot([0,1],[0,1],&apos;b--&apos;)
+    plt.xlabel(&apos;False Positive Rate&apos;);
+    plt.ylabel(&apos;True Positive Rate&apos;)
+    plt.title(&apos;ROC curve for AdaBoost Horse Colic Detection System&apos;)
     ax.axis([0,1,0,1])
     plt.show()
     print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)
@@ -2533,164 +2471,6 @@ def plotROC(predStrengths,classLabels):
 <h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
 <li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/栈的压入弹出序列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/18/栈的压入弹出序列/" itemprop="url">栈的压入、弹出序列(剑指offer第二十一题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def IsPopOrder(self, pushV, popV):
-            # write code here
-            # 备份
-            backupV = []
-            # 弹出序列
-            while popV:
-                # 备份序列中有
-                if len(backupV) &gt; 0 and backupV[-1] == popV[0]:
-                    backupV.pop()
-                    popV.pop(0)
-                # 备份序列中没有
-                elif len(pushV) &gt; 0: 
-                    backupV.append(pushV.pop(0))
-                else:
-                    return False
-            return True
-</code></pre>
 
           
         
@@ -2829,30 +2609,146 @@ def plotROC(predStrengths,classLabels):
         
           
             <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class TreeNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.left = None
-    #         self.right = None
-    class Solution:
-        # 返回从上到下每个节点值列表，例：[1,2,3]
-        def PrintFromTopToBottom(self, root):
-            # write code here
-            res = []
-            if not root:
-                return []
-            queue = []; queue.append(root)
-            while len(queue) &gt; 0:
-                node = queue.pop(0)
-                res.append(node.val)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            return res
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class TreeNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.left = None</span></div><div class="line"><span class="comment">#         self.right = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回从上到下每个节点值列表，例：[1,2,3]</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">PrintFromTopToBottom</span><span class="params">(self, root)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        res = []</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</div><div class="line">            <span class="keyword">return</span> []</div><div class="line">        queue = []; queue.append(root)</div><div class="line">        <span class="keyword">while</span> len(queue) &gt; <span class="number">0</span>:</div><div class="line">            node = queue.pop(<span class="number">0</span>)</div><div class="line">            res.append(node.val)</div><div class="line">            <span class="keyword">if</span> node.left:</div><div class="line">                queue.append(node.left)</div><div class="line">            <span class="keyword">if</span> node.right:</div><div class="line">                queue.append(node.right)</div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/栈的压入弹出序列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/18/栈的压入弹出序列/" itemprop="url">栈的压入、弹出序列(剑指offer第二十一题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T00:00:00+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">IsPopOrder</span><span class="params">(self, pushV, popV)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="comment"># 备份</span></div><div class="line">        backupV = []</div><div class="line">		<span class="comment"># 弹出序列</span></div><div class="line">        <span class="keyword">while</span> popV:</div><div class="line">			<span class="comment"># 备份序列中有</span></div><div class="line">            <span class="keyword">if</span> len(backupV) &gt; <span class="number">0</span> <span class="keyword">and</span> backupV[<span class="number">-1</span>] == popV[<span class="number">0</span>]:</div><div class="line">                backupV.pop()</div><div class="line">                popV.pop(<span class="number">0</span>)</div><div class="line">			<span class="comment"># 备份序列中没有</span></div><div class="line">            <span class="keyword">elif</span> len(pushV) &gt; <span class="number">0</span>: </div><div class="line">                backupV.append(pushV.pop(<span class="number">0</span>))</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
 
           
         
@@ -3003,26 +2899,7 @@ def plotROC(predStrengths,classLabels):
           10   6
          / \  / \
         11 9 7  5
-</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    # class TreeNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.left = None
-    #         self.right = None
-    class Solution:
-        # 返回镜像树的根节点
-        def Mirror(self, root):
-            # write code here
-            if root == None:
-                return None
-            # if root.left != None and root.right != None:
-            root.left, root.right = root.right, root.left
-            self.Mirror(root.left)
-            self.Mirror(root.right)
-
-            return root
-</code></pre>
+</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class TreeNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.left = None</span></div><div class="line"><span class="comment">#         self.right = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回镜像树的根节点</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Mirror</span><span class="params">(self, root)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> root == <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        <span class="comment"># if root.left != None and root.right != None:</span></div><div class="line">        root.left, root.right = root.right, root.left</div><div class="line">        self.Mirror(root.left)</div><div class="line">        self.Mirror(root.right)</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> root</div></pre></td></tr></table></figure>
 
           
         

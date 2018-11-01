@@ -483,7 +483,7 @@ def loadSimpData():
 def stumpClassify(dataMatrix,dimen,threshVal,threshIneq):
     retArray=np.ones((np.shape(dataMatrix)[0],1))
     #该特征小于等于阈值
-    if threshIneq==&#39;lt&#39;:
+    if threshIneq==&apos;lt&apos;:
         retArray[dataMatrix[:,dimen]&lt;=threshVal]=-1.0
     else:
         retArray[dataMatrix[:,dimen]&gt;threshVal]=-1.0
@@ -504,7 +504,7 @@ def buildStump(dataArr,classLabels,D):
         #在特征的不同阈值上遍历
         for j in range(-1,int(numSteps)+1):
             #区别大于阈值和小于阈值两种情况
-            for inequal in [&#39;lt&#39;,&#39;gt&#39;]:
+            for inequal in [&apos;lt&apos;,&apos;gt&apos;]:
                 threshVal=(rangeMin+float(j)*stepSize)
                 predictedVals=stumpClassify(dataMatrix,i,threshVal,inequal)
                 errArr=np.mat(np.ones((m,1)))
@@ -519,9 +519,9 @@ def buildStump(dataArr,classLabels,D):
                 if weightedError&lt;minError:
                     minError=weightedError
                     bestClassEst=predictedVals.copy()
-                    bestStump[&#39;dim&#39;]=i
-                    bestStump[&#39;thresh&#39;]=threshVal
-                    bestStump[&#39;ineq&#39;]=inequal
+                    bestStump[&apos;dim&apos;]=i
+                    bestStump[&apos;thresh&apos;]=threshVal
+                    bestStump[&apos;ineq&apos;]=inequal
     return bestStump,minError,bestClassEst
 </code></pre><h2 id="完整AdaBoost算法的实现"><a href="#完整AdaBoost算法的实现" class="headerlink" title="完整AdaBoost算法的实现"></a>完整AdaBoost算法的实现</h2><p>这一节中，将使用多个弱分类器来构建AdaBoost分类器。</p>
 <p>整个实现的伪代码如下：</p>
@@ -547,7 +547,7 @@ def buildStump(dataArr,classLabels,D):
        # print(&quot;D:&quot;,D.T)
         #alpha表示该次分类器的权重
         alpha=float(0.5*np.log((1.0-error)/max(error,1e-16)))
-        bestStump[&#39;alpha&#39;]=alpha
+        bestStump[&apos;alpha&apos;]=alpha
         #保存该次迭代分类器的信息
         weakClassArr.append(bestStump)
         #该次迭代分类器对样本的估计值
@@ -574,11 +574,11 @@ def adaClassify(datToClass,classifierArr):
     m=np.shape(dataMatrix)[0]
     aggClassEst=np.mat(np.zeros((m,1)))
     for i in range(len(classifierArr)):
-        classEst=stumpClassify(dataMatrix,classifierArr[i][&#39;dim&#39;],\
-                               classifierArr[i][&#39;thresh&#39;],\
-                               classifierArr[i][&#39;ineq&#39;])
+        classEst=stumpClassify(dataMatrix,classifierArr[i][&apos;dim&apos;],\
+                               classifierArr[i][&apos;thresh&apos;],\
+                               classifierArr[i][&apos;ineq&apos;])
         #由各个分类器加权确定
-        aggClassEst+=classifierArr[i][&#39;alpha&#39;]*classEst
+        aggClassEst+=classifierArr[i][&apos;alpha&apos;]*classEst
         print(aggClassEst)
     return np.sign(aggClassEst)
 #用【0,0】进行测试，随着迭代的进行，分类结果会越来越强 
@@ -593,12 +593,12 @@ def adaClassify(datToClass,classifierArr):
 </ol>
 <p>自适应数据加载函数</p>
 <pre><code>def loadDataSet(fileName):
-numFeat=len(open(fileName).readline().split(&#39;\t&#39;))
+numFeat=len(open(fileName).readline().split(&apos;\t&apos;))
 dataMat=[];labelMat=[]
 fr=open(fileName)
 for line in fr.readlines():
     lineArr=[]
-    curLine=line.strip().split(&#39;\t&#39;)
+    curLine=line.strip().split(&apos;\t&apos;)
     for i in range(numFeat-1):
         lineArr.append(float(curLine[i]))
     dataMat.append(lineArr)

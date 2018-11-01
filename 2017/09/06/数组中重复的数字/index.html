@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。 解法     # -*- coding:utf-8 -*-     class Solution:         # 这里">
+<meta name="description" content="题目描述在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。 解法12345678910111213141516# -*- coding:utf-8 -*-class Solution:">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数组中重复的数字(剑指Offer)">
 <meta property="og:url" content="http://yoursite.com/2017/09/06/数组中重复的数字/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。 解法     # -*- coding:utf-8 -*-     class Solution:         # 这里">
+<meta property="og:description" content="题目描述在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。 解法12345678910111213141516# -*- coding:utf-8 -*-class Solution:">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-27T14:59:50.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数组中重复的数字(剑指Offer)">
-<meta name="twitter:description" content="题目描述在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。 解法     # -*- coding:utf-8 -*-     class Solution:         # 这里">
+<meta name="twitter:description" content="题目描述在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。 解法12345678910111213141516# -*- coding:utf-8 -*-class Solution:">
 
 
 
@@ -395,23 +395,7 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。</p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        # 这里要特别注意~找到任意重复的一个值并赋值到duplication[0]
-        # 函数返回True/False
-        def duplicate(self, numbers, duplication):
-            # write code here
-            length = len(numbers)
-            # 依次访问数组中值对应的下标，将其标记为+length, 当再次访问该地址时，就为重复
-            for i in range(length):
-                idx = numbers[i]%length
-                if numbers[idx] &gt; length:
-                    duplication[0] = idx
-                    return True
-                numbers[idx] += length
-            return False
-</code></pre>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 这里要特别注意~找到任意重复的一个值并赋值到duplication[0]</span></div><div class="line">    <span class="comment"># 函数返回True/False</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">duplicate</span><span class="params">(self, numbers, duplication)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        length = len(numbers)</div><div class="line">		<span class="comment"># 依次访问数组中值对应的下标，将其标记为+length, 当再次访问该地址时，就为重复</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</div><div class="line">            idx = numbers[i]%length</div><div class="line">            <span class="keyword">if</span> numbers[idx] &gt; length:</div><div class="line">                duplication[<span class="number">0</span>] = idx</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">            numbers[idx] += length</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -456,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/字符流中第一个不重复的字符/" rel="next" title="字符流中第一个不重复的字符（剑指Offer)">
-                <i class="fa fa-chevron-left"></i> 字符流中第一个不重复的字符（剑指Offer)
+              <a href="/2017/09/05/链表中环的入口结点/" rel="next" title="链表中环的入口结点（剑指Offer)">
+                <i class="fa fa-chevron-left"></i> 链表中环的入口结点（剑指Offer)
               </a>
             
           </div>
@@ -466,8 +450,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/07/LeetCode148排序链表/" rel="prev" title="LeetCode148排序链表">
-                LeetCode148排序链表 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/07/LeetCode第95场周赛/" rel="prev" title="LeetCode第95场周赛">
+                LeetCode第95场周赛 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

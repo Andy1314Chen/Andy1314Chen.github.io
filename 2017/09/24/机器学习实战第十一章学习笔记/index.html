@@ -543,7 +543,7 @@ def apriori(dataSet,minSupport=0.5):
 
 #输出
    reload(apriori)
-Out[22]: &lt;module &#39;apriori&#39; from &#39;G:\\MyPython_MachineLearning\\机器学习实战\\ch11\\apriori.py&#39;&gt;
+Out[22]: &lt;module &apos;apriori&apos; from &apos;G:\\MyPython_MachineLearning\\机器学习实战\\ch11\\apriori.py&apos;&gt;
 
 L,suppData=apriori.apriori(dataSet)
 
@@ -597,7 +597,7 @@ def calcConf(freqSet,H,supportData,br1,minConf=0.7):
         conf=supportData[freqSet]/supportData[freqSet-conseq]
         #大于最小可信度
         if conf&gt;=minConf:
-            print(freqSet-conseq,&#39;--&gt;&#39;,conseq,&#39;conf:&#39;,conf)
+            print(freqSet-conseq,&apos;--&gt;&apos;,conseq,&apos;conf:&apos;,conf)
             br1.append((freqSet-conseq,conseq,conf))
             prunedH.append(conseq)
     #返回满足最小可信度要求的规则

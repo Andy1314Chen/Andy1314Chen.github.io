@@ -414,65 +414,17 @@
 <li>1 步 + 2 步</li>
 <li>2 步 + 1 步</li>
 </ol>
-<pre><code class="Python">
-    class Solution:
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            tmp = [0]*(n+1)
-            tmp[0] = 1
-            tmp[1] = 1
-            for i in range(2, n+1):
-                tmp[i] = tmp[i-1] + tmp[i-2]
-            return tmp[n]
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">climbStairs</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        tmp = [<span class="number">0</span>]*(n+<span class="number">1</span>)</div><div class="line">        tmp[<span class="number">0</span>] = <span class="number">1</span></div><div class="line">        tmp[<span class="number">1</span>] = <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n+<span class="number">1</span>):</div><div class="line">            tmp[i] = tmp[i<span class="number">-1</span>] + tmp[i<span class="number">-2</span>]</div><div class="line">        <span class="keyword">return</span> tmp[n]</div></pre></td></tr></table></figure>
 <h2 id="思路1-递推法求解"><a href="#思路1-递推法求解" class="headerlink" title="思路1(递推法求解)"></a>思路1(递推法求解)</h2><ol>
 <li>首先求得递推公式 F(n) = F(n-1) + F(n-2)</li>
 <li>实现</li>
 </ol>
-<pre><code class="Python">
-    class Solution:
-        def get_value(self, n, tmp):
-            if n &lt;= 1:
-                return 1
-            # 如果记忆过，则直接返回值
-            if tmp[n] != -1:
-                return tmp[n]
-            # 否则重新计算
-            tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp)
-            return tmp[n]
-
-
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            tmp = [-1]*(n+1)
-            return self.get_value(n, tmp)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_value</span><span class="params">(self, n, tmp)</span>:</span></div><div class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span></div><div class="line">		<span class="comment"># 如果记忆过，则直接返回值</span></div><div class="line">        <span class="keyword">if</span> tmp[n] != <span class="number">-1</span>:</div><div class="line">            <span class="keyword">return</span> tmp[n]</div><div class="line">		<span class="comment"># 否则重新计算</span></div><div class="line">        tmp[n] = self.get_value(n<span class="number">-1</span>, tmp) + self.get_value(n<span class="number">-2</span>, tmp)</div><div class="line">        <span class="keyword">return</span> tmp[n]</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">climbStairs</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        tmp = [<span class="number">-1</span>]*(n+<span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> self.get_value(n, tmp)</div></pre></td></tr></table></figure>
 <h2 id="思路2-记忆性递归"><a href="#思路2-记忆性递归" class="headerlink" title="思路2(记忆性递归)"></a>思路2(记忆性递归)</h2><ol>
 <li>递推公式 F(n) = F(n-1) + F(n-2)</li>
 <li>递归实现</li>
 </ol>
-<pre><code class="Python">
-    class Solution:
-        def climbStairs(self, n):
-            &quot;&quot;&quot;
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            first = 1
-            second = 1
-            cur = 1
-            for i in range(2, n+1):
-                cur = first + second
-                first = second
-                second= cur
-            return cur
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">climbStairs</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        first = <span class="number">1</span></div><div class="line">        second = <span class="number">1</span></div><div class="line">        cur = <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n+<span class="number">1</span>):</div><div class="line">            cur = first + second</div><div class="line">            first = second</div><div class="line">            second= cur</div><div class="line">        <span class="keyword">return</span> cur</div></pre></td></tr></table></figure>
 <h2 id="思路3"><a href="#思路3" class="headerlink" title="思路3"></a>思路3</h2><ol>
 <li>使用两个变量保存前两个值</li>
 </ol>
@@ -520,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/帕斯卡三角形/" rel="next" title="LeetCode - 帕斯卡三角形">
-                <i class="fa fa-chevron-left"></i> LeetCode - 帕斯卡三角形
+              <a href="/2017/07/05/不同路径2/" rel="next" title="LeetCode - 不同路径">
+                <i class="fa fa-chevron-left"></i> LeetCode - 不同路径
               </a>
             
           </div>
@@ -530,8 +482,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/除自身以外数组的乘积/" rel="prev" title="LeetCode - 除自身以外数组的乘积">
-                LeetCode - 除自身以外数组的乘积 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/帕斯卡三角形/" rel="prev" title="LeetCode - 帕斯卡三角形">
+                LeetCode - 帕斯卡三角形 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

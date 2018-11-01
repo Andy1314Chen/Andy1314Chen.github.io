@@ -418,8 +418,8 @@ max_steps = 1000 # 最大迭代次数
 learning_rate = 0.001 # 学习率
 dropout = 0.9 # dropout时随机保留神经元的比例
 
-data_dir = &#39;data&#39; # 样本数据存储的路径
-log_dir = &#39;log&#39; # 输出日志保存的路径
+data_dir = &apos;data&apos; # 样本数据存储的路径
+log_dir = &apos;log&apos; # 输出日志保存的路径
 
 # 保存mnist数据
 mnist = input_data.read_data_sets(data_dir, one_hot=True)
@@ -427,14 +427,14 @@ mnist = input_data.read_data_sets(data_dir, one_hot=True)
 sess = tf.InteractiveSession()
 
 
-with tf.name_scope(&#39;input&#39;):
-    x = tf.placeholder(tf.float32, [None, 784], name=&#39;x-input&#39;)
-    y_ = tf.placeholder(tf.float32, [None, 10], name=&#39;y-input&#39;)
+with tf.name_scope(&apos;input&apos;):
+    x = tf.placeholder(tf.float32, [None, 784], name=&apos;x-input&apos;)
+    y_ = tf.placeholder(tf.float32, [None, 10], name=&apos;y-input&apos;)
 
 # 使用tf.summary.image保存图像信息
-with tf.name_scope(&#39;input_reshape&#39;):
+with tf.name_scope(&apos;input_reshape&apos;):
     image_shaped_input = tf.reshape(x, [-1, 28, 28, 1])
-    tf.summary.image(&#39;input&#39;, image_shaped_input, 10)
+    tf.summary.image(&apos;input&apos;, image_shaped_input, 10)
 
 # 连接权重
 def weight_variable(shape):
@@ -449,81 +449,81 @@ def bias_variable(shape):
 
 # 收录每次迭代后的参数信息
 def variable_summaries(var):
-    with tf.name_scope(&#39;summaries&#39;):
+    with tf.name_scope(&apos;summaries&apos;):
     # 计算参数的均值，并使用tf.summary.scaler记录
         mean = tf.reduce_mean(var)
-        tf.summary.scalar(&#39;mean&#39;, mean)
+        tf.summary.scalar(&apos;mean&apos;, mean)
         # 计算参数的标准差
-        with tf.name_scope(&#39;sttdev&#39;):
+        with tf.name_scope(&apos;sttdev&apos;):
             stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
             # 使用tf.summary.scalar记录下标准差，最大值，最小值
-            tf.summary.scalar(&#39;sttdev&#39;, stddev)
-            tf.summary.scalar(&#39;max&#39;, tf.reduce_max(var))
-            tf.summary.scalar(&#39;min&#39;, tf.reduce_min(var))
+            tf.summary.scalar(&apos;sttdev&apos;, stddev)
+            tf.summary.scalar(&apos;max&apos;, tf.reduce_max(var))
+            tf.summary.scalar(&apos;min&apos;, tf.reduce_min(var))
             # 用直方图记录参数的分布
-            tf.summary.histogram(&#39;histogram&#39;, var)
+            tf.summary.histogram(&apos;histogram&apos;, var)
 
 # 构建神经网络层
 def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
     # 设置命名空间
     with tf.name_scope(layer_name):
         # 调用之前的方法初始化权重w，并且调用参数信息的记录方法，记录w的信息
-        with tf.name_scope(&#39;weights&#39;):
+        with tf.name_scope(&apos;weights&apos;):
             weights = weight_variable([input_dim, output_dim])
             variable_summaries(weights)
     # 调用之前的方法初始化权重b,并且调用参数信息的记录方法，记录b的信息
-        with tf.name_scope(&#39;biases&#39;):
+        with tf.name_scope(&apos;biases&apos;):
             biases = bias_variable([output_dim])
             variable_summaries(biases)
         # 执行wx+b的线性计算，并且用直方图记录下来
-        with tf.name_scope(&#39;linear_compute&#39;):
+        with tf.name_scope(&apos;linear_compute&apos;):
             preactivate = tf.matmul(input_tensor, weights) + biases
-            tf.summary.histogram(&#39;linear&#39;, preactivate)
+            tf.summary.histogram(&apos;linear&apos;, preactivate)
         # 将线性输出经过激励函数，并将输出也用直方图记录下来
-        activations = act(preactivate, name=&#39;activation&#39;)
-        tf.summary.histogram(&#39;activations&#39;, activations)
+        activations = act(preactivate, name=&apos;activation&apos;)
+        tf.summary.histogram(&apos;activations&apos;, activations)
 
 # 返回激励层的最终输出
     return activations
 # 隐含层1
-hidden1 = nn_layer(x, 784, 500, &#39;layer1&#39;)
+hidden1 = nn_layer(x, 784, 500, &apos;layer1&apos;)
 # 创建一个dropout层，
-with tf.name_scope(&#39;dropout&#39;):
+with tf.name_scope(&apos;dropout&apos;):
     keep_prob = tf.placeholder(tf.float32)
-    tf.summary.scalar(&#39;dropout_keep_probability&#39;, keep_prob)
+    tf.summary.scalar(&apos;dropout_keep_probability&apos;, keep_prob)
     dropped = tf.nn.dropout(hidden1, keep_prob)
 # 输出层
-y = nn_layer(dropped, 500, 10, &#39;layer2&#39;, act=tf.identity)
+y = nn_layer(dropped, 500, 10, &apos;layer2&apos;, act=tf.identity)
 
 # 创建损失函数
-with tf.name_scope(&#39;loss&#39;):
+with tf.name_scope(&apos;loss&apos;):
     # 计算交叉熵损失
     diff = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)
-    with tf.name_scope(&#39;total&#39;):
+    with tf.name_scope(&apos;total&apos;):
         # 计算所有样本交叉熵损失的均值
         cross_entropy = tf.reduce_mean(diff)
-tf.summary.scalar(&#39;loss&#39;, cross_entropy)
+tf.summary.scalar(&apos;loss&apos;, cross_entropy)
 
 # 训练
 # 使用AdamOptimizer优化器训练模型，最小化交叉熵损失
-with tf.name_scope(&#39;train&#39;):
+with tf.name_scope(&apos;train&apos;):
     train_step = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
 
 # 计算准确率
-with tf.name_scope(&#39;accuracy&#39;):
-    with tf.name_scope(&#39;correct_prediction&#39;):
+with tf.name_scope(&apos;accuracy&apos;):
+    with tf.name_scope(&apos;correct_prediction&apos;):
         correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
-    with tf.name_scope(&#39;accuracy&#39;):
+    with tf.name_scope(&apos;accuracy&apos;):
         # 求均值即为准确率
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-tf.summary.scalar(&#39;accuracy&#39;, accuracy)
+tf.summary.scalar(&apos;accuracy&apos;, accuracy)
 
 # 合并summary operation, 运行初始化变量
 # summaries合并
 merged = tf.summary.merge_all()
 # 写到指定的磁盘路径中
-train_writer = tf.summary.FileWriter(log_dir+&#39;/train&#39;, sess.graph)
-test_writer = tf.summary.FileWriter(log_dir+&#39;/test&#39;)
+train_writer = tf.summary.FileWriter(log_dir+&apos;/train&apos;, sess.graph)
+test_writer = tf.summary.FileWriter(log_dir+&apos;/test&apos;)
 
 # 运行初始化变量
 tf.global_variables_initializer().run()
@@ -544,7 +544,7 @@ for i in range(max_steps):
     if i%10 == 0: # 记录测试集的summary与accuracy
         summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
         test_writer.add_summary(summary,i)
-        print(&#39;Accuracy at step %s: %s&#39; % (i, acc))
+        print(&apos;Accuracy at step %s: %s&apos; % (i, acc))
     else: # 记录训练集的summary
         if i % 100 == 99:
             run_options = tf.RunOptions(trace_level = tf.RunOptions.FULL_TRACE)
@@ -553,9 +553,9 @@ for i in range(max_steps):
             feed_dict=feed_dict(True),
             options=run_options,
             run_metadata=run_metadata)
-            train_writer.add_run_metadata(run_metadata, &#39;step%03d&#39; % i)
+            train_writer.add_run_metadata(run_metadata, &apos;step%03d&apos; % i)
             train_writer.add_summary(summary, i)
-            print(&#39;Adding run metadata for&#39;, i)
+            print(&apos;Adding run metadata for&apos;, i)
         else:
             summary, _ = sess.run([merged, train_step], feed_dict=feed_dict(True))
             train_writer.add_summary(summary, i)

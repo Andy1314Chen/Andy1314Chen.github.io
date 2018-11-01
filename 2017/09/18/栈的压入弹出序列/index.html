@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 代码     # -*- coding:utf-8 -*-     class Solu">
+<meta name="description" content="题目描述输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 代码12345678910111213141516171819# -*- coding:">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="栈的压入、弹出序列(剑指offer第二十一题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/18/栈的压入弹出序列/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 代码     # -*- coding:utf-8 -*-     class Solu">
+<meta property="og:description" content="题目描述输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 代码12345678910111213141516171819# -*- coding:">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-08-05T07:01:42.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="栈的压入、弹出序列(剑指offer第二十一题)">
-<meta name="twitter:description" content="题目描述输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 代码     # -*- coding:utf-8 -*-     class Solu">
+<meta name="twitter:description" content="题目描述输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 代码12345678910111213141516171819# -*- coding:">
 
 
 
@@ -395,26 +395,7 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def IsPopOrder(self, pushV, popV):
-            # write code here
-            # 备份
-            backupV = []
-            # 弹出序列
-            while popV:
-                # 备份序列中有
-                if len(backupV) &gt; 0 and backupV[-1] == popV[0]:
-                    backupV.pop()
-                    popV.pop(0)
-                # 备份序列中没有
-                elif len(pushV) &gt; 0: 
-                    backupV.append(pushV.pop(0))
-                else:
-                    return False
-            return True
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">IsPopOrder</span><span class="params">(self, pushV, popV)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="comment"># 备份</span></div><div class="line">        backupV = []</div><div class="line">		<span class="comment"># 弹出序列</span></div><div class="line">        <span class="keyword">while</span> popV:</div><div class="line">			<span class="comment"># 备份序列中有</span></div><div class="line">            <span class="keyword">if</span> len(backupV) &gt; <span class="number">0</span> <span class="keyword">and</span> backupV[<span class="number">-1</span>] == popV[<span class="number">0</span>]:</div><div class="line">                backupV.pop()</div><div class="line">                popV.pop(<span class="number">0</span>)</div><div class="line">			<span class="comment"># 备份序列中没有</span></div><div class="line">            <span class="keyword">elif</span> len(pushV) &gt; <span class="number">0</span>: </div><div class="line">                backupV.append(pushV.pop(<span class="number">0</span>))</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -459,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/18/从上往下打印二叉树/" rel="next" title="从上往下打印二叉树(剑指offer第二十二题)">
-                <i class="fa fa-chevron-left"></i> 从上往下打印二叉树(剑指offer第二十二题)
+              <a href="/2017/09/17/二叉树的镜像/" rel="next" title="二叉树的镜像(剑指offer第十八题)">
+                <i class="fa fa-chevron-left"></i> 二叉树的镜像(剑指offer第十八题)
               </a>
             
           </div>
@@ -469,8 +450,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/19/机器学习实战第七章学习笔记2/" rel="prev" title="机器学习算法常用指标">
-                机器学习算法常用指标 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/18/从上往下打印二叉树/" rel="prev" title="从上往下打印二叉树(剑指offer第二十二题)">
+                从上往下打印二叉树(剑指offer第二十二题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

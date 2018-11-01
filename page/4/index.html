@@ -301,6 +301,353 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/各种排序方法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/03/各种排序方法总结/" itemprop="url">各种排序方法总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T00:00:00+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>分治思想</li>
+<li>不稳定</li>
+<li><a href="https://blog.csdn.net/MoreWindows/article/details/6684558" target="_blank" rel="external">https://blog.csdn.net/MoreWindows/article/details/6684558</a><h4 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h4></li>
+</ul>
+<ol>
+<li>先从数列中取出一个数作为基准数；</li>
+<li>分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边；</li>
+<li>再对左右区间重复步骤2，直到各区间只有一个数；</li>
+</ol>
+<pre><code># 快速排序
+def QuickSort(nums, left, right):
+    if left &lt; right:
+        i, j, x = left, right, nums[left]
+        while i &lt; j:
+            # 从后端开始
+            while i &lt; j and nums[j] &gt;= x:
+                j -= 1
+            if i &lt; j:
+                nums[i] = nums[j]        
+                i += 1
+            # 从前端开始
+            while i &lt; j and nums[i] &lt; x:
+                i += 1
+            if i &lt; j:
+                nums[j] = nums[i]        
+                j -= 1
+        nums[i] = x
+        QuickSort(nums, left, i - 1)
+        QuickSort(nums, i + 1, right)
+    return nums
+</code></pre><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-1"><a href="#基本思路-1" class="headerlink" title="基本思路"></a>基本思路</h4><ol>
+<li>比较相邻的前后两个数据，如果前面数据大于后面数据，就将两个数据交换；</li>
+<li>这样对数组的第0个数据到第N-1个数据进行一次遍历后，最大的一个数据就“沉”到数组第N-1个位置；</li>
+<li><p>N=N-1,如果N!=0则继续前面两步</p>
+<pre><code>def bubbleSort1(nums):
+&quot;&quot;&quot;
+冒泡排序1
+&quot;&quot;&quot;
+for i in range(len(nums)):
+    for j in range(1, len(nums)-i):
+        if nums[j] &lt; nums[j-1]:
+            nums[j], nums[j-1] = nums[j-1], nums[j]
+return nums
+</code></pre></li>
+</ol>
+<pre><code>def bubbleSort2(nums):
+    &quot;&quot;&quot;
+    冒泡排序2  改进1
+    &quot;&quot;&quot;
+    flag = False
+    for i in range(len(nums)):
+        if flag != False:
+            break 
+        flag = True 
+        for j in range(1, len(nums)-i):
+            if nums[j] &lt; nums[j-1]:
+                nums[j], nums[j-1] = nums[j-1], nums[j]
+                flag = False 
+    return nums
+
+def bubbleSort3(nums):
+    &quot;&quot;&quot;
+    冒泡排序3  改进2
+    &quot;&quot;&quot;
+    flag = len(nums)
+    while flag &gt; 0:
+        k = flag 
+        flag = 0
+        for j in range(1, k):
+            if nums[j] &lt; nums[j-1]:
+                nums[j], nums[j-1] = nums[j-1], nums[j]
+                flag = j 
+    return nums
+</code></pre><h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-2"><a href="#基本思路-2" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次将一个待排序的记录，按其关键字大小插入到前面已经排好序的子序列中的适当位置，直到全部记录插入完成为止。</p>
+<ol>
+<li>初始时，a[0]自成一个有序区，a[1…n-1]为无序区；</li>
+<li>将a[i]并入当前的有序区a[0…i-1]中形成a[0…i]有序区；</li>
+<li><p>i++并重复第二步，直到i == n-1;</p>
+<pre><code>def insertSort1(nums):
+    &quot;&quot;&quot;
+    插入排序
+    &quot;&quot;&quot;
+    i = 1
+    while i &lt; len(nums):
+        tmp = nums[i]
+        j = i - 1
+        while j &gt;= 0 and nums[j] &gt; tmp:
+            nums[j+1] = nums[j]
+            j -= 1
+        nums[j+1] = tmp
+        i += 1
+    return nums
+</code></pre></li>
+</ol>
+<pre><code>def insertSort2(nums):
+    &quot;&quot;&quot;
+    插入排序2 改进1
+    &quot;&quot;&quot;
+    for i in range(1, len(nums)):
+        for j in range(i-1, -1, -1):
+            if nums[j] &gt; nums[j+1]:
+                nums[j], nums[j+1] = nums[j+1], nums[j]
+            else:
+                break
+    return nums
+</code></pre><h2 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-3"><a href="#基本思路-3" class="headerlink" title="基本思路"></a>基本思路</h4><p>直接选择排序和直接插入排序类似，都将数据分为有序区和无序区，所不同的是直接将无序区的第一个元素直接插入到有序区以形成一个更大的有序区，而直接选择排序是从无序区选一个最小的元素直接放到有序区的最后；</p>
+<ol>
+<li>初始时，数组全为无序区a[0…n-1],令i=0;</li>
+<li>在无序区a[i…n-1]中选取一个最小的元素，将其与a[i]交换，交换之后a[0…i]就形成了一个有序区；</li>
+<li><p>i++并重复第二步，直到i == n-1;</p>
+<pre><code>def selectionSort1(nums):
+    &quot;&quot;&quot;
+    选择排序
+    &quot;&quot;&quot;
+    for i in range(len(nums)):
+        min_idx = i 
+        for j in range(i+1, len(nums)):
+            if nums[j] &lt; nums[min_idx]:
+                min_idx = j 
+        if min_idx != i:
+            nums[i], nums[min_idx] = nums[min_idx], nums[i]
+    return nums
+</code></pre></li>
+</ol>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-4"><a href="#基本思路-4" class="headerlink" title="基本思路"></a>基本思路</h4><p>将数组分为二组A,B,如果这两组都是有序的，则直接合并。若不是，可以将A,B组各自再分成两组，依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后合并相邻的两个小组即可。</p>
+<pre><code># 归并排序
+def mergeArray(nums, left, mid, right):
+    tmp = []
+    i, j = left, mid + 1
+    m, n = mid, right
+    while i &lt;= m and j &lt;= n:
+        if nums[i] &gt; nums[j]:
+            tmp.append(nums[j])
+            j += 1
+        else:
+            tmp.append(nums[i])
+            i += 1
+    while i &lt;= m:
+        tmp.append(nums[i])
+        i += 1
+    while j &lt;= n:
+        tmp.append(nums[j])
+        j += 1
+    # 排好序的值写入原数组
+    nums[left:left+len(tmp)] = tmp
+
+def mergesort(nums, left, right):
+    if left &lt; right:
+        mid = (left + right)//2
+        mergesort(nums, left, mid)
+        mergesort(nums, mid + 1, right)
+        mergeArray(nums, left, mid, right)
+
+def MergeSort(nums):
+    mergesort(nums, 0, len(nums)-1)
+    return nums
+</code></pre><h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>不稳定</li>
+</ul>
+<h4 id="基本思路-5"><a href="#基本思路-5" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次先将数组构成最大堆，然后交换堆顶元素(即nums[0])与最后一个元素，然后隔离最后一个元素重新构建最大堆，依次迭代重复，直到数组中只有一个元素；</p>
+<pre><code># 堆排序
+def MaxHeapFixDown(nums, i, n):
+    tmp = nums[i]
+    j = 2*i + 1 # 左孩子
+    while j &lt; n :
+        # 右孩子
+        if j &lt; n - 1 and nums[j] &lt; nums[j+1]:
+            j += 1
+        # 比最大的都大
+        if tmp &gt; nums[j]:
+            break
+        nums[i] = nums[j]
+        i = j 
+        j = 2*i + 1
+    nums[i] = tmp
+
+
+def MakeMaxHeap(nums, n):
+    for i in range(n//2, -1, -1):
+        MaxHeapFixDown(nums, i, n)
+
+def MaxHeapDeleteNumber(nums, n):
+    nums[0], nums[n-1] = nums[n-1], nums[0]
+    MaxHeapFixDown(nums, 0, n - 1)
+
+def MaxHeapSort(nums):
+    n = len(nums)
+    MakeMaxHeap(nums, n)
+    for i in range(n, 0, -1):
+        MaxHeapDeleteNumber(nums, i)
+    return nums
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/机器学习面试总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -638,21 +985,21 @@
 <p>一般认为泛化误差=偏差+方差，偏差表示的是输出与真值的误差，即模型的准确度。方差指的是模型在不同数据集上的预测值与所有数据集平均预测值之间的差异，即模型稳定性。</p>
 <p><strong>26. 过拟合和欠拟合的定义</strong></p>
 <p>根据学习误差曲线，训练集误差增大测试集误差减小说明在学习，属于欠拟合。测试集误差变大，训练集误差很小属于过拟合</p>
-<pre><code>   过拟合
+<pre><code>过拟合
 
-   定义：学习到的模型在训练样本中表现的过于优越，导致在测试集或验证集上泛化能力差表现不佳。即学习得过于彻底，将噪声也学到了。
+定义：学习到的模型在训练样本中表现的过于优越，导致在测试集或验证集上泛化能力差表现不佳。即学习得过于彻底，将噪声也学到了。
 
-   情况：参数过多；模型过大；训练样本过少；数据不纯；
+情况：参数过多；模型过大；训练样本过少；数据不纯；
 
-   措施：加入正则项；dropout；（训练的时候让神经元以一定的概率不工作）扩大训练样本集；清洗数据；
+措施：加入正则项；dropout；（训练的时候让神经元以一定的概率不工作）扩大训练样本集；清洗数据；
 
-   欠拟合
+欠拟合
 
-    定义：模型不能很好的捕捉到数据特征，不能很好的拟合数据。
+ 定义：模型不能很好的捕捉到数据特征，不能很好的拟合数据。
 
-   情况：特征不够好或者维度不够，训练时间不够
+情况：特征不够好或者维度不够，训练时间不够
 
-   措施：更换更好的特征；增加网络复杂度；减少正则化参数；增大训练时间
+措施：更换更好的特征；增加网络复杂度；减少正则化参数；增大训练时间
 </code></pre><p><strong>27. LR逻辑回归有哪些优缺点？</strong></p>
 <p>优点：</p>
 <ul>
@@ -771,353 +1118,6 @@
 <p><strong>6. 还有什么问题？</strong></p>
 <p>1）对于新员工的培养机制；<br>2）如果走技术岗位，公司的晋升制度是怎样的；</p>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/各种排序方法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/03/各种排序方法总结/" itemprop="url">各种排序方法总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T00:00:00+08:00">
-                2017-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><ul>
-<li>时间复杂度O(N*logN)</li>
-<li>分治思想</li>
-<li>不稳定</li>
-<li><a href="https://blog.csdn.net/MoreWindows/article/details/6684558" target="_blank" rel="external">https://blog.csdn.net/MoreWindows/article/details/6684558</a><h4 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h4></li>
-</ul>
-<ol>
-<li>先从数列中取出一个数作为基准数；</li>
-<li>分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边；</li>
-<li>再对左右区间重复步骤2，直到各区间只有一个数；</li>
-</ol>
-<pre><code>    # 快速排序
-    def QuickSort(nums, left, right):
-        if left &lt; right:
-            i, j, x = left, right, nums[left]
-            while i &lt; j:
-                # 从后端开始
-                while i &lt; j and nums[j] &gt;= x:
-                    j -= 1
-                if i &lt; j:
-                    nums[i] = nums[j]        
-                    i += 1
-                # 从前端开始
-                while i &lt; j and nums[i] &lt; x:
-                    i += 1
-                if i &lt; j:
-                    nums[j] = nums[i]        
-                    j -= 1
-            nums[i] = x
-            QuickSort(nums, left, i - 1)
-            QuickSort(nums, i + 1, right)
-        return nums
-</code></pre><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><ul>
-<li>时间复杂度O(N*N)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-1"><a href="#基本思路-1" class="headerlink" title="基本思路"></a>基本思路</h4><ol>
-<li>比较相邻的前后两个数据，如果前面数据大于后面数据，就将两个数据交换；</li>
-<li>这样对数组的第0个数据到第N-1个数据进行一次遍历后，最大的一个数据就“沉”到数组第N-1个位置；</li>
-<li><p>N=N-1,如果N!=0则继续前面两步</p>
-<pre><code> def bubbleSort1(nums):
- &quot;&quot;&quot;
- 冒泡排序1
- &quot;&quot;&quot;
- for i in range(len(nums)):
-     for j in range(1, len(nums)-i):
-         if nums[j] &lt; nums[j-1]:
-             nums[j], nums[j-1] = nums[j-1], nums[j]
- return nums
-</code></pre></li>
-</ol>
-<pre><code>    def bubbleSort2(nums):
-        &quot;&quot;&quot;
-        冒泡排序2  改进1
-        &quot;&quot;&quot;
-        flag = False
-        for i in range(len(nums)):
-            if flag != False:
-                break 
-            flag = True 
-            for j in range(1, len(nums)-i):
-                if nums[j] &lt; nums[j-1]:
-                    nums[j], nums[j-1] = nums[j-1], nums[j]
-                    flag = False 
-        return nums
-
-    def bubbleSort3(nums):
-        &quot;&quot;&quot;
-        冒泡排序3  改进2
-        &quot;&quot;&quot;
-        flag = len(nums)
-        while flag &gt; 0:
-            k = flag 
-            flag = 0
-            for j in range(1, k):
-                if nums[j] &lt; nums[j-1]:
-                    nums[j], nums[j-1] = nums[j-1], nums[j]
-                    flag = j 
-        return nums
-</code></pre><h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><ul>
-<li>时间复杂度O(N*N)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-2"><a href="#基本思路-2" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次将一个待排序的记录，按其关键字大小插入到前面已经排好序的子序列中的适当位置，直到全部记录插入完成为止。</p>
-<ol>
-<li>初始时，a[0]自成一个有序区，a[1…n-1]为无序区；</li>
-<li>将a[i]并入当前的有序区a[0…i-1]中形成a[0…i]有序区；</li>
-<li><p>i++并重复第二步，直到i == n-1;</p>
-<pre><code> def insertSort1(nums):
-     &quot;&quot;&quot;
-     插入排序
-     &quot;&quot;&quot;
-     i = 1
-     while i &lt; len(nums):
-         tmp = nums[i]
-         j = i - 1
-         while j &gt;= 0 and nums[j] &gt; tmp:
-             nums[j+1] = nums[j]
-             j -= 1
-         nums[j+1] = tmp
-         i += 1
-     return nums
-</code></pre></li>
-</ol>
-<pre><code>    def insertSort2(nums):
-        &quot;&quot;&quot;
-        插入排序2 改进1
-        &quot;&quot;&quot;
-        for i in range(1, len(nums)):
-            for j in range(i-1, -1, -1):
-                if nums[j] &gt; nums[j+1]:
-                    nums[j], nums[j+1] = nums[j+1], nums[j]
-                else:
-                    break
-        return nums
-</code></pre><h2 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h2><ul>
-<li>时间复杂度O(N*N)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-3"><a href="#基本思路-3" class="headerlink" title="基本思路"></a>基本思路</h4><p>直接选择排序和直接插入排序类似，都将数据分为有序区和无序区，所不同的是直接将无序区的第一个元素直接插入到有序区以形成一个更大的有序区，而直接选择排序是从无序区选一个最小的元素直接放到有序区的最后；</p>
-<ol>
-<li>初始时，数组全为无序区a[0…n-1],令i=0;</li>
-<li>在无序区a[i…n-1]中选取一个最小的元素，将其与a[i]交换，交换之后a[0…i]就形成了一个有序区；</li>
-<li><p>i++并重复第二步，直到i == n-1;</p>
-<pre><code> def selectionSort1(nums):
-     &quot;&quot;&quot;
-     选择排序
-     &quot;&quot;&quot;
-     for i in range(len(nums)):
-         min_idx = i 
-         for j in range(i+1, len(nums)):
-             if nums[j] &lt; nums[min_idx]:
-                 min_idx = j 
-         if min_idx != i:
-             nums[i], nums[min_idx] = nums[min_idx], nums[i]
-     return nums
-</code></pre></li>
-</ol>
-<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><ul>
-<li>时间复杂度O(N*logN)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-4"><a href="#基本思路-4" class="headerlink" title="基本思路"></a>基本思路</h4><p>将数组分为二组A,B,如果这两组都是有序的，则直接合并。若不是，可以将A,B组各自再分成两组，依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后合并相邻的两个小组即可。</p>
-<pre><code># 归并排序
-def mergeArray(nums, left, mid, right):
-    tmp = []
-    i, j = left, mid + 1
-    m, n = mid, right
-    while i &lt;= m and j &lt;= n:
-        if nums[i] &gt; nums[j]:
-            tmp.append(nums[j])
-            j += 1
-        else:
-            tmp.append(nums[i])
-            i += 1
-    while i &lt;= m:
-        tmp.append(nums[i])
-        i += 1
-    while j &lt;= n:
-        tmp.append(nums[j])
-        j += 1
-    # 排好序的值写入原数组
-    nums[left:left+len(tmp)] = tmp
-
-def mergesort(nums, left, right):
-    if left &lt; right:
-        mid = (left + right)//2
-        mergesort(nums, left, mid)
-        mergesort(nums, mid + 1, right)
-        mergeArray(nums, left, mid, right)
-
-def MergeSort(nums):
-    mergesort(nums, 0, len(nums)-1)
-    return nums
-</code></pre><h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
-<li>时间复杂度O(N*logN)</li>
-<li>不稳定</li>
-</ul>
-<h4 id="基本思路-5"><a href="#基本思路-5" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次先将数组构成最大堆，然后交换堆顶元素(即nums[0])与最后一个元素，然后隔离最后一个元素重新构建最大堆，依次迭代重复，直到数组中只有一个元素；</p>
-<pre><code># 堆排序
-def MaxHeapFixDown(nums, i, n):
-    tmp = nums[i]
-    j = 2*i + 1 # 左孩子
-    while j &lt; n :
-        # 右孩子
-        if j &lt; n - 1 and nums[j] &lt; nums[j+1]:
-            j += 1
-        # 比最大的都大
-        if tmp &gt; nums[j]:
-            break
-        nums[i] = nums[j]
-        i = j 
-        j = 2*i + 1
-    nums[i] = tmp
-
-
-def MakeMaxHeap(nums, n):
-    for i in range(n//2, -1, -1):
-        MaxHeapFixDown(nums, i, n)
-
-def MaxHeapDeleteNumber(nums, n):
-    nums[0], nums[n-1] = nums[n-1], nums[0]
-    MaxHeapFixDown(nums, 0, n - 1)
-
-def MaxHeapSort(nums):
-    n = len(nums)
-    MakeMaxHeap(nums, n)
-    for i in range(n, 0, -1):
-        MaxHeapDeleteNumber(nums, i)
-    return nums
-</code></pre>
           
         
       
@@ -1464,9 +1464,9 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pylab as plt
 %matplotlib inline
 from matplotlib.pylab import rcParams
-rcParams[&#39;figure.figsize&#39;]=15,6
+rcParams[&apos;figure.figsize&apos;]=15,6
 
-series=pd.Series.from_csv(&#39;daily-minimum-temperatures.csv&#39;,header=0)
+series=pd.Series.from_csv(&apos;daily-minimum-temperatures.csv&apos;,header=0)
 print(series.head(20))
 
 Date
@@ -1499,9 +1499,9 @@ series.plot()
 <pre><code>#将最后7个数据分裂出去作为验证集
 split_point=len(series)-7
 dataset,validation=series[0:split_point],series[split_point:]
-print(&#39;Dataset %d, Validation %d&#39; % (len(dataset),len(validation)))
-dataset.to_csv(&#39;tempdataset.csv&#39;)
-validation.to_csv(&#39;tempvalidation.csv&#39;)
+print(&apos;Dataset %d, Validation %d&apos; % (len(dataset),len(validation)))
+dataset.to_csv(&apos;tempdataset.csv&apos;)
+validation.to_csv(&apos;tempvalidation.csv&apos;)
 
 Dataset 3643, Validation 7
 
@@ -1605,7 +1605,7 @@ Name: Daily minimum temperatures in Melbourne, Australia, 1981-1990, dtype: floa
 start_index=len(differenced)
 end_index=len(differenced)
 forecast=model_fit.predict(start=start_index,end=end_index)
-#forecast=model_fit.predict(&#39;1990-12-25&#39;,&#39;1990-12-25&#39;)
+#forecast=model_fit.predict(&apos;1990-12-25&apos;,&apos;1990-12-25&apos;)
 
 #invert the differenced forecast to something usable
 forecast=inverse_difference(X,forecast,days_in_year)
@@ -1841,16 +1841,7 @@ Day 7: 12.674730
 </ul>
 </li>
 </ul>
-<pre><code class="Python">
-    # GBDT的基本过程：
-    1. Initialize the outcome
-    2. Iterate from 1 to total number of trees
-      2.1 Update the weights for targets based on previous run (higher for the ones mis-classified)
-      2.2 Fit the model on selected subsample of data(行采样?)
-      2.3 Make predictions on the full set of observations
-      2.4 Update the output with current results taking into account the learning rate
-    3. Return the final output.
-</code></pre>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># GBDT的基本过程：</div><div class="line">1. Initialize the outcome</div><div class="line">2. Iterate from 1 to total number of trees</div><div class="line">  2.1 Update the weights for targets based on previous run (higher for the ones mis-classified)</div><div class="line">  2.2 Fit the model on selected subsample of data(行采样?)</div><div class="line">  2.3 Make predictions on the full set of observations</div><div class="line">  2.4 Update the output with current results taking into account the learning rate</div><div class="line">3. Return the final output.</div></pre></td></tr></table></figure>
 <h4 id="Boosting相关参数"><a href="#Boosting相关参数" class="headerlink" title="Boosting相关参数"></a>Boosting相关参数</h4><ul>
 <li><strong>learning_rate</strong><ul>
 <li>This determines the impact of each tree on the final outcome (step 2.4). GBM works by starting with an initial estimate which is updated using the output of each tree. The learning parameter controls the magnitude of this change in the estimates.</li>
@@ -1943,61 +1934,478 @@ Day 7: 12.674730
 <h2 id="泰坦尼克号数据集验证"><a href="#泰坦尼克号数据集验证" class="headerlink" title="泰坦尼克号数据集验证"></a>泰坦尼克号数据集验证</h2><ol>
 <li>使用默认learning_rate, 寻找对应的n_estimators</li>
 </ol>
-<pre><code class="Python">
-    # 首先确定learning_rate为默认， 寻找最优n_estimators
-    from sklearn.model_selection import GridSearchCV
-
-    # 寻找最优n_estimator
-    param_test1 = {&#39;n_estimators&#39;:range(20,81,10)}
-    gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(verbose=1, learning_rate=0.1,
-            min_samples_split=10,min_samples_leaf=5,max_depth=5,
-            max_features=&#39;sqrt&#39;,subsample=0.8,random_state=42), 
-    param_grid = param_test1, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch1.fit(train[predictors].values, y_train)
-    # 70
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 首先确定learning_rate为默认， 寻找最优n_estimators</span></div><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</div><div class="line"></div><div class="line"><span class="comment"># 寻找最优n_estimator</span></div><div class="line">param_test1 = &#123;<span class="string">'n_estimators'</span>:range(<span class="number">20</span>,<span class="number">81</span>,<span class="number">10</span>)&#125;</div><div class="line">gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(verbose=<span class="number">1</span>, learning_rate=<span class="number">0.1</span>,</div><div class="line">        min_samples_split=<span class="number">10</span>,min_samples_leaf=<span class="number">5</span>,max_depth=<span class="number">5</span>,</div><div class="line">        max_features=<span class="string">'sqrt'</span>,subsample=<span class="number">0.8</span>,random_state=<span class="number">42</span>), </div><div class="line">param_grid = param_test1, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch1.fit(train[predictors].values, y_train)</div><div class="line"><span class="comment"># 70</span></div></pre></td></tr></table></figure>
 <ol>
 <li>主要的Boosting参数确定(learning_rate &amp; n_estimators), 下面搜寻决策树相关参数</li>
 </ol>
-<pre><code class="Python">
-    param_test2 = {&#39;max_depth&#39;:range(3,10,1), &#39;min_samples_split&#39;:range(20,100,5)}
-    gsearch2 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70, max_features=&#39;sqrt&#39;, subsample=0.8, random_state=42), 
-    param_grid = param_test2, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch2.fit(train[predictors].values, y_train)
-    gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_
-    # max_depth = 9 , min_samples_split = 65
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">param_test2 = &#123;<span class="string">'max_depth'</span>:range(<span class="number">3</span>,<span class="number">10</span>,<span class="number">1</span>), <span class="string">'min_samples_split'</span>:range(<span class="number">20</span>,<span class="number">100</span>,<span class="number">5</span>)&#125;</div><div class="line">gsearch2 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>, max_features=<span class="string">'sqrt'</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">42</span>), </div><div class="line">param_grid = param_test2, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch2.fit(train[predictors].values, y_train)</div><div class="line">gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_</div><div class="line"><span class="comment"># max_depth = 9 , min_samples_split = 65</span></div></pre></td></tr></table></figure>
 <ul>
 <li>首先搞max_depth &amp; num_samples_split</li>
 <li>再搞min_samples_leaf</li>
 <li>max_features</li>
 </ul>
-<pre><code class="Python">
-
-    param_test3 = { &#39;min_samples_leaf&#39;:range(3,30,2)}
-    gsearch3 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9, min_samples_split=65, max_features=&#39;sqrt&#39;, subsample=0.8, random_state=42), 
-    param_grid = param_test3, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch3.fit(train[predictors].values, y_train)
-    gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_
-
-    # min_samples_leaf = 7
-</code></pre>
-<pre><code class="Python">
-    param_test4 = {&#39;max_features&#39;:range(3,13,2)}
-    gsearch4 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9, min_samples_split=65, min_samples_leaf=7, subsample=0.8, random_state=42),
-    param_grid = param_test4, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch4.fit(train[predictors].values, y_train)
-    gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_
-</code></pre>
-<pre><code class="Python">
-    param_test5 = {&#39;subsample&#39;:[0.5,0.6,0.7,0.75,0.8,0.85,0.9]}
-    gsearch5 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=70,max_depth=9,min_samples_split=65, min_samples_leaf=7,  random_state=42,max_features=3),
-    param_grid = param_test5, scoring=&#39;accuracy&#39;,n_jobs=6,iid=False, cv=5)
-    gsearch5.fit(train[predictors].values, y_train)
-    gsearch5.grid_scores_, gsearch5.best_params_, gsearch5.best_score_
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">param_test3 = &#123; <span class="string">'min_samples_leaf'</span>:range(<span class="number">3</span>,<span class="number">30</span>,<span class="number">2</span>)&#125;</div><div class="line">gsearch3 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>,max_depth=<span class="number">9</span>, min_samples_split=<span class="number">65</span>, max_features=<span class="string">'sqrt'</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">42</span>), </div><div class="line">param_grid = param_test3, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch3.fit(train[predictors].values, y_train)</div><div class="line">gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_</div><div class="line"></div><div class="line"><span class="comment"># min_samples_leaf = 7</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">param_test4 = &#123;<span class="string">'max_features'</span>:range(<span class="number">3</span>,<span class="number">13</span>,<span class="number">2</span>)&#125;</div><div class="line">gsearch4 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>,max_depth=<span class="number">9</span>, min_samples_split=<span class="number">65</span>, min_samples_leaf=<span class="number">7</span>, subsample=<span class="number">0.8</span>, random_state=<span class="number">42</span>),</div><div class="line">param_grid = param_test4, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch4.fit(train[predictors].values, y_train)</div><div class="line">gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">param_test5 = &#123;<span class="string">'subsample'</span>:[<span class="number">0.5</span>,<span class="number">0.6</span>,<span class="number">0.7</span>,<span class="number">0.75</span>,<span class="number">0.8</span>,<span class="number">0.85</span>,<span class="number">0.9</span>]&#125;</div><div class="line">gsearch5 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=<span class="number">0.1</span>, n_estimators=<span class="number">70</span>,max_depth=<span class="number">9</span>,min_samples_split=<span class="number">65</span>, min_samples_leaf=<span class="number">7</span>,  random_state=<span class="number">42</span>,max_features=<span class="number">3</span>),</div><div class="line">param_grid = param_test5, scoring=<span class="string">'accuracy'</span>,n_jobs=<span class="number">6</span>,iid=<span class="keyword">False</span>, cv=<span class="number">5</span>)</div><div class="line">gsearch5.fit(train[predictors].values, y_train)</div><div class="line">gsearch5.grid_scores_, gsearch5.best_params_, gsearch5.best_score_</div></pre></td></tr></table></figure>
 <p>等以上参数确定后，再调整learning_rate 和 n_estimators, learning_rate降，n_estimators升。</p>
 <p><img src="https://i.imgur.com/2KMrUOw.png" alt="分数提升"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/Time Series Forecasting with ARIMA in Python3/" itemprop="url">Python3时间序列分析模型ARIMA的简单实用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <pre><code>import warnings
+import itertools
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+plt.style.use(&apos;fivethirtyeight&apos;)
+%matplotlib inline
+
+#导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot;
+#收集了从1958年到2001年的，CO2变化
+data=sm.datasets.co2.load_pandas()
+y=data.data
+
+#每周的数据很难工作，用每月的平均值代替
+y=y[&apos;co2&apos;].resample(&apos;MS&apos;).mean()
+
+
+
+#使用缺失值前面的值来填充
+y=y.fillna(y.bfill())
+print(y)
+
+
+1958-03-01    316.100000
+1958-04-01    317.200000
+1958-05-01    317.433333
+1958-06-01    315.625000
+1958-07-01    315.625000
+1958-08-01    314.950000
+1958-09-01    313.500000
+1958-10-01    313.425000
+1958-11-01    313.425000
+1958-12-01    314.700000
+1959-01-01    315.500000
+1959-02-01    316.700000
+1959-03-01    316.733333
+1959-04-01    317.675000
+1959-05-01    318.325000
+1959-06-01    318.025000
+1959-07-01    316.525000
+1959-08-01    314.900000
+1959-09-01    313.825000
+1959-10-01    313.400000
+1959-11-01    314.875000
+1959-12-01    315.525000
+1960-01-01    316.380000
+1960-02-01    316.975000
+1960-03-01    317.575000
+1960-04-01    319.120000
+1960-05-01    319.925000
+1960-06-01    319.450000
+1960-07-01    318.060000
+1960-08-01    315.775000
+                 ...    
+1999-07-01    369.000000
+1999-08-01    366.700000
+1999-09-01    364.675000
+1999-10-01    365.140000
+1999-11-01    366.650000
+1999-12-01    367.900000
+2000-01-01    369.020000
+2000-02-01    369.375000
+2000-03-01    370.400000
+2000-04-01    371.540000
+2000-05-01    371.650000
+2000-06-01    371.625000
+2000-07-01    369.940000
+2000-08-01    367.950000
+2000-09-01    366.540000
+2000-10-01    366.725000
+2000-11-01    368.125000
+2000-12-01    369.440000
+2001-01-01    370.175000
+2001-02-01    371.325000
+2001-03-01    372.060000
+2001-04-01    372.775000
+2001-05-01    373.800000
+2001-06-01    373.060000
+2001-07-01    371.300000
+2001-08-01    369.425000
+2001-09-01    367.880000
+2001-10-01    368.050000
+2001-11-01    369.375000
+2001-12-01    371.020000
+Freq: MS, Name: co2, Length: 526, dtype: float64
+
+
+#可视化数据
+y.plot(figsize=(15,6))
+
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt;
+</code></pre><p><img src="https://i.imgur.com/rjbrTh2.png" alt=""></p>
+<p>最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise.</p>
+<ul>
+<li><p>p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days.</p>
+</li>
+<li><p>d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small.</p>
+</li>
+<li><p>q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past.</p>
+</li>
+</ul>
+<p>When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.).</p>
+<pre><code>#Define the p,d,q parameters to take any value between 0 and 2
+p=d=q=range(0,2)
+#产生不同的组合
+pdq=list(itertools.product(p,d,q))
+#加上季节
+seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))]
+
+print(&apos;Examples of parameter combinations for Seasonal ARIMA...&apos;)
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[1],seasonal_pdq[1]))
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[1],seasonal_pdq[2]))
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[2],seasonal_pdq[3]))
+print(&apos;SARIMAX: {} x {}&apos;.format(pdq[2],seasonal_pdq[4]))
+
+
+Examples of parameter combinations for Seasonal ARIMA...
+SARIMAX: (0, 0, 1) x (0, 0, 1, 12)
+SARIMAX: (0, 0, 1) x (0, 1, 0, 12)
+SARIMAX: (0, 1, 0) x (0, 1, 1, 12)
+SARIMAX: (0, 1, 0) x (1, 0, 0, 12)
+</code></pre><p>使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。</p>
+<pre><code>warnings.filterwarnings(&apos;ignore&apos;)
+for param in pdq:
+    for param_seasonal in seasonal_pdq:
+        try:
+            mod=sm.tsa.statespace.SARIMAX(y,order=param,
+                                         seasonal_order=param_seasonal,
+                                         enforce_stationarity=False,
+                                         enforce_invertibility=False)
+            results=mod.fit()
+            print(&apos;ARIMA{} x {}12 - AIC:{}&apos;.format(param,param_seasonal,results.aic))
+        except:
+            continue
+
+
+ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514
+ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955
+ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035
+ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077
+ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545
+ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444
+ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609
+ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488
+ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783
+ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884
+ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123
+ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135
+ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242
+ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801
+ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082
+ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724
+ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303
+ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172
+ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419
+ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214
+ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316
+ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715
+ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042
+ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721
+ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874
+ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157
+ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964
+ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518
+ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054
+ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267
+ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374
+ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998
+ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694
+ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544
+ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341
+ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134
+ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588
+ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976
+ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977
+ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118
+ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662
+ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821
+ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868
+ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384
+ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459
+ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794
+ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837
+ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677
+ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254
+ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126
+ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399
+ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544
+ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744
+ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113
+ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746
+ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897
+ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253
+ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126
+ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924
+ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222
+
+
+
+
+#发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型
+mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1),
+                             seasonal_order=(1,1,1,12),
+                             enforce_stationarity=False,
+                             enforce_invertibility=False)
+results=mod.fit()
+print(results.summary().tables[1])
+
+
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.3181      0.092      3.441      0.001       0.137       0.499
+ma.L1         -0.6254      0.077     -8.162      0.000      -0.776      -0.475
+ar.S.L12       0.0010      0.001      1.732      0.083      -0.000       0.002
+ma.S.L12      -0.8769      0.026    -33.806      0.000      -0.928      -0.826
+sigma2         0.0972      0.004     22.632      0.000       0.089       0.106
+==============================================================================
+</code></pre><p>coef列显示了各个特征的权重，如何对时间序列产生影响。</p>
+<pre><code>results.plot_diagnostics(figsize=(15,12))
+</code></pre><p><img src="https://i.imgur.com/CX8ezlB.png" alt=""></p>
+<p>Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。</p>
+<ul>
+<li>In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed.</li>
+<li>The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed.</li>
+<li>The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself.</li>
+</ul>
+<p>这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间</p>
+<pre><code>#dynamic=False,ensures that we produce one-step ahead forecasts, 
+#meaning that forecasts at each point are generated using the full history up to that point.
+pred=results.get_prediction(start=pd.to_datetime(&apos;1998-01-01&apos;),dynamic=False)
+pred_ci=pred.conf_int()
+
+#绘制出实际值
+ax=y[&apos;1990&apos;:].plot(label=&apos;observed&apos;)
+#预测值
+pred.predicted_mean.plot(ax=ax,label=&apos;One-step ahead Forecast&apos;,alpha=.7)
+#置信区间
+ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&apos;k&apos;,alpha=.2)
+ax.set_xlabel(&apos;Date&apos;)
+ax.set_ylabel(&apos;CO2 Levels&apos;)
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0x66f26d8&gt;
+</code></pre><p><img src="https://i.imgur.com/dMU02LT.png" alt=""></p>
+<pre><code>y_forecasted=pred.predicted_mean
+y_truth=y[&apos;1998-01-01&apos;:]
+
+#计算平方差
+mse=((y_forecasted-y_truth)**2).mean()
+print(&apos;The Mean Squared Error of our forecasts is {}&apos;.format(round(mse,2)))
+
+
+The Mean Squared Error of our forecasts is 0.07
+
+
+#dynamic=True,利用指定时间点之前的数据进行预测？
+pred_dynamic = results.get_prediction(start=pd.to_datetime(&apos;1998-01-01&apos;), dynamic=True, full_results=True)
+pred_dynamic_ci = pred_dynamic.conf_int()
+
+
+ax = y[&apos;1990&apos;:].plot(label=&apos;observed&apos;, figsize=(20, 15))
+pred_dynamic.predicted_mean.plot(label=&apos;Dynamic Forecast&apos;, ax=ax)
+
+ax.fill_between(pred_dynamic_ci.index,
+                pred_dynamic_ci.iloc[:, 0],
+                pred_dynamic_ci.iloc[:, 1], color=&apos;k&apos;, alpha=.25)
+
+ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&apos;1998-01-01&apos;), y.index[-1],
+                 alpha=.1, zorder=-1)
+
+ax.set_xlabel(&apos;Date&apos;)
+ax.set_ylabel(&apos;CO2 Levels&apos;)
+
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0xdaddcf8&gt;
+</code></pre><p><img src="https://i.imgur.com/EH4nXRx.png" alt=""></p>
+<pre><code># Extract the predicted and true values of our time series
+y_forecasted = pred_dynamic.predicted_mean
+y_truth = y[&apos;1998-01-01&apos;:]
+
+# Compute the mean square error
+mse = ((y_forecasted - y_truth) ** 2).mean()
+print(&apos;The Mean Squared Error of our forecasts is {}&apos;.format(round(mse, 2)))
+
+The Mean Squared Error of our forecasts is 1.01
+
+
+#Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长
+pred_uc=results.get_forecast(steps=500)
+#Get confidence intervals of forecasts
+pred_ci=pred_uc.conf_int()
+
+ax=y.plot(label=&apos;observed&apos;,figsize=(20,15))
+pred_uc.predicted_mean.plot(ax=ax,label=&apos;Forecast&apos;)
+ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],
+               pred_ci.iloc[:,1],color=&apos;k&apos;,alpha=.25)
+ax.set_xlabel(&apos;Date&apos;)
+ax.set_ylabel(&apos;CO2 Levels&apos;)
+plt.legend()
+
+&lt;matplotlib.legend.Legend at 0xda122e8&gt;
+</code></pre><p> <img src="https://i.imgur.com/TfPcg9W.png" alt=""></p>
+<p>##参考博客##</p>
+<ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
+</ol>
 
           
         
@@ -2254,7 +2662,7 @@ def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
     unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
     #所有物品都已经投过票，则不需要进行推荐
     if len(unratedItems)==0:
-        return &#39;you rated everything&#39;
+        return &apos;you rated everything&apos;
     itemScores=[]
     #对未投票物品进行遍历
     for item in unratedItems:
@@ -2295,14 +2703,14 @@ def printMat(inMat,thresh=0.8):
     for i in range(32):
         for k in range(32):
             if float(inMat[i,k])&gt;thresh:
-                print(1,end=&#39;&#39;);
+                print(1,end=&apos;&apos;);
             else:
-                print(0,end=&#39;&#39;);
-        print(&#39;&#39;)
+                print(0,end=&apos;&apos;);
+        print(&apos;&apos;)
 
 def imgCompress(numSV=3,thresh=0.8):
     my1=[]
-    for line in open(&#39;0_5.txt&#39;).readlines():
+    for line in open(&apos;0_5.txt&apos;).readlines():
         newRow=[]
         for i in range(32):
             newRow.append(int(line[i]))
@@ -2322,463 +2730,6 @@ def imgCompress(numSV=3,thresh=0.8):
           numSV)
     printMat(reconMat,thresh)
 </code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/29/Time Series Forecasting with ARIMA in Python3/" itemprop="url">Python3时间序列分析模型ARIMA的简单实用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
-                2017-09-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <pre><code>import warnings
-import itertools
-import pandas as pd
-import numpy as np
-import statsmodels.api as sm
-import matplotlib.pyplot as plt
-plt.style.use(&#39;fivethirtyeight&#39;)
-%matplotlib inline
-
-#导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot;
-#收集了从1958年到2001年的，CO2变化
-data=sm.datasets.co2.load_pandas()
-y=data.data
-
-#每周的数据很难工作，用每月的平均值代替
-y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean()
-
-
-
-#使用缺失值前面的值来填充
-y=y.fillna(y.bfill())
-print(y)
-
-
-1958-03-01    316.100000
-1958-04-01    317.200000
-1958-05-01    317.433333
-1958-06-01    315.625000
-1958-07-01    315.625000
-1958-08-01    314.950000
-1958-09-01    313.500000
-1958-10-01    313.425000
-1958-11-01    313.425000
-1958-12-01    314.700000
-1959-01-01    315.500000
-1959-02-01    316.700000
-1959-03-01    316.733333
-1959-04-01    317.675000
-1959-05-01    318.325000
-1959-06-01    318.025000
-1959-07-01    316.525000
-1959-08-01    314.900000
-1959-09-01    313.825000
-1959-10-01    313.400000
-1959-11-01    314.875000
-1959-12-01    315.525000
-1960-01-01    316.380000
-1960-02-01    316.975000
-1960-03-01    317.575000
-1960-04-01    319.120000
-1960-05-01    319.925000
-1960-06-01    319.450000
-1960-07-01    318.060000
-1960-08-01    315.775000
-                 ...    
-1999-07-01    369.000000
-1999-08-01    366.700000
-1999-09-01    364.675000
-1999-10-01    365.140000
-1999-11-01    366.650000
-1999-12-01    367.900000
-2000-01-01    369.020000
-2000-02-01    369.375000
-2000-03-01    370.400000
-2000-04-01    371.540000
-2000-05-01    371.650000
-2000-06-01    371.625000
-2000-07-01    369.940000
-2000-08-01    367.950000
-2000-09-01    366.540000
-2000-10-01    366.725000
-2000-11-01    368.125000
-2000-12-01    369.440000
-2001-01-01    370.175000
-2001-02-01    371.325000
-2001-03-01    372.060000
-2001-04-01    372.775000
-2001-05-01    373.800000
-2001-06-01    373.060000
-2001-07-01    371.300000
-2001-08-01    369.425000
-2001-09-01    367.880000
-2001-10-01    368.050000
-2001-11-01    369.375000
-2001-12-01    371.020000
-Freq: MS, Name: co2, Length: 526, dtype: float64
-
-
-#可视化数据
-y.plot(figsize=(15,6))
-
-&lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt;
-</code></pre><p><img src="https://i.imgur.com/rjbrTh2.png" alt=""></p>
-<p>最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise.</p>
-<ul>
-<li><p>p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days.</p>
-</li>
-<li><p>d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small.</p>
-</li>
-<li><p>q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past.</p>
-</li>
-</ul>
-<p>When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.).</p>
-<pre><code>#Define the p,d,q parameters to take any value between 0 and 2
-p=d=q=range(0,2)
-#产生不同的组合
-pdq=list(itertools.product(p,d,q))
-#加上季节
-seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))]
-
-print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;)
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1]))
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2]))
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3]))
-print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4]))
-
-
-Examples of parameter combinations for Seasonal ARIMA...
-SARIMAX: (0, 0, 1) x (0, 0, 1, 12)
-SARIMAX: (0, 0, 1) x (0, 1, 0, 12)
-SARIMAX: (0, 1, 0) x (0, 1, 1, 12)
-SARIMAX: (0, 1, 0) x (1, 0, 0, 12)
-</code></pre><p>使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。</p>
-<pre><code>warnings.filterwarnings(&#39;ignore&#39;)
-for param in pdq:
-    for param_seasonal in seasonal_pdq:
-        try:
-            mod=sm.tsa.statespace.SARIMAX(y,order=param,
-                                         seasonal_order=param_seasonal,
-                                         enforce_stationarity=False,
-                                         enforce_invertibility=False)
-            results=mod.fit()
-            print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic))
-        except:
-            continue
-
-
-ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514
-ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955
-ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035
-ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077
-ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545
-ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444
-ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609
-ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488
-ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783
-ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884
-ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123
-ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135
-ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242
-ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801
-ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082
-ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724
-ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303
-ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172
-ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419
-ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214
-ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316
-ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715
-ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042
-ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721
-ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874
-ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157
-ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964
-ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518
-ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054
-ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267
-ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374
-ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998
-ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694
-ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544
-ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341
-ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134
-ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588
-ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976
-ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977
-ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118
-ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662
-ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821
-ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868
-ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384
-ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459
-ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794
-ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837
-ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677
-ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254
-ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126
-ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399
-ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544
-ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744
-ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113
-ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746
-ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897
-ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253
-ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126
-ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924
-ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222
-
-
-
-
-#发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型
-mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1),
-                             seasonal_order=(1,1,1,12),
-                             enforce_stationarity=False,
-                             enforce_invertibility=False)
-results=mod.fit()
-print(results.summary().tables[1])
-
-
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-ar.L1          0.3181      0.092      3.441      0.001       0.137       0.499
-ma.L1         -0.6254      0.077     -8.162      0.000      -0.776      -0.475
-ar.S.L12       0.0010      0.001      1.732      0.083      -0.000       0.002
-ma.S.L12      -0.8769      0.026    -33.806      0.000      -0.928      -0.826
-sigma2         0.0972      0.004     22.632      0.000       0.089       0.106
-==============================================================================
-</code></pre><p>coef列显示了各个特征的权重，如何对时间序列产生影响。</p>
-<pre><code>results.plot_diagnostics(figsize=(15,12))
-</code></pre><p><img src="https://i.imgur.com/CX8ezlB.png" alt=""></p>
-<p>Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。</p>
-<ul>
-<li>In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed.</li>
-<li>The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed.</li>
-<li>The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself.</li>
-</ul>
-<p>这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间</p>
-<pre><code>#dynamic=False,ensures that we produce one-step ahead forecasts, 
-#meaning that forecasts at each point are generated using the full history up to that point.
-pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False)
-pred_ci=pred.conf_int()
-
-#绘制出实际值
-ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;)
-#预测值
-pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7)
-#置信区间
-ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2)
-ax.set_xlabel(&#39;Date&#39;)
-ax.set_ylabel(&#39;CO2 Levels&#39;)
-plt.legend()
-
-&lt;matplotlib.legend.Legend at 0x66f26d8&gt;
-</code></pre><p><img src="https://i.imgur.com/dMU02LT.png" alt=""></p>
-<pre><code>y_forecasted=pred.predicted_mean
-y_truth=y[&#39;1998-01-01&#39;:]
-
-#计算平方差
-mse=((y_forecasted-y_truth)**2).mean()
-print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2)))
-
-
-The Mean Squared Error of our forecasts is 0.07
-
-
-#dynamic=True,利用指定时间点之前的数据进行预测？
-pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True)
-pred_dynamic_ci = pred_dynamic.conf_int()
-
-
-ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15))
-pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax)
-
-ax.fill_between(pred_dynamic_ci.index,
-                pred_dynamic_ci.iloc[:, 0],
-                pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25)
-
-ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1],
-                 alpha=.1, zorder=-1)
-
-ax.set_xlabel(&#39;Date&#39;)
-ax.set_ylabel(&#39;CO2 Levels&#39;)
-
-plt.legend()
-
-&lt;matplotlib.legend.Legend at 0xdaddcf8&gt;
-</code></pre><p><img src="https://i.imgur.com/EH4nXRx.png" alt=""></p>
-<pre><code># Extract the predicted and true values of our time series
-y_forecasted = pred_dynamic.predicted_mean
-y_truth = y[&#39;1998-01-01&#39;:]
-
-# Compute the mean square error
-mse = ((y_forecasted - y_truth) ** 2).mean()
-print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2)))
-
-The Mean Squared Error of our forecasts is 1.01
-
-
-#Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长
-pred_uc=results.get_forecast(steps=500)
-#Get confidence intervals of forecasts
-pred_ci=pred_uc.conf_int()
-
-ax=y.plot(label=&#39;observed&#39;,figsize=(20,15))
-pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;)
-ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],
-               pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25)
-ax.set_xlabel(&#39;Date&#39;)
-ax.set_ylabel(&#39;CO2 Levels&#39;)
-plt.legend()
-
-&lt;matplotlib.legend.Legend at 0xda122e8&gt;
-</code></pre><p> <img src="https://i.imgur.com/TfPcg9W.png" alt=""></p>
-<p>##参考博客##</p>
-<ol>
-<li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
-</ol>
 
           
         
@@ -2968,7 +2919,7 @@ plt.legend()
 
 import numpy as np
 
-def loadDataSet(fileName,delim=&#39;\t&#39;):
+def loadDataSet(fileName,delim=&apos;\t&apos;):
     fr=open(fileName)
     stringArr=[line.strip().split(delim) for line in fr.readlines()]
     datArr=[list(map(float,line)) for line in stringArr]
@@ -3003,7 +2954,7 @@ def pca(dataMat,topNfeat=9999999):
 
 #程序清单13-2 将NaN替换成平均值的函数
 def replaceNanWithMean():
-    datMat=loadDataSet(&#39;secom.data&#39;,&#39; &#39;)
+    datMat=loadDataSet(&apos;secom.data&apos;,&apos; &apos;)
     numFeat=np.shape(datMat)[1]
     for i in range(numFeat):
         meanVal=np.mean(datMat[np.nonzero(-np.isnan(datMat[:,i].A))[0],i])
@@ -3197,7 +3148,7 @@ class treeNode:
         self.count+=numOccur
 
     def disp(self,ind=1):
-        print(&#39; &#39;*ind,self.name,&#39; &#39;,self.count)
+        print(&apos; &apos;*ind,self.name,&apos; &apos;,self.count)
         for child in self.children.values():
             child.disp(ind+1)
 </code></pre><p>除了FP树外，还需要一个头指针表来指向给定类型的第一个实例。</p>
@@ -3227,7 +3178,7 @@ def createTree(dataSet,minSup=1):
     for k in headerTable:
         headerTable[k]=[headerTable[k],None]
     #FP树根节点
-    retTree=treeNode(&#39;Null Set&#39;,1,None)
+    retTree=treeNode(&apos;Null Set&apos;,1,None)
     #再次遍历数据集
     for tranSet,count in dataSet.items():
         localD={}
@@ -3320,7 +3271,7 @@ def mineTree(inTree,headerTable,minSup,preFix,freqItemList):
 
         #如果树中还有元素项大于最小支持度，递归调用mineTree()函数
         if myHead!=None:
-            print(&#39;conditional tree for: &#39;,newFreqSet)
+            print(&apos;conditional tree for: &apos;,newFreqSet)
             myCondTree.disp(1)
             mineTree(myCondTree,myHead,minSup,newFreqSet,freqItemList)
 
@@ -3334,16 +3285,16 @@ from time import sleep
 import re
 
 def getLotsOfTweets(searchStr):
-    CONSUMER_KEY=&#39;&#39;
-    CONSUMER_SECRET=&#39;&#39;
-    ACCESS_TOKEN_KEY=&#39;&#39;
-    ACCESS_TOKEN_SECRET=&#39;&#39;
+    CONSUMER_KEY=&apos;&apos;
+    CONSUMER_SECRET=&apos;&apos;
+    ACCESS_TOKEN_KEY=&apos;&apos;
+    ACCESS_TOKEN_SECRET=&apos;&apos;
     api=twitter.Api(consumer_key=CONSUMER_KEY,consumer_secret=CONSUMER_SECRET,
                     access_token_key=ACCESS_TOKEN_KEY,
                     access_token_secret=ACCESS_TOKEN_SECRET)
     resultsPages=[]
     for i in range(1,15):
-        print(&#39;fetching page %d&#39; % i)
+        print(&apos;fetching page %d&apos; % i)
         searchResults=api.GetSearch(searchStr,per_page=100,page=i)
         resultsPages.append(searchResults)
         sleep(6)
@@ -3351,9 +3302,9 @@ def getLotsOfTweets(searchStr):
 
 #程序清单12-7 文本解析及合成代码
 def textParse(bigString):
-    urlsRemoved=re.sub(&#39;(http[s]?:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*&#39;,
-                       &#39;&#39;,bigString)
-    listOfTokens=re.split(r&#39;\W*&#39;,urlsRemoved)
+    urlsRemoved=re.sub(&apos;(http[s]?:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*&apos;,
+                       &apos;&apos;,bigString)
+    listOfTokens=re.split(r&apos;\W*&apos;,urlsRemoved)
     return [tok.lower() for tok in listOfTokens if len(tok)&gt;2]
 
 def mineTweets(tweetArr,minSup=5):
@@ -3367,7 +3318,7 @@ def mineTweets(tweetArr,minSup=5):
     mineTree(myFPtree,myHeaderTab,minSup,set([]),myFreqList)
     return myFreqList
 </code></pre><h2 id="示例：从新闻网站点击流中挖掘"><a href="#示例：从新闻网站点击流中挖掘" class="headerlink" title="示例：从新闻网站点击流中挖掘"></a>示例：从新闻网站点击流中挖掘</h2><p>在kosarak.dat文件中，包含将近100万条记录。该文件中的每一行包含某个用户浏览过的新闻报道。</p>
-<pre><code>In [47]: parsedDat=[line.split() for line in open(&#39;kosarak.dat&#39;).readlines()]
+<pre><code>In [47]: parsedDat=[line.split() for line in open(&apos;kosarak.dat&apos;).readlines()]
 
 In [48]: initSet=fpGrowth.createInitSet(parsedDat)
 
@@ -3376,18 +3327,18 @@ In [49]: myFPtree,myHeaderTab=fpGrowth.createTree(initSet,100000)
 In [50]: myFreqList=[]
 
 In [51]: fpGrowth.mineTree(myFPtree,myHeaderTab,100000,set([]),myFreqList)
-conditional tree for:  {&#39;1&#39;}
+conditional tree for:  {&apos;1&apos;}
   Null Set   1
    6   107404
-conditional tree for:  {&#39;3&#39;}
+conditional tree for:  {&apos;3&apos;}
   Null Set   1
    6   186289
     11   117401
    11   9718
-conditional tree for:  {&#39;3&#39;, &#39;11&#39;}
+conditional tree for:  {&apos;3&apos;, &apos;11&apos;}
   Null Set   1
    6   117401
-conditional tree for:  {&#39;11&#39;}
+conditional tree for:  {&apos;11&apos;}
   Null Set   1
    6   261773
 
@@ -3396,15 +3347,15 @@ Out[52]: 9
 
 In[53]: myFreqList
 Out[53]: 
-[{&#39;1&#39;},
- {&#39;1&#39;, &#39;6&#39;},
- {&#39;3&#39;},
- {&#39;11&#39;, &#39;3&#39;},
- {&#39;11&#39;, &#39;3&#39;, &#39;6&#39;},
- {&#39;3&#39;, &#39;6&#39;},
- {&#39;11&#39;},
- {&#39;11&#39;, &#39;6&#39;},
- {&#39;6&#39;}]
+[{&apos;1&apos;},
+ {&apos;1&apos;, &apos;6&apos;},
+ {&apos;3&apos;},
+ {&apos;11&apos;, &apos;3&apos;},
+ {&apos;11&apos;, &apos;3&apos;, &apos;6&apos;},
+ {&apos;3&apos;, &apos;6&apos;},
+ {&apos;11&apos;},
+ {&apos;11&apos;, &apos;6&apos;},
+ {&apos;6&apos;}]
 </code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>FP-growth算法是一种用于发现数据集中频繁模式的有效方法。FP-growth算法利用Apriori原则，执行更快。Apriori算法产生候选项集，然后扫描数据集来检测它们是否频繁。由于只对数据集扫描两次，因此FP-growth算法执行更快。在FP-growth算法中，数据集存储在一个被称为FP树的结构中。FP树构建完成后，可以通过查找元素项的条件基及构建条件FP树来发现频繁项集。该过程不断以更多元素作为条件重复进行，直到FP树只包含一个元素为止。</p>
 
           
@@ -3692,7 +3643,7 @@ def apriori(dataSet,minSupport=0.5):
 
 #输出
    reload(apriori)
-Out[22]: &lt;module &#39;apriori&#39; from &#39;G:\\MyPython_MachineLearning\\机器学习实战\\ch11\\apriori.py&#39;&gt;
+Out[22]: &lt;module &apos;apriori&apos; from &apos;G:\\MyPython_MachineLearning\\机器学习实战\\ch11\\apriori.py&apos;&gt;
 
 L,suppData=apriori.apriori(dataSet)
 
@@ -3746,7 +3697,7 @@ def calcConf(freqSet,H,supportData,br1,minConf=0.7):
         conf=supportData[freqSet]/supportData[freqSet-conseq]
         #大于最小可信度
         if conf&gt;=minConf:
-            print(freqSet-conseq,&#39;--&gt;&#39;,conseq,&#39;conf:&#39;,conf)
+            print(freqSet-conseq,&apos;--&gt;&apos;,conseq,&apos;conf:&apos;,conf)
             br1.append((freqSet-conseq,conseq,conf))
             prunedH.append(conseq)
     #返回满足最小可信度要求的规则

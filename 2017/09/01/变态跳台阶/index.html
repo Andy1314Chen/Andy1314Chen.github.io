@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码     # -*- coding:utf-8 -*-     class Solution:         def jumpFloorII(self, number):             # write code here             tmp = [-1">
+<meta name="description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码1234567891011121314151617# -*- coding:utf-8 -*-class Solution:    def jumpFloorII(self, number):        # write code here        tmp = [-1">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="变态跳台阶(剑指offer第九题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/变态跳台阶/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码     # -*- coding:utf-8 -*-     class Solution:         def jumpFloorII(self, number):             # write code here             tmp = [-1">
+<meta property="og:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码1234567891011121314151617# -*- coding:utf-8 -*-class Solution:    def jumpFloorII(self, number):        # write code here        tmp = [-1">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-25T15:25:19.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="变态跳台阶(剑指offer第九题)">
-<meta name="twitter:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码     # -*- coding:utf-8 -*-     class Solution:         def jumpFloorII(self, number):             # write code here             tmp = [-1">
+<meta name="twitter:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码1234567891011121314151617# -*- coding:utf-8 -*-class Solution:    def jumpFloorII(self, number):        # write code here        tmp = [-1">
 
 
 
@@ -395,24 +395,7 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def jumpFloorII(self, number):
-            # write code here
-            tmp = [-1]*(number+1)
-            return self.myWays(number, tmp)
-
-        def myWays(self, number, tmp):
-            if number &lt;= 0:
-                return 0
-            if number == 1:
-                return 1
-            if tmp[number] != -1:
-                return tmp[number]
-            tmp[number] = self.myWays(number-1, tmp)*2
-            return tmp[number]
-</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">jumpFloorII</span><span class="params">(self, number)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        tmp = [<span class="number">-1</span>]*(number+<span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> self.myWays(number, tmp)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">myWays</span><span class="params">(self, number, tmp)</span>:</span></div><div class="line">        <span class="keyword">if</span> number &lt;= <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        <span class="keyword">if</span> number == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> tmp[number] != <span class="number">-1</span>:</div><div class="line">            <span class="keyword">return</span> tmp[number]</div><div class="line">        tmp[number] = self.myWays(number<span class="number">-1</span>, tmp)*<span class="number">2</span></div><div class="line">        <span class="keyword">return</span> tmp[number]</div></pre></td></tr></table></figure>
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>还是要找出递推公式</p>
 
       
@@ -458,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/30/Windows下安装Xgboost/" rel="next" title="Windows系统下Xgboost安装【转】">
-                <i class="fa fa-chevron-left"></i> Windows系统下Xgboost安装【转】
+              <a href="/2017/09/01/数值的整数次方/" rel="next" title="数值的整数次方(剑指offer第十二题)">
+                <i class="fa fa-chevron-left"></i> 数值的整数次方(剑指offer第十二题)
               </a>
             
           </div>
