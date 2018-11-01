@@ -404,8 +404,29 @@ tf(w, d) = count(w, d) / size(d)
 <pre><code># 文档总数n与词w所出现文件数docs(w, D)比值的对数
 idf = log(n / docs(w, D))
 </code></pre><p>TF-IDF倾向于过滤掉常见的词语，保留重要的词语。</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.feature_extraction.<span class="built_in">text</span> import CountVectorizer</div><div class="line"><span class="comment"># 语料</span></div><div class="line">corpus = ['This <span class="keyword">is</span> <span class="keyword">the</span> <span class="keyword">first</span> document.',</div><div class="line">			'This <span class="keyword">is</span> <span class="keyword">the</span> <span class="keyword">second</span> <span class="keyword">second</span> document.',</div><div class="line">			'And <span class="keyword">the</span> <span class="keyword">third</span> one.',</div><div class="line">			'Is this <span class="keyword">the</span> <span class="keyword">first</span> document?']</div><div class="line"><span class="comment"># 将文本中的词语，转换成词频矩阵</span></div><div class="line">vectorizer = CountVectorizer()</div><div class="line"><span class="comment"># 计算词语出现的频率 </span></div><div class="line">X = vectorizer.fit_transform(corpus)</div><div class="line"><span class="comment"># 获取词袋中所有文本关键词</span></div><div class="line"><span class="built_in">words</span> = vectorizer.get_feature_names()</div><div class="line"><span class="comment"># 查看词频结果</span></div><div class="line">print(X.toarray())</div><div class="line"></div><div class="line"><span class="comment"># TfidfTransformer用于统计vectorizer中每个词语的TF-IDF值</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_extraction.<span class="built_in">text</span> import TfidfTransformer</div><div class="line">transformer = TfidfTransformer()</div><div class="line">print(transformer)</div><div class="line">tfidf = transformer.fit_transform(X)</div><div class="line">print(tfidf.toarray())</div></pre></td></tr></table></figure>
+<pre><code>
+    from sklearn.feature_extraction.text import CountVectorizer
+    # 语料
+    corpus = [&#39;This is the first document.&#39;,
+                &#39;This is the second second document.&#39;,
+                &#39;And the third one.&#39;,
+                &#39;Is this the first document?&#39;]
+    # 将文本中的词语，转换成词频矩阵
+    vectorizer = CountVectorizer()
+    # 计算词语出现的频率 
+    X = vectorizer.fit_transform(corpus)
+    # 获取词袋中所有文本关键词
+    words = vectorizer.get_feature_names()
+    # 查看词频结果
+    print(X.toarray())
 
+    # TfidfTransformer用于统计vectorizer中每个词语的TF-IDF值
+    from sklearn.feature_extraction.text import TfidfTransformer
+    transformer = TfidfTransformer()
+    print(transformer)
+    tfidf = transformer.fit_transform(X)
+    print(tfidf.toarray())
+</code></pre>
           
         
       
@@ -571,28 +592,28 @@ idf = log(n / docs(w, D))
 <p><img src="https://i.imgur.com/CQMBKFO.png" alt="图5"></p>
 <p>图5 1995-2017年用户的评分数量趋势图</p>
 <p>整体看，随着时间的发展，电影发行数量是增加的，特别是20世纪90年代后，近似指数增长。但是用户的评分数量增长并不是这么强烈，这也说明了，电影的发行数量是比较大的。</p>
-<h4 id="2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K"><a href="#2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K" class="headerlink" title="2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;"></a>2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;</h4><h5 id="-推荐总评分数Top-10"><a href="#-推荐总评分数Top-10" class="headerlink" title="    推荐总评分数Top-10"></a>    推荐总评分数Top-10</h5><pre><code>Top    Title    中文名    年份
-1    Toy Story    玩具总动员    1995
-2    Usual Suspects, The    普通嫌疑犯    1995
-3    Braveheart    勇敢的心    1995
-4    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
-5    Pulp Fiction    低俗小说    1994
-6    Shawshank Redemption, The    肖申克的救赎    1994
-7    Forrest Gump    阿甘正传    1994
-8    Jurassic Park    侏罗纪公园    1993
-9    Schindler&apos;s List    辛德勒的名单    1993
-10    Silence of the Lambs, The    沉默的羔羊    1991
-</code></pre><h5 id="-推荐总评分人数-Top-10"><a href="#-推荐总评分人数-Top-10" class="headerlink" title="    推荐总评分人数 Top-10"></a>    推荐总评分人数 Top-10</h5><pre><code>Top    Title    中文名    年份
-1    Toy Story    玩具总动员    1995
-2    Braveheart    勇敢的心    1995
-3    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
-4    Pulp Fiction    低俗小说    1994
-5    Shawshank Redemption, The    肖申克的救赎    1994
-6    Forrest Gump    阿甘正传    1994
-7    Jurassic Park    侏罗纪公园    1993
-8    Schindler&apos;s List    辛德勒的名单    1993
-9    Terminator 2: Judgment Day    终结者2：审判日    1991
-10    Silence of the Lambs, The    沉默的羔羊    1991
+<h4 id="2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K"><a href="#2-实现baseline推荐系统，如推荐评分最高的Top-K-推荐评分人数最多的Top-K" class="headerlink" title="2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;"></a>2)    实现baseline推荐系统，如推荐评分最高的Top-K, 推荐评分人数最多的Top-K;</h4><h5 id="-推荐总评分数Top-10"><a href="#-推荐总评分数Top-10" class="headerlink" title="    推荐总评分数Top-10"></a>    推荐总评分数Top-10</h5><pre><code>    Top    Title    中文名    年份
+    1    Toy Story    玩具总动员    1995
+    2    Usual Suspects, The    普通嫌疑犯    1995
+    3    Braveheart    勇敢的心    1995
+    4    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
+    5    Pulp Fiction    低俗小说    1994
+    6    Shawshank Redemption, The    肖申克的救赎    1994
+    7    Forrest Gump    阿甘正传    1994
+    8    Jurassic Park    侏罗纪公园    1993
+    9    Schindler&#39;s List    辛德勒的名单    1993
+    10    Silence of the Lambs, The    沉默的羔羊    1991
+</code></pre><h5 id="-推荐总评分人数-Top-10"><a href="#-推荐总评分人数-Top-10" class="headerlink" title="    推荐总评分人数 Top-10"></a>    推荐总评分人数 Top-10</h5><pre><code>    Top    Title    中文名    年份
+    1    Toy Story    玩具总动员    1995
+    2    Braveheart    勇敢的心    1995
+    3    Star Wars: Episode IV - A New Hope    星球大战IV:新希望    1977
+    4    Pulp Fiction    低俗小说    1994
+    5    Shawshank Redemption, The    肖申克的救赎    1994
+    6    Forrest Gump    阿甘正传    1994
+    7    Jurassic Park    侏罗纪公园    1993
+    8    Schindler&#39;s List    辛德勒的名单    1993
+    9    Terminator 2: Judgment Day    终结者2：审判日    1991
+    10    Silence of the Lambs, The    沉默的羔羊    1991
 </code></pre><p>最为简单的推荐算法，Top10、Most Popular、Recent Uploads等等，虽然可以推荐质量较高的电影给用户，但是无法做到针对性、有目的性，所有用户得到的推荐信息都是相同的。上面两个Top10推荐的都是最为经典的电影，但是如果电影网站每次总是都推荐这些，用户体验肯定不会好，下面继续一些更复杂，但是也更有效的推荐算法。</p>
 <h4 id="3-基于内容推荐算法；"><a href="#3-基于内容推荐算法；" class="headerlink" title="3)    基于内容推荐算法；"></a>3)    基于内容推荐算法；</h4><p>在Day01中对数据分析，发现对每个movie共有1128个tags, 对每个tag共有10993个movies, 将这些movie的tag看作是该movie的属性特征，构建10993<em>1128的movies</em>tags矩阵，计算相似度。这样不用我们对movie提取属性特征，再根据TFIDE进行向量化，十分方便。</p>
 <pre><code>具体过程如下：
@@ -626,7 +647,7 @@ Top    Title    中文名    年份
 <p>KNN用于基于内容的推荐，这里主要使用sklearn库, KNN在这里需要确定两个参数，K值和距离度量。</p>
 <pre><code># (KNN)基于内容推荐的Top10电影
 Top    Title    中文名    年份
-1    Bug&apos;s Life, A    虫虫特工队    1995
+1    Bug&#39;s Life, A    虫虫特工队    1995
 2    Toy Story 2    玩具总动员2    1998
 3    Shrek    怪物史莱克    1999
 4    Monsters, Inc.    怪兽电力公司    2001
@@ -654,11 +675,11 @@ Top    Title    中文名    年份
         皮尔逊系数相似度    2.7449    2.5089    1.0    0.4118
         余弦相似度    2.7668    2.5309    1.0    0.4085
 </code></pre><p>Train set 与 test set的比例7:3， 从RMSE、MAE、Precision@5、Recall@5几项评估指标看，欧式距离相似度都是较差的，皮尔逊系数和余弦相似度结果相差不大，皮尔逊系数相似度整体要好一些。</p>
-<pre><code># 表7 Item-based CF不同相似度方法结果对比
-    RMSE    MAE    Pecision@5    Recall@5
-欧式距离相似度    3.5100    3.3105    1.0    0.0884
-皮尔逊系数相似度    3.3133    3.112    1.0    0.1943
-余弦相似度    3.3037    3.0926    1.0    0.2183
+<pre><code>        # 表7 Item-based CF不同相似度方法结果对比
+            RMSE    MAE    Pecision@5    Recall@5
+        欧式距离相似度    3.5100    3.3105    1.0    0.0884
+        皮尔逊系数相似度    3.3133    3.112    1.0    0.1943
+        余弦相似度    3.3037    3.0926    1.0    0.2183
 </code></pre><p>从Item-based CF结果看，整体要比User-based CF差一些，3种相似度计算方法中欧式距离相似度仍然是较差的，而皮尔逊系数相似度与余弦相似度类似，但这里余弦相似度要更好一些。</p>
 <p>Collaborative Filtering协同过滤的改进算法，有Top-k collaborative、Bias-subtracted Collaborative Filtering、Top-k &amp; Bias-subtracted Collaborative Filtering等。</p>
 <pre><code># 表8 几种User-based Collaborative Filtering对比结果
@@ -816,7 +837,40 @@ Top-k &amp; Bias-subtracted CF    2.1538    1.8744    1.0    0.5324
         
           
             <h2 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h2><p><img src="https://i.imgur.com/i3fRuKG.png" alt="第一题"><br><img src="https://i.imgur.com/LGqy5EK.png" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 输入</span></div><div class="line">s = input()</div><div class="line">length = len(s)</div><div class="line">k = length // <span class="number">4</span></div><div class="line"></div><div class="line">s1 = s[:k]; s2 = s[k:<span class="number">2</span>*k]</div><div class="line">s3 = s[<span class="number">2</span>*k:<span class="number">3</span>*k]; s4 = s[<span class="number">3</span>*k:<span class="number">4</span>*k]</div><div class="line">s3 = s3[::<span class="number">-1</span>]; s4 = s4[::<span class="number">-1</span>]</div><div class="line"></div><div class="line">res = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k+<span class="number">1</span>):</div><div class="line">    res.append([<span class="string">' '</span>]*(k+<span class="number">1</span>))</div><div class="line"></div><div class="line"><span class="comment"># 第一行</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">    res[<span class="number">0</span>][i] = s1[i]</div><div class="line"><span class="comment"># 最后一列</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">    res[i][k] = s2[i]</div><div class="line"><span class="comment"># 最后一行</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k,<span class="number">0</span>,<span class="number">-1</span>):</div><div class="line">    res[k][i] = s3[i<span class="number">-1</span>]</div><div class="line"><span class="comment"># 第一列</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k,<span class="number">0</span>,<span class="number">-1</span>):</div><div class="line">    res[i][<span class="number">0</span>] = s4[i<span class="number">-1</span>]</div><div class="line"><span class="comment"># 输出</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(k+<span class="number">1</span>):</div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(k+<span class="number">1</span>):</div><div class="line">        <span class="keyword">if</span> j != k:</div><div class="line">            print(res[i][j],end=<span class="string">""</span>)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(res[i][j])</div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    # 输入
+    s = input()
+    length = len(s)
+    k = length // 4
+
+    s1 = s[:k]; s2 = s[k:2*k]
+    s3 = s[2*k:3*k]; s4 = s[3*k:4*k]
+    s3 = s3[::-1]; s4 = s4[::-1]
+
+    res = []
+    for i in range(k+1):
+        res.append([&#39; &#39;]*(k+1))
+
+    # 第一行
+    for i in range(k):
+        res[0][i] = s1[i]
+    # 最后一列
+    for i in range(k):
+        res[i][k] = s2[i]
+    # 最后一行
+    for i in range(k,0,-1):
+        res[k][i] = s3[i-1]
+    # 第一列
+    for i in range(k,0,-1):
+        res[i][0] = s4[i-1]
+    # 输出
+    for i in range(k+1):
+        for j in range(k+1):
+            if j != k:
+                print(res[i][j],end=&quot;&quot;)
+            else:
+                print(res[i][j])
+</code></pre>
 <h2 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h2><p><img src="https://i.imgur.com/pD3Kwmp.png" alt=""><br><img src="https://i.imgur.com/JBuJ0wa.png" alt=""></p>
 <pre><code>import sys
 import math
@@ -824,13 +878,13 @@ import math
 def helper(s):
     if len(s) == 1:
         return 1
-    if s[0] == &apos;0&apos; and s[-1] == &apos;0&apos;:
+    if s[0] == &#39;0&#39; and s[-1] == &#39;0&#39;:
         return 0
-    if s[0] == &apos;0&apos; or s[-1] == &apos;0&apos;:
+    if s[0] == &#39;0&#39; or s[-1] == &#39;0&#39;:
         return 1
     return len(s)
 
-if __name__ == &apos;__main__&apos;:
+if __name__ == &#39;__main__&#39;:
 
     # 输入
     s = input()
@@ -845,7 +899,7 @@ if __name__ == &apos;__main__&apos;:
 <pre><code>import sys
 
 s = input()
-rows, index = map(int,s.split(&apos; &apos;))
+rows, index = map(int,s.split(&#39; &#39;))
 if rows == 0 or index &gt;= rows:
     print(-1)
     sys.exit()
@@ -853,7 +907,7 @@ if rows == 0 or index &gt;= rows:
 re = []
 for i in range(rows):
     s = input()
-    re.append(list(map(int,s.split(&apos; &apos;))))
+    re.append(list(map(int,s.split(&#39; &#39;))))
 
 max_length = 0
 index_i = 0
@@ -1375,8 +1429,8 @@ max_steps = 1000 # 最大迭代次数
 learning_rate = 0.001 # 学习率
 dropout = 0.9 # dropout时随机保留神经元的比例
 
-data_dir = &apos;data&apos; # 样本数据存储的路径
-log_dir = &apos;log&apos; # 输出日志保存的路径
+data_dir = &#39;data&#39; # 样本数据存储的路径
+log_dir = &#39;log&#39; # 输出日志保存的路径
 
 # 保存mnist数据
 mnist = input_data.read_data_sets(data_dir, one_hot=True)
@@ -1384,14 +1438,14 @@ mnist = input_data.read_data_sets(data_dir, one_hot=True)
 sess = tf.InteractiveSession()
 
 
-with tf.name_scope(&apos;input&apos;):
-    x = tf.placeholder(tf.float32, [None, 784], name=&apos;x-input&apos;)
-    y_ = tf.placeholder(tf.float32, [None, 10], name=&apos;y-input&apos;)
+with tf.name_scope(&#39;input&#39;):
+    x = tf.placeholder(tf.float32, [None, 784], name=&#39;x-input&#39;)
+    y_ = tf.placeholder(tf.float32, [None, 10], name=&#39;y-input&#39;)
 
 # 使用tf.summary.image保存图像信息
-with tf.name_scope(&apos;input_reshape&apos;):
+with tf.name_scope(&#39;input_reshape&#39;):
     image_shaped_input = tf.reshape(x, [-1, 28, 28, 1])
-    tf.summary.image(&apos;input&apos;, image_shaped_input, 10)
+    tf.summary.image(&#39;input&#39;, image_shaped_input, 10)
 
 # 连接权重
 def weight_variable(shape):
@@ -1406,81 +1460,81 @@ def bias_variable(shape):
 
 # 收录每次迭代后的参数信息
 def variable_summaries(var):
-    with tf.name_scope(&apos;summaries&apos;):
+    with tf.name_scope(&#39;summaries&#39;):
     # 计算参数的均值，并使用tf.summary.scaler记录
         mean = tf.reduce_mean(var)
-        tf.summary.scalar(&apos;mean&apos;, mean)
+        tf.summary.scalar(&#39;mean&#39;, mean)
         # 计算参数的标准差
-        with tf.name_scope(&apos;sttdev&apos;):
+        with tf.name_scope(&#39;sttdev&#39;):
             stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
             # 使用tf.summary.scalar记录下标准差，最大值，最小值
-            tf.summary.scalar(&apos;sttdev&apos;, stddev)
-            tf.summary.scalar(&apos;max&apos;, tf.reduce_max(var))
-            tf.summary.scalar(&apos;min&apos;, tf.reduce_min(var))
+            tf.summary.scalar(&#39;sttdev&#39;, stddev)
+            tf.summary.scalar(&#39;max&#39;, tf.reduce_max(var))
+            tf.summary.scalar(&#39;min&#39;, tf.reduce_min(var))
             # 用直方图记录参数的分布
-            tf.summary.histogram(&apos;histogram&apos;, var)
+            tf.summary.histogram(&#39;histogram&#39;, var)
 
 # 构建神经网络层
 def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
     # 设置命名空间
     with tf.name_scope(layer_name):
         # 调用之前的方法初始化权重w，并且调用参数信息的记录方法，记录w的信息
-        with tf.name_scope(&apos;weights&apos;):
+        with tf.name_scope(&#39;weights&#39;):
             weights = weight_variable([input_dim, output_dim])
             variable_summaries(weights)
     # 调用之前的方法初始化权重b,并且调用参数信息的记录方法，记录b的信息
-        with tf.name_scope(&apos;biases&apos;):
+        with tf.name_scope(&#39;biases&#39;):
             biases = bias_variable([output_dim])
             variable_summaries(biases)
         # 执行wx+b的线性计算，并且用直方图记录下来
-        with tf.name_scope(&apos;linear_compute&apos;):
+        with tf.name_scope(&#39;linear_compute&#39;):
             preactivate = tf.matmul(input_tensor, weights) + biases
-            tf.summary.histogram(&apos;linear&apos;, preactivate)
+            tf.summary.histogram(&#39;linear&#39;, preactivate)
         # 将线性输出经过激励函数，并将输出也用直方图记录下来
-        activations = act(preactivate, name=&apos;activation&apos;)
-        tf.summary.histogram(&apos;activations&apos;, activations)
+        activations = act(preactivate, name=&#39;activation&#39;)
+        tf.summary.histogram(&#39;activations&#39;, activations)
 
 # 返回激励层的最终输出
     return activations
 # 隐含层1
-hidden1 = nn_layer(x, 784, 500, &apos;layer1&apos;)
+hidden1 = nn_layer(x, 784, 500, &#39;layer1&#39;)
 # 创建一个dropout层，
-with tf.name_scope(&apos;dropout&apos;):
+with tf.name_scope(&#39;dropout&#39;):
     keep_prob = tf.placeholder(tf.float32)
-    tf.summary.scalar(&apos;dropout_keep_probability&apos;, keep_prob)
+    tf.summary.scalar(&#39;dropout_keep_probability&#39;, keep_prob)
     dropped = tf.nn.dropout(hidden1, keep_prob)
 # 输出层
-y = nn_layer(dropped, 500, 10, &apos;layer2&apos;, act=tf.identity)
+y = nn_layer(dropped, 500, 10, &#39;layer2&#39;, act=tf.identity)
 
 # 创建损失函数
-with tf.name_scope(&apos;loss&apos;):
+with tf.name_scope(&#39;loss&#39;):
     # 计算交叉熵损失
     diff = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)
-    with tf.name_scope(&apos;total&apos;):
+    with tf.name_scope(&#39;total&#39;):
         # 计算所有样本交叉熵损失的均值
         cross_entropy = tf.reduce_mean(diff)
-tf.summary.scalar(&apos;loss&apos;, cross_entropy)
+tf.summary.scalar(&#39;loss&#39;, cross_entropy)
 
 # 训练
 # 使用AdamOptimizer优化器训练模型，最小化交叉熵损失
-with tf.name_scope(&apos;train&apos;):
+with tf.name_scope(&#39;train&#39;):
     train_step = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
 
 # 计算准确率
-with tf.name_scope(&apos;accuracy&apos;):
-    with tf.name_scope(&apos;correct_prediction&apos;):
+with tf.name_scope(&#39;accuracy&#39;):
+    with tf.name_scope(&#39;correct_prediction&#39;):
         correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
-    with tf.name_scope(&apos;accuracy&apos;):
+    with tf.name_scope(&#39;accuracy&#39;):
         # 求均值即为准确率
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-tf.summary.scalar(&apos;accuracy&apos;, accuracy)
+tf.summary.scalar(&#39;accuracy&#39;, accuracy)
 
 # 合并summary operation, 运行初始化变量
 # summaries合并
 merged = tf.summary.merge_all()
 # 写到指定的磁盘路径中
-train_writer = tf.summary.FileWriter(log_dir+&apos;/train&apos;, sess.graph)
-test_writer = tf.summary.FileWriter(log_dir+&apos;/test&apos;)
+train_writer = tf.summary.FileWriter(log_dir+&#39;/train&#39;, sess.graph)
+test_writer = tf.summary.FileWriter(log_dir+&#39;/test&#39;)
 
 # 运行初始化变量
 tf.global_variables_initializer().run()
@@ -1501,7 +1555,7 @@ for i in range(max_steps):
     if i%10 == 0: # 记录测试集的summary与accuracy
         summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
         test_writer.add_summary(summary,i)
-        print(&apos;Accuracy at step %s: %s&apos; % (i, acc))
+        print(&#39;Accuracy at step %s: %s&#39; % (i, acc))
     else: # 记录训练集的summary
         if i % 100 == 99:
             run_options = tf.RunOptions(trace_level = tf.RunOptions.FULL_TRACE)
@@ -1510,9 +1564,9 @@ for i in range(max_steps):
             feed_dict=feed_dict(True),
             options=run_options,
             run_metadata=run_metadata)
-            train_writer.add_run_metadata(run_metadata, &apos;step%03d&apos; % i)
+            train_writer.add_run_metadata(run_metadata, &#39;step%03d&#39; % i)
             train_writer.add_summary(summary, i)
-            print(&apos;Adding run metadata for&apos;, i)
+            print(&#39;Adding run metadata for&#39;, i)
         else:
             summary, _ = sess.run([merged, train_step], feed_dict=feed_dict(True))
             train_writer.add_summary(summary, i)
@@ -1880,156 +1934,6 @@ test_writer.close()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对数似然函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机对数似然函数/" itemprop="url">RBM学习笔记（四）对数似然函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
-                2018-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
-                    <span itemprop="name">DBN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RBM学习笔记（四）对数似然函数"><a href="#RBM学习笔记（四）对数似然函数" class="headerlink" title="RBM学习笔记（四）对数似然函数"></a>RBM学习笔记（四）对数似然函数</h3><p><img src="http://img.blog.csdn.net/20140213230041656" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机梯度计算公式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2136,6 +2040,157 @@ test_writer.close()
         
           
             <h3 id="RBM学习笔记（五）梯度计算公式"><a href="#RBM学习笔记（五）梯度计算公式" class="headerlink" title="RBM学习笔记（五）梯度计算公式"></a>RBM学习笔记（五）梯度计算公式</h3><p><img src="http://img.blog.csdn.net/20140214180006531" alt=""><br><img src="http://img.blog.csdn.net/20140214180015046" alt=""><br><img src="http://img.blog.csdn.net/20140214180023156" alt=""><br><img src="http://img.blog.csdn.net/20140214182009515" alt=""><br><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
+<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/限制玻尔兹曼机对比散度算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/20/限制玻尔兹曼机对比散度算法/" itemprop="url">RBM学习笔记（六）对比散度算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
+                    <span itemprop="name">DBN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="RBM学习笔记（六）对比散度算法"><a href="#RBM学习笔记（六）对比散度算法" class="headerlink" title="RBM学习笔记（六）对比散度算法"></a>RBM学习笔记（六）对比散度算法</h3><p><img src="http://img.blog.csdn.net/20140218141501953" alt=""><br><img src="http://img.blog.csdn.net/20140309233856234" alt=""><br><img src="http://img.blog.csdn.net/20140218141517671" alt=""></p>
+<p><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
 <h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19168967" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19168967</a></p>
 
           

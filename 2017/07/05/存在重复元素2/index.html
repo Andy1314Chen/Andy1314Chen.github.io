@@ -404,7 +404,23 @@
 </code></pre><p>示例 3:</p>
 <pre><code>输入: nums = [1,2,3,1,2,3], k = 2
 输出: false
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">containsNearbyDuplicate</span><span class="params">(self, nums, k)</span>:</span></div><div class="line">       <span class="string">"""</span></div><div class="line">       :type nums: List[int]</div><div class="line">       :type k: int</div><div class="line">       :rtype: bool</div><div class="line">       """</div><div class="line">       d = &#123;&#125;</div><div class="line">       <span class="keyword">for</span> i, num <span class="keyword">in</span> enumerate(nums):</div><div class="line">           <span class="keyword">if</span> num <span class="keyword">in</span> d <span class="keyword">and</span> i - d[num] &lt;= k:</div><div class="line">               <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">           d[num] = i</div><div class="line">       </div><div class="line">       <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
+</code></pre><pre><code class="Python">
+    class Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        &quot;&quot;&quot;
+        d = {}
+        for i, num in enumerate(nums):
+            if num in d and i - d[num] &lt;= k:
+                return True
+            d[num] = i
+
+        return False
+</code></pre>
+
       
     </div>
 
@@ -448,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/不同路径/" rel="next" title="LeetCode - 不同路径">
-                <i class="fa fa-chevron-left"></i> LeetCode - 不同路径
+              <a href="/2017/07/05/Fizz Buzz/" rel="next" title="LeetCode - Fizz Buzz">
+                <i class="fa fa-chevron-left"></i> LeetCode - Fizz Buzz
               </a>
             
           </div>
@@ -458,8 +474,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/寻找峰值/" rel="prev" title="LeetCode - 寻找峰值">
-                LeetCode - 寻找峰值 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/计数质数/" rel="prev" title="LeetCode - 计数质数">
+                LeetCode - 计数质数 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

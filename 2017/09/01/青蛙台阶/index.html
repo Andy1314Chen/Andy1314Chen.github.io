@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码1234567891011121314# -*- coding:utf-8 -*-class Solution:    def jumpFloor(self, number):        # write code here                first">
+<meta name="description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码     # -*- coding:utf-8 -*-     class Solution:         def jumpFloor(self, number):             # write code here              first">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="青蛙台阶(剑指offer第八题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/青蛙台阶/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码1234567891011121314# -*- coding:utf-8 -*-class Solution:    def jumpFloor(self, number):        # write code here                first">
+<meta property="og:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码     # -*- coding:utf-8 -*-     class Solution:         def jumpFloor(self, number):             # write code here              first">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-26T01:41:52.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="青蛙台阶(剑指offer第八题)">
-<meta name="twitter:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码1234567891011121314# -*- coding:utf-8 -*-class Solution:    def jumpFloor(self, number):        # write code here                first">
+<meta name="twitter:description" content="题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码     # -*- coding:utf-8 -*-     class Solution:         def jumpFloor(self, number):             # write code here              first">
 
 
 
@@ -395,7 +395,21 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">jumpFloor</span><span class="params">(self, number)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        </div><div class="line">        first = <span class="number">1</span></div><div class="line">        second = <span class="number">1</span></div><div class="line">        res = <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, number):</div><div class="line">            res = first + second</div><div class="line">            second = first</div><div class="line">            first = res</div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def jumpFloor(self, number):
+            # write code here
+
+            first = 1
+            second = 1
+            res = 1
+            for i in range(1, number):
+                res = first + second
+                second = first
+                first = res
+            return res
+</code></pre>
 
       
     </div>
@@ -440,8 +454,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/二进制中1的个数/" rel="next" title="二进制中1的个数(剑指offer第十一题)">
-                <i class="fa fa-chevron-left"></i> 二进制中1的个数(剑指offer第十一题)
+              <a href="/2017/09/01/机器学习实战第二章笔记/" rel="next" title="机器学习实战第二章学习笔记(k-NN)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第二章学习笔记(k-NN)
               </a>
             
           </div>
@@ -450,8 +464,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" rel="prev" title="调整数组顺序使奇数位于偶数前面(剑指offer第十三题)">
-                调整数组顺序使奇数位于偶数前面(剑指offer第十三题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/包含min函数的栈/" rel="prev" title="包含min函数的栈(剑指offer第二十题)">
+                包含min函数的栈(剑指offer第二十题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

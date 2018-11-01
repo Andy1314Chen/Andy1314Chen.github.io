@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作：  插入一个字符 删除一个字符 替换一个字符 示例 1:  输入: word1 = &amp;quot;horse&amp;quot;, word2 = &amp;quot;ros&amp;quot; 输出: 3 解释:  horse -&amp;gt; rorse (将 &amp;apos;h&amp;apos">
+<meta name="description" content="给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作：  插入一个字符 删除一个字符 替换一个字符  示例 1:   输入: word1 = &amp;quot;horse&amp;quot;, word2 = &amp;quot;ros&amp;quot;  输出: 3  解释:   horse -&amp;gt; rorse (将 &amp;#39;h&amp;">
 <meta name="keywords" content="python,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode - 编辑距离">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/编辑距离/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作：  插入一个字符 删除一个字符 替换一个字符 示例 1:  输入: word1 = &amp;quot;horse&amp;quot;, word2 = &amp;quot;ros&amp;quot; 输出: 3 解释:  horse -&amp;gt; rorse (将 &amp;apos;h&amp;apos">
+<meta property="og:description" content="给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作：  插入一个字符 删除一个字符 替换一个字符  示例 1:   输入: word1 = &amp;quot;horse&amp;quot;, word2 = &amp;quot;ros&amp;quot;  输出: 3  解释:   horse -&amp;gt; rorse (将 &amp;#39;h&amp;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/KJpBzH2.png">
 <meta property="og:updated_time" content="2018-07-21T06:23:55.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode - 编辑距离">
-<meta name="twitter:description" content="给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作：  插入一个字符 删除一个字符 替换一个字符 示例 1:  输入: word1 = &amp;quot;horse&amp;quot;, word2 = &amp;quot;ros&amp;quot; 输出: 3 解释:  horse -&amp;gt; rorse (将 &amp;apos;h&amp;apos">
+<meta name="twitter:description" content="给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。 你可以对一个单词进行如下三种操作：  插入一个字符 删除一个字符 替换一个字符  示例 1:   输入: word1 = &amp;quot;horse&amp;quot;, word2 = &amp;quot;ros&amp;quot;  输出: 3  解释:   horse -&amp;gt; rorse (将 &amp;#39;h&amp;">
 <meta name="twitter:image" content="https://i.imgur.com/KJpBzH2.png">
 
 
@@ -402,28 +402,59 @@
 <li>插入一个字符</li>
 <li>删除一个字符</li>
 <li><p>替换一个字符</p>
-<pre><code>示例 1:
+<pre><code> 示例 1:
 
-输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot;
-输出: 3
-解释: 
-horse -&gt; rorse (将 &apos;h&apos; 替换为 &apos;r&apos;)
-rorse -&gt; rose (删除 &apos;r&apos;)
-rose -&gt; ros (删除 &apos;e&apos;)
+ 输入: word1 = &quot;horse&quot;, word2 = &quot;ros&quot;
+ 输出: 3
+ 解释: 
+ horse -&gt; rorse (将 &#39;h&#39; 替换为 &#39;r&#39;)
+ rorse -&gt; rose (删除 &#39;r&#39;)
+ rose -&gt; ros (删除 &#39;e&#39;)
 </code></pre></li>
 </ol>
-<pre><code>示例 2:
+<pre><code>    示例 2:
 
-输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot;
-输出: 5
-解释: 
-intention -&gt; inention (删除 &apos;t&apos;)
-inention -&gt; enention (将 &apos;i&apos; 替换为 &apos;e&apos;)
-enention -&gt; exention (将 &apos;n&apos; 替换为 &apos;x&apos;)
-exention -&gt; exection (将 &apos;n&apos; 替换为 &apos;c&apos;)
-exection -&gt; execution (插入 &apos;u&apos;)
+    输入: word1 = &quot;intention&quot;, word2 = &quot;execution&quot;
+    输出: 5
+    解释: 
+    intention -&gt; inention (删除 &#39;t&#39;)
+    inention -&gt; enention (将 &#39;i&#39; 替换为 &#39;e&#39;)
+    enention -&gt; exention (将 &#39;n&#39; 替换为 &#39;x&#39;)
+    exention -&gt; exection (将 &#39;n&#39; 替换为 &#39;c&#39;)
+    exection -&gt; execution (插入 &#39;u&#39;)
 </code></pre><p><img src="https://i.imgur.com/KJpBzH2.png" alt="求解过程"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minDistance</span><span class="params">(self, word1, word2)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type word1: str</div><div class="line">        :type word2: str</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        l1 = len(word1)</div><div class="line">        l2 = len(word2)</div><div class="line">        tmp = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(l1+<span class="number">1</span>):</div><div class="line">            tmp.append([<span class="number">-1</span>]*(l2+<span class="number">1</span>))</div><div class="line">        <span class="keyword">return</span> self.myMethod(word1, word2, l1, l2, tmp)</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">myMethod</span><span class="params">(self, word1, word2, l1, l2, tmp)</span>:</span></div><div class="line">        <span class="keyword">if</span> l1 == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> l2</div><div class="line">        <span class="keyword">if</span> l2 == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> l1</div><div class="line">        <span class="keyword">if</span> tmp[l1][l2] != <span class="number">-1</span>:</div><div class="line">            <span class="keyword">return</span> tmp[l1][l2]</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> word1[l1<span class="number">-1</span>] == word2[l2<span class="number">-1</span>]:</div><div class="line">            res = self.myMethod(word1,word2, l1<span class="number">-1</span>, l2<span class="number">-1</span>, tmp)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            res = min(self.myMethod(word1,word2, l1<span class="number">-1</span>, l2<span class="number">-1</span>, tmp),</div><div class="line">                     min(self.myMethod(word1, word2, l1 - <span class="number">1</span>, l2, tmp),</div><div class="line">                        self.myMethod(word1, word2, l1, l2 - <span class="number">1</span>, tmp))) + <span class="number">1</span></div><div class="line">        tmp[l1][l2] = res</div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    class Solution:
+        def minDistance(self, word1, word2):
+            &quot;&quot;&quot;
+            :type word1: str
+            :type word2: str
+            :rtype: int
+            &quot;&quot;&quot;
+            l1 = len(word1)
+            l2 = len(word2)
+            tmp = []
+            for i in range(l1+1):
+                tmp.append([-1]*(l2+1))
+            return self.myMethod(word1, word2, l1, l2, tmp)
+
+        def myMethod(self, word1, word2, l1, l2, tmp):
+            if l1 == 0:
+                return l2
+            if l2 == 0:
+                return l1
+            if tmp[l1][l2] != -1:
+                return tmp[l1][l2]
+
+            if word1[l1-1] == word2[l2-1]:
+                res = self.myMethod(word1,word2, l1-1, l2-1, tmp)
+            else:
+                res = min(self.myMethod(word1,word2, l1-1, l2-1, tmp),
+                         min(self.myMethod(word1, word2, l1 - 1, l2, tmp),
+                            self.myMethod(word1, word2, l1, l2 - 1, tmp))) + 1
+            tmp[l1][l2] = res
+            return res
+</code></pre>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
 <li>最后一位如果相等，则去掉后求子问题；</li>
 <li>如不等，则至少需要一步，然后分情况讨论：</li>
@@ -472,8 +503,8 @@ exection -&gt; execution (插入 &apos;u&apos;)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/第一个错误的版本/" rel="next" title="LeetCode - 第一个错误的版本">
-                <i class="fa fa-chevron-left"></i> LeetCode - 第一个错误的版本
+              <a href="/2017/07/05/有效的括号/" rel="next" title="LeetCode - 有效的括号">
+                <i class="fa fa-chevron-left"></i> LeetCode - 有效的括号
               </a>
             
           </div>
@@ -482,8 +513,8 @@ exection -&gt; execution (插入 &apos;u&apos;)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/不同路径/" rel="prev" title="LeetCode - 不同路径">
-                LeetCode - 不同路径 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/缺失数字/" rel="prev" title="LeetCode - 缺失数字">
+                LeetCode - 缺失数字 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

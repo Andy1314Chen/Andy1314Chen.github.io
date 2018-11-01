@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。 解法1(普通解法)12345678910111213141516171819# -*- coding:utf">
+<meta name="description" content="题目描述如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。 解法1(普通解法)     # -*- coding:utf-8 -*-     class Solutio">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据流中的中位数(剑指offer第六十三题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/03/数据流中的中位数/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。 解法1(普通解法)12345678910111213141516171819# -*- coding:utf">
+<meta property="og:description" content="题目描述如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。 解法1(普通解法)     # -*- coding:utf-8 -*-     class Solutio">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-27T11:51:24.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据流中的中位数(剑指offer第六十三题)">
-<meta name="twitter:description" content="题目描述如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。 解法1(普通解法)12345678910111213141516171819# -*- coding:utf">
+<meta name="twitter:description" content="题目描述如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。 解法1(普通解法)     # -*- coding:utf-8 -*-     class Solutio">
 
 
 
@@ -395,9 +395,63 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。</p>
-<h3 id="解法1-普通解法"><a href="#解法1-普通解法" class="headerlink" title="解法1(普通解法)"></a>解法1(普通解法)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.array = []</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Insert</span><span class="params">(self, num)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        self.array.append(num)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetMedian</span><span class="params">(self, fucking)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> len(self.array) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        self.array = sorted(self.array)</div><div class="line">        <span class="keyword">if</span> len(self.array)&amp;<span class="number">1</span> == <span class="number">0</span>: <span class="comment"># 偶数</span></div><div class="line">            mid = len(self.array)/<span class="number">2</span></div><div class="line">            <span class="keyword">return</span> (self.array[mid] + self.array[mid<span class="number">-1</span>])/<span class="number">2.0</span></div><div class="line">        <span class="keyword">else</span>: <span class="comment"># 奇数</span></div><div class="line">            mid = len(self.array)/<span class="number">2</span></div><div class="line">            <span class="keyword">return</span> self.array[mid]</div></pre></td></tr></table></figure>
+<h3 id="解法1-普通解法"><a href="#解法1-普通解法" class="headerlink" title="解法1(普通解法)"></a>解法1(普通解法)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def __init__(self):
+            self.array = []
+        def Insert(self, num):
+            # write code here
+            self.array.append(num)
+        def GetMedian(self, fucking):
+            # write code here
+            if len(self.array) == 0:
+                return None
+            self.array = sorted(self.array)
+            if len(self.array)&amp;1 == 0: # 偶数
+                mid = len(self.array)/2
+                return (self.array[mid] + self.array[mid-1])/2.0
+            else: # 奇数
+                mid = len(self.array)/2
+                return self.array[mid]
+</code></pre>
 <h3 id="解法2-堆思想"><a href="#解法2-堆思想" class="headerlink" title="解法2(堆思想)"></a>解法2(堆思想)</h3><p>在偶数时插入最小堆，奇数时插入最大堆。始终保持最大堆最大值小于最小堆最小值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.left = [] <span class="comment"># 最大堆，堆顶值最大</span></div><div class="line">        self.right = [] <span class="comment"># 最小堆，堆顶值最小</span></div><div class="line">        self.cnt = <span class="number">0</span> <span class="comment"># 计数</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Insert</span><span class="params">(self, num)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        self.cnt += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> self.cnt &amp; <span class="number">1</span> == <span class="number">1</span>: <span class="comment"># 奇数</span></div><div class="line">            <span class="keyword">if</span> len(self.right)&gt;<span class="number">0</span> :</div><div class="line">                <span class="keyword">if</span> self.right[<span class="number">0</span>] &lt; num:</div><div class="line">                    self.right.append(num)</div><div class="line">                    self.right.sort()</div><div class="line">                    num = self.right.pop(<span class="number">0</span>)</div><div class="line">            self.left.append(num)</div><div class="line">            self.left.sort(reverse=<span class="keyword">True</span>)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> len(self.left)&gt;<span class="number">0</span> :</div><div class="line">                <span class="keyword">if</span>  self.left[<span class="number">0</span>] &gt; num:</div><div class="line">                    self.left.append(num)</div><div class="line">                    self.left.sort(reverse=<span class="keyword">True</span>)</div><div class="line">                    num = self.left.pop(<span class="number">0</span>)</div><div class="line">            self.right.append(num)</div><div class="line">            self.right.sort()</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetMedian</span><span class="params">(self, fucking)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> self.cnt == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> self.left[<span class="number">0</span>]</div><div class="line">        <span class="keyword">if</span> self.cnt &amp; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> self.left[<span class="number">0</span>]</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> (self.left[<span class="number">0</span>]+self.right[<span class="number">0</span>])/<span class="number">2.0</span></div></pre></td></tr></table></figure>
+<pre><code class="Python">
+# -*- coding:utf-8 -*-
+class Solution:
+    def __init__(self):
+        self.left = [] # 最大堆，堆顶值最大
+        self.right = [] # 最小堆，堆顶值最小
+        self.cnt = 0 # 计数
+    def Insert(self, num):
+        # write code here
+        self.cnt += 1
+        if self.cnt &amp; 1 == 1: # 奇数
+            if len(self.right)&gt;0 :
+                if self.right[0] &lt; num:
+                    self.right.append(num)
+                    self.right.sort()
+                    num = self.right.pop(0)
+            self.left.append(num)
+            self.left.sort(reverse=True)
+        else:
+            if len(self.left)&gt;0 :
+                if  self.left[0] &gt; num:
+                    self.left.append(num)
+                    self.left.sort(reverse=True)
+                    num = self.left.pop(0)
+            self.right.append(num)
+            self.right.sort()
+    def GetMedian(self, fucking):
+        # write code here
+        if self.cnt == 1:
+            return self.left[0]
+        if self.cnt &amp; 1:
+            return self.left[0]
+        else:
+            return (self.left[0]+self.right[0])/2.0
+</code></pre>
+
       
     </div>
 
@@ -441,8 +495,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/03/机器学习实战第三章学习笔记/" rel="next" title="机器学习实战第三章学习笔记(决策树-Decision Tree)">
-                <i class="fa fa-chevron-left"></i> 机器学习实战第三章学习笔记(决策树-Decision Tree)
+              <a href="/2017/09/01/数值的整数次方/" rel="next" title="数值的整数次方(剑指offer第十二题)">
+                <i class="fa fa-chevron-left"></i> 数值的整数次方(剑指offer第十二题)
               </a>
             
           </div>
@@ -451,8 +505,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/04/删除链表中重复的结点/" rel="prev" title="删除链表中重复的结点（剑指Offer)">
-                删除链表中重复的结点（剑指Offer) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/03/机器学习实战第三章学习笔记/" rel="prev" title="机器学习实战第三章学习笔记(决策树-Decision Tree)">
+                机器学习实战第三章学习笔记(决策树-Decision Tree) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

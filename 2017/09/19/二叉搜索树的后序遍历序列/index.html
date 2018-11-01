@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。 代码12345678910111213141516171819202122232425262728293031# -*- coding:utf-8 -*-class Solution:    def VerifySquenceOfBST(self, s">
+<meta name="description" content="题目描述输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。 代码     # -*- coding:utf-8 -*-     class Solution:         def VerifySquenceOfBST(self, sequence):             # write code her">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二叉搜索树的后序遍历序列(剑指offer第二十三题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/19/二叉搜索树的后序遍历序列/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。 代码12345678910111213141516171819202122232425262728293031# -*- coding:utf-8 -*-class Solution:    def VerifySquenceOfBST(self, s">
+<meta property="og:description" content="题目描述输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。 代码     # -*- coding:utf-8 -*-     class Solution:         def VerifySquenceOfBST(self, sequence):             # write code her">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-08-06T02:36:42.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二叉搜索树的后序遍历序列(剑指offer第二十三题)">
-<meta name="twitter:description" content="题目描述输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。 代码12345678910111213141516171819202122232425262728293031# -*- coding:utf-8 -*-class Solution:    def VerifySquenceOfBST(self, s">
+<meta name="twitter:description" content="题目描述输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。 代码     # -*- coding:utf-8 -*-     class Solution:         def VerifySquenceOfBST(self, sequence):             # write code her">
 
 
 
@@ -395,7 +395,38 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">VerifySquenceOfBST</span><span class="params">(self, sequence)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> len(sequence) &lt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">if</span> len(sequence) == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="comment"># 根节点</span></div><div class="line">        root = sequence[<span class="number">-1</span>]</div><div class="line">        <span class="comment"># 左子树</span></div><div class="line">        <span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(sequence):</div><div class="line">            <span class="keyword">if</span> v &gt; root:</div><div class="line">                <span class="keyword">break</span></div><div class="line">        left_seq = sequence[:i]</div><div class="line">        <span class="comment"># 右子树</span></div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> sequence[i:<span class="number">-1</span>]:</div><div class="line">            <span class="keyword">if</span> v &lt; root:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        right_seq = sequence[i:<span class="number">-1</span>]</div><div class="line">        <span class="comment"># 存在左子树</span></div><div class="line">        left_flag = <span class="keyword">True</span></div><div class="line">        <span class="keyword">if</span> i &gt; <span class="number">0</span>:</div><div class="line">            left_flag = self.VerifySquenceOfBST(left_seq)</div><div class="line">        <span class="comment"># 存在右子树</span></div><div class="line">        right_flag = <span class="keyword">True</span></div><div class="line">        <span class="keyword">if</span> i &lt; len(sequence)<span class="number">-1</span>:</div><div class="line">            right_flag = self.VerifySquenceOfBST(right_seq)</div><div class="line">            </div><div class="line">        <span class="keyword">return</span> left_flag <span class="keyword">and</span> right_flag</div></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def VerifySquenceOfBST(self, sequence):
+            # write code here
+            if len(sequence) &lt; 1:
+                return False
+            if len(sequence) == 1:
+                return True
+            # 根节点
+            root = sequence[-1]
+            # 左子树
+            for i, v in enumerate(sequence):
+                if v &gt; root:
+                    break
+            left_seq = sequence[:i]
+            # 右子树
+            for v in sequence[i:-1]:
+                if v &lt; root:
+                    return False
+            right_seq = sequence[i:-1]
+            # 存在左子树
+            left_flag = True
+            if i &gt; 0:
+                left_flag = self.VerifySquenceOfBST(left_seq)
+            # 存在右子树
+            right_flag = True
+            if i &lt; len(sequence)-1:
+                right_flag = self.VerifySquenceOfBST(right_seq)
+
+            return left_flag and right_flag
+</code></pre>
 
       
     </div>

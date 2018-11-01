@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&amp;gt;2-&amp;gt;3-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5 处理后为 1-&amp;gt;2-&amp;gt;5 解法 递归解法12345678910111213141516171819202122# -*- coding:utf-8 -*-# class ListNode:#">
+<meta name="description" content="题目描述在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&amp;gt;2-&amp;gt;3-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5 处理后为 1-&amp;gt;2-&amp;gt;5 解法 递归解法     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self,">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="删除链表中重复的结点（剑指Offer)">
 <meta property="og:url" content="http://yoursite.com/2017/09/04/删除链表中重复的结点/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&amp;gt;2-&amp;gt;3-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5 处理后为 1-&amp;gt;2-&amp;gt;5 解法 递归解法12345678910111213141516171819202122# -*- coding:utf-8 -*-# class ListNode:#">
+<meta property="og:description" content="题目描述在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&amp;gt;2-&amp;gt;3-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5 处理后为 1-&amp;gt;2-&amp;gt;5 解法 递归解法     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self,">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-27T12:33:07.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="删除链表中重复的结点（剑指Offer)">
-<meta name="twitter:description" content="题目描述在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&amp;gt;2-&amp;gt;3-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5 处理后为 1-&amp;gt;2-&amp;gt;5 解法 递归解法12345678910111213141516171819202122# -*- coding:utf-8 -*-# class ListNode:#">
+<meta name="twitter:description" content="题目描述在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&amp;gt;2-&amp;gt;3-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5 处理后为 1-&amp;gt;2-&amp;gt;5 解法 递归解法     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self,">
 
 
 
@@ -395,7 +395,29 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5 处理后为 1-&gt;2-&gt;5</p>
-<h3 id="解法-递归解法"><a href="#解法-递归解法" class="headerlink" title="解法 递归解法"></a>解法 递归解法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class ListNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.next = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">deleteDuplication</span><span class="params">(self, pHead)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">		<span class="comment"># 链表为单结点或为空</span></div><div class="line">        <span class="keyword">if</span> (pHead==<span class="keyword">None</span>) <span class="keyword">or</span> (pHead.next==<span class="keyword">None</span>):</div><div class="line">            <span class="keyword">return</span> pHead</div><div class="line">		<span class="comment"># 对链表开头是重复结点的进行处理</span></div><div class="line">        <span class="keyword">if</span> pHead.val == pHead.next.val:</div><div class="line">            p = pHead.next.next</div><div class="line">			<span class="comment"># 一直循环到非重复值为止</span></div><div class="line">            <span class="keyword">while</span> p <span class="keyword">and</span> p.val == pHead.val: </div><div class="line">                p = p.next</div><div class="line">			<span class="comment"># 对剩余链表继续处理</span></div><div class="line">            <span class="keyword">return</span> self.deleteDuplication(p)</div><div class="line">        pHead.next = self.deleteDuplication(pHead.next)</div><div class="line">        <span class="keyword">return</span> pHead</div></pre></td></tr></table></figure>
+<h3 id="解法-递归解法"><a href="#解法-递归解法" class="headerlink" title="解法 递归解法"></a>解法 递归解法</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    class Solution:
+        def deleteDuplication(self, pHead):
+            # write code here
+            # 链表为单结点或为空
+            if (pHead==None) or (pHead.next==None):
+                return pHead
+            # 对链表开头是重复结点的进行处理
+            if pHead.val == pHead.next.val:
+                p = pHead.next.next
+                # 一直循环到非重复值为止
+                while p and p.val == pHead.val: 
+                    p = p.next
+                # 对剩余链表继续处理
+                return self.deleteDuplication(p)
+            pHead.next = self.deleteDuplication(pHead.next)
+            return pHead
+</code></pre>
 
       
     </div>
@@ -440,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/03/数据流中的中位数/" rel="next" title="数据流中的中位数(剑指offer第六十三题)">
-                <i class="fa fa-chevron-left"></i> 数据流中的中位数(剑指offer第六十三题)
+              <a href="/2017/09/03/机器学习实战第三章学习笔记/" rel="next" title="机器学习实战第三章学习笔记(决策树-Decision Tree)">
+                <i class="fa fa-chevron-left"></i> 机器学习实战第三章学习笔记(决策树-Decision Tree)
               </a>
             
           </div>
@@ -450,8 +472,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/05/机器学习实战第四章学习笔记/" rel="prev" title="机器学习实战第四章学习笔记(朴素贝叶斯分类器)">
-                机器学习实战第四章学习笔记(朴素贝叶斯分类器) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/05/链表中环的入口结点/" rel="prev" title="链表中环的入口结点（剑指Offer)">
+                链表中环的入口结点（剑指Offer) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

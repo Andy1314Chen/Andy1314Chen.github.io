@@ -423,7 +423,7 @@
 import numpy as np
 
 # 测试数据集加载函数
-def loadDataSet(fileName,delim=&apos;\t&apos;):
+def loadDataSet(fileName,delim=&#39;\t&#39;):
     fr=open(fileName)
     stringArr=[line.strip().split(delim) for line in fr.readlines()]
     datArr=[list(map(float,line)) for line in stringArr]

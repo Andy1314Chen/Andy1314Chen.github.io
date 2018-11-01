@@ -436,13 +436,13 @@ from sklearn.preprocessing import StandardScaler
 import numpy as np
 
 def calcError():
-    frTrain=open(&apos;horseColicTraining.txt&apos;)
-    frTest=open(&apos;horseColicTest.txt&apos;)
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
 
     #训练样本集
     trainSet=[];trainLabels=[]
     for line in frTrain.readlines():
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):
             lineArr.append(float(currLine[i]))
@@ -451,7 +451,7 @@ def calcError():
     #测试集
     testSet=[];testLabels=[]
     for line in frTest.readlines():
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):
             lineArr.append(float(currLine[i]))
@@ -459,7 +459,7 @@ def calcError():
         testLabels.append(float(currLine[21]))
 
     #Logistic回归
-    classifier=LogisticRegression(solver=&apos;sag&apos;,max_iter=700)
+    classifier=LogisticRegression(solver=&#39;sag&#39;,max_iter=700)
     #拟合
     classifier.fit(np.array(trainSet),np.array(trainLabels))
     #默认配置预测
@@ -482,13 +482,13 @@ def calcError():
     #4. 使用lbfgs算法，500次迭代 0.283582
 
 def calcError2():
-    frTrain=open(&apos;horseColicTraining.txt&apos;)
-    frTest=open(&apos;horseColicTest.txt&apos;)
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
 
     #训练样本集
     trainSet=[];trainLabels=[]
     for line in frTrain.readlines():
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):
             lineArr.append(float(currLine[i]))
@@ -497,7 +497,7 @@ def calcError2():
     #测试集
     testSet=[];testLabels=[]
     for line in frTest.readlines():
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):
             lineArr.append(float(currLine[i]))

@@ -405,7 +405,28 @@
 调用 isBadVersion(4) -&gt; true
 
 所以，4 是第一个错误的版本。 
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># The isBadVersion API is already defined for you.</span></div><div class="line"><span class="comment"># @param version, an integer</span></div><div class="line"><span class="comment"># @return a bool</span></div><div class="line"><span class="comment"># def isBadVersion(version):</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">firstBadVersion</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        left = <span class="number">1</span>; right = n</div><div class="line">        <span class="keyword">while</span> left &lt; right:</div><div class="line">            mid = (left + right)//<span class="number">2</span></div><div class="line">            <span class="keyword">if</span> isBadVersion(mid) == <span class="keyword">True</span>:</div><div class="line">                right = mid</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                left = mid + <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> left</div></pre></td></tr></table></figure>
+</code></pre><pre><code class="Python">
+    # The isBadVersion API is already defined for you.
+    # @param version, an integer
+    # @return a bool
+    # def isBadVersion(version):
+
+    class Solution(object):
+        def firstBadVersion(self, n):
+            &quot;&quot;&quot;
+            :type n: int
+            :rtype: int
+            &quot;&quot;&quot;
+            left = 1; right = n
+            while left &lt; right:
+                mid = (left + right)//2
+                if isBadVersion(mid) == True:
+                    right = mid
+                else:
+                    left = mid + 1
+            return left
+</code></pre>
+
       
     </div>
 
@@ -449,8 +470,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/有效的括号/" rel="next" title="LeetCode - 有效的括号">
-                <i class="fa fa-chevron-left"></i> LeetCode - 有效的括号
+              <a href="/2017/07/05/不同路径/" rel="next" title="LeetCode - 不同路径">
+                <i class="fa fa-chevron-left"></i> LeetCode - 不同路径
               </a>
             
           </div>
@@ -459,8 +480,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/编辑距离/" rel="prev" title="LeetCode - 编辑距离">
-                LeetCode - 编辑距离 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/帕斯卡三角形/" rel="prev" title="LeetCode - 帕斯卡三角形">
+                LeetCode - 帕斯卡三角形 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

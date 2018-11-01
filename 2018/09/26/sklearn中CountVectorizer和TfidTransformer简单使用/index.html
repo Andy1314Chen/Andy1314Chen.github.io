@@ -403,8 +403,29 @@ tf(w, d) = count(w, d) / size(d)
 <pre><code># 文档总数n与词w所出现文件数docs(w, D)比值的对数
 idf = log(n / docs(w, D))
 </code></pre><p>TF-IDF倾向于过滤掉常见的词语，保留重要的词语。</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.feature_extraction.<span class="built_in">text</span> import CountVectorizer</div><div class="line"><span class="comment"># 语料</span></div><div class="line">corpus = ['This <span class="keyword">is</span> <span class="keyword">the</span> <span class="keyword">first</span> document.',</div><div class="line">			'This <span class="keyword">is</span> <span class="keyword">the</span> <span class="keyword">second</span> <span class="keyword">second</span> document.',</div><div class="line">			'And <span class="keyword">the</span> <span class="keyword">third</span> one.',</div><div class="line">			'Is this <span class="keyword">the</span> <span class="keyword">first</span> document?']</div><div class="line"><span class="comment"># 将文本中的词语，转换成词频矩阵</span></div><div class="line">vectorizer = CountVectorizer()</div><div class="line"><span class="comment"># 计算词语出现的频率 </span></div><div class="line">X = vectorizer.fit_transform(corpus)</div><div class="line"><span class="comment"># 获取词袋中所有文本关键词</span></div><div class="line"><span class="built_in">words</span> = vectorizer.get_feature_names()</div><div class="line"><span class="comment"># 查看词频结果</span></div><div class="line">print(X.toarray())</div><div class="line"></div><div class="line"><span class="comment"># TfidfTransformer用于统计vectorizer中每个词语的TF-IDF值</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_extraction.<span class="built_in">text</span> import TfidfTransformer</div><div class="line">transformer = TfidfTransformer()</div><div class="line">print(transformer)</div><div class="line">tfidf = transformer.fit_transform(X)</div><div class="line">print(tfidf.toarray())</div></pre></td></tr></table></figure>
+<pre><code>
+    from sklearn.feature_extraction.text import CountVectorizer
+    # 语料
+    corpus = [&#39;This is the first document.&#39;,
+                &#39;This is the second second document.&#39;,
+                &#39;And the third one.&#39;,
+                &#39;Is this the first document?&#39;]
+    # 将文本中的词语，转换成词频矩阵
+    vectorizer = CountVectorizer()
+    # 计算词语出现的频率 
+    X = vectorizer.fit_transform(corpus)
+    # 获取词袋中所有文本关键词
+    words = vectorizer.get_feature_names()
+    # 查看词频结果
+    print(X.toarray())
 
+    # TfidfTransformer用于统计vectorizer中每个词语的TF-IDF值
+    from sklearn.feature_extraction.text import TfidfTransformer
+    transformer = TfidfTransformer()
+    print(transformer)
+    tfidf = transformer.fit_transform(X)
+    print(tfidf.toarray())
+</code></pre>
       
     </div>
 

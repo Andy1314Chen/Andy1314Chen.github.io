@@ -473,7 +473,7 @@ import numpy as np
 #Logistic回归梯度上升法优化算法
 def loadDataSet():#读取样本数据
     dataMat=[];labelMat=[]
-    fr=open(&apos;testSet.txt&apos;)
+    fr=open(&#39;testSet.txt&#39;)
     for line in fr.readlines():
         lineArr=line.strip().split()#除去空格后划分
         dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征
@@ -517,12 +517,12 @@ def plotBestFit(wei):
     fig=plt.figure()
     ax=fig.add_subplot(111)
     print(len(xcord1),len(ycord1))
-    ax.scatter(xcord1,ycord1,s=30,c=&apos;red&apos;,marker=&apos;s&apos;)
-    ax.scatter(xcord2,ycord2,s=30,c=&apos;green&apos;)
+    ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;)
+    ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;)
     x=np.arange(-3.0,3.0,0.1)
     y=(-weights[0]-weights[1]*x)/weights[2]
     ax.plot(x,y)
-    plt.xlabel(&apos;X1&apos;);plt.ylabel(&apos;X2&apos;);
+    plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;);
     plt.show()
 </code></pre><p><img src="http://img.blog.csdn.net/20170502140250228" alt=""></p>
 <h4 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h4><p>回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是<img src="http://img.blog.csdn.net/20150414211501282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTHU1OTcyMDM5MzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。</p>
@@ -626,11 +626,11 @@ def classifyVector(inX,weights):
         return 0.0
 
 def colicTest():
-    frTrain=open(&apos;horseColicTraining.txt&apos;)
-    frTest=open(&apos;horseColicTest.txt&apos;)
+    frTrain=open(&#39;horseColicTraining.txt&#39;)
+    frTest=open(&#39;horseColicTest.txt&#39;)
     trainingSet=[];trainingLabels=[]
     for line in frTrain.readlines():
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):#21个特征
             lineArr.append(float(currLine[i]))
@@ -640,7 +640,7 @@ def colicTest():
     errorCount=0;numTestVec=0.0
     for line in frTest.readlines():
         numTestVec+=1.0
-        currLine=line.strip().split(&apos;\t&apos;)
+        currLine=line.strip().split(&#39;\t&#39;)
         lineArr=[]
         for i in range(21):
             lineArr.append(float(currLine[i]))
@@ -716,8 +716,8 @@ def multiTest():
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/07/LeetCode148排序链表/" rel="prev" title="LeetCode148排序链表">
-                LeetCode148排序链表 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/09/Hands-on第二章学习笔记(1)/" rel="prev" title="Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(1)">
+                Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(1) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

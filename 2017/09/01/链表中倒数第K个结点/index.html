@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述输入一个链表，输出该链表中倒数第k个结点。 代码1234567891011121314151617181920212223242526# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Noneclass Solution">
+<meta name="description" content="题目描述输入一个链表，输出该链表中倒数第k个结点。 代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None      class Solution:         de">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="链表中倒数第K个节点(剑指offer第十四题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/链表中倒数第K个结点/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述输入一个链表，输出该链表中倒数第k个结点。 代码1234567891011121314151617181920212223242526# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Noneclass Solution">
+<meta property="og:description" content="题目描述输入一个链表，输出该链表中倒数第k个结点。 代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None      class Solution:         de">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-26T06:25:01.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="链表中倒数第K个节点(剑指offer第十四题)">
-<meta name="twitter:description" content="题目描述输入一个链表，输出该链表中倒数第k个结点。 代码1234567891011121314151617181920212223242526# -*- coding:utf-8 -*-# class ListNode:#     def __init__(self, x):#         self.val = x#         self.next = Noneclass Solution">
+<meta name="twitter:description" content="题目描述输入一个链表，输出该链表中倒数第k个结点。 代码     # -*- coding:utf-8 -*-     # class ListNode:     #     def __init__(self, x):     #         self.val = x     #         self.next = None      class Solution:         de">
 
 
 
@@ -395,7 +395,33 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，输出该链表中倒数第k个结点。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class ListNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.next = None</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindKthToTail</span><span class="params">(self, head, k)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="comment"># 快慢指针，快指针先走k步</span></div><div class="line">        <span class="keyword">if</span> k == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        </div><div class="line">        cnt = <span class="number">1</span></div><div class="line">        first = head</div><div class="line">        <span class="keyword">while</span> (first != <span class="keyword">None</span>)&amp;(cnt &lt; k):</div><div class="line">            first = first.next</div><div class="line">            cnt += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> first == <span class="keyword">None</span>: <span class="comment"># 链表长度小于3</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        second = head</div><div class="line">        <span class="keyword">while</span> first.next != <span class="keyword">None</span>:</div><div class="line">            first = first.next</div><div class="line">            second = second.next</div><div class="line">        <span class="keyword">return</span> second</div></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+
+    class Solution:
+        def FindKthToTail(self, head, k):
+            # write code here
+            # 快慢指针，快指针先走k步
+            if k == 0:
+                return None
+
+            cnt = 1
+            first = head
+            while (first != None)&amp;(cnt &lt; k):
+                first = first.next
+                cnt += 1
+            if first == None: # 链表长度小于3
+                return None
+            second = head
+            while first.next != None:
+                first = first.next
+                second = second.next
+            return second
+</code></pre>
 
       
     </div>
@@ -440,8 +466,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/从尾到头打印链表/" rel="next" title="从尾到头打印链表(剑指offer第三题)">
-                <i class="fa fa-chevron-left"></i> 从尾到头打印链表(剑指offer第三题)
+              <a href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" rel="next" title="调整数组顺序使奇数位于偶数前面(剑指offer第十三题)">
+                <i class="fa fa-chevron-left"></i> 调整数组顺序使奇数位于偶数前面(剑指offer第十三题)
               </a>
             
           </div>
@@ -450,8 +476,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/二维数组中的查找/" rel="prev" title="二维数组中的查找(剑指offer第一题)">
-                二维数组中的查找(剑指offer第一题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/2反转链表/" rel="prev" title="反转链表(剑指offer第十五题)">
+                反转链表(剑指offer第十五题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

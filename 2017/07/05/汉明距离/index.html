@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &amp;lt; 231. 示例: 输入: x = 1, y = 4  输出: 2  解释: 1   (0 0 0 1) 4   (0 1 0 0)        ↑   ↑ 上面的箭头指出了对应二进制位不同的位置。 1234567891011121314151">
+<meta name="description" content="两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &amp;lt; 231. 示例: 输入: x = 1, y = 4  输出: 2  解释: 1   (0 0 0 1) 4   (0 1 0 0)        ↑   ↑ 上面的箭头指出了对应二进制位不同的位置。      class Solution(ob">
 <meta name="keywords" content="python,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode - 汉明距离">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/汉明距离/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &amp;lt; 231. 示例: 输入: x = 1, y = 4  输出: 2  解释: 1   (0 0 0 1) 4   (0 1 0 0)        ↑   ↑ 上面的箭头指出了对应二进制位不同的位置。 1234567891011121314151">
+<meta property="og:description" content="两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &amp;lt; 231. 示例: 输入: x = 1, y = 4  输出: 2  解释: 1   (0 0 0 1) 4   (0 1 0 0)        ↑   ↑ 上面的箭头指出了对应二进制位不同的位置。      class Solution(ob">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-22T08:00:13.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode - 汉明距离">
-<meta name="twitter:description" content="两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &amp;lt; 231. 示例: 输入: x = 1, y = 4  输出: 2  解释: 1   (0 0 0 1) 4   (0 1 0 0)        ↑   ↑ 上面的箭头指出了对应二进制位不同的位置。 1234567891011121314151">
+<meta name="twitter:description" content="两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &amp;lt; 231. 示例: 输入: x = 1, y = 4  输出: 2  解释: 1   (0 0 0 1) 4   (0 1 0 0)        ↑   ↑ 上面的箭头指出了对应二进制位不同的位置。      class Solution(ob">
 
 
 
@@ -407,7 +407,35 @@
 4   (0 1 0 0)
        ↑   ↑
 </code></pre><p>上面的箭头指出了对应二进制位不同的位置。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hammingDistance</span><span class="params">(self, x, y)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type x: int</div><div class="line">        :type y: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        bx = [v <span class="keyword">for</span> v <span class="keyword">in</span> bin(x)[<span class="number">2</span>:]]</div><div class="line">        by = [v <span class="keyword">for</span> v <span class="keyword">in</span> bin(y)[<span class="number">2</span>:]]</div><div class="line">        </div><div class="line">        bx.reverse()</div><div class="line">        by.reverse()</div><div class="line">        i = <span class="number">0</span>; cnt = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> (i&lt;len(bx))&amp;(i&lt;len(by)):</div><div class="line">            <span class="keyword">if</span> bx[i] != by[i]:</div><div class="line">                cnt += <span class="number">1</span></div><div class="line">            i += <span class="number">1</span></div><div class="line">            </div><div class="line">        <span class="keyword">if</span> len(bx)&gt;i:</div><div class="line">            cnt += bx[i:].count(<span class="string">'1'</span>)</div><div class="line">        <span class="keyword">if</span> len(by)&gt;i:</div><div class="line">            cnt += by[i:].count(<span class="string">'1'</span>)</div><div class="line">            </div><div class="line">        <span class="keyword">return</span> cnt</div><div class="line">    </div><div class="line">        <span class="comment"># return bin(x^y).count('1')</span></div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    class Solution(object):
+        def hammingDistance(self, x, y):
+            &quot;&quot;&quot;
+            :type x: int
+            :type y: int
+            :rtype: int
+            &quot;&quot;&quot;
+            bx = [v for v in bin(x)[2:]]
+            by = [v for v in bin(y)[2:]]
+
+            bx.reverse()
+            by.reverse()
+            i = 0; cnt = 0
+            while (i&lt;len(bx))&amp;(i&lt;len(by)):
+                if bx[i] != by[i]:
+                    cnt += 1
+                i += 1
+
+            if len(bx)&gt;i:
+                cnt += bx[i:].count(&#39;1&#39;)
+            if len(by)&gt;i:
+                cnt += by[i:].count(&#39;1&#39;)
+
+            return cnt
+
+            # return bin(x^y).count(&#39;1&#39;)
+</code></pre>
+
       
     </div>
 
@@ -451,8 +479,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/长度最小的子数组/" rel="next" title="LeetCode - 长度最小的子数组">
-                <i class="fa fa-chevron-left"></i> LeetCode - 长度最小的子数组
+              <a href="/2017/07/05/汇总区间/" rel="next" title="LeetCode - 汇总区间">
+                <i class="fa fa-chevron-left"></i> LeetCode - 汇总区间
               </a>
             
           </div>
@@ -461,8 +489,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/汇总区间/" rel="prev" title="LeetCode - 汇总区间">
-                LeetCode - 汇总区间 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/求众数/" rel="prev" title="LeetCode - 求众数">
+                LeetCode - 求众数 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

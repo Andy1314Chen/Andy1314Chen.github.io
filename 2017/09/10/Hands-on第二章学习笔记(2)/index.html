@@ -408,14 +408,14 @@
 <h4 id="Grid-Search"><a href="#Grid-Search" class="headerlink" title="Grid Search"></a>Grid Search</h4><pre><code>from sklearn.model_selection import GridSearchCV
 
 param_grid = [
-    {&apos;n_estimators&apos;:[3,10,30], &apos;max_features&apos;:[2,4,6,8]},
-    {&apos;bootstrap&apos;:[False], &apos;n_estimators&apos;:[3,10],
-        &apos;max_features&apos;:[2,3,4]},
+    {&#39;n_estimators&#39;:[3,10,30], &#39;max_features&#39;:[2,4,6,8]},
+    {&#39;bootstrap&#39;:[False], &#39;n_estimators&#39;:[3,10],
+        &#39;max_features&#39;:[2,3,4]},
     ]
 
 forest_reg = RandomForestRegressor()
 
-grid_search = GridSearchCV(forest_reg, param_grid, cv=5, scoring=&apos;neg_mean_squared_error&apos;)
+grid_search = GridSearchCV(forest_reg, param_grid, cv=5, scoring=&#39;neg_mean_squared_error&#39;)
 
 grid_search.fit(housing_prepared, housing_labels)
 
@@ -433,14 +433,14 @@ grid_search.cv_results_
 </ul>
 <h4 id="Analyze-the-Best-Models-and-Their-Errors"><a href="#Analyze-the-Best-Models-and-Their-Errors" class="headerlink" title="Analyze the Best Models and Their Errors"></a>Analyze the Best Models and Their Errors</h4><pre><code>feature_importances = grid_search.best_estimator_.feature_importances_
 
-extra_attribs = [&apos;rooms_per_hhold&apos;,&apos;pop_per_hhold&apos;,&apos;bedrooms_per_room&apos;]
+extra_attribs = [&#39;rooms_per_hhold&#39;,&#39;pop_per_hhold&#39;,&#39;bedrooms_per_room&#39;]
 cat_one_hot_attribs = list(encoder.classes_)
 attributes = num_attribs + extra_attribs + cat_one_hot_attribs
 sorted(zip(feature_importances, attributes), reverse=True)
 </code></pre><h4 id="Evaluate-Your-System-on-the-Test-Set"><a href="#Evaluate-Your-System-on-the-Test-Set" class="headerlink" title="Evaluate Your System on the Test Set"></a>Evaluate Your System on the Test Set</h4><pre><code>final_model = grid_search.best_estimator_
 
-X_test = strat_test_set.drop(&apos;median_house_value&apos;, axis=1)
-y_test = strat_test_set[&apos;median_house_value&apos;].copy()
+X_test = strat_test_set.drop(&#39;median_house_value&#39;, axis=1)
+y_test = strat_test_set[&#39;median_house_value&#39;].copy()
 
 X_test_prepared = full_pipeline.transform(X_test)
 

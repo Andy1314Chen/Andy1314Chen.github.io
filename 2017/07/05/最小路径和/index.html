@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。 1234567891011121314151617181920212223242526class Solu">
+<meta name="description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。      class Solution:         def minPathSum(self, gri">
 <meta name="keywords" content="python,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode - 最小路径和">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/最小路径和/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。 1234567891011121314151617181920212223242526class Solu">
+<meta property="og:description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。      class Solution:         def minPathSum(self, gri">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-20T15:42:26.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode - 最小路径和">
-<meta name="twitter:description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。 1234567891011121314151617181920212223242526class Solu">
+<meta name="twitter:description" content="给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [  [1,3,1],   [1,5,1],   [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。      class Solution:         def minPathSum(self, gri">
 
 
 
@@ -404,12 +404,58 @@
 <p>]</p>
 <p>输出: 7</p>
 <p>解释: 因为路径 1→3→1→1→1 的总和最小。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minPathSum</span><span class="params">(self, grid)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type grid: List[List[int]]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">		</div><div class="line">        m = len(grid[<span class="number">0</span>])</div><div class="line">        n = len(grid)</div><div class="line">        tmp = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</div><div class="line">            tmp.append([<span class="number">-1</span>]*(m+<span class="number">1</span>))</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> self.myAns(m, n, grid, tmp)</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">myAns</span><span class="params">(self, m, n, grid, tmp)</span>:</span></div><div class="line">        <span class="keyword">if</span> (m &lt;= <span class="number">0</span>) | (n &lt;= <span class="number">0</span>):</div><div class="line">            <span class="keyword">return</span> float(<span class="string">'inf'</span>) <span class="comment"># 最小路径，不应该设置为0， 这里需要特别注意</span></div><div class="line">        <span class="keyword">if</span> (m == <span class="number">1</span>)&amp;(n == <span class="number">1</span>):</div><div class="line">            <span class="keyword">return</span> grid[<span class="number">0</span>][<span class="number">0</span>]</div><div class="line">        <span class="keyword">if</span> tmp[n][m] != <span class="number">-1</span>:</div><div class="line">            <span class="keyword">return</span> tmp[n][m]</div><div class="line"></div><div class="line">        tmp[n][m] = min(self.myAns(m<span class="number">-1</span>, n, grid, tmp), self.myAns(m, n<span class="number">-1</span>, grid, tmp)) + grid[n<span class="number">-1</span>][m<span class="number">-1</span>]            </div><div class="line">        <span class="keyword">return</span> tmp[n][m]</div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    class Solution:
+        def minPathSum(self, grid):
+            &quot;&quot;&quot;
+            :type grid: List[List[int]]
+            :rtype: int
+            &quot;&quot;&quot;
+
+            m = len(grid[0])
+            n = len(grid)
+            tmp = []
+            for i in range(n+1):
+                tmp.append([-1]*(m+1))
+
+            return self.myAns(m, n, grid, tmp)
+
+        def myAns(self, m, n, grid, tmp):
+            if (m &lt;= 0) | (n &lt;= 0):
+                return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意
+            if (m == 1)&amp;(n == 1):
+                return grid[0][0]
+            if tmp[n][m] != -1:
+                return tmp[n][m]
+
+            tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1]            
+            return tmp[n][m]
+</code></pre>
 <h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
 <li>从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小；</li>
 <li>保持递归过程中的值</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minPathSum</span><span class="params">(self, grid)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type grid: List[List[int]]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        m = len(grid)</div><div class="line">        n = len(grid[<span class="number">0</span>])</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m):<span class="comment"># 多少列 横轴</span></div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n):<span class="comment"># 多少行 纵轴</span></div><div class="line">                <span class="keyword">if</span> (i==<span class="number">0</span>)&amp;(j==<span class="number">0</span>):</div><div class="line">                    <span class="keyword">continue</span></div><div class="line">                <span class="keyword">elif</span> i == <span class="number">0</span>:</div><div class="line">                    grid[i][j] += grid[i][j<span class="number">-1</span>]</div><div class="line">                <span class="keyword">elif</span> j == <span class="number">0</span>:</div><div class="line">                    grid[i][j] += grid[i<span class="number">-1</span>][j]</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    grid[i][j] += min(grid[i<span class="number">-1</span>][j], grid[i][j<span class="number">-1</span>])</div><div class="line">        <span class="keyword">return</span> grid[m<span class="number">-1</span>][n<span class="number">-1</span>]</div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    class Solution:
+        def minPathSum(self, grid):
+            &quot;&quot;&quot;
+            :type grid: List[List[int]]
+            :rtype: int
+            &quot;&quot;&quot;
+            m = len(grid)
+            n = len(grid[0])
+            for i in range(m):# 多少列 横轴
+                for j in range(n):# 多少行 纵轴
+                    if (i==0)&amp;(j==0):
+                        continue
+                    elif i == 0:
+                        grid[i][j] += grid[i][j-1]
+                    elif j == 0:
+                        grid[i][j] += grid[i-1][j]
+                    else:
+                        grid[i][j] += min(grid[i-1][j], grid[i][j-1])
+            return grid[m-1][n-1]
+</code></pre>
 
       
     </div>
@@ -454,8 +500,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/颠倒二进制位/" rel="next" title="LeetCode - 颠倒二进制位">
-                <i class="fa fa-chevron-left"></i> LeetCode - 颠倒二进制位
+              <a href="/2017/07/05/2寻找重复数/" rel="next" title="LeetCode - 寻找重复数">
+                <i class="fa fa-chevron-left"></i> LeetCode - 寻找重复数
               </a>
             
           </div>
@@ -464,8 +510,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/长度最小的子数组/" rel="prev" title="LeetCode - 长度最小的子数组">
-                LeetCode - 长度最小的子数组 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/10/BaiduUNIT/" rel="prev" title="百度UNIT">
+                百度UNIT <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -535,12 +535,12 @@ def plotROC(predStrengths,classLabels):
         else:
             delX=xStep;delY=0;
             ySum+=cur[1]
-        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&apos;b&apos;)
+        ax.plot([cur[0],cur[0]-delX],[cur[1],cur[1]-delY],c=&#39;b&#39;)
         cur=(cur[0]-delX,cur[1]-delY)
-    ax.plot([0,1],[0,1],&apos;b--&apos;)
-    plt.xlabel(&apos;False Positive Rate&apos;);
-    plt.ylabel(&apos;True Positive Rate&apos;)
-    plt.title(&apos;ROC curve for AdaBoost Horse Colic Detection System&apos;)
+    ax.plot([0,1],[0,1],&#39;b--&#39;)
+    plt.xlabel(&#39;False Positive Rate&#39;);
+    plt.ylabel(&#39;True Positive Rate&#39;)
+    plt.title(&#39;ROC curve for AdaBoost Horse Colic Detection System&#39;)
     ax.axis([0,1,0,1])
     plt.show()
     print(&quot;the Area Under the Curve is: &quot;,ySum*xStep)

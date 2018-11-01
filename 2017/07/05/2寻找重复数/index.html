@@ -403,7 +403,29 @@
 输出: 3
 </code></pre><p>说明：</p>
 <p>不能更改原数组（假设数组是只读的）。<br>只能使用额外的 O(1) 的空间。<br>时间复杂度小于 O(n2) 。<br>数组中只有一个重复的数字，但它可能不止重复出现一次。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findDuplicate</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        left = <span class="number">0</span>; right = len(nums)<span class="number">-1</span></div><div class="line">        </div><div class="line">        <span class="keyword">while</span> left+<span class="number">1</span> &lt; right:</div><div class="line">            mid = (left + right)//<span class="number">2</span></div><div class="line">            cnt = <span class="number">0</span></div><div class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> nums:</div><div class="line">                <span class="keyword">if</span> (v &gt; mid) &amp; (v &lt;= right):</div><div class="line">                    cnt += <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> cnt &gt; (right - mid):</div><div class="line">                left = mid</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                right = mid</div><div class="line">        </div><div class="line">        <span class="keyword">return</span>  int(right)</div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    class Solution:
+        def findDuplicate(self, nums):
+            &quot;&quot;&quot;
+            :type nums: List[int]
+            :rtype: int
+            &quot;&quot;&quot;
+            left = 0; right = len(nums)-1
+
+            while left+1 &lt; right:
+                mid = (left + right)//2
+                cnt = 0
+                for v in nums:
+                    if (v &gt; mid) &amp; (v &lt;= right):
+                        cnt += 1
+                if cnt &gt; (right - mid):
+                    left = mid
+                else:
+                    right = mid
+
+            return  int(right)
+</code></pre>
+
       
     </div>
 
@@ -447,8 +469,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/求众数/" rel="next" title="LeetCode - 求众数">
-                <i class="fa fa-chevron-left"></i> LeetCode - 求众数
+              <a href="/2017/07/05/拼多多笔试题/" rel="next" title="LeetCode - 拼多多四道编程题">
+                <i class="fa fa-chevron-left"></i> LeetCode - 拼多多四道编程题
               </a>
             
           </div>
@@ -457,8 +479,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/计数质数/" rel="prev" title="LeetCode - 计数质数">
-                LeetCode - 计数质数 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/最小路径和/" rel="prev" title="LeetCode - 最小路径和">
+                LeetCode - 最小路径和 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

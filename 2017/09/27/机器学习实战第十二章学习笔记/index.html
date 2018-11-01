@@ -445,7 +445,7 @@ class treeNode:
         self.count+=numOccur
 
     def disp(self,ind=1):
-        print(&apos; &apos;*ind,self.name,&apos; &apos;,self.count)
+        print(&#39; &#39;*ind,self.name,&#39; &#39;,self.count)
         for child in self.children.values():
             child.disp(ind+1)
 </code></pre><p>除了FP树外，还需要一个头指针表来指向给定类型的第一个实例。</p>
@@ -475,7 +475,7 @@ def createTree(dataSet,minSup=1):
     for k in headerTable:
         headerTable[k]=[headerTable[k],None]
     #FP树根节点
-    retTree=treeNode(&apos;Null Set&apos;,1,None)
+    retTree=treeNode(&#39;Null Set&#39;,1,None)
     #再次遍历数据集
     for tranSet,count in dataSet.items():
         localD={}
@@ -568,7 +568,7 @@ def mineTree(inTree,headerTable,minSup,preFix,freqItemList):
 
         #如果树中还有元素项大于最小支持度，递归调用mineTree()函数
         if myHead!=None:
-            print(&apos;conditional tree for: &apos;,newFreqSet)
+            print(&#39;conditional tree for: &#39;,newFreqSet)
             myCondTree.disp(1)
             mineTree(myCondTree,myHead,minSup,newFreqSet,freqItemList)
 
@@ -582,16 +582,16 @@ from time import sleep
 import re
 
 def getLotsOfTweets(searchStr):
-    CONSUMER_KEY=&apos;&apos;
-    CONSUMER_SECRET=&apos;&apos;
-    ACCESS_TOKEN_KEY=&apos;&apos;
-    ACCESS_TOKEN_SECRET=&apos;&apos;
+    CONSUMER_KEY=&#39;&#39;
+    CONSUMER_SECRET=&#39;&#39;
+    ACCESS_TOKEN_KEY=&#39;&#39;
+    ACCESS_TOKEN_SECRET=&#39;&#39;
     api=twitter.Api(consumer_key=CONSUMER_KEY,consumer_secret=CONSUMER_SECRET,
                     access_token_key=ACCESS_TOKEN_KEY,
                     access_token_secret=ACCESS_TOKEN_SECRET)
     resultsPages=[]
     for i in range(1,15):
-        print(&apos;fetching page %d&apos; % i)
+        print(&#39;fetching page %d&#39; % i)
         searchResults=api.GetSearch(searchStr,per_page=100,page=i)
         resultsPages.append(searchResults)
         sleep(6)
@@ -599,9 +599,9 @@ def getLotsOfTweets(searchStr):
 
 #程序清单12-7 文本解析及合成代码
 def textParse(bigString):
-    urlsRemoved=re.sub(&apos;(http[s]?:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*&apos;,
-                       &apos;&apos;,bigString)
-    listOfTokens=re.split(r&apos;\W*&apos;,urlsRemoved)
+    urlsRemoved=re.sub(&#39;(http[s]?:[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*&#39;,
+                       &#39;&#39;,bigString)
+    listOfTokens=re.split(r&#39;\W*&#39;,urlsRemoved)
     return [tok.lower() for tok in listOfTokens if len(tok)&gt;2]
 
 def mineTweets(tweetArr,minSup=5):
@@ -615,7 +615,7 @@ def mineTweets(tweetArr,minSup=5):
     mineTree(myFPtree,myHeaderTab,minSup,set([]),myFreqList)
     return myFreqList
 </code></pre><h2 id="示例：从新闻网站点击流中挖掘"><a href="#示例：从新闻网站点击流中挖掘" class="headerlink" title="示例：从新闻网站点击流中挖掘"></a>示例：从新闻网站点击流中挖掘</h2><p>在kosarak.dat文件中，包含将近100万条记录。该文件中的每一行包含某个用户浏览过的新闻报道。</p>
-<pre><code>In [47]: parsedDat=[line.split() for line in open(&apos;kosarak.dat&apos;).readlines()]
+<pre><code>In [47]: parsedDat=[line.split() for line in open(&#39;kosarak.dat&#39;).readlines()]
 
 In [48]: initSet=fpGrowth.createInitSet(parsedDat)
 
@@ -624,18 +624,18 @@ In [49]: myFPtree,myHeaderTab=fpGrowth.createTree(initSet,100000)
 In [50]: myFreqList=[]
 
 In [51]: fpGrowth.mineTree(myFPtree,myHeaderTab,100000,set([]),myFreqList)
-conditional tree for:  {&apos;1&apos;}
+conditional tree for:  {&#39;1&#39;}
   Null Set   1
    6   107404
-conditional tree for:  {&apos;3&apos;}
+conditional tree for:  {&#39;3&#39;}
   Null Set   1
    6   186289
     11   117401
    11   9718
-conditional tree for:  {&apos;3&apos;, &apos;11&apos;}
+conditional tree for:  {&#39;3&#39;, &#39;11&#39;}
   Null Set   1
    6   117401
-conditional tree for:  {&apos;11&apos;}
+conditional tree for:  {&#39;11&#39;}
   Null Set   1
    6   261773
 
@@ -644,15 +644,15 @@ Out[52]: 9
 
 In[53]: myFreqList
 Out[53]: 
-[{&apos;1&apos;},
- {&apos;1&apos;, &apos;6&apos;},
- {&apos;3&apos;},
- {&apos;11&apos;, &apos;3&apos;},
- {&apos;11&apos;, &apos;3&apos;, &apos;6&apos;},
- {&apos;3&apos;, &apos;6&apos;},
- {&apos;11&apos;},
- {&apos;11&apos;, &apos;6&apos;},
- {&apos;6&apos;}]
+[{&#39;1&#39;},
+ {&#39;1&#39;, &#39;6&#39;},
+ {&#39;3&#39;},
+ {&#39;11&#39;, &#39;3&#39;},
+ {&#39;11&#39;, &#39;3&#39;, &#39;6&#39;},
+ {&#39;3&#39;, &#39;6&#39;},
+ {&#39;11&#39;},
+ {&#39;11&#39;, &#39;6&#39;},
+ {&#39;6&#39;}]
 </code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>FP-growth算法是一种用于发现数据集中频繁模式的有效方法。FP-growth算法利用Apriori原则，执行更快。Apriori算法产生候选项集，然后扫描数据集来检测它们是否频繁。由于只对数据集扫描两次，因此FP-growth算法执行更快。在FP-growth算法中，数据集存储在一个被称为FP树的结构中。FP树构建完成后，可以通过查找元素项的条件基及构建条件FP树来发现频繁项集。该过程不断以更多元素作为条件重复进行，直到FP树只包含一个元素为止。</p>
 
       

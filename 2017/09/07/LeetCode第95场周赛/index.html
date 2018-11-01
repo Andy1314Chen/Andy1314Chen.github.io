@@ -409,7 +409,32 @@ ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next 
 由于该列表有两个中间结点，值分别为 3 和 4，我们返回第二个结点。
 </code></pre><p>提示：</p>
 <p>给定链表的结点数介于 1 和 100 之间。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># Definition for singly-linked list.</span></div><div class="line"><span class="comment"># class ListNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.next = None</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleNode</span><span class="params">(self, head)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type head: ListNode</div><div class="line">        :rtype: ListNode</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> head.next == <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">return</span> head</div><div class="line">        </div><div class="line">        fastPtr = head.next</div><div class="line">        slowPtr = head</div><div class="line">        <span class="keyword">while</span> fastPtr <span class="keyword">and</span> fastPtr.next :</div><div class="line">            fastPtr = fastPtr.next.next</div><div class="line">            slowPtr = slowPtr.next</div><div class="line">        <span class="keyword">if</span> fastPtr :</div><div class="line">            <span class="keyword">return</span> slowPtr.next</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> slowPtr</div></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+
+    class Solution:
+        def middleNode(self, head):
+            &quot;&quot;&quot;
+            :type head: ListNode
+            :rtype: ListNode
+            &quot;&quot;&quot;
+            if head.next == None:
+                return head
+
+            fastPtr = head.next
+            slowPtr = head
+            while fastPtr and fastPtr.next :
+                fastPtr = fastPtr.next.next
+                slowPtr = slowPtr.next
+            if fastPtr :
+                return slowPtr.next
+            else:
+                return slowPtr
+</code></pre>
 <p><strong>877. 石子游戏</strong></p>
 <p>亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。</p>
 <p>游戏以谁手中的石子最多来决出胜负。石子的总数是奇数，所以没有平局。</p>
@@ -473,8 +498,8 @@ sum(piles) 是奇数。
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/06/数组中重复的数字/" rel="next" title="数组中重复的数字(剑指Offer)">
-                <i class="fa fa-chevron-left"></i> 数组中重复的数字(剑指Offer)
+              <a href="/2017/09/07/LeetCode148排序链表/" rel="next" title="LeetCode148排序链表">
+                <i class="fa fa-chevron-left"></i> LeetCode148排序链表
               </a>
             
           </div>

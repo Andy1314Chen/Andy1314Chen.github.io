@@ -460,12 +460,12 @@ def calcShannonEnt(dataSet):
     return shannonEnt
 #创建简单数据集
 def createDataSet():
-    dataSet=[[1,1,&apos;yes&apos;],
-             [1,1,&apos;yes&apos;],
-             [1,0,&apos;no&apos;],
-             [0,1,&apos;no&apos;],
-             [0,1,&apos;no&apos;]]
-    labels=[&apos;no surfacing&apos;,&apos;flippers&apos;]
+    dataSet=[[1,1,&#39;yes&#39;],
+             [1,1,&#39;yes&#39;],
+             [1,0,&#39;no&#39;],
+             [0,1,&#39;no&#39;],
+             [0,1,&#39;no&#39;]]
+    labels=[&#39;no surfacing&#39;,&#39;flippers&#39;]
     return dataSet, labels
 </code></pre><h4 id="划分数据集"><a href="#划分数据集" class="headerlink" title="划分数据集"></a>划分数据集</h4><p>对每个特征划分数据集的结果计算一次信息熵，然后判断按照哪个特征划分数据集是最好的划分方式。</p>
 <pre><code>#按照给定特征划分数据集
@@ -542,32 +542,32 @@ def createTree(dataSet,labels):
 <pre><code>import matplotlib.pyplot as plt
 
 #文本框
-decisionNode = dict(boxstyle=&apos;sawtooth&apos;,fc=&apos;0.8&apos;)
-leafNode=dict(boxstyle=&apos;round4&apos;,fc=&apos;0.8&apos;)
+decisionNode = dict(boxstyle=&#39;sawtooth&#39;,fc=&#39;0.8&#39;)
+leafNode=dict(boxstyle=&#39;round4&#39;,fc=&#39;0.8&#39;)
 #箭头格式
-arrow_args=dict(arrowstyle=&apos;&lt;-&apos;)
+arrow_args=dict(arrowstyle=&#39;&lt;-&#39;)
 
 绘制带箭头的注解
 def plotNode(nodeTxt,centerPt,parentPt,nodeType):
     createPlot.ax1.annotate(nodeTxt,xy=parentPt,
-                            xycoords=&apos;axes fraction&apos;,
+                            xycoords=&#39;axes fraction&#39;,
                             xytext=centerPt,
-                            textcoords=&apos;axes fraction&apos;,
-    va=&apos;center&apos;,ha=&apos;center&apos;,bbox=nodeType,arrowprops=
+                            textcoords=&#39;axes fraction&#39;,
+    va=&#39;center&#39;,ha=&#39;center&#39;,bbox=nodeType,arrowprops=
     arrow_args)
 
 def createPlot(inTree):
-    fig=plt.figure(1,facecolor=&apos;white&apos;)
+    fig=plt.figure(1,facecolor=&#39;white&#39;)
     fig.clf()
     axprops=dict(xticks=[],yticks=[])
     createPlot.ax1=plt.subplot(111,frameon=False,**axprops)
     plotTree.totalW=float(getNumLeafs(inTree))
     plotTree.totalD=float(getTreeDepth(inTree))
     plotTree.xOff=-0.5/plotTree.totalW;plotTree.yOff=1.0;
-    plotTree(inTree,(0.5,1.0),&apos;&apos;)
+    plotTree(inTree,(0.5,1.0),&#39;&#39;)
 
-#    plotNode(&apos;a decision node&apos;,(0.5,0.1),(0.1,0.5),decisionNode)
-#    plotNode(&apos;a leaf node&apos;,(0.8,0.1),(0.3,0.8),leafNode)
+#    plotNode(&#39;a decision node&#39;,(0.5,0.1),(0.1,0.5),decisionNode)
+#    plotNode(&#39;a leaf node&#39;,(0.8,0.1),(0.3,0.8),leafNode)
     plt.show()
 </code></pre><h4 id="构造注解树"><a href="#构造注解树" class="headerlink" title="构造注解树"></a>构造注解树</h4><p>定义两个新函数getNumLeafs()和getTreeDepth()，来获取叶节点的数目和树的层数，以确定图x轴和y轴。</p>
 <pre><code>#获取叶节点的数目
@@ -577,7 +577,7 @@ def getNumLeafs(myTree):
     secondDict=myTree[firstStr]
     for key in secondDict.keys():
         #测试节点的类型是否为字典，不是则为叶子节点
-        if type(secondDict[key]).__name__==&apos;dict&apos;:
+        if type(secondDict[key]).__name__==&#39;dict&#39;:
             numLeafs+=getNumLeafs(secondDict[key])
         else:
             numLeafs+=1
@@ -589,7 +589,7 @@ def getTreeDepth(myTree):
     firstStr=list(myTree.keys())[0]
     secondDict=myTree[firstStr]
     for key in secondDict.keys():
-        if type(secondDict[key]).__name__==&apos;dict&apos;:
+        if type(secondDict[key]).__name__==&#39;dict&#39;:
             thisDepth=1+getTreeDepth(secondDict[key])
         else:
             thisDepth=1
@@ -598,10 +598,10 @@ def getTreeDepth(myTree):
     return maxDepth
 
 def retrieveTree(i):
-    listOfTrees=[{&apos;no surfacing&apos;:{0:&apos;no&apos;,1:{&apos;flippers&apos;:\
-                                            {0:&apos;no&apos;,1:&apos;yes&apos;}}}},
-    {&apos;no surfacing&apos;:{0:&apos;no&apos;,1:{&apos;flippers&apos;:\
-                               {0:{&apos;head&apos;:{0:&apos;no&apos;,1:&apos;yes&apos;}},1: &apos;no&apos;}}}}]
+    listOfTrees=[{&#39;no surfacing&#39;:{0:&#39;no&#39;,1:{&#39;flippers&#39;:\
+                                            {0:&#39;no&#39;,1:&#39;yes&#39;}}}},
+    {&#39;no surfacing&#39;:{0:&#39;no&#39;,1:{&#39;flippers&#39;:\
+                               {0:{&#39;head&#39;:{0:&#39;no&#39;,1:&#39;yes&#39;}},1: &#39;no&#39;}}}}]
     return listOfTrees[i]
 </code></pre><p>函数retrieveTree输出预先存储的树信息，避免了每次测试代码时都要从数据中创建树的麻烦。</p>
 <pre><code>def plotMidText(cntrPt,parentPt,txtString):
@@ -620,7 +620,7 @@ def plotTree(myTree,parentPt,nodeTxt):
     secondDict=myTree[firstStr]
     plotTree.yOff=plotTree.yOff-1.0/plotTree.totalD
     for key in secondDict.keys():
-        if type(secondDict[key]).__name__==&apos;dict&apos;:
+        if type(secondDict[key]).__name__==&#39;dict&#39;:
             plotTree(secondDict[key],cntrPt,str(key))
         else:
             plotTree.xOff=plotTree.xOff+1.0/plotTree.totalW
@@ -637,7 +637,7 @@ def classify(inputTree,featLabels,testVec):
     featIndex=featLabels.index(firstStr)
     for key in secondDict.keys():
         if testVec[featIndex]==key:
-            if type(secondDict[key]).__name__==&apos;dict&apos;:
+            if type(secondDict[key]).__name__==&#39;dict&#39;:
                 classLabel=classify(secondDict[key],featLabels,testVec)
             else:
                 classLabel=secondDict[key]
@@ -704,8 +704,8 @@ def grabTree(filename):
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/顺时针打印矩阵/" rel="next" title="顺时针打印矩阵(剑指offer第十九题)">
-                <i class="fa fa-chevron-left"></i> 顺时针打印矩阵(剑指offer第十九题)
+              <a href="/2017/09/03/数据流中的中位数/" rel="next" title="数据流中的中位数(剑指offer第六十三题)">
+                <i class="fa fa-chevron-left"></i> 数据流中的中位数(剑指offer第六十三题)
               </a>
             
           </div>
@@ -714,8 +714,8 @@ def grabTree(filename):
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/03/数据流中的中位数/" rel="prev" title="数据流中的中位数(剑指offer第六十三题)">
-                数据流中的中位数(剑指offer第六十三题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/04/删除链表中重复的结点/" rel="prev" title="删除链表中重复的结点（剑指Offer)">
+                删除链表中重复的结点（剑指Offer) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

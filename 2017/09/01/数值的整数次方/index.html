@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码1234567891011121314151617181920# -*- coding:utf-8 -*-class Solution:    def Power(self, base, exponent):        # write code here        r">
+<meta name="description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码     # -*- coding:utf-8 -*-     class Solution:         def Power(self, base, exponent):             # write code here             res = b">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数值的整数次方(剑指offer第十二题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/数值的整数次方/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码1234567891011121314151617181920# -*- coding:utf-8 -*-class Solution:    def Power(self, base, exponent):        # write code here        r">
+<meta property="og:description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码     # -*- coding:utf-8 -*-     class Solution:         def Power(self, base, exponent):             # write code here             res = b">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-26T05:54:12.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数值的整数次方(剑指offer第十二题)">
-<meta name="twitter:description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码1234567891011121314151617181920# -*- coding:utf-8 -*-class Solution:    def Power(self, base, exponent):        # write code here        r">
+<meta name="twitter:description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码     # -*- coding:utf-8 -*-     class Solution:         def Power(self, base, exponent):             # write code here             res = b">
 
 
 
@@ -395,7 +395,27 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Power</span><span class="params">(self, base, exponent)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        res = base</div><div class="line">        <span class="keyword">if</span> exponent == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span></div><div class="line">        <span class="keyword">elif</span> exponent &gt; <span class="number">0</span>:</div><div class="line">            flag = <span class="number">0</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            flag = <span class="number">1</span></div><div class="line">        exponent = abs(exponent)</div><div class="line">        <span class="keyword">while</span> exponent &gt; <span class="number">1</span>:</div><div class="line">            res *= base</div><div class="line">            exponent -= <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> flag:</div><div class="line">            <span class="keyword">return</span> <span class="number">1.</span>/res</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def Power(self, base, exponent):
+            # write code here
+            res = base
+            if exponent == 0:
+                return 1
+            elif exponent &gt; 0:
+                flag = 0
+            else:
+                flag = 1
+            exponent = abs(exponent)
+            while exponent &gt; 1:
+                res *= base
+                exponent -= 1
+            if flag:
+                return 1./res
+            else:
+                return res
+</code></pre>
 
       
     </div>
@@ -440,8 +460,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/30/Windows下安装Xgboost/" rel="next" title="Windows系统下Xgboost安装【转】">
-                <i class="fa fa-chevron-left"></i> Windows系统下Xgboost安装【转】
+              <a href="/2017/09/01/2反转链表/" rel="next" title="反转链表(剑指offer第十五题)">
+                <i class="fa fa-chevron-left"></i> 反转链表(剑指offer第十五题)
               </a>
             
           </div>
@@ -450,8 +470,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/变态跳台阶/" rel="prev" title="变态跳台阶(剑指offer第九题)">
-                变态跳台阶(剑指offer第九题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/03/数据流中的中位数/" rel="prev" title="数据流中的中位数(剑指offer第六十三题)">
+                数据流中的中位数(剑指offer第六十三题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

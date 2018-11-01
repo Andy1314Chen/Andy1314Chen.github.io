@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 代码112345678910111213# -*- coding:utf-8 -*- 暴力解法class Solution:    # array 二维列表    def Find(self, ta">
+<meta name="description" content="题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 代码1     # -*- coding:utf-8 -*- 暴力解法     class Solution:         # array 二维列表         def Find(self,">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二维数组中的查找(剑指offer第一题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/二维数组中的查找/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 代码112345678910111213# -*- coding:utf-8 -*- 暴力解法class Solution:    # array 二维列表    def Find(self, ta">
+<meta property="og:description" content="题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 代码1     # -*- coding:utf-8 -*- 暴力解法     class Solution:         # array 二维列表         def Find(self,">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-25T14:02:47.209Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二维数组中的查找(剑指offer第一题)">
-<meta name="twitter:description" content="题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 代码112345678910111213# -*- coding:utf-8 -*- 暴力解法class Solution:    # array 二维列表    def Find(self, ta">
+<meta name="twitter:description" content="题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 代码1     # -*- coding:utf-8 -*- 暴力解法     class Solution:         # array 二维列表         def Find(self,">
 
 
 
@@ -395,8 +395,40 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<h3 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*- 暴力解法</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># array 二维列表</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Find</span><span class="params">(self, target, array)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        n = len(array)</div><div class="line">        m = len(array[<span class="number">0</span>])</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</div><div class="line">                <span class="keyword">if</span> array[i][j] == target:</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
-<h3 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-  每次查找右上角的值的大小</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># array 二维列表</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Find</span><span class="params">(self, target, array)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        col = len(array[<span class="number">0</span>])</div><div class="line">        row = len(array)</div><div class="line">        cur_col = col - <span class="number">1</span></div><div class="line">        cur_row = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> (cur_row&lt;row)&amp;(cur_col&gt;=<span class="number">0</span>):</div><div class="line">            <span class="keyword">if</span> array[cur_row][cur_col] == target:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">            <span class="keyword">elif</span> array[cur_row][cur_col] &gt; target: <span class="comment"># 排除该列</span></div><div class="line">                cur_col -= <span class="number">1</span></div><div class="line">            <span class="keyword">elif</span> array[cur_row][cur_col] &lt; target: <span class="comment"># 排除该行</span></div><div class="line">                cur_row += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
+<h3 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*- 暴力解法
+    class Solution:
+        # array 二维列表
+        def Find(self, target, array):
+            # write code here
+            n = len(array)
+            m = len(array[0])
+            for i in range(n):
+                for j in range(m):
+                    if array[i][j] == target:
+                        return True
+            return False
+</code></pre>
+<h3 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-  每次查找右上角的值的大小
+    class Solution:
+        # array 二维列表
+        def Find(self, target, array):
+            # write code here
+            col = len(array[0])
+            row = len(array)
+            cur_col = col - 1
+            cur_row = 0
+            while (cur_row&lt;row)&amp;(cur_col&gt;=0):
+                if array[cur_row][cur_col] == target:
+                    return True
+                elif array[cur_row][cur_col] &gt; target: # 排除该列
+                    cur_col -= 1
+                elif array[cur_row][cur_col] &lt; target: # 排除该行
+                    cur_row += 1
+            return False
+</code></pre>
+
       
     </div>
 
@@ -440,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/链表中倒数第K个结点/" rel="next" title="链表中倒数第K个节点(剑指offer第十四题)">
-                <i class="fa fa-chevron-left"></i> 链表中倒数第K个节点(剑指offer第十四题)
+              <a href="/2017/09/01/替换空格/" rel="next" title="替换空格(剑指offer第二题)">
+                <i class="fa fa-chevron-left"></i> 替换空格(剑指offer第二题)
               </a>
             
           </div>
@@ -450,8 +482,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/替换空格/" rel="prev" title="替换空格(剑指offer第二题)">
-                替换空格(剑指offer第二题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/旋转数组的最小数字/" rel="prev" title="旋转数组的最小数字(剑指offer第六题)">
+                旋转数组的最小数字(剑指offer第六题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 代码123456789101112131415161718192021222324252627282930# -*- coding:utf-8 -*-#">
+<meta name="description" content="题目描述输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 代码     # -*- coding:utf-8 -*-     # class TreeNode:     #     def __init__(se">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="重建二叉树(剑指offer第四题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/15/重建二叉树/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 代码123456789101112131415161718192021222324252627282930# -*- coding:utf-8 -*-#">
+<meta property="og:description" content="题目描述输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 代码     # -*- coding:utf-8 -*-     # class TreeNode:     #     def __init__(se">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-08-05T03:29:16.137Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重建二叉树(剑指offer第四题)">
-<meta name="twitter:description" content="题目描述输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 代码123456789101112131415161718192021222324252627282930# -*- coding:utf-8 -*-#">
+<meta name="twitter:description" content="题目描述输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 代码     # -*- coding:utf-8 -*-     # class TreeNode:     #     def __init__(se">
 
 
 
@@ -395,7 +395,37 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># class TreeNode:</span></div><div class="line"><span class="comment">#     def __init__(self, x):</span></div><div class="line"><span class="comment">#         self.val = x</span></div><div class="line"><span class="comment">#         self.left = None</span></div><div class="line"><span class="comment">#         self.right = None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回构造的TreeNode根节点</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reConstructBinaryTree</span><span class="params">(self, pre, tin)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> len(pre) != len(tin):</div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        <span class="keyword">return</span> self.returnRoot(pre, tin, len(pre))</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">returnRoot</span><span class="params">(self, pre, tin, length)</span>:</span></div><div class="line">        <span class="keyword">if</span> length == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        <span class="comment"># 前序遍历第一个是根节点</span></div><div class="line">        root_val = pre[<span class="number">0</span>]</div><div class="line">        root = TreeNode(root_val)</div><div class="line">        <span class="keyword">if</span> length == <span class="number">1</span> :</div><div class="line">            <span class="keyword">return</span> root</div><div class="line">        <span class="comment"># 在中序遍历中的根节点位置，不含重复数字</span></div><div class="line">        idx = tin.index(root_val)</div><div class="line">		<span class="comment"># 递归左子树</span></div><div class="line">        root.left = self.returnRoot(pre[<span class="number">1</span>:idx+<span class="number">1</span>],tin[:idx], len(pre[:idx]))</div><div class="line">		<span class="comment"># 递归右子树</span></div><div class="line">        root.right = self.returnRoot(pre[idx+<span class="number">1</span>:],tin[idx+<span class="number">1</span>:], len(pre[idx+<span class="number">1</span>:]))</div><div class="line">        <span class="keyword">return</span> root</div></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class TreeNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
+    class Solution:
+        # 返回构造的TreeNode根节点
+        def reConstructBinaryTree(self, pre, tin):
+            # write code here
+            if len(pre) != len(tin):
+                return None
+            return self.returnRoot(pre, tin, len(pre))
+
+        def returnRoot(self, pre, tin, length):
+            if length == 0:
+                return None
+            # 前序遍历第一个是根节点
+            root_val = pre[0]
+            root = TreeNode(root_val)
+            if length == 1 :
+                return root
+            # 在中序遍历中的根节点位置，不含重复数字
+            idx = tin.index(root_val)
+            # 递归左子树
+            root.left = self.returnRoot(pre[1:idx+1],tin[:idx], len(pre[:idx]))
+            # 递归右子树
+            root.right = self.returnRoot(pre[idx+1:],tin[idx+1:], len(pre[idx+1:]))
+            return root
+</code></pre>
 
       
     </div>

@@ -438,8 +438,8 @@ def propagate(w, b, X, Y):
     cost = np.squeeze(cost)
     assert(cost.shape == ())
 
-    grads = {&apos;dw&apos;:dw,
-             &apos;db&apos;:db}
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
     return grads, cost
 
 # GRADED FUNCTION: optimize
@@ -449,8 +449,8 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost=False):
         # 正向传播计算cost, 反向传播计算grad
         grads, cost = propagate(w, b, X, Y)
 
-        dw = grads[&apos;dw&apos;]
-        db = grads[&apos;db&apos;]
+        dw = grads[&#39;dw&#39;]
+        db = grads[&#39;db&#39;]
         # 负梯度方向下降
         w = w - learning_rate*dw
         b = b - learning_rate*db
@@ -460,10 +460,10 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost=False):
 
         if print_cost and i%100 == 0:
             print(&quot;Cost after iteration %i: %f&quot; % (i, cost))
-    params = {&apos;w&apos;:w,
-              &apos;b&apos;:b}
-    grads = {&apos;dw&apos;:dw,
-             &apos;db&apos;:db}
+    params = {&#39;w&#39;:w,
+              &#39;b&#39;:b}
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
     return params, grads, costs
 
 # 预测    
@@ -495,8 +495,8 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
     parameters, grads, costs = optimize(w, b, X_train, Y_train,
                                         num_iterations, learning_rate, print_cost)
     # 得到参数
-    w = parameters[&apos;w&apos;]
-    b = parameters[&apos;b&apos;]
+    w = parameters[&#39;w&#39;]
+    b = parameters[&#39;b&#39;]
 
     # 预测
     Y_prediction_test = predict(w, b, X_test)
@@ -684,8 +684,8 @@ test accuracy: 100.0 %
         
           
             <p>数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。</p>
-<pre><code>housing.plot(kind = &apos;scatter&apos;, x=&apos;longitude&apos;, y=&apos;latitude&apos;,
-            alpha =0.4, s = housing[&apos;population&apos;]/100,  label=&apos;population&apos;, figsize=(10,7), c=&apos;median_house_value&apos;, cmap = plt.get_cmap(&apos;jet&apos;),
+<pre><code>housing.plot(kind = &#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;,
+            alpha =0.4, s = housing[&#39;population&#39;]/100,  label=&#39;population&#39;, figsize=(10,7), c=&#39;median_house_value&#39;, cmap = plt.get_cmap(&#39;jet&#39;),
             colorbar=True, sharex = False)
 plt.legend()
 </code></pre><p><strong> alpha=0.4,表示透明度；s=housing[‘population’]/100,表示圆圈半径大小；c=”median_house_value”,表示颜色代表的信息； </strong></p>
@@ -886,7 +886,7 @@ import matplotlib.pyplot as plt
 import warnings 
 #from sklearn.ensemble import RandomForestRegressor
 
-warnings.filterwarnings(&apos;ignore&apos;)
+warnings.filterwarnings(&#39;ignore&#39;)
 
 
 #sigmoid函数
@@ -896,7 +896,7 @@ def sigmoid(z):
     return s
 
 
-#print(&apos;sigmoid([0, 2]) = &apos; + str(sigmoid(np.array([0,2]))))
+#print(&#39;sigmoid([0, 2]) = &#39; + str(sigmoid(np.array([0,2]))))
 
 #初始化参数
 def initialize_with_zeros(dim):
@@ -910,8 +910,8 @@ def initialize_with_zeros(dim):
 
 #dim = 2
 #w, b = initialize_with_zeros(dim)
-#print(&apos;w = &apos;+ str(w))
-#print(&apos;b = &apos;+ str(b))
+#print(&#39;w = &#39;+ str(w))
+#print(&#39;b = &#39;+ str(b))
 
 
 def propagate(w, b, X, Y):
@@ -943,17 +943,17 @@ def propagate(w, b, X, Y):
     cost = np.squeeze(cost)
     assert(cost.shape == ())
 
-    grads = {&apos;dw&apos;: dw,
-             &apos;db&apos;: db}
+    grads = {&#39;dw&#39;: dw,
+             &#39;db&#39;: db}
 
     return grads, cost
 
 w, b, X, Y = np.array([[1],[2]]), 2, np.array([[1, 2, -1],[3, 4, -3.2]]), np.array([[1, 0, 1]])
 #grads, cost = propagate(w, b, X, Y)
 
-#print(&apos;dw = &apos; + str(grads[&apos;dw&apos;]))
-#print(&apos;db = &apos; + str(grads[&apos;db&apos;]))
-#print(&apos;cost = &apos; + str(cost))
+#print(&#39;dw = &#39; + str(grads[&#39;dw&#39;]))
+#print(&#39;db = &#39; + str(grads[&#39;db&#39;]))
+#print(&#39;cost = &#39; + str(cost))
 
 def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
     &quot;&quot;&quot;
@@ -981,8 +981,8 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
         grads, cost = propagate(w, b, X, Y)
 
         #Retrieve derivatives from grads
-        dw = grads[&apos;dw&apos;]
-        db = grads[&apos;db&apos;]
+        dw = grads[&#39;dw&#39;]
+        db = grads[&#39;db&#39;]
 
         # update rule
         w = w - learning_rate*dw
@@ -994,13 +994,13 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
 
         # Print the cost every 100 training examples
         if print_cost and i % 100 == 0:
-            print(&apos;Cost after iteration %i: %f&apos; % (i, cost))
+            print(&#39;Cost after iteration %i: %f&#39; % (i, cost))
 
-    params = {&apos;w&apos;:w,
-              &apos;b&apos;:b}
+    params = {&#39;w&#39;:w,
+              &#39;b&#39;:b}
 
-    grads = {&apos;dw&apos;:dw,
-             &apos;db&apos;:db}
+    grads = {&#39;dw&#39;:dw,
+             &#39;db&#39;:db}
 
     return params, grads, costs
 
@@ -1033,7 +1033,7 @@ def predict(w, b, X):
 w = np.array([[0.1124579], [0.23106775]])
 b = -0.3
 X = np.array([[1., -1.1, -3.2],[1.2, 2, 0.1]])
-#print(&apos;predictions = &apos; + str(predict(w,b,X)))
+#print(&#39;predictions = &#39; + str(predict(w,b,X)))
 
 
 
@@ -1046,25 +1046,25 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
     # Gradient descent
     parameters, grads, costs = optimize(w, b, X_train, Y_train, num_iterations, learning_rate, print_cost = True)
 
-    # Retrieve parameters w and b from dictionary &apos;parameters&apos;
-    w = parameters[&apos;w&apos;]
-    b = parameters[&apos;b&apos;]
+    # Retrieve parameters w and b from dictionary &#39;parameters&#39;
+    w = parameters[&#39;w&#39;]
+    b = parameters[&#39;b&#39;]
 
     # Predict test/train set examples
     Y_prediction_test = predict(w, b, X_test)
     Y_prediction_train = predict(w, b, X_train)
 
     # Print train/test Errors
-    print(&apos;train accuracy: {} %&apos;.format(100 - np.mean(np.abs(Y_prediction_train - Y_train)) * 100))
-    print(&apos;test accuracy: {} %&apos;.format(100 - np.mean(np.abs(Y_prediction_test - Y_test)) * 100))
+    print(&#39;train accuracy: {} %&#39;.format(100 - np.mean(np.abs(Y_prediction_train - Y_train)) * 100))
+    print(&#39;test accuracy: {} %&#39;.format(100 - np.mean(np.abs(Y_prediction_test - Y_test)) * 100))
 
-    d = {&apos;costs&apos;: costs,
-         &apos;Y_prediction_test&apos;: Y_prediction_test,
-         &apos;Y_prediction_train&apos;: Y_prediction_train,
-         &apos;w&apos;: w,
-         &apos;b&apos;: b,
-         &apos;learning_rate&apos;: learning_rate,
-         &apos;num_iterations&apos;: num_iterations
+    d = {&#39;costs&#39;: costs,
+         &#39;Y_prediction_test&#39;: Y_prediction_test,
+         &#39;Y_prediction_train&#39;: Y_prediction_train,
+         &#39;w&#39;: w,
+         &#39;b&#39;: b,
+         &#39;learning_rate&#39;: learning_rate,
+         &#39;num_iterations&#39;: num_iterations
          }
 
     return d
@@ -1541,13 +1541,13 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
 import matplotlib
 import matplotlib.pyplot as plt
 
-plt.rcParams[&apos;axes.labelsize&apos;] = 14
-plt.rcParams[&apos;xtick.labelsize&apos;] = 12
-plt.rcParams[&apos;ytick.labelsize&apos;] = 12
+plt.rcParams[&#39;axes.labelsize&#39;] = 14
+plt.rcParams[&#39;xtick.labelsize&#39;] = 12
+plt.rcParams[&#39;ytick.labelsize&#39;] = 12
 
 #Where to save the figures
-PROJECT_ROOT_DIR = &apos;.&apos;
-CHAPTER_ID = &apos;CHAPTER2&apos;
+PROJECT_ROOT_DIR = &#39;.&#39;
+CHAPTER_ID = &#39;CHAPTER2&#39;
 IMAGES_PATH = os.path.join(PROJECT_ROOT_DIR, &quot;images&quot;, CHAPTER_ID)
 
 def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolution=300):
@@ -2198,9 +2198,9 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
             <p>使用sklearn.externals.joblib或者Python’s pickle module去保存模型。</p>
 <pre><code>from sklearn.externals import joblib
 
- joblib.dump(my_model,&apos;my_model.pkl&apos;)
+ joblib.dump(my_model,&#39;my_model.pkl&#39;)
 # and later ...
-my_model_loaded = joblib.load(&apos;my_model.pkl&apos;)
+my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
 </code></pre>
           
         

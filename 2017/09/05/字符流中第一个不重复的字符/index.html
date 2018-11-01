@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。 如果当前字符流没有存在出现一次的字符，返回#字符。 解法1(暴力法)12345678910111213141516171819202122# -*- coding:utf-8 -">
+<meta name="description" content="题目描述请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。 如果当前字符流没有存在出现一次的字符，返回#字符。 解法1(暴力法)     # -*- coding:utf-8 -*-     class Solution:">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符流中第一个不重复的字符（剑指Offer)">
 <meta property="og:url" content="http://yoursite.com/2017/09/05/字符流中第一个不重复的字符/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。 如果当前字符流没有存在出现一次的字符，返回#字符。 解法1(暴力法)12345678910111213141516171819202122# -*- coding:utf-8 -">
+<meta property="og:description" content="题目描述请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。 如果当前字符流没有存在出现一次的字符，返回#字符。 解法1(暴力法)     # -*- coding:utf-8 -*-     class Solution:">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-27T13:46:58.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符流中第一个不重复的字符（剑指Offer)">
-<meta name="twitter:description" content="题目描述请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。 如果当前字符流没有存在出现一次的字符，返回#字符。 解法1(暴力法)12345678910111213141516171819202122# -*- coding:utf-8 -">
+<meta name="twitter:description" content="题目描述请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。 如果当前字符流没有存在出现一次的字符，返回#字符。 解法1(暴力法)     # -*- coding:utf-8 -*-     class Solution:">
 
 
 
@@ -396,8 +396,54 @@
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。</p>
 <p>如果当前字符流没有存在出现一次的字符，返回#字符。</p>
-<h3 id="解法1-暴力法"><a href="#解法1-暴力法" class="headerlink" title="解法1(暴力法)"></a>解法1(暴力法)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回对应char</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.save = []</div><div class="line">        self.dicT = &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FirstAppearingOnce</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        self.dicT = &#123;&#125;</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> self.save:</div><div class="line">            <span class="keyword">if</span> v <span class="keyword">in</span> self.dicT:</div><div class="line">                self.dicT[v] += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                self.dicT[v] = <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> self.save:</div><div class="line">            <span class="keyword">if</span> self.dicT[v] == <span class="number">1</span>:</div><div class="line">                <span class="keyword">return</span> v</div><div class="line">        <span class="keyword">return</span> <span class="string">'#'</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Insert</span><span class="params">(self, char)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        self.save.append(char)</div></pre></td></tr></table></figure>
-<h3 id="解法2-队列存储"><a href="#解法2-队列存储" class="headerlink" title="解法2(队列存储)"></a>解法2(队列存储)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># 返回对应char</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">		<span class="comment"># 统计各个字符出现的次数</span></div><div class="line">        self.save = [<span class="number">0</span>]*<span class="number">256</span></div><div class="line">		<span class="comment"># 保存只出现一次的字符</span></div><div class="line">        self.quen = []</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FirstAppearingOnce</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">while</span> len(self.quen) &gt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">if</span> self.save[ord(self.quen[<span class="number">0</span>])] &gt; <span class="number">1</span>:</div><div class="line">                self.quen.pop(<span class="number">0</span>)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">return</span> self.quen[<span class="number">0</span>]</div><div class="line">        <span class="keyword">return</span> <span class="string">'#'</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Insert</span><span class="params">(self, char)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        idx = ord(char)</div><div class="line">        self.save[idx] += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> self.save[idx] == <span class="number">1</span>:</div><div class="line">            self.quen.append(char)</div></pre></td></tr></table></figure>
+<h3 id="解法1-暴力法"><a href="#解法1-暴力法" class="headerlink" title="解法1(暴力法)"></a>解法1(暴力法)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # 返回对应char
+        def __init__(self):
+            self.save = []
+            self.dicT = {}
+        def FirstAppearingOnce(self):
+            # write code here
+            self.dicT = {}
+            for v in self.save:
+                if v in self.dicT:
+                    self.dicT[v] += 1
+                else:
+                    self.dicT[v] = 1
+            for v in self.save:
+                if self.dicT[v] == 1:
+                    return v
+            return &#39;#&#39;
+        def Insert(self, char):
+            # write code here
+            self.save.append(char)
+</code></pre>
+<h3 id="解法2-队列存储"><a href="#解法2-队列存储" class="headerlink" title="解法2(队列存储)"></a>解法2(队列存储)</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        # 返回对应char
+        def __init__(self):
+            # 统计各个字符出现的次数
+            self.save = [0]*256
+            # 保存只出现一次的字符
+            self.quen = []
+        def FirstAppearingOnce(self):
+            # write code here
+            while len(self.quen) &gt; 0:
+                if self.save[ord(self.quen[0])] &gt; 1:
+                    self.quen.pop(0)
+                else:
+                    return self.quen[0]
+            return &#39;#&#39;
+        def Insert(self, char):
+            # write code here
+            idx = ord(char)
+            self.save[idx] += 1
+            if self.save[idx] == 1:
+                self.quen.append(char)
+</code></pre>
+
       
     </div>
 
@@ -441,8 +487,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/机器学习实战第四章学习笔记/" rel="next" title="机器学习实战第四章学习笔记(朴素贝叶斯分类器)">
-                <i class="fa fa-chevron-left"></i> 机器学习实战第四章学习笔记(朴素贝叶斯分类器)
+              <a href="/2017/09/05/XGBoost调参指南/" rel="next" title="XGBoost调参指南">
+                <i class="fa fa-chevron-left"></i> XGBoost调参指南
               </a>
             
           </div>
@@ -451,8 +497,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/05/XGBoost调参指南/" rel="prev" title="XGBoost调参指南">
-                XGBoost调参指南 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/05/机器学习实战第四章学习笔记/" rel="prev" title="机器学习实战第四章学习笔记(朴素贝叶斯分类器)">
+                机器学习实战第四章学习笔记(朴素贝叶斯分类器) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

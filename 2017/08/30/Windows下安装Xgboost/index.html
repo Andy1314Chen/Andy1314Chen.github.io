@@ -424,7 +424,7 @@ $ git submodule update
 </code></pre><p>如果添加成功的话，应该返回类似下面这样的信息：</p>
 <pre><code>C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\mingw32-make
 </code></pre><p>为了输入的方便，可以简化mingw32-make命令为make</p>
-<pre><code>$ alias make=&apos;mingw32-make&apos;
+<pre><code>$ alias make=&#39;mingw32-make&#39;
 </code></pre><h3 id="XGBoost的编译"><a href="#XGBoost的编译" class="headerlink" title="XGBoost的编译"></a>XGBoost的编译</h3><p>现在就可以开始编译XGBoost了，首先进入xgboost文件夹</p>
 <pre><code>$ cd /e/algorithm/xgboost
 </code></pre><p>通过<a href="https://xgboost.readthedocs.io/en/latest/build.html#building-on-windows" target="_blank" rel="external">这篇官方文档</a>给出的统一编译的方法在写这篇文章时还不能正常编译成功，所以我们采用下面的命令来分开编译，每次编译一个子模块。注意，我们要等每个命令编译完成后才能键入下一个命令。</p>
@@ -439,8 +439,8 @@ $ make -j4
 <pre><code>$ cd /e/algorithm/xgboost/python-package&gt;python setup.py install
 </code></pre><p>进行到这儿，基本上就完成了，这时打开一个Jupyter notebook，直接导入xgboost包会出现错误，我们需要先运行下面的代码：</p>
 <pre><code>import os
-mingw_path = &apos;C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin&apos;
-os.environ[&apos;PATH&apos;] = mingw_path + &apos;;&apos; + os.environ[&apos;PATH&apos;]
+mingw_path = &#39;C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin&#39;
+os.environ[&#39;PATH&#39;] = mingw_path + &#39;;&#39; + os.environ[&#39;PATH&#39;]
 </code></pre><h3 id="成功示例"><a href="#成功示例" class="headerlink" title="成功示例"></a>成功示例</h3><p>然后我们就可以开始导入xgboost包去运行下面的示例：</p>
 <pre><code>import xgboost as xgb
 import numpy as np
@@ -448,13 +448,13 @@ data = np.random.rand(5,10) # 5 entities, each contains 10 features
 label = np.random.randint(2, size=5) # binary target
 dtrain = xgb.DMatrix( data, label=label)
 dtest = dtrain
-param = {&apos;bst:max_depth&apos;:2, &apos;bst:eta&apos;:1, &apos;silent&apos;:1, &apos;objective&apos;:&apos;binary:logistic&apos; }
-param[&apos;nthread&apos;] = 4
-param[&apos;eval_metric&apos;] = &apos;auc&apos;
-evallist  = [(dtest,&apos;eval&apos;), (dtrain,&apos;train&apos;)]
+param = {&#39;bst:max_depth&#39;:2, &#39;bst:eta&#39;:1, &#39;silent&#39;:1, &#39;objective&#39;:&#39;binary:logistic&#39; }
+param[&#39;nthread&#39;] = 4
+param[&#39;eval_metric&#39;] = &#39;auc&#39;
+evallist  = [(dtest,&#39;eval&#39;), (dtrain,&#39;train&#39;)]
 num_round = 10
 bst = xgb.train( param, dtrain, num_round, evallist )
-bst.dump_model(&apos;dump.raw.txt&apos;)
+bst.dump_model(&#39;dump.raw.txt&#39;)
 </code></pre><p>至此，如果没有出现错误，就表示安装成功。</p>
 <h2 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h2><ol>
 <li>可能对git bash不熟悉的可以先看看git操作命令</li>
@@ -517,8 +517,8 @@ bst.dump_model(&apos;dump.raw.txt&apos;)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/数值的整数次方/" rel="prev" title="数值的整数次方(剑指offer第十二题)">
-                数值的整数次方(剑指offer第十二题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/变态跳台阶/" rel="prev" title="变态跳台阶(剑指offer第九题)">
+                变态跳台阶(剑指offer第九题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

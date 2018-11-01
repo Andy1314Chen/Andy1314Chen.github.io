@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="题目描述输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。 代码12345678910111213141516# -*- coding:utf-8 -*-class Solution:    def reOrderArray(self, array):        # write">
+<meta name="description" content="题目描述输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。 代码     # -*- coding:utf-8 -*-     class Solution:         def reOrderArray(self, array):             # write co">
 <meta name="keywords" content="python,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="调整数组顺序使奇数位于偶数前面(剑指offer第十三题)">
 <meta property="og:url" content="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="题目描述输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。 代码12345678910111213141516# -*- coding:utf-8 -*-class Solution:    def reOrderArray(self, array):        # write">
+<meta property="og:description" content="题目描述输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。 代码     # -*- coding:utf-8 -*-     class Solution:         def reOrderArray(self, array):             # write co">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-26T05:59:19.269Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="调整数组顺序使奇数位于偶数前面(剑指offer第十三题)">
-<meta name="twitter:description" content="题目描述输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。 代码12345678910111213141516# -*- coding:utf-8 -*-class Solution:    def reOrderArray(self, array):        # write">
+<meta name="twitter:description" content="题目描述输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。 代码     # -*- coding:utf-8 -*-     class Solution:         def reOrderArray(self, array):             # write co">
 
 
 
@@ -395,7 +395,23 @@
 
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reOrderArray</span><span class="params">(self, array)</span>:</span></div><div class="line">        <span class="comment"># write code here</span></div><div class="line">        <span class="keyword">if</span> len(array) &lt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> []</div><div class="line">        array1 = []</div><div class="line">        array2 = []</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> array:</div><div class="line">            <span class="keyword">if</span> v%<span class="number">2</span>:</div><div class="line">                array1.append(v)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                array2.append(v)</div><div class="line">        array = array1 + array2</div><div class="line">        <span class="keyword">return</span> array</div></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def reOrderArray(self, array):
+            # write code here
+            if len(array) &lt; 1:
+                return []
+            array1 = []
+            array2 = []
+            for v in array:
+                if v%2:
+                    array1.append(v)
+                else:
+                    array2.append(v)
+            array = array1 + array2
+            return array
+</code></pre>
 
       
     </div>
@@ -440,8 +456,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/青蛙台阶/" rel="next" title="青蛙台阶(剑指offer第八题)">
-                <i class="fa fa-chevron-left"></i> 青蛙台阶(剑指offer第八题)
+              <a href="/2017/09/01/菲波那切数列/" rel="next" title="菲波那切数列(剑指offer第七题)">
+                <i class="fa fa-chevron-left"></i> 菲波那切数列(剑指offer第七题)
               </a>
             
           </div>
@@ -450,8 +466,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/2合并两个排序的链表/" rel="prev" title="合并两个排序的链表(剑指offer第十六题)">
-                合并两个排序的链表(剑指offer第十六题) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/链表中倒数第K个结点/" rel="prev" title="链表中倒数第K个节点(剑指offer第十四题)">
+                链表中倒数第K个节点(剑指offer第十四题) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

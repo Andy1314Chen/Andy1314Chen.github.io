@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="快速排序 时间复杂度O(N*logN) 分治思想 不稳定 https://blog.csdn.net/MoreWindows/article/details/6684558基本思路   先从数列中取出一个数作为基准数； 分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边； 再对左右区间重复步骤2，直到各区间只有一个数；  # 快速排序 def QuickSort(nums, lef">
+<meta name="description" content="快速排序 时间复杂度O(N*logN) 分治思想 不稳定 https://blog.csdn.net/MoreWindows/article/details/6684558基本思路   先从数列中取出一个数作为基准数； 分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边； 再对左右区间重复步骤2，直到各区间只有一个数；      # 快速排序     def QuickSort(n">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="各种排序方法总结">
 <meta property="og:url" content="http://yoursite.com/2017/11/03/各种排序方法总结/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="快速排序 时间复杂度O(N*logN) 分治思想 不稳定 https://blog.csdn.net/MoreWindows/article/details/6684558基本思路   先从数列中取出一个数作为基准数； 分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边； 再对左右区间重复步骤2，直到各区间只有一个数；  # 快速排序 def QuickSort(nums, lef">
+<meta property="og:description" content="快速排序 时间复杂度O(N*logN) 分治思想 不稳定 https://blog.csdn.net/MoreWindows/article/details/6684558基本思路   先从数列中取出一个数作为基准数； 分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边； 再对左右区间重复步骤2，直到各区间只有一个数；      # 快速排序     def QuickSort(n">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-08-15T08:22:46.804Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种排序方法总结">
-<meta name="twitter:description" content="快速排序 时间复杂度O(N*logN) 分治思想 不稳定 https://blog.csdn.net/MoreWindows/article/details/6684558基本思路   先从数列中取出一个数作为基准数； 分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边； 再对左右区间重复步骤2，直到各区间只有一个数；  # 快速排序 def QuickSort(nums, lef">
+<meta name="twitter:description" content="快速排序 时间复杂度O(N*logN) 分治思想 不稳定 https://blog.csdn.net/MoreWindows/article/details/6684558基本思路   先从数列中取出一个数作为基准数； 分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边； 再对左右区间重复步骤2，直到各区间只有一个数；      # 快速排序     def QuickSort(n">
 
 
 
@@ -405,27 +405,27 @@
 <li>分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边；</li>
 <li>再对左右区间重复步骤2，直到各区间只有一个数；</li>
 </ol>
-<pre><code># 快速排序
-def QuickSort(nums, left, right):
-    if left &lt; right:
-        i, j, x = left, right, nums[left]
-        while i &lt; j:
-            # 从后端开始
-            while i &lt; j and nums[j] &gt;= x:
-                j -= 1
-            if i &lt; j:
-                nums[i] = nums[j]        
-                i += 1
-            # 从前端开始
-            while i &lt; j and nums[i] &lt; x:
-                i += 1
-            if i &lt; j:
-                nums[j] = nums[i]        
-                j -= 1
-        nums[i] = x
-        QuickSort(nums, left, i - 1)
-        QuickSort(nums, i + 1, right)
-    return nums
+<pre><code>    # 快速排序
+    def QuickSort(nums, left, right):
+        if left &lt; right:
+            i, j, x = left, right, nums[left]
+            while i &lt; j:
+                # 从后端开始
+                while i &lt; j and nums[j] &gt;= x:
+                    j -= 1
+                if i &lt; j:
+                    nums[i] = nums[j]        
+                    i += 1
+                # 从前端开始
+                while i &lt; j and nums[i] &lt; x:
+                    i += 1
+                if i &lt; j:
+                    nums[j] = nums[i]        
+                    j -= 1
+            nums[i] = x
+            QuickSort(nums, left, i - 1)
+            QuickSort(nums, i + 1, right)
+        return nums
 </code></pre><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><ul>
 <li>时间复杂度O(N*N)</li>
 <li>稳定</li>
@@ -434,45 +434,45 @@ def QuickSort(nums, left, right):
 <li>比较相邻的前后两个数据，如果前面数据大于后面数据，就将两个数据交换；</li>
 <li>这样对数组的第0个数据到第N-1个数据进行一次遍历后，最大的一个数据就“沉”到数组第N-1个位置；</li>
 <li><p>N=N-1,如果N!=0则继续前面两步</p>
-<pre><code>def bubbleSort1(nums):
-&quot;&quot;&quot;
-冒泡排序1
-&quot;&quot;&quot;
-for i in range(len(nums)):
-    for j in range(1, len(nums)-i):
-        if nums[j] &lt; nums[j-1]:
-            nums[j], nums[j-1] = nums[j-1], nums[j]
-return nums
+<pre><code> def bubbleSort1(nums):
+ &quot;&quot;&quot;
+ 冒泡排序1
+ &quot;&quot;&quot;
+ for i in range(len(nums)):
+     for j in range(1, len(nums)-i):
+         if nums[j] &lt; nums[j-1]:
+             nums[j], nums[j-1] = nums[j-1], nums[j]
+ return nums
 </code></pre></li>
 </ol>
-<pre><code>def bubbleSort2(nums):
-    &quot;&quot;&quot;
-    冒泡排序2  改进1
-    &quot;&quot;&quot;
-    flag = False
-    for i in range(len(nums)):
-        if flag != False:
-            break 
-        flag = True 
-        for j in range(1, len(nums)-i):
-            if nums[j] &lt; nums[j-1]:
-                nums[j], nums[j-1] = nums[j-1], nums[j]
-                flag = False 
-    return nums
+<pre><code>    def bubbleSort2(nums):
+        &quot;&quot;&quot;
+        冒泡排序2  改进1
+        &quot;&quot;&quot;
+        flag = False
+        for i in range(len(nums)):
+            if flag != False:
+                break 
+            flag = True 
+            for j in range(1, len(nums)-i):
+                if nums[j] &lt; nums[j-1]:
+                    nums[j], nums[j-1] = nums[j-1], nums[j]
+                    flag = False 
+        return nums
 
-def bubbleSort3(nums):
-    &quot;&quot;&quot;
-    冒泡排序3  改进2
-    &quot;&quot;&quot;
-    flag = len(nums)
-    while flag &gt; 0:
-        k = flag 
-        flag = 0
-        for j in range(1, k):
-            if nums[j] &lt; nums[j-1]:
-                nums[j], nums[j-1] = nums[j-1], nums[j]
-                flag = j 
-    return nums
+    def bubbleSort3(nums):
+        &quot;&quot;&quot;
+        冒泡排序3  改进2
+        &quot;&quot;&quot;
+        flag = len(nums)
+        while flag &gt; 0:
+            k = flag 
+            flag = 0
+            for j in range(1, k):
+                if nums[j] &lt; nums[j-1]:
+                    nums[j], nums[j-1] = nums[j-1], nums[j]
+                    flag = j 
+        return nums
 </code></pre><h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><ul>
 <li>时间复杂度O(N*N)</li>
 <li>稳定</li>
@@ -482,33 +482,33 @@ def bubbleSort3(nums):
 <li>初始时，a[0]自成一个有序区，a[1…n-1]为无序区；</li>
 <li>将a[i]并入当前的有序区a[0…i-1]中形成a[0…i]有序区；</li>
 <li><p>i++并重复第二步，直到i == n-1;</p>
-<pre><code>def insertSort1(nums):
-    &quot;&quot;&quot;
-    插入排序
-    &quot;&quot;&quot;
-    i = 1
-    while i &lt; len(nums):
-        tmp = nums[i]
-        j = i - 1
-        while j &gt;= 0 and nums[j] &gt; tmp:
-            nums[j+1] = nums[j]
-            j -= 1
-        nums[j+1] = tmp
-        i += 1
-    return nums
+<pre><code> def insertSort1(nums):
+     &quot;&quot;&quot;
+     插入排序
+     &quot;&quot;&quot;
+     i = 1
+     while i &lt; len(nums):
+         tmp = nums[i]
+         j = i - 1
+         while j &gt;= 0 and nums[j] &gt; tmp:
+             nums[j+1] = nums[j]
+             j -= 1
+         nums[j+1] = tmp
+         i += 1
+     return nums
 </code></pre></li>
 </ol>
-<pre><code>def insertSort2(nums):
-    &quot;&quot;&quot;
-    插入排序2 改进1
-    &quot;&quot;&quot;
-    for i in range(1, len(nums)):
-        for j in range(i-1, -1, -1):
-            if nums[j] &gt; nums[j+1]:
-                nums[j], nums[j+1] = nums[j+1], nums[j]
-            else:
-                break
-    return nums
+<pre><code>    def insertSort2(nums):
+        &quot;&quot;&quot;
+        插入排序2 改进1
+        &quot;&quot;&quot;
+        for i in range(1, len(nums)):
+            for j in range(i-1, -1, -1):
+                if nums[j] &gt; nums[j+1]:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+                else:
+                    break
+        return nums
 </code></pre><h2 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h2><ul>
 <li>时间复杂度O(N*N)</li>
 <li>稳定</li>
@@ -518,18 +518,18 @@ def bubbleSort3(nums):
 <li>初始时，数组全为无序区a[0…n-1],令i=0;</li>
 <li>在无序区a[i…n-1]中选取一个最小的元素，将其与a[i]交换，交换之后a[0…i]就形成了一个有序区；</li>
 <li><p>i++并重复第二步，直到i == n-1;</p>
-<pre><code>def selectionSort1(nums):
-    &quot;&quot;&quot;
-    选择排序
-    &quot;&quot;&quot;
-    for i in range(len(nums)):
-        min_idx = i 
-        for j in range(i+1, len(nums)):
-            if nums[j] &lt; nums[min_idx]:
-                min_idx = j 
-        if min_idx != i:
-            nums[i], nums[min_idx] = nums[min_idx], nums[i]
-    return nums
+<pre><code> def selectionSort1(nums):
+     &quot;&quot;&quot;
+     选择排序
+     &quot;&quot;&quot;
+     for i in range(len(nums)):
+         min_idx = i 
+         for j in range(i+1, len(nums)):
+             if nums[j] &lt; nums[min_idx]:
+                 min_idx = j 
+         if min_idx != i:
+             nums[i], nums[min_idx] = nums[min_idx], nums[i]
+     return nums
 </code></pre></li>
 </ol>
 <h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><ul>
@@ -646,8 +646,8 @@ def MaxHeapSort(nums):
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/03/机器学习面试总结/" rel="next" title="机器学习面试问题总结">
-                <i class="fa fa-chevron-left"></i> 机器学习面试问题总结
+              <a href="/2017/10/27/Boxplot/" rel="next" title="盒图(boxplot)">
+                <i class="fa fa-chevron-left"></i> 盒图(boxplot)
               </a>
             
           </div>
@@ -656,8 +656,8 @@ def MaxHeapSort(nums):
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/05/海量数据处理面试问题总结/" rel="prev" title="海量数据处理面试问题总结">
-                海量数据处理面试问题总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/03/机器学习面试总结/" rel="prev" title="机器学习面试问题总结">
+                机器学习面试问题总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

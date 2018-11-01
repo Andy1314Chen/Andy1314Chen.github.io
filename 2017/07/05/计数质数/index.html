@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和  123456789101112131415class Solution:   def countPrimes(self, n):       &quot;&quot;&quot;       :type n:">
+<meta name="description" content="统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和       class Solution:     def countPrimes(self, n):         &amp;quot;&amp;quot;&amp;quot;         :ty">
 <meta name="keywords" content="python,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode - 计数质数">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/计数质数/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和  123456789101112131415class Solution:   def countPrimes(self, n):       &quot;&quot;&quot;       :type n:">
+<meta property="og:description" content="统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和       class Solution:     def countPrimes(self, n):         &amp;quot;&amp;quot;&amp;quot;         :ty">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-22T07:22:58.589Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode - 计数质数">
-<meta name="twitter:description" content="统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和  123456789101112131415class Solution:   def countPrimes(self, n):       &quot;&quot;&quot;       :type n:">
+<meta name="twitter:description" content="统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和       class Solution:     def countPrimes(self, n):         &amp;quot;&amp;quot;&amp;quot;         :ty">
 
 
 
@@ -403,7 +403,23 @@
 <li>从2开始遍历，将其平方，及平方+v的数，倍数全部置0</li>
 <li>求和</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">countPrimes</span><span class="params">(self, n)</span>:</span></div><div class="line">       <span class="string">"""</span></div><div class="line">       :type n: int</div><div class="line">       :rtype: int</div><div class="line">       """</div><div class="line">       tmp = [<span class="number">1</span>]*n</div><div class="line">       <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">2</span>, n):</div><div class="line">           <span class="keyword">if</span> tmp[v<span class="number">-1</span>]:</div><div class="line">               <span class="comment"># 该位置是质数</span></div><div class="line">               <span class="comment"># 将该质数的倍数全部标记</span></div><div class="line">               <span class="keyword">for</span> i <span class="keyword">in</span> range(v*v, n, v):</div><div class="line">                       tmp[i<span class="number">-1</span>] = <span class="number">0</span></div><div class="line">       <span class="keyword">return</span> sum(tmp[<span class="number">2</span>:])</div></pre></td></tr></table></figure>
+<pre><code class="Python">
+    class Solution:
+    def countPrimes(self, n):
+        &quot;&quot;&quot;
+        :type n: int
+        :rtype: int
+        &quot;&quot;&quot;
+        tmp = [1]*n
+        for v in range(2, n):
+            if tmp[v-1]:
+                # 该位置是质数
+                # 将该质数的倍数全部标记
+                for i in range(v*v, n, v):
+                        tmp[i-1] = 0
+        return sum(tmp[2:])
+</code></pre>
+
       
     </div>
 
@@ -447,8 +463,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/2寻找重复数/" rel="next" title="LeetCode - 寻找重复数">
-                <i class="fa fa-chevron-left"></i> LeetCode - 寻找重复数
+              <a href="/2017/07/05/存在重复元素2/" rel="next" title="LeetCode - 存在重复元素2">
+                <i class="fa fa-chevron-left"></i> LeetCode - 存在重复元素2
               </a>
             
           </div>

@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="思路参考：Leetcode845 思路：暴力求解 def repeatedSubstringPattern(s):     if len(s) &amp;lt; 2:         return s     length = len(s)     for i in range(1, len(s)):         sub = s[:i]         # 包含多少个子串         tmp =">
+<meta name="description" content="思路参考：Leetcode845 思路：暴力求解     def repeatedSubstringPattern(s):         if len(s) &amp;lt; 2:             return s         length = len(s)         for i in range(1, len(s)):             sub = s[:i]">
 <meta name="keywords" content="python,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode - 拼多多四道编程题">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/拼多多笔试题/index.html">
 <meta property="og:site_name" content="Andy&#39;s blog">
-<meta property="og:description" content="思路参考：Leetcode845 思路：暴力求解 def repeatedSubstringPattern(s):     if len(s) &amp;lt; 2:         return s     length = len(s)     for i in range(1, len(s)):         sub = s[:i]         # 包含多少个子串         tmp =">
+<meta property="og:description" content="思路参考：Leetcode845 思路：暴力求解     def repeatedSubstringPattern(s):         if len(s) &amp;lt; 2:             return s         length = len(s)         for i in range(1, len(s)):             sub = s[:i]">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/zI0q01K.png">
 <meta property="og:image" content="https://i.imgur.com/sZKwzJG.png">
@@ -109,7 +109,7 @@
 <meta property="og:updated_time" content="2018-07-22T15:18:29.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode - 拼多多四道编程题">
-<meta name="twitter:description" content="思路参考：Leetcode845 思路：暴力求解 def repeatedSubstringPattern(s):     if len(s) &amp;lt; 2:         return s     length = len(s)     for i in range(1, len(s)):         sub = s[:i]         # 包含多少个子串         tmp =">
+<meta name="twitter:description" content="思路参考：Leetcode845 思路：暴力求解     def repeatedSubstringPattern(s):         if len(s) &amp;lt; 2:             return s         length = len(s)         for i in range(1, len(s)):             sub = s[:i]">
 <meta name="twitter:image" content="https://i.imgur.com/zI0q01K.png">
 
 
@@ -402,24 +402,24 @@
         <p><img src="https://i.imgur.com/zI0q01K.png" alt="第一题"></p>
 <h3 id="思路参考：Leetcode845"><a href="#思路参考：Leetcode845" class="headerlink" title="思路参考：Leetcode845"></a>思路参考：Leetcode845</h3><p><img src="https://i.imgur.com/sZKwzJG.png" alt="第二题"></p>
 <h3 id="思路：暴力求解"><a href="#思路：暴力求解" class="headerlink" title="思路：暴力求解"></a>思路：暴力求解</h3><pre><code class="Python">
-<span class="function"><span class="keyword">def</span> <span class="title">repeatedSubstringPattern</span><span class="params">(s)</span>:</span>
-    <span class="keyword">if</span> len(s) &lt; <span class="number">2</span>:
-        <span class="keyword">return</span> s
-    length = len(s)
-    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, len(s)):
-        sub = s[:i]
-        <span class="comment"># 包含多少个子串</span>
-        tmp = length//i
-        <span class="comment"># 剩余部分</span>
-        tmp2 = length%i
-        <span class="keyword">if</span> sub[:tmp2] == s[tmp*i:]:
-            <span class="keyword">if</span> tmp*sub == s[:tmp*i]:
-                <span class="keyword">return</span> sub
-    <span class="keyword">return</span> s
+    def repeatedSubstringPattern(s):
+        if len(s) &lt; 2:
+            return s
+        length = len(s)
+        for i in range(1, len(s)):
+            sub = s[:i]
+            # 包含多少个子串
+            tmp = length//i
+            # 剩余部分
+            tmp2 = length%i
+            if sub[:tmp2] == s[tmp*i:]:
+                if tmp*sub == s[:tmp*i]:
+                    return sub
+        return s
 
-<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
-    s = input()
-    print(repeatedSubstringPattern(s))
+    if __name__ == &quot;__main__&quot;:
+        s = input()
+        print(repeatedSubstringPattern(s))
 </code></pre>
 <p><img src="https://i.imgur.com/5z8R4CW.png" alt="第三题"></p>
 <h3 id="思路：参考下面链接"><a href="#思路：参考下面链接" class="headerlink" title="思路：参考下面链接"></a>思路：参考下面链接</h3><p><a href="https://www.geeksforgeeks.org/find-minimum-moves-reach-target-infinite-line/" target="_blank" rel="external">https://www.geeksforgeeks.org/find-minimum-moves-reach-target-infinite-line/</a></p>
@@ -471,8 +471,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/解码方法/" rel="next" title="LeetCode - 解码方法">
-                <i class="fa fa-chevron-left"></i> LeetCode - 解码方法
+              <a href="/2017/07/05/爬楼梯/" rel="next" title="LeetCode - 爬楼梯">
+                <i class="fa fa-chevron-left"></i> LeetCode - 爬楼梯
               </a>
             
           </div>
@@ -481,8 +481,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/寻找旋转排序数组中的最小值2/" rel="prev" title="LeetCode - 寻找旋转排序数组中的最小值2">
-                LeetCode - 寻找旋转排序数组中的最小值2 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/2寻找重复数/" rel="prev" title="LeetCode - 寻找重复数">
+                LeetCode - 寻找重复数 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

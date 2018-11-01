@@ -513,7 +513,7 @@ def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
     unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
     #所有物品都已经投过票，则不需要进行推荐
     if len(unratedItems)==0:
-        return &apos;you rated everything&apos;
+        return &#39;you rated everything&#39;
     itemScores=[]
     #对未投票物品进行遍历
     for item in unratedItems:
@@ -554,14 +554,14 @@ def printMat(inMat,thresh=0.8):
     for i in range(32):
         for k in range(32):
             if float(inMat[i,k])&gt;thresh:
-                print(1,end=&apos;&apos;);
+                print(1,end=&#39;&#39;);
             else:
-                print(0,end=&apos;&apos;);
-        print(&apos;&apos;)
+                print(0,end=&#39;&#39;);
+        print(&#39;&#39;)
 
 def imgCompress(numSV=3,thresh=0.8):
     my1=[]
-    for line in open(&apos;0_5.txt&apos;).readlines():
+    for line in open(&#39;0_5.txt&#39;).readlines():
         newRow=[]
         for i in range(32):
             newRow.append(int(line[i]))
