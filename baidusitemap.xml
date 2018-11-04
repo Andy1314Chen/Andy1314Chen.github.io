@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/11/04/Git%E4%B8%ADfatal-refusing-to-merge-unrelated-histories%E9%94%99%E8%AF%AF/</loc>
+    <lastmod>2018-11-04T15:31:39.540Z</lastmod>
+    <data>
+        <display>
+        <title>Git中fatal: refusing to merge unrelated histories错误</title>
+        <pubTime>2018-11-04T15:26:03.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="http://yoursite.com/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/09/26/sklearn%E4%B8%ADCountVectorizer%E5%92%8CTfidTransformer%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2018-09-26T13:24:20.419Z</lastmod>
     <data>
@@ -2035,9 +2055,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -2059,9 +2079,9 @@
         
         <tag>python</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>书籍</tag>
+         
+        <tag>sklearn</tag>
          
          
            
@@ -2662,9 +2682,9 @@
          
         <tag>算法</tag>
          
-        <tag>sklearn</tag>
-         
         <tag>Python</tag>
+         
+        <tag>sklearn</tag>
          
          
            

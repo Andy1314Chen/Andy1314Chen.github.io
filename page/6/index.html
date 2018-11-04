@@ -301,6 +301,176 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/二叉树的镜像/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/17/二叉树的镜像/" itemprop="url">二叉树的镜像(剑指offer第十八题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T00:00:00+08:00">
+                2017-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>操作给定的二叉树，将其变换为源二叉树的镜像。</p>
+<pre><code>二叉树的镜像定义：源二叉树 
+            8
+           /  \
+          6   10
+         / \  / \
+        5  7 9 11
+        镜像二叉树
+            8
+           /  \
+          10   6
+         / \  / \
+        11 9 7  5
+</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    # class TreeNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
+    class Solution:
+        # 返回镜像树的根节点
+        def Mirror(self, root):
+            # write code here
+            if root == None:
+                return None
+            # if root.left != None and root.right != None:
+            root.left, root.right = root.right, root.left
+            self.Mirror(root.left)
+            self.Mirror(root.right)
+
+            return root
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/树的子结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2317,192 +2487,6 @@ def multiTest():
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/LeetCode148排序链表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/07/LeetCode148排序链表/" itemprop="url">LeetCode148排序链表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T00:00:00+08:00">
-                2017-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><strong>148. 排序链表</strong></p>
-<p>在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。</p>
-<p>示例 1:</p>
-<pre><code>输入: 4-&gt;2-&gt;1-&gt;3
-输出: 1-&gt;2-&gt;3-&gt;4
-</code></pre><p>示例 2:</p>
-<pre><code>输入: -1-&gt;5-&gt;3-&gt;4-&gt;0
-输出: -1-&gt;0-&gt;3-&gt;4-&gt;5
-</code></pre><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>归并排序，先将链表分段，再合并</p>
-<pre><code># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    def sortList(self, head):
-        # 分段返回条件
-        if head == None or head.next == None:
-            return head
-        mid = self.getMid(head)
-        right = mid.next
-        mid.next = None
-        return self.mergeSort(self.sortList(head), self.sortList(right))
-
-    def getMid(self, head):
-        if head == None:
-            return None
-        quick, slow = head, head
-        while quick.next and quick.next.next:
-            slow = slow.next
-            quick = quick.next.next
-        return slow
-
-    def mergeSort(self, left, right):
-        tmp = ListNode(0); res = tmp
-        while left != None and right != None:
-            if left.val &gt; right.val:
-                tmp.next = right
-                right = right.next
-            else:
-                tmp.next = left
-                left = left.next
-            tmp = tmp.next
-        if left != None:
-            tmp.next = left
-        if right != None:
-            tmp.next = right
-        return res.next
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2553,7 +2537,7 @@ class Solution:
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">142</span>
+                <span class="site-state-item-count">143</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2564,7 +2548,7 @@ class Solution:
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2575,7 +2559,7 @@ class Solution:
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

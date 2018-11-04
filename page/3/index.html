@@ -301,6 +301,360 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/19/利用PCA来简化数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/19/利用PCA来简化数据/" itemprop="url">利用PCA来简化数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T00:00:00+08:00">
+                2017-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="PCA-Principal-Components-Analysis"><a href="#PCA-Principal-Components-Analysis" class="headerlink" title="PCA(Principal Components Analysis)"></a>PCA(Principal Components Analysis)</h2><p>主成分分析（Principal Components Analysis），简称PCA，是一种数据降维技术，用于数据预处理。一般我们获取的原始数据维度都很高，比如1000个特征，在这1000个特征中可能包含了很多无用的信息或者噪声，真正有用的特征才100个，那么我们可以运用PCA算法将1000个特征降到100个特征。这样不仅可以去除无用的噪声，还能减少很大的计算量。</p>
+<p>在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标轴选择的是原始数据中方差最大的方向，第二个新坐标轴的选择和第一个坐标轴正交且具有最大方差的方向。该过程一直重复，重复次数为原始数据中特征的数目。最后，大部分方差都包含在最前面的几个新坐标轴中。</p>
+<p><font color="red"><br> 数据的最大方差给出了数据的最重要的信息。 ??</font></p>
+<font color="black">
+
+<h2 id="Python中实现PCA过程"><a href="#Python中实现PCA过程" class="headerlink" title="Python中实现PCA过程"></a>Python中实现PCA过程</h2><ul>
+<li>去除平均值</li>
+<li>计算协方差矩阵</li>
+<li>计算协方差矩阵的特征值和特征向量</li>
+<li>将特征值从大到小排序</li>
+<li>保留最上面的N个特征向量</li>
+<li>将数据转换到上述N个特征向量构建的新空间中</li>
+</ul>
+<h2 id="PCA算法-python3"><a href="#PCA算法-python3" class="headerlink" title="PCA算法(python3)"></a>PCA算法(python3)</h2><pre><code>#程序清单13-1 PCA算法
+
+import numpy as np
+
+# 测试数据集加载函数
+def loadDataSet(fileName,delim=&#39;\t&#39;):
+    fr=open(fileName)
+    stringArr=[line.strip().split(delim) for line in fr.readlines()]
+    datArr=[list(map(float,line)) for line in stringArr]
+    return np.mat(datArr)
+
+def pca(dataMat,topNfeat=9999999):
+    #求取每个特征的平均值
+    meanVals=np.mean(dataMat,axis=0)
+    #减去平均值
+    meanRemoved=dataMat-meanVals
+    #计算协方差矩阵 rowvar=0 表示数据一行代表一个样本
+    covMat=np.cov(meanRemoved,rowvar=0)
+    #计算协方差矩阵特征值及特征向量
+    eigVals,eigVects=np.linalg.eig(np.mat(covMat))
+    #对特征值进行从小到大的排序
+    eigValInd=np.argsort(eigVals)
+    #进行逆序，最大的n个特征值的下标
+    eigValInd=eigValInd[:-(topNfeat+1):-1]
+    #【python里面，list[a:b:c]代表从下标a开始到b，步长为c。】
+
+    #提取出前N个特征值对应的特征向量
+    redEigVects=eigVects[:,eigValInd]
+    #低维空间数据
+    lowDDataMat=meanRemoved*redEigVects
+    #重构原始数据
+    reconMat=(lowDDataMat*redEigVects.T)+meanVals
+    return lowDDataMat,reconMat
+</code></pre><h2 id="如何确定主成分个数"><a href="#如何确定主成分个数" class="headerlink" title="如何确定主成分个数"></a>如何确定主成分个数</h2><p>在应用PCA时，如何确定n呢？即n取多少，才能保留最多信息同时去除最多的噪声？一般，是通过方差百分比来确定n的，Andrew Ng的<a href="http://deeplearning.stanford.edu/wiki/index.php/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90" target="_blank" rel="external">Ufldl教程</a>中介绍的比较详细， 其中一条简单的公式：</p>
+<p>一般而言，设\(\lambda_1, \lambda_2, …, \lambda_n \)表示\(\sum\)的特征值（按由大到小顺序排列）,使得\( \lambda_j \)为对应于特征向量\( u_j \)的特征值。那么如果我们保留前k个成分，则保留的方差百分比可计算为：<br>\( \frac {\sum_{(j=1)}^{k} \lambda_j}{ \sum_{(j=1)}^{n} \lambda_j} \)</p>
+<pre><code>def precentage2n(eigVals, percentage):
+    sortArray = np.sort(eigVals)  # 升序
+    sortArray = sortArray[-1::-1] # 降序
+    arraySum = sum(sortArray)
+    tmpSum = 0 ; num = 0
+    for i in sortArray:
+        tmpSum += i
+        num += 1
+        if tmpSum &gt; arraySum * percentage:
+            return num
+</code></pre><h2 id="参考博客："><a href="#参考博客：" class="headerlink" title="参考博客："></a>参考博客：</h2><ol>
+<li><a href="http://blog.csdn.net/u012162613/article/details/42177327" target="_blank" rel="external">http://blog.csdn.net/u012162613/article/details/42177327</a></li>
+<li><a href="https://item.jd.com/11242112.html" title="《机器学习实战》第13章" target="_blank" rel="external">《机器学习实战》第13章</a></li>
+</ol>
+</font>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/pandas绘图/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/16/pandas绘图/" itemprop="url">使用pandas绘制图形</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-16T00:00:00+08:00">
+                2017-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。</p>
+<pre><code>housing.plot(kind = &#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;,
+            alpha =0.4, s = housing[&#39;population&#39;]/100,  label=&#39;population&#39;, figsize=(10,7), c=&#39;median_house_value&#39;, cmap = plt.get_cmap(&#39;jet&#39;),
+            colorbar=True, sharex = False)
+plt.legend()
+</code></pre><p><strong> alpha=0.4,表示透明度；s=housing[‘population’]/100,表示圆圈半径大小；c=”median_house_value”,表示颜色代表的信息； </strong></p>
+<p><img src="https://i.imgur.com/SMOXeLo.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/深度学习第二章课程(吴恩达)学习笔记（3）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -547,150 +901,6 @@ train accuracy: 100.0 %
 test accuracy: 100.0 %
 &quot;&quot;&quot;
 </code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/pandas绘图/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/16/pandas绘图/" itemprop="url">使用pandas绘制图形</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-16T00:00:00+08:00">
-                2017-12-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>数据集是加利福利亚州各个街区的房价信息，(x,y)坐标表示经纬度信息，圆圈半径表示人口信息，颜色则代表房价的高低，很漂亮的一幅图片，包含的信息也挺全的。</p>
-<pre><code>housing.plot(kind = &#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;,
-            alpha =0.4, s = housing[&#39;population&#39;]/100,  label=&#39;population&#39;, figsize=(10,7), c=&#39;median_house_value&#39;, cmap = plt.get_cmap(&#39;jet&#39;),
-            colorbar=True, sharex = False)
-plt.legend()
-</code></pre><p><strong> alpha=0.4,表示透明度；s=housing[‘population’]/100,表示圆圈半径大小；c=”median_house_value”,表示颜色代表的信息； </strong></p>
-<p><img src="https://i.imgur.com/SMOXeLo.png" alt=""></p>
-
           
         
       
@@ -2235,187 +2445,6 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/海量数据处理面试问题总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/海量数据处理面试问题总结/" itemprop="url">海量数据处理面试问题总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T00:00:00+08:00">
-                2017-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-海量日志数据，提取出某日访问百度次数最多的那个IP"><a href="#1-海量日志数据，提取出某日访问百度次数最多的那个IP" class="headerlink" title="1. 海量日志数据，提取出某日访问百度次数最多的那个IP."></a>1. 海量日志数据，提取出某日访问百度次数最多的那个IP.</h3><p>首先将该天，并且是访问百度的日志中的IP取出来，逐个写入到一个大文件中。注意到IP是32位的，最多有个2^32个IP。采用映射的方法，比如模1000，把整个大文件映射为1000个小文件，再找出每个小文中出现频率最大的IP（可以采用hash_map进行频率统计，然后再找出频率最大的几个）及相应的频率。然后再在这1000个最大的IP中，找出那个频率最大的IP，即为所求。</p>
-<p>思路：</p>
-<ol>
-<li>IP地址最多有2^32=4G种取值情况，所以不能完全加载到内存中处理；</li>
-<li>可以考虑采用”分而治之”的思想，按照IP地址的Hash(IP)%1024值，把海量IP日志分别存储到1024个小文件中。每个小文件共有4MB个IP地址；</li>
-<li>对于每一个小文件，可以构建一个IP为key, 出现次数为value的hash map， 同时记录当前出现次数最多的那个IP地址；</li>
-<li>可以得到1024个小文件中的出现次数最多的IP, 再依据常规排序算法得到总体上出现次数最多的IP.</li>
-</ol>
-<h3 id="2-搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G"><a href="#2-搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G" class="headerlink" title="2.  搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G."></a>2.  搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G.</h3><p>典型Top K算法。</p>
-<ol>
-<li>对这批海量数据预处理，在O(N)的时间内用Hash表完成统计；</li>
-<li>借助最小堆这个数据结构，找出TopK, 时间复杂度为O(Nlogk)</li>
-</ol>
-<h3 id="3-有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。"><a href="#3-有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。" class="headerlink" title="3. 有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。"></a>3. 有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。</h3><p>顺序读文件，对于每个词x, 取hash(x)%5000, 然后按照该值存到5000个小文件中。这时每个文件大小约为200K左右。</p>
-<p>对每个小文件，统计每个文件中出现的词以及相应的频率(hash_map), 并取出出现频率最大的100个词(可以用含有100个结点的最小堆), 并把100个词及相应的频率存入文件，这样又得到了5000个文件。后面就是把这些文件进行归并(类似归并排序过程).</p>
-<h3 id="4-有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。"><a href="#4-有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。" class="headerlink" title="4. 有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。"></a>4. 有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。</h3><p>TopK问题</p>
-<p>思路：</p>
-<ol>
-<li>顺序读取10个文件，按照hash(query)%10的结果将query写入到另外10个文件中。这样新生成的文件每个的大小约为1G.</li>
-<li>一台内存在2G左右的机器，依次对用hash_map(query, query_count)来统计每个query出现的次数。利用快排/堆/归并排序按照出现次数进行排序。将排序好的query和对应的query_count输出到文件中。这样得到了10个排好序的文件。</li>
-<li>对这10个文件进行归并排序</li>
-</ol>
-<h3 id="5-给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？"><a href="#5-给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？" class="headerlink" title="5.  给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？"></a>5.  给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？</h3><p>思路1：</p>
-<ol>
-<li><p>可以估计每个文件大约5G*64 = 320G，远远大于内存限制的4G. 所以不可能将其完全加载到内存中处理。考虑采取分而治之的方法。</p>
-</li>
-<li><p>遍历文件a, 对每个url求取hash(url)%1000, 然后根据所取得的值将url分别存储到1000个小文件中(a0,a1,…,a999), 这样每个小文件的大约为300M.</p>
-</li>
-<li>遍历文件b, 采取和a相同的方式将url分别存储到1000个小文件(记为b0,b1, …, b999). 这样处理后，所有 可能相同的url都在对应的小文件(a0vsb0, a1vsb1, …., a999vsb999)中。</li>
-<li>求每对小文件中相同的url时，可以把其中一个小文件的url存储到hash_map中，然后遍历另一个小文件的每个url, 看其是否在刚才构建的hash_map中，如果是，那么就是共同的url.</li>
-</ol>
-<p>思路2：</p>
-<p>在允许一定的错误率下，可以使用Bloom filter滤波器，4G内存大概可以表示340亿bit. 将其中一个文件中的url使用Bloom filter映射为这340亿bit， 然后挨个读取另外一个文件的url, 检查是否与Bloom filter, 如果是，那么该url应该是共同的url.</p>
-<h3 id="6-在2-5亿个整数中找出不重复的整数，注，内存不足以容纳这2-5亿个整数。"><a href="#6-在2-5亿个整数中找出不重复的整数，注，内存不足以容纳这2-5亿个整数。" class="headerlink" title="6. 在2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。"></a>6. 在2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。</h3><p>方案1：</p>
-<p>进行划分小文件，在小文件中找出不重复的整数，并排序，然后再进行归并同时去除重复的元素。</p>
-<p>方案2：</p>
-<p>采用2-Bitmap(每个数分配2bit, 00表示不存在，01表示出现一次，10表示出现多次，11无意义)进行，共需要内存2^32*2bit= 1GB内存。然后扫描这2.5亿个整数，查看Bitmap中相对应位，如果是00变01,01变10,10保持不变。扫描之后，把对应位是01的整数输出即可。</p>
-<h3 id="7、腾讯面试题：给40亿个不重复的unsigned-int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？"><a href="#7、腾讯面试题：给40亿个不重复的unsigned-int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？" class="headerlink" title="7、腾讯面试题：给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？"></a>7、腾讯面试题：给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？</h3><p>方案1：</p>
-<p>申请512M的内存，一个bit位代表一个unsigned int值。读入40亿个数，设置相应的bit位，读入要查询的数，查看相应bit位是否为1，为1表示存在，为0表示不存在。</p>
-<p>方案2：</p>
-<p>根据32位位数表示，把40亿个数分为两类，最高位为0，最高位为1.</p>
-<h3 id="8、怎么在海量数据中找出重复次数最多的一个？"><a href="#8、怎么在海量数据中找出重复次数最多的一个？" class="headerlink" title="8、怎么在海量数据中找出重复次数最多的一个？"></a>8、怎么在海量数据中找出重复次数最多的一个？</h3><p>先做hash，然后求模映射为小文件，求出每个小文件中重复次数最多的一个，并记录重复次数。然后找出上一步求出的数据中重复次数最多的一个就是所求（具体参考前面的题）。</p>
-<h3 id="9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。"><a href="#9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。" class="headerlink" title="9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。"></a>9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。</h3><p>上千万或上亿的数据，现在的机器的内存应该能存下。所以考虑采用hash_map/搜索二叉树/红黑树等来进行统计次数。然后就是取出前N个出现次数最多的数据了，可以用第2题提到的堆机制完成。</p>
-<h3 id="10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析"><a href="#10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析" class="headerlink" title="10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析"></a>10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析</h3><p>先统计每个词的频次，然后找出最频繁的TopN个(这个可以用堆来实现)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2466,7 +2495,7 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">142</span>
+                <span class="site-state-item-count">143</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2477,7 +2506,7 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2488,7 +2517,7 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

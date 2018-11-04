@@ -301,6 +301,187 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/海量数据处理面试问题总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/05/海量数据处理面试问题总结/" itemprop="url">海量数据处理面试问题总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T00:00:00+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-海量日志数据，提取出某日访问百度次数最多的那个IP"><a href="#1-海量日志数据，提取出某日访问百度次数最多的那个IP" class="headerlink" title="1. 海量日志数据，提取出某日访问百度次数最多的那个IP."></a>1. 海量日志数据，提取出某日访问百度次数最多的那个IP.</h3><p>首先将该天，并且是访问百度的日志中的IP取出来，逐个写入到一个大文件中。注意到IP是32位的，最多有个2^32个IP。采用映射的方法，比如模1000，把整个大文件映射为1000个小文件，再找出每个小文中出现频率最大的IP（可以采用hash_map进行频率统计，然后再找出频率最大的几个）及相应的频率。然后再在这1000个最大的IP中，找出那个频率最大的IP，即为所求。</p>
+<p>思路：</p>
+<ol>
+<li>IP地址最多有2^32=4G种取值情况，所以不能完全加载到内存中处理；</li>
+<li>可以考虑采用”分而治之”的思想，按照IP地址的Hash(IP)%1024值，把海量IP日志分别存储到1024个小文件中。每个小文件共有4MB个IP地址；</li>
+<li>对于每一个小文件，可以构建一个IP为key, 出现次数为value的hash map， 同时记录当前出现次数最多的那个IP地址；</li>
+<li>可以得到1024个小文件中的出现次数最多的IP, 再依据常规排序算法得到总体上出现次数最多的IP.</li>
+</ol>
+<h3 id="2-搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G"><a href="#2-搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G" class="headerlink" title="2.  搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G."></a>2.  搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。请统计最热门的10个查询串，要求使用的内存不能超过1G.</h3><p>典型Top K算法。</p>
+<ol>
+<li>对这批海量数据预处理，在O(N)的时间内用Hash表完成统计；</li>
+<li>借助最小堆这个数据结构，找出TopK, 时间复杂度为O(Nlogk)</li>
+</ol>
+<h3 id="3-有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。"><a href="#3-有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。" class="headerlink" title="3. 有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。"></a>3. 有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。</h3><p>顺序读文件，对于每个词x, 取hash(x)%5000, 然后按照该值存到5000个小文件中。这时每个文件大小约为200K左右。</p>
+<p>对每个小文件，统计每个文件中出现的词以及相应的频率(hash_map), 并取出出现频率最大的100个词(可以用含有100个结点的最小堆), 并把100个词及相应的频率存入文件，这样又得到了5000个文件。后面就是把这些文件进行归并(类似归并排序过程).</p>
+<h3 id="4-有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。"><a href="#4-有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。" class="headerlink" title="4. 有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。"></a>4. 有10个文件，每个文件1G，每个文件的每一行存放的都是用户的query，每个文件的query都可能重复。要求你按照query的频度排序。</h3><p>TopK问题</p>
+<p>思路：</p>
+<ol>
+<li>顺序读取10个文件，按照hash(query)%10的结果将query写入到另外10个文件中。这样新生成的文件每个的大小约为1G.</li>
+<li>一台内存在2G左右的机器，依次对用hash_map(query, query_count)来统计每个query出现的次数。利用快排/堆/归并排序按照出现次数进行排序。将排序好的query和对应的query_count输出到文件中。这样得到了10个排好序的文件。</li>
+<li>对这10个文件进行归并排序</li>
+</ol>
+<h3 id="5-给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？"><a href="#5-给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？" class="headerlink" title="5.  给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？"></a>5.  给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？</h3><p>思路1：</p>
+<ol>
+<li><p>可以估计每个文件大约5G*64 = 320G，远远大于内存限制的4G. 所以不可能将其完全加载到内存中处理。考虑采取分而治之的方法。</p>
+</li>
+<li><p>遍历文件a, 对每个url求取hash(url)%1000, 然后根据所取得的值将url分别存储到1000个小文件中(a0,a1,…,a999), 这样每个小文件的大约为300M.</p>
+</li>
+<li>遍历文件b, 采取和a相同的方式将url分别存储到1000个小文件(记为b0,b1, …, b999). 这样处理后，所有 可能相同的url都在对应的小文件(a0vsb0, a1vsb1, …., a999vsb999)中。</li>
+<li>求每对小文件中相同的url时，可以把其中一个小文件的url存储到hash_map中，然后遍历另一个小文件的每个url, 看其是否在刚才构建的hash_map中，如果是，那么就是共同的url.</li>
+</ol>
+<p>思路2：</p>
+<p>在允许一定的错误率下，可以使用Bloom filter滤波器，4G内存大概可以表示340亿bit. 将其中一个文件中的url使用Bloom filter映射为这340亿bit， 然后挨个读取另外一个文件的url, 检查是否与Bloom filter, 如果是，那么该url应该是共同的url.</p>
+<h3 id="6-在2-5亿个整数中找出不重复的整数，注，内存不足以容纳这2-5亿个整数。"><a href="#6-在2-5亿个整数中找出不重复的整数，注，内存不足以容纳这2-5亿个整数。" class="headerlink" title="6. 在2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。"></a>6. 在2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。</h3><p>方案1：</p>
+<p>进行划分小文件，在小文件中找出不重复的整数，并排序，然后再进行归并同时去除重复的元素。</p>
+<p>方案2：</p>
+<p>采用2-Bitmap(每个数分配2bit, 00表示不存在，01表示出现一次，10表示出现多次，11无意义)进行，共需要内存2^32*2bit= 1GB内存。然后扫描这2.5亿个整数，查看Bitmap中相对应位，如果是00变01,01变10,10保持不变。扫描之后，把对应位是01的整数输出即可。</p>
+<h3 id="7、腾讯面试题：给40亿个不重复的unsigned-int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？"><a href="#7、腾讯面试题：给40亿个不重复的unsigned-int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？" class="headerlink" title="7、腾讯面试题：给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？"></a>7、腾讯面试题：给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？</h3><p>方案1：</p>
+<p>申请512M的内存，一个bit位代表一个unsigned int值。读入40亿个数，设置相应的bit位，读入要查询的数，查看相应bit位是否为1，为1表示存在，为0表示不存在。</p>
+<p>方案2：</p>
+<p>根据32位位数表示，把40亿个数分为两类，最高位为0，最高位为1.</p>
+<h3 id="8、怎么在海量数据中找出重复次数最多的一个？"><a href="#8、怎么在海量数据中找出重复次数最多的一个？" class="headerlink" title="8、怎么在海量数据中找出重复次数最多的一个？"></a>8、怎么在海量数据中找出重复次数最多的一个？</h3><p>先做hash，然后求模映射为小文件，求出每个小文件中重复次数最多的一个，并记录重复次数。然后找出上一步求出的数据中重复次数最多的一个就是所求（具体参考前面的题）。</p>
+<h3 id="9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。"><a href="#9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。" class="headerlink" title="9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。"></a>9、上千万或上亿数据（有重复），统计其中出现次数最多的前N个数据。</h3><p>上千万或上亿的数据，现在的机器的内存应该能存下。所以考虑采用hash_map/搜索二叉树/红黑树等来进行统计次数。然后就是取出前N个出现次数最多的数据了，可以用第2题提到的堆机制完成。</p>
+<h3 id="10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析"><a href="#10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析" class="headerlink" title="10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析"></a>10、一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析</h3><p>先统计每个词的频次，然后找出最频繁的TopN个(这个可以用堆来实现)</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/机器学习面试总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2041,330 +2222,6 @@ Day 7: 12.674730
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
-                2017-09-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
-<ul>
-<li>优点：简化数据，去除噪声，提高算法的结果</li>
-<li>缺点：数据的转换可能难以理解</li>
-<li>适用数据类型：数值型数据</li>
-</ul>
-<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
-<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
-<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
-<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
-<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
-<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
-<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
-<pre><code>import numpy as np
-
-In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
-
-In[139]: U
-Out[139]: 
-array([[-0.14142136, -0.98994949],
-       [-0.98994949,  0.14142136]])
-In[140]: Sigma
-Out[140]: 
-array([ 10.,   0.])
-
-In[141]: VT
-Out[141]: 
-array([[-0.70710678, -0.70710678],
-   [-0.70710678,  0.70710678]])
-</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
-<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
-<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
-<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
-<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
-<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
-<pre><code>#### 相似度计算 ####
-
-1. 欧式距离
-2. 皮尔相关系数（Pearson correlation)
-3. 余弦相似度(cosine similarity)
-
-#程序清单14-1 相似度计算
-
-#欧式距离
-def ecludSim(inA,inB):
-    return 1.0/(1.0+la.norm(inA-inB))
-
-#皮尔逊相关系数
-def pearsSim(inA,inB):
-    if len(inA)&lt;3:
-        return 1.0
-    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
-
-#余弦相似度
-def cosSim(inA,inB):
-    num=float(inA.T*inB)
-    denom=la.norm(inA)*la.norm(inB)
-    return 0.5+0.5*(num/denom)
-</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
-<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
-<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
-<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
-</ol>
-<p>程序源码：</p>
-<pre><code>&quot;&quot;&quot;
-    示例：餐馆菜肴推荐引擎
-&quot;&quot;&quot;
-#程序清单14-2 基于物品相似度的推荐引擎
-
-#基于给定相似度计算方法的条件下，用户对物品的估计评分值
-&quot;&quot;&quot;
-dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
-&quot;&quot;&quot;
-def standEst(dataMat,user,simMeas,item):
-    #物品数
-    n=np.shape(dataMat)[1]
-    simTotal=0;ratSimTotal=0
-    #遍历每一个物品
-    for j in range(n):
-        userRating=dataMat[user,j]
-        #如果用户没有对该物品进行评分，则跳过
-        if userRating==0:
-            continue
-        #将item所在列与当前遍历列进行逻辑与
-        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
-                                       dataMat[:,j].A&gt;0))[0]
-        #若结果为0，则相似度为0，说明item与当前物品毫无交集
-        if len(overLap)==0:
-            similarity=0
-        else:
-            #计算相似度
-            similarity=simMeas(dataMat[overLap,item],
-                               dataMat[overLap,j])
-        #总的相似度
-        simTotal+=similarity
-        #考虑用户评分
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        #归一化
-        return ratSimTotal/simTotal
-
-#返回最高N个推荐结果   
-def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
-    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
-    #所有物品都已经投过票，则不需要进行推荐
-    if len(unratedItems)==0:
-        return &#39;you rated everything&#39;
-    itemScores=[]
-    #对未投票物品进行遍历
-    for item in unratedItems:
-        estimatedScore=estMethod(dataMat,user,simMeas,item)
-        itemScores.append((item,estimatedScore))
-    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
-</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
-def svdEst(dataMat,user,simMeas,item):
-    n=np.shape(dataMat)[1]
-    simTotal=0.0;ratSimTotal=0.0
-    #奇异值分解
-    U,Sigma,VT=la.svd(dataMat)
-    #构建对角矩阵
-    Sig4=np.mat(np.eye(4)*Sigma[:4])
-    #将物品转换到低维空间中
-    xformedItems=dataMat.T*U[:,:4]*Sig4.I
-
-    for j in range(n):
-        userRating=dataMat[user,j]
-        if userRating==0 or j==item:
-            continue
-        similarity=simMeas(xformedItems[item,:].T,
-                           xformedItems[j,:].T)
-        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
-        simTotal+=similarity
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        return ratSimTotal/float(simTotal)
-</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
-<pre><code>&quot;&quot;&quot;
-    基于SVD的图像压缩
-&quot;&quot;&quot;
-
-#程序清单14-4 图像压缩函数
-def printMat(inMat,thresh=0.8):
-    for i in range(32):
-        for k in range(32):
-            if float(inMat[i,k])&gt;thresh:
-                print(1,end=&#39;&#39;);
-            else:
-                print(0,end=&#39;&#39;);
-        print(&#39;&#39;)
-
-def imgCompress(numSV=3,thresh=0.8):
-    my1=[]
-    for line in open(&#39;0_5.txt&#39;).readlines():
-        newRow=[]
-        for i in range(32):
-            newRow.append(int(line[i]))
-        my1.append(newRow)
-    myMat=np.mat(my1)
-    print(&quot;****original matrix****&quot;)
-    #打印原始数据
-    printMat(myMat,thresh)
-    #SVD分解
-    U,Sigma,VT=la.svd(myMat)
-    SigRecon=np.mat(np.zeros((numSV,numSV)))
-    for k in range(numSV):
-        SigRecon[k,k]=Sigma[k]
-    #重构矩阵
-    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
-    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
-          numSV)
-    printMat(reconMat,thresh)
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2779,6 +2636,330 @@ plt.legend()
 <ol>
 <li><a href="https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3</a></li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
+<ul>
+<li>优点：简化数据，去除噪声，提高算法的结果</li>
+<li>缺点：数据的转换可能难以理解</li>
+<li>适用数据类型：数值型数据</li>
+</ul>
+<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
+<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
+<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
+<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
+<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
+<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
+<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
+<pre><code>import numpy as np
+
+In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
+
+In[139]: U
+Out[139]: 
+array([[-0.14142136, -0.98994949],
+       [-0.98994949,  0.14142136]])
+In[140]: Sigma
+Out[140]: 
+array([ 10.,   0.])
+
+In[141]: VT
+Out[141]: 
+array([[-0.70710678, -0.70710678],
+   [-0.70710678,  0.70710678]])
+</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
+<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
+<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
+<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
+<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
+<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
+<pre><code>#### 相似度计算 ####
+
+1. 欧式距离
+2. 皮尔相关系数（Pearson correlation)
+3. 余弦相似度(cosine similarity)
+
+#程序清单14-1 相似度计算
+
+#欧式距离
+def ecludSim(inA,inB):
+    return 1.0/(1.0+la.norm(inA-inB))
+
+#皮尔逊相关系数
+def pearsSim(inA,inB):
+    if len(inA)&lt;3:
+        return 1.0
+    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
+
+#余弦相似度
+def cosSim(inA,inB):
+    num=float(inA.T*inB)
+    denom=la.norm(inA)*la.norm(inB)
+    return 0.5+0.5*(num/denom)
+</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
+<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
+<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
+<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
+</ol>
+<p>程序源码：</p>
+<pre><code>&quot;&quot;&quot;
+    示例：餐馆菜肴推荐引擎
+&quot;&quot;&quot;
+#程序清单14-2 基于物品相似度的推荐引擎
+
+#基于给定相似度计算方法的条件下，用户对物品的估计评分值
+&quot;&quot;&quot;
+dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
+&quot;&quot;&quot;
+def standEst(dataMat,user,simMeas,item):
+    #物品数
+    n=np.shape(dataMat)[1]
+    simTotal=0;ratSimTotal=0
+    #遍历每一个物品
+    for j in range(n):
+        userRating=dataMat[user,j]
+        #如果用户没有对该物品进行评分，则跳过
+        if userRating==0:
+            continue
+        #将item所在列与当前遍历列进行逻辑与
+        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
+                                       dataMat[:,j].A&gt;0))[0]
+        #若结果为0，则相似度为0，说明item与当前物品毫无交集
+        if len(overLap)==0:
+            similarity=0
+        else:
+            #计算相似度
+            similarity=simMeas(dataMat[overLap,item],
+                               dataMat[overLap,j])
+        #总的相似度
+        simTotal+=similarity
+        #考虑用户评分
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        #归一化
+        return ratSimTotal/simTotal
+
+#返回最高N个推荐结果   
+def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
+    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
+    #所有物品都已经投过票，则不需要进行推荐
+    if len(unratedItems)==0:
+        return &#39;you rated everything&#39;
+    itemScores=[]
+    #对未投票物品进行遍历
+    for item in unratedItems:
+        estimatedScore=estMethod(dataMat,user,simMeas,item)
+        itemScores.append((item,estimatedScore))
+    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
+</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
+def svdEst(dataMat,user,simMeas,item):
+    n=np.shape(dataMat)[1]
+    simTotal=0.0;ratSimTotal=0.0
+    #奇异值分解
+    U,Sigma,VT=la.svd(dataMat)
+    #构建对角矩阵
+    Sig4=np.mat(np.eye(4)*Sigma[:4])
+    #将物品转换到低维空间中
+    xformedItems=dataMat.T*U[:,:4]*Sig4.I
+
+    for j in range(n):
+        userRating=dataMat[user,j]
+        if userRating==0 or j==item:
+            continue
+        similarity=simMeas(xformedItems[item,:].T,
+                           xformedItems[j,:].T)
+        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
+        simTotal+=similarity
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        return ratSimTotal/float(simTotal)
+</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
+<pre><code>&quot;&quot;&quot;
+    基于SVD的图像压缩
+&quot;&quot;&quot;
+
+#程序清单14-4 图像压缩函数
+def printMat(inMat,thresh=0.8):
+    for i in range(32):
+        for k in range(32):
+            if float(inMat[i,k])&gt;thresh:
+                print(1,end=&#39;&#39;);
+            else:
+                print(0,end=&#39;&#39;);
+        print(&#39;&#39;)
+
+def imgCompress(numSV=3,thresh=0.8):
+    my1=[]
+    for line in open(&#39;0_5.txt&#39;).readlines():
+        newRow=[]
+        for i in range(32):
+            newRow.append(int(line[i]))
+        my1.append(newRow)
+    myMat=np.mat(my1)
+    print(&quot;****original matrix****&quot;)
+    #打印原始数据
+    printMat(myMat,thresh)
+    #SVD分解
+    U,Sigma,VT=la.svd(myMat)
+    SigRecon=np.mat(np.zeros((numSV,numSV)))
+    for k in range(numSV):
+        SigRecon[k,k]=Sigma[k]
+    #重构矩阵
+    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
+    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
+          numSV)
+    printMat(reconMat,thresh)
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
 
           
         
@@ -3440,372 +3621,6 @@ Out[53]:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/机器学习实战第十一章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/24/机器学习实战第十一章学习笔记/" itemprop="url">机器学习实战第十一章学习笔记(使用Apriori算法进行关联分析)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T00:00:00+08:00">
-                2017-09-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本章主要内容：</p>
-<ul>
-<li>Apriori算法</li>
-<li>频繁项集生成</li>
-<li>关联规则生成</li>
-<li>投票中的关联规则发现</li>
-</ul>
-<h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><p>从大规模数据集中寻找物品间的隐含关系被称作<strong>关联分析</strong>（association analysis)或者<strong>关联规则学习</strong>（association rule learning).</p>
-<p>关联分析是一种在大规模数据集中寻找有趣关系的任务，这些有趣关系可以有两种形式：频繁项集或者关联规则。</p>
-<p><strong>频繁项集</strong>（frequent item sets)是经常出现在一块的物品的集合，<strong>关联规则</strong>（association rules)暗示两种物品之间可能存在很强的关系。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">交易号码</th>
-<th style="text-align:left">商品</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">0</td>
-<td style="text-align:left">豆奶，莴苣</td>
-</tr>
-<tr>
-<td style="text-align:left">1</td>
-<td style="text-align:left">莴苣，尿布，葡萄酒，甜菜</td>
-</tr>
-<tr>
-<td style="text-align:left">2</td>
-<td style="text-align:left">豆奶，尿布，葡萄酒，橙汁</td>
-</tr>
-<tr>
-<td style="text-align:left">3</td>
-<td style="text-align:left">莴苣，豆奶，尿布，葡萄酒</td>
-</tr>
-<tr>
-<td style="text-align:left">4</td>
-<td style="text-align:left">莴苣，豆奶，尿布，橙汁</td>
-</tr>
-</tbody>
-</table>
-<p><em>上表是某个杂货店的交易清单</em></p>
-<p>频繁项集是指那些经常出现在一起的物品集合，{葡萄酒、尿布、豆奶}就是一个频繁项集。 也可以找到尿布-&gt;葡萄酒这样的关联规则。(这意味着如果有人买了尿布，那么他也很可能买葡萄酒）</p>
-<p>当寻找频繁项集时，频繁（frequent)的定义是什么？有许多概念可以解答这个问题，不过本章主要考虑<strong>支持度</strong>和<strong>可信度</strong>。</p>
-<p>一个项集的支持度（support)被定义为数据集中包含该项集的记录所占的比例。上表中，{豆奶}的支持度是4/5,而{豆奶，尿布}的支持度为3/5. </p>
-<p>可信度（或者说置信度）(confidence)是针对一条诸如{尿布}-&gt;{葡萄酒}的关联规则来定义的。这条规则的可信度被定义为“支持度（{尿布，葡萄酒}）/支持度（{尿布}）”。</p>
-<p><em>{尿布，葡萄酒}的支持度为3/5，{尿布}的支持度为4/5，所以“尿布-&gt;葡萄酒”这条关联规则的可信度为3/4=75%.</em></p>
-<p>对于一个数据集（商店），如果能列出所有物品可能的组合的清单，然后对于每一种组合统计出频繁程度，那这样可以得到很多的有用信息，可以提升商店销售额。但是当物品成千上万时，暴力搜索，计算量是非常大的。</p>
-<h2 id="Apriori原理"><a href="#Apriori原理" class="headerlink" title="Apriori原理"></a>Apriori原理</h2><p>为了降低所需的计算时间，研究人员发现一种所谓的Apriori原理，Apriori原理可以帮我们减少可能感兴趣的项集。Apriori原理是说如果某个项集是频繁的，那么它的所有子集也是频繁的。反之，如果一个项集是非频繁集，那么它的所有超集也是非频繁的。</p>
-<blockquote>
-<p>apriori在拉丁语中指“来自以前”，当定义问题时，通常会使用先验知识或者假设，这被称作“一个先验”（a priori).在贝叶斯统计中，使用先验知识作为条件进行推断也很常见。先验知识可能来自领域知识、先前的一些测量结果，等等。</p>
-</blockquote>
-<p>假如说我们计算出一个项集（集合）是非频繁集后，那么它的超集（它作为子集被包含）就也是非频繁集，就不用再进行计算它的超集了，从而减少了很大的计算量。</p>
-<h2 id="使用Apriori算法来发现频繁集"><a href="#使用Apriori算法来发现频繁集" class="headerlink" title="使用Apriori算法来发现频繁集"></a>使用Apriori算法来发现频繁集</h2><p>基于Apriori原理的Apriori算法，并使用Python来实现，然后将其应用于虚拟商店Hole Foods的数据集上。</p>
-<p>Apriori算法的两个输入参数分别是最小支持度和数据集。该算法首先会生成所有单个物品的项集列表。接着扫描交易记录来查看哪些项集满足最小支持度要求，那些不满足最小支持度的集合会被去掉。然后，对剩下的集合进行组合以生成包含两个元素的项集。接下来，再重新扫描交易记录，去掉不满足最小支持度的项集。该过程重复进行直到所有项集都被去掉。</p>
-<pre><code>#数据集扫描伪代码：
-对数据集中的每条交易记录tran
-对每个候选项集can:
-    检查一下can是否是tran的子集：
-    如果是，则增加can的计数值
-    对每个候选项集：
-    如果其支持度不低于最小值，则保留该项集
-    返回所有频繁项集列表
-
-
-import numpy as np
-
-#程序清单11-1 Apriori算法中的辅助函数
-
-def loadDataSet():
-    return [[1,3,4],[2,3,5],[1,2,3,5],[2,5]]
-
-def createC1(dataSet):
-    C1=[]
-    for transaction in dataSet:
-        for item in transaction:
-            if not [item] in C1:
-                C1.append([item])
-    C1.sort()
-    return list(map(frozenset,C1))
-
-def scanD(D,CK,minSupport):
-    ssCnt={}
-    for tid in D:
-        for can in CK:
-            if can.issubset(tid):
-                if can not in ssCnt:
-                    ssCnt[can]=1
-                else:
-                    ssCnt[can]+=1
-    numItems=float(len(D))
-    retList=[]
-    supportData={}
-    for key in ssCnt:
-        #计算支持度
-        support=ssCnt[key]/numItems
-        if support&gt;=minSupport:
-            retList.insert(0,key)
-        supportData[key]=support
-    return retList,supportData    
-</code></pre><p>函数loadDataSet()构建一个测试数据，createC1()返回一个包含单个物品的列表，scanD()根据数据集计算支持度并返回大于最小支持度的集合的列表。</p>
-<pre><code>#整个Apriori算法的伪代码：
-当集合中项的个数大于0时：
-    构建一个k个项组成的候选项集的列表
-    检查数据以确认每个项集都是频繁的
-    保留频繁项集并构建k+1项组成的候选项集的列表
-
-#程序清单11-2 Apriori算法
-def aprioriGen(Lk,k):
-    retList=[]
-    lenLk=len(Lk)
-    for i in range(lenLk):
-        for j in range(i+1,lenLk):
-            L1=list(Lk[i])[:k-2];L2=list(Lk[j])[:k-2]
-            L1.sort();L2.sort()
-            #如果L1、L2前k-2个元素都相等，合并
-            if L1==L2:
-                retList.append(Lk[i]|Lk[j])
-    return retList
-
-def apriori(dataSet,minSupport=0.5):
-    C1=createC1(dataSet)
-    D=list(map(set,dataSet))
-    L1,supportData=scanD(D,C1,minSupport)
-    L=[L1]
-    k=2
-    while (len(L[k-2])&gt;0):
-        Ck=aprioriGen(L[k-2],k)
-        Lk,supK=scanD(D,Ck,minSupport)
-        supportData.update(supK)
-        L.append(Lk)
-        k+=1
-    return L,supportData
-
-#这两函数比较难懂，Ck是候选项集列表，经过最小支持度筛选Ck-&gt;Lk.
-#而Lk-&gt;Ck+1
-
-#输出
-   reload(apriori)
-Out[22]: &lt;module &#39;apriori&#39; from &#39;G:\\MyPython_MachineLearning\\机器学习实战\\ch11\\apriori.py&#39;&gt;
-
-L,suppData=apriori.apriori(dataSet)
-
-Out[24]: L
-[[frozenset({5}), frozenset({2}), frozenset({3}), frozenset({1})],
- [frozenset({2, 3}), frozenset({3, 5}), frozenset({2, 5}), frozenset({1, 3})],
- [frozenset({2, 3, 5})],
- []]
-
-Out[25]: suppData
-{frozenset({1}): 0.5,
- frozenset({3}): 0.75,
- frozenset({4}): 0.25,
- frozenset({2}): 0.75,
- frozenset({5}): 0.75,
- frozenset({1, 3}): 0.5,
- frozenset({2, 5}): 0.75,
- frozenset({3, 5}): 0.5,
- frozenset({2, 3}): 0.5,
- frozenset({1, 5}): 0.25,
- frozenset({1, 2}): 0.25,
- frozenset({2, 3, 5}): 0.5}
-</code></pre><p>有个问题是L2=[{2,3},{3,5},{2,5},{1,3}]根据aprioriGen函数“L1==L2”才能合并，那只有{2,3}和{2,5}才能合并为{2,3,5}，C3.但是{1,3,5}为什么不是C3里的呢？</p>
-<h2 id="从频繁项集中挖掘关联规则"><a href="#从频繁项集中挖掘关联规则" class="headerlink" title="从频繁项集中挖掘关联规则"></a>从频繁项集中挖掘关联规则</h2><p>从频繁项集中挖掘关联规则可以利用关联分析发现许多有趣的内容，最常寻找的两个目标是频繁项集与关联规则。</p>
-<p>一条规则P-&gt;H的可信度定义为support(P|H)/support(P)。</p>
-<p>如果规则0,1,2-&gt;3并不满足最小可信度要求，那么就知道任何左部为{0,1,2}子集的规则也不会满足最小可信度要求。</p>
-<p>首先从一个频繁项集开始，接着创建一个规则列表，其中规则右部只包含一个元素，然后对这些规则进行测试。接下来合并所有剩余规则来创建一个新的规则列表，其中规则右部包含两个元素。这种方法也被称为分级法。</p>
-<pre><code>#程序清单11-3 关联规则生成函数
-#频繁项集列表，包含那些频繁项集支持数据的字典，最小可信度阈值
-def generateRules(L,supportData,minConf=0.7):
-    bigRuleList=[]
-    #只获取有两个或更多元素的集合
-    for i in range(1,len(L)):
-        for freqSet in L[i]:
-            H1=[frozenset([item]) for item in freqSet]
-            #频繁项集数目超过2，做进一步合并
-            if (i&gt;1):
-                rulesFromConseq(freqSet,H1,supportData,bigRuleList,\
-                                minConf)
-            #如果频繁项集中只有两个元素，那计算可信度
-            else:
-                calcConf(freqSet,H1,supportData,bigRuleList,minConf)
-    #返回一个包含可信度的规则列表
-    return bigRuleList
-
-#对规则进行评估
-def calcConf(freqSet,H,supportData,br1,minConf=0.7):
-    prunedH=[]
-    for conseq in H:
-        #计算可信度
-        conf=supportData[freqSet]/supportData[freqSet-conseq]
-        #大于最小可信度
-        if conf&gt;=minConf:
-            print(freqSet-conseq,&#39;--&gt;&#39;,conseq,&#39;conf:&#39;,conf)
-            br1.append((freqSet-conseq,conseq,conf))
-            prunedH.append(conseq)
-    #返回满足最小可信度要求的规则
-    return prunedH
-
-#用于生成候选规则集合
-def rulesFromConseq(freqSet,H,supportData,br1,minConf=0.7):
-    #频繁项集的大小
-    m=len(H[0])
-    if (len(freqSet)&gt;(m+1)):
-        #生成H中元素的无重复组合
-        Hmp1=aprioriGen(H,m+1)
-        #计算Hmp1中所有可能规则的可信度
-        Hmp1=calcConf(freqSet,Hmp1,supportData,br1,minConf)
-        if (len(Hmp1)&gt;1):
-            rulesFromConseq(freqSet,Hmp1,supportData,br1,minConf)
-
-In[43] L,suppData=apriori.apriori(dataSet,minSupport=0.5)
-
-In[44] rules=apriori.generateRules(L,suppData,minConf=0.7)
-frozenset({5}) --&gt; frozenset({2}) conf: 1.0
-frozenset({2}) --&gt; frozenset({5}) conf: 1.0
-frozenset({1}) --&gt; frozenset({3}) conf: 1.0 
-</code></pre><p>##小结##<br>关联分析是用于发现大数据集中元素间有趣关系的一个工具集，可以采用两种方式来量化这些有趣的关系。第一种方式是使用频繁项集，它会给出经常在一起出现的元素项。第二种方式是关联规则，每条关联规则意味着元素项之间的“If…Then…”关系。</p>
-<p>发现元素间不同的组合是个十分耗时的任务，一个解决方法是Apriori算法。使用Apriori原理来减少在数据库上进行检查的集合的数目。Apriori原理是说如果一个元素项是不频繁的，那么那些包含该元素的超集也是不频繁的。Apriori算法从单元素项集开始，通过组合满足最小支持度要求的项集来形成更大的集合。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3856,7 +3671,7 @@ frozenset({1}) --&gt; frozenset({3}) conf: 1.0
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">142</span>
+                <span class="site-state-item-count">143</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -3867,7 +3682,7 @@ frozenset({1}) --&gt; frozenset({3}) conf: 1.0
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -3878,7 +3693,7 @@ frozenset({1}) --&gt; frozenset({3}) conf: 1.0
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

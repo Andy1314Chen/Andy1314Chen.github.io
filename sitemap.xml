@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/11/04/Git%E4%B8%ADfatal-refusing-to-merge-unrelated-histories%E9%94%99%E8%AF%AF/</loc>
+    
+    <lastmod>2018-11-04T15:31:39.540Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/09/26/sklearn%E4%B8%ADCountVectorizer%E5%92%8CTfidTransformer%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     
     <lastmod>2018-09-26T13:24:20.419Z</lastmod>
