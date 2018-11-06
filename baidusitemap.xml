@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/11/06/python%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E4%BB%A3%E7%A0%81%E6%B8%85%E5%8D%956-2%E9%94%99%E8%AF%AF/</loc>
+    <lastmod>2018-11-06T09:20:21.331Z</lastmod>
+    <data>
+        <display>
+        <title>python深度学习 代码清单6-2错误</title>
+        <pubTime>2018-11-06T09:15:56.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="deeplearning" url="http://yoursite.com/categories/deeplearning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/11/04/Git%E4%B8%ADfatal-refusing-to-merge-unrelated-histories%E9%94%99%E8%AF%AF/</loc>
     <lastmod>2018-11-04T15:31:39.540Z</lastmod>
     <data>
@@ -2682,9 +2702,9 @@
          
         <tag>算法</tag>
          
-        <tag>Python</tag>
-         
         <tag>sklearn</tag>
+         
+        <tag>Python</tag>
          
          
            

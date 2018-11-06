@@ -587,6 +587,345 @@ plt.show()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/25/A Complete Tutorail(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/25/A Complete Tutorail(1)/" itemprop="url">A Complete Tutorial to Learn Data Science with Python from Scratch(1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T00:00:00+08:00">
+                2017-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近一段时间进行大论文研究方向的调研，主要是关于电子系统或设备故障预测和健康管理（PHM）这一块。也跟老板沟通了，大致就做这一块了。研一在实验室除了上理论课之外，就负责实验室项目中上位机软件编程，也没掌握啥儿高大上的东西。现在论文大方向基本定了，趁着暑假想掌握一些数据分析(Data Analysis)方面的基本技术，包括（Python及其相关库、机器学习、数据挖掘算法等）。</p>
+<p>在<a href="https://www.analyticsvidhya.com" target="_blank" rel="external">https://www.analyticsvidhya.com</a>网站里看到一篇很不错的博客，跟着学习了一下。算是对前一段时间Numpy、Pandas、Scipy库的复习运用吧，整体上对用Python进行机器学习过程有一个把握。</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2014/09/Orange-Shoes-300x300.jpg" alt="参考博主女儿的鞋子，很卡哇伊啊~"></p>
+<h2 id="目录-Table-of-Contents"><a href="#目录-Table-of-Contents" class="headerlink" title="目录(Table of Contents)"></a>目录(Table of Contents)</h2><ol>
+<li>Python基础知识(Basics of Python for Data Analysis)<ul>
+<li>Why learn Python for data analysis?</li>
+<li>Python 2.7 vs 3.4</li>
+<li>How to install Python?</li>
+<li>Running a few simple program in Python</li>
+</ul>
+</li>
+<li>Python库和数据结构(Python libraries and data structures)<ul>
+<li>Python Data Structures</li>
+<li>Python Iteration and Conditional Constructs</li>
+<li>Python Libraries</li>
+</ul>
+</li>
+<li>使用Pandas库探索分析(Exploratory analysis in Python using Pandas)<ul>
+<li>Introduction to series and dataframes</li>
+<li>Analytics Vidhy a dataset- Loan Prediction Problem</li>
+</ul>
+</li>
+<li>使用Pandas数据修复(Data Munging in Python using Pandas)</li>
+<li>建立预测模型(Building a Predictive Model in Python)<ul>
+<li>Logistic Regression</li>
+<li>Decision Tree</li>
+<li>Random Forest</li>
+</ul>
+</li>
+</ol>
+<h2 id="1、Python基础知识"><a href="#1、Python基础知识" class="headerlink" title="1、Python基础知识"></a>1、Python基础知识</h2><p><strong>Why learn Python for data analysis?</strong></p>
+<pre><code>- 开源、免费安装
+- 丰富的在线社区论坛
+- 简单易学
+- 可以成为Data Science的一种标准语言
+</code></pre><p>但是缺点也显而易见，</p>
+<pre><code> - 解释型语言，速度慢
+</code></pre><p><strong>Python 2.7 vs 3.4</strong></p>
+<p>这是一个非常具有争议性的话题，但是，我个人感觉，如果现在入门学习一定要用Python3了。</p>
+<p><strong>How to install Python?</strong></p>
+<p>有两种方法：</p>
+<pre><code>-直接从Python官网上下载安装包，一步一步配置环境，需要什么包装什么包
+-直接安装Anaconda,基本库都预安装了，啥事儿没有，不过要自己百度Anaconda教程，看看如何使用，挺简单的！
+</code></pre><p>推荐使用第二种方法，特别是国内&amp;Windows系统，自己配置Python环境，安装相关库真的是非常麻烦的！</p>
+<h2 id="2、Python库和数据结构"><a href="#2、Python库和数据结构" class="headerlink" title="2、Python库和数据结构"></a>2、Python库和数据结构</h2><p><strong>Python Data Structures</strong></p>
+<ul>
+<li>Lists-Lists 是Python中使用最为频繁，功能也最为丰富的数据结构。可以简单的由逗号和中括号定义。Lists可以包含不同类型的元素，但是使用时基本都是同类型的。Python中lists是可变的，list中的每个元素也都可以改写。</li>
+</ul>
+<h2 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h2><p>A list can be simply defined by writing comma separated values in square brackets.</p>
+<pre><code class="python">squares_list=[0,1,4,9,16,25]
+</code></pre>
+<pre><code class="python">squares_list
+</code></pre>
+<pre><code>[0, 1, 4, 9, 16, 25]
+</code></pre><p>Individual elements of a list can be accessed by writing the index number in square bracket. Please note that the first index of a list is 0 and not 1</p>
+<pre><code class="python">squares_list[0]#Indexing returns the item
+</code></pre>
+<pre><code>0
+</code></pre><p>A range of script can be accessed by having first index and last index</p>
+<pre><code class="python">squares_list[2:4] #Slicing returns a new list
+</code></pre>
+<pre><code>[4, 9]
+</code></pre><p>A Negative index access the list from end</p>
+<pre><code class="python">squares_list[-2] #It should return the second last element in the list
+</code></pre>
+<pre><code>16
+</code></pre><p>A few common methods applicable to lists include: append(),extend(),insert(),remove(),pop(),count(),sort(),reverse()</p>
+<ul>
+<li><strong>Strings</strong>- Strings 可以简单的用单引号(‘),双引号(“),三引号( ”’)表示。 Strings用三引号时可以包含多行，因此在Python docstrings中使用较多。‘\’是一个换行符，另起一行。但是需要注意Python strings是不可变的，不能改变strings!</li>
+</ul>
+<h2 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h2><p>A string can be simply defined by using single(‘),double(‘’) or triple(‘’’) quotation</p>
+<pre><code class="python">greeting=&#39;Hello&#39;
+print(greeting[1])
+print(len(greeting))
+print(greeting+&#39;World&#39;)
+</code></pre>
+<pre><code>e
+5
+HelloWorld
+</code></pre><p>Raw strings can be used to pass on string as is. Python interpretter does not alter the string, if you specify a string to be raw. Raw string can be defined by adding r to the string</p>
+<pre><code class="python">stmt=r&#39;\n is a newline character by default.&#39;
+print(stmt)
+</code></pre>
+<pre><code>\n is a newline character by default.
+</code></pre><p>Python strings are immutable and hence can be changed. Doing so will result in an error.</p>
+<p>Common string methods include lower(),strip(),isdigit(),isspace(),find(),replace(),split() and join(). These are usually very helpful when you need to perform data mainpulation or cleaning on text fields.</p>
+<ul>
+<li><strong> Tuples </strong> - 元组可以用逗号和圆括号表示。元组是不可变的，输出由圆括号包围。尽管元组是不可变的，但是可以包含可变元素。</li>
+</ul>
+<p>因为元组是不可变的，在处理上相对于List更快。可以使用tuple代替使用不会更改的list.</p>
+<h2 id="Tuples"><a href="#Tuples" class="headerlink" title="Tuples"></a>Tuples</h2><p>A tuple is represented by a number of values separated by commas.</p>
+<pre><code class="python">tuple_example=0,1,4,9,16,25
+</code></pre>
+<pre><code class="python">tuple_example
+</code></pre>
+<pre><code>(0, 1, 4, 9, 16, 25)
+</code></pre><pre><code class="python">tuple_example[2]
+</code></pre>
+<pre><code>4
+</code></pre><pre><code class="python">tuple_example[2]=6
+</code></pre>
+<pre><code>---------------------------------------------------------------------------
+
+TypeError                                 Traceback (most recent call last)
+
+&lt;ipython-input-12-59fc5567f2da&gt; in &lt;module&gt;()
+----&gt; 1 tuple_example[2]=6
+
+
+TypeError: &#39;tuple&#39; object does not support item assignment
+</code></pre><ul>
+<li>Dictionary -Dictionary是一种无序的key-value对集合，同一Dictionary中Key必须是唯一的。用大括号变可以建立一个空的Dictionary.</li>
+</ul>
+<h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><p>A dictionary is an unordered set of key: value pairs, with the requirement that the keys are unique (within one dictionary). A pair of braces creates an empty dictionary:{}</p>
+<pre><code class="python">extensions={&#39;Kunal&#39;:9073,&#39;Tavish&#39;:9128,&#39;Sunil&#39;:9223,&#39;Nitin&#39;:9330}
+extensions
+</code></pre>
+<pre><code>{&#39;Kunal&#39;: 9073, &#39;Nitin&#39;: 9330, &#39;Sunil&#39;: 9223, &#39;Tavish&#39;: 9128}
+</code></pre><pre><code class="python">extensions[&#39;Mukesh&#39;]=9150
+extensions
+</code></pre>
+<pre><code>{&#39;Kunal&#39;: 9073, &#39;Mukesh&#39;: 9150, &#39;Nitin&#39;: 9330, &#39;Sunil&#39;: 9223, &#39;Tavish&#39;: 9128}
+</code></pre><pre><code class="python">extensions.keys()
+</code></pre>
+<pre><code>dict_keys([&#39;Kunal&#39;, &#39;Tavish&#39;, &#39;Sunil&#39;, &#39;Nitin&#39;, &#39;Mukesh&#39;])
+</code></pre><h2 id="Python-Iteration-and-Conditional-Constructs"><a href="#Python-Iteration-and-Conditional-Constructs" class="headerlink" title="Python Iteration and Conditional Constructs"></a>Python Iteration and Conditional Constructs</h2><p>Like most languages, Python also has a FOR-loop which is the most widely used method for iteration. It has a simple syntax:</p>
+<pre><code class="Python"> for i in [Python Iterable]:
+   expression(i)
+</code></pre>
+<p>Here “Python Iterable” can be a list, tuple or other advanced data structures which we will explore in later sections. Let’s take a look at a simple example, determining the factorial of a number.</p>
+<pre><code class="Python"> fact=1
+ for i in range(1,N+1):
+   fact *=i
+</code></pre>
+<p>Coming to conditional statements, these are used to execute code fragments based on a condition. The most commonly used construct is if-else, with following syntax:</p>
+<pre><code class="Python">  if [condition]:
+     __execution if true__
+  else:
+     __execution if false__
+</code></pre>
+<p>For instance, if we want to print whether the number N is even or odd:</p>
+<pre><code class="Python">  if N%2 == 0:
+    print(&#39;Even&#39;)
+  else:
+    print(&#39;Odd&#39;)
+</code></pre>
+<p>Now that you are familiar with Python fundamentals, let’s take a step further. </p>
+<h2 id="Python-Libraries"><a href="#Python-Libraries" class="headerlink" title="Python Libraries"></a>Python Libraries</h2><p>Lets take one step ahead in our journey to learn Python by getting acquainted with some useful libraries. The first step is obviously to learn to import them into our environment. There are several ways of doing so in Python:</p>
+<pre><code class="Python">  import math as m
+</code></pre>
+<pre><code class="Python">  from math import *
+</code></pre>
+<p>In the first manner, we have defined an alias m to library math. We can now use various functions from math library (e.g. factorial) by referencing it using the alias m.factorial().</p>
+<p>In the second manner, you have imported the entire name space in math i.e. you can directly use factorial() without referring to math.</p>
+<p>推荐使用前一种导入方法。</p>
+<p>科学计算和数据分析常用的库：</p>
+<ul>
+<li><p><strong>NumPy</strong> stands for Numerical Python. The most powerful feature of NumPy is n-dimensional array. This library also contains basic linear algebra functions, Fourier transforms,  advanced random number capabilities and tools for integration with other low level languages like Fortran, C and C++</p>
+</li>
+<li><p><strong>SciPy</strong> stands for Scientific Python. SciPy is built on NumPy. It is one of the most useful library for variety of high level science and engineering modules like discrete Fourier transform, Linear Algebra, Optimization and Sparse matrices.</p>
+</li>
+<li><p><strong>Matplotlib</strong> for plotting vast variety of graphs, starting from histograms to line plots to heat plots.. You can use Pylab feature in ipython notebook (ipython notebook –pylab = inline) to use these plotting features inline. If you ignore the inline option, then pylab converts ipython environment to an environment, very similar to Matlab. You can also use Latex commands to add math to your plot.</p>
+</li>
+<li><p><strong>Pandas</strong> for structured data operations and manipulations. It is extensively used for data munging and preparation. Pandas were added relatively recently to Python and have been instrumental in boosting Python’s usage in data scientist community.</p>
+</li>
+<li><p><strong>Scikit Learn</strong> for machine learning. Built on NumPy, SciPy and matplotlib, this library contains a lot of effiecient tools for machine learning and statistical modeling including classification, regression, clustering and dimensionality reduction.</p>
+</li>
+<li><p><strong>Statsmodels</strong> for statistical modeling. Statsmodels is a Python module that allows users to explore data, estimate statistical models, and perform statistical tests. An extensive list of descriptive statistics, statistical tests, plotting functions, and result statistics are available for different types of data and each estimator.</p>
+</li>
+<li><p><strong>Seaborn</strong> for statistical data visualization. Seaborn is a library for making attractive and informative statistical graphics in Python. It is based on matplotlib. Seaborn aims to make visualization a central part of exploring and understanding data.</p>
+</li>
+<li><p><strong>Bokeh</strong> for creating interactive plots, dashboards and data applications on modern web-browsers. It empowers the user to generate elegant and concise graphics in the style of D3.js. Moreover, it has the capability of high-performance interactivity over very large or streaming datasets.</p>
+</li>
+<li><p><strong>Blaze</strong> for extending the capability of Numpy and Pandas to distributed and streaming datasets. It can be used to access data from a multitude of sources including Bcolz, MongoDB, SQLAlchemy, Apache Spark, PyTables, etc. Together with Bokeh, Blaze can act as a very powerful tool for creating effective visualizations and dashboards on huge chunks of data.</p>
+</li>
+<li><p><strong>Scrapy</strong> for web crawling. It is a very useful framework for getting specific patterns of data. It has the capability to start at a website home url and then dig through web-pages within the website to gather information.</p>
+</li>
+<li><p><strong>SymPy</strong> for symbolic computation. It has wide-ranging capabilities from basic symbolic arithmetic to calculus, algebra, discrete mathematics and quantum physics. Another useful feature is the capability of formatting the result of the computations as LaTeX code.</p>
+</li>
+<li><p><strong>Requests</strong> for accessing the web. It works similar to the the standard python library urllib2 but is much easier to code. You will find subtle differences with urllib2 but for beginners, Requests might be more convenient.</p>
+</li>
+</ul>
+<p>还有一些其他的库可能会用到：</p>
+<ul>
+<li><p><strong>os</strong> for Operating system and file operations</p>
+</li>
+<li><p><strong>networkx</strong> and <strong> igraph </strong> for graph based data manipulations</p>
+</li>
+<li><p><strong>regular expressions </strong> for finding patterns in text data</p>
+</li>
+<li><p><strong> BeautifulSoup </strong> for scrapping web. It is inferior to Scrapy as it will extract information from just a single webpage in a run.</p>
+</li>
+</ul>
+<p>Now that we are familiar with Python fundamentals and additional libraries, lets take a deep dive into problem solving through Python. Yes I mean making a predictive model! In the process, we use some powerful libraries and also come across the next level of data structures. We will take you through the 3 key phases:</p>
+<ol>
+<li><p>Data Exploration (分析数据） – finding out more about the data we have</p>
+</li>
+<li><p>Data Munging （数据修复） – cleaning the data and playing with it to make it better suit statistical modeling</p>
+</li>
+<li><p>Predictive Modeling （预测模型） – running the actual algorithms and having fun </p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/13/Python学习书单/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1155,7 +1494,7 @@ plt.show()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/求众数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汉明距离/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1174,7 +1513,7 @@ plt.show()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/求众数/" itemprop="url">LeetCode - 求众数</a></h1>
+                <a class="post-title-link" href="/2017/07/05/汉明距离/" itemprop="url">LeetCode - 汉明距离</a></h1>
         
 
         <div class="post-meta">
@@ -1249,195 +1588,46 @@ plt.show()
       
         
           
-            <p>给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。</p>
-<p>你可以假设数组是非空的，并且给定的数组总是存在众数。</p>
-<p>示例 1:</p>
-<pre><code>输入: [3,2,3]
-输出: 3
-</code></pre><p>示例 2:</p>
-<pre><code>输入: [2,2,1,1,1,2,2]
+            <p>两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。</p>
+<p>给出两个整数 x 和 y，计算它们之间的汉明距离。</p>
+<p>注意：<br>0 ≤ x, y &lt; 231.</p>
+<p>示例:</p>
+<pre><code>输入: x = 1, y = 4
+
 输出: 2
 
-
-
-class Solution(object):
-    def majorityElement(self, nums):
-        &quot;&quot;&quot;
-        :type nums: List[int]
-        :rtype: int
-        &quot;&quot;&quot;
-        m = int(len(nums)/2 + 0.5) # 取整
-        for i in set(nums):
-            if nums.count(i) &gt; m:
-                return i
-        return nums[0]
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/2寻找重复数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/2寻找重复数/" itemprop="url">LeetCode - 寻找重复数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
-<p>示例 1:</p>
-<pre><code>输入: [1,3,4,2,2]
-输出: 2
-</code></pre><p>示例 2:</p>
-<pre><code>输入: [3,1,3,4,2]
-输出: 3
-</code></pre><p>说明：</p>
-<p>不能更改原数组（假设数组是只读的）。<br>只能使用额外的 O(1) 的空间。<br>时间复杂度小于 O(n2) 。<br>数组中只有一个重复的数字，但它可能不止重复出现一次。</p>
+解释:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+</code></pre><p>上面的箭头指出了对应二进制位不同的位置。</p>
 <pre><code class="Python">
-    class Solution:
-        def findDuplicate(self, nums):
+    class Solution(object):
+        def hammingDistance(self, x, y):
             &quot;&quot;&quot;
-            :type nums: List[int]
+            :type x: int
+            :type y: int
             :rtype: int
             &quot;&quot;&quot;
-            left = 0; right = len(nums)-1
+            bx = [v for v in bin(x)[2:]]
+            by = [v for v in bin(y)[2:]]
 
-            while left+1 &lt; right:
-                mid = (left + right)//2
-                cnt = 0
-                for v in nums:
-                    if (v &gt; mid) &amp; (v &lt;= right):
-                        cnt += 1
-                if cnt &gt; (right - mid):
-                    left = mid
-                else:
-                    right = mid
+            bx.reverse()
+            by.reverse()
+            i = 0; cnt = 0
+            while (i&lt;len(bx))&amp;(i&lt;len(by)):
+                if bx[i] != by[i]:
+                    cnt += 1
+                i += 1
 
-            return  int(right)
+            if len(bx)&gt;i:
+                cnt += bx[i:].count(&#39;1&#39;)
+            if len(by)&gt;i:
+                cnt += by[i:].count(&#39;1&#39;)
+
+            return cnt
+
+            # return bin(x^y).count(&#39;1&#39;)
 </code></pre>
 
           
@@ -1881,6 +2071,162 @@ class Solution(object):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/颠倒二进制位/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/颠倒二进制位/" itemprop="url">LeetCode - 颠倒二进制位</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>颠倒给定的 32 位无符号整数的二进制位。</p>
+<p>示例:</p>
+<pre><code>输入: 43261596
+输出: 964176192
+解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，
+     返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。
+</code></pre><p>进阶:<br>如果多次调用这个函数，你将如何优化你的算法？</p>
+<pre><code class="Python">
+    class Solution:
+        # @param n, an integer
+        # @return an integer
+        def reverseBits(self, n):
+            # 32位填充
+            bin_1 = bin(n)[2:].zfill(32)
+            bin_1 = [v for v in bin_1]
+            bin_1.reverse()
+            res = int(&#39;&#39;.join(bin_1), 2)
+            return res
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/有效的括号/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2057,205 +2403,6 @@ class Solution(object):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/最小路径和/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/最小路径和/" itemprop="url">LeetCode - 最小路径和</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p>
-<p>说明：每次只能向下或者向右移动一步。</p>
-<p>示例:</p>
-<p>输入:</p>
-<p>[<br>  [1,3,1],</p>
-<p>  [1,5,1],</p>
-<p>  [4,2,1]</p>
-<p>]</p>
-<p>输出: 7</p>
-<p>解释: 因为路径 1→3→1→1→1 的总和最小。</p>
-<pre><code class="Python">
-    class Solution:
-        def minPathSum(self, grid):
-            &quot;&quot;&quot;
-            :type grid: List[List[int]]
-            :rtype: int
-            &quot;&quot;&quot;
-
-            m = len(grid[0])
-            n = len(grid)
-            tmp = []
-            for i in range(n+1):
-                tmp.append([-1]*(m+1))
-
-            return self.myAns(m, n, grid, tmp)
-
-        def myAns(self, m, n, grid, tmp):
-            if (m &lt;= 0) | (n &lt;= 0):
-                return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意
-            if (m == 1)&amp;(n == 1):
-                return grid[0][0]
-            if tmp[n][m] != -1:
-                return tmp[n][m]
-
-            tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1]            
-            return tmp[n][m]
-</code></pre>
-<h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
-<li>从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小；</li>
-<li>保持递归过程中的值</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def minPathSum(self, grid):
-            &quot;&quot;&quot;
-            :type grid: List[List[int]]
-            :rtype: int
-            &quot;&quot;&quot;
-            m = len(grid)
-            n = len(grid[0])
-            for i in range(m):# 多少列 横轴
-                for j in range(n):# 多少行 纵轴
-                    if (i==0)&amp;(j==0):
-                        continue
-                    elif i == 0:
-                        grid[i][j] += grid[i][j-1]
-                    elif j == 0:
-                        grid[i][j] += grid[i-1][j]
-                    else:
-                        grid[i][j] += min(grid[i-1][j], grid[i][j-1])
-            return grid[m-1][n-1]
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2306,7 +2453,7 @@ class Solution(object):
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">143</span>
+                <span class="site-state-item-count">144</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2317,7 +2464,7 @@ class Solution(object):
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
