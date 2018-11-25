@@ -301,6 +301,259 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/25/Building-Autoencoders-in-Keras/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/25/Building-Autoencoders-in-Keras/" itemprop="url">Building Autoencoders in Keras</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-25T21:21:37+08:00">
+                2018-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deeplearning/" itemprop="url" rel="index">
+                    <span itemprop="name">deeplearning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>翻译自博客<a href="https://blog.keras.io/building-autoencoders-in-keras.html" target="_blank" rel="external">Building Autoencoders in Keras</a></p>
+<p>在本教程中，我们将回答有关自动编码器的一些常见问题，我们将介绍以下模型的代码示例：</p>
+<ul>
+<li>a simple autoencoder based on a fully-connected layer</li>
+<li>a sparse autoencoder</li>
+<li>a deep fully-connected autoencoder</li>
+<li>a deep convolutional autoencoder</li>
+<li>an image denoising model</li>
+<li>a sequence-to-sequence autoencoder</li>
+<li>a variational autoencoder</li>
+</ul>
+<h2 id="What-are-autoencoders"><a href="#What-are-autoencoders" class="headerlink" title="What are autoencoders?"></a>What are autoencoders?</h2><p><img src="https://blog.keras.io/img/ae/autoencoder_schema.jpg" alt=""></p>
+<p>“自动编码”是一种压缩和解压缩的数据压缩算法,有下列三个特点：</p>
+<ol>
+<li>data-specific(特定数据)</li>
+<li>lossy(有损)</li>
+<li>learned automatically(自主学习)</li>
+</ol>
+<p>另外，在几乎所有使用术语“自动编码器”的上下文中，压缩和解压缩功能都是用神经网络实现的。</p>
+<p>1）自动编码器是特定于数据的，这意味着它们只能压缩类似于他们所训练的数据。这与MPEG-2音频层III（MP3）压缩算法不同，后者仅保留关于“声音”的假设，而不是关于特定类型的声音。在面部图片上训练的自动编码器在压缩树木图片方面做得相当差，因为它将学习的特征将是面部特定的。</p>
+<p>2）自动编码器是有损耗的，这意味着与原始输入相比，解压缩的输出会降级（类似于MP3或JPEG压缩）。这与无损算术压缩不同。</p>
+<p>3）自动编码器是从数据示例中自动学习的，这是一个有用的属性：它意味着很容易训练算法的特定实例，这些实例在特定类型的输入上表现良好。它不需要任何新的工程，只需要适当的培训数据。</p>
+<p>要构建自动编码器，需要三件事：编码功能，解码功能，以及数据的压缩表示与解压缩表示之间的信息丢失量之间的距离函数（即loss函数）。编码器和解码器将被选择为参数函数（通常是神经网络），并且相对于距离函数是可微分的，因此可以使用随机梯度下降来优化编码/解码函数的参数以最小化重建损失。这很简单！而且你甚至不需要理解任何这些词在实践中开始使用自动编码器。</p>
+<h2 id="Are-they-good-at-data-compression"><a href="#Are-they-good-at-data-compression" class="headerlink" title="Are they good at data compression?"></a>Are they good at data compression?</h2><p>通常，不是真的。例如，在图像压缩中，训练一个比JPEG等基本算法更好的自动编码器是非常困难的，并且通常唯一可以实现的方法是将自己限制在一种非常特殊的图像类型（例如哪个JPEG做得不好）。自动编码器是特定于数据的这一事实使得它们对于实际数据压缩问题通常是不切实际的：只能将它们用于与其训练相似的数据，并使它们更加通用，因此需要大量的训练数据。但是，未来可能会改变这一点，谁知道呢？</p>
+<h2 id="What-are-autoencoders-good-for"><a href="#What-are-autoencoders-good-for" class="headerlink" title="What are autoencoders good for?"></a>What are autoencoders good for?</h2><p>它们很少用于实际应用中。2012年，他们简要地在深度卷积神经网络的贪婪分层预训练中找到了应用[1]，但随着我们开始意识到更好的随机权重初始化方案足以从头开始训练深度网络。2014年，批量标准化[2]开始允许更深层次的网络，从2015年底开始，我们可以使用残差学习从头开始训练任意深度的网络[3]。</p>
+<p>今天，自动编码器的两个有趣的实际应用是<strong>数据去噪</strong>（我们将在本文后面介绍），以及<strong>数据可视化的降维</strong>。通过适当的维度和稀疏性约束，自动编码器可以学习比PCA或其他基本技术更有趣的数据投影。</p>
+<p>特别是对于2D可视化，t-SNE可能是最好的算法，但它通常需要相对低维的数据。因此，在高维数据中可视化相似关系的良好策略是首先使用自动编码器将数据压缩到低维空间（例如32维），然后使用t-SNE将压缩数据映射到2D平面。请注意，Keras中t-SNE的一个很好的参数化实现是由<a href="https://github.com/kylemcdonald/Parametric-t-SNE/blob/master/Parametric%20t-SNE%20(Keras" target="_blank" rel="external">Kyle McDonald</a>.ipynb)开发的，可以在Github上获得。另外<a href="http://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html" target="_blank" rel="external">scikit-learn</a>也有一个简单实用的实现。</p>
+<h2 id="So-what’s-the-big-deal-with-autoencoders"><a href="#So-what’s-the-big-deal-with-autoencoders" class="headerlink" title="So what’s the big deal with autoencoders?"></a>So what’s the big deal with autoencoders?</h2><p>他们的主要声誉来自在线提供的许多入门机器学习课程。因此，很多新手都非常喜欢自动编码器但无法掌握足够的自动编码器。这就是本教程存在的原因！</p>
+<p>另外，他们吸引了如此多的研究和关注的一个原因是因为他们长期以来被认为是解决无监督学习问题的潜在途径，即在不需要标签的情况下学习有用的表示。然后，自动编码器不是真正的无监督学习技术（这意味着完全不同的学习过程），它们是自我监督技术，是监督学习的特定实例，其中目标是从输入数据生成的。为了获得自我监督的模型来学习有趣的特征，你必须提出一个有趣的合成目标和损失函数，这就是出现问题的地方：仅仅学习在细节上重建你的输入可能不是这里的正确选择。在这一点上，有明显的证据表明，专注于在像素级重建图像，并不能有助于学习标签超级化学习所引发的有趣的抽象特征（其中目标是相当抽象的概念“发明的”“由人类如”狗“，”汽车“……）。事实上，人们可能会争辩说，这方面的最佳特征是那些在精确输入重建时最差的特征，同时在感兴趣的主要任务（分类，本地化等）上实现高性能。</p>
+<p>在应用于视觉的自我监督学习中，自动编码器式输入重建的潜在富有成效的替代方案是使用玩具任务，例如拼图解决或细节上下文匹配（能够匹配高分辨率但小的图片片段与从中提取的图片的低分辨率版本）。以下论文研究拼图解决问题，并进行了非常有趣的阅读：<a href="http://arxiv.org/abs/1603.09246" title="Noroozi and Favaro (2016)" target="_blank" rel="external">http://arxiv.org/abs/1603.09246</a> 这些任务为模型提供了关于传统自动编码器中缺失的输入数据的内置假设，例如“视觉宏观结构比像素级细节更重要”。</p>
+<p><img src="https://blog.keras.io/img/ae/jigsaw-puzzle.png" alt=""></p>
+<h2 id="Let’s-build-the-simplest-possible-autoencoder"><a href="#Let’s-build-the-simplest-possible-autoencoder" class="headerlink" title="Let’s build the simplest possible autoencoder"></a>Let’s build the simplest possible autoencoder</h2><p>我们将从简单开始，使用单个全连接神经层作为编码器和解码器：</p>
+<pre><code>from keras.layers import Input, Dense
+from keras.models import Model
+
+# this is the size of our encoded representations
+encoding_dim = 32  # 32 floats -&gt; compression of factor 24.5, assuming the input is 784 floats
+
+# this is our input placeholder
+input_img = Input(shape=(784,))
+# &quot;encoded&quot; is the encoded representation of the input
+encoded = Dense(encoding_dim, activation=&#39;relu&#39;)(input_img)
+# &quot;decoded&quot; is the lossy reconstruction of the input
+decoded = Dense(784, activation=&#39;sigmoid&#39;)(encoded)
+
+# this model maps an input to its reconstruction
+autoencoder = Model(input_img, decoded)
+</code></pre><p>我们还创建一个单独的编码器模型：</p>
+<pre><code># this model maps an input to its encoded representation
+encoder = Model(input_img, encoded)
+</code></pre><p>以及解码器模型：</p>
+<pre><code># create a placeholder for an encoded (32-dimensional) input
+encoded_input = Input(shape=(encoding_dim,))
+# retrieve the last layer of the autoencoder model
+decoder_layer = autoencoder.layers[-1]
+# create the decoder model
+decoder = Model(encoded_input, decoder_layer(encoded_input))
+</code></pre><p>现在让我们训练我们的自动编码器重建MNIST数字。首先，我们将配置我们的模型以使用每像素二进制交叉熵损失和Adadelta优化器：</p>
+<pre><code>autoencoder.compile(optimizer=&#39;adadelta&#39;, loss=&#39;binary_crossentropy&#39;)
+</code></pre><p>让我们准备输入数据。我们正在使用MNIST数字，丢弃标签（因为我们只对编码/解码输入图像感兴趣）。</p>
+<pre><code>from keras.datasets import mnist
+import numpy as np
+(x_train, _), (x_test, _) = mnist.load_data()
+</code></pre><p>我们将对0到1之间的所有值进行归一化，并将28x28图像压缩为大小为784的向量。</p>
+<pre><code>x_train = x_train.astype(&#39;float32&#39;) / 255.
+x_test = x_test.astype(&#39;float32&#39;) / 255.
+x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
+x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
+print(x_train.shape)
+print(x_test.shape)
+</code></pre><p>训练自动编解码50轮：</p>
+<pre><code>autoencoder.fit(x_train, x_train,
+                epochs=50,
+                batch_size=256,
+                shuffle=True,
+                validation_data=(x_test, x_test))
+</code></pre><p>在50次迭代之后，自动编码器似乎达到稳定的训练集/验证集损失值约0.11。我们可以尝试可视化重建的输入和编码的表示。我们将使用Matplotlib。</p>
+<pre><code># encode and decode some digits
+# note that we take them from the *test* set
+encoded_imgs = encoder.predict(x_test)
+decoded_imgs = decoder.predict(encoded_imgs)
+
+# use Matplotlib (don&#39;t ask)
+import matplotlib.pyplot as plt
+
+n = 10  # how many digits we will display
+plt.figure(figsize=(20, 4))
+for i in range(n):
+    # display original
+    ax = plt.subplot(2, n, i + 1)
+    plt.imshow(x_test[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+    # display reconstruction
+    ax = plt.subplot(2, n, i + 1 + n)
+    plt.imshow(decoded_imgs[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+plt.show()
+</code></pre><p>这就是我们得到的。顶行是原始数字，底行是重建数字。我们正在通过这种基本方法失去相当多的细节。</p>
+<p><img src="https://blog.keras.io/img/ae/basic_ae_32.png" alt=""></p>
+<h2 id="Adding-a-sparsity-constraint-on-the-encoded-representations"><a href="#Adding-a-sparsity-constraint-on-the-encoded-representations" class="headerlink" title="Adding a sparsity constraint on the encoded representations"></a>Adding a sparsity constraint on the encoded representations</h2><p>在前面的示例中，表示仅受隐藏层（32）的大小约束。在这种情况下，通常发生的是隐藏层正在学习PCA（主成分分析）的近似。但是，将表示约束为紧凑的另一种方法是在隐藏表示的活动上添加稀疏性约束，因此在给定时间更少的单元将“触发”。在Keras中，可以通过向我们的Dense层添加activity_regularizer来完成：</p>
+<pre><code>from keras import regularizers
+
+encoding_dim = 32
+
+input_img = Input(shape=(784,))
+# add a Dense layer with a L1 activity regularizer
+encoded = Dense(encoding_dim, activation=&#39;relu&#39;,
+                activity_regularizer=regularizers.l1(10e-5))(input_img)
+decoded = Dense(784, activation=&#39;sigmoid&#39;)(encoded)
+
+autoencoder = Model(input_img, decoded)
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/06/python深度学习-代码清单6-2错误/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1941,157 +2194,6 @@ test_writer.close()
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM训练算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/21/限制玻尔兹曼机RBM训练算法/" itemprop="url">RBM学习笔记（七）RBM训练算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
-                2018-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/DBN/" itemprop="url" rel="index">
-                    <span itemprop="name">DBN</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="RBM学习笔记（七）RBM训练算法"><a href="#RBM学习笔记（七）RBM训练算法" class="headerlink" title="RBM学习笔记（七）RBM训练算法"></a>RBM学习笔记（七）RBM训练算法</h3><p><img src="http://img.blog.csdn.net/20140218142518171" alt=""><br><img src="http://img.blog.csdn.net/20140218142525640" alt=""></p>
-<p><img src="http://img.blog.csdn.net/20140218224838375" alt=""></p>
-<h3 id="原博客地址"><a href="#原博客地址" class="headerlink" title="原博客地址"></a>原博客地址</h3><p><a href="http://blog.csdn.net/itplus/article/details/19408701" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/19408701</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/限制玻尔兹曼机RBM评估/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2283,7 +2385,7 @@ test_writer.close()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">144</span>
+                <span class="site-state-item-count">145</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2305,7 +2407,7 @@ test_writer.close()
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

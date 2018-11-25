@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Building Autoencoders in Keras]]></title>
+    <url>%2F2018%2F11%2F25%2FBuilding-Autoencoders-in-Keras%2F</url>
+    <content type="text"><![CDATA[翻译自博客Building Autoencoders in Keras 在本教程中，我们将回答有关自动编码器的一些常见问题，我们将介绍以下模型的代码示例： a simple autoencoder based on a fully-connected layer a sparse autoencoder a deep fully-connected autoencoder a deep convolutional autoencoder an image denoising model a sequence-to-sequence autoencoder a variational autoencoder What are autoencoders? “自动编码”是一种压缩和解压缩的数据压缩算法,有下列三个特点： data-specific(特定数据) lossy(有损) learned automatically(自主学习) 另外，在几乎所有使用术语“自动编码器”的上下文中，压缩和解压缩功能都是用神经网络实现的。 1）自动编码器是特定于数据的，这意味着它们只能压缩类似于他们所训练的数据。这与MPEG-2音频层III（MP3）压缩算法不同，后者仅保留关于“声音”的假设，而不是关于特定类型的声音。在面部图片上训练的自动编码器在压缩树木图片方面做得相当差，因为它将学习的特征将是面部特定的。 2）自动编码器是有损耗的，这意味着与原始输入相比，解压缩的输出会降级（类似于MP3或JPEG压缩）。这与无损算术压缩不同。 3）自动编码器是从数据示例中自动学习的，这是一个有用的属性：它意味着很容易训练算法的特定实例，这些实例在特定类型的输入上表现良好。它不需要任何新的工程，只需要适当的培训数据。 要构建自动编码器，需要三件事：编码功能，解码功能，以及数据的压缩表示与解压缩表示之间的信息丢失量之间的距离函数（即loss函数）。编码器和解码器将被选择为参数函数（通常是神经网络），并且相对于距离函数是可微分的，因此可以使用随机梯度下降来优化编码/解码函数的参数以最小化重建损失。这很简单！而且你甚至不需要理解任何这些词在实践中开始使用自动编码器。 Are they good at data compression?通常，不是真的。例如，在图像压缩中，训练一个比JPEG等基本算法更好的自动编码器是非常困难的，并且通常唯一可以实现的方法是将自己限制在一种非常特殊的图像类型（例如哪个JPEG做得不好）。自动编码器是特定于数据的这一事实使得它们对于实际数据压缩问题通常是不切实际的：只能将它们用于与其训练相似的数据，并使它们更加通用，因此需要大量的训练数据。但是，未来可能会改变这一点，谁知道呢？ What are autoencoders good for?它们很少用于实际应用中。2012年，他们简要地在深度卷积神经网络的贪婪分层预训练中找到了应用[1]，但随着我们开始意识到更好的随机权重初始化方案足以从头开始训练深度网络。2014年，批量标准化[2]开始允许更深层次的网络，从2015年底开始，我们可以使用残差学习从头开始训练任意深度的网络[3]。 今天，自动编码器的两个有趣的实际应用是数据去噪（我们将在本文后面介绍），以及数据可视化的降维。通过适当的维度和稀疏性约束，自动编码器可以学习比PCA或其他基本技术更有趣的数据投影。 特别是对于2D可视化，t-SNE可能是最好的算法，但它通常需要相对低维的数据。因此，在高维数据中可视化相似关系的良好策略是首先使用自动编码器将数据压缩到低维空间（例如32维），然后使用t-SNE将压缩数据映射到2D平面。请注意，Keras中t-SNE的一个很好的参数化实现是由Kyle McDonald.ipynb)开发的，可以在Github上获得。另外scikit-learn也有一个简单实用的实现。 So what’s the big deal with autoencoders?他们的主要声誉来自在线提供的许多入门机器学习课程。因此，很多新手都非常喜欢自动编码器但无法掌握足够的自动编码器。这就是本教程存在的原因！ 另外，他们吸引了如此多的研究和关注的一个原因是因为他们长期以来被认为是解决无监督学习问题的潜在途径，即在不需要标签的情况下学习有用的表示。然后，自动编码器不是真正的无监督学习技术（这意味着完全不同的学习过程），它们是自我监督技术，是监督学习的特定实例，其中目标是从输入数据生成的。为了获得自我监督的模型来学习有趣的特征，你必须提出一个有趣的合成目标和损失函数，这就是出现问题的地方：仅仅学习在细节上重建你的输入可能不是这里的正确选择。在这一点上，有明显的证据表明，专注于在像素级重建图像，并不能有助于学习标签超级化学习所引发的有趣的抽象特征（其中目标是相当抽象的概念“发明的”“由人类如”狗“，”汽车“……）。事实上，人们可能会争辩说，这方面的最佳特征是那些在精确输入重建时最差的特征，同时在感兴趣的主要任务（分类，本地化等）上实现高性能。 在应用于视觉的自我监督学习中，自动编码器式输入重建的潜在富有成效的替代方案是使用玩具任务，例如拼图解决或细节上下文匹配（能够匹配高分辨率但小的图片片段与从中提取的图片的低分辨率版本）。以下论文研究拼图解决问题，并进行了非常有趣的阅读：http://arxiv.org/abs/1603.09246 这些任务为模型提供了关于传统自动编码器中缺失的输入数据的内置假设，例如“视觉宏观结构比像素级细节更重要”。 Let’s build the simplest possible autoencoder我们将从简单开始，使用单个全连接神经层作为编码器和解码器： from keras.layers import Input, Dense from keras.models import Model # this is the size of our encoded representations encoding_dim = 32 # 32 floats -&gt; compression of factor 24.5, assuming the input is 784 floats # this is our input placeholder input_img = Input(shape=(784,)) # &quot;encoded&quot; is the encoded representation of the input encoded = Dense(encoding_dim, activation=&#39;relu&#39;)(input_img) # &quot;decoded&quot; is the lossy reconstruction of the input decoded = Dense(784, activation=&#39;sigmoid&#39;)(encoded) # this model maps an input to its reconstruction autoencoder = Model(input_img, decoded) 我们还创建一个单独的编码器模型： # this model maps an input to its encoded representation encoder = Model(input_img, encoded) 以及解码器模型： # create a placeholder for an encoded (32-dimensional) input encoded_input = Input(shape=(encoding_dim,)) # retrieve the last layer of the autoencoder model decoder_layer = autoencoder.layers[-1] # create the decoder model decoder = Model(encoded_input, decoder_layer(encoded_input)) 现在让我们训练我们的自动编码器重建MNIST数字。首先，我们将配置我们的模型以使用每像素二进制交叉熵损失和Adadelta优化器： autoencoder.compile(optimizer=&#39;adadelta&#39;, loss=&#39;binary_crossentropy&#39;) 让我们准备输入数据。我们正在使用MNIST数字，丢弃标签（因为我们只对编码/解码输入图像感兴趣）。 from keras.datasets import mnist import numpy as np (x_train, _), (x_test, _) = mnist.load_data() 我们将对0到1之间的所有值进行归一化，并将28x28图像压缩为大小为784的向量。 x_train = x_train.astype(&#39;float32&#39;) / 255. x_test = x_test.astype(&#39;float32&#39;) / 255. x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:]))) x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:]))) print(x_train.shape) print(x_test.shape) 训练自动编解码50轮： autoencoder.fit(x_train, x_train, epochs=50, batch_size=256, shuffle=True, validation_data=(x_test, x_test)) 在50次迭代之后，自动编码器似乎达到稳定的训练集/验证集损失值约0.11。我们可以尝试可视化重建的输入和编码的表示。我们将使用Matplotlib。 # encode and decode some digits # note that we take them from the *test* set encoded_imgs = encoder.predict(x_test) decoded_imgs = decoder.predict(encoded_imgs) # use Matplotlib (don&#39;t ask) import matplotlib.pyplot as plt n = 10 # how many digits we will display plt.figure(figsize=(20, 4)) for i in range(n): # display original ax = plt.subplot(2, n, i + 1) plt.imshow(x_test[i].reshape(28, 28)) plt.gray() ax.get_xaxis().set_visible(False) ax.get_yaxis().set_visible(False) # display reconstruction ax = plt.subplot(2, n, i + 1 + n) plt.imshow(decoded_imgs[i].reshape(28, 28)) plt.gray() ax.get_xaxis().set_visible(False) ax.get_yaxis().set_visible(False) plt.show() 这就是我们得到的。顶行是原始数字，底行是重建数字。我们正在通过这种基本方法失去相当多的细节。 Adding a sparsity constraint on the encoded representations在前面的示例中，表示仅受隐藏层（32）的大小约束。在这种情况下，通常发生的是隐藏层正在学习PCA（主成分分析）的近似。但是，将表示约束为紧凑的另一种方法是在隐藏表示的活动上添加稀疏性约束，因此在给定时间更少的单元将“触发”。在Keras中，可以通过向我们的Dense层添加activity_regularizer来完成： from keras import regularizers encoding_dim = 32 input_img = Input(shape=(784,)) # add a Dense layer with a L1 activity regularizer encoded = Dense(encoding_dim, activation=&#39;relu&#39;, activity_regularizer=regularizers.l1(10e-5))(input_img) decoded = Dense(784, activation=&#39;sigmoid&#39;)(encoded) autoencoder = Model(input_img, decoded)]]></content>
+      <categories>
+        <category>deeplearning</category>
+      </categories>
+      <tags>
+        <tag>keras</tag>
+        <tag>deeplearning</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[python深度学习 代码清单6-2错误]]></title>
     <url>%2F2018%2F11%2F06%2Fpython%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E4%BB%A3%E7%A0%81%E6%B8%85%E5%8D%956-2%E9%94%99%E8%AF%AF%2F</url>
     <content type="text"><![CDATA[代码清单 6-2 字符级的one-hot编码# 错误代码 import string samples = [&#39;The cat sat on the mat.&#39;, &#39;The dog ate my homework.&#39;] characters = string.printable token_index = dict(zip(range(1, len(characters) + 1), characters)) max_length = 50 results = np.zeros((len(samples), max_length, max(token_index.keys()) + 1)) for i, sample in enumerate(samples): for j, character in enumerate(sample): index = token_index.get(character) results[i, j, index] = 1. # 正确代码 import string samples = [&#39;The cat sat on the mat.&#39;, &#39;The dog ate my homework.&#39;] characters = string.printable # All printable ASCII characters. token_index = dict(zip(characters, range(1, len(characters) + 1))) max_length = 50 results = np.zeros((len(samples), max_length, max(token_index.values()) + 1)) for i, sample in enumerate(samples): for j, character in enumerate(sample[:max_length]): index = token_index.get(character) results[i, j, index] = 1. 按照原书中代码，得到的results不是one-hot向量。]]></content>
@@ -95,20 +107,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[RBM学习笔记（七）RBM训练算法]]></title>
-    <url>%2F2018%2F03%2F21%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BARBM%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[RBM学习笔记（七）RBM训练算法 原博客地址http://blog.csdn.net/itplus/article/details/19408701]]></content>
-      <categories>
-        <category>深度学习</category>
-        <category>DBN</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>RBM</tag>
-        <tag>DBN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[RBM学习笔记（八）RBM的评估]]></title>
     <url>%2F2018%2F03%2F21%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BARBM%E8%AF%84%E4%BC%B0%2F</url>
     <content type="text"><![CDATA[RBM学习笔记（八）RBM的评估 原博客地址http://blog.csdn.net/itplus/article/details/19408773]]></content>
@@ -123,9 +121,23 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[RBM学习笔记（四）对数似然函数]]></title>
-    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%95%B0%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0%2F</url>
-    <content type="text"><![CDATA[RBM学习笔记（四）对数似然函数 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
+    <title><![CDATA[RBM学习笔记（七）RBM训练算法]]></title>
+    <url>%2F2018%2F03%2F21%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BARBM%E8%AE%AD%E7%BB%83%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[RBM学习笔记（七）RBM训练算法 原博客地址http://blog.csdn.net/itplus/article/details/19408701]]></content>
+      <categories>
+        <category>深度学习</category>
+        <category>DBN</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>RBM</tag>
+        <tag>DBN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[RBM学习笔记（六）对比散度算法]]></title>
+    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%AF%94%E6%95%A3%E5%BA%A6%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[RBM学习笔记（六）对比散度算法 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
       <categories>
         <category>深度学习</category>
         <category>DBN</category>
@@ -165,9 +177,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[RBM学习笔记（六）对比散度算法]]></title>
-    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%AF%94%E6%95%A3%E5%BA%A6%E7%AE%97%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[RBM学习笔记（六）对比散度算法 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
+    <title><![CDATA[RBM学习笔记（四）对数似然函数]]></title>
+    <url>%2F2018%2F03%2F20%2F%E9%99%90%E5%88%B6%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E5%AF%B9%E6%95%B0%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[RBM学习笔记（四）对数似然函数 原博客地址http://blog.csdn.net/itplus/article/details/19168967]]></content>
       <categories>
         <category>深度学习</category>
         <category>DBN</category>
@@ -469,9 +481,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Python3时间序列分析模型ARIMA的简单实用]]></title>
-    <url>%2F2017%2F09%2F29%2FTime%20Series%20Forecasting%20with%20ARIMA%20in%20Python3%2F</url>
-    <content type="text"><![CDATA[import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&#39;fivethirtyeight&#39;) %matplotlib inline #导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot; #收集了从1958年到2001年的，CO2变化 data=sm.datasets.co2.load_pandas() y=data.data #每周的数据很难工作，用每月的平均值代替 y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean() #使用缺失值前面的值来填充 y=y.fillna(y.bfill()) print(y) 1958-03-01 316.100000 1958-04-01 317.200000 1958-05-01 317.433333 1958-06-01 315.625000 1958-07-01 315.625000 1958-08-01 314.950000 1958-09-01 313.500000 1958-10-01 313.425000 1958-11-01 313.425000 1958-12-01 314.700000 1959-01-01 315.500000 1959-02-01 316.700000 1959-03-01 316.733333 1959-04-01 317.675000 1959-05-01 318.325000 1959-06-01 318.025000 1959-07-01 316.525000 1959-08-01 314.900000 1959-09-01 313.825000 1959-10-01 313.400000 1959-11-01 314.875000 1959-12-01 315.525000 1960-01-01 316.380000 1960-02-01 316.975000 1960-03-01 317.575000 1960-04-01 319.120000 1960-05-01 319.925000 1960-06-01 319.450000 1960-07-01 318.060000 1960-08-01 315.775000 ... 1999-07-01 369.000000 1999-08-01 366.700000 1999-09-01 364.675000 1999-10-01 365.140000 1999-11-01 366.650000 1999-12-01 367.900000 2000-01-01 369.020000 2000-02-01 369.375000 2000-03-01 370.400000 2000-04-01 371.540000 2000-05-01 371.650000 2000-06-01 371.625000 2000-07-01 369.940000 2000-08-01 367.950000 2000-09-01 366.540000 2000-10-01 366.725000 2000-11-01 368.125000 2000-12-01 369.440000 2001-01-01 370.175000 2001-02-01 371.325000 2001-03-01 372.060000 2001-04-01 372.775000 2001-05-01 373.800000 2001-06-01 373.060000 2001-07-01 371.300000 2001-08-01 369.425000 2001-09-01 367.880000 2001-10-01 368.050000 2001-11-01 369.375000 2001-12-01 371.020000 Freq: MS, Name: co2, Length: 526, dtype: float64 #可视化数据 y.plot(figsize=(15,6)) &lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt; 最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise. p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days. d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small. q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past. When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.). #Define the p,d,q parameters to take any value between 0 and 2 p=d=q=range(0,2) #产生不同的组合 pdq=list(itertools.product(p,d,q)) #加上季节 seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))] print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4])) Examples of parameter combinations for Seasonal ARIMA... SARIMAX: (0, 0, 1) x (0, 0, 1, 12) SARIMAX: (0, 0, 1) x (0, 1, 0, 12) SARIMAX: (0, 1, 0) x (0, 1, 1, 12) SARIMAX: (0, 1, 0) x (1, 0, 0, 12) 使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。 warnings.filterwarnings(&#39;ignore&#39;) for param in pdq: for param_seasonal in seasonal_pdq: try: mod=sm.tsa.statespace.SARIMAX(y,order=param, seasonal_order=param_seasonal, enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic)) except: continue ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514 ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955 ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035 ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077 ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545 ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444 ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609 ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488 ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783 ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884 ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123 ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135 ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242 ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801 ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082 ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724 ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303 ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172 ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419 ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214 ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316 ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715 ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042 ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721 ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874 ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157 ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964 ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518 ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054 ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267 ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374 ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998 ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694 ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544 ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341 ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134 ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588 ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976 ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977 ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118 ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662 ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821 ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868 ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384 ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459 ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794 ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837 ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677 ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254 ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126 ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399 ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544 ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744 ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113 ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746 ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897 ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253 ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126 ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924 ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222 #发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型 mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1), seasonal_order=(1,1,1,12), enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(results.summary().tables[1]) ============================================================================== coef std err z P&gt;|z| [0.025 0.975] ------------------------------------------------------------------------------ ar.L1 0.3181 0.092 3.441 0.001 0.137 0.499 ma.L1 -0.6254 0.077 -8.162 0.000 -0.776 -0.475 ar.S.L12 0.0010 0.001 1.732 0.083 -0.000 0.002 ma.S.L12 -0.8769 0.026 -33.806 0.000 -0.928 -0.826 sigma2 0.0972 0.004 22.632 0.000 0.089 0.106 ============================================================================== coef列显示了各个特征的权重，如何对时间序列产生影响。 results.plot_diagnostics(figsize=(15,12)) Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。 In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed. The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed. The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself. 这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间 #dynamic=False,ensures that we produce one-step ahead forecasts, #meaning that forecasts at each point are generated using the full history up to that point. pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False) pred_ci=pred.conf_int() #绘制出实际值 ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;) #预测值 pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7) #置信区间 ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0x66f26d8&gt; y_forecasted=pred.predicted_mean y_truth=y[&#39;1998-01-01&#39;:] #计算平方差 mse=((y_forecasted-y_truth)**2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2))) The Mean Squared Error of our forecasts is 0.07 #dynamic=True,利用指定时间点之前的数据进行预测？ pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True) pred_dynamic_ci = pred_dynamic.conf_int() ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15)) pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax) ax.fill_between(pred_dynamic_ci.index, pred_dynamic_ci.iloc[:, 0], pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25) ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1], alpha=.1, zorder=-1) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xdaddcf8&gt; # Extract the predicted and true values of our time series y_forecasted = pred_dynamic.predicted_mean y_truth = y[&#39;1998-01-01&#39;:] # Compute the mean square error mse = ((y_forecasted - y_truth) ** 2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2))) The Mean Squared Error of our forecasts is 1.01 #Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长 pred_uc=results.get_forecast(steps=500) #Get confidence intervals of forecasts pred_ci=pred_uc.conf_int() ax=y.plot(label=&#39;observed&#39;,figsize=(20,15)) pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;) ax.fill_between(pred_ci.index,pred_ci.iloc[:,0], pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xda122e8&gt; ##参考博客## https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3]]></content>
+    <title><![CDATA[机器学习实战第十四章学习笔记(利用SVD简化数据)]]></title>
+    <url>%2F2017%2F09%2F29%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[SVD的应用奇异值分解（SVD） 优点：简化数据，去除噪声，提高算法的结果 缺点：数据的转换可能难以理解 适用数据类型：数值型数据 利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。 隐性语义索引最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA). 在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。 推荐系统SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。 矩阵分解在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。 $$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$ ##利用Python实现SVD##利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。 import numpy as np In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]]) In[139]: U Out[139]: array([[-0.14142136, -0.98994949], [-0.98994949, 0.14142136]]) In[140]: Sigma Out[140]: array([ 10., 0.]) In[141]: VT Out[141]: array([[-0.70710678, -0.70710678], [-0.70710678, 0.70710678]]) 注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵 奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似： $$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$ 确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。 基于协同过滤的推荐引擎协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。 协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。 #### 相似度计算 #### 1. 欧式距离 2. 皮尔相关系数（Pearson correlation) 3. 余弦相似度(cosine similarity) #程序清单14-1 相似度计算 #欧式距离 def ecludSim(inA,inB): return 1.0/(1.0+la.norm(inA-inB)) #皮尔逊相关系数 def pearsSim(inA,inB): if len(inA)&lt;3: return 1.0 return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1] #余弦相似度 def cosSim(inA,inB): num=float(inA.T*inB) denom=la.norm(inA)*la.norm(inB) return 0.5+0.5*(num/denom) 示例：餐馆菜肴推荐引擎 寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。 在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。（根据相似度来计算） 对这些物品的评分从高到低进行排序，返回前N个物品 程序源码： &quot;&quot;&quot; 示例：餐馆菜肴推荐引擎 &quot;&quot;&quot; #程序清单14-2 基于物品相似度的推荐引擎 #基于给定相似度计算方法的条件下，用户对物品的估计评分值 &quot;&quot;&quot; dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品 &quot;&quot;&quot; def standEst(dataMat,user,simMeas,item): #物品数 n=np.shape(dataMat)[1] simTotal=0;ratSimTotal=0 #遍历每一个物品 for j in range(n): userRating=dataMat[user,j] #如果用户没有对该物品进行评分，则跳过 if userRating==0: continue #将item所在列与当前遍历列进行逻辑与 overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0, dataMat[:,j].A&gt;0))[0] #若结果为0，则相似度为0，说明item与当前物品毫无交集 if len(overLap)==0: similarity=0 else: #计算相似度 similarity=simMeas(dataMat[overLap,item], dataMat[overLap,j]) #总的相似度 simTotal+=similarity #考虑用户评分 ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: #归一化 return ratSimTotal/simTotal #返回最高N个推荐结果 def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst): unratedItems=np.nonzero(dataMat[user,:].A==0)[1] #所有物品都已经投过票，则不需要进行推荐 if len(unratedItems)==0: return &#39;you rated everything&#39; itemScores=[] #对未投票物品进行遍历 for item in unratedItems: estimatedScore=estMethod(dataMat,user,simMeas,item) itemScores.append((item,estimatedScore)) return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N] 利用SVD提高推荐的效果#程序清单14-3 基于SVD的评分估计 def svdEst(dataMat,user,simMeas,item): n=np.shape(dataMat)[1] simTotal=0.0;ratSimTotal=0.0 #奇异值分解 U,Sigma,VT=la.svd(dataMat) #构建对角矩阵 Sig4=np.mat(np.eye(4)*Sigma[:4]) #将物品转换到低维空间中 xformedItems=dataMat.T*U[:,:4]*Sig4.I for j in range(n): userRating=dataMat[user,j] if userRating==0 or j==item: continue similarity=simMeas(xformedItems[item,:].T, xformedItems[j,:].T) print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity)) simTotal+=similarity ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: return ratSimTotal/float(simTotal) 基于SVD的图像压缩原始的图像大小是3232=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要322+32*2+2=130个像素，相当于压缩了近10倍！ &quot;&quot;&quot; 基于SVD的图像压缩 &quot;&quot;&quot; #程序清单14-4 图像压缩函数 def printMat(inMat,thresh=0.8): for i in range(32): for k in range(32): if float(inMat[i,k])&gt;thresh: print(1,end=&#39;&#39;); else: print(0,end=&#39;&#39;); print(&#39;&#39;) def imgCompress(numSV=3,thresh=0.8): my1=[] for line in open(&#39;0_5.txt&#39;).readlines(): newRow=[] for i in range(32): newRow.append(int(line[i])) my1.append(newRow) myMat=np.mat(my1) print(&quot;****original matrix****&quot;) #打印原始数据 printMat(myMat,thresh) #SVD分解 U,Sigma,VT=la.svd(myMat) SigRecon=np.mat(np.zeros((numSV,numSV))) for k in range(numSV): SigRecon[k,k]=Sigma[k] #重构矩阵 reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:] print(&quot;****reconstructed matrix using %d singular values*****&quot; % numSV) printMat(reconMat,thresh) 小结SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。]]></content>
       <categories>
         <category>Python</category>
         <category>算法</category>
@@ -483,9 +495,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[机器学习实战第十四章学习笔记(利用SVD简化数据)]]></title>
-    <url>%2F2017%2F09%2F29%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[SVD的应用奇异值分解（SVD） 优点：简化数据，去除噪声，提高算法的结果 缺点：数据的转换可能难以理解 适用数据类型：数值型数据 利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。 隐性语义索引最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA). 在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。 推荐系统SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。 矩阵分解在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。 $$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$ ##利用Python实现SVD##利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。 import numpy as np In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]]) In[139]: U Out[139]: array([[-0.14142136, -0.98994949], [-0.98994949, 0.14142136]]) In[140]: Sigma Out[140]: array([ 10., 0.]) In[141]: VT Out[141]: array([[-0.70710678, -0.70710678], [-0.70710678, 0.70710678]]) 注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵 奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似： $$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$ 确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。 基于协同过滤的推荐引擎协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。 协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。 #### 相似度计算 #### 1. 欧式距离 2. 皮尔相关系数（Pearson correlation) 3. 余弦相似度(cosine similarity) #程序清单14-1 相似度计算 #欧式距离 def ecludSim(inA,inB): return 1.0/(1.0+la.norm(inA-inB)) #皮尔逊相关系数 def pearsSim(inA,inB): if len(inA)&lt;3: return 1.0 return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1] #余弦相似度 def cosSim(inA,inB): num=float(inA.T*inB) denom=la.norm(inA)*la.norm(inB) return 0.5+0.5*(num/denom) 示例：餐馆菜肴推荐引擎 寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。 在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。（根据相似度来计算） 对这些物品的评分从高到低进行排序，返回前N个物品 程序源码： &quot;&quot;&quot; 示例：餐馆菜肴推荐引擎 &quot;&quot;&quot; #程序清单14-2 基于物品相似度的推荐引擎 #基于给定相似度计算方法的条件下，用户对物品的估计评分值 &quot;&quot;&quot; dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品 &quot;&quot;&quot; def standEst(dataMat,user,simMeas,item): #物品数 n=np.shape(dataMat)[1] simTotal=0;ratSimTotal=0 #遍历每一个物品 for j in range(n): userRating=dataMat[user,j] #如果用户没有对该物品进行评分，则跳过 if userRating==0: continue #将item所在列与当前遍历列进行逻辑与 overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0, dataMat[:,j].A&gt;0))[0] #若结果为0，则相似度为0，说明item与当前物品毫无交集 if len(overLap)==0: similarity=0 else: #计算相似度 similarity=simMeas(dataMat[overLap,item], dataMat[overLap,j]) #总的相似度 simTotal+=similarity #考虑用户评分 ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: #归一化 return ratSimTotal/simTotal #返回最高N个推荐结果 def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst): unratedItems=np.nonzero(dataMat[user,:].A==0)[1] #所有物品都已经投过票，则不需要进行推荐 if len(unratedItems)==0: return &#39;you rated everything&#39; itemScores=[] #对未投票物品进行遍历 for item in unratedItems: estimatedScore=estMethod(dataMat,user,simMeas,item) itemScores.append((item,estimatedScore)) return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N] 利用SVD提高推荐的效果#程序清单14-3 基于SVD的评分估计 def svdEst(dataMat,user,simMeas,item): n=np.shape(dataMat)[1] simTotal=0.0;ratSimTotal=0.0 #奇异值分解 U,Sigma,VT=la.svd(dataMat) #构建对角矩阵 Sig4=np.mat(np.eye(4)*Sigma[:4]) #将物品转换到低维空间中 xformedItems=dataMat.T*U[:,:4]*Sig4.I for j in range(n): userRating=dataMat[user,j] if userRating==0 or j==item: continue similarity=simMeas(xformedItems[item,:].T, xformedItems[j,:].T) print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity)) simTotal+=similarity ratSimTotal+=similarity*userRating if simTotal==0: return 0 else: return ratSimTotal/float(simTotal) 基于SVD的图像压缩原始的图像大小是3232=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要322+32*2+2=130个像素，相当于压缩了近10倍！ &quot;&quot;&quot; 基于SVD的图像压缩 &quot;&quot;&quot; #程序清单14-4 图像压缩函数 def printMat(inMat,thresh=0.8): for i in range(32): for k in range(32): if float(inMat[i,k])&gt;thresh: print(1,end=&#39;&#39;); else: print(0,end=&#39;&#39;); print(&#39;&#39;) def imgCompress(numSV=3,thresh=0.8): my1=[] for line in open(&#39;0_5.txt&#39;).readlines(): newRow=[] for i in range(32): newRow.append(int(line[i])) my1.append(newRow) myMat=np.mat(my1) print(&quot;****original matrix****&quot;) #打印原始数据 printMat(myMat,thresh) #SVD分解 U,Sigma,VT=la.svd(myMat) SigRecon=np.mat(np.zeros((numSV,numSV))) for k in range(numSV): SigRecon[k,k]=Sigma[k] #重构矩阵 reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:] print(&quot;****reconstructed matrix using %d singular values*****&quot; % numSV) printMat(reconMat,thresh) 小结SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。]]></content>
+    <title><![CDATA[Python3时间序列分析模型ARIMA的简单实用]]></title>
+    <url>%2F2017%2F09%2F29%2FTime%20Series%20Forecasting%20with%20ARIMA%20in%20Python3%2F</url>
+    <content type="text"><![CDATA[import warnings import itertools import pandas as pd import numpy as np import statsmodels.api as sm import matplotlib.pyplot as plt plt.style.use(&#39;fivethirtyeight&#39;) %matplotlib inline #导入数据集 &quot;Atomspheric CO2 from Continuous Air Samples at Mauna Loa Observatory,Hawaii,U.S.A&quot; #收集了从1958年到2001年的，CO2变化 data=sm.datasets.co2.load_pandas() y=data.data #每周的数据很难工作，用每月的平均值代替 y=y[&#39;co2&#39;].resample(&#39;MS&#39;).mean() #使用缺失值前面的值来填充 y=y.fillna(y.bfill()) print(y) 1958-03-01 316.100000 1958-04-01 317.200000 1958-05-01 317.433333 1958-06-01 315.625000 1958-07-01 315.625000 1958-08-01 314.950000 1958-09-01 313.500000 1958-10-01 313.425000 1958-11-01 313.425000 1958-12-01 314.700000 1959-01-01 315.500000 1959-02-01 316.700000 1959-03-01 316.733333 1959-04-01 317.675000 1959-05-01 318.325000 1959-06-01 318.025000 1959-07-01 316.525000 1959-08-01 314.900000 1959-09-01 313.825000 1959-10-01 313.400000 1959-11-01 314.875000 1959-12-01 315.525000 1960-01-01 316.380000 1960-02-01 316.975000 1960-03-01 317.575000 1960-04-01 319.120000 1960-05-01 319.925000 1960-06-01 319.450000 1960-07-01 318.060000 1960-08-01 315.775000 ... 1999-07-01 369.000000 1999-08-01 366.700000 1999-09-01 364.675000 1999-10-01 365.140000 1999-11-01 366.650000 1999-12-01 367.900000 2000-01-01 369.020000 2000-02-01 369.375000 2000-03-01 370.400000 2000-04-01 371.540000 2000-05-01 371.650000 2000-06-01 371.625000 2000-07-01 369.940000 2000-08-01 367.950000 2000-09-01 366.540000 2000-10-01 366.725000 2000-11-01 368.125000 2000-12-01 369.440000 2001-01-01 370.175000 2001-02-01 371.325000 2001-03-01 372.060000 2001-04-01 372.775000 2001-05-01 373.800000 2001-06-01 373.060000 2001-07-01 371.300000 2001-08-01 369.425000 2001-09-01 367.880000 2001-10-01 368.050000 2001-11-01 369.375000 2001-12-01 371.020000 Freq: MS, Name: co2, Length: 526, dtype: float64 #可视化数据 y.plot(figsize=(15,6)) &lt;matplotlib.axes._subplots.AxesSubplot at 0x66d31d0&gt; 最常使用的时间序列预测方法是ARIMA(AutoregRessive Integrated Moving Average).ARIMA模型有3个参数(p,d,q). 这3个参数反映了数据集的Seasonality、trend、noise. p is the auto-regressive part of the model. It allows us to incorporate the effect of past values into our model. Intuitively, this would be similar to stating that it is likely to be warm tomorrow if it has been warm the past 3 days. d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing (i.e. the number of past time points to subtract from the current value) to apply to the time series. Intuitively, this would be similar to stating that it is likely to be same temperature tomorrow if the difference in temperature in the last three days has been very small. q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past. When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.). #Define the p,d,q parameters to take any value between 0 and 2 p=d=q=range(0,2) #产生不同的组合 pdq=list(itertools.product(p,d,q)) #加上季节 seasonal_pdq=[(x[0],x[1],x[2],12) for x in list(itertools.product(p,d,q))] print(&#39;Examples of parameter combinations for Seasonal ARIMA...&#39;) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[1])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[1],seasonal_pdq[2])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[3])) print(&#39;SARIMAX: {} x {}&#39;.format(pdq[2],seasonal_pdq[4])) Examples of parameter combinations for Seasonal ARIMA... SARIMAX: (0, 0, 1) x (0, 0, 1, 12) SARIMAX: (0, 0, 1) x (0, 1, 0, 12) SARIMAX: (0, 1, 0) x (0, 1, 1, 12) SARIMAX: (0, 1, 0) x (1, 0, 0, 12) 使用AIC(Akaike Information Criterion)来评价预测值的好坏，AIC的测量在考虑模型拟合的同时兼顾了模型的复杂性。 warnings.filterwarnings(&#39;ignore&#39;) for param in pdq: for param_seasonal in seasonal_pdq: try: mod=sm.tsa.statespace.SARIMAX(y,order=param, seasonal_order=param_seasonal, enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(&#39;ARIMA{} x {}12 - AIC:{}&#39;.format(param,param_seasonal,results.aic)) except: continue ARIMA(0, 0, 0) x (0, 0, 1, 12)12 - AIC:6787.343624045514 ARIMA(0, 0, 0) x (0, 1, 1, 12)12 - AIC:1596.711172763955 ARIMA(0, 0, 0) x (1, 0, 0, 12)12 - AIC:1058.9388921320035 ARIMA(0, 0, 0) x (1, 0, 1, 12)12 - AIC:1056.2878469210077 ARIMA(0, 0, 0) x (1, 1, 0, 12)12 - AIC:1361.6578978075545 ARIMA(0, 0, 0) x (1, 1, 1, 12)12 - AIC:1044.7647912707444 ARIMA(0, 0, 1) x (0, 0, 0, 12)12 - AIC:6881.048755626609 ARIMA(0, 0, 1) x (0, 0, 1, 12)12 - AIC:6072.662327451488 ARIMA(0, 0, 1) x (0, 1, 0, 12)12 - AIC:1379.1941067396783 ARIMA(0, 0, 1) x (0, 1, 1, 12)12 - AIC:1241.4174716778884 ARIMA(0, 0, 1) x (1, 0, 0, 12)12 - AIC:1088.9948875850123 ARIMA(0, 0, 1) x (1, 0, 1, 12)12 - AIC:814.4118150843135 ARIMA(0, 0, 1) x (1, 1, 0, 12)12 - AIC:1119.5957893617242 ARIMA(0, 0, 1) x (1, 1, 1, 12)12 - AIC:807.0912988219801 ARIMA(0, 1, 0) x (0, 0, 1, 12)12 - AIC:1240.2211199194082 ARIMA(0, 1, 0) x (0, 1, 1, 12)12 - AIC:337.7938546075724 ARIMA(0, 1, 0) x (1, 0, 0, 12)12 - AIC:619.9501759055303 ARIMA(0, 1, 0) x (1, 0, 1, 12)12 - AIC:376.9283760172 ARIMA(0, 1, 0) x (1, 1, 0, 12)12 - AIC:478.32969077419 ARIMA(0, 1, 0) x (1, 1, 1, 12)12 - AIC:323.0776389715214 ARIMA(0, 1, 1) x (0, 0, 0, 12)12 - AIC:1371.1872602335316 ARIMA(0, 1, 1) x (0, 0, 1, 12)12 - AIC:1101.8410734302715 ARIMA(0, 1, 1) x (0, 1, 0, 12)12 - AIC:587.9479710144042 ARIMA(0, 1, 1) x (0, 1, 1, 12)12 - AIC:302.4949000294721 ARIMA(0, 1, 1) x (1, 0, 0, 12)12 - AIC:584.4333533382874 ARIMA(0, 1, 1) x (1, 0, 1, 12)12 - AIC:337.1999051381157 ARIMA(0, 1, 1) x (1, 1, 0, 12)12 - AIC:433.08636080834964 ARIMA(0, 1, 1) x (1, 1, 1, 12)12 - AIC:281.5189824575518 ARIMA(1, 0, 0) x (0, 0, 0, 12)12 - AIC:1676.8881767362054 ARIMA(1, 0, 0) x (0, 0, 1, 12)12 - AIC:1241.9354357372267 ARIMA(1, 0, 0) x (0, 1, 0, 12)12 - AIC:624.2602350139374 ARIMA(1, 0, 0) x (0, 1, 1, 12)12 - AIC:341.2896610178998 ARIMA(1, 0, 0) x (1, 0, 0, 12)12 - AIC:579.3895777150694 ARIMA(1, 0, 0) x (1, 0, 1, 12)12 - AIC:370.59134220280544 ARIMA(1, 0, 0) x (1, 1, 0, 12)12 - AIC:476.0500437548341 ARIMA(1, 0, 0) x (1, 1, 1, 12)12 - AIC:327.58083322496134 ARIMA(1, 0, 1) x (0, 0, 0, 12)12 - AIC:1372.6085881593588 ARIMA(1, 0, 1) x (0, 0, 1, 12)12 - AIC:1199.488809891976 ARIMA(1, 0, 1) x (0, 1, 0, 12)12 - AIC:586.4485732611977 ARIMA(1, 0, 1) x (0, 1, 1, 12)12 - AIC:305.6273831940118 ARIMA(1, 0, 1) x (1, 0, 0, 12)12 - AIC:587.4338742477662 ARIMA(1, 0, 1) x (1, 0, 1, 12)12 - AIC:399.9368041891821 ARIMA(1, 0, 1) x (1, 1, 0, 12)12 - AIC:433.5469464396868 ARIMA(1, 0, 1) x (1, 1, 1, 12)12 - AIC:285.76516171537384 ARIMA(1, 1, 0) x (0, 0, 0, 12)12 - AIC:1324.311112732459 ARIMA(1, 1, 0) x (0, 0, 1, 12)12 - AIC:1060.9351914429794 ARIMA(1, 1, 0) x (0, 1, 0, 12)12 - AIC:600.7412682677837 ARIMA(1, 1, 0) x (0, 1, 1, 12)12 - AIC:312.1329633298677 ARIMA(1, 1, 0) x (1, 0, 0, 12)12 - AIC:593.6637754907254 ARIMA(1, 1, 0) x (1, 0, 1, 12)12 - AIC:349.20914674681126 ARIMA(1, 1, 0) x (1, 1, 0, 12)12 - AIC:440.1375921963399 ARIMA(1, 1, 0) x (1, 1, 1, 12)12 - AIC:293.7426230783544 ARIMA(1, 1, 1) x (0, 0, 0, 12)12 - AIC:1262.6545542464744 ARIMA(1, 1, 1) x (0, 0, 1, 12)12 - AIC:1052.0636724059113 ARIMA(1, 1, 1) x (0, 1, 0, 12)12 - AIC:581.3099934454746 ARIMA(1, 1, 1) x (0, 1, 1, 12)12 - AIC:295.9374057333897 ARIMA(1, 1, 1) x (1, 0, 0, 12)12 - AIC:576.8647111808253 ARIMA(1, 1, 1) x (1, 0, 1, 12)12 - AIC:327.90491256754126 ARIMA(1, 1, 1) x (1, 1, 0, 12)12 - AIC:444.12436864889924 ARIMA(1, 1, 1) x (1, 1, 1, 12)12 - AIC:277.7802252819222 #发现ARIMA(1,1,1)*(1,1,1,12)效果最好，因此用来拟合模型 mod=sm.tsa.statespace.SARIMAX(y,order=(1,1,1), seasonal_order=(1,1,1,12), enforce_stationarity=False, enforce_invertibility=False) results=mod.fit() print(results.summary().tables[1]) ============================================================================== coef std err z P&gt;|z| [0.025 0.975] ------------------------------------------------------------------------------ ar.L1 0.3181 0.092 3.441 0.001 0.137 0.499 ma.L1 -0.6254 0.077 -8.162 0.000 -0.776 -0.475 ar.S.L12 0.0010 0.001 1.732 0.083 -0.000 0.002 ma.S.L12 -0.8769 0.026 -33.806 0.000 -0.928 -0.826 sigma2 0.0972 0.004 22.632 0.000 0.089 0.106 ============================================================================== coef列显示了各个特征的权重，如何对时间序列产生影响。 results.plot_diagnostics(figsize=(15,12)) Our primary concern is to ensure that the residuals of our model are uncorrelated and normally distributed with zero-mean. 即主要关心的是Standardized residual（残差）是不相关的，残差大致服从零均值正态分布。如果seasonal ARIMA模型不满足这些，则其还要提高的可能性。 In the top right plot, we see that the red KDE line follows closely with the N(0,1) line (where N(0,1)) is the standard notation for a normal distribution with mean 0 and standard deviation of 1). This is a good indication that the residuals are normally distributed. The qq-plot on the bottom left shows that the ordered distribution of residuals (blue dots) follows the linear trend of the samples taken from a standard normal distribution with N(0, 1). Again, this is a strong indication that the residuals are normally distributed. The residuals over time (top left plot) don’t display any obvious seasonality and appear to be white noise. This is confirmed by the autocorrelation (i.e. correlogram) plot on the bottom right, which shows that the time series residuals have low correlation with lagged versions of itself. 这里开始用模型进行预测，get_prediction()返回预测值，conf_int()给出相应的置信区间 #dynamic=False,ensures that we produce one-step ahead forecasts, #meaning that forecasts at each point are generated using the full history up to that point. pred=results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;),dynamic=False) pred_ci=pred.conf_int() #绘制出实际值 ax=y[&#39;1990&#39;:].plot(label=&#39;observed&#39;) #预测值 pred.predicted_mean.plot(ax=ax,label=&#39;One-step ahead Forecast&#39;,alpha=.7) #置信区间 ax.fill_between(pred_ci.index,pred_ci.iloc[:,0],pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.2) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0x66f26d8&gt; y_forecasted=pred.predicted_mean y_truth=y[&#39;1998-01-01&#39;:] #计算平方差 mse=((y_forecasted-y_truth)**2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse,2))) The Mean Squared Error of our forecasts is 0.07 #dynamic=True,利用指定时间点之前的数据进行预测？ pred_dynamic = results.get_prediction(start=pd.to_datetime(&#39;1998-01-01&#39;), dynamic=True, full_results=True) pred_dynamic_ci = pred_dynamic.conf_int() ax = y[&#39;1990&#39;:].plot(label=&#39;observed&#39;, figsize=(20, 15)) pred_dynamic.predicted_mean.plot(label=&#39;Dynamic Forecast&#39;, ax=ax) ax.fill_between(pred_dynamic_ci.index, pred_dynamic_ci.iloc[:, 0], pred_dynamic_ci.iloc[:, 1], color=&#39;k&#39;, alpha=.25) ax.fill_betweenx(ax.get_ylim(), pd.to_datetime(&#39;1998-01-01&#39;), y.index[-1], alpha=.1, zorder=-1) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xdaddcf8&gt; # Extract the predicted and true values of our time series y_forecasted = pred_dynamic.predicted_mean y_truth = y[&#39;1998-01-01&#39;:] # Compute the mean square error mse = ((y_forecasted - y_truth) ** 2).mean() print(&#39;The Mean Squared Error of our forecasts is {}&#39;.format(round(mse, 2))) The Mean Squared Error of our forecasts is 1.01 #Get forecast 500 steps ahead in future，get_forecast()可以指定预测的步长 pred_uc=results.get_forecast(steps=500) #Get confidence intervals of forecasts pred_ci=pred_uc.conf_int() ax=y.plot(label=&#39;observed&#39;,figsize=(20,15)) pred_uc.predicted_mean.plot(ax=ax,label=&#39;Forecast&#39;) ax.fill_between(pred_ci.index,pred_ci.iloc[:,0], pred_ci.iloc[:,1],color=&#39;k&#39;,alpha=.25) ax.set_xlabel(&#39;Date&#39;) ax.set_ylabel(&#39;CO2 Levels&#39;) plt.legend() &lt;matplotlib.legend.Legend at 0xda122e8&gt; ##参考博客## https://www.digitalocean.com/community/tutorials/a-guide-to-time-series-forecasting-with-arima-in-python-3]]></content>
       <categories>
         <category>Python</category>
         <category>算法</category>
@@ -743,6 +755,19 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(1)]]></title>
+    <url>%2F2017%2F09%2F09%2FHands-on%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1)%2F</url>
+    <content type="text"><![CDATA[Chapter 2 End-to-End Machine Learning Project主要内容： Look at the big picture Get the data Discover and visualize the data to gain insights Prepare the data for Machine Learning algorithms Select a model and train it Fine-tune your model Present your solution Launch, monitor, and maintain your system PipelinesA sequence of data processing components is called a data pipeline. 一系列数据处理组件被称为pipeline. Create a Test Set通常从dataset中随机抽取出20%放在一边作为测试集。 import numpy as np # 注意确定随机数的种子，以便后期复现 np.random.seed(42) def split_train_test(data, test_ratio): shuffled_indices = np.random.permutation(len(data)) test_set_size = int(len(data) * test_ratio) test_indices = shuffled_indices[:test_set_size] train_indices = shuffled_indices[test_set_size:] return data.iloc[train_indices], data.iloc[test_indices] train_set, test_set = split_train_test(housing, 0.2) print(len(train_set), &#39;train +&#39;, len(test_set), &#39;test&#39;) # sklearn库中也有对应的函数 from sklearn.model_selection import train_test_split train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42) 有时候，test set的划分也不是完全随机的，在数据集非常大时，没有问题。但小数据时，应该保证与原始大环境同分布，避免采样偏差。 housing[&#39;income_cat&#39;] = np.ceil(housing[&#39;median_income&#39;] / 1.5) housing[&#39;income_cat&#39;].where(housing[&#39;income_cat&#39;] &lt; 5, 5.0, inplace=True) # 分层采样(stratified sampling) from sklearn.model_selection import StratifiedShuffleSplit split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42) for train_index, test_index in split.split(housing, housing[&#39;income_cat&#39;]): strat_train_set = housing.loc[train_index] strat_test_set = housing.loc[test_index] Discover and Visualize the Data to Gain Insights# 创建副本 housing = strat_train_set.copy() housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;) The radius of each circle represents the district’s population (option s), and the color represents the price (option c). We will use a predefined color map (option cmap) called jet, which ranges from blue (low values) to red (high prices). housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;, alpha=0.4, s=housing[&#39;population&#39;]/100, label=&#39;population&#39;, c=&#39;median_house_value&#39;, cmap=plt.get_cmap(&#39;jet&#39;), colorbar=True) plt.legend() # 相关系数或者说Pearsons&#39;r系数 corr_matrix = housing.corr() corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False) from pandas.tools.plotting import scatter_matrix attributes = [&#39;median_house_value&#39;,&#39;median_income&#39;,&#39;total_rooms&#39;, &#39;housing_median_age&#39;] scatter_matrix(housing[attributes], figsize=(12,8)) Experimenting with Attribute Combinationshousing[&#39;rooms_per_household&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;households&#39;] housing[&#39;bedrooms_per_room&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;total_rooms&#39;] housing[&#39;population_per_household&#39;] = housing[&#39;population&#39;]/housing[&#39;households&#39;] corr_matrix = housing.corr() corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False) Data Cleaning对于缺失值，有3种处理办法 Get rid of the corresponding districts(丢弃该条样本) Get rid of the whole attribute(丢弃整个列) Set the values to some value (zero, the mean, the median, etc.).(填充均值、中位数) from sklearn.preprocessing import Imputer imputer = Imputer(strategy=’median’) housing_num = housing.drop(‘ocean_proximity’, axis=1) imputer.fit(housing_num) X = imputer.transform(housing_num) housing_tr = pd.DataFrame(X, columns = housing_num.columns) Handling Text and Categorical Attributesfrom sklearn.preprocessing import LabelEncoder encoder = LabelEncoder() housing_cat = housing[&#39;ocean_proximity&#39;] housing_cat_encoded = encoder.fit_transform(housing_cat) housing_cat_encoded from sklearn.preprocessing import OneHotEncoder encoder = OneHotEncoder() housing_cat_1hot = encoder.fit_transform(housing_cat_encoded.reshape(-1,1)) housing_cat_1hot.toarray() from sklearn.preprocessing import LabelBinarizer encoder = LabelBinarizer() housing_cat_1hot = encoder.fit_transform(housing_cat) housing_cat_1hot Custom Transformersfrom sklearn.base import BaseEstimator, TransformerMixin rooms_ix, bedrooms_ix, population_ix, household_ix = 3, 4, 5, 6 class CombinedAttributesAdder(BaseEstimator, TransformerMixin): def __init__(self, add_bedrooms_per_room = True): self.add_bedrooms_per_room = add_bedrooms_per_room def fit(self, X, y=None): return self def transform(self, X, y=None): rooms_per_household = X[:, rooms_ix] / X[:, household_ix] population_per_household = X[:, population_ix] / X[:, household_ix] if self.add_bedrooms_per_room: bedrooms_per_room = X[:, bedrooms_ix] / X[:, rooms_ix] return np.c_[X, rooms_per_household, population_per_household, bedrooms_per_room] else: return np.c_[X, rooms_per_household, population_per_household] attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False) housing_extra_attribs = attr_adder.transform(housing.values) Feature Scaling通常有两种方式进行特征缩放，min-max scaling, standardization Min-max scaling(normalization): \( \frac {x-min}{max-min} \) Standardization: \( \frac {x-mean}{variance} \) from sklearn.base import BaseEstimator, TransformerMixin class DataFrameSelector(BaseEstimator, TransformerMixin): def __init__(self, attribute_names): self.attribute_names = attribute_names def fit(self, X, y=None): return self def transform(self, X): return X[self.attribute_names].values from sklearn.pipeline import Pipeline from sklearn.preprocessing import StandardScaler num_pipeline = Pipeline([ (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)), (&#39;attribs_adder&#39;, CombinedAttributesAdder()), (&#39;std_scaler&#39;, StandardScaler()), ]) from sklearn.pipeline import FeatureUnion num_attribs = list(housing_num) cat_attribs = [&#39;ocean_proximity&#39;] num_pipeline = Pipeline([ (&#39;selector&#39;, DataFrameSelector(num_attribs)), (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)), (&#39;attribs_adder&#39;, CombinedAttributesAdder()), (&#39;std_scaler&#39;, StandardScaler()), ]) cat_pipeline = Pipeline([ (&#39;selector&#39;, DataFrameSelector(cat_attribs)), (&#39;label_binarizer&#39;, LabelBinarizer()), ]) full_pipeline = FeatureUnion(trainsformer_list=[ (&#39;num_pipeline&#39;, num_pipeline), (&#39;cat_pipeline&#39;, cat_pipeline), ])]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>书籍</tag>
+        <tag>sklearn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[网易校招一道算法题]]></title>
     <url>%2F2017%2F09%2F09%2F%E7%BD%91%E6%98%93%E4%B8%80%E9%81%93%E7%AE%97%E6%B3%95%E9%A2%98%2F</url>
     <content type="text"><![CDATA[题目是： 小易正在玩一款新出的射击游戏，这个射击游戏在一个二维平面进行 ，小易在坐标原点(0,0)，平面上有n只怪物，每个怪物有所在的坐标 (x[i],y[i]).小易进行一次射击会把x轴和y轴上(包括坐标原点)的怪 物一次性消灭。小易是这个游戏的VIP玩家，他拥有两项特权操作。 1、让平面内的所有怪物同时向任意同一方向移动任意同一距离。 2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度。 小易要进行一次射击，小易在进行射击前，可以使用这两种特权 操作任意次。 小易想知道在他射击的时候最多可以同时消灭多少只怪物。 看到题目的时候，首先想的是根据两项特权暴力遍历。后来理解题意，发现怪物数n&lt;=50, 两项特权的意思其实是可以改变坐标系的位置和方向，那么在改变的过程中坐标系x轴，y轴出现怪物次数最多。 想到这一点之后，便开始动手编程。思路是，首先选择一个坐标，让其他怪物坐标减去这个坐标(相当于将坐标系移动到该坐标了)，然后计算相对选定怪物的角度[-180,+180]，再将同一角度(45和135属于一类)的分类。按角度类别再次遍历，寻找某一角度和其角度垂直的角度的个数，再加上原点1个就是当前怪物为原点的最大消灭数。 真实的讲，想到这一点的时候还是很激动的~ 但是后来用C语言怎么也实现不了。原因在于无法快速找到同一角度的分类，一个数组里不重复的数有多少哪些，分别有多少个？在这里卡了好久。。。 后来看到牛客网上有人公布答案，解题思路类似，但是他是用斜率来表示的，更高明一些。同一条直线上斜率相同，垂直直线斜率乘积是-1； C++代码如下： 作者：雨baby 链接：https://www.nowcoder.com/discuss/39219?type=0&amp;order=0&amp;pos=6&amp;page=2 来源：牛客网 #include &lt;bits/stdc++.h&gt; using namespace std; const int maxn = 50 + 5; int x[maxn], y[maxn]; int n; int solve() { if(n &lt;= 2) return n; int res = 1; for(int i = 0; i &lt; n; i++) { for(int j = 0; j &lt; n; j++) { if(i != j) { int dx1 = x[j] - x[i]; int dy1 = y[j] - y[i]; for(int k = 0; k &lt; n; k++) { int cnt = 0; if(i != k &amp;&amp; j != k) { for(int r = 0; r &lt; n; r++) { int dx2 = x[r] - x[i]; int dy2 = y[r] - y[i]; if(dy1 * dx2 == dy2 * dx1) { cnt++; } else { dx2 = x[r] - x[k]; dy2 = y[r] - y[k]; if(dy1 * dy2 == -dx2 * dx1) { cnt++; } } } } res = max(res, cnt); } } } } return res; } int main() { cin &gt;&gt; n; for(int i = 0; i &lt; n; i++) cin &gt;&gt; x[i]; for(int i = 0; i &lt; n; i++) cin &gt;&gt; y[i]; cout &lt;&lt; solve() &lt;&lt; endl; }]]></content>
@@ -755,16 +780,17 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hands-On Machine Learning with Scikit-Learn and TensorFlow 第二章学习笔记(1)]]></title>
-    <url>%2F2017%2F09%2F09%2FHands-on%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1)%2F</url>
-    <content type="text"><![CDATA[Chapter 2 End-to-End Machine Learning Project主要内容： Look at the big picture Get the data Discover and visualize the data to gain insights Prepare the data for Machine Learning algorithms Select a model and train it Fine-tune your model Present your solution Launch, monitor, and maintain your system PipelinesA sequence of data processing components is called a data pipeline. 一系列数据处理组件被称为pipeline. Create a Test Set通常从dataset中随机抽取出20%放在一边作为测试集。 import numpy as np # 注意确定随机数的种子，以便后期复现 np.random.seed(42) def split_train_test(data, test_ratio): shuffled_indices = np.random.permutation(len(data)) test_set_size = int(len(data) * test_ratio) test_indices = shuffled_indices[:test_set_size] train_indices = shuffled_indices[test_set_size:] return data.iloc[train_indices], data.iloc[test_indices] train_set, test_set = split_train_test(housing, 0.2) print(len(train_set), &#39;train +&#39;, len(test_set), &#39;test&#39;) # sklearn库中也有对应的函数 from sklearn.model_selection import train_test_split train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42) 有时候，test set的划分也不是完全随机的，在数据集非常大时，没有问题。但小数据时，应该保证与原始大环境同分布，避免采样偏差。 housing[&#39;income_cat&#39;] = np.ceil(housing[&#39;median_income&#39;] / 1.5) housing[&#39;income_cat&#39;].where(housing[&#39;income_cat&#39;] &lt; 5, 5.0, inplace=True) # 分层采样(stratified sampling) from sklearn.model_selection import StratifiedShuffleSplit split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42) for train_index, test_index in split.split(housing, housing[&#39;income_cat&#39;]): strat_train_set = housing.loc[train_index] strat_test_set = housing.loc[test_index] Discover and Visualize the Data to Gain Insights# 创建副本 housing = strat_train_set.copy() housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;) The radius of each circle represents the district’s population (option s), and the color represents the price (option c). We will use a predefined color map (option cmap) called jet, which ranges from blue (low values) to red (high prices). housing.plot(kind=&#39;scatter&#39;, x=&#39;longitude&#39;, y=&#39;latitude&#39;, alpha=0.4, s=housing[&#39;population&#39;]/100, label=&#39;population&#39;, c=&#39;median_house_value&#39;, cmap=plt.get_cmap(&#39;jet&#39;), colorbar=True) plt.legend() # 相关系数或者说Pearsons&#39;r系数 corr_matrix = housing.corr() corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False) from pandas.tools.plotting import scatter_matrix attributes = [&#39;median_house_value&#39;,&#39;median_income&#39;,&#39;total_rooms&#39;, &#39;housing_median_age&#39;] scatter_matrix(housing[attributes], figsize=(12,8)) Experimenting with Attribute Combinationshousing[&#39;rooms_per_household&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;households&#39;] housing[&#39;bedrooms_per_room&#39;] = housing[&#39;total_rooms&#39;]/housing[&#39;total_rooms&#39;] housing[&#39;population_per_household&#39;] = housing[&#39;population&#39;]/housing[&#39;households&#39;] corr_matrix = housing.corr() corr_matrix[&#39;median_house_value&#39;].sort_values(ascending=False) Data Cleaning对于缺失值，有3种处理办法 Get rid of the corresponding districts(丢弃该条样本) Get rid of the whole attribute(丢弃整个列) Set the values to some value (zero, the mean, the median, etc.).(填充均值、中位数) from sklearn.preprocessing import Imputer imputer = Imputer(strategy=’median’) housing_num = housing.drop(‘ocean_proximity’, axis=1) imputer.fit(housing_num) X = imputer.transform(housing_num) housing_tr = pd.DataFrame(X, columns = housing_num.columns) Handling Text and Categorical Attributesfrom sklearn.preprocessing import LabelEncoder encoder = LabelEncoder() housing_cat = housing[&#39;ocean_proximity&#39;] housing_cat_encoded = encoder.fit_transform(housing_cat) housing_cat_encoded from sklearn.preprocessing import OneHotEncoder encoder = OneHotEncoder() housing_cat_1hot = encoder.fit_transform(housing_cat_encoded.reshape(-1,1)) housing_cat_1hot.toarray() from sklearn.preprocessing import LabelBinarizer encoder = LabelBinarizer() housing_cat_1hot = encoder.fit_transform(housing_cat) housing_cat_1hot Custom Transformersfrom sklearn.base import BaseEstimator, TransformerMixin rooms_ix, bedrooms_ix, population_ix, household_ix = 3, 4, 5, 6 class CombinedAttributesAdder(BaseEstimator, TransformerMixin): def __init__(self, add_bedrooms_per_room = True): self.add_bedrooms_per_room = add_bedrooms_per_room def fit(self, X, y=None): return self def transform(self, X, y=None): rooms_per_household = X[:, rooms_ix] / X[:, household_ix] population_per_household = X[:, population_ix] / X[:, household_ix] if self.add_bedrooms_per_room: bedrooms_per_room = X[:, bedrooms_ix] / X[:, rooms_ix] return np.c_[X, rooms_per_household, population_per_household, bedrooms_per_room] else: return np.c_[X, rooms_per_household, population_per_household] attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False) housing_extra_attribs = attr_adder.transform(housing.values) Feature Scaling通常有两种方式进行特征缩放，min-max scaling, standardization Min-max scaling(normalization): \( \frac {x-min}{max-min} \) Standardization: \( \frac {x-mean}{variance} \) from sklearn.base import BaseEstimator, TransformerMixin class DataFrameSelector(BaseEstimator, TransformerMixin): def __init__(self, attribute_names): self.attribute_names = attribute_names def fit(self, X, y=None): return self def transform(self, X): return X[self.attribute_names].values from sklearn.pipeline import Pipeline from sklearn.preprocessing import StandardScaler num_pipeline = Pipeline([ (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)), (&#39;attribs_adder&#39;, CombinedAttributesAdder()), (&#39;std_scaler&#39;, StandardScaler()), ]) from sklearn.pipeline import FeatureUnion num_attribs = list(housing_num) cat_attribs = [&#39;ocean_proximity&#39;] num_pipeline = Pipeline([ (&#39;selector&#39;, DataFrameSelector(num_attribs)), (&#39;imputer&#39;, Imputer(strategy=&#39;median&#39;)), (&#39;attribs_adder&#39;, CombinedAttributesAdder()), (&#39;std_scaler&#39;, StandardScaler()), ]) cat_pipeline = Pipeline([ (&#39;selector&#39;, DataFrameSelector(cat_attribs)), (&#39;label_binarizer&#39;, LabelBinarizer()), ]) full_pipeline = FeatureUnion(trainsformer_list=[ (&#39;num_pipeline&#39;, num_pipeline), (&#39;cat_pipeline&#39;, cat_pipeline), ])]]></content>
+    <title><![CDATA[机器学习实战第五章学习笔记(Logistic回归)]]></title>
+    <url>%2F2017%2F09%2F07%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。 利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。 Logistic的一般过程： 收集数据：采用任意方法收集数据。 准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。 分析数据：采用任意方法对数据进行分析。 训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。 测试数据：一旦训练步骤完成，分类将会很快。 使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。 基于Logistic回归和Sigmoid函数的分类 优点：计算代价不高，易于理解和实现。 缺点：容易欠拟合，分类精度可能不高。 适用数据类型：数值型和标称型数据。 我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function). 而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。 说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。 由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。 那么，现在的关键在于，如何确定上述的最佳回归系数？ 基于最优化方法的最佳回归系数确定Sigmoid函数： 这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。 梯度上升法梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。 梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。 梯度下降算法和梯度上升算法的区别 梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山). 训练算法：使用梯度上升找到最佳参数#梯度上升法的伪代码： 每个回归系数初始化为1 重复R次： 计算整个数据集的梯度 使用α*gradient更新回归系数的向量 返回回归系数 import numpy as np #Logistic回归梯度上升法优化算法 def loadDataSet():#读取样本数据 dataMat=[];labelMat=[] fr=open(&#39;testSet.txt&#39;) for line in fr.readlines(): lineArr=line.strip().split()#除去空格后划分 dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征 labelMat.append(int(lineArr[2]))#标签 return dataMat,labelMat def sigmoid(inX): return 1.0/(1+np.exp(-inX)) def gradAscent(dataMatIn,classLabels): dataMatrix=np.mat(dataMatIn)#100*3 labelMat=np.mat(classLabels).transpose() m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数 alpha=0.001#步长 maxCycles=500#最大迭代次数 weights=np.ones((n,1))#回归系数初始化为1 for k in range(maxCycles): h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1 error=(labelMat-h)# weights=weights+alpha*dataMatrix.transpose()*error return weights #画出数据集和Logistic回归最佳拟合直线的函数 def plotBestFit(wei): import matplotlib.pyplot as plt weights=wei#.getA() dataMat,labelMat=loadDataSet() dataArr=np.array(dataMat) n=np.shape(dataArr)[0] xcord1=[];ycord1=[] xcord2=[];ycord2=[] for i in range(n): if int(labelMat[i])==1: xcord1.append(dataArr[i,1]) ycord1.append(dataArr[i,2]) else: xcord2.append(dataArr[i,1]) ycord2.append(dataArr[i,2]) fig=plt.figure() ax=fig.add_subplot(111) print(len(xcord1),len(ycord1)) ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;) ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;) x=np.arange(-3.0,3.0,0.1) y=(-weights[0]-weights[1]*x)/weights[2] ax.plot(x,y) plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;); plt.show() 公式推导回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。 那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数： 观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。 这个分段函数还可以简写为： 那么对于m条训练样本而言，代价函数就是m个预测代价的累加和： 为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导： 所以结果就是: weights=weights+alpha*dataMatrix.transpose()*error 是一致的！！ 训练算法：随机梯度上升梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。 #随机梯度上升算法伪代码： 所有回归系数初始化为1 对数据集中每个样本 计算该样本的梯度 使用alpha*gradient更新回归系数值 返回回归系数值 #随机梯度上升算法 def stocGradAscent0(dataMatrix,classLabels): m,n=np.shape(dataMatrix) alpha=0.01#步长 weights=np.ones(n)#1*n X=[]#保持weights的历史数据 for j in range(300):#迭代300次 for i in range(m): h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = error=classLabels[i]-h weights=weights+alpha*error*dataMatrix[i] X.append(weights) return weights 这段代码与梯度上升算法很相似，但是也有些区别： 这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本) 没有矩阵的转换过程，所有变量的数据类型都是NumPy数组 但是有个问题，为什么随机梯度上升算法也可以达到最优呢？书中并没有给出相关解释。 在迭代200次过程中，weights=[X0,X1,X2]变化曲线；而我自己的300次跌打过程中，变化曲线是： X0: X1: X2: 从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。 因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。 代码如下： #改进的随机梯度上升算法 def stocGradAscent1(dataMatrix,classLabels,numIter=150): m,n=np.shape(dataMatrix) weights=np.ones(n) X=[] for j in range(numIter): dataIndex=list(range(m)) for i in range(m): alpha=4/(1.0+j+i)+0.01 randIndex=int(np.random.uniform(0,len(dataIndex))) h=sigmoid(sum(dataMatrix[randIndex]*weights)) error=classLabels[randIndex]-h weights=weights+alpha*error*dataMatrix[randIndex] X.append(weights) del dataIndex[randIndex] X=np.array(X) return weights 改进之处有两个方面，每次迭代时调整alpha和随机选取更新。 步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。 通过随机选取样本来更新回归系数，可以减少周期性的波动。 示例：从疝气病症预测病马的死亡率使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。 使用Logistic回归估计马疝气病的死亡率 收集数据：UCI机器学习数据库 准备数据：用Python解析文本文件并填充缺失值 分析数据：可视化并观察数据 训练算法：使用优化算法，找到最佳的系数 测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。 使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。 (数据集中有30%的值是缺失的) 准备数据：处理数据中的缺失值由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题： 使用可用特征的均值来填充缺失值； 使用特殊值来填补缺失值，如-1； 忽略有缺失值的样本； 使用相似样本的均值添补缺失值； 使用另外的机器学习算法预测缺失值； 在数据预处理阶段，所有缺失值用实数0代替。原因有二： 根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新； sigmoid(0)=0.5,对结果不具有任何倾向性； 对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。 测试算法：用Logistic回归进行分类#Logistic回归分类函数 def classifyVector(inX,weights): prob=sigmoid(sum(inX*weights)) if prob&gt;0.5: return 1.0 else: return 0.0 def colicTest(): frTrain=open(&#39;horseColicTraining.txt&#39;) frTest=open(&#39;horseColicTest.txt&#39;) trainingSet=[];trainingLabels=[] for line in frTrain.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21):#21个特征 lineArr.append(float(currLine[i])) trainingSet.append(lineArr) trainingLabels.append(float(currLine[21])) #标签 trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500) errorCount=0;numTestVec=0.0 for line in frTest.readlines(): numTestVec+=1.0 currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]): errorCount+=1 errorRate=(float(errorCount)/numTestVec) print(&quot;the error rate of this test is: %f&quot; % errorRate) return errorRate def multiTest(): numTests=10;errorSum=0.0 for k in range(numTests): errorSum+=colicTest() print(&quot;after %d iterations the average error rate is: %f&quot; % (numTests,errorSum/float(numTests))) 参考博客 http://blog.csdn.net/lu597203933/article/details/38468303#comments http://blog.csdn.net/CharlieLincy/article/details/70767791#comments]]></content>
       <categories>
-        <category>python</category>
+        <category>Python</category>
+        <category>算法</category>
       </categories>
       <tags>
-        <tag>python</tag>
-        <tag>书籍</tag>
-        <tag>sklearn</tag>
+        <tag>机器学习</tag>
+        <tag>算法</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -802,22 +828,8 @@
       <tags>
         <tag>机器学习</tag>
         <tag>算法</tag>
+        <tag>Python</tag>
         <tag>sklearn</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[机器学习实战第五章学习笔记(Logistic回归)]]></title>
-    <url>%2F2017%2F09%2F07%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[回归的概念：假设现在有一些数据点，用一条直线对这些点进行拟合，这个拟合的过程就被称为回归。 利用Logistic回归进行分类的主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。而拟合过程中，需要寻找最佳拟合参数，得到最佳拟合直线，这就需要一些最优化算法。 Logistic的一般过程： 收集数据：采用任意方法收集数据。 准备数据：由于需要进行距离计算，因此要求数据类型为数值型。另外，结构化数据格式则最佳。 分析数据：采用任意方法对数据进行分析。 训练数据：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数。 测试数据：一旦训练步骤完成，分类将会很快。 使用算法：首先，我们需要输入一些数据，并将其转换成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定它们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他分析工作。 基于Logistic回归和Sigmoid函数的分类 优点：计算代价不高，易于理解和实现。 缺点：容易欠拟合，分类精度可能不高。 适用数据类型：数值型和标称型数据。 我们想通过已知数据拟合出一个函数，函数接收所有新的数据输入，然后预测出类别。在二分类情况下，上述函数输出0或1. 最简单的类似函数应该是单位阶跃函数，也被称为海维赛德阶跃函数(Heaviside step function). 而单位阶跃函数存在一个问题是，在跳跃点上，由0直接到1，这种瞬间跳跃过程是比较麻烦的。幸运的是，另外一种函数，Sigmoid函数具有和阶跃函数类似的性质，而且数学上更加易于处理。 说白了，Logistic回归分类器就是，在每个特征上都乘以相应的一个回归系数，然后把所有的结果值相加，并将总和代入Sigmoid函数中，进而可以得到一个范围在0~1之间的数值。结果大于0.5的数据被判定为类别1，小于0.5的数据被判定为类别0. 从这个角度来说，Logistic回归也可以被看作是一种概率估计。 由回归系数可以构成一个函数或者一条曲线(z=w0*x0+w1*x1+w2*x2+…+wn*xn=0），这条曲线位于两个类别的交界处。 那么，现在的关键在于，如何确定上述的最佳回归系数？ 基于最优化方法的最佳回归系数确定Sigmoid函数： 这里以二分类为例，假设输入数据的特征向量是[x0,x1,x2,…,xn],乘以回归系统[w0,w1,w2,…,wn]，累加后代入Sigmoid函数中，输出就是一个0~1的值，用于分类。 梯度上升法梯度上升法的主要思想是：从当前函数的最大梯度方向寻找，以求得到函数的最大值。 梯度上升算法沿着梯度方向移动，总是指向函数值增长最快的方向。 梯度下降算法和梯度上升算法的区别 梯度下降算法中的系数更新公式中，是减号。可以这样理解，梯度下降算法是下山的过程，寻找CostFunction最小的点。而梯度上升算法则是上山的过程，但是无论“上山”还是“下山”过程，走的方向始终是沿着当前函数值变化最快的方向(增长最快就是对应上山，下降最快就是对应下山). 训练算法：使用梯度上升找到最佳参数#梯度上升法的伪代码： 每个回归系数初始化为1 重复R次： 计算整个数据集的梯度 使用α*gradient更新回归系数的向量 返回回归系数 import numpy as np #Logistic回归梯度上升法优化算法 def loadDataSet():#读取样本数据 dataMat=[];labelMat=[] fr=open(&#39;testSet.txt&#39;) for line in fr.readlines(): lineArr=line.strip().split()#除去空格后划分 dataMat.append([1.0,float(lineArr[0]),float(lineArr[1])])#因为只有两个特征 labelMat.append(int(lineArr[2]))#标签 return dataMat,labelMat def sigmoid(inX): return 1.0/(1+np.exp(-inX)) def gradAscent(dataMatIn,classLabels): dataMatrix=np.mat(dataMatIn)#100*3 labelMat=np.mat(classLabels).transpose() m,n=np.shape(dataMatrix)#m是样本个数，n是特征个数 alpha=0.001#步长 maxCycles=500#最大迭代次数 weights=np.ones((n,1))#回归系数初始化为1 for k in range(maxCycles): h=sigmoid(dataMatrix*weights)#m*n * n*1 -&gt; m*1 error=(labelMat-h)# weights=weights+alpha*dataMatrix.transpose()*error return weights #画出数据集和Logistic回归最佳拟合直线的函数 def plotBestFit(wei): import matplotlib.pyplot as plt weights=wei#.getA() dataMat,labelMat=loadDataSet() dataArr=np.array(dataMat) n=np.shape(dataArr)[0] xcord1=[];ycord1=[] xcord2=[];ycord2=[] for i in range(n): if int(labelMat[i])==1: xcord1.append(dataArr[i,1]) ycord1.append(dataArr[i,2]) else: xcord2.append(dataArr[i,1]) ycord2.append(dataArr[i,2]) fig=plt.figure() ax=fig.add_subplot(111) print(len(xcord1),len(ycord1)) ax.scatter(xcord1,ycord1,s=30,c=&#39;red&#39;,marker=&#39;s&#39;) ax.scatter(xcord2,ycord2,s=30,c=&#39;green&#39;) x=np.arange(-3.0,3.0,0.1) y=(-weights[0]-weights[1]*x)/weights[2] ax.plot(x,y) plt.xlabel(&#39;X1&#39;);plt.ylabel(&#39;X2&#39;); plt.show() 公式推导回归问题中，需要一个代价函数用来评论拟合过程的“好坏”。对于线性回归问题，它的代价函数是估计值与实际值差的平方和来评断拟合的“好坏”，J(θ)越小，估计值和实际值差距越小，拟合效果越好。 那对于Logistic回归也沿用这个代价函数行不行？ 答案是否定的！因为Sigmoid函数带入J(θ)后，J(θ)不是一个凸函数，会存在很多个局部极值点，无法进行评价拟合的效果。有人定义另外一个代价函数： 观察这个函数的特性，当预测准确时(实际值y=1且预测值h=1或者实际值y=0且预测值h=0),cost是接近于0的，而当预测很离谱时(实际值y=1且预测值h=0或者实际值y=0且预测值h=1)，cost趋于∞。当然，中间的过程也是符合要求的。 这个分段函数还可以简写为： 那么对于m条训练样本而言，代价函数就是m个预测代价的累加和： 为了使J(θ)取最小值(这里是取最大值，因为对J(θ)加了一个负号)，对其求偏导： 所以结果就是: weights=weights+alpha*dataMatrix.transpose()*error 是一致的！！ 训练算法：随机梯度上升梯度上升算法在每次更新回归系数时都需要遍历整个数据集(因为代价函数是m个训练样本数据代价的累加和),该方法在处理100个左右的数据集时尚可，但是如果样本数据过多，特征数过多，那么该方法的计算复杂度就更高了。一种改进方法是一次仅用一个样本点来更新回归系数，该方法称为随机梯度上升算法。该方法的另外一个优点是，可以在新样本到来时对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与“在线学习”相对应，一次处理所有数据被称作是“批处理”。 #随机梯度上升算法伪代码： 所有回归系数初始化为1 对数据集中每个样本 计算该样本的梯度 使用alpha*gradient更新回归系数值 返回回归系数值 #随机梯度上升算法 def stocGradAscent0(dataMatrix,classLabels): m,n=np.shape(dataMatrix) alpha=0.01#步长 weights=np.ones(n)#1*n X=[]#保持weights的历史数据 for j in range(300):#迭代300次 for i in range(m): h=sigmoid(sum(dataMatrix[i]*weights))#1*n * 1*n = error=classLabels[i]-h weights=weights+alpha*error*dataMatrix[i] X.append(weights) return weights 这段代码与梯度上升算法很相似，但是也有些区别： 这里的变量h和error都是数值，而梯度上升算法都是向量(因为这里的是一个样本) 没有矩阵的转换过程，所有变量的数据类型都是NumPy数组 但是有个问题，为什么随机梯度上升算法也可以达到最优呢？书中并没有给出相关解释。 在迭代200次过程中，weights=[X0,X1,X2]变化曲线；而我自己的300次跌打过程中，变化曲线是： X0: X1: X2: 从图中看，在大的波动停止之后，还会有一些小的周期波动。产生这种现象的原因是存在一些不能正确分类的样本点，在每次迭代时会引发系数的剧烈变化。 因为这个算法是将m个训练样本一次代入进行weights的更新的，那么如果从m个样本中随机一个进行训练会不会就可以消除这个周期波动呢? 答案是肯定的，作者称之为改进的随机梯度上升算法。 代码如下： #改进的随机梯度上升算法 def stocGradAscent1(dataMatrix,classLabels,numIter=150): m,n=np.shape(dataMatrix) weights=np.ones(n) X=[] for j in range(numIter): dataIndex=list(range(m)) for i in range(m): alpha=4/(1.0+j+i)+0.01 randIndex=int(np.random.uniform(0,len(dataIndex))) h=sigmoid(sum(dataMatrix[randIndex]*weights)) error=classLabels[randIndex]-h weights=weights+alpha*error*dataMatrix[randIndex] X.append(weights) del dataIndex[randIndex] X=np.array(X) return weights 改进之处有两个方面，每次迭代时调整alpha和随机选取更新。 步长alpha在每次迭代的时候都会调整，这会缓解数据波动和高频波动。另外alpha会随着迭代次数不断减小，但永远不会减小到0，这是因为alpha=4/(1.0+j+i)+0.01,存在一个常数项。必须这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响。如果要处理的问题是动态变化的，那么可以适当加大上述常数项，来确保新的值获得更大的回归系数。另一点值得注意的是，在降低alpha的函数中，alpha每次减少1/(j+i)，其中j是迭代次数，i是样本点的下标。这样当j&lt;&lt;max(i)时，alpha就不是严格下降的。 通过随机选取样本来更新回归系数，可以减少周期性的波动。 示例：从疝气病症预测病马的死亡率使用Logistic回归来预测患有疝气病的马的存活问题。数据集包括368个样本和21个特征。 使用Logistic回归估计马疝气病的死亡率 收集数据：UCI机器学习数据库 准备数据：用Python解析文本文件并填充缺失值 分析数据：可视化并观察数据 训练算法：使用优化算法，找到最佳的系数 测试算法：为了量化回归的效果，需要观察错误率。根据错误率决定是否回退到训练阶段，通过改变迭代的次数和步长等参数来得到更好的回归系数。 使用算法：实现一个简单的命令行程序来收集马的症状并输出预测结果。 (数据集中有30%的值是缺失的) 准备数据：处理数据中的缺失值由于一些不可避免的原因，数据集经常会是缺失不全的，所以必须采用一些方法来解决这个问题： 使用可用特征的均值来填充缺失值； 使用特殊值来填补缺失值，如-1； 忽略有缺失值的样本； 使用相似样本的均值添补缺失值； 使用另外的机器学习算法预测缺失值； 在数据预处理阶段，所有缺失值用实数0代替。原因有二： 根据回归系数的更新公式，若特征值为0，不会对特征系数进行更新； sigmoid(0)=0.5,对结果不具有任何倾向性； 对样本数据中类别标签已经缺失的，应该丢弃。因为类别标签与特征不同，很难确定采用某个合适的值来替代，而且对训练模型影响较大。 测试算法：用Logistic回归进行分类#Logistic回归分类函数 def classifyVector(inX,weights): prob=sigmoid(sum(inX*weights)) if prob&gt;0.5: return 1.0 else: return 0.0 def colicTest(): frTrain=open(&#39;horseColicTraining.txt&#39;) frTest=open(&#39;horseColicTest.txt&#39;) trainingSet=[];trainingLabels=[] for line in frTrain.readlines(): currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21):#21个特征 lineArr.append(float(currLine[i])) trainingSet.append(lineArr) trainingLabels.append(float(currLine[21])) #标签 trainWeights=stocGradAscent1(np.array(trainingSet),trainingLabels,500) errorCount=0;numTestVec=0.0 for line in frTest.readlines(): numTestVec+=1.0 currLine=line.strip().split(&#39;\t&#39;) lineArr=[] for i in range(21): lineArr.append(float(currLine[i])) if int(classifyVector(np.array(lineArr),trainWeights))!=int(currLine[21]): errorCount+=1 errorRate=(float(errorCount)/numTestVec) print(&quot;the error rate of this test is: %f&quot; % errorRate) return errorRate def multiTest(): numTests=10;errorSum=0.0 for k in range(numTests): errorSum+=colicTest() print(&quot;after %d iterations the average error rate is: %f&quot; % (numTests,errorSum/float(numTests))) 参考博客 http://blog.csdn.net/lu597203933/article/details/38468303#comments http://blog.csdn.net/CharlieLincy/article/details/70767791#comments]]></content>
-      <categories>
-        <category>Python</category>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>算法</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -847,18 +859,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[XGBoost调参指南]]></title>
-    <url>%2F2017%2F09%2F05%2FXGBoost%E8%B0%83%E5%8F%82%E6%8C%87%E5%8D%97%2F</url>
-    <content type="text"><![CDATA[The XGBoost Advantage Regularization 正则 Parallel Processing 并行处理 High Flexibility 高灵活性 Handing Missing Values 处理缺失值 Tree Pruning树的剪枝 Built-in Cross-Validation内置交叉验证 Continue on Existing Model可以在已有的模型上继续训练 XGBoost Parameters General Parameters: Guide the overall functioning Booster Parameters: Guide the individual booster(tree/regression) at each step Learning Task Parameters: Guide the optimization performed General ParametersThese define the overall functionality of XGBoost. booster [default=gbtree] Select the type of model to run at each iteration. It has 2 options: gbtree: tree-based models gblinear: linear models silent [default=0]: Silent mode is activated is set to 1, i.e. no running messages will be printed. It’s generally good to keep it 0 as the messages might help in understanding the model. nthread [default to maximum number of threads available if not set] This is used for parallel processing and number of cores in the system should be entered If you wish to run on all cores, value should not be entered and algorithm will detect automatically Booster ParametersThough there are 2 types of boosters, I’ll consider only tree booster here because it always outperforms the linear booster and thus the later is rarely used. eta[default=0.3] Analogous to learning rate in GBM Makes the model more robust by shrinking the weights on each step Typical final values to be used: 0.01-0.2 min_child_weight[default=1] Defines the minimum sum of weights of all observations required in a child. This is similar to min_child_leaf in GBM but not exactly. This refers to min “sum of weights” of observations while GBM has min “number of observations”. Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree. Too high values can lead to under-fitting hence, it should be tuned using CV. max_depth[default=6] The maximum depth of a tree, same as GBM. Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample. Should be tuned using CV. Typical values: 3-10 max_leaf_nodes The maximum number of terminal nodes or leaves in a tree. Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves. If this is defined, GBM will ignore max_depth. gamma [default=0] A node is split only when the resulting split gives a positive reduction in the loss function. Gamma specifies the minimum loss reduction required to make a split. Makes the algorithm conservative. The values can vary depending on the loss function and should be tuned. max_depta_step[default=0] In maximum delta step we allow each tree’s weight estimation to be. If the value is set to 0, it means there is no constraint. If it is set to a positive value, it can help making the update step more conservative. Usually this parameter is not needed, but it might help in logistic regression when class is extremely imbalanced. This is generally not used but you can explore further if you wish. subsample [default=1] Same as the subsample of GBM. Denotes the fraction of observations to be randomly samples for each tree. Lower values make the algorithm more conservative and prevents overfitting but too small values might lead to under-fitting. Typical values: 0.5-1 colsample_bytree [default=1] Similar to max_features in GBM. Denotes the fraction of columns to be randomly samples for each tree. Typical values: 0.5-1 colsample_bylevel[default=1] Denotes the subsample ratio of columns for each split, in each level. I don’t use this often because subsample and colsample_bytree will do the job for you. but you can explore further if you feel so. lambda [default=1] L2 regularization term on weights (analogous to Ridge regression) This used to handle the regularization part of XGBoost. Though many data scientists don’t use it often, it should be explored to reduce overfitting. alpha [default=0] L1 regularization term on weight (analogous to Lasso regression) Can be used in case of very high dimensionality so that the algorithm runs faster when implemented scale_pos_weight[default=1] A value greater than 0 should be used in case of high class imbalance as it helps in faster convergence. Learning Task ParametersThese parameters are used to define the optimization objective the metric to be calculated at each step. objective [default=reg:linear] This defines the loss function to be minimized. Mostly used values are: binary:logistic –logistic regression for binary classification, returns predicted probability (not class) multi:softmax –multiclass classification using the softmax objective, returns predicted class (not probabilities) you also need to set an additional num_class (number of classes) parameter defining the number of unique classes multi:softprob –same as softmax, but returns predicted probability of each data point belonging to each class. eval_metric [default according to objective] The metric to be used for validation data. The default values are rmse for regression and error for classification. Typical values are: rmse – root mean square error mae – mean absolute error logloss – negative log-likelihood error – Binary classification error rate (0.5 threshold) merror – Multiclass classification error rate mlogloss – Multiclass logloss auc: Area under the curve seed [default=0] The random number seed. Can be used for generating reproducible results and also for parameter tuning. If you’ve been using Scikit-Learn till now, these parameter names might not look familiar. A good news is that xgboost module in python has an sklearn wrapper called XGBClassifier. It uses sklearn style naming convention. The parameters names which will change are: eta –&gt; learning_rate lambda –&gt; reg_lambda alpha –&gt; reg_alpha You must be wondering that we have defined everything except something similar to the “n_estimators” parameter in GBM. Well this exists as a parameter in XGBClassifier. However, it has to be passed as “num_boosting_rounds” while calling the fit function in the standard xgboost implementation. 相关文档 XGBoost Parameters (official guide) XGBoost Demo Codes (xgboost GitHub repository) Python API Reference (official guide) General Approach for Parameter TuningWe will use an approach similar to that of GBM here. The various steps to be performed are: Choose a relatively high learning rate. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the optimum number of trees for this learning rate. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required. Tune tree-specific parameters ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here. Tune regularization parameters (lambda, alpha) for xgboost which can help reduce model complexity and enhance performance. Lower the learning rate and decide the optimal parameters . Step1: Fix learning rate and number of estimators for tuning tree-based parametersIn order to decide on boosting parameters, we need to set some initial values of other parameters. Lets take the following values: max_depth = 5 : This should be between 3-10. I’ve started with 5 but you can choose a different number as well. 4-6 can be good starting points. min_child_weight = 1 : A smaller value is chosen because it is a highly imbalanced class problem and leaf nodes can have smaller size groups. gamma = 0 : A smaller value like 0.1-0.2 can also be chosen for starting. This will anyways be tuned later. subsample, colsample_bytree = 0.8 : This is a commonly used used start value. Typical values range between 0.5-0.9. scale_pos_weight = 1: Because of high class imbalance. 样本不均衡 Please note that all the above are just initial estimates and will be tuned later. Lets take the default learning rate of 0.1 here and check the optimum number of trees using cv function of xgboost. The function defined above will do it for us. Step2: Tune max_depth and min_child_weightWe tune these first as they will have the highest impact on model outcome. To start with, let’s set wider ranges and then we will perform another iteration for smaller ranges.]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>ML</tag>
-        <tag>XGBoost</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[字符流中第一个不重复的字符（剑指Offer)]]></title>
     <url>%2F2017%2F09%2F05%2F%E5%AD%97%E7%AC%A6%E6%B5%81%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%97%E7%AC%A6%2F</url>
     <content type="text"><![CDATA[题目描述请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。 如果当前字符流没有存在出现一次的字符，返回#字符。 解法1(暴力法) # -*- coding:utf-8 -*- class Solution: # 返回对应char def __init__(self): self.save = [] self.dicT = {} def FirstAppearingOnce(self): # write code here self.dicT = {} for v in self.save: if v in self.dicT: self.dicT[v] += 1 else: self.dicT[v] = 1 for v in self.save: if self.dicT[v] == 1: return v return &#39;#&#39; def Insert(self, char): # write code here self.save.append(char) 解法2(队列存储) # -*- coding:utf-8 -*- class Solution: # 返回对应char def __init__(self): # 统计各个字符出现的次数 self.save = [0]*256 # 保存只出现一次的字符 self.quen = [] def FirstAppearingOnce(self): # write code here while len(self.quen) &gt; 0: if self.save[ord(self.quen[0])] &gt; 1: self.quen.pop(0) else: return self.quen[0] return &#39;#&#39; def Insert(self, char): # write code here idx = ord(char) self.save[idx] += 1 if self.save[idx] == 1: self.quen.append(char)]]></content>
@@ -868,6 +868,18 @@
       <tags>
         <tag>python</tag>
         <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[XGBoost调参指南]]></title>
+    <url>%2F2017%2F09%2F05%2FXGBoost%E8%B0%83%E5%8F%82%E6%8C%87%E5%8D%97%2F</url>
+    <content type="text"><![CDATA[The XGBoost Advantage Regularization 正则 Parallel Processing 并行处理 High Flexibility 高灵活性 Handing Missing Values 处理缺失值 Tree Pruning树的剪枝 Built-in Cross-Validation内置交叉验证 Continue on Existing Model可以在已有的模型上继续训练 XGBoost Parameters General Parameters: Guide the overall functioning Booster Parameters: Guide the individual booster(tree/regression) at each step Learning Task Parameters: Guide the optimization performed General ParametersThese define the overall functionality of XGBoost. booster [default=gbtree] Select the type of model to run at each iteration. It has 2 options: gbtree: tree-based models gblinear: linear models silent [default=0]: Silent mode is activated is set to 1, i.e. no running messages will be printed. It’s generally good to keep it 0 as the messages might help in understanding the model. nthread [default to maximum number of threads available if not set] This is used for parallel processing and number of cores in the system should be entered If you wish to run on all cores, value should not be entered and algorithm will detect automatically Booster ParametersThough there are 2 types of boosters, I’ll consider only tree booster here because it always outperforms the linear booster and thus the later is rarely used. eta[default=0.3] Analogous to learning rate in GBM Makes the model more robust by shrinking the weights on each step Typical final values to be used: 0.01-0.2 min_child_weight[default=1] Defines the minimum sum of weights of all observations required in a child. This is similar to min_child_leaf in GBM but not exactly. This refers to min “sum of weights” of observations while GBM has min “number of observations”. Used to control over-fitting. Higher values prevent a model from learning relations which might be highly specific to the particular sample selected for a tree. Too high values can lead to under-fitting hence, it should be tuned using CV. max_depth[default=6] The maximum depth of a tree, same as GBM. Used to control over-fitting as higher depth will allow model to learn relations very specific to a particular sample. Should be tuned using CV. Typical values: 3-10 max_leaf_nodes The maximum number of terminal nodes or leaves in a tree. Can be defined in place of max_depth. Since binary trees are created, a depth of ‘n’ would produce a maximum of 2^n leaves. If this is defined, GBM will ignore max_depth. gamma [default=0] A node is split only when the resulting split gives a positive reduction in the loss function. Gamma specifies the minimum loss reduction required to make a split. Makes the algorithm conservative. The values can vary depending on the loss function and should be tuned. max_depta_step[default=0] In maximum delta step we allow each tree’s weight estimation to be. If the value is set to 0, it means there is no constraint. If it is set to a positive value, it can help making the update step more conservative. Usually this parameter is not needed, but it might help in logistic regression when class is extremely imbalanced. This is generally not used but you can explore further if you wish. subsample [default=1] Same as the subsample of GBM. Denotes the fraction of observations to be randomly samples for each tree. Lower values make the algorithm more conservative and prevents overfitting but too small values might lead to under-fitting. Typical values: 0.5-1 colsample_bytree [default=1] Similar to max_features in GBM. Denotes the fraction of columns to be randomly samples for each tree. Typical values: 0.5-1 colsample_bylevel[default=1] Denotes the subsample ratio of columns for each split, in each level. I don’t use this often because subsample and colsample_bytree will do the job for you. but you can explore further if you feel so. lambda [default=1] L2 regularization term on weights (analogous to Ridge regression) This used to handle the regularization part of XGBoost. Though many data scientists don’t use it often, it should be explored to reduce overfitting. alpha [default=0] L1 regularization term on weight (analogous to Lasso regression) Can be used in case of very high dimensionality so that the algorithm runs faster when implemented scale_pos_weight[default=1] A value greater than 0 should be used in case of high class imbalance as it helps in faster convergence. Learning Task ParametersThese parameters are used to define the optimization objective the metric to be calculated at each step. objective [default=reg:linear] This defines the loss function to be minimized. Mostly used values are: binary:logistic –logistic regression for binary classification, returns predicted probability (not class) multi:softmax –multiclass classification using the softmax objective, returns predicted class (not probabilities) you also need to set an additional num_class (number of classes) parameter defining the number of unique classes multi:softprob –same as softmax, but returns predicted probability of each data point belonging to each class. eval_metric [default according to objective] The metric to be used for validation data. The default values are rmse for regression and error for classification. Typical values are: rmse – root mean square error mae – mean absolute error logloss – negative log-likelihood error – Binary classification error rate (0.5 threshold) merror – Multiclass classification error rate mlogloss – Multiclass logloss auc: Area under the curve seed [default=0] The random number seed. Can be used for generating reproducible results and also for parameter tuning. If you’ve been using Scikit-Learn till now, these parameter names might not look familiar. A good news is that xgboost module in python has an sklearn wrapper called XGBClassifier. It uses sklearn style naming convention. The parameters names which will change are: eta –&gt; learning_rate lambda –&gt; reg_lambda alpha –&gt; reg_alpha You must be wondering that we have defined everything except something similar to the “n_estimators” parameter in GBM. Well this exists as a parameter in XGBClassifier. However, it has to be passed as “num_boosting_rounds” while calling the fit function in the standard xgboost implementation. 相关文档 XGBoost Parameters (official guide) XGBoost Demo Codes (xgboost GitHub repository) Python API Reference (official guide) General Approach for Parameter TuningWe will use an approach similar to that of GBM here. The various steps to be performed are: Choose a relatively high learning rate. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the optimum number of trees for this learning rate. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required. Tune tree-specific parameters ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here. Tune regularization parameters (lambda, alpha) for xgboost which can help reduce model complexity and enhance performance. Lower the learning rate and decide the optimal parameters . Step1: Fix learning rate and number of estimators for tuning tree-based parametersIn order to decide on boosting parameters, we need to set some initial values of other parameters. Lets take the following values: max_depth = 5 : This should be between 3-10. I’ve started with 5 but you can choose a different number as well. 4-6 can be good starting points. min_child_weight = 1 : A smaller value is chosen because it is a highly imbalanced class problem and leaf nodes can have smaller size groups. gamma = 0 : A smaller value like 0.1-0.2 can also be chosen for starting. This will anyways be tuned later. subsample, colsample_bytree = 0.8 : This is a commonly used used start value. Typical values range between 0.5-0.9. scale_pos_weight = 1: Because of high class imbalance. 样本不均衡 Please note that all the above are just initial estimates and will be tuned later. Lets take the default learning rate of 0.1 here and check the optimum number of trees using cv function of xgboost. The function defined above will do it for us. Step2: Tune max_depth and min_child_weightWe tune these first as they will have the highest impact on model outcome. To start with, let’s set wider ranges and then we will perform another iteration for smaller ranges.]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>ML</tag>
+        <tag>XGBoost</tag>
       </tags>
   </entry>
   <entry>
@@ -921,117 +933,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[顺时针打印矩阵(剑指offer第十九题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5%2F</url>
-    <content type="text"><![CDATA[题目描述输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10. 代码 # -*- coding:utf-8 -*- class Solution: # matrix类型为二维列表，需要返回列表 def printMatrix(self, matrix): # write code here ret = [] while len(matrix) &gt; 0: ret += matrix[0] #将矩阵的首行放入 ret matrix = [x for x in zip(*matrix[1:])][::-1] #去掉矩阵首行后逆时针旋转90度 return ret]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[二进制中1的个数(剑指offer第十一题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0%2F</url>
-    <content type="text"><![CDATA[题目描述输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。 代码 # -*- coding:utf-8 -*- class Solution: def NumberOf1(self, n): # write code here cnt = 0 if n &lt; 0: n = n&amp;0xffffffff while n: cnt += 1 n = n&amp;(n-1) return cnt]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[旋转数组的最小数字(剑指offer第六题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97%2F</url>
-    <content type="text"><![CDATA[题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码 # -*- coding:utf-8 -*- class Solution: def minNumberInRotateArray(self, rotateArray): # write code here if len(rotateArray) &lt; 1: return 0 i = 1 while i &lt; len(rotateArray): if rotateArray[i] &lt; rotateArray[i-1]: return rotateArray[i] i += 1 return rotateArray[-1]]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[数值的整数次方(剑指offer第十二题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9%2F</url>
-    <content type="text"><![CDATA[题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码 # -*- coding:utf-8 -*- class Solution: def Power(self, base, exponent): # write code here res = base if exponent == 0: return 1 elif exponent &gt; 0: flag = 0 else: flag = 1 exponent = abs(exponent) while exponent &gt; 1: res *= base exponent -= 1 if flag: return 1./res else: return res]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[菲波那切数列(剑指offer第七题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E8%8F%B2%E6%B3%A2%E9%82%A3%E5%88%87%E6%95%B0%E5%88%97%2F</url>
-    <content type="text"><![CDATA[题目描述大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。n&lt;=39 代码 # -*- coding:utf-8 -*- class Solution: def Fibonacci(self, n): # write code here if n &lt; 2: return n first = 1 second = 0 res = 0 for i in range(1,n): res = first + second second = first first = res return res]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[反转链表(剑指offer第十五题)]]></title>
-    <url>%2F2017%2F09%2F01%2F2%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8%2F</url>
-    <content type="text"><![CDATA[题目描述输入一个链表，反转链表后，输出新链表的表头。 代码 # -*- coding:utf-8 -*- # class ListNode: # def __init__(self, x): # self.val = x # self.next = None class Solution: # 返回ListNode def ReverseList(self, pHead): # write code here if pHead == None: return None newList = None while pHead != None: nextNode = pHead pHead = pHead.next nextNode.next = newList newList = nextNode return newList]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[青蛙台阶(剑指offer第八题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E9%9D%92%E8%9B%99%E5%8F%B0%E9%98%B6%2F</url>
-    <content type="text"><![CDATA[题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码 # -*- coding:utf-8 -*- class Solution: def jumpFloor(self, number): # write code here first = 1 second = 1 res = 1 for i in range(1, number): res = first + second second = first first = res return res]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[从尾到头打印链表(剑指offer第三题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8%2F</url>
-    <content type="text"><![CDATA[题目描述输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。 代码 # -*- coding:utf-8 -*- # class ListNode: # def __init__(self, x): # self.val = x # self.next = None class Solution: # 返回从尾部到头部的列表值序列，例如[1,2,3] def printListFromTailToHead(self, listNode): # write code here if listNode == None: return [] res = [] while listNode != None: res.append(listNode.val) listNode = listNode.next return res[::-1]]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[矩形覆盖(剑指offer第十题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E7%9F%A9%E5%BD%A2%E8%A6%86%E7%9B%96%2F</url>
-    <content type="text"><![CDATA[题目描述我们可以用21的小矩形横着或者竖着去覆盖更大的矩形。请问用n个21的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？ 代码 # -*- coding:utf-8 -*- class Solution: def rectCover(self, number): # write code here if number &lt;= 3: return number first = 3 second = 2 res = 0 for i in range(3, number): res = first + second second = first first = res return res 思路还是要找出递推公式]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[替换空格(剑指offer第二题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC%2F</url>
-    <content type="text"><![CDATA[题目描述请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。 代码 # -*- coding:utf-8 -*- class Solution: # s 源字符串 def replaceSpace(self, s): # write code here return s.replace(&#39; &#39;, &#39;%20&#39;)]]></content>
+    <title><![CDATA[包含min函数的栈(剑指offer第二十题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88%2F</url>
+    <content type="text"><![CDATA[题目描述定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。 代码 # -*- coding:utf-8 -*- class Solution: def __init__(self): self.stack = [] def push(self, node): # write code here self.stack.append(node) def pop(self): # write code here return self.stack.pop() def top(self): # write code here return self.stack[-1] def min(self): # write code here return min(self.stack)]]></content>
       <categories>
         <category>数据结构</category>
       </categories>
@@ -1053,9 +957,33 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[变态跳台阶(剑指offer第九题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E5%8F%98%E6%80%81%E8%B7%B3%E5%8F%B0%E9%98%B6%2F</url>
-    <content type="text"><![CDATA[题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码 # -*- coding:utf-8 -*- class Solution: def jumpFloorII(self, number): # write code here tmp = [-1]*(number+1) return self.myWays(number, tmp) def myWays(self, number, tmp): if number &lt;= 0: return 0 if number == 1: return 1 if tmp[number] != -1: return tmp[number] tmp[number] = self.myWays(number-1, tmp)*2 return tmp[number] 思路还是要找出递推公式]]></content>
+    <title><![CDATA[用两个栈实现队列(剑指offer第五题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%2F</url>
+    <content type="text"><![CDATA[题目描述用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。 代码 # -*- coding:utf-8 -*- class Solution: def __init__(self): self.In = [] self.Out = [] def push(self, node): # write code here self.In.append(node) def pop(self): # return xx if self.Out:# Out为空，将In中反顺序装入Out,以实现先入先出 return self.Out.pop() else:# 不为空，直接弹出 while self.In: self.Out.append(self.In.pop()) return self.Out.pop()]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[旋转数组的最小数字(剑指offer第六题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97%2F</url>
+    <content type="text"><![CDATA[题目描述把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 代码 # -*- coding:utf-8 -*- class Solution: def minNumberInRotateArray(self, rotateArray): # write code here if len(rotateArray) &lt; 1: return 0 i = 1 while i &lt; len(rotateArray): if rotateArray[i] &lt; rotateArray[i-1]: return rotateArray[i] i += 1 return rotateArray[-1]]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[二进制中1的个数(剑指offer第十一题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[题目描述输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。 代码 # -*- coding:utf-8 -*- class Solution: def NumberOf1(self, n): # write code here cnt = 0 if n &lt; 0: n = n&amp;0xffffffff while n: cnt += 1 n = n&amp;(n-1) return cnt]]></content>
       <categories>
         <category>数据结构</category>
       </categories>
@@ -1077,17 +1005,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[机器学习实战第二章学习笔记(k-NN)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。 优点： 精度高、对异常值不敏感、无数据输入假定 缺点： 计算复杂度高、空间复杂度高 基本原理存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算法中k的出处，通常k是不大于20的整数。最后，选择k个最相似数据中出现次数最多的分类，作为新数据的分类。 k-近邻算法的一般流程 收集数据：可以使用任何方法 准备数据：距离计算所需要的数值，最好是结构化的数据格式 分析数据：可以使用任何方法 训练算法：此步骤不适用于k-近邻算法 测试算法：计算错误率 使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k-近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理。 kNN代码实现伪代码： 计算已知类别数据集中的点和当前点之间的距离； 按照距离递增次序排序； 选取与当前点距离最小的k个点； 确定前k个点所在类别的出行频率； 返回前k个点出行频率最高的类别作为当前点的预测分类。 Python代码： #python3.6 import numpy as np import operator from os import listdir def createDataSet(): group=np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]]) labels=[&#39;A&#39;,&#39;A&#39;,&#39;B&#39;,&#39;B&#39;] return group,labels # inX: input # dataSet: train data set # labels: labels of dataSet # k: k of kNN def classify0(inX,dataSet,labels,k): dataSetSize=dataSet.shape[0]#样本个数 diffMat=np.tile(inX,(dataSetSize,1))-dataSet #np.tile()函数用法 sqDiffMat=diffMat**2 sqDistances=sqDiffMat.sum(axis=1)#欧式距离 distances=sqDistances**0.5 sortedDistIndicies=distances.argsort()#按距离排序，返回从小到大的索引值 classCount={} for i in range(k): voteIlabel=labels[sortedDistIndicies[i]] classCount[voteIlabel]=classCount.get(voteIlabel,0)+1#计算前k个，各个类别的个数 sortedClassCount=sorted(classCount.items(), key=operator.itemgetter(1), reverse=True) #Python3中没有.iteritems(),更换为.items() #print(sortedClassCount) return sortedClassCount[0][0] #测试 import kNN group,labels=kNN.createDataSet() kNN.classify0([0,0],group,labels,3) #结果应该是B,可以改变输入[0,0] 示例1、改进约会网站的配对效果约会数据存放在datingTestSet2.txt中，每个样本占一行，共有1000行，即1000个样本。主要特征： 每年获得的飞行常客里程数 玩视频游戏所耗时间百分比 每周消费的冰淇淋公升数 数据下载 将文本记录到转换NumPy的解析程序#输入文件名，输出训练样本矩阵和类标签向量 def file2matrix(filename): #打开文件 fr=open(filename) #按行全部读取数据 arrayOLines=fr.readlines() #行数 numberOfLines=len(arrayOLines) #用于存放样本，主要有3个特征 returnMat=np.zeros((numberOfLines,3)) #分类标签 classLabelVector=[] index=0 for line in arrayOLines: line=line.strip() listFromLine=line.split(&#39;\t&#39;) returnMat[index,:]=listFromLine[0:3] classLabelVector.append(int(listFromLine[-1])) index+=1 return returnMat,classLabelVector #测试 reload(kNN)#重新加载kNN #python3中没有内置该函数，需要from imp import reload datingDataMat,datingLabels=kNN.file2matrix(&#39;datingTestSet2.txt&#39;) 归一化数值因为kNN是依赖样本间距离进行分类的，欧式距离的计算中，数字差值最大的特征对计算结果的影响要大一些。但是，一般来说，每个特征视为同等重要的。这样就需要对特征值进行处理，通常采用的方法是将数值归一化，如将取值范围处理为0-1或-1-1之间。 newValue=(oldValue-min)/(max-min) 公式可以将任意取值范围的特征值转化为0到1区间内的值。 归一化特征值Python3程序#输入样本集，输出归一化后的样本集、ranges，minVals def autoNorm(dataSet): #newValue=(oldValue-min)/(max-min) minVals=dataSet.min(0) maxVals=dataSet.max(0) ranges=maxVals-minVals normDataSet=np.zeros(np.shape(dataSet)) m=dataSet.shape[0] normDataSet=dataSet-np.tile(minVals,(m,1)) normDataSet=normDataSet/np.tile(ranges,(m,1)) return normDataSet,ranges,minVals #测试 reload(kNN) normMat,ranges,minVals=kNN.autoNorm(datingDataMat) kNN约会网站测试代码def datingClassTest(): hoRatio=0.10 datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;) normMat,ranges,minVals=autoNorm(datingDataMat) m=normMat.shape[0] numTestVecs=int(m*hoRatio) errorCount=0.0 for i in range(numTestVecs): classifierResult=classify0(normMat[i,:],normMat[numTestVecs:m,:], datingLabels[numTestVecs:m],5) print(&#39;the classifier came back with: %d, the real answer is: %d&#39; % (classifierResult,datingLabels[i])) if (classifierResult != datingLabels[i]): errorCount+=1.0 print(&#39;the total error rate is : %f&#39; % (errorCount/float(numTestVecs))) #测试 kNN.datingClassTest() 约会网站预测函数def classifyPerson(): resultList=[&#39;not at all&#39;,&#39;in small doses&#39;,&#39;in large doses&#39;] percentTats=float(input(&#39;percentage of time spent playing video games?&#39;)) ffMiles=float(input(&#39;frequent fliter miles earned per year?&#39;)) iceCream=float(input(&#39;liters of ice cream consumed per year?&#39;)) datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;) normMat,ranges,minVals=autoNorm(datingDataMat) inArr=np.array([ffMiles,percentTats,iceCream]) classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3) print(&#39;You will probably like this person: &#39;,\ resultList[classifierResult-1]) #python2中的raw_input()，python3中为input() 示例2、手写识别系统将32*32的二进制图像矩阵转化为1*1024向量def img2vector(filename): returnVect=np.zeros((1,1024)) fr=open(filename) for i in range(32): lineStr=fr.readline() for j in range(32): returnVect[0,32*i+j]=int(lineStr[j]) return returnVect #测试 testVector=kNN.img2vector(&#39;testDigits/0_13.txt&#39;) 手写数字识别系统的测试代码from os import listdir def handwritingClassTest(): hwLabels=[] trainingFileList=listdir(&#39;trainingDigits&#39;) m=len(trainingFileList) trainingMat=np.zeros((m,1024)) for i in range(m): fileNameStr=trainingFileList[i] fileStr=fileNameStr.split(&#39;.&#39;)[0] classNumStr=int(fileStr.split(&#39;_&#39;)[0])#文件名是标签 hwLabels.append(classNumStr) trainingMat[i,:]=img2vector(&#39;trainingDigits/%s&#39; % fileNameStr) testFileList=listdir(&#39;testDigits&#39;) errorCount=0.0 mTest=len(testFileList) for i in range(mTest): fileNameStr=testFileList[i] fileStr=fileNameStr.split(&#39;.&#39;)[0] classNumStr=int(fileStr.split(&#39;_&#39;)[0]) vectorUnderTest=img2vector(&#39;testDigits/%s&#39; % fileNameStr) classifierResult=classify0(vectorUnderTest,\ trainingMat,hwLabels,3) print(&#39;the classifier came back with: %d, the real anser is: %d&#39; \ % (classifierResult,classNumStr)) if classifierResult != classNumStr: errorCount+=1.0 print(&#39;the total number of errors is: %d&#39; % errorCount) #测试 kNN.handwritingClassTest() 小结k-近邻算法是分类数据最简单最有效的算法。k-近邻算法是基于实例的学习，使用算法时必须有接近实际数据的训练样本数据。k-近邻算法必须保存全部数据集，如果训练数据集很大，必须使用大量的存储空间。此外，由于必须对数据集中的每个数据计算距离值，实际使用时可能非常耗时。 k-近邻算法的另一个缺陷是它无法给出任何数据的基础结构信息，因此无法知晓平均实例样本和典型实例样本具有什么特征。]]></content>
+    <title><![CDATA[数值的整数次方(剑指offer第十二题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9%2F</url>
+    <content type="text"><![CDATA[题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。 代码 # -*- coding:utf-8 -*- class Solution: def Power(self, base, exponent): # write code here res = base if exponent == 0: return 1 elif exponent &gt; 0: flag = 0 else: flag = 1 exponent = abs(exponent) while exponent &gt; 1: res *= base exponent -= 1 if flag: return 1./res else: return res]]></content>
       <categories>
-        <category>Python</category>
-        <category>算法</category>
+        <category>数据结构</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
-        <tag>算法</tag>
-        <tag>Python</tag>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
       </tags>
   </entry>
   <entry>
@@ -1103,9 +1029,33 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[包含min函数的栈(剑指offer第二十题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88%2F</url>
-    <content type="text"><![CDATA[题目描述定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。 代码 # -*- coding:utf-8 -*- class Solution: def __init__(self): self.stack = [] def push(self, node): # write code here self.stack.append(node) def pop(self): # write code here return self.stack.pop() def top(self): # write code here return self.stack[-1] def min(self): # write code here return min(self.stack)]]></content>
+    <title><![CDATA[青蛙台阶(剑指offer第八题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E9%9D%92%E8%9B%99%E5%8F%B0%E9%98%B6%2F</url>
+    <content type="text"><![CDATA[题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。 代码 # -*- coding:utf-8 -*- class Solution: def jumpFloor(self, number): # write code here first = 1 second = 1 res = 1 for i in range(1, number): res = first + second second = first first = res return res]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[替换空格(剑指offer第二题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC%2F</url>
+    <content type="text"><![CDATA[题目描述请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。 代码 # -*- coding:utf-8 -*- class Solution: # s 源字符串 def replaceSpace(self, s): # write code here return s.replace(&#39; &#39;, &#39;%20&#39;)]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[从尾到头打印链表(剑指offer第三题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[题目描述输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。 代码 # -*- coding:utf-8 -*- # class ListNode: # def __init__(self, x): # self.val = x # self.next = None class Solution: # 返回从尾部到头部的列表值序列，例如[1,2,3] def printListFromTailToHead(self, listNode): # write code here if listNode == None: return [] res = [] while listNode != None: res.append(listNode.val) listNode = listNode.next return res[::-1]]]></content>
       <categories>
         <category>数据结构</category>
       </categories>
@@ -1127,15 +1077,77 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[用两个栈实现队列(剑指offer第五题)]]></title>
-    <url>%2F2017%2F09%2F01%2F%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%2F</url>
-    <content type="text"><![CDATA[题目描述用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。 代码 # -*- coding:utf-8 -*- class Solution: def __init__(self): self.In = [] self.Out = [] def push(self, node): # write code here self.In.append(node) def pop(self): # return xx if self.Out:# Out为空，将In中反顺序装入Out,以实现先入先出 return self.Out.pop() else:# 不为空，直接弹出 while self.In: self.Out.append(self.In.pop()) return self.Out.pop()]]></content>
+    <title><![CDATA[菲波那切数列(剑指offer第七题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E8%8F%B2%E6%B3%A2%E9%82%A3%E5%88%87%E6%95%B0%E5%88%97%2F</url>
+    <content type="text"><![CDATA[题目描述大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。n&lt;=39 代码 # -*- coding:utf-8 -*- class Solution: def Fibonacci(self, n): # write code here if n &lt; 2: return n first = 1 second = 0 res = 0 for i in range(1,n): res = first + second second = first first = res return res]]></content>
       <categories>
         <category>数据结构</category>
       </categories>
       <tags>
         <tag>python</tag>
         <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[顺时针打印矩阵(剑指offer第十九题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5%2F</url>
+    <content type="text"><![CDATA[题目描述输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10. 代码 # -*- coding:utf-8 -*- class Solution: # matrix类型为二维列表，需要返回列表 def printMatrix(self, matrix): # write code here ret = [] while len(matrix) &gt; 0: ret += matrix[0] #将矩阵的首行放入 ret matrix = [x for x in zip(*matrix[1:])][::-1] #去掉矩阵首行后逆时针旋转90度 return ret]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[矩形覆盖(剑指offer第十题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E7%9F%A9%E5%BD%A2%E8%A6%86%E7%9B%96%2F</url>
+    <content type="text"><![CDATA[题目描述我们可以用21的小矩形横着或者竖着去覆盖更大的矩形。请问用n个21的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？ 代码 # -*- coding:utf-8 -*- class Solution: def rectCover(self, number): # write code here if number &lt;= 3: return number first = 3 second = 2 res = 0 for i in range(3, number): res = first + second second = first first = res return res 思路还是要找出递推公式]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[变态跳台阶(剑指offer第九题)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E5%8F%98%E6%80%81%E8%B7%B3%E5%8F%B0%E9%98%B6%2F</url>
+    <content type="text"><![CDATA[题目描述一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。 代码 # -*- coding:utf-8 -*- class Solution: def jumpFloorII(self, number): # write code here tmp = [-1]*(number+1) return self.myWays(number, tmp) def myWays(self, number, tmp): if number &lt;= 0: return 0 if number == 1: return 1 if tmp[number] != -1: return tmp[number] tmp[number] = self.myWays(number-1, tmp)*2 return tmp[number] 思路还是要找出递推公式]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[反转链表(剑指offer第十五题)]]></title>
+    <url>%2F2017%2F09%2F01%2F2%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[题目描述输入一个链表，反转链表后，输出新链表的表头。 代码 # -*- coding:utf-8 -*- # class ListNode: # def __init__(self, x): # self.val = x # self.next = None class Solution: # 返回ListNode def ReverseList(self, pHead): # write code here if pHead == None: return None newList = None while pHead != None: nextNode = pHead pHead = pHead.next nextNode.next = newList newList = nextNode return newList]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[机器学习实战第二章学习笔记(k-NN)]]></title>
+    <url>%2F2017%2F09%2F01%2F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[k-近邻算法(kNN)采用测量不同特征值之间的距离方法进行分类。 优点： 精度高、对异常值不敏感、无数据输入假定 缺点： 计算复杂度高、空间复杂度高 基本原理存在训练样本集，每个样本都有标签，输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据(也称为最近邻)的分类标签。一般来说，只选择样本数据集中前k个最相似的数据，这也就是k-近邻算法中k的出处，通常k是不大于20的整数。最后，选择k个最相似数据中出现次数最多的分类，作为新数据的分类。 k-近邻算法的一般流程 收集数据：可以使用任何方法 准备数据：距离计算所需要的数值，最好是结构化的数据格式 分析数据：可以使用任何方法 训练算法：此步骤不适用于k-近邻算法 测试算法：计算错误率 使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k-近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理。 kNN代码实现伪代码： 计算已知类别数据集中的点和当前点之间的距离； 按照距离递增次序排序； 选取与当前点距离最小的k个点； 确定前k个点所在类别的出行频率； 返回前k个点出行频率最高的类别作为当前点的预测分类。 Python代码： #python3.6 import numpy as np import operator from os import listdir def createDataSet(): group=np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]]) labels=[&#39;A&#39;,&#39;A&#39;,&#39;B&#39;,&#39;B&#39;] return group,labels # inX: input # dataSet: train data set # labels: labels of dataSet # k: k of kNN def classify0(inX,dataSet,labels,k): dataSetSize=dataSet.shape[0]#样本个数 diffMat=np.tile(inX,(dataSetSize,1))-dataSet #np.tile()函数用法 sqDiffMat=diffMat**2 sqDistances=sqDiffMat.sum(axis=1)#欧式距离 distances=sqDistances**0.5 sortedDistIndicies=distances.argsort()#按距离排序，返回从小到大的索引值 classCount={} for i in range(k): voteIlabel=labels[sortedDistIndicies[i]] classCount[voteIlabel]=classCount.get(voteIlabel,0)+1#计算前k个，各个类别的个数 sortedClassCount=sorted(classCount.items(), key=operator.itemgetter(1), reverse=True) #Python3中没有.iteritems(),更换为.items() #print(sortedClassCount) return sortedClassCount[0][0] #测试 import kNN group,labels=kNN.createDataSet() kNN.classify0([0,0],group,labels,3) #结果应该是B,可以改变输入[0,0] 示例1、改进约会网站的配对效果约会数据存放在datingTestSet2.txt中，每个样本占一行，共有1000行，即1000个样本。主要特征： 每年获得的飞行常客里程数 玩视频游戏所耗时间百分比 每周消费的冰淇淋公升数 数据下载 将文本记录到转换NumPy的解析程序#输入文件名，输出训练样本矩阵和类标签向量 def file2matrix(filename): #打开文件 fr=open(filename) #按行全部读取数据 arrayOLines=fr.readlines() #行数 numberOfLines=len(arrayOLines) #用于存放样本，主要有3个特征 returnMat=np.zeros((numberOfLines,3)) #分类标签 classLabelVector=[] index=0 for line in arrayOLines: line=line.strip() listFromLine=line.split(&#39;\t&#39;) returnMat[index,:]=listFromLine[0:3] classLabelVector.append(int(listFromLine[-1])) index+=1 return returnMat,classLabelVector #测试 reload(kNN)#重新加载kNN #python3中没有内置该函数，需要from imp import reload datingDataMat,datingLabels=kNN.file2matrix(&#39;datingTestSet2.txt&#39;) 归一化数值因为kNN是依赖样本间距离进行分类的，欧式距离的计算中，数字差值最大的特征对计算结果的影响要大一些。但是，一般来说，每个特征视为同等重要的。这样就需要对特征值进行处理，通常采用的方法是将数值归一化，如将取值范围处理为0-1或-1-1之间。 newValue=(oldValue-min)/(max-min) 公式可以将任意取值范围的特征值转化为0到1区间内的值。 归一化特征值Python3程序#输入样本集，输出归一化后的样本集、ranges，minVals def autoNorm(dataSet): #newValue=(oldValue-min)/(max-min) minVals=dataSet.min(0) maxVals=dataSet.max(0) ranges=maxVals-minVals normDataSet=np.zeros(np.shape(dataSet)) m=dataSet.shape[0] normDataSet=dataSet-np.tile(minVals,(m,1)) normDataSet=normDataSet/np.tile(ranges,(m,1)) return normDataSet,ranges,minVals #测试 reload(kNN) normMat,ranges,minVals=kNN.autoNorm(datingDataMat) kNN约会网站测试代码def datingClassTest(): hoRatio=0.10 datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;) normMat,ranges,minVals=autoNorm(datingDataMat) m=normMat.shape[0] numTestVecs=int(m*hoRatio) errorCount=0.0 for i in range(numTestVecs): classifierResult=classify0(normMat[i,:],normMat[numTestVecs:m,:], datingLabels[numTestVecs:m],5) print(&#39;the classifier came back with: %d, the real answer is: %d&#39; % (classifierResult,datingLabels[i])) if (classifierResult != datingLabels[i]): errorCount+=1.0 print(&#39;the total error rate is : %f&#39; % (errorCount/float(numTestVecs))) #测试 kNN.datingClassTest() 约会网站预测函数def classifyPerson(): resultList=[&#39;not at all&#39;,&#39;in small doses&#39;,&#39;in large doses&#39;] percentTats=float(input(&#39;percentage of time spent playing video games?&#39;)) ffMiles=float(input(&#39;frequent fliter miles earned per year?&#39;)) iceCream=float(input(&#39;liters of ice cream consumed per year?&#39;)) datingDataMat,datingLabels=file2matrix(&#39;datingTestSet2.txt&#39;) normMat,ranges,minVals=autoNorm(datingDataMat) inArr=np.array([ffMiles,percentTats,iceCream]) classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3) print(&#39;You will probably like this person: &#39;,\ resultList[classifierResult-1]) #python2中的raw_input()，python3中为input() 示例2、手写识别系统将32*32的二进制图像矩阵转化为1*1024向量def img2vector(filename): returnVect=np.zeros((1,1024)) fr=open(filename) for i in range(32): lineStr=fr.readline() for j in range(32): returnVect[0,32*i+j]=int(lineStr[j]) return returnVect #测试 testVector=kNN.img2vector(&#39;testDigits/0_13.txt&#39;) 手写数字识别系统的测试代码from os import listdir def handwritingClassTest(): hwLabels=[] trainingFileList=listdir(&#39;trainingDigits&#39;) m=len(trainingFileList) trainingMat=np.zeros((m,1024)) for i in range(m): fileNameStr=trainingFileList[i] fileStr=fileNameStr.split(&#39;.&#39;)[0] classNumStr=int(fileStr.split(&#39;_&#39;)[0])#文件名是标签 hwLabels.append(classNumStr) trainingMat[i,:]=img2vector(&#39;trainingDigits/%s&#39; % fileNameStr) testFileList=listdir(&#39;testDigits&#39;) errorCount=0.0 mTest=len(testFileList) for i in range(mTest): fileNameStr=testFileList[i] fileStr=fileNameStr.split(&#39;.&#39;)[0] classNumStr=int(fileStr.split(&#39;_&#39;)[0]) vectorUnderTest=img2vector(&#39;testDigits/%s&#39; % fileNameStr) classifierResult=classify0(vectorUnderTest,\ trainingMat,hwLabels,3) print(&#39;the classifier came back with: %d, the real anser is: %d&#39; \ % (classifierResult,classNumStr)) if classifierResult != classNumStr: errorCount+=1.0 print(&#39;the total number of errors is: %d&#39; % errorCount) #测试 kNN.handwritingClassTest() 小结k-近邻算法是分类数据最简单最有效的算法。k-近邻算法是基于实例的学习，使用算法时必须有接近实际数据的训练样本数据。k-近邻算法必须保存全部数据集，如果训练数据集很大，必须使用大量的存储空间。此外，由于必须对数据集中的每个数据计算距离值，实际使用时可能非常耗时。 k-近邻算法的另一个缺陷是它无法给出任何数据的基础结构信息，因此无法知晓平均实例样本和典型实例样本具有什么特征。]]></content>
+      <categories>
+        <category>Python</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>算法</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1322,9 +1334,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 汉明距离]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB%2F</url>
-    <content type="text"><![CDATA[两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &lt; 231. 示例: 输入: x = 1, y = 4 输出: 2 解释: 1 (0 0 0 1) 4 (0 1 0 0) ↑ ↑ 上面的箭头指出了对应二进制位不同的位置。 class Solution(object): def hammingDistance(self, x, y): &quot;&quot;&quot; :type x: int :type y: int :rtype: int &quot;&quot;&quot; bx = [v for v in bin(x)[2:]] by = [v for v in bin(y)[2:]] bx.reverse() by.reverse() i = 0; cnt = 0 while (i&lt;len(bx))&amp;(i&lt;len(by)): if bx[i] != by[i]: cnt += 1 i += 1 if len(bx)&gt;i: cnt += bx[i:].count(&#39;1&#39;) if len(by)&gt;i: cnt += by[i:].count(&#39;1&#39;) return cnt # return bin(x^y).count(&#39;1&#39;)]]></content>
+    <title><![CDATA[LeetCode - 最小路径和]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%2F</url>
+    <content type="text"><![CDATA[给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [ [1,3,1], [1,5,1], [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid[0]) n = len(grid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, grid, tmp) def myAns(self, m, n, grid, tmp): if (m &lt;= 0) | (n &lt;= 0): return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意 if (m == 1)&amp;(n == 1): return grid[0][0] if tmp[n][m] != -1: return tmp[n][m] tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1] return tmp[n][m] 思路1(递归解法) 从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小； 保持递归过程中的值 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid) n = len(grid[0]) for i in range(m):# 多少列 横轴 for j in range(n):# 多少行 纵轴 if (i==0)&amp;(j==0): continue elif i == 0: grid[i][j] += grid[i][j-1] elif j == 0: grid[i][j] += grid[i-1][j] else: grid[i][j] += min(grid[i-1][j], grid[i][j-1]) return grid[m-1][n-1]]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1334,9 +1346,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 汇总区间]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%B1%87%E6%80%BB%E5%8C%BA%E9%97%B4%2F</url>
-    <content type="text"><![CDATA[给定一个无重复元素的有序整数数组，返回数组区间范围的汇总。 示例 1: 输入: [0,1,2,4,5,7] 输出: [&quot;0-&gt;2&quot;,&quot;4-&gt;5&quot;,&quot;7&quot;] 解释: 0,1,2 可组成一个连续的区间; 4,5 可组成一个连续的区间。 示例 2: 输入: [0,2,3,4,6,8,9] 输出: [&quot;0&quot;,&quot;2-&gt;4&quot;,&quot;6&quot;,&quot;8-&gt;9&quot;] 解释: 2,3,4 可组成一个连续的区间; 8,9 可组成一个连续的区间。 class Solution: def summaryRanges(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[str] &quot;&quot;&quot; if len(nums)&lt;1: return [] tmp = []; res = [] j = 1; s = str(nums[0]) while j &lt; len(nums): if nums[j] &gt; nums[j-1] + 1: tmp.append(s) s = str(nums[j]) j += 1 else: s += &#39;+&#39; + str(nums[j]) j += 1 # 最后一个 tmp.append(s) for s in tmp: s = s.split(&#39;+&#39;) if len(s) &gt; 1: res.append(s[0]+&quot;-&gt;&quot;+s[-1]) else: res.append(s[0]) return res]]></content>
+    <title><![CDATA[LeetCode - 除自身以外数组的乘积]]></title>
+    <url>%2F2017%2F07%2F05%2F%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF%2F</url>
+    <content type="text"><![CDATA[给定长度为 n 的整数数组 nums，其中 n &gt; 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。 示例: 输入: [1,2,3,4] 输出: [24,12,8,6] 说明: 请不要使用除法，且在 O(n) 时间复杂度内完成此题。 进阶：你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。） class Solution: def productExceptSelf(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[int] &quot;&quot;&quot; res = [] p = 1 for v in nums: res.append(p) p *= v p = 1 for i in range(len(nums)-1,-1,-1): res[i] *= p p *= nums[i] return res]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1346,21 +1358,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 爬楼梯]]></title>
-    <url>%2F2017%2F07%2F05%2F%E7%88%AC%E6%A5%BC%E6%A2%AF%2F</url>
-    <content type="text"><![CDATA[假设你正在爬楼梯。需要 n 步你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 输入： 2 输出： 2 解释： 有两种方法可以爬到楼顶。 1 步 + 1 步 2 步 示例 2： 输入： 3 输出： 3 解释： 有三种方法可以爬到楼顶。 1 步 + 1 步 + 1 步 1 步 + 2 步 2 步 + 1 步 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [0]*(n+1) tmp[0] = 1 tmp[1] = 1 for i in range(2, n+1): tmp[i] = tmp[i-1] + tmp[i-2] return tmp[n] 思路1(递推法求解) 首先求得递推公式 F(n) = F(n-1) + F(n-2) 实现 class Solution: def get_value(self, n, tmp): if n &lt;= 1: return 1 # 如果记忆过，则直接返回值 if tmp[n] != -1: return tmp[n] # 否则重新计算 tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp) return tmp[n] def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [-1]*(n+1) return self.get_value(n, tmp) 思路2(记忆性递归) 递推公式 F(n) = F(n-1) + F(n-2) 递归实现 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; first = 1 second = 1 cur = 1 for i in range(2, n+1): cur = first + second first = second second= cur return cur 思路3 使用两个变量保存前两个值]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 颠倒二进制位]]></title>
-    <url>%2F2017%2F07%2F05%2F%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D%2F</url>
-    <content type="text"><![CDATA[颠倒给定的 32 位无符号整数的二进制位。 示例: 输入: 43261596 输出: 964176192 解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ， 返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。 进阶:如果多次调用这个函数，你将如何优化你的算法？ class Solution: # @param n, an integer # @return an integer def reverseBits(self, n): # 32位填充 bin_1 = bin(n)[2:].zfill(32) bin_1 = [v for v in bin_1] bin_1.reverse() res = int(&#39;&#39;.join(bin_1), 2) return res]]></content>
+    <title><![CDATA[LeetCode - 打家劫舍]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D%2F</url>
+    <content type="text"><![CDATA[你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。 示例 1: 输入: [1,2,3,1] 输出: 4 解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。 偷窃到的最高金额 = 1 + 3 = 4 。 示例 2: 输入: [2,7,9,3,1] 输出: 12 解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。 偷窃到的最高金额 = 2 + 9 + 1 = 12 。 class Solution: def rob(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; if len(nums) == 0: return 0 elif len(nums) &lt; 2: return max(nums[0], nums[-1]) tmp = [0]*len(nums) tmp[0], tmp[1] = nums[0], max(nums[0], nums[1]) for i in range(2, len(nums)): tmp[i] = max(nums[i]+tmp[i-2], tmp[i-1]) return tmp[-1]]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1382,9 +1382,21 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 最小路径和]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%2F</url>
-    <content type="text"><![CDATA[给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 示例: 输入: [ [1,3,1], [1,5,1], [4,2,1] ] 输出: 7 解释: 因为路径 1→3→1→1→1 的总和最小。 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid[0]) n = len(grid) tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) return self.myAns(m, n, grid, tmp) def myAns(self, m, n, grid, tmp): if (m &lt;= 0) | (n &lt;= 0): return float(&#39;inf&#39;) # 最小路径，不应该设置为0， 这里需要特别注意 if (m == 1)&amp;(n == 1): return grid[0][0] if tmp[n][m] != -1: return tmp[n][m] tmp[n][m] = min(self.myAns(m-1, n, grid, tmp), self.myAns(m, n-1, grid, tmp)) + grid[n-1][m-1] return tmp[n][m] 思路1(递归解法) 从右下角往回递归，分别比较上方和左方的路径和大小，选择小的加上本点的大小； 保持递归过程中的值 class Solution: def minPathSum(self, grid): &quot;&quot;&quot; :type grid: List[List[int]] :rtype: int &quot;&quot;&quot; m = len(grid) n = len(grid[0]) for i in range(m):# 多少列 横轴 for j in range(n):# 多少行 纵轴 if (i==0)&amp;(j==0): continue elif i == 0: grid[i][j] += grid[i][j-1] elif j == 0: grid[i][j] += grid[i-1][j] else: grid[i][j] += min(grid[i-1][j], grid[i][j-1]) return grid[m-1][n-1]]]></content>
+    <title><![CDATA[LeetCode - 拼多多四道编程题]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%8B%BC%E5%A4%9A%E5%A4%9A%E7%AC%94%E8%AF%95%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[思路参考：Leetcode845 思路：暴力求解 def repeatedSubstringPattern(s): if len(s) &lt; 2: return s length = len(s) for i in range(1, len(s)): sub = s[:i] # 包含多少个子串 tmp = length//i # 剩余部分 tmp2 = length%i if sub[:tmp2] == s[tmp*i:]: if tmp*sub == s[:tmp*i]: return sub return s if __name__ == &quot;__main__&quot;: s = input() print(repeatedSubstringPattern(s)) 思路：参考下面链接https://www.geeksforgeeks.org/find-minimum-moves-reach-target-infinite-line/ 思路：参考下面链接 https://www.nowcoder.com/discuss/87694?type=0&amp;order=0&amp;pos=11&amp;page=1]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 爬楼梯]]></title>
+    <url>%2F2017%2F07%2F05%2F%E7%88%AC%E6%A5%BC%E6%A2%AF%2F</url>
+    <content type="text"><![CDATA[假设你正在爬楼梯。需要 n 步你才能到达楼顶。 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？ 注意：给定 n 是一个正整数。 示例 1： 输入： 2 输出： 2 解释： 有两种方法可以爬到楼顶。 1 步 + 1 步 2 步 示例 2： 输入： 3 输出： 3 解释： 有三种方法可以爬到楼顶。 1 步 + 1 步 + 1 步 1 步 + 2 步 2 步 + 1 步 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [0]*(n+1) tmp[0] = 1 tmp[1] = 1 for i in range(2, n+1): tmp[i] = tmp[i-1] + tmp[i-2] return tmp[n] 思路1(递推法求解) 首先求得递推公式 F(n) = F(n-1) + F(n-2) 实现 class Solution: def get_value(self, n, tmp): if n &lt;= 1: return 1 # 如果记忆过，则直接返回值 if tmp[n] != -1: return tmp[n] # 否则重新计算 tmp[n] = self.get_value(n-1, tmp) + self.get_value(n-2, tmp) return tmp[n] def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [-1]*(n+1) return self.get_value(n, tmp) 思路2(记忆性递归) 递推公式 F(n) = F(n-1) + F(n-2) 递归实现 class Solution: def climbStairs(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; first = 1 second = 1 cur = 1 for i in range(2, n+1): cur = first + second first = second second= cur return cur 思路3 使用两个变量保存前两个值]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1430,45 +1442,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 拼多多四道编程题]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%8B%BC%E5%A4%9A%E5%A4%9A%E7%AC%94%E8%AF%95%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[思路参考：Leetcode845 思路：暴力求解 def repeatedSubstringPattern(s): if len(s) &lt; 2: return s length = len(s) for i in range(1, len(s)): sub = s[:i] # 包含多少个子串 tmp = length//i # 剩余部分 tmp2 = length%i if sub[:tmp2] == s[tmp*i:]: if tmp*sub == s[:tmp*i]: return sub return s if __name__ == &quot;__main__&quot;: s = input() print(repeatedSubstringPattern(s)) 思路：参考下面链接https://www.geeksforgeeks.org/find-minimum-moves-reach-target-infinite-line/ 思路：参考下面链接 https://www.nowcoder.com/discuss/87694?type=0&amp;order=0&amp;pos=11&amp;page=1]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 寻找旋转排序数组中的最小值]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%2F</url>
-    <content type="text"><![CDATA[假设按照升序排序的数组在预先未知的某个点上进行了旋转。 ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。 请找出其中最小的元素。 你可以假设数组中不存在重复元素。 示例 1: 输入: [3,4,5,1,2] 输出: 1 示例 2: 输入: [4,5,6,7,0,1,2] 输出: 0 class Solution(object): def findMin(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; for i in range(1, len(nums)): if nums[i] &lt; nums[i-1]: return nums[i] return nums[0]]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 打家劫舍]]></title>
-    <url>%2F2017%2F07%2F05%2F%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D%2F</url>
-    <content type="text"><![CDATA[你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。 示例 1: 输入: [1,2,3,1] 输出: 4 解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。 偷窃到的最高金额 = 1 + 3 = 4 。 示例 2: 输入: [2,7,9,3,1] 输出: 12 解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。 偷窃到的最高金额 = 2 + 9 + 1 = 12 。 class Solution: def rob(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; if len(nums) == 0: return 0 elif len(nums) &lt; 2: return max(nums[0], nums[-1]) tmp = [0]*len(nums) tmp[0], tmp[1] = nums[0], max(nums[0], nums[1]) for i in range(2, len(nums)): tmp[i] = max(nums[i]+tmp[i-2], tmp[i-1]) return tmp[-1]]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 寻找峰值]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E5%B3%B0%E5%80%BC%2F</url>
-    <content type="text"><![CDATA[峰值元素是指其值大于左右相邻值的元素。 给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。 数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。 你可以假设 nums[-1] = nums[n] = -∞。 示例 1: 输入: nums = [1,2,3,1] 输出: 2 解释: 3 是峰值元素，你的函数应该返回其索引 2。 示例 2: 输入: nums = [1,2,1,3,5,6,4] 输出: 1 或 5 解释: 你的函数可以返回索引 1，其峰值元素为 2； 或者返回索引 5， 其峰值元素为 6。 说明: 你的解法应该是 O(logN) 时间复杂度的。 class Solution(object): def findPeakElement(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; nums = [-1*float(&#39;inf&#39;)] + nums + [-1*float(&#39;inf&#39;)] for i in range(1, len(nums)-1): if (nums[i]&gt;nums[i-1])&amp;(nums[i]&gt;nums[i+1]): return i - 1 return 0]]></content>
+    <title><![CDATA[LeetCode - 买卖股票的最佳时机]]></title>
+    <url>%2F2017%2F07%2F05%2F%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%2F</url>
+    <content type="text"><![CDATA[给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。 示例 2: 输入: [7,6,4,3,1] 输出: 0 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。 思路 遍历过程中记录最低股价； 同时记录最高差价； class Solution: def maxProfit(self, prices): &quot;&quot;&quot; :type prices: List[int] :rtype: int &quot;&quot;&quot; res = 0 buy = float(&#39;inf&#39;) for v in prices: buy = min(buy, v) res = max(res, v-buy) return res]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1490,9 +1466,21 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 帕斯卡三角形]]></title>
-    <url>%2F2017%2F07%2F05%2F%E5%B8%95%E6%96%AF%E5%8D%A1%E4%B8%89%E8%A7%92%E5%BD%A2%2F</url>
-    <content type="text"><![CDATA[给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。 在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [ [1], [1,1], [1,2,1], [1,3,3,1], [1,4,6,4,1] ] class Solution(object): def generate(self, numRows): &quot;&quot;&quot; :type numRows: int :rtype: List[List[int]] &quot;&quot;&quot; res = [] for i in range(1, 1+numRows): res.append([1]*i) for i in range(2, numRows): for j in range(1, i): res[i][j] = res[i-1][j] + res[i-1][j-1] return res]]></content>
+    <title><![CDATA[LeetCode - 寻找重复数]]></title>
+    <url>%2F2017%2F07%2F05%2F2%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。 示例 1: 输入: [1,3,4,2,2] 输出: 2 示例 2: 输入: [3,1,3,4,2] 输出: 3 说明： 不能更改原数组（假设数组是只读的）。只能使用额外的 O(1) 的空间。时间复杂度小于 O(n2) 。数组中只有一个重复的数字，但它可能不止重复出现一次。 class Solution: def findDuplicate(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; left = 0; right = len(nums)-1 while left+1 &lt; right: mid = (left + right)//2 cnt = 0 for v in nums: if (v &gt; mid) &amp; (v &lt;= right): cnt += 1 if cnt &gt; (right - mid): left = mid else: right = mid return int(right)]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 寻找峰值]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E5%B3%B0%E5%80%BC%2F</url>
+    <content type="text"><![CDATA[峰值元素是指其值大于左右相邻值的元素。 给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。 数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。 你可以假设 nums[-1] = nums[n] = -∞。 示例 1: 输入: nums = [1,2,3,1] 输出: 2 解释: 3 是峰值元素，你的函数应该返回其索引 2。 示例 2: 输入: nums = [1,2,1,3,5,6,4] 输出: 1 或 5 解释: 你的函数可以返回索引 1，其峰值元素为 2； 或者返回索引 5， 其峰值元素为 6。 说明: 你的解法应该是 O(logN) 时间复杂度的。 class Solution(object): def findPeakElement(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; nums = [-1*float(&#39;inf&#39;)] + nums + [-1*float(&#39;inf&#39;)] for i in range(1, len(nums)-1): if (nums[i]&gt;nums[i-1])&amp;(nums[i]&gt;nums[i+1]): return i - 1 return 0]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1514,9 +1502,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 计数质数]]></title>
-    <url>%2F2017%2F07%2F05%2F%E8%AE%A1%E6%95%B0%E8%B4%A8%E6%95%B0%2F</url>
-    <content type="text"><![CDATA[统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和 class Solution: def countPrimes(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [1]*n for v in range(2, n): if tmp[v-1]: # 该位置是质数 # 将该质数的倍数全部标记 for i in range(v*v, n, v): tmp[i-1] = 0 return sum(tmp[2:])]]></content>
+    <title><![CDATA[LeetCode - 不同路径]]></title>
+    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84%2F</url>
+    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 问总共有多少条不同的路径？ 例如，上图是一个7 x 3 的网格。有多少可能的路径？ 说明：m 和 n 的值均不超过 100。 示例 1: 输入: m = 3, n = 2 输出: 3 解释: 从左上角开始，总共有 3 条路径可以到达右下角。 向右 -&gt; 向右 -&gt; 向下 向右 -&gt; 向下 -&gt; 向右 向下 -&gt; 向右 -&gt; 向右 示例 2: 输入: m = 7, n = 3 输出: 28 class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # m是纵，n是横 # 保持递归中间结果 tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) # 递归调用 return self.myAns(m, n, tmp) def myAns(self, m, n, tmp): # 出界认为是0 if (m &lt;= 0) | (n &lt;= 0): return 0 # 起点 if (m == 1) &amp; (n == 1): return 1 # 已经递归过直接返回 if tmp[n][m] != -1: return tmp[n][m] # 由结果往回走，左边部分，上边部分 left = self.myAns(m-1, n, tmp) up = self.myAns(m, n-1, tmp) # 保持结果 tmp[n][m] = left + up # 返回 return tmp[n][m] 思路1(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0； 保持递归过程的中间值； class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # 递推解法 tmp = [] for i in range(n+1): tmp.append([0]*(m+1)) tmp[1][1] = 1 for y in range(1, n+1): for x in range(1, m+1): if (x==1) &amp; (y==1): continue tmp[y][x] = tmp[y-1][x] + tmp[y][x-1] return tmp[n][m] 思路2(递推解法) 与递归相反，从上到下，递推求解；]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1538,9 +1526,57 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 寻找重复数]]></title>
-    <url>%2F2017%2F07%2F05%2F2%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0%2F</url>
-    <content type="text"><![CDATA[给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。 示例 1: 输入: [1,3,4,2,2] 输出: 2 示例 2: 输入: [3,1,3,4,2] 输出: 3 说明： 不能更改原数组（假设数组是只读的）。只能使用额外的 O(1) 的空间。时间复杂度小于 O(n2) 。数组中只有一个重复的数字，但它可能不止重复出现一次。 class Solution: def findDuplicate(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; left = 0; right = len(nums)-1 while left+1 &lt; right: mid = (left + right)//2 cnt = 0 for v in nums: if (v &gt; mid) &amp; (v &lt;= right): cnt += 1 if cnt &gt; (right - mid): left = mid else: right = mid return int(right)]]></content>
+    <title><![CDATA[LeetCode - 计数质数]]></title>
+    <url>%2F2017%2F07%2F05%2F%E8%AE%A1%E6%95%B0%E8%B4%A8%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[统计所有小于非负整数 n 的质数的数量。 示例: 输入: 10 输出: 4 解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和 class Solution: def countPrimes(self, n): &quot;&quot;&quot; :type n: int :rtype: int &quot;&quot;&quot; tmp = [1]*n for v in range(2, n): if tmp[v-1]: # 该位置是质数 # 将该质数的倍数全部标记 for i in range(v*v, n, v): tmp[i-1] = 0 return sum(tmp[2:])]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 帕斯卡三角形]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%B8%95%E6%96%AF%E5%8D%A1%E4%B8%89%E8%A7%92%E5%BD%A2%2F</url>
+    <content type="text"><![CDATA[给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。 在杨辉三角中，每个数是它左上方和右上方的数的和。 示例: 输入: 5 输出: [ [1], [1,1], [1,2,1], [1,3,3,1], [1,4,6,4,1] ] class Solution(object): def generate(self, numRows): &quot;&quot;&quot; :type numRows: int :rtype: List[List[int]] &quot;&quot;&quot; res = [] for i in range(1, 1+numRows): res.append([1]*i) for i in range(2, numRows): for j in range(1, i): res[i][j] = res[i-1][j] + res[i-1][j-1] return res]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - Fizz Buzz]]></title>
+    <url>%2F2017%2F07%2F05%2FFizz%20Buzz%2F</url>
+    <content type="text"><![CDATA[写一个程序，输出从 1 到 n 数字的字符串表示。 如果 n 是3的倍数，输出“Fizz”； 如果 n 是5的倍数，输出“Buzz”； 3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。 示例： n = 15, 返回: [ &quot;1&quot;, &quot;2&quot;, &quot;Fizz&quot;, &quot;4&quot;, &quot;Buzz&quot;, &quot;Fizz&quot;, &quot;7&quot;, &quot;8&quot;, &quot;Fizz&quot;, &quot;Buzz&quot;, &quot;11&quot;, &quot;Fizz&quot;, &quot;13&quot;, &quot;14&quot;, &quot;FizzBuzz&quot; ] 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和 class Solution: def fizzBuzz(self, n): &quot;&quot;&quot; :type n: int :rtype: List[str] &quot;&quot;&quot; tmp = [&quot;&quot; for v in range(n)] for v in range(2,n,3): tmp[v] += &#39;Fizz&#39; for v in range(4,n,5): tmp[v] += &#39;Buzz&#39; for v in range(n): if tmp[v] == &quot;&quot;: tmp[v] = str(v+1) return tmp]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 汇总区间]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%B1%87%E6%80%BB%E5%8C%BA%E9%97%B4%2F</url>
+    <content type="text"><![CDATA[给定一个无重复元素的有序整数数组，返回数组区间范围的汇总。 示例 1: 输入: [0,1,2,4,5,7] 输出: [&quot;0-&gt;2&quot;,&quot;4-&gt;5&quot;,&quot;7&quot;] 解释: 0,1,2 可组成一个连续的区间; 4,5 可组成一个连续的区间。 示例 2: 输入: [0,2,3,4,6,8,9] 输出: [&quot;0&quot;,&quot;2-&gt;4&quot;,&quot;6&quot;,&quot;8-&gt;9&quot;] 解释: 2,3,4 可组成一个连续的区间; 8,9 可组成一个连续的区间。 class Solution: def summaryRanges(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[str] &quot;&quot;&quot; if len(nums)&lt;1: return [] tmp = []; res = [] j = 1; s = str(nums[0]) while j &lt; len(nums): if nums[j] &gt; nums[j-1] + 1: tmp.append(s) s = str(nums[j]) j += 1 else: s += &#39;+&#39; + str(nums[j]) j += 1 # 最后一个 tmp.append(s) for s in tmp: s = s.split(&#39;+&#39;) if len(s) &gt; 1: res.append(s[0]+&quot;-&gt;&quot;+s[-1]) else: res.append(s[0]) return res]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 汉明距离]]></title>
+    <url>%2F2017%2F07%2F05%2F%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB%2F</url>
+    <content type="text"><![CDATA[两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。 给出两个整数 x 和 y，计算它们之间的汉明距离。 注意：0 ≤ x, y &lt; 231. 示例: 输入: x = 1, y = 4 输出: 2 解释: 1 (0 0 0 1) 4 (0 1 0 0) ↑ ↑ 上面的箭头指出了对应二进制位不同的位置。 class Solution(object): def hammingDistance(self, x, y): &quot;&quot;&quot; :type x: int :type y: int :rtype: int &quot;&quot;&quot; bx = [v for v in bin(x)[2:]] by = [v for v in bin(y)[2:]] bx.reverse() by.reverse() i = 0; cnt = 0 while (i&lt;len(bx))&amp;(i&lt;len(by)): if bx[i] != by[i]: cnt += 1 i += 1 if len(bx)&gt;i: cnt += bx[i:].count(&#39;1&#39;) if len(by)&gt;i: cnt += by[i:].count(&#39;1&#39;) return cnt # return bin(x^y).count(&#39;1&#39;)]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1574,9 +1610,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 买卖股票的最佳时机]]></title>
-    <url>%2F2017%2F07%2F05%2F%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%2F</url>
-    <content type="text"><![CDATA[给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。 注意你不能在买入股票前卖出股票。 示例 1: 输入: [7,1,5,3,6,4] 输出: 5 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。 示例 2: 输入: [7,6,4,3,1] 输出: 0 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。 思路 遍历过程中记录最低股价； 同时记录最高差价； class Solution: def maxProfit(self, prices): &quot;&quot;&quot; :type prices: List[int] :rtype: int &quot;&quot;&quot; res = 0 buy = float(&#39;inf&#39;) for v in prices: buy = min(buy, v) res = max(res, v-buy) return res]]></content>
+    <title><![CDATA[LeetCode - 寻找旋转排序数组中的最小值]]></title>
+    <url>%2F2017%2F07%2F05%2F%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%2F</url>
+    <content type="text"><![CDATA[假设按照升序排序的数组在预先未知的某个点上进行了旋转。 ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。 请找出其中最小的元素。 你可以假设数组中不存在重复元素。 示例 1: 输入: [3,4,5,1,2] 输出: 1 示例 2: 输入: [4,5,6,7,0,1,2] 输出: 0 class Solution(object): def findMin(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: int &quot;&quot;&quot; for i in range(1, len(nums)): if nums[i] &lt; nums[i-1]: return nums[i] return nums[0]]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1586,9 +1622,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 不同路径]]></title>
-    <url>%2F2017%2F07%2F05%2F%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84%2F</url>
-    <content type="text"><![CDATA[一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。 问总共有多少条不同的路径？ 例如，上图是一个7 x 3 的网格。有多少可能的路径？ 说明：m 和 n 的值均不超过 100。 示例 1: 输入: m = 3, n = 2 输出: 3 解释: 从左上角开始，总共有 3 条路径可以到达右下角。 向右 -&gt; 向右 -&gt; 向下 向右 -&gt; 向下 -&gt; 向右 向下 -&gt; 向右 -&gt; 向右 示例 2: 输入: m = 7, n = 3 输出: 28 class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # m是纵，n是横 # 保持递归中间结果 tmp = [] for i in range(n+1): tmp.append([-1]*(m+1)) # 递归调用 return self.myAns(m, n, tmp) def myAns(self, m, n, tmp): # 出界认为是0 if (m &lt;= 0) | (n &lt;= 0): return 0 # 起点 if (m == 1) &amp; (n == 1): return 1 # 已经递归过直接返回 if tmp[n][m] != -1: return tmp[n][m] # 由结果往回走，左边部分，上边部分 left = self.myAns(m-1, n, tmp) up = self.myAns(m, n-1, tmp) # 保持结果 tmp[n][m] = left + up # 返回 return tmp[n][m] 思路1(递归解法) 从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和； m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0； 保持递归过程的中间值； class Solution: def uniquePaths(self, m, n): &quot;&quot;&quot; :type m: int :type n: int :rtype: int &quot;&quot;&quot; # 递推解法 tmp = [] for i in range(n+1): tmp.append([0]*(m+1)) tmp[1][1] = 1 for y in range(1, n+1): for x in range(1, m+1): if (x==1) &amp; (y==1): continue tmp[y][x] = tmp[y-1][x] + tmp[y][x-1] return tmp[n][m] 思路2(递推解法) 与递归相反，从上到下，递推求解；]]></content>
+    <title><![CDATA[LeetCode - 颠倒二进制位]]></title>
+    <url>%2F2017%2F07%2F05%2F%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D%2F</url>
+    <content type="text"><![CDATA[颠倒给定的 32 位无符号整数的二进制位。 示例: 输入: 43261596 输出: 964176192 解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ， 返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。 进阶:如果多次调用这个函数，你将如何优化你的算法？ class Solution: # @param n, an integer # @return an integer def reverseBits(self, n): # 32位填充 bin_1 = bin(n)[2:].zfill(32) bin_1 = [v for v in bin_1] bin_1.reverse() res = int(&#39;&#39;.join(bin_1), 2) return res]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -1610,30 +1646,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LeetCode - 除自身以外数组的乘积]]></title>
-    <url>%2F2017%2F07%2F05%2F%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF%2F</url>
-    <content type="text"><![CDATA[给定长度为 n 的整数数组 nums，其中 n &gt; 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。 示例: 输入: [1,2,3,4] 输出: [24,12,8,6] 说明: 请不要使用除法，且在 O(n) 时间复杂度内完成此题。 进阶：你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。） class Solution: def productExceptSelf(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[int] &quot;&quot;&quot; res = [] p = 1 for v in nums: res.append(p) p *= v p = 1 for i in range(len(nums)-1,-1,-1): res[i] *= p p *= nums[i] return res]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - Fizz Buzz]]></title>
-    <url>%2F2017%2F07%2F05%2FFizz%20Buzz%2F</url>
-    <content type="text"><![CDATA[写一个程序，输出从 1 到 n 数字的字符串表示。 如果 n 是3的倍数，输出“Fizz”； 如果 n 是5的倍数，输出“Buzz”； 3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。 示例： n = 15, 返回: [ &quot;1&quot;, &quot;2&quot;, &quot;Fizz&quot;, &quot;4&quot;, &quot;Buzz&quot;, &quot;Fizz&quot;, &quot;7&quot;, &quot;8&quot;, &quot;Fizz&quot;, &quot;Buzz&quot;, &quot;11&quot;, &quot;Fizz&quot;, &quot;13&quot;, &quot;14&quot;, &quot;FizzBuzz&quot; ] 思路 从2开始遍历，将其平方，及平方+v的数，倍数全部置0 求和 class Solution: def fizzBuzz(self, n): &quot;&quot;&quot; :type n: int :rtype: List[str] &quot;&quot;&quot; tmp = [&quot;&quot; for v in range(n)] for v in range(2,n,3): tmp[v] += &#39;Fizz&#39; for v in range(4,n,5): tmp[v] += &#39;Buzz&#39; for v in range(n): if tmp[v] == &quot;&quot;: tmp[v] = str(v+1) return tmp]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[动态规划]]></title>
     <url>%2F2017%2F07%2F04%2F%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%2F</url>
     <content type="text"><![CDATA[概念递归到动态规划的一般转化方法递归函数有n个参数，就定义一个n维的数组，数组的下标是递归函数参数的取值范围，数组元素的值是递归函数的返回值，这样就可以从边界值开始， 逐步填充数组，相当于计算递归函数值的逆过程。 动态规划的一般思路 将原问题分解为子问题 把原问题分解为若干个子问题，子问题和原问题形式相同或类似，只不过规模变小了。子问题都解决，原问题即解决(数字三角形例）。 子问题的解一旦求出就会被保存，所以每个子问题只需求 解一次。 确定状态 在用动态规划解题时，我们往往将和子问题相关的各个变量的一组取值，称之为一个“状 态”。一个“状态”对应于一个或多个子问题， 所谓某个“状态”下的“值”，就是这个“状 态”所对应的子问题的解。 所有“状态”的集合，构成问题的“状态空间”。“状态空间”的大小，与用动态规划解决问题的时间复杂度直接相关。 在数字三角形的例子里，一共有N×(N+1)/2个数字，所以这个问题的状态空间里一共就有N×(N+1)/2个状态。 整个问题的时间复杂度是状态数目乘以计算每个状态所需时间。在数字三角形里每个“状态”只需要经过一次，且在每个状态上作计算所花的时间都是和N无关的常数。 确定一些初始状态(边界状态)的值 以“数字三角形”为例，初始状态就是底边数字，值就是底边数字值。 确定状态转移方程 定义出什么是“状态”，以及在该“状态”下的“值”后，就要找出不同的状态之间如何迁移――即如何从一个或多个“值”已知的 “状态”，求出另一个“状态”的“值”(递推型)。状态的迁移可以用递推公式表示，此递推公式也可被称作“状态转移方程”。 数字三角形的状态转移方程: 能用动规解决的问题的特点 问题具有最优子结构性质。如果问题的最优解所包含的 子问题的解也是最优的，我们就称该问题具有最优子结 构性质。 无后效性。当前的若干个状态值一旦确定，则此后过程的演变就只和这若干个状态的值有关，和之前是采取哪种手段或经过哪条路径演变到当前的这若干个状态，没有关系。 参考博客 教你彻底学会动态规划–入门篇 算法-动态规划 Dynamic Programming–从菜鸟到老鸟]]></content>
@@ -1643,6 +1655,18 @@
       <tags>
         <tag>python</tag>
         <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode - 回文链表]]></title>
+    <url>%2F2017%2F07%2F03%2F%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[请判断一个链表是否为回文链表。 示例 1: 输入: 1-&gt;2 输出: false 示例 2: 输入: 1-&gt;2-&gt;2-&gt;1 输出: true 进阶： 你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？ # Definition for singly-linked list. # class ListNode: # def __init__(self, x): # self.val = x # self.next = None class Solution: # 原地反转链表 def reverseList(self, head): &quot;&quot;&quot; :type head: ListNode :rtype: ListNode &quot;&quot;&quot; newHead = None while head != None: nextNode = ListNode(0) nextNode = head.next head.next = newHead newHead = head head = nextNode return newHead # 是否是回文链表 def isPalindrome(self, head): &quot;&quot;&quot; :type head: ListNode :rtype: bool &quot;&quot;&quot; if head == None: return True elif head.next == None: return True # 快慢指针找中点 firstPtr = head secondPtr = head while firstPtr != None: if firstPtr.next != None: firstPtr = firstPtr.next.next secondPtr = secondPtr.next else: break # 长度为奇数的时候，此时慢指针指向中点 if firstPtr != None: # 原地反转链表 secondPtr.next = self.reverseList(secondPtr.next) secondPtr = secondPtr.next # 长度为偶数的时候，慢指针指向后半段的开头 else: # 原地反转链表 secondPtr = self.reverseList(secondPtr) # 从开头和中间依次比较 firstPtr = head while secondPtr != None: if firstPtr.val != secondPtr.val: return False else: firstPtr = firstPtr.next secondPtr = secondPtr.next return True 思路 快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位； 根据快指针最后的状态，确定慢指针； 将后半段原地反转； 从开头和中间依次比较；]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -1657,18 +1681,6 @@
         <tag>Leetcode</tag>
         <tag>C</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[LeetCode - 回文链表]]></title>
-    <url>%2F2017%2F07%2F03%2F%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8%2F</url>
-    <content type="text"><![CDATA[请判断一个链表是否为回文链表。 示例 1: 输入: 1-&gt;2 输出: false 示例 2: 输入: 1-&gt;2-&gt;2-&gt;1 输出: true 进阶： 你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？ # Definition for singly-linked list. # class ListNode: # def __init__(self, x): # self.val = x # self.next = None class Solution: # 原地反转链表 def reverseList(self, head): &quot;&quot;&quot; :type head: ListNode :rtype: ListNode &quot;&quot;&quot; newHead = None while head != None: nextNode = ListNode(0) nextNode = head.next head.next = newHead newHead = head head = nextNode return newHead # 是否是回文链表 def isPalindrome(self, head): &quot;&quot;&quot; :type head: ListNode :rtype: bool &quot;&quot;&quot; if head == None: return True elif head.next == None: return True # 快慢指针找中点 firstPtr = head secondPtr = head while firstPtr != None: if firstPtr.next != None: firstPtr = firstPtr.next.next secondPtr = secondPtr.next else: break # 长度为奇数的时候，此时慢指针指向中点 if firstPtr != None: # 原地反转链表 secondPtr.next = self.reverseList(secondPtr.next) secondPtr = secondPtr.next # 长度为偶数的时候，慢指针指向后半段的开头 else: # 原地反转链表 secondPtr = self.reverseList(secondPtr) # 从开头和中间依次比较 firstPtr = head while secondPtr != None: if firstPtr.val != secondPtr.val: return False else: firstPtr = firstPtr.next secondPtr = secondPtr.next return True 思路 快慢指针找到链表中点，快指针到尾的时候，慢指针指向中间部位； 根据快指针最后的状态，确定慢指针； 将后半段原地反转； 从开头和中间依次比较；]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>Leetcode</tag>
       </tags>
   </entry>
   <entry>

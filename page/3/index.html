@@ -301,6 +301,150 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/win10双系统ubuntu卸载/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/10/win10双系统ubuntu卸载/" itemprop="url">Win10双系统ubuntu卸载</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T00:00:00+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/软件安装/" itemprop="url" rel="index">
+                    <span itemprop="name">软件安装</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>win10系统下，安装ubunut双系统，卸载ubuntu系统过程，win10采用UEFI启动。</p>
+<h2 id="卸载过程："><a href="#卸载过程：" class="headerlink" title="卸载过程："></a>卸载过程：</h2><ol>
+<li>win10磁盘工具将ubuntu系统分区全部“删除卷”， 剩下一个“UEFI”启动分区无法删除；</li>
+<li>Win+R, 运行<strong>Diskpart</strong>；</li>
+<li>输入<em>list disk</em>, 显示当前挂载磁盘，ubuntu安装在了磁盘1中，输入<em>select disk 1</em>, 选择磁盘1. 随后输入<em>list partition</em>来显示磁盘有哪些分区，要删除的分区应该可以根据容量大小分辨出来，（我的ubuntu uefi启动分区大约500MB左右），输入<em>select partition X</em>. 最后输入<em>delete partition override</em>,从而删除该分区。</li>
+<li>删除了分区以后可以再打开磁盘工具进行确认，随后进入bios禁止ubuntu启动项。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/28/模型融合方法概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2153,358 +2297,6 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/11/时间规则快速入门/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/11/时间规则快速入门/" itemprop="url">时间序列规则法快速入门【转】</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T00:00:00+08:00">
-                2017-11-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>时间序列规则法快速入门</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大家好~我是drop-out。今年我<strong>参加了IJCAI-17数据挖掘竞赛和KDD CUP 2017，分别获得了第三名和第九名</strong>。两个比赛都是时间序列数据。因为我本身是学金融的，对金融时间序列接触的比较多，然而我发现搞机器学习的小伙伴们时间序列处理的基本方法都没有入门~所以这里写一篇文章，以IJCAI-17口碑客流量预测大赛为背景，介绍一下时间序列规则法，让大家快速入门！= =</p>
-<p>IJCAI-17给的是蚂蚁金服的支付数据，具体来说，给的是店铺（实体店）过去每天的客流量，预测店铺未来14天每天的客流量。由过去外推未来，这是典型的时间序列问题。像支付数据、客流量数据、交通数据等，具有明显的周期性。从预测的角度说，周期性是核心，只要抓住了周期性，任务就完成了一大半。</p>
-<h2 id="基本规则法快速入门"><a href="#基本规则法快速入门" class="headerlink" title="基本规则法快速入门"></a>基本规则法快速入门</h2><p>假设给定下面的数据，任务是预测第四周每天的客流量。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-<th>周均值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一周</td>
-<td>20</td>
-<td>10</td>
-<td>70</td>
-<td>50</td>
-<td>250</td>
-<td>200</td>
-<td>100</td>
-<td>100</td>
-</tr>
-<tr>
-<td>第二周</td>
-<td>26</td>
-<td>18</td>
-<td>66</td>
-<td>50</td>
-<td>180</td>
-<td>140</td>
-<td>80</td>
-<td>80</td>
-</tr>
-<tr>
-<td>第三周</td>
-<td>15</td>
-<td>8</td>
-<td>67</td>
-<td>60</td>
-<td>270</td>
-<td>160</td>
-<td>120</td>
-<td>100</td>
-</tr>
-</tbody>
-</table>
-<p>明显能看到周一到周日的周期波动。预测的核心任务就是尽可能准确的提取这种周期。</p>
-<ul>
-<li><p>第一步: 除以周均值，得到一个比例。</p>
-</li>
-<li><p>第二步: 按列取中位数。</p>
-</li>
-</ul>
-<p>就可以得到一组鲁棒的周期因子。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一周</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.5</td>
-<td>2.5</td>
-<td>2</td>
-<td>1</td>
-</tr>
-<tr>
-<td>第二周</td>
-<td>0.325</td>
-<td>0.225</td>
-<td>0.825</td>
-<td>0.625</td>
-<td>2.25</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-<tr>
-<td>第三周</td>
-<td>0.15</td>
-<td>0.08</td>
-<td>0.67</td>
-<td>0.6</td>
-<td>2.7</td>
-<td>1.6</td>
-<td>1.2</td>
-</tr>
-<tr>
-<td>中位数</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.6</td>
-<td>2.5</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<p>做预测时，只要将周期因子，乘以一个base，就可以做下一周的预测啦。比如说，我们取最后一周的平均客流量100作为base，那么我们直接乘上周期因子，就得到下一周的预测:</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>中位数</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.6</td>
-<td>2.5</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-<tr>
-<td>预测 (base=100)</td>
-<td>20</td>
-<td>10</td>
-<td>70</td>
-<td>60</td>
-<td>250</td>
-<td>175</td>
-<td>100</td>
-</tr>
-</tbody>
-</table>
-<p>实际应用当然要取更长的时段啦。具体取几周以测试集的效果来确定。</p>
-<h2 id="针对周期因子的优化"><a href="#针对周期因子的优化" class="headerlink" title="针对周期因子的优化"></a>针对周期因子的优化</h2><p>按列提取中位数是一种简单而有效的提取周期因子的方法。中位数十分鲁棒，不受极端值的影响。但中位数损失了很多信息。实践中，可以在此基础上进一步优化。比如可以提取一个均值和一个中位数，然后将均值和中位数融合。融合的比例按照测试集的表现来确定。也可以根据与预测周的时间距离来赋予不同的权重。</p>
-<h2 id="针对base的优化"><a href="#针对base的优化" class="headerlink" title="针对base的优化"></a>针对base的优化</h2><p>直接用最后一周的平均客流量作为base并不一定是最好的方法。也许最后三天或最后五天的均值能更好的反映最新的情况。但是，我们不能直接对最后三天客流量取均值（最后三天是周末，这样取的base就偏大了）。需要去掉周期性因素后，再取平均。具体做法，就是用客流量除以周期因子。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>周一</th>
-<th>周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第三周</td>
-<td>15</td>
-<td>8</td>
-<td>67</td>
-<td>60</td>
-<td>270</td>
-<td>160</td>
-<td>120</td>
-</tr>
-<tr>
-<td>中位数</td>
-<td>0.2</td>
-<td>0.1</td>
-<td>0.7</td>
-<td>0.6</td>
-<td>2.5</td>
-<td>1.75</td>
-<td>1</td>
-</tr>
-<tr>
-<td>去周期以后的客流量</td>
-<td>75</td>
-<td>80</td>
-<td>95.7</td>
-<td>100</td>
-<td>108</td>
-<td>91.4</td>
-<td>120</td>
-</tr>
-</tbody>
-</table>
-<p>这样我们就可以取最后三天的平均，(108+91.4+120)/3=106.5，作为base。具体取多少天的，也要通过测试集的表现来确定。当然也可以按某些函数形式来给每天赋予不同的权重。</p>
-<h2 id="其他影响因素"><a href="#其他影响因素" class="headerlink" title="其他影响因素"></a>其他影响因素</h2><p>在IJCAI-17的这个赛题里面，天气是非常重要的一个影响因素。可以提取残差，然后用残差训练一个天气的模型。推荐使用xgboost。其他影响因素可以如法炮制。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>周期因子的确定，中位数Or均值，或者两者的融合 周期因子 = \(\alpha*{中位数}+\beta*{均值} (\alpha + \beta = 1)\)</li>
-<li>提取前几周来确定周期因子，或者与预测周的时间距离赋予不同的权重</li>
-<li>Base的选择，最后一周？最后3天？最后5天？</li>
-</ol>
-<h3 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h3><ol>
-<li><a href="http://www.jianshu.com/p/31e20f00c26f?spm=5176.9876270.0.0.2e44f4d2wd3dPO" target="_blank" rel="external">http://www.jianshu.com/p/31e20f00c26f?spm=5176.9876270.0.0.2e44f4d2wd3dPO</a></li>
-<li><a href="https://tianchi.aliyun.com/competition/new_articleDetail.html?spm=5176.8366600.0.0.472ba697eBOdsh&amp;raceId=231591&amp;postsId=2526" target="_blank" rel="external">https://tianchi.aliyun.com/competition/new_articleDetail.html?spm=5176.8366600.0.0.472ba697eBOdsh&amp;raceId=231591&amp;postsId=2526</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2555,7 +2347,7 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">144</span>
+                <span class="site-state-item-count">145</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2577,7 +2369,7 @@ def save_fig(fig_id, tight_layout=True, fig_extension=&quot;png&quot;, resolutio
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

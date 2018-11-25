@@ -301,6 +301,358 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/11/时间规则快速入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/11/时间规则快速入门/" itemprop="url">时间序列规则法快速入门【转】</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T00:00:00+08:00">
+                2017-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>时间序列规则法快速入门</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大家好~我是drop-out。今年我<strong>参加了IJCAI-17数据挖掘竞赛和KDD CUP 2017，分别获得了第三名和第九名</strong>。两个比赛都是时间序列数据。因为我本身是学金融的，对金融时间序列接触的比较多，然而我发现搞机器学习的小伙伴们时间序列处理的基本方法都没有入门~所以这里写一篇文章，以IJCAI-17口碑客流量预测大赛为背景，介绍一下时间序列规则法，让大家快速入门！= =</p>
+<p>IJCAI-17给的是蚂蚁金服的支付数据，具体来说，给的是店铺（实体店）过去每天的客流量，预测店铺未来14天每天的客流量。由过去外推未来，这是典型的时间序列问题。像支付数据、客流量数据、交通数据等，具有明显的周期性。从预测的角度说，周期性是核心，只要抓住了周期性，任务就完成了一大半。</p>
+<h2 id="基本规则法快速入门"><a href="#基本规则法快速入门" class="headerlink" title="基本规则法快速入门"></a>基本规则法快速入门</h2><p>假设给定下面的数据，任务是预测第四周每天的客流量。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+<th>周均值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一周</td>
+<td>20</td>
+<td>10</td>
+<td>70</td>
+<td>50</td>
+<td>250</td>
+<td>200</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>第二周</td>
+<td>26</td>
+<td>18</td>
+<td>66</td>
+<td>50</td>
+<td>180</td>
+<td>140</td>
+<td>80</td>
+<td>80</td>
+</tr>
+<tr>
+<td>第三周</td>
+<td>15</td>
+<td>8</td>
+<td>67</td>
+<td>60</td>
+<td>270</td>
+<td>160</td>
+<td>120</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>明显能看到周一到周日的周期波动。预测的核心任务就是尽可能准确的提取这种周期。</p>
+<ul>
+<li><p>第一步: 除以周均值，得到一个比例。</p>
+</li>
+<li><p>第二步: 按列取中位数。</p>
+</li>
+</ul>
+<p>就可以得到一组鲁棒的周期因子。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一周</td>
+<td>0.2</td>
+<td>0.1</td>
+<td>0.7</td>
+<td>0.5</td>
+<td>2.5</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>第二周</td>
+<td>0.325</td>
+<td>0.225</td>
+<td>0.825</td>
+<td>0.625</td>
+<td>2.25</td>
+<td>1.75</td>
+<td>1</td>
+</tr>
+<tr>
+<td>第三周</td>
+<td>0.15</td>
+<td>0.08</td>
+<td>0.67</td>
+<td>0.6</td>
+<td>2.7</td>
+<td>1.6</td>
+<td>1.2</td>
+</tr>
+<tr>
+<td>中位数</td>
+<td>0.2</td>
+<td>0.1</td>
+<td>0.7</td>
+<td>0.6</td>
+<td>2.5</td>
+<td>1.75</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>做预测时，只要将周期因子，乘以一个base，就可以做下一周的预测啦。比如说，我们取最后一周的平均客流量100作为base，那么我们直接乘上周期因子，就得到下一周的预测:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中位数</td>
+<td>0.2</td>
+<td>0.1</td>
+<td>0.7</td>
+<td>0.6</td>
+<td>2.5</td>
+<td>1.75</td>
+<td>1</td>
+</tr>
+<tr>
+<td>预测 (base=100)</td>
+<td>20</td>
+<td>10</td>
+<td>70</td>
+<td>60</td>
+<td>250</td>
+<td>175</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>实际应用当然要取更长的时段啦。具体取几周以测试集的效果来确定。</p>
+<h2 id="针对周期因子的优化"><a href="#针对周期因子的优化" class="headerlink" title="针对周期因子的优化"></a>针对周期因子的优化</h2><p>按列提取中位数是一种简单而有效的提取周期因子的方法。中位数十分鲁棒，不受极端值的影响。但中位数损失了很多信息。实践中，可以在此基础上进一步优化。比如可以提取一个均值和一个中位数，然后将均值和中位数融合。融合的比例按照测试集的表现来确定。也可以根据与预测周的时间距离来赋予不同的权重。</p>
+<h2 id="针对base的优化"><a href="#针对base的优化" class="headerlink" title="针对base的优化"></a>针对base的优化</h2><p>直接用最后一周的平均客流量作为base并不一定是最好的方法。也许最后三天或最后五天的均值能更好的反映最新的情况。但是，我们不能直接对最后三天客流量取均值（最后三天是周末，这样取的base就偏大了）。需要去掉周期性因素后，再取平均。具体做法，就是用客流量除以周期因子。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第三周</td>
+<td>15</td>
+<td>8</td>
+<td>67</td>
+<td>60</td>
+<td>270</td>
+<td>160</td>
+<td>120</td>
+</tr>
+<tr>
+<td>中位数</td>
+<td>0.2</td>
+<td>0.1</td>
+<td>0.7</td>
+<td>0.6</td>
+<td>2.5</td>
+<td>1.75</td>
+<td>1</td>
+</tr>
+<tr>
+<td>去周期以后的客流量</td>
+<td>75</td>
+<td>80</td>
+<td>95.7</td>
+<td>100</td>
+<td>108</td>
+<td>91.4</td>
+<td>120</td>
+</tr>
+</tbody>
+</table>
+<p>这样我们就可以取最后三天的平均，(108+91.4+120)/3=106.5，作为base。具体取多少天的，也要通过测试集的表现来确定。当然也可以按某些函数形式来给每天赋予不同的权重。</p>
+<h2 id="其他影响因素"><a href="#其他影响因素" class="headerlink" title="其他影响因素"></a>其他影响因素</h2><p>在IJCAI-17的这个赛题里面，天气是非常重要的一个影响因素。可以提取残差，然后用残差训练一个天气的模型。推荐使用xgboost。其他影响因素可以如法炮制。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>周期因子的确定，中位数Or均值，或者两者的融合 周期因子 = \(\alpha*{中位数}+\beta*{均值} (\alpha + \beta = 1)\)</li>
+<li>提取前几周来确定周期因子，或者与预测周的时间距离赋予不同的权重</li>
+<li>Base的选择，最后一周？最后3天？最后5天？</li>
+</ol>
+<h3 id="原文链接："><a href="#原文链接：" class="headerlink" title="原文链接："></a>原文链接：</h3><ol>
+<li><a href="http://www.jianshu.com/p/31e20f00c26f?spm=5176.9876270.0.0.2e44f4d2wd3dPO" target="_blank" rel="external">http://www.jianshu.com/p/31e20f00c26f?spm=5176.9876270.0.0.2e44f4d2wd3dPO</a></li>
+<li><a href="https://tianchi.aliyun.com/competition/new_articleDetail.html?spm=5176.8366600.0.0.472ba697eBOdsh&amp;raceId=231591&amp;postsId=2526" target="_blank" rel="external">https://tianchi.aliyun.com/competition/new_articleDetail.html?spm=5176.8366600.0.0.472ba697eBOdsh&amp;raceId=231591&amp;postsId=2526</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/10/python保存模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2365,6 +2717,330 @@ Day 7: 12.674730
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
+<ul>
+<li>优点：简化数据，去除噪声，提高算法的结果</li>
+<li>缺点：数据的转换可能难以理解</li>
+<li>适用数据类型：数值型数据</li>
+</ul>
+<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
+<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
+<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
+<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
+<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
+<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
+<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
+<pre><code>import numpy as np
+
+In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
+
+In[139]: U
+Out[139]: 
+array([[-0.14142136, -0.98994949],
+       [-0.98994949,  0.14142136]])
+In[140]: Sigma
+Out[140]: 
+array([ 10.,   0.])
+
+In[141]: VT
+Out[141]: 
+array([[-0.70710678, -0.70710678],
+   [-0.70710678,  0.70710678]])
+</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
+<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
+<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
+<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
+<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
+<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
+<pre><code>#### 相似度计算 ####
+
+1. 欧式距离
+2. 皮尔相关系数（Pearson correlation)
+3. 余弦相似度(cosine similarity)
+
+#程序清单14-1 相似度计算
+
+#欧式距离
+def ecludSim(inA,inB):
+    return 1.0/(1.0+la.norm(inA-inB))
+
+#皮尔逊相关系数
+def pearsSim(inA,inB):
+    if len(inA)&lt;3:
+        return 1.0
+    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
+
+#余弦相似度
+def cosSim(inA,inB):
+    num=float(inA.T*inB)
+    denom=la.norm(inA)*la.norm(inB)
+    return 0.5+0.5*(num/denom)
+</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
+<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
+<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
+<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
+</ol>
+<p>程序源码：</p>
+<pre><code>&quot;&quot;&quot;
+    示例：餐馆菜肴推荐引擎
+&quot;&quot;&quot;
+#程序清单14-2 基于物品相似度的推荐引擎
+
+#基于给定相似度计算方法的条件下，用户对物品的估计评分值
+&quot;&quot;&quot;
+dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
+&quot;&quot;&quot;
+def standEst(dataMat,user,simMeas,item):
+    #物品数
+    n=np.shape(dataMat)[1]
+    simTotal=0;ratSimTotal=0
+    #遍历每一个物品
+    for j in range(n):
+        userRating=dataMat[user,j]
+        #如果用户没有对该物品进行评分，则跳过
+        if userRating==0:
+            continue
+        #将item所在列与当前遍历列进行逻辑与
+        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
+                                       dataMat[:,j].A&gt;0))[0]
+        #若结果为0，则相似度为0，说明item与当前物品毫无交集
+        if len(overLap)==0:
+            similarity=0
+        else:
+            #计算相似度
+            similarity=simMeas(dataMat[overLap,item],
+                               dataMat[overLap,j])
+        #总的相似度
+        simTotal+=similarity
+        #考虑用户评分
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        #归一化
+        return ratSimTotal/simTotal
+
+#返回最高N个推荐结果   
+def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
+    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
+    #所有物品都已经投过票，则不需要进行推荐
+    if len(unratedItems)==0:
+        return &#39;you rated everything&#39;
+    itemScores=[]
+    #对未投票物品进行遍历
+    for item in unratedItems:
+        estimatedScore=estMethod(dataMat,user,simMeas,item)
+        itemScores.append((item,estimatedScore))
+    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
+</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
+def svdEst(dataMat,user,simMeas,item):
+    n=np.shape(dataMat)[1]
+    simTotal=0.0;ratSimTotal=0.0
+    #奇异值分解
+    U,Sigma,VT=la.svd(dataMat)
+    #构建对角矩阵
+    Sig4=np.mat(np.eye(4)*Sigma[:4])
+    #将物品转换到低维空间中
+    xformedItems=dataMat.T*U[:,:4]*Sig4.I
+
+    for j in range(n):
+        userRating=dataMat[user,j]
+        if userRating==0 or j==item:
+            continue
+        similarity=simMeas(xformedItems[item,:].T,
+                           xformedItems[j,:].T)
+        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
+        simTotal+=similarity
+        ratSimTotal+=similarity*userRating
+    if simTotal==0:
+        return 0
+    else:
+        return ratSimTotal/float(simTotal)
+</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
+<pre><code>&quot;&quot;&quot;
+    基于SVD的图像压缩
+&quot;&quot;&quot;
+
+#程序清单14-4 图像压缩函数
+def printMat(inMat,thresh=0.8):
+    for i in range(32):
+        for k in range(32):
+            if float(inMat[i,k])&gt;thresh:
+                print(1,end=&#39;&#39;);
+            else:
+                print(0,end=&#39;&#39;);
+        print(&#39;&#39;)
+
+def imgCompress(numSV=3,thresh=0.8):
+    my1=[]
+    for line in open(&#39;0_5.txt&#39;).readlines():
+        newRow=[]
+        for i in range(32):
+            newRow.append(int(line[i]))
+        my1.append(newRow)
+    myMat=np.mat(my1)
+    print(&quot;****original matrix****&quot;)
+    #打印原始数据
+    printMat(myMat,thresh)
+    #SVD分解
+    U,Sigma,VT=la.svd(myMat)
+    SigRecon=np.mat(np.zeros((numSV,numSV)))
+    for k in range(numSV):
+        SigRecon[k,k]=Sigma[k]
+    #重构矩阵
+    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
+    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
+          numSV)
+    printMat(reconMat,thresh)
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/Time Series Forecasting with ARIMA in Python3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2813,563 +3489,6 @@ plt.legend()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/机器学习实战第十四章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/29/机器学习实战第十四章学习笔记/" itemprop="url">机器学习实战第十四章学习笔记(利用SVD简化数据)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T00:00:00+08:00">
-                2017-09-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="SVD的应用"><a href="#SVD的应用" class="headerlink" title="SVD的应用"></a>SVD的应用</h2><p><strong>奇异值分解（SVD）</strong></p>
-<ul>
-<li>优点：简化数据，去除噪声，提高算法的结果</li>
-<li>缺点：数据的转换可能难以理解</li>
-<li>适用数据类型：数值型数据</li>
-</ul>
-<p>利用SVD实现，使得能够用小得多的数据集来表示原始数据集，因为SVD可以去除噪声和冗余信息。</p>
-<h4 id="隐性语义索引"><a href="#隐性语义索引" class="headerlink" title="隐性语义索引"></a>隐性语义索引</h4><p>最早的SVD应用之一是信息检索，称利用SVD的方法为隐性语义索引（Latent Semantic Indexing,LSI)或隐性语义分析（Latent Semantic Analysis,LSA).</p>
-<p>在LSI中，一个矩阵是由文档和词语组成的。当我们在该矩阵上应用SVD时，就会构建出多个奇异值。这些奇异值代表了文档中的概念或主题，这一特点可以用于更高效的文档搜索。在词语拼写错误时，只基于词语存在与否的简单搜索方法会遇到问题。简单搜索的另一问题就是同义词的使用。</p>
-<h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>SVD的另一个应用就是推荐系统。简单版本的推荐系统能够计算项或者人之间的相似度。更先进的方法则先利用SVD从数据中构建一个主题空间，然后再在该空间下计算其相似度。</p>
-<h2 id="矩阵分解"><a href="#矩阵分解" class="headerlink" title="矩阵分解"></a>矩阵分解</h2><p>在线性代数中有很多矩阵分解技术，可以将原始矩阵表示成新的易于处理的形式，这种新形式是两个或多个矩阵的乘积。SVD是最常见的一种矩阵分解技术，将原始的数据集矩阵\(data\)分解成三个矩阵\(U\)、\(\sum\)和\(V^T\)。如果原始矩阵\(data\)是m行n列，那么\(U\)、\(\sum\)和\(V^T\)就分别是m行m列、m行n列和n行n列。</p>
-<p>$$ Data_{m*n}=U_{m*m}{\sum}_{m*n}V^T_{n*n} $$</p>
-<p>##利用Python实现SVD##<br>利用NumPy的linalg线性代数工具箱进行奇异值分解十分方便。</p>
-<pre><code>import numpy as np
-
-In[138]: U,Sigma,VT=np.linalg.svd([[1,1],[7,7]])
-
-In[139]: U
-Out[139]: 
-array([[-0.14142136, -0.98994949],
-       [-0.98994949,  0.14142136]])
-In[140]: Sigma
-Out[140]: 
-array([ 10.,   0.])
-
-In[141]: VT
-Out[141]: 
-array([[-0.70710678, -0.70710678],
-   [-0.70710678,  0.70710678]])
-</code></pre><p><em>注意：由于矩阵除了对角元素其他均为0，因此这种仅返回对角元素的方式能够节省空间，这是Numpy的内部机制产生的，因此返回的Sigma不是一个对角矩阵</em></p>
-<p>奇异值分解后去掉\(\sum\)中较小值，这样元数据集就可以用如下结果来近似：</p>
-<p>$$ Data_{m*n}=U_{m*3}{\sum}_{3*3}V^T_{3*n} $$</p>
-<p>确定要保留的奇异值的数目有很多启发式的策略，其中一个典型的做法就是保留矩阵中90%的能量信息。为了计算总能量信息，将所有的奇异值求其平方和。于是可以将奇异值的平方和累加到总值的90%为止。</p>
-<h2 id="基于协同过滤的推荐引擎"><a href="#基于协同过滤的推荐引擎" class="headerlink" title="基于协同过滤的推荐引擎"></a>基于协同过滤的推荐引擎</h2><p>协同过滤（collaborative filtering)是通过将用户和其他用户的数据进行对比实现推荐的。</p>
-<p>协同过滤是基于用户或者基于物品的相似度进行推荐的。例如，某用户看过一部电影，而另有一部电影该用户没有看过且和该电源相似度很高，则推荐给该用户应该是合理的。</p>
-<pre><code>#### 相似度计算 ####
-
-1. 欧式距离
-2. 皮尔相关系数（Pearson correlation)
-3. 余弦相似度(cosine similarity)
-
-#程序清单14-1 相似度计算
-
-#欧式距离
-def ecludSim(inA,inB):
-    return 1.0/(1.0+la.norm(inA-inB))
-
-#皮尔逊相关系数
-def pearsSim(inA,inB):
-    if len(inA)&lt;3:
-        return 1.0
-    return 0.5+0.5*np.corrcoef(inA,inB,rowvar=0)[0][1]
-
-#余弦相似度
-def cosSim(inA,inB):
-    num=float(inA.T*inB)
-    denom=la.norm(inA)*la.norm(inB)
-    return 0.5+0.5*(num/denom)
-</code></pre><h2 id="示例：餐馆菜肴推荐引擎"><a href="#示例：餐馆菜肴推荐引擎" class="headerlink" title="示例：餐馆菜肴推荐引擎"></a>示例：餐馆菜肴推荐引擎</h2><ol>
-<li>寻找用户没有评级的菜肴，即在用户-物品矩阵中的0值（行）。</li>
-<li>在用户没有评级的所有物品中，对每一物品预计一个可能的评级分数。<br>（根据相似度来计算）</li>
-<li>对这些物品的评分从高到低进行排序，返回前N个物品</li>
-</ol>
-<p>程序源码：</p>
-<pre><code>&quot;&quot;&quot;
-    示例：餐馆菜肴推荐引擎
-&quot;&quot;&quot;
-#程序清单14-2 基于物品相似度的推荐引擎
-
-#基于给定相似度计算方法的条件下，用户对物品的估计评分值
-&quot;&quot;&quot;
-dataMat:数据集，user:用户编号，simMeas:相似度计算方法，item:物品
-&quot;&quot;&quot;
-def standEst(dataMat,user,simMeas,item):
-    #物品数
-    n=np.shape(dataMat)[1]
-    simTotal=0;ratSimTotal=0
-    #遍历每一个物品
-    for j in range(n):
-        userRating=dataMat[user,j]
-        #如果用户没有对该物品进行评分，则跳过
-        if userRating==0:
-            continue
-        #将item所在列与当前遍历列进行逻辑与
-        overLap=np.nonzero(np.logical_and(dataMat[:,item].A&gt;0,
-                                       dataMat[:,j].A&gt;0))[0]
-        #若结果为0，则相似度为0，说明item与当前物品毫无交集
-        if len(overLap)==0:
-            similarity=0
-        else:
-            #计算相似度
-            similarity=simMeas(dataMat[overLap,item],
-                               dataMat[overLap,j])
-        #总的相似度
-        simTotal+=similarity
-        #考虑用户评分
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        #归一化
-        return ratSimTotal/simTotal
-
-#返回最高N个推荐结果   
-def recommand(dataMat,user,N=3,simMeas=cosSim,estMethod=standEst):
-    unratedItems=np.nonzero(dataMat[user,:].A==0)[1]
-    #所有物品都已经投过票，则不需要进行推荐
-    if len(unratedItems)==0:
-        return &#39;you rated everything&#39;
-    itemScores=[]
-    #对未投票物品进行遍历
-    for item in unratedItems:
-        estimatedScore=estMethod(dataMat,user,simMeas,item)
-        itemScores.append((item,estimatedScore))
-    return sorted(itemScores,key=lambda jj:jj[1],reverse=True)[:N]
-</code></pre><h4 id="利用SVD提高推荐的效果"><a href="#利用SVD提高推荐的效果" class="headerlink" title="利用SVD提高推荐的效果"></a>利用SVD提高推荐的效果</h4><pre><code>#程序清单14-3 基于SVD的评分估计
-def svdEst(dataMat,user,simMeas,item):
-    n=np.shape(dataMat)[1]
-    simTotal=0.0;ratSimTotal=0.0
-    #奇异值分解
-    U,Sigma,VT=la.svd(dataMat)
-    #构建对角矩阵
-    Sig4=np.mat(np.eye(4)*Sigma[:4])
-    #将物品转换到低维空间中
-    xformedItems=dataMat.T*U[:,:4]*Sig4.I
-
-    for j in range(n):
-        userRating=dataMat[user,j]
-        if userRating==0 or j==item:
-            continue
-        similarity=simMeas(xformedItems[item,:].T,
-                           xformedItems[j,:].T)
-        print(&quot;the %d and %d similarity is: %f&quot; % (item, j,similarity))
-        simTotal+=similarity
-        ratSimTotal+=similarity*userRating
-    if simTotal==0:
-        return 0
-    else:
-        return ratSimTotal/float(simTotal)
-</code></pre><h2 id="基于SVD的图像压缩"><a href="#基于SVD的图像压缩" class="headerlink" title="基于SVD的图像压缩"></a>基于SVD的图像压缩</h2><p>原始的图像大小是32<em>32=1024个像素，根据两个奇异值和\(U\)、\(V^T\)就可以重构原图像，而这时仅需要32</em>2+32*2+2=130个像素，相当于压缩了近10倍！</p>
-<pre><code>&quot;&quot;&quot;
-    基于SVD的图像压缩
-&quot;&quot;&quot;
-
-#程序清单14-4 图像压缩函数
-def printMat(inMat,thresh=0.8):
-    for i in range(32):
-        for k in range(32):
-            if float(inMat[i,k])&gt;thresh:
-                print(1,end=&#39;&#39;);
-            else:
-                print(0,end=&#39;&#39;);
-        print(&#39;&#39;)
-
-def imgCompress(numSV=3,thresh=0.8):
-    my1=[]
-    for line in open(&#39;0_5.txt&#39;).readlines():
-        newRow=[]
-        for i in range(32):
-            newRow.append(int(line[i]))
-        my1.append(newRow)
-    myMat=np.mat(my1)
-    print(&quot;****original matrix****&quot;)
-    #打印原始数据
-    printMat(myMat,thresh)
-    #SVD分解
-    U,Sigma,VT=la.svd(myMat)
-    SigRecon=np.mat(np.zeros((numSV,numSV)))
-    for k in range(numSV):
-        SigRecon[k,k]=Sigma[k]
-    #重构矩阵
-    reconMat=U[:,:numSV]*SigRecon*VT[:numSV,:]
-    print(&quot;****reconstructed matrix using %d singular values*****&quot; %
-          numSV)
-    printMat(reconMat,thresh)
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>SVD是一种强大的降维工具，可以利用SVD来逼近矩阵并从中提取重要特征。通过保留矩阵80%-90%的能量，就可以得到重要的特征并去掉噪声。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/机器学习实战第十三章学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/28/机器学习实战第十三章学习笔记/" itemprop="url">机器学习实战第十三章学习笔记(利用PCA来简化数据)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T00:00:00+08:00">
-                2017-09-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>主要内容</p>
-<ul>
-<li>降维技术</li>
-<li>主成分分析(PCA)</li>
-<li>对半导体数据进行降维处理</li>
-</ul>
-<h2 id="降维技术"><a href="#降维技术" class="headerlink" title="降维技术"></a>降维技术</h2><ul>
-<li>使得数据集更易使用</li>
-<li>降低很多算法的计算开销</li>
-<li>去除噪声</li>
-<li>使得结果易懂</li>
-</ul>
-<p>有几种降维技术：</p>
-<ol>
-<li>主成分分析（Principal Component Analysis,PCA).在PCA中，数据从原来的坐标系转换到了新的坐标系，新坐标系的选择是由数据本身决定的。第一个新坐标系轴选择的是原始数据中方差最大的方向，第二个新坐标轴的选择和第一个坐标轴正交且具有最大方差的方向。该过程一直重复，重复次数为原始数据中特征的数目。大部分方差都包含在最前面的几个新坐标轴中。因此，可以忽略余下的坐标轴，即对数据进行了降维处理。</li>
-</ol>
-<ol>
-<li>因子分析（Factor Analysis).在因子分析中，假设在观察数据的生成中有一些观察不到的隐变量（latent variable).假设观察数据是这些隐变量和某些噪声的线性组合。那么隐变量的数据可能比观察数据的数目少，也就是说通过找到隐变量就可以实现数据的降维。</li>
-<li>独立成分分析（Independent Component Analysis，ICA). ICA假设数据是从N个数据源生成的，并假设数据为多个数据源的混合观察结果，这些数据源之间在统计上是相互独立的，而在PCA中只假设数据是不相关的。</li>
-</ol>
-<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><p><strong>主成分分析</strong></p>
-<ul>
-<li>优点：降低数据的复杂性，识别最重要的多个特征</li>
-<li>缺点：不一定需要，且可能损失有用信息</li>
-<li>适用数据类型：数值型数据</li>
-</ul>
-<p>PCA的基本过程，第一个主成分是从数据差异性最大（即方差最大）的方向提取出来，第二个主成分则来自于数据差异性次大的方向，并且该方向与第一个主成分方向正交。通过数据集的协方差矩阵及其特征值分析，可以求得这些主成分的值。</p>
-<p>一旦得到了协方差矩阵的特征向量，就可以保留最大的N个值，通过将数据乘上这N个特征向量而将它转换到新的空间。</p>
-<pre><code>将数据转换成前N个主成分的伪代码：
-
-去除平均值
-计算协方差矩阵
-计算协方差矩阵的特征值和特征向量
-将特征值从大到小排序
-保留最上面的N个特征向量
-将数据转换到上述N个特征向量构建的新空间中
-
-#程序清单13-1 PCA算法
-
-import numpy as np
-
-def loadDataSet(fileName,delim=&#39;\t&#39;):
-    fr=open(fileName)
-    stringArr=[line.strip().split(delim) for line in fr.readlines()]
-    datArr=[list(map(float,line)) for line in stringArr]
-    return np.mat(datArr)
-
-def pca(dataMat,topNfeat=9999999):
-    #求取每个特征的平均值
-    meanVals=np.mean(dataMat,axis=0)
-    #减去平均值
-    meanRemoved=dataMat-meanVals
-    #计算协方差矩阵
-    covMat=np.cov(meanRemoved,rowvar=0)
-    #计算协方差矩阵特征值及特征向量
-    eigVals,eigVects=np.linalg.eig(np.mat(covMat))
-    #对特征值进行从小到大的排序
-    eigValInd=np.argsort(eigVals)
-    #进行逆序，
-    eigValInd=eigValInd[:-(topNfeat+1):-1]
-    #提取出前N个特征值对应的特征向量
-    redEigVects=eigVects[:,eigValInd]
-    #低维空间数据
-    lowDDataMat=meanRemoved*redEigVects
-    #重构原始数据
-    reconMat=(lowDDataMat*redEigVects.T)+meanVals
-    return lowDDataMat,reconMat
-
-
-
-&quot;&quot;&quot;
-    示例：利用PCA对半导体制造数据降维
-&quot;&quot;&quot;
-
-#程序清单13-2 将NaN替换成平均值的函数
-def replaceNanWithMean():
-    datMat=loadDataSet(&#39;secom.data&#39;,&#39; &#39;)
-    numFeat=np.shape(datMat)[1]
-    for i in range(numFeat):
-        meanVal=np.mean(datMat[np.nonzero(-np.isnan(datMat[:,i].A))[0],i])
-        #填充NaN为平均值
-        datMat[np.nonzero(np.isnan(datMat[:,i].A))[0],i]=meanVal
-    return datMat
-</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>降维技术使得数据变得更易使用，并且往往能够去除数据中的噪声，使得其他机器学习任务更加精确。降维往往作为预处理步骤，在数据应用到其他算法之前清洗数据。</p>
-<p>PCA可以从数据中识别其主要特征，通过沿着数据最大方差方向旋转坐标轴来实现。选择方差最大的方向作为第一条坐标轴，后续坐标轴则与前面的坐标轴正交。协方差矩阵上的特征值可以用一系列的正交坐标轴来获取。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3420,7 +3539,7 @@ def replaceNanWithMean():
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">144</span>
+                <span class="site-state-item-count">145</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -3442,7 +3561,7 @@ def replaceNanWithMean():
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
