@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/不同路径/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/寻找旋转排序数组中的最小值/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -320,7 +320,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/不同路径/" itemprop="url">LeetCode - 不同路径</a></h1>
+                <a class="post-title-link" href="/2017/07/05/寻找旋转排序数组中的最小值/" itemprop="url">LeetCode - 寻找旋转排序数组中的最小值</a></h1>
         
 
         <div class="post-meta">
@@ -395,91 +395,30 @@
       
         
           
-            <p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
-<p>问总共有多少条不同的路径？</p>
-<p><img src="https://leetcode-cn.com/static/images/problemset/robot_maze.png" alt="路径图片"></p>
-<p>例如，上图是一个7 x 3 的网格。有多少可能的路径？</p>
-<p>说明：m 和 n 的值均不超过 100。</p>
+            <p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
+<p>( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。</p>
+<p>请找出其中最小的元素。</p>
+<p>你可以假设数组中不存在重复元素。</p>
 <p>示例 1:</p>
-<p>输入: m = 3, n = 2</p>
-<p>输出: 3</p>
-<p>解释:</p>
-<p>从左上角开始，总共有 3 条路径可以到达右下角。</p>
-<ol>
-<li><p>向右 -&gt; 向右 -&gt; 向下</p>
-</li>
-<li><p>向右 -&gt; 向下 -&gt; 向右</p>
-</li>
-<li><p>向下 -&gt; 向右 -&gt; 向右</p>
-</li>
-</ol>
-<p>示例 2:</p>
-<p>输入: m = 7, n = 3</p>
-<p>输出: 28</p>
-<pre><code>class Solution:
-    def uniquePaths(self, m, n):
-        &quot;&quot;&quot;
-        :type m: int
-        :type n: int
-        :rtype: int
-        &quot;&quot;&quot;
-        # m是纵，n是横
-        # 保持递归中间结果
-        tmp = []
-        for i in range(n+1):
-            tmp.append([-1]*(m+1))
-        # 递归调用
-        return self.myAns(m, n, tmp)
+<pre><code>输入: [3,4,5,1,2]
+输出: 1
+</code></pre><p>示例 2:</p>
+<pre><code>输入: [4,5,6,7,0,1,2]
+输出: 0
 
-    def myAns(self, m, n, tmp):
-        # 出界认为是0
-        if (m &lt;= 0) | (n &lt;= 0):
-            return 0
-        # 起点
-        if (m == 1) &amp; (n == 1):
-            return 1
-        # 已经递归过直接返回
-        if tmp[n][m] != -1:
-            return tmp[n][m]
-        # 由结果往回走，左边部分，上边部分
-        left = self.myAns(m-1, n, tmp)
-        up = self.myAns(m, n-1, tmp)
-        # 保持结果
-        tmp[n][m] = left + up
-        # 返回
-        return tmp[n][m]
-</code></pre><h2 id="思路1-递归解法"><a href="#思路1-递归解法" class="headerlink" title="思路1(递归解法)"></a>思路1(递归解法)</h2><ol>
-<li>从结果回溯，某一点的路径总数等于其上一点，和其左一点的路径数和；</li>
-<li>m&lt;= 0 || n&lt;= 0 认为是边界，路径数为0；</li>
-<li>保持递归过程的中间值；</li>
-</ol>
-<pre><code class="Python">
-    class Solution:
-        def uniquePaths(self, m, n):
-            &quot;&quot;&quot;
-            :type m: int
-            :type n: int
-            :rtype: int
-            &quot;&quot;&quot;
-            # 递推解法
-            tmp = []
-            for i in range(n+1):
-                tmp.append([0]*(m+1))
-            tmp[1][1] = 1
+class Solution(object):
+def findMin(self, nums):
+    &quot;&quot;&quot;
+    :type nums: List[int]
+    :rtype: int
+    &quot;&quot;&quot;
 
-            for y in range(1, n+1):
-                for x in range(1, m+1):
-                    if (x==1) &amp; (y==1):
-                        continue
-                    tmp[y][x] = tmp[y-1][x] + tmp[y][x-1]
+    for i in range(1, len(nums)):
+        if nums[i] &lt; nums[i-1]:
+            return nums[i]
 
-            return tmp[n][m]
+    return nums[0]
 </code></pre>
-<h2 id="思路2-递推解法"><a href="#思路2-递推解法" class="headerlink" title="思路2(递推解法)"></a>思路2(递推解法)</h2><ol>
-<li>与递归相反，从上到下，递推求解；</li>
-</ol>
-
           
         
       
@@ -522,7 +461,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/存在重复元素2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/解码方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -541,7 +480,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/存在重复元素2/" itemprop="url">LeetCode - 存在重复元素2</a></h1>
+                <a class="post-title-link" href="/2017/07/05/解码方法/" itemprop="url">LeetCode - 解码方法</a></h1>
         
 
         <div class="post-meta">
@@ -616,33 +555,54 @@
       
         
           
-            <p>给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。</p>
+            <p>一条包含字母 A-Z 的消息通过以下方式进行了编码：</p>
+<pre><code>&#39;A&#39; -&gt; 1
+&#39;B&#39; -&gt; 2
+...
+&#39;Z&#39; -&gt; 26
+</code></pre><p>给定一个只包含数字的非空字符串，请计算解码方法的总数。</p>
 <p>示例 1:</p>
-<pre><code>输入: nums = [1,2,3,1], k = 3
-输出: true
+<pre><code>输入: &quot;12&quot;
+输出: 2
+解释: 它可以解码为 &quot;AB&quot;（1 2）或者 &quot;L&quot;（12）。
 </code></pre><p>示例 2:</p>
-<pre><code>输入: nums = [1,0,1,1], k = 1
-输出: true
-</code></pre><p>示例 3:</p>
-<pre><code>输入: nums = [1,2,3,1,2,3], k = 2
-输出: false
-</code></pre><pre><code class="Python">
-    class Solution:
-    def containsNearbyDuplicate(self, nums, k):
+<pre><code>输入: &quot;226&quot;
+输出: 3
+解释: 它可以解码为 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), 或者 &quot;BBF&quot; (2 2 6) 。
+
+
+class Solution:
+    def numDecodings(self, s):
         &quot;&quot;&quot;
-        :type nums: List[int]
-        :type k: int
-        :rtype: bool
+        :type s: str
+        :rtype: int
         &quot;&quot;&quot;
+        if len(s) == 0:
+            return 0
         d = {}
-        for i, num in enumerate(nums):
-            if num in d and i - d[num] &lt;= k:
-                return True
-            d[num] = i
+        d[&quot;&quot;] = 1
+        return self.ways(s,d)
 
-        return False
+    # 记忆形递归
+    def ways(self, s, d):
+        # 已经计算过
+        if s in d.keys():
+            return d[s]
+        # 首位为0不可解码
+        if s[0] == &#39;0&#39;:
+            return 0
+        # 长度为1
+        if len(s) == 1:
+            return 1
+        # 去掉一位后的子问题
+        first = self.ways(s[1:], d) # 去掉第一位
+        tmp = int(s[:2]) # 看看前两位是否符合解码标准
+        # 去掉两位后的子问题
+        if (tmp &gt; 9)&amp;(tmp &lt;= 26):
+            first += self.ways(s[2:], d)
+        d[s] = first
+        return first
 </code></pre>
-
           
         
       
@@ -847,7 +807,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/帕斯卡三角形/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/寻找峰值/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -866,7 +826,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/帕斯卡三角形/" itemprop="url">LeetCode - 帕斯卡三角形</a></h1>
+                <a class="post-title-link" href="/2017/07/05/寻找峰值/" itemprop="url">LeetCode - 寻找峰值</a></h1>
         
 
         <div class="post-meta">
@@ -941,35 +901,35 @@
       
         
           
-            <p>给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif" alt="帕斯卡三角形"></p>
-<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
-<p>示例:</p>
-<pre><code>输入: 5
-输出:
-[
-     [1],
-    [1,1],
-   [1,2,1],
-  [1,3,3,1],
- [1,4,6,4,1]
-]
-</code></pre><pre><code class="Python">
-    class Solution(object):
-        def generate(self, numRows):
-            &quot;&quot;&quot;
-            :type numRows: int
-            :rtype: List[List[int]]
-            &quot;&quot;&quot;
-            res = []
-            for i in range(1, 1+numRows):
-                res.append([1]*i)
-            for i in range(2, numRows):
-                for j in range(1, i):
-                    res[i][j] = res[i-1][j] + res[i-1][j-1]
-            return res
-</code></pre>
+            <p>峰值元素是指其值大于左右相邻值的元素。</p>
+<p>给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。</p>
+<p>数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。</p>
+<p>你可以假设 nums[-1] = nums[n] = -∞。</p>
+<p>示例 1:</p>
+<pre><code>输入: nums = [1,2,3,1]
+输出: 2
+解释: 3 是峰值元素，你的函数应该返回其索引 2。
+</code></pre><p>示例 2:</p>
+<pre><code>输入: nums = [1,2,1,3,5,6,4]
+输出: 1 或 5 
+解释: 你的函数可以返回索引 1，其峰值元素为 2；
+     或者返回索引 5， 其峰值元素为 6。
+</code></pre><p>说明:</p>
+<p>你的解法应该是 O(logN) 时间复杂度的。</p>
+<pre><code>class Solution(object):
+    def findPeakElement(self, nums):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :rtype: int
+        &quot;&quot;&quot;
+        nums = [-1*float(&#39;inf&#39;)] + nums + [-1*float(&#39;inf&#39;)]
 
+        for i in range(1, len(nums)-1):
+            if (nums[i]&gt;nums[i-1])&amp;(nums[i]&gt;nums[i+1]):
+                return i - 1
+
+        return 0
+</code></pre>
           
         
       
@@ -1199,7 +1159,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汇总区间/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/存在重复元素2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1218,7 +1178,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/汇总区间/" itemprop="url">LeetCode - 汇总区间</a></h1>
+                <a class="post-title-link" href="/2017/07/05/存在重复元素2/" itemprop="url">LeetCode - 存在重复元素2</a></h1>
         
 
         <div class="post-meta">
@@ -1293,226 +1253,31 @@
       
         
           
-            <p>给定一个无重复元素的有序整数数组，返回数组区间范围的汇总。</p>
+            <p>给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。</p>
 <p>示例 1:</p>
-<pre><code>输入: [0,1,2,4,5,7]
-输出: [&quot;0-&gt;2&quot;,&quot;4-&gt;5&quot;,&quot;7&quot;]
-解释: 0,1,2 可组成一个连续的区间; 4,5 可组成一个连续的区间。
+<pre><code>输入: nums = [1,2,3,1], k = 3
+输出: true
 </code></pre><p>示例 2:</p>
-<pre><code>输入: [0,2,3,4,6,8,9]
-输出: [&quot;0&quot;,&quot;2-&gt;4&quot;,&quot;6&quot;,&quot;8-&gt;9&quot;]
-解释: 2,3,4 可组成一个连续的区间; 8,9 可组成一个连续的区间。
+<pre><code>输入: nums = [1,0,1,1], k = 1
+输出: true
+</code></pre><p>示例 3:</p>
+<pre><code>输入: nums = [1,2,3,1,2,3], k = 2
+输出: false
 </code></pre><pre><code class="Python">
     class Solution:
-        def summaryRanges(self, nums):
-            &quot;&quot;&quot;
-            :type nums: List[int]
-            :rtype: List[str]
-            &quot;&quot;&quot;
-            if len(nums)&lt;1:
-                return []
+    def containsNearbyDuplicate(self, nums, k):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        &quot;&quot;&quot;
+        d = {}
+        for i, num in enumerate(nums):
+            if num in d and i - d[num] &lt;= k:
+                return True
+            d[num] = i
 
-            tmp = []; res = []
-            j = 1; s = str(nums[0])
-
-            while j &lt; len(nums):
-                if nums[j] &gt; nums[j-1] + 1:
-                    tmp.append(s)
-                    s = str(nums[j])
-                    j += 1
-                else:
-                    s += &#39;+&#39; + str(nums[j])
-                    j += 1
-
-            # 最后一个
-            tmp.append(s)
-
-            for s in tmp:
-                s = s.split(&#39;+&#39;)
-                if len(s) &gt; 1:
-                    res.append(s[0]+&quot;-&gt;&quot;+s[-1])
-                else:
-                    res.append(s[0])
-
-            return res
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汉明距离/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/汉明距离/" itemprop="url">LeetCode - 汉明距离</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。</p>
-<p>给出两个整数 x 和 y，计算它们之间的汉明距离。</p>
-<p>注意：<br>0 ≤ x, y &lt; 231.</p>
-<p>示例:</p>
-<pre><code>输入: x = 1, y = 4
-
-输出: 2
-
-解释:
-1   (0 0 0 1)
-4   (0 1 0 0)
-       ↑   ↑
-</code></pre><p>上面的箭头指出了对应二进制位不同的位置。</p>
-<pre><code class="Python">
-    class Solution(object):
-        def hammingDistance(self, x, y):
-            &quot;&quot;&quot;
-            :type x: int
-            :type y: int
-            :rtype: int
-            &quot;&quot;&quot;
-            bx = [v for v in bin(x)[2:]]
-            by = [v for v in bin(y)[2:]]
-
-            bx.reverse()
-            by.reverse()
-            i = 0; cnt = 0
-            while (i&lt;len(bx))&amp;(i&lt;len(by)):
-                if bx[i] != by[i]:
-                    cnt += 1
-                i += 1
-
-            if len(bx)&gt;i:
-                cnt += bx[i:].count(&#39;1&#39;)
-            if len(by)&gt;i:
-                cnt += by[i:].count(&#39;1&#39;)
-
-            return cnt
-
-            # return bin(x^y).count(&#39;1&#39;)
+        return False
 </code></pre>
 
           
@@ -1674,6 +1439,186 @@ class Solution(object):
                 return i
         return nums[0]
 </code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汇总区间/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/汇总区间/" itemprop="url">LeetCode - 汇总区间</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个无重复元素的有序整数数组，返回数组区间范围的汇总。</p>
+<p>示例 1:</p>
+<pre><code>输入: [0,1,2,4,5,7]
+输出: [&quot;0-&gt;2&quot;,&quot;4-&gt;5&quot;,&quot;7&quot;]
+解释: 0,1,2 可组成一个连续的区间; 4,5 可组成一个连续的区间。
+</code></pre><p>示例 2:</p>
+<pre><code>输入: [0,2,3,4,6,8,9]
+输出: [&quot;0&quot;,&quot;2-&gt;4&quot;,&quot;6&quot;,&quot;8-&gt;9&quot;]
+解释: 2,3,4 可组成一个连续的区间; 8,9 可组成一个连续的区间。
+</code></pre><pre><code class="Python">
+    class Solution:
+        def summaryRanges(self, nums):
+            &quot;&quot;&quot;
+            :type nums: List[int]
+            :rtype: List[str]
+            &quot;&quot;&quot;
+            if len(nums)&lt;1:
+                return []
+
+            tmp = []; res = []
+            j = 1; s = str(nums[0])
+
+            while j &lt; len(nums):
+                if nums[j] &gt; nums[j-1] + 1:
+                    tmp.append(s)
+                    s = str(nums[j])
+                    j += 1
+                else:
+                    s += &#39;+&#39; + str(nums[j])
+                    j += 1
+
+            # 最后一个
+            tmp.append(s)
+
+            for s in tmp:
+                s = s.split(&#39;+&#39;)
+                if len(s) &gt; 1:
+                    res.append(s[0]+&quot;-&gt;&quot;+s[-1])
+                else:
+                    res.append(s[0])
+
+            return res
+</code></pre>
+
           
         
       
@@ -1881,7 +1826,7 @@ class Solution(object):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/寻找旋转排序数组中的最小值/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/汉明距离/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1900,7 +1845,7 @@ class Solution(object):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/07/05/寻找旋转排序数组中的最小值/" itemprop="url">LeetCode - 寻找旋转排序数组中的最小值</a></h1>
+                <a class="post-title-link" href="/2017/07/05/汉明距离/" itemprop="url">LeetCode - 汉明距离</a></h1>
         
 
         <div class="post-meta">
@@ -1975,30 +1920,48 @@ class Solution(object):
       
         
           
-            <p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。</p>
-<p>( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。</p>
-<p>请找出其中最小的元素。</p>
-<p>你可以假设数组中不存在重复元素。</p>
-<p>示例 1:</p>
-<pre><code>输入: [3,4,5,1,2]
-输出: 1
-</code></pre><p>示例 2:</p>
-<pre><code>输入: [4,5,6,7,0,1,2]
-输出: 0
+            <p>两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。</p>
+<p>给出两个整数 x 和 y，计算它们之间的汉明距离。</p>
+<p>注意：<br>0 ≤ x, y &lt; 231.</p>
+<p>示例:</p>
+<pre><code>输入: x = 1, y = 4
 
-class Solution(object):
-def findMin(self, nums):
-    &quot;&quot;&quot;
-    :type nums: List[int]
-    :rtype: int
-    &quot;&quot;&quot;
+输出: 2
 
-    for i in range(1, len(nums)):
-        if nums[i] &lt; nums[i-1]:
-            return nums[i]
+解释:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+</code></pre><p>上面的箭头指出了对应二进制位不同的位置。</p>
+<pre><code class="Python">
+    class Solution(object):
+        def hammingDistance(self, x, y):
+            &quot;&quot;&quot;
+            :type x: int
+            :type y: int
+            :rtype: int
+            &quot;&quot;&quot;
+            bx = [v for v in bin(x)[2:]]
+            by = [v for v in bin(y)[2:]]
 
-    return nums[0]
+            bx.reverse()
+            by.reverse()
+            i = 0; cnt = 0
+            while (i&lt;len(bx))&amp;(i&lt;len(by)):
+                if bx[i] != by[i]:
+                    cnt += 1
+                i += 1
+
+            if len(bx)&gt;i:
+                cnt += bx[i:].count(&#39;1&#39;)
+            if len(by)&gt;i:
+                cnt += by[i:].count(&#39;1&#39;)
+
+            return cnt
+
+            # return bin(x^y).count(&#39;1&#39;)
 </code></pre>
+
           
         
       

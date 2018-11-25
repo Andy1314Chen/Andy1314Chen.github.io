@@ -105,7 +105,14 @@
 <meta property="og:image" content="https://blog.keras.io/img/ae/autoencoder_schema.jpg">
 <meta property="og:image" content="https://blog.keras.io/img/ae/jigsaw-puzzle.png">
 <meta property="og:image" content="https://blog.keras.io/img/ae/basic_ae_32.png">
-<meta property="og:updated_time" content="2018-11-25T14:23:43.012Z">
+<meta property="og:image" content="https://blog.keras.io/img/ae/sparse_ae_32.png">
+<meta property="og:image" content="https://blog.keras.io/img/ae/deep_ae_32.png">
+<meta property="og:image" content="https://blog.keras.io/img/ae/tb_curves.png">
+<meta property="og:image" content="https://blog.keras.io/img/ae/deep_conv_ae_128.png">
+<meta property="og:image" content="https://blog.keras.io/img/ae/encoded_representations.png">
+<meta property="og:image" content="https://blog.keras.io/img/ae/noisy_digits.png">
+<meta property="og:image" content="https://blog.keras.io/img/ae/denoised_digits.png">
+<meta property="og:updated_time" content="2018-11-25T15:04:41.457Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Building Autoencoders in Keras">
 <meta name="twitter:description" content="翻译自博客Building Autoencoders in Keras 在本教程中，我们将回答有关自动编码器的一些常见问题，我们将介绍以下模型的代码示例：  a simple autoencoder based on a fully-connected layer a sparse autoencoder a deep fully-connected autoencoder a deep conv">
@@ -514,6 +521,173 @@ encoded = Dense(encoding_dim, activation=&#39;relu&#39;,
 decoded = Dense(784, activation=&#39;sigmoid&#39;)(encoded)
 
 autoencoder = Model(input_img, decoded)
+</code></pre><p>让我们训练这个模型100轮（增加正规化，模型不太可能过度拟合，可以训练更长）。<br>模型以训练集损失0.11和验证集损失0.10结束。两者之间的差异主要是由于正规化术语被添加到训练期间的损失（价值约0.01）。</p>
+<p>这是我们新结果的可视化：</p>
+<p><img src="https://blog.keras.io/img/ae/sparse_ae_32.png" alt=""></p>
+<p>它们看起来与之前的模型非常相似，唯一的显着差异是编码表示的稀疏性。encoded_imgs.mean（）产生的值为3.33（超过我们的10,000个测试图像），而使用之前的模型，相同的数量为7.30。因此，我们的新模型产生两倍稀疏的编码表示。</p>
+<h2 id="Deep-autoencoder"><a href="#Deep-autoencoder" class="headerlink" title="Deep autoencoder"></a>Deep autoencoder</h2><p>我们不必将自己局限于单层作为编码器或解码器，我们可以改为使用一叠层，例如：</p>
+<pre><code>input_img = Input(shape=(784,))
+encoded = Dense(128, activation=&#39;relu&#39;)(input_img)
+encoded = Dense(64, activation=&#39;relu&#39;)(encoded)
+encoded = Dense(32, activation=&#39;relu&#39;)(encoded)
+
+decoded = Dense(64, activation=&#39;relu&#39;)(encoded)
+decoded = Dense(128, activation=&#39;relu&#39;)(decoded)
+decoded = Dense(784, activation=&#39;sigmoid&#39;)(decoded)
+
+autoencoder = Model(input_img, decoded)
+autoencoder.compile(optimizer=&#39;adadelta&#39;, loss=&#39;binary_crossentropy&#39;)
+
+autoencoder.fit(x_train, x_train,
+                epochs=100,
+                batch_size=256,
+                shuffle=True,
+                validation_data=(x_test, x_test))
+</code></pre><p>经过100轮迭代，它到达训练集损失和测试损失约为0.097，比我们以前的型号好一点。我们重建的数字看起来也好一点：</p>
+<p><img src="https://blog.keras.io/img/ae/deep_ae_32.png" alt=""></p>
+<h2 id="Convolutional-autoencoder"><a href="#Convolutional-autoencoder" class="headerlink" title="Convolutional autoencoder"></a>Convolutional autoencoder</h2><p>由于我们的输入是图像，因此使用卷积神经网络（convnets）作为编码器和解码器是有意义的。在实际设置中，应用于图像的自动编码器始终是卷积自动编码器 - 它们只是表现得更好。让我们实现一个。编码器将包含一堆Conv2D和MaxPooling2D层（最大池用于空间下采样），而解码器将包含一堆Conv2D和UpSampling2D层。</p>
+<pre><code>from keras.layers import Input, Dense, Conv2D, MaxPooling2D, UpSampling2D
+from keras.models import Model
+from keras import backend as K
+
+input_img = Input(shape=(28, 28, 1))  # adapt this if using `channels_first` image data format
+
+x = Conv2D(16, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(input_img)
+x = MaxPooling2D((2, 2), padding=&#39;same&#39;)(x)
+x = Conv2D(8, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(x)
+x = MaxPooling2D((2, 2), padding=&#39;same&#39;)(x)
+x = Conv2D(8, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(x)
+encoded = MaxPooling2D((2, 2), padding=&#39;same&#39;)(x)
+
+# at this point the representation is (4, 4, 8) i.e. 128-dimensional
+
+x = Conv2D(8, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(encoded)
+x = UpSampling2D((2, 2))(x)
+x = Conv2D(8, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(x)
+x = UpSampling2D((2, 2))(x)
+x = Conv2D(16, (3, 3), activation=&#39;relu&#39;)(x)
+x = UpSampling2D((2, 2))(x)
+decoded = Conv2D(1, (3, 3), activation=&#39;sigmoid&#39;, padding=&#39;same&#39;)(x)
+
+autoencoder = Model(input_img, decoded)
+autoencoder.compile(optimizer=&#39;adadelta&#39;, loss=&#39;binary_crossentropy&#39;)
+</code></pre><p>为了训练它，我们将使用具有形状的原始MNIST数字（样本，3,28,28），并且我们将标准化0到1之间的像素值。</p>
+<pre><code>from keras.datasets import mnist
+import numpy as np
+
+(x_train, _), (x_test, _) = mnist.load_data()
+
+x_train = x_train.astype(&#39;float32&#39;) / 255.
+x_test = x_test.astype(&#39;float32&#39;) / 255.
+x_train = np.reshape(x_train, (len(x_train), 28, 28, 1))  # adapt this if using `channels_first` image data format
+x_test = np.reshape(x_test, (len(x_test), 28, 28, 1))  # adapt this if using `channels_first` image data format
+</code></pre><p>让我们训练这个模型50轮。为了演示如何在训练期间可视化模型的结果，我们将使用TensorFlow后端和TensorBoard回调。</p>
+<p>首先，让我们打开一个终端并启动一个TensorBoard服务器，它将读取存储在/tmp/ autoencoder中的日志。</p>
+<p>然后让我们训练我们的模型。在回调列表中，我们传递了TensorBoard回调的实例。在每轮迭代之后，此回调会将日志写入/tmp/autoencoder，这可以由我们的TensorBoard服务器读取。</p>
+<pre><code>from keras.callbacks import TensorBoard
+
+autoencoder.fit(x_train, x_train,
+                epochs=50,
+                batch_size=128,
+                shuffle=True,
+                validation_data=(x_test, x_test),
+                callbacks=[TensorBoard(log_dir=&#39;/tmp/autoencoder&#39;)])
+</code></pre><p>这允许我们监控TensorBoard Web界面中的培训（通过导航到<a href="http://0.0.0.0:6006）：" target="_blank" rel="external">http://0.0.0.0:6006）：</a></p>
+<p><img src="https://blog.keras.io/img/ae/tb_curves.png" alt=""></p>
+<p>该模型收敛到0.094的损失，明显优于我们之前的模型（这在很大程度上是由于编码表示的熵容量较高，128维度与先前的32维度相比）。我们来看看重建的数字：</p>
+<pre><code>decoded_imgs = autoencoder.predict(x_test)
+
+n = 10
+plt.figure(figsize=(20, 4))
+for i in range(n):
+    # display original
+    ax = plt.subplot(2, n, i)
+    plt.imshow(x_test[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+    # display reconstruction
+    ax = plt.subplot(2, n, i + n)
+    plt.imshow(decoded_imgs[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+plt.show()
+</code></pre><p><img src="https://blog.keras.io/img/ae/deep_conv_ae_128.png" alt=""></p>
+<p>我们还可以看一下128维编码表示。这些表示是8x4x4，因此我们将它们重新整形为4x32，以便能够将它们显示为灰度图像。</p>
+<pre><code>n = 10
+plt.figure(figsize=(20, 8))
+for i in range(n):
+    ax = plt.subplot(1, n, i+1)
+    plt.imshow(encoded_imgs[i].reshape(4, 4 * 8).T)
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+plt.show()
+</code></pre><p><img src="https://blog.keras.io/img/ae/encoded_representations.png" alt=""></p>
+<h2 id="Application-to-image-denoising"><a href="#Application-to-image-denoising" class="headerlink" title="Application to image denoising"></a>Application to image denoising</h2><p>让我们将卷积自动编码器用于处理图像去噪问题。这很简单：我们将训练自动编码器来映射噪声数字图像以清理数字图像。</p>
+<p>以下是我们将如何生成合成噪声数字：我们只应用高斯噪声矩阵并将图像剪切在0和1之间。</p>
+<pre><code>from keras.datasets import mnist
+import numpy as np
+
+(x_train, _), (x_test, _) = mnist.load_data()
+
+x_train = x_train.astype(&#39;float32&#39;) / 255.
+x_test = x_test.astype(&#39;float32&#39;) / 255.
+x_train = np.reshape(x_train, (len(x_train), 28, 28, 1))  # adapt this if using `channels_first` image data format
+x_test = np.reshape(x_test, (len(x_test), 28, 28, 1))  # adapt this if using `channels_first` image data format
+
+noise_factor = 0.5
+x_train_noisy = x_train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape) 
+x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape) 
+
+x_train_noisy = np.clip(x_train_noisy, 0., 1.)
+x_test_noisy = np.clip(x_test_noisy, 0., 1.)
+</code></pre><p>这是噪声的数字看起来像：</p>
+<p>n = 10<br>plt.figure(figsize=(20, 2))<br>for i in range(n):<br>    ax = plt.subplot(1, n, i)<br>    plt.imshow(x_test_noisy[i].reshape(28, 28))<br>    plt.gray()<br>    ax.get_xaxis().set_visible(False)<br>    ax.get_yaxis().set_visible(False)<br>plt.show()</p>
+<p><img src="https://blog.keras.io/img/ae/noisy_digits.png" alt=""></p>
+<p>如果你眯着眼睛，你仍然可以识别它们，但很难。我们的自动编码器能学会恢复原始数字吗？让我们来看看。与之前的卷积自动编码器相比，为了提高重建的质量，我们将使用略有不同的模型，每层使用更多滤波器：</p>
+<pre><code>input_img = Input(shape=(28, 28, 1))  # adapt this if using `channels_first` image data format
+
+x = Conv2D(32, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(input_img)
+x = MaxPooling2D((2, 2), padding=&#39;same&#39;)(x)
+x = Conv2D(32, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(x)
+encoded = MaxPooling2D((2, 2), padding=&#39;same&#39;)(x)
+
+# at this point the representation is (7, 7, 32)
+
+x = Conv2D(32, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(encoded)
+x = UpSampling2D((2, 2))(x)
+x = Conv2D(32, (3, 3), activation=&#39;relu&#39;, padding=&#39;same&#39;)(x)
+x = UpSampling2D((2, 2))(x)
+decoded = Conv2D(1, (3, 3), activation=&#39;sigmoid&#39;, padding=&#39;same&#39;)(x)
+
+autoencoder = Model(input_img, decoded)
+autoencoder.compile(optimizer=&#39;adadelta&#39;, loss=&#39;binary_crossentropy&#39;)
+</code></pre><p>让我们训练它100轮：</p>
+<pre><code>autoencoder.fit(x_train_noisy, x_train,
+                epochs=100,
+                batch_size=128,
+                shuffle=True,
+                validation_data=(x_test_noisy, x_test),
+                callbacks=[TensorBoard(log_dir=&#39;/tmp/tb&#39;, histogram_freq=0, write_graph=False)])
+</code></pre><p>现在让我们来看看结果。顶部，馈送到网络的噪声数字，以及底部，数字由网络重建。</p>
+<p><img src="https://blog.keras.io/img/ae/denoised_digits.png" alt=""></p>
+<p>它似乎工作得很好。如果将此过程扩展到更大的网络，可以开始构建文档去噪或音频去噪模型。<a href="https://www.kaggle.com/c/denoising-dirty-documents" target="_blank" rel="external">Kaggle有一个有趣的数据集可以帮助入门。</a></p>
+<h2 id="Sequence-to-sequence-autoencoder"><a href="#Sequence-to-sequence-autoencoder" class="headerlink" title="Sequence-to-sequence autoencoder"></a>Sequence-to-sequence autoencoder</h2><p>如果您输入的是序列，而不是矢量或2D图像，那么您可能希望将一种可以捕获时间结构的模型（如LSTM）用作编码器和解码器。要构建基于LSTM的自动编码器，首先使用LSTM编码器将输入序列转换为包含整个序列信息的单个向量，然后重复此向量n次（其中n是输出序列中的时间步数），并运行LSTM解码器将此常数序列转换为目标序列。</p>
+<p>我们不会在任何特定数据集上证明这一点。我们将在此处提供一个代码示例供读者参考！</p>
+<pre><code>from keras.layers import Input, LSTM, RepeatVector
+from keras.models import Model
+
+inputs = Input(shape=(timesteps, input_dim))
+encoded = LSTM(latent_dim)(inputs)
+
+decoded = RepeatVector(timesteps)(encoded)
+decoded = LSTM(input_dim, return_sequences=True)(decoded)
+
+sequence_autoencoder = Model(inputs, decoded)
+encoder = Model(inputs, encoded)
 </code></pre>
       
     </div>
@@ -728,7 +902,7 @@ autoencoder = Model(input_img, decoded)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-are-autoencoders"><span class="nav-number">1.</span> <span class="nav-text">What are autoencoders?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Are-they-good-at-data-compression"><span class="nav-number">2.</span> <span class="nav-text">Are they good at data compression?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-are-autoencoders-good-for"><span class="nav-number">3.</span> <span class="nav-text">What are autoencoders good for?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#So-what’s-the-big-deal-with-autoencoders"><span class="nav-number">4.</span> <span class="nav-text">So what’s the big deal with autoencoders?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Let’s-build-the-simplest-possible-autoencoder"><span class="nav-number">5.</span> <span class="nav-text">Let’s build the simplest possible autoencoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adding-a-sparsity-constraint-on-the-encoded-representations"><span class="nav-number">6.</span> <span class="nav-text">Adding a sparsity constraint on the encoded representations</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-are-autoencoders"><span class="nav-number">1.</span> <span class="nav-text">What are autoencoders?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Are-they-good-at-data-compression"><span class="nav-number">2.</span> <span class="nav-text">Are they good at data compression?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-are-autoencoders-good-for"><span class="nav-number">3.</span> <span class="nav-text">What are autoencoders good for?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#So-what’s-the-big-deal-with-autoencoders"><span class="nav-number">4.</span> <span class="nav-text">So what’s the big deal with autoencoders?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Let’s-build-the-simplest-possible-autoencoder"><span class="nav-number">5.</span> <span class="nav-text">Let’s build the simplest possible autoencoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adding-a-sparsity-constraint-on-the-encoded-representations"><span class="nav-number">6.</span> <span class="nav-text">Adding a sparsity constraint on the encoded representations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-autoencoder"><span class="nav-number">7.</span> <span class="nav-text">Deep autoencoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convolutional-autoencoder"><span class="nav-number">8.</span> <span class="nav-text">Convolutional autoencoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application-to-image-denoising"><span class="nav-number">9.</span> <span class="nav-text">Application to image denoising</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequence-to-sequence-autoencoder"><span class="nav-number">10.</span> <span class="nav-text">Sequence-to-sequence autoencoder</span></a></li></ol></div>
             
 
           </div>

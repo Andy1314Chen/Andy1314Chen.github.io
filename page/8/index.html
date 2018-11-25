@@ -1051,162 +1051,6 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/包含min函数的栈/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/包含min函数的栈/" itemprop="url">包含min函数的栈(剑指offer第二十题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def __init__(self):
-            self.stack = []
-        def push(self, node):
-            # write code here
-            self.stack.append(node)
-        def pop(self):
-            # write code here
-            return self.stack.pop()
-        def top(self):
-            # write code here
-            return self.stack[-1]
-        def min(self):
-            # write code here
-            return min(self.stack)
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2合并两个排序的链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1372,7 +1216,7 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/用两个栈实现队列/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/青蛙台阶/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1391,7 +1235,7 @@ class Solution:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/用两个栈实现队列/" itemprop="url">用两个栈实现队列(剑指offer第五题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/青蛙台阶/" itemprop="url">青蛙台阶(剑指offer第八题)</a></h1>
         
 
         <div class="post-meta">
@@ -1466,25 +1310,21 @@ class Solution:
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def __init__(self):
-            self.In = []
-            self.Out = []
-
-        def push(self, node):
+        def jumpFloor(self, number):
             # write code here
-            self.In.append(node)
-        def pop(self):
-            # return xx
-            if  self.Out:# Out为空，将In中反顺序装入Out,以实现先入先出
-                return self.Out.pop()
-            else:# 不为空，直接弹出
-                while self.In:
-                    self.Out.append(self.In.pop())
-                return self.Out.pop()
+
+            first = 1
+            second = 1
+            res = 1
+            for i in range(1, number):
+                res = first + second
+                second = first
+                first = res
+            return res
 </code></pre>
 
           
@@ -1529,7 +1369,7 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/旋转数组的最小数字/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/菲波那切数列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1548,7 +1388,7 @@ class Solution:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/旋转数组的最小数字/" itemprop="url">旋转数组的最小数字(剑指offer第六题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/菲波那切数列/" itemprop="url">菲波那切数列(剑指offer第七题)</a></h1>
         
 
         <div class="post-meta">
@@ -1623,20 +1463,23 @@ class Solution:
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。<br>n&lt;=39</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def minNumberInRotateArray(self, rotateArray):
+        def Fibonacci(self, n):
             # write code here
-            if len(rotateArray) &lt; 1:
-                return 0
-            i = 1
-            while i &lt; len(rotateArray):
-                if rotateArray[i] &lt; rotateArray[i-1]:
-                    return rotateArray[i]
-                i += 1
-            return rotateArray[-1]
+            if n &lt; 2:
+                return n
+
+            first = 1
+            second = 0
+            res = 0
+            for i in range(1,n):
+                res = first + second
+                second = first
+                first = res
+            return res
 </code></pre>
 
           
@@ -1681,7 +1524,7 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/二进制中1的个数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/调整数组顺序使奇数位于偶数前面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -1700,7 +1543,7 @@ class Solution:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/二进制中1的个数/" itemprop="url">二进制中1的个数(剑指offer第十一题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/调整数组顺序使奇数位于偶数前面/" itemprop="url">调整数组顺序使奇数位于偶数前面(剑指offer第十三题)</a></h1>
         
 
         <div class="post-meta">
@@ -1775,19 +1618,182 @@ class Solution:
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def NumberOf1(self, n):
+        def reOrderArray(self, array):
             # write code here
-            cnt = 0
-            if n &lt; 0:
-                n = n&amp;0xffffffff
-            while n:
-                cnt += 1
-                n = n&amp;(n-1)
-            return cnt
+            if len(array) &lt; 1:
+                return []
+            array1 = []
+            array2 = []
+            for v in array:
+                if v%2:
+                    array1.append(v)
+                else:
+                    array2.append(v)
+            array = array1 + array2
+            return array
+</code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/数值的整数次方/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/01/数值的整数次方/" itemprop="url">数值的整数次方(剑指offer第十二题)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
+    # -*- coding:utf-8 -*-
+    class Solution:
+        def Power(self, base, exponent):
+            # write code here
+            res = base
+            if exponent == 0:
+                return 1
+            elif exponent &gt; 0:
+                flag = 0
+            else:
+                flag = 1
+            exponent = abs(exponent)
+            while exponent &gt; 1:
+                res *= base
+                exponent -= 1
+            if flag:
+                return 1./res
+            else:
+                return res
 </code></pre>
 
           
@@ -2003,7 +2009,7 @@ class Solution:
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/数值的整数次方/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/旋转数组的最小数字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Andy Chen">
@@ -2022,7 +2028,7 @@ class Solution:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/数值的整数次方/" itemprop="url">数值的整数次方(剑指offer第十二题)</a></h1>
+                <a class="post-title-link" href="/2017/09/01/旋转数组的最小数字/" itemprop="url">旋转数组的最小数字(剑指offer第六题)</a></h1>
         
 
         <div class="post-meta">
@@ -2097,27 +2103,20 @@ class Solution:
       
         
           
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
+            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
     # -*- coding:utf-8 -*-
     class Solution:
-        def Power(self, base, exponent):
+        def minNumberInRotateArray(self, rotateArray):
             # write code here
-            res = base
-            if exponent == 0:
-                return 1
-            elif exponent &gt; 0:
-                flag = 0
-            else:
-                flag = 1
-            exponent = abs(exponent)
-            while exponent &gt; 1:
-                res *= base
-                exponent -= 1
-            if flag:
-                return 1./res
-            else:
-                return res
+            if len(rotateArray) &lt; 1:
+                return 0
+            i = 1
+            while i &lt; len(rotateArray):
+                if rotateArray[i] &lt; rotateArray[i-1]:
+                    return rotateArray[i]
+                i += 1
+            return rotateArray[-1]
 </code></pre>
 
           
