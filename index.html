@@ -678,7 +678,94 @@ decoded = LSTM(input_dim, return_sequences=True)(decoded)
 
 sequence_autoencoder = Model(inputs, decoded)
 encoder = Model(inputs, encoded)
-</code></pre>
+</code></pre><h2 id="Variational-autoencoder-VAE"><a href="#Variational-autoencoder-VAE" class="headerlink" title="Variational autoencoder (VAE)"></a>Variational autoencoder (VAE)</h2><p>变分自动编码器对自动编码略微更现代，更有趣。</p>
+<p>你问什么是变分自动编码器？它是一种自动编码器，对正在学习的编码表示添加了约束。更准确地说，它是一个自动编码器，可以为输入数据学习隐变量模型。因此，不是让神经网络学习任意函数，而是学习建模数据的概率分布参数。如果您从此分布中采样点，则可以生成新的输入数据样本：VAE是“生成模型”。</p>
+<p>变分自动编码器如何工作？</p>
+<p>首先，编码器网络将输入样本x转换为潜在空间中的两个参数，我们将定义为z_mean和z_log_sigma。然后，我们通过z = z_mean + exp（z_log_sigma）* epsilon从假定生成数据的潜在正态分布中随机地采样相似的点z，其中epsilon是随机正态张量。最后，解码器网络将这些潜在空间点映射回原始输入数据。</p>
+<p>通过两个损失函数训练模型的参数：重构损失函数迫使解码的样本匹配初始输入（就像我们之前的自动编码器一样），以及学习的潜在分布和先前分布之间的KL差异，充当正规化术语。你实际上可以完全摆脱后一个术语，尽管它有助于学习格式良好的潜在空间并减少对训练数据的过度拟合。</p>
+<p>由于VAE是一个更复杂的示例，因此我们将<a href="https://github.com/fchollet/keras/blob/master/examples/variational_autoencoder.py" target="_blank" rel="external">Github上的代码</a>作为独立脚本提供。在这里，我们将逐步回顾如何创建模型。</p>
+<p>首先，这是我们的编码器网络，将输入映射到我们的潜在分布参数：</p>
+<pre><code>x = Input(batch_shape=(batch_size, original_dim))
+h = Dense(intermediate_dim, activation=&#39;relu&#39;)(x)
+z_mean = Dense(latent_dim)(h)
+z_log_sigma = Dense(latent_dim)(h)
+</code></pre><p>我们可以使用这些参数从潜在空间中采样新的相似点：</p>
+<pre><code>def sampling(args):
+    z_mean, z_log_sigma = args
+    epsilon = K.random_normal(shape=(batch_size, latent_dim),
+                              mean=0., std=epsilon_std)
+    return z_mean + K.exp(z_log_sigma) * epsilon
+
+# note that &quot;output_shape&quot; isn&#39;t necessary with the TensorFlow backend
+# so you could write `Lambda(sampling)([z_mean, z_log_sigma])`
+z = Lambda(sampling, output_shape=(latent_dim,))([z_mean, z_log_sigma])
+</code></pre><p>最后，我们可以将这些采样的潜点映射回重建输入：</p>
+<pre><code>decoder_h = Dense(intermediate_dim, activation=&#39;relu&#39;)
+decoder_mean = Dense(original_dim, activation=&#39;sigmoid&#39;)
+h_decoded = decoder_h(z)
+x_decoded_mean = decoder_mean(h_decoded)
+</code></pre><p>到目前为止我们所做的工作允许我们实例化3个模型：</p>
+<ul>
+<li>端到端自动编码器将输入映射到重建</li>
+<li>编码器将输入映射到潜在空间</li>
+<li><p>一个发生器，它可以在潜在空间上取点并输出相应的重建样本</p>
+<h1 id="end-to-end-autoencoder"><a href="#end-to-end-autoencoder" class="headerlink" title="end-to-end autoencoder"></a>end-to-end autoencoder</h1><p>  vae = Model(x, x_decoded_mean)</p>
+<h1 id="encoder-from-inputs-to-latent-space"><a href="#encoder-from-inputs-to-latent-space" class="headerlink" title="encoder, from inputs to latent space"></a>encoder, from inputs to latent space</h1><p>  encoder = Model(x, z_mean)</p>
+<h1 id="generator-from-latent-space-to-reconstructed-inputs"><a href="#generator-from-latent-space-to-reconstructed-inputs" class="headerlink" title="generator, from latent space to reconstructed inputs"></a>generator, from latent space to reconstructed inputs</h1><p>  decoder_input = Input(shape=(latent_dim,))<br>  _h_decoded = decoder_h(decoder_input)<br>  _x_decoded_mean = decoder_mean(_h_decoded)<br>  generator = Model(decoder_input, _x_decoded_mean)</p>
+</li>
+</ul>
+<p>我们使用端到端模型训练模型，具有自定义损失函数：重构项和KL发散正则项的总和。</p>
+<pre><code>def vae_loss(x, x_decoded_mean):
+    xent_loss = objectives.binary_crossentropy(x, x_decoded_mean)
+    kl_loss = - 0.5 * K.mean(1 + z_log_sigma - K.square(z_mean) - K.exp(z_log_sigma), axis=-1)
+    return xent_loss + kl_loss
+
+vae.compile(optimizer=&#39;rmsprop&#39;, loss=vae_loss)
+</code></pre><p>我们在MNIST数字上训练我们的VAE：</p>
+<pre><code>(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+x_train = x_train.astype(&#39;float32&#39;) / 255.
+x_test = x_test.astype(&#39;float32&#39;) / 255.
+x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
+x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
+
+vae.fit(x_train, x_train,
+        shuffle=True,
+        epochs=epochs,
+        batch_size=batch_size,
+        validation_data=(x_test, x_test))
+</code></pre><p>因为我们的潜在空间是二维的，所以在这一点上可以做一些很酷的可视化。一个是查看潜在2D平面上不同类别的邻域：</p>
+<pre><code>x_test_encoded = encoder.predict(x_test, batch_size=batch_size)
+plt.figure(figsize=(6, 6))
+plt.scatter(x_test_encoded[:, 0], x_test_encoded[:, 1], c=y_test)
+plt.colorbar()
+plt.show()
+</code></pre><p><img src="https://blog.keras.io/img/ae/vae_classes_plane.png" alt=""></p>
+<p>这些彩色簇中的每一个都是一种数字。相近的簇是结构相似的数字（即，在潜在空间中共享信息的数字）。</p>
+<p>因为VAE是一个生成模型，我们也可以用它来生成新的数字！在这里，我们将扫描潜在的平面，定期对潜在点进行采样，并为每个点生成相应的数字。这为我们提供了“生成”MNIST数字的潜在流形的可视化。</p>
+<pre><code># display a 2D manifold of the digits
+n = 15  # figure with 15x15 digits
+digit_size = 28
+figure = np.zeros((digit_size * n, digit_size * n))
+# we will sample n points within [-15, 15] standard deviations
+grid_x = np.linspace(-15, 15, n)
+grid_y = np.linspace(-15, 15, n)
+
+for i, yi in enumerate(grid_x):
+    for j, xi in enumerate(grid_y):
+        z_sample = np.array([[xi, yi]]) * epsilon_std
+        x_decoded = generator.predict(z_sample)
+        digit = x_decoded[0].reshape(digit_size, digit_size)
+        figure[i * digit_size: (i + 1) * digit_size,
+               j * digit_size: (j + 1) * digit_size] = digit
+
+plt.figure(figsize=(10, 10))
+plt.imshow(figure)
+plt.show()
+</code></pre><p><img src="https://blog.keras.io/img/ae/vae_digits_manifold.png" alt=""></p>
+<p>以上！</p>
+<p>如果您有关于此帖子（或将来的帖子）中涵盖的更多主题的建议，您可以在Twitter上通过@fchollet与我联系。</p>
+
           
         
       
