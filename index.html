@@ -550,7 +550,91 @@ plt.show()
 </code></pre><p><img src="https://i.imgur.com/mzStw3R.png" alt=""></p>
 <p>在上面看到的这个圆是隐空间H中编码器f（x）下的图像。正如您可能从一开始就猜到的那样，因为trig图将笛卡尔坐标投影到极坐标。编码矢量是线性子空间。极坐标中的圆具有等式r = a。对于那些没有假设这个结果的人，我希望这是一个足够好的妙语。</p>
 <p>使用PCA，可以使用线性代数中的Gram-Schmidt算法将任何高维空间投影到多个线性子空间中。</p>
-<h2 id="Anomaly-Detection"><a href="#Anomaly-Detection" class="headerlink" title="Anomaly Detection"></a>Anomaly Detection</h2><p>原文链接：<a href="http://rickyhan.com/jekyll/update/2017/09/14/autoencoders.html" title="Gradient Trader Part1 : The Surprising Usefulness of Autoencoders " target="_blank" rel="external">http://rickyhan.com/jekyll/update/2017/09/14/autoencoders.html</a></p>
+<h2 id="Anomaly-Detection"><a href="#Anomaly-Detection" class="headerlink" title="Anomaly Detection"></a>Anomaly Detection</h2><p>如你所见，自动编码是数据可视化和探索中非常强大的技术。但除了创建漂亮的图形之外，还有更深的应用。一个应用是异常检测。</p>
+<p>监管机构可以通过构建无监督的深度学习算法来识别非法交易策略。</p>
+<p>在数据挖掘中，异常检测（或异常值检测）是对不符合数据集中预期模式的观测值的识别。以无监督的方式训练神经网络的能力允许自动编码器在该区域中发光。自动编码器为传统的信号重建和时间序列异常检测方法提供了非常强大的替代方案。</p>
+<p>训练自动编码器在概念上很简单：</p>
+<ol>
+<li>训练集训练Xtrain，with正则化</li>
+<li>评估Xeval并确定自动编码器的容量</li>
+<li>当我们在检查错误可视化后认为它足够好时，选择一个错误阈值（例如2σ）来确定数据点是否是异常。当然，由于我们正在处理时间序列，因此应该在滚动的基础上选择此阈值（滑动窗口）。</li>
+</ol>
+<p>在金融时间序列（和其他系列）中，我们经常想要检测制度变化，即在价格突然变化之前知道。在我的实验中，这在检测冰山订单方面特别有效，冰山订单是为了隐藏实际订单数量而分成几个较小订单的单个大订单。使用普通机器学习方法检测冰山订单很困难，但在人工检查时很明显。</p>
+<p>在下一部分中，我们将模拟异常检测如何工作。首先让我们绘制自动编码器输出的均方误差。</p>
+<pre><code>X_test, _ = gen(1)
+decoded_imgs = m.predict(X_test)
+
+for i in range(2):
+    plt.plot(range(10), np.square(np.abs(X_test[0, :, i] - decoded_imgs[0, :, i])), label=&quot;MSE&quot;)
+
+plt.ylim(-1,1)
+plt.xlim(0,10)
+plt.title(dos_numeros)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/oSOH77X.png" alt=""></p>
+<p>现在让我们改变生成器中的一个数据点。这意味着政权转变。</p>
+<pre><code>X_test, _ = gen(1)
+X_test[0, 4, 0] = X_test[0, 4, 0] + 0.5
+decoded_imgs = m.predict(X_test)
+
+for i in range(2):
+    plt.plot(decoded_imgs[0, :, i])
+    plt.plot(X_test[0, :, i])
+
+plt.ylim(-1,1)
+plt.xlim(0,10)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/aPmoVVx.png" alt=""></p>
+<pre><code>for i in range(2):
+    mse = np.square(np.abs(X_test[0, :, i] - decoded_imgs[0, :, i]))
+    anomaly = np.argmax(mse)
+    if mse[anomaly] &gt; 0.4:
+        plt.title(&quot;Anomaly detected in series {} at time step: {}&quot;.format(i, anomaly))
+    plt.plot(range(10), mse, label=&quot;MSE&quot;)
+
+plt.ylim(-1,1)
+plt.xlim(0,10)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/zwvVadD.png" alt=""></p>
+<h3 id="A-Note-on-MSE"><a href="#A-Note-on-MSE" class="headerlink" title="A Note on MSE"></a>A Note on MSE</h3><p>此外，假设金融系列被归一化为零中心信号，MSE将是一种适应不良的措施。因为如果异常值接近0，则MSE可能小于原始信号的MSE（以0为中心）。因此，必须通过向MSE添加移动平均值来设计更复杂的损失函数。这样，我们可以根据与滚动平均值的偏差来判断。</p>
+<h3 id="A-Note-on-Online-Training-Inference"><a href="#A-Note-on-Online-Training-Inference" class="headerlink" title="A Note on Online Training / Inference"></a>A Note on Online Training / Inference</h3><p>与所有信号处理神经网络一样，该算法应该能够在滚动的基础上运行。该算法只需要来自滑动窗口的一段数据。</p>
+<p>当引入注意力机制时，在线训练（部分观察到的输入）变得更加复杂。使用记忆机制可以实现在线和线性时间注意对齐。我可能会在未来的帖子中介绍金融数据的关注力机制。</p>
+<h2 id="Pattern-Search"><a href="#Pattern-Search" class="headerlink" title="Pattern Search"></a>Pattern Search</h2><p>给出一个示例交易模式，快速识别多维数据系列中的类似模式。</p>
+<p>实现：</p>
+<ul>
+<li>在序列数据集上训练堆叠的循环自动编码器</li>
+<li>对查询序列模式Xt-1，Xt，Xt + 1，… 进行编码以获得HX</li>
+<li>然后对于所有历史数据，使用编码器产生固定长度矢量H = {Ha，Hb，Hc，…} </li>
+<li>对于每个t∈H，找到argmintdist（Ht，HX）</li>
+</ul>
+<p>它基本上是一个模糊散列函数。我没有尝试过，因为计算所有序列的哈希值需要严格的计算才能供大型机构玩家使用。</p>
+<p><img src="https://i.imgur.com/Jpou3kq.png" alt=""></p>
+<h3 id="Stacked-Autoencoders"><a href="#Stacked-Autoencoders" class="headerlink" title="Stacked Autoencoders"></a>Stacked Autoencoders</h3><p>这是介绍堆叠自动编码器如何工作的好地方。</p>
+<p><img src="https://i.imgur.com/SJEra9J.png" alt=""></p>
+<p>如上所述，简单的循环自动编码器有3层：编码器LSTM层，隐藏层和解码器LSTM层。堆叠自动编码器通过堆叠多个单层自动编码器构成。第一个单层自动编码器将输入映射到第一个隐向量。在训练第一自动编码器之后，我们丢弃第一解码器层，然后由第二自动编码器替换，第二自动编码器具有较小的隐向量维度。重复此过程并通过反复试验确定正确的深度和大小（如果您知道更好的方法，请告诉我。）堆叠自动编码器的深度使功能不变，并允许提取的功能更抽象。</p>
+<h3 id="A-Note-on-Supervised-Learning"><a href="#A-Note-on-Supervised-Learning" class="headerlink" title="A Note on Supervised Learning"></a>A Note on Supervised Learning</h3><p>这篇文章仅涉及自动编码器的无监督使用。变分复现自动编码器可以“去噪”人为损坏的数据输入。我从来没有运气，所以我不推荐在金融数据上使用。</p>
+<p>金融数据非常嘈杂。但是，当训练容量较小时，自动编码器具有内置的去噪能力，因为它们只能学习最显着的功能。</p>
+<h3 id="A-Note-on-Variational-Inference-Bayesian-Method"><a href="#A-Note-on-Variational-Inference-Bayesian-Method" class="headerlink" title="A Note on Variational Inference / Bayesian Method"></a>A Note on Variational Inference / Bayesian Method</h3><p><a href="https://jaan.io/what-is-variational-autoencoder-vae-tutorial/" title="地址" target="_blank" rel="external">https://jaan.io/what-is-variational-autoencoder-vae-tutorial/</a></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>自动编码器虽然简单，但却是功能强大的工具。我们使用自动编码器在高维空间上可视化流形并检测时间序列中的异常。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><p><a href="https://arxiv.org/pdf/1511.01432.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1511.01432.pdf</a></p>
+</li>
+<li><p><a href="http://www1.icsi.berkeley.edu/~vinyals/Files/rnn_denoise_2012.pdf" target="_blank" rel="external">http://www1.icsi.berkeley.edu/~vinyals/Files/rnn_denoise_2012.pdf</a></p>
+</li>
+<li><p><a href="http://www.deeplearningbook.org/contents/autoencoders.html" target="_blank" rel="external">http://www.deeplearningbook.org/contents/autoencoders.html</a></p>
+</li>
+<li><p><a href="http://wp.doc.ic.ac.uk/hipeds/wp-content/uploads/sites/78/2017/01/Steven_Hutt_Deep_Networks_Financial.pdf" target="_blank" rel="external">http://wp.doc.ic.ac.uk/hipeds/wp-content/uploads/sites/78/2017/01/Steven_Hutt_Deep_Networks_Financial.pdf</a></p>
+</li>
+<li><p><a href="https://www.cs.cmu.edu/~epxing/Class/10708-17/project-reports/project8.pdf" target="_blank" rel="external">https://www.cs.cmu.edu/~epxing/Class/10708-17/project-reports/project8.pdf</a></p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1610.09513.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1610.09513.pdf</a></p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1012.0349.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1012.0349.pdf</a></p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1204.1381.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1204.1381.pdf</a></p>
+</li>
+</ol>
+<p>原文链接：<a href="http://rickyhan.com/jekyll/update/2017/09/14/autoencoders.html" title="Gradient Trader Part1 : The Surprising Usefulness of Autoencoders " target="_blank" rel="external">http://rickyhan.com/jekyll/update/2017/09/14/autoencoders.html</a></p>
 
           
         
