@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/12/01/The-Surprising-Usefulness-of-Autoencoders/</loc>
+    <lastmod>2018-12-01T09:40:29.751Z</lastmod>
+    <data>
+        <display>
+        <title>The Surprising Usefulness of Autoencoders</title>
+        <pubTime>2018-12-01T08:06:13.000Z</pubTime>
+        
+        <tag>keras</tag>
+         
+        <tag>deeplearning</tag>
+         
+         
+           
+             
+              <breadCrumb title="deeplearning" url="http://yoursite.com/categories/deeplearning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/11/25/Building-Autoencoders-in-Keras/</loc>
     <lastmod>2018-11-26T06:19:31.167Z</lastmod>
     <data>
@@ -2724,9 +2746,9 @@
          
         <tag>算法</tag>
          
-        <tag>Python</tag>
-         
         <tag>sklearn</tag>
+         
+        <tag>Python</tag>
          
          
            

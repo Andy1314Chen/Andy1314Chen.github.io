@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta name="google-site-verification" content="y1NE4TYCS_y-0LIIks73rI2qINI9JYRwk6Su8ZG-ZIw" />
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="keras,deeplearning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="使用Autoencoders从时间序列中学习最突出的特征Autoencoder自动编码器是将输入复制到输出或学习辨识的做法。它有一个称为隐空间h的内部状态，用于表示输入。通常，选择此维度小于输入（称为欠完备）。自动编码器由两部分组成：编码器f：X→H和解码器g：H→Y。  隐藏层维度应小于输入维度x。这样，h被迫承担输入空间的有用属性和最显着的特征。 训练自动编码器以找到函数f，g满足下式：  R">
+<meta name="keywords" content="keras,deeplearning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Surprising Usefulness of Autoencoders">
+<meta property="og:url" content="http://yoursite.com/2018/12/01/The-Surprising-Usefulness-of-Autoencoders/index.html">
+<meta property="og:site_name" content="Andy&#39;s blog">
+<meta property="og:description" content="使用Autoencoders从时间序列中学习最突出的特征Autoencoder自动编码器是将输入复制到输出或学习辨识的做法。它有一个称为隐空间h的内部状态，用于表示输入。通常，选择此维度小于输入（称为欠完备）。自动编码器由两部分组成：编码器f：X→H和解码器g：H→Y。  隐藏层维度应小于输入维度x。这样，h被迫承担输入空间的有用属性和最显着的特征。 训练自动编码器以找到函数f，g满足下式：  R">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/1SejAwt.jpg">
+<meta property="og:image" content="https://i.imgur.com/glFBWDv.png">
+<meta property="og:image" content="https://i.imgur.com/nrNYjVD.jpg">
+<meta property="og:image" content="https://i.imgur.com/B7nofy2.png">
+<meta property="og:image" content="https://i.imgur.com/ZyT1a42.png">
+<meta property="og:image" content="https://i.imgur.com/GLAX6Xn.png">
+<meta property="og:image" content="https://i.imgur.com/Qr6zUrC.png">
+<meta property="og:image" content="https://i.imgur.com/mzStw3R.png">
+<meta property="og:updated_time" content="2018-12-01T09:40:29.751Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Surprising Usefulness of Autoencoders">
+<meta name="twitter:description" content="使用Autoencoders从时间序列中学习最突出的特征Autoencoder自动编码器是将输入复制到输出或学习辨识的做法。它有一个称为隐空间h的内部状态，用于表示输入。通常，选择此维度小于输入（称为欠完备）。自动编码器由两部分组成：编码器f：X→H和解码器g：H→Y。  隐藏层维度应小于输入维度x。这样，h被迫承担输入空间的有用属性和最显着的特征。 训练自动编码器以找到函数f，g满足下式：  R">
+<meta name="twitter:image" content="https://i.imgur.com/1SejAwt.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/01/The-Surprising-Usefulness-of-Autoencoders/"/>
+
+
+
+
+
+<link href="/js/google-code-prettify/tomorrow.css" type="text/css" rel="stylesheet" />
+
+  <title>The Surprising Usefulness of Autoencoders | Andy's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><a href="https://github.com/Andy1314Chen.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Andy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello, world.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/The-Surprising-Usefulness-of-Autoencoders/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">The Surprising Usefulness of Autoencoders</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-01T16:06:13+08:00">
+                2018-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deeplearning/" itemprop="url" rel="index">
+                    <span itemprop="name">deeplearning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="使用Autoencoders从时间序列中学习最突出的特征"><a href="#使用Autoencoders从时间序列中学习最突出的特征" class="headerlink" title="使用Autoencoders从时间序列中学习最突出的特征"></a>使用Autoencoders从时间序列中学习最突出的特征</h3><h2 id="Autoencoder"><a href="#Autoencoder" class="headerlink" title="Autoencoder"></a>Autoencoder</h2><p>自动编码器是将输入复制到输出或学习辨识的做法。它有一个称为隐空间h的内部状态，用于表示输入。通常，选择此维度小于输入（称为欠完备）。自动编码器由两部分组成：编码器f：X→H和解码器g：H→Y。</p>
+<p><img src="https://i.imgur.com/1SejAwt.jpg" alt=""></p>
+<p>隐藏层维度应小于输入维度x。这样，h被迫承担输入空间的有用属性和最显着的特征。</p>
+<p>训练自动编码器以找到函数f，g满足下式：</p>
+<p><img src="https://i.imgur.com/glFBWDv.png" alt=""></p>
+<h2 id="Recurrent-Autoencoder"><a href="#Recurrent-Autoencoder" class="headerlink" title="Recurrent Autoencoder"></a>Recurrent Autoencoder</h2><p>对于时间序列数据，循环自动编码器特别有用。唯一的区别是编码器和解码器被诸如LSTM之类的RNN取代。将RNN视为随时间变化的for循环，以保持状态。它可以展开到前馈网络中。</p>
+<p>首先，将输入编码成不完备的隐向量h，然后由解码器对其进行解码。循环自动编码器是序列到序列（seq2seq）架构的一种特殊情况，它在机器翻译中非常强大，将一种语言序列映射到另一种语言序列。</p>
+<p><img src="https://i.imgur.com/nrNYjVD.jpg" alt=""></p>
+<pre><code>import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+</code></pre><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>复制两个异相初始化的正弦函数的张量。</p>
+<p>输入的形状是形状的张量（batch_size，time_step，input_dim）。</p>
+<ul>
+<li><em>batch_size</em> 是训练的批次数。在单个样本上循环比在一批样本上应用张量操作要慢</li>
+<li><em>time_step</em>是RNN迭代的时间帧数。在本教程中，它是10，因为生成了10个点</li>
+<li><em>input_dim</em>是每个时间步的数据点数，这里我们有2个函数，所以这个数字是2</li>
+</ul>
+<p>要处理股票数据，只需将input_dim轴替换为所需的数据点即可。</p>
+<ul>
+<li>买入价，卖出价，价差，成交量，RSI(Bid, Ask, Spread, Volume, RSI), 对于此设置，<em>input_dime</em>将为5</li>
+<li>Order book levels. We can rebin the order book along tick axis so each tick aggregates more liquidity. An example would be 10 levels that are 1 stdev apart. Then input_dim would be 10. ？？？</li>
+</ul>
+<p>这是艺术家对循环自动编码器的再现。</p>
+<pre><code>plt.xkcd()
+
+x1 = np.linspace(-np.pi, np.pi)
+y1 = np.sin(x1)
+phi = 3
+x2 = np.linspace(-np.pi+phi, np.pi+phi)
+y2 = np.sin(x2)
+
+f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex=True, sharey=True)
+ax1.plot(x1, y1)
+ax1.set_title(&#39;Recurrent Autoencoder&#39;)
+ax2.plot(x1, y1)
+ax3.plot(x2, y2)
+ax4.plot(x2, y2)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/B7nofy2.png" alt=""></p>
+<h3 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h3><p>对于每个批次，生成2个正弦函数，每个函数有10个数据点。正弦函数的相位是随机的。</p>
+<pre><code>import random
+def gen(batch_size):
+    seq_length = 10
+
+    batch_x = []
+    batch_y = []
+    for _ in range(batch_size):
+        rand = random.random() * 2 * np.pi
+
+        sig1 = np.sin(np.linspace(0.0 * np.pi + rand,
+                                  3.0 * np.pi + rand, seq_length * 2))
+        sig2 = np.cos(np.linspace(0.0 * np.pi + rand,
+                                  3.0 * np.pi + rand, seq_length * 2))
+        x1 = sig1[:seq_length]
+        y1 = sig1[seq_length:]
+        x2 = sig2[:seq_length]
+        y2 = sig2[seq_length:]
+
+        x_ = np.array([x1, x2])
+        y_ = np.array([y1, y2])
+        x_, y_ = x_.T, y_.T
+
+        batch_x.append(x_)
+        batch_y.append(y_)
+
+    batch_x = np.array(batch_x)
+    batch_y = np.array(batch_y)
+
+    return batch_x, batch_x#batch_y
+</code></pre><h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><p>目标是使用两个数字来表示正弦函数. 通常，我们使用φ∈R来表示三角函数的相位角。<br>让我们看看神经网络是否可以学习这个相位角。这里的计划是将输入正弦函数压缩为两个数字，然后将它们解码回来。</p>
+<p>定义架构并让神经网络发挥作用。它是一个具有3层的模型，LSTM编码器将输入时间序列“编码”为固定长度矢量（在这种情况下为2）。RepeatVector将固定长度矢量重复10次，用作LSTM解码器的输入。对于解码器，我们可以用隐向量初始化隐藏状态（存储器）并使用时间t-1的输出作为时间t的输入，或者我们可以使用隐向量h作为每个时间步的输入。这些被称为条件和无条件解码器。</p>
+<pre><code>from keras.models import Sequential, Model
+from keras.layers import LSTM, RepeatVector
+
+batch_size = 100
+X_train, _ = gen(batch_size)
+
+m = Sequential()
+m.add(LSTM(2, input_shape=(10, 2)))
+m.add(RepeatVector(10))
+m.add(LSTM(2, return_sequences=True))
+print m.summary()
+m.compile(loss=&#39;mse&#39;, optimizer=&#39;adam&#39;)
+history = m.fit(X_train, X_train, nb_epoch=2000, batch_size=100)
+</code></pre><p>由于这篇文章是该技术的演示，我们使用最小的模型，在这种情况下恰好是最好的。<br>“最佳”维度将是导致最高无损压缩的维度。在实践中，它主要是艺术而非科学。在生产中，有许多技巧可以加速训练并找到隐向量的正确容量(维数？)。主题包括：处理异步，非平稳时间序列的架构，预处理技术，如小波变换和FFT（Topics include: architectures for dealing with asynchronus, non-stationary time series, preprocessing techniques such as wavelet transforms and FFT.）</p>
+<pre><code>plt.xkcd()
+plt.plot(history.history[&#39;loss&#39;])
+plt.ylabel(&quot;loss&quot;)
+plt.xlabel(&quot;epoch&quot;)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/ZyT1a42.png" alt=""></p>
+<p>您可能认为神经网络在训练期间突然“得到它”，但这只是逃避鞍点的优化器。实际上，正如我们在下面演示的那样，神经网络（至少是解码器）根本不会学习它背后的数学。</p>
+<pre><code>X_test, _ = gen(1)
+decoded_imgs = m.predict(X_test)
+
+plt.xkcd()
+for i in range(2):
+    plt.plot(range(10), decoded_imgs[0, :, i])
+    plt.plot(range(10), X_test[0, :, i])
+plt.title(dos_numeros)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/GLAX6Xn.png" alt=""></p>
+<p>通过更多的培训，它将更接近输入，但这不是本演示所必需的。</p>
+<p>可视化隐向量有时是有用的，但在这种情况下不是。<br><img src="https://i.imgur.com/Qr6zUrC.png" alt=""></p>
+<h3 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h3><p>该模型成功压缩了20点至2点。它从数据中学到了最显着的特征。然而，在这种情况下，模型是无用的，因为它已经成功地学习了g（f（x））= x。自动编码器设计为不完美复制。（？！为啥）与所有神经网络一样，自动编码器利用数据集中在低维流形或流形集合的思想。目标是学习一个在这个流形的数据点上表现正确的函数，并在这个流形的各处(其他各处)展现出异常的行为。(因此autoencoder可以用来进行异常诊断)在这种情况下，我们发现了一个与20D空间相切的二维流形。这里我们讨论一些可视化技术。</p>
+<p>下面我们将演示在用动画投影回20D时的流形图。理想情况下，这表明解码器的工作原理。</p>
+<pre><code>x = Input(shape=(2,))
+decoded = m.layers[1](x)
+decoded = m.layers[2](decoded)
+decoder = Model(x, decoded)
+
+import matplotlib.animation as animation
+from IPython.display import HTML
+from numpy import random
+
+
+fig, ax = plt.subplots()
+
+x = range(10)
+
+arr = decoder.predict(np.array([[-3.3, 0]]))
+linea, = ax.plot(x, arr[0, :, 0])
+lineb, = ax.plot(x, arr[0, :, 1])
+ax.set_ylim(-1, 1)
+ax.set_xlim(-0.1, 10.1)
+
+def animate(i):
+    ax.set_title(&quot;{0:.2f}, 0&quot;.format(-3.3+i/30.))
+    arr = decoder.predict(np.array([[-3.3+i/30., 0]]))
+    linea.set_ydata(arr[0, :, 0])
+    lineb.set_ydata(arr[0, :, 1])
+    return line,
+
+
+# Init only required for blitting to give a clean slate.
+def init():
+    line.set_ydata(np.ma.array(x, mask=True))
+    return line,
+
+ani = animation.FuncAnimation(fig, animate, np.arange(1, 200), init_func=init,
+                              interval=25, blit=True)
+HTML(ani.to_html5_video())
+</code></pre><p>正如我们从上面的动画中看到的那样. 神经网络不使用相位角作为隐空间。相反，它在训练过程中使用由LSTM的梯度引起的这两个数字之间的复杂交互。As x→∞, the decoder g(h)→0. 这被理解为解码器不学习底层的三角函数，而仅仅是近似高维空间的流形。</p>
+<p>现在让我们可视化整个的隐空间。对于我们可能在财务数据中遇到的更高维度的潜在空间，我们可以使用PCA和tSNE，但这些超出了本文的范围。</p>
+<pre><code>plt.xkcd()
+X_test, _ = gen(1000)
+latent_vec = encoder.predict(X_test)
+plt.scatter(latent_vec[:, 0], latent_vec[:, 1])
+plt.xlim(-1,1)
+plt.ylim(-1,1)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/mzStw3R.png" alt=""></p>
+<p>在上面看到的这个圆是隐空间H中编码器f（x）下的图像。正如您可能从一开始就猜到的那样，因为trig图将笛卡尔坐标投影到极坐标。编码矢量是线性子空间。极坐标中的圆具有等式r = a。对于那些没有假设这个结果的人，我希望这是一个足够好的妙语。</p>
+<p>使用PCA，可以使用线性代数中的Gram-Schmidt算法将任何高维空间投影到多个线性子空间中。</p>
+<h2 id="Anomaly-Detection"><a href="#Anomaly-Detection" class="headerlink" title="Anomaly Detection"></a>Anomaly Detection</h2><p>原文链接：<a href="http://rickyhan.com/jekyll/update/2017/09/14/autoencoders.html" title="Gradient Trader Part1 : The Surprising Usefulness of Autoencoders " target="_blank" rel="external">http://rickyhan.com/jekyll/update/2017/09/14/autoencoders.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/keras/" rel="tag"># keras</a>
+          
+            <a href="/tags/deeplearning/" rel="tag"># deeplearning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/25/Building-Autoencoders-in-Keras/" rel="next" title="Building Autoencoders in Keras">
+                <i class="fa fa-chevron-left"></i> Building Autoencoders in Keras
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Andy Chen" />
+          <p class="site-author-name" itemprop="name">Andy Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">146</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Andy1314Chen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+<br>
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=133998&auto=1&height=66"></iframe>
+
+        
+
+		
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Autoencoders从时间序列中学习最突出的特征"><span class="nav-number">1.</span> <span class="nav-text">使用Autoencoders从时间序列中学习最突出的特征</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autoencoder"><span class="nav-number"></span> <span class="nav-text">Autoencoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recurrent-Autoencoder"><span class="nav-number"></span> <span class="nav-text">Recurrent Autoencoder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Task"><span class="nav-number">1.</span> <span class="nav-text">Task</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator"><span class="nav-number">2.</span> <span class="nav-text">Generator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model"><span class="nav-number">3.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visualization"><span class="nav-number">4.</span> <span class="nav-text">Visualization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Anomaly-Detection"><span class="nav-number"></span> <span class="nav-text">Anomaly Detection</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Andy Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+  |  本页点击 <span id="busuanzi_value_page_pv"></span> 次
+  |  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
+  <!-- 小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  
+	<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+	$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+	prettyPrint();
+	})    
+	</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>
