@@ -1126,353 +1126,6 @@ my_model_loaded = joblib.load(&#39;my_model.pkl&#39;)
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/各种排序方法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/03/各种排序方法总结/" itemprop="url">各种排序方法总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T00:00:00+08:00">
-                2017-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><ul>
-<li>时间复杂度O(N*logN)</li>
-<li>分治思想</li>
-<li>不稳定</li>
-<li><a href="https://blog.csdn.net/MoreWindows/article/details/6684558" target="_blank" rel="external">https://blog.csdn.net/MoreWindows/article/details/6684558</a><h4 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h4></li>
-</ul>
-<ol>
-<li>先从数列中取出一个数作为基准数；</li>
-<li>分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边；</li>
-<li>再对左右区间重复步骤2，直到各区间只有一个数；</li>
-</ol>
-<pre><code>    # 快速排序
-    def QuickSort(nums, left, right):
-        if left &lt; right:
-            i, j, x = left, right, nums[left]
-            while i &lt; j:
-                # 从后端开始
-                while i &lt; j and nums[j] &gt;= x:
-                    j -= 1
-                if i &lt; j:
-                    nums[i] = nums[j]        
-                    i += 1
-                # 从前端开始
-                while i &lt; j and nums[i] &lt; x:
-                    i += 1
-                if i &lt; j:
-                    nums[j] = nums[i]        
-                    j -= 1
-            nums[i] = x
-            QuickSort(nums, left, i - 1)
-            QuickSort(nums, i + 1, right)
-        return nums
-</code></pre><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><ul>
-<li>时间复杂度O(N*N)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-1"><a href="#基本思路-1" class="headerlink" title="基本思路"></a>基本思路</h4><ol>
-<li>比较相邻的前后两个数据，如果前面数据大于后面数据，就将两个数据交换；</li>
-<li>这样对数组的第0个数据到第N-1个数据进行一次遍历后，最大的一个数据就“沉”到数组第N-1个位置；</li>
-<li><p>N=N-1,如果N!=0则继续前面两步</p>
-<pre><code> def bubbleSort1(nums):
- &quot;&quot;&quot;
- 冒泡排序1
- &quot;&quot;&quot;
- for i in range(len(nums)):
-     for j in range(1, len(nums)-i):
-         if nums[j] &lt; nums[j-1]:
-             nums[j], nums[j-1] = nums[j-1], nums[j]
- return nums
-</code></pre></li>
-</ol>
-<pre><code>    def bubbleSort2(nums):
-        &quot;&quot;&quot;
-        冒泡排序2  改进1
-        &quot;&quot;&quot;
-        flag = False
-        for i in range(len(nums)):
-            if flag != False:
-                break 
-            flag = True 
-            for j in range(1, len(nums)-i):
-                if nums[j] &lt; nums[j-1]:
-                    nums[j], nums[j-1] = nums[j-1], nums[j]
-                    flag = False 
-        return nums
-
-    def bubbleSort3(nums):
-        &quot;&quot;&quot;
-        冒泡排序3  改进2
-        &quot;&quot;&quot;
-        flag = len(nums)
-        while flag &gt; 0:
-            k = flag 
-            flag = 0
-            for j in range(1, k):
-                if nums[j] &lt; nums[j-1]:
-                    nums[j], nums[j-1] = nums[j-1], nums[j]
-                    flag = j 
-        return nums
-</code></pre><h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><ul>
-<li>时间复杂度O(N*N)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-2"><a href="#基本思路-2" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次将一个待排序的记录，按其关键字大小插入到前面已经排好序的子序列中的适当位置，直到全部记录插入完成为止。</p>
-<ol>
-<li>初始时，a[0]自成一个有序区，a[1…n-1]为无序区；</li>
-<li>将a[i]并入当前的有序区a[0…i-1]中形成a[0…i]有序区；</li>
-<li><p>i++并重复第二步，直到i == n-1;</p>
-<pre><code> def insertSort1(nums):
-     &quot;&quot;&quot;
-     插入排序
-     &quot;&quot;&quot;
-     i = 1
-     while i &lt; len(nums):
-         tmp = nums[i]
-         j = i - 1
-         while j &gt;= 0 and nums[j] &gt; tmp:
-             nums[j+1] = nums[j]
-             j -= 1
-         nums[j+1] = tmp
-         i += 1
-     return nums
-</code></pre></li>
-</ol>
-<pre><code>    def insertSort2(nums):
-        &quot;&quot;&quot;
-        插入排序2 改进1
-        &quot;&quot;&quot;
-        for i in range(1, len(nums)):
-            for j in range(i-1, -1, -1):
-                if nums[j] &gt; nums[j+1]:
-                    nums[j], nums[j+1] = nums[j+1], nums[j]
-                else:
-                    break
-        return nums
-</code></pre><h2 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h2><ul>
-<li>时间复杂度O(N*N)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-3"><a href="#基本思路-3" class="headerlink" title="基本思路"></a>基本思路</h4><p>直接选择排序和直接插入排序类似，都将数据分为有序区和无序区，所不同的是直接将无序区的第一个元素直接插入到有序区以形成一个更大的有序区，而直接选择排序是从无序区选一个最小的元素直接放到有序区的最后；</p>
-<ol>
-<li>初始时，数组全为无序区a[0…n-1],令i=0;</li>
-<li>在无序区a[i…n-1]中选取一个最小的元素，将其与a[i]交换，交换之后a[0…i]就形成了一个有序区；</li>
-<li><p>i++并重复第二步，直到i == n-1;</p>
-<pre><code> def selectionSort1(nums):
-     &quot;&quot;&quot;
-     选择排序
-     &quot;&quot;&quot;
-     for i in range(len(nums)):
-         min_idx = i 
-         for j in range(i+1, len(nums)):
-             if nums[j] &lt; nums[min_idx]:
-                 min_idx = j 
-         if min_idx != i:
-             nums[i], nums[min_idx] = nums[min_idx], nums[i]
-     return nums
-</code></pre></li>
-</ol>
-<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><ul>
-<li>时间复杂度O(N*logN)</li>
-<li>稳定</li>
-</ul>
-<h4 id="基本思路-4"><a href="#基本思路-4" class="headerlink" title="基本思路"></a>基本思路</h4><p>将数组分为二组A,B,如果这两组都是有序的，则直接合并。若不是，可以将A,B组各自再分成两组，依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后合并相邻的两个小组即可。</p>
-<pre><code># 归并排序
-def mergeArray(nums, left, mid, right):
-    tmp = []
-    i, j = left, mid + 1
-    m, n = mid, right
-    while i &lt;= m and j &lt;= n:
-        if nums[i] &gt; nums[j]:
-            tmp.append(nums[j])
-            j += 1
-        else:
-            tmp.append(nums[i])
-            i += 1
-    while i &lt;= m:
-        tmp.append(nums[i])
-        i += 1
-    while j &lt;= n:
-        tmp.append(nums[j])
-        j += 1
-    # 排好序的值写入原数组
-    nums[left:left+len(tmp)] = tmp
-
-def mergesort(nums, left, right):
-    if left &lt; right:
-        mid = (left + right)//2
-        mergesort(nums, left, mid)
-        mergesort(nums, mid + 1, right)
-        mergeArray(nums, left, mid, right)
-
-def MergeSort(nums):
-    mergesort(nums, 0, len(nums)-1)
-    return nums
-</code></pre><h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
-<li>时间复杂度O(N*logN)</li>
-<li>不稳定</li>
-</ul>
-<h4 id="基本思路-5"><a href="#基本思路-5" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次先将数组构成最大堆，然后交换堆顶元素(即nums[0])与最后一个元素，然后隔离最后一个元素重新构建最大堆，依次迭代重复，直到数组中只有一个元素；</p>
-<pre><code># 堆排序
-def MaxHeapFixDown(nums, i, n):
-    tmp = nums[i]
-    j = 2*i + 1 # 左孩子
-    while j &lt; n :
-        # 右孩子
-        if j &lt; n - 1 and nums[j] &lt; nums[j+1]:
-            j += 1
-        # 比最大的都大
-        if tmp &gt; nums[j]:
-            break
-        nums[i] = nums[j]
-        i = j 
-        j = 2*i + 1
-    nums[i] = tmp
-
-
-def MakeMaxHeap(nums, n):
-    for i in range(n//2, -1, -1):
-        MaxHeapFixDown(nums, i, n)
-
-def MaxHeapDeleteNumber(nums, n):
-    nums[0], nums[n-1] = nums[n-1], nums[0]
-    MaxHeapFixDown(nums, 0, n - 1)
-
-def MaxHeapSort(nums):
-    n = len(nums)
-    MakeMaxHeap(nums, n)
-    for i in range(n, 0, -1):
-        MaxHeapDeleteNumber(nums, i)
-    return nums
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/机器学习面试总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1943,6 +1596,353 @@ def MaxHeapSort(nums):
 <p><strong>6. 还有什么问题？</strong></p>
 <p>1）对于新员工的培养机制；<br>2）如果走技术岗位，公司的晋升制度是怎样的；</p>
 
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/各种排序方法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/03/各种排序方法总结/" itemprop="url">各种排序方法总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T00:00:00+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>分治思想</li>
+<li>不稳定</li>
+<li><a href="https://blog.csdn.net/MoreWindows/article/details/6684558" target="_blank" rel="external">https://blog.csdn.net/MoreWindows/article/details/6684558</a><h4 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h4></li>
+</ul>
+<ol>
+<li>先从数列中取出一个数作为基准数；</li>
+<li>分区过程，将比这个数大的数全放在它的右边，小于或等于它的数放在左边；</li>
+<li>再对左右区间重复步骤2，直到各区间只有一个数；</li>
+</ol>
+<pre><code>    # 快速排序
+    def QuickSort(nums, left, right):
+        if left &lt; right:
+            i, j, x = left, right, nums[left]
+            while i &lt; j:
+                # 从后端开始
+                while i &lt; j and nums[j] &gt;= x:
+                    j -= 1
+                if i &lt; j:
+                    nums[i] = nums[j]        
+                    i += 1
+                # 从前端开始
+                while i &lt; j and nums[i] &lt; x:
+                    i += 1
+                if i &lt; j:
+                    nums[j] = nums[i]        
+                    j -= 1
+            nums[i] = x
+            QuickSort(nums, left, i - 1)
+            QuickSort(nums, i + 1, right)
+        return nums
+</code></pre><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-1"><a href="#基本思路-1" class="headerlink" title="基本思路"></a>基本思路</h4><ol>
+<li>比较相邻的前后两个数据，如果前面数据大于后面数据，就将两个数据交换；</li>
+<li>这样对数组的第0个数据到第N-1个数据进行一次遍历后，最大的一个数据就“沉”到数组第N-1个位置；</li>
+<li><p>N=N-1,如果N!=0则继续前面两步</p>
+<pre><code> def bubbleSort1(nums):
+ &quot;&quot;&quot;
+ 冒泡排序1
+ &quot;&quot;&quot;
+ for i in range(len(nums)):
+     for j in range(1, len(nums)-i):
+         if nums[j] &lt; nums[j-1]:
+             nums[j], nums[j-1] = nums[j-1], nums[j]
+ return nums
+</code></pre></li>
+</ol>
+<pre><code>    def bubbleSort2(nums):
+        &quot;&quot;&quot;
+        冒泡排序2  改进1
+        &quot;&quot;&quot;
+        flag = False
+        for i in range(len(nums)):
+            if flag != False:
+                break 
+            flag = True 
+            for j in range(1, len(nums)-i):
+                if nums[j] &lt; nums[j-1]:
+                    nums[j], nums[j-1] = nums[j-1], nums[j]
+                    flag = False 
+        return nums
+
+    def bubbleSort3(nums):
+        &quot;&quot;&quot;
+        冒泡排序3  改进2
+        &quot;&quot;&quot;
+        flag = len(nums)
+        while flag &gt; 0:
+            k = flag 
+            flag = 0
+            for j in range(1, k):
+                if nums[j] &lt; nums[j-1]:
+                    nums[j], nums[j-1] = nums[j-1], nums[j]
+                    flag = j 
+        return nums
+</code></pre><h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-2"><a href="#基本思路-2" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次将一个待排序的记录，按其关键字大小插入到前面已经排好序的子序列中的适当位置，直到全部记录插入完成为止。</p>
+<ol>
+<li>初始时，a[0]自成一个有序区，a[1…n-1]为无序区；</li>
+<li>将a[i]并入当前的有序区a[0…i-1]中形成a[0…i]有序区；</li>
+<li><p>i++并重复第二步，直到i == n-1;</p>
+<pre><code> def insertSort1(nums):
+     &quot;&quot;&quot;
+     插入排序
+     &quot;&quot;&quot;
+     i = 1
+     while i &lt; len(nums):
+         tmp = nums[i]
+         j = i - 1
+         while j &gt;= 0 and nums[j] &gt; tmp:
+             nums[j+1] = nums[j]
+             j -= 1
+         nums[j+1] = tmp
+         i += 1
+     return nums
+</code></pre></li>
+</ol>
+<pre><code>    def insertSort2(nums):
+        &quot;&quot;&quot;
+        插入排序2 改进1
+        &quot;&quot;&quot;
+        for i in range(1, len(nums)):
+            for j in range(i-1, -1, -1):
+                if nums[j] &gt; nums[j+1]:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+                else:
+                    break
+        return nums
+</code></pre><h2 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h2><ul>
+<li>时间复杂度O(N*N)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-3"><a href="#基本思路-3" class="headerlink" title="基本思路"></a>基本思路</h4><p>直接选择排序和直接插入排序类似，都将数据分为有序区和无序区，所不同的是直接将无序区的第一个元素直接插入到有序区以形成一个更大的有序区，而直接选择排序是从无序区选一个最小的元素直接放到有序区的最后；</p>
+<ol>
+<li>初始时，数组全为无序区a[0…n-1],令i=0;</li>
+<li>在无序区a[i…n-1]中选取一个最小的元素，将其与a[i]交换，交换之后a[0…i]就形成了一个有序区；</li>
+<li><p>i++并重复第二步，直到i == n-1;</p>
+<pre><code> def selectionSort1(nums):
+     &quot;&quot;&quot;
+     选择排序
+     &quot;&quot;&quot;
+     for i in range(len(nums)):
+         min_idx = i 
+         for j in range(i+1, len(nums)):
+             if nums[j] &lt; nums[min_idx]:
+                 min_idx = j 
+         if min_idx != i:
+             nums[i], nums[min_idx] = nums[min_idx], nums[i]
+     return nums
+</code></pre></li>
+</ol>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>稳定</li>
+</ul>
+<h4 id="基本思路-4"><a href="#基本思路-4" class="headerlink" title="基本思路"></a>基本思路</h4><p>将数组分为二组A,B,如果这两组都是有序的，则直接合并。若不是，可以将A,B组各自再分成两组，依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后合并相邻的两个小组即可。</p>
+<pre><code># 归并排序
+def mergeArray(nums, left, mid, right):
+    tmp = []
+    i, j = left, mid + 1
+    m, n = mid, right
+    while i &lt;= m and j &lt;= n:
+        if nums[i] &gt; nums[j]:
+            tmp.append(nums[j])
+            j += 1
+        else:
+            tmp.append(nums[i])
+            i += 1
+    while i &lt;= m:
+        tmp.append(nums[i])
+        i += 1
+    while j &lt;= n:
+        tmp.append(nums[j])
+        j += 1
+    # 排好序的值写入原数组
+    nums[left:left+len(tmp)] = tmp
+
+def mergesort(nums, left, right):
+    if left &lt; right:
+        mid = (left + right)//2
+        mergesort(nums, left, mid)
+        mergesort(nums, mid + 1, right)
+        mergeArray(nums, left, mid, right)
+
+def MergeSort(nums):
+    mergesort(nums, 0, len(nums)-1)
+    return nums
+</code></pre><h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
+<li>时间复杂度O(N*logN)</li>
+<li>不稳定</li>
+</ul>
+<h4 id="基本思路-5"><a href="#基本思路-5" class="headerlink" title="基本思路"></a>基本思路</h4><p>每次先将数组构成最大堆，然后交换堆顶元素(即nums[0])与最后一个元素，然后隔离最后一个元素重新构建最大堆，依次迭代重复，直到数组中只有一个元素；</p>
+<pre><code># 堆排序
+def MaxHeapFixDown(nums, i, n):
+    tmp = nums[i]
+    j = 2*i + 1 # 左孩子
+    while j &lt; n :
+        # 右孩子
+        if j &lt; n - 1 and nums[j] &lt; nums[j+1]:
+            j += 1
+        # 比最大的都大
+        if tmp &gt; nums[j]:
+            break
+        nums[i] = nums[j]
+        i = j 
+        j = 2*i + 1
+    nums[i] = tmp
+
+
+def MakeMaxHeap(nums, n):
+    for i in range(n//2, -1, -1):
+        MaxHeapFixDown(nums, i, n)
+
+def MaxHeapDeleteNumber(nums, n):
+    nums[0], nums[n-1] = nums[n-1], nums[0]
+    MaxHeapFixDown(nums, 0, n - 1)
+
+def MaxHeapSort(nums):
+    n = len(nums)
+    MakeMaxHeap(nums, n)
+    for i in range(n, 0, -1):
+        MaxHeapDeleteNumber(nums, i)
+    return nums
+</code></pre>
           
         
       

@@ -3223,176 +3223,6 @@ def crossValidation(xArr,yArr,numVal=10):
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/二叉搜索树的后序遍历序列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Andy Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Andy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/二叉搜索树的后序遍历序列/" itemprop="url">二叉搜索树的后序遍历序列(剑指offer第二十三题)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-		  
-		  
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-			
-			
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="Python">
-    # -*- coding:utf-8 -*-
-    class Solution:
-        def VerifySquenceOfBST(self, sequence):
-            # write code here
-            if len(sequence) &lt; 1:
-                return False
-            if len(sequence) == 1:
-                return True
-            # 根节点
-            root = sequence[-1]
-            # 左子树
-            for i, v in enumerate(sequence):
-                if v &gt; root:
-                    break
-            left_seq = sequence[:i]
-            # 右子树
-            for v in sequence[i:-1]:
-                if v &lt; root:
-                    return False
-            right_seq = sequence[i:-1]
-            # 存在左子树
-            left_flag = True
-            if i &gt; 0:
-                left_flag = self.VerifySquenceOfBST(left_seq)
-            # 存在右子树
-            right_flag = True
-            if i &lt; len(sequence)-1:
-                right_flag = self.VerifySquenceOfBST(right_seq)
-
-            return left_flag and right_flag
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3637,6 +3467,352 @@ def plotROC(predStrengths,classLabels):
 <h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ol>
 <li><a href="http://www.cnblogs.com/maybe2030/p/5375175.html#top" target="_blank" rel="external">http://www.cnblogs.com/maybe2030/p/5375175.html#top</a></li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/机器学习实战第七章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Andy Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Andy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/机器学习实战第七章学习笔记/" itemprop="url">机器学习实战第七章学习笔记(AdaBoost算法)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T00:00:00+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+		  
+		  
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+			
+			
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>众人拾材火焰高，当做重大决定时，一般会综合多个专家的意见。元算法（meta-algorithm)背后的思路也是如此。元算法是对其他算法进行组合的一种方式，而机器学习实战第七章就介绍了最为流行的AdaBoost元算法。</p>
+<p><img src="http://file03.16sucai.com/2017/1100/16sucai_p20161105069_1a7.JPG" alt=""></p>
+<p>这一章首先讨论不同分类器的集成方法，主要关注boosting方法及其代表分类器Adaboost.随后，建立一个单层决策树(decision stump)分类器，并基于这些弱分类器，实现AdaBoost算法。最后在一个难数据集上应用AdaBoost分类器，与Logistic Regress分类器预测的差别。</p>
+<p>本章结束前还讨论了，非均衡分类问题。</p>
+<h2 id="基于数据集成多重抽样的分类器"><a href="#基于数据集成多重抽样的分类器" class="headerlink" title="基于数据集成多重抽样的分类器"></a>基于数据集成多重抽样的分类器</h2><p>不同的分类算法，各有优缺点，可以将不同的分类器组合起来，而这种组合结果则被称为集成方法（ensemble method)或者元算法（meta-algorithm).</p>
+<p>使用不同集成方法时会有多种形式：可以是不同算法的集成、也可以是同一算法在不同设置下的集成、还可以是数据集不同部分分配给不同分类器之后的集成。</p>
+<p><strong>AdaBoost</strong></p>
+<ul>
+<li>优点：泛化错误率低，易编码，可以应用在大部分分类器上，无参数调整。</li>
+<li>缺点：对离群值敏感</li>
+<li>适用数据类型：数值型和标称型数据</li>
+</ul>
+<h4 id="bagging-基于数据随机重抽样的分类器构建方法"><a href="#bagging-基于数据随机重抽样的分类器构建方法" class="headerlink" title="bagging:基于数据随机重抽样的分类器构建方法"></a>bagging:基于数据随机重抽样的分类器构建方法</h4><p>自举汇聚法（bootstrap aggregating),也称为bagging方法，是从原始数据集选择S次后得到S个新数据集的一种技术。新数据集和原始数据集的大小相等（？？）。每个数据集都是通过在原始数据集中随机选择一个样本来进行替换而得到的。</p>
+<p>在S个数据集建好之后，将某个学习算法分别作用于每个数据集就得到了S个分类器。当我们要对新数据进行分类时，就应用这S个分类器进行分类，选择分类器投票结果中最多的类别作为最后的分类结果。</p>
+<blockquote>
+<p>给定一个大小为n的训练集D，Bagging算法从中均匀、有放回地（即使用自助抽样法）选出 m个大小为 n’的子集\(D_i\)，作为新的训练集。在这 m个训练集上使用分类、回归等算法，则可得到m个模型，再通过取平均值、取多数票等方法，即可得到Bagging的结果。</p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Bootstrap_aggregating" target="_blank" rel="external">https://en.wikipedia.org/wiki/Bootstrap_aggregating</a></p>
+<p>还有一些更先进的bagging方法，比如随机森林(random forest).</p>
+<h4 id="boosting"><a href="#boosting" class="headerlink" title="boosting"></a>boosting</h4><p>boosting是一种与bagging很类似的技术。不论是在boosting还是bagging当中，所使用的多个分类器的类型都是一致的。但是在boosting中，不同的分类器是通过串行训练而获得的，每个新分类器都根据已训练出的分类器的性能来进行训练。boosting是通过集中关注被已有分类器错分的那些数据来获得新的分类器。</p>
+<p>由于boosting分类的结果是基于所有分类器的加权求和结果的，因此boosting与bagging不太一样。bagging中的分类器权重是相等的，而boosting中的分类器权重并不相等，每个权重代表的是其对应分类器在上一轮迭代中的成功度。</p>
+<p>boosting方法拥有多个版本，本章将关注其中一个最流行的版本AdaBoost.</p>
+<p><strong>AdaBoost的一般流程</strong></p>
+<ol>
+<li>收集数据：可以使用任意方法。</li>
+<li>准备数据：依赖于所使用的弱分类器类型，本章使用的是单层决策树，这种分类器可以处理任何数据类型。当然也可以使用任意分类器作为弱分类器，第2章到第6章的任一分类器都可以充当弱分类器。作为弱分类器，简单分类器的效果最好。</li>
+<li>分析数据：可以使用任意方法</li>
+<li>训练算法：AdaBoost的大部分时间都用在训练上，分类器将多次在同一数据集上训练弱分类器。</li>
+<li>测试算法：计算分类的错误率。</li>
+<li>使用算法：同SVM一样，AdaBoost预测两个类别中的一个。如果想把它应用到多个类别的场合，那么就要像多类SVM中的做法一样对AdaBoost进行修改。</li>
+</ol>
+<h2 id="训练算法：基于错误提升分类器的性能"><a href="#训练算法：基于错误提升分类器的性能" class="headerlink" title="训练算法：基于错误提升分类器的性能"></a>训练算法：基于错误提升分类器的性能</h2><p>AdaBoost是adaptive boosting(自适应boosting)的缩写，其运行过程：训练数据中的每个样本，并赋予其一个权重，这些权重构成了向量D.一开始，这些权重都初始化成相等值。首先在训练数据上训练出一个弱分类器并计算该分类器的错误率，然后在同一数据集上再次训练弱分类器。在分类器的第二次训练当中，将会重新调整每个样本的权重，其中第一次<strong>分对的样本的权重将会降低，而第一次分错的样本的权重将会提高。</strong>为了从所有弱分类器中得到最终的分类结果，AdaBoost为每个分类器都分配了一个权重值alpha,这些alpha值是基于每个弱分类器的错误率进行计算的。其中，错误率e定义为：</p>
+<p>$$ e=\frac {未正确分类的样本数目}{所有样本数目} $$</p>
+<p>而alpha的计算公式如下：</p>
+<p>$$ \alpha=\frac 12 ln(\frac {1-e}e)$$</p>
+<p>AdaBoost算法的流程如图所示：</p>
+<p><img src="http://images.cnitblog.com/blog/550724/201501/021052397167053.png" alt=""></p>
+<p>左边是数据集，其中直方图的不同宽度表示每个样例上的不同权重。在经过一个分类器后，加权的预测结果会通过三角形中的alpha值进行加权。每个三角形中输出的加权结果在圆形中求和，从而得到最终的输出结果。</p>
+<p>计算出alpha值之后，可以对权重向量D进行更新，以使得那些正确分类的样本的权重降低而错分样本的权重升高。D的计算方法如下。</p>
+<p>如果某个样本被正确分类，那么该样本的权重更改为：</p>
+<p>$$ {D_i}^{(t+1)} = \frac {D_i^{(t)}e^{-\alpha}}{Sum(D)} $$</p>
+<p>其中t是第t次迭代，而i是第i个样本。</p>
+<p>而如果某个样本被错分，那么该样本的权重更改为：</p>
+<p>$$ {D_i}^{(t+1)}=\frac {D_i^{(t)}e^{\alpha}}{Sum(D)} $$</p>
+<p>在计算出D之后，AdaBoost又开始进入下一轮迭代。AdaBoost算法会不断地重复训练和调整权重(分类器的权重alpha,样本的权重Di)的过程，直到训练错误率为0或者弱分类器的数目达到用户的指定值为止。</p>
+<h2 id="基于单层决策树构建弱分类器"><a href="#基于单层决策树构建弱分类器" class="headerlink" title="基于单层决策树构建弱分类器"></a>基于单层决策树构建弱分类器</h2><p>单层决策树(decision stump,决策树桩）是一种简单的决策树。仅仅基于单个特征来做决策，由于这个单次分裂过程，也被称为树桩。</p>
+<p>本书惯例，先构造一个简单的数据集：</p>
+<pre><code>import numpy as np
+
+#简单数据集
+def loadSimpData():
+    datMat=np.matrix([[1.,2.1],
+                      [2.,1.1],
+                      [1.3,1.],
+                      [1.,1.],
+                      [2.,1.]])
+    classLabels=[1.0,1.0,-1.0,-1.0,1.0]
+    return datMat,classLabels
+</code></pre><p>这个简单的数据集通过单层决策树是无法进行分类的，因此采用AdaBoost算法组合多个单层决策树进行正确分类。</p>
+<p>接下来两个函数，第一个函数用于测试是否有某个值小于或者大于正在测试的阈值。第二个函数会在一个加权数据集中循环，找到具有最低错误率的单层决策树。</p>
+<pre><code>&quot;&quot;&quot;
+将最小错误率minError设为+∞
+对数据集中的每一个特征（第一层循环）：
+    对每个步长（第二层循环）：
+        对每个不等号（第三层循环）：
+            建立一棵单层决策树并利用加权数据集对它进行测试
+            如果错误率低于minError，则将当前单层决策树设为最佳单层决策树
+返回最佳单层决策树
+&quot;&quot;&quot;
+#单层决策树生成函数
+#根据单一特征的决策树桩
+def stumpClassify(dataMatrix,dimen,threshVal,threshIneq):
+    retArray=np.ones((np.shape(dataMatrix)[0],1))
+    #该特征小于等于阈值
+    if threshIneq==&#39;lt&#39;:
+        retArray[dataMatrix[:,dimen]&lt;=threshVal]=-1.0
+    else:
+        retArray[dataMatrix[:,dimen]&gt;threshVal]=-1.0
+    return retArray
+#遍历stumpClassify()函数所有的可能输入值，找到数据集上最佳的单层决策树
+#所说的最佳是指加权错误率最低
+def buildStump(dataArr,classLabels,D):
+    dataMatrix=np.mat(dataArr);labelMat=np.mat(classLabels).T
+    m,n=np.shape(dataMatrix)
+    numSteps=10.0;bestStump={};bestClassEst=np.mat(np.zeros((m,1)))
+    #最小错误率设置为无穷大
+    minError=np.inf
+    #在所有特征上遍历
+    for i in range(n):
+        #某个特征的min、max
+        rangeMin=dataMatrix[:,i].min();rangeMax=dataMatrix[:,i].max()
+        stepSize=(rangeMax-rangeMin)/numSteps
+        #在特征的不同阈值上遍历
+        for j in range(-1,int(numSteps)+1):
+            #区别大于阈值和小于阈值两种情况
+            for inequal in [&#39;lt&#39;,&#39;gt&#39;]:
+                threshVal=(rangeMin+float(j)*stepSize)
+                predictedVals=stumpClassify(dataMatrix,i,threshVal,inequal)
+                errArr=np.mat(np.ones((m,1)))
+                #正确分类为0，错误则为1
+                errArr[predictedVals==labelMat]=0
+                #计算加权错误率，adaboost
+                weightedError=D.T*errArr
+                #print(&quot;split: dim %d, thresh %.2f, thresh ineqal:\
+                #      %s, the weighted error is %.3f&quot; % \
+                #      (i,threshVal,inequal,weightedError))
+                #保存最小错误率的单层决策树的信息，哪个特征，阈值，大于还是小于
+                if weightedError&lt;minError:
+                    minError=weightedError
+                    bestClassEst=predictedVals.copy()
+                    bestStump[&#39;dim&#39;]=i
+                    bestStump[&#39;thresh&#39;]=threshVal
+                    bestStump[&#39;ineq&#39;]=inequal
+    return bestStump,minError,bestClassEst
+</code></pre><h2 id="完整AdaBoost算法的实现"><a href="#完整AdaBoost算法的实现" class="headerlink" title="完整AdaBoost算法的实现"></a>完整AdaBoost算法的实现</h2><p>这一节中，将使用多个弱分类器来构建AdaBoost分类器。</p>
+<p>整个实现的伪代码如下：</p>
+<pre><code>对每次迭代：
+    利用buildStump()函数找到最佳的单层决策树
+    将最佳单层决策树加入到单层决策树数组
+    计算alpha
+    计算新的权重向量D
+    更新累计类别估计值
+    如果错误率等于0，则退出循环
+</code></pre><p>基于单层决策树的AdaBoost训练过程</p>
+<pre><code>def adaBoostTrainDS(dataArr,classLabels,numIt=40):
+    #数据集、类别标签、迭代次数
+    #对单层决策树进行存储
+    weakClassArr=[]
+    m=np.shape(dataArr)[0]
+    #向量D包含了每个样本的权重，在迭代中会增加错分数据的权重，降低正确分类的权重
+    D=np.mat(np.ones((m,1))/m)
+    #记录每个数据点的类别估计累计值
+    aggClassEst=np.mat(np.zeros((m,1)))
+    for i in range(numIt):
+        bestStump,error,classEst=buildStump(dataArr,classLabels,D)
+       # print(&quot;D:&quot;,D.T)
+        #alpha表示该次分类器的权重
+        alpha=float(0.5*np.log((1.0-error)/max(error,1e-16)))
+        bestStump[&#39;alpha&#39;]=alpha
+        #保存该次迭代分类器的信息
+        weakClassArr.append(bestStump)
+        #该次迭代分类器对样本的估计值
+        #print(&quot;classEst: &quot;,classEst.T)
+        #以下3行更新D的值
+        expon=np.multiply(-1*alpha*np.mat(classLabels).T,classEst)
+        D=np.multiply(D,np.exp(expon))
+        D=D/D.sum()
+        #记录每个数据点的类别估计累计值
+        aggClassEst+=alpha*classEst
+        #print(&quot;aggClassEst:&quot;,aggClassEst.T)
+        aggErrors=np.multiply(np.sign(aggClassEst)!=np.mat(classLabels).T,
+                              np.ones((m,1)))
+        errorRate=aggErrors.sum()/m
+       # print(&quot;total error: &quot;,errorRate,&quot;\n&quot;)
+        if errorRate==0.0 :
+            break
+    return weakClassArr,aggClassEst        
+</code></pre><h2 id="测试算法：基于AdaBoost的分类"><a href="#测试算法：基于AdaBoost的分类" class="headerlink" title="测试算法：基于AdaBoost的分类"></a>测试算法：基于AdaBoost的分类</h2><p>一旦拥有了多个弱分类器以及其对应的alpha值，进行测试就相当容易了。每个弱分类器的结果以其对应的alpha值作为权重，所有这些弱分类器的结果加权求和就得到了最后的结果。</p>
+<pre><code>#测试算法：基于AdaBoost的分类
+
+def adaClassify(datToClass,classifierArr):
+    dataMatrix=np.mat(datToClass)
+    m=np.shape(dataMatrix)[0]
+    aggClassEst=np.mat(np.zeros((m,1)))
+    for i in range(len(classifierArr)):
+        classEst=stumpClassify(dataMatrix,classifierArr[i][&#39;dim&#39;],\
+                               classifierArr[i][&#39;thresh&#39;],\
+                               classifierArr[i][&#39;ineq&#39;])
+        #由各个分类器加权确定
+        aggClassEst+=classifierArr[i][&#39;alpha&#39;]*classEst
+        print(aggClassEst)
+    return np.sign(aggClassEst)
+#用【0,0】进行测试，随着迭代的进行，分类结果会越来越强 
+</code></pre><p>输出的类别估计值乘上该单层决策树的alpha权重然后累加到aggClassEst上。</p>
+<h2 id="示例：在一个难数据集上应用AdaBoost"><a href="#示例：在一个难数据集上应用AdaBoost" class="headerlink" title="示例：在一个难数据集上应用AdaBoost"></a>示例：在一个难数据集上应用AdaBoost</h2><ol>
+<li>收集数据：提供的文本文件。</li>
+<li>准备数据：确保类别标签是+1和-1而非1和0。</li>
+<li>分析数据：手工检查数据。</li>
+<li>训练算法：在数据上，利用adaBoostTrainDS()函数训练出一系列的分类器。</li>
+<li>测试算法：我们拥有两个数据集。在不采用随机抽样的方法下，就会对 AdaBoost和Logistic回归的结果进行完全对等的比较。</li>
+<li>使用算法：观察该例子上的错误率。</li>
+</ol>
+<p>自适应数据加载函数</p>
+<pre><code>def loadDataSet(fileName):
+numFeat=len(open(fileName).readline().split(&#39;\t&#39;))
+dataMat=[];labelMat=[]
+fr=open(fileName)
+for line in fr.readlines():
+    lineArr=[]
+    curLine=line.strip().split(&#39;\t&#39;)
+    for i in range(numFeat-1):
+        lineArr.append(float(curLine[i]))
+    dataMat.append(lineArr)
+    labelMat.append(float(curLine[-1]))
+return dataMat,labelMat
+</code></pre><p>通过改变弱分类器的数目为1到10000之间的几个不同数字，测试不同弱分类器数目下的错误率。</p>
+<p><img src="https://i.imgur.com/eia9P7R.jpg" alt=""></p>
+<p>之前采用Logistic回归得到的平均错误率为0.35，而这里采用AdaBoost可以轻松达到0.21. 当分类器数目过大时，错误率又会上升，这是由于过拟合(overfitting）。</p>
 
           
         

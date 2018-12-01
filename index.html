@@ -395,13 +395,13 @@
       
         
           
-            <h3 id="使用Autoencoders从时间序列中学习最突出的特征"><a href="#使用Autoencoders从时间序列中学习最突出的特征" class="headerlink" title="使用Autoencoders从时间序列中学习最突出的特征"></a>使用Autoencoders从时间序列中学习最突出的特征</h3><h2 id="Autoencoder"><a href="#Autoencoder" class="headerlink" title="Autoencoder"></a>Autoencoder</h2><p>自动编码器是将输入复制到输出或学习辨识的做法。它有一个称为隐空间h的内部状态，用于表示输入。通常，选择此维度小于输入（称为欠完备）。自动编码器由两部分组成：编码器f：X→H和解码器g：H→Y。</p>
+            <h3 id="使用Autoencoders从时间序列中学习最突出的特征"><a href="#使用Autoencoders从时间序列中学习最突出的特征" class="headerlink" title="使用Autoencoders从时间序列中学习最突出的特征"></a>使用Autoencoders从时间序列中学习最突出的特征</h3><h2 id="Autoencoder"><a href="#Autoencoder" class="headerlink" title="Autoencoder"></a>Autoencoder</h2><p>自编码器是将输入复制到输出或学习辨识的方法。它有一个称为隐空间h的内部状态，用于表示输入。通常，此维度小于输入维度（称为欠完备）。自编码器由两部分组成：编码器f：X→H和解码器g：H→Y。</p>
 <p><img src="https://i.imgur.com/1SejAwt.jpg" alt=""></p>
-<p>隐藏层维度应小于输入维度x。这样，h被迫承担输入空间的有用属性和最显着的特征。</p>
-<p>训练自动编码器以找到函数f，g满足下式：</p>
+<p>隐藏层维度应小于输入维度x。这样，h被迫学习输入空间的有用属性和最显着的特征。</p>
+<p>训练自编码器以找到函数f，g满足下式：</p>
 <p><img src="https://i.imgur.com/glFBWDv.png" alt=""></p>
-<h2 id="Recurrent-Autoencoder"><a href="#Recurrent-Autoencoder" class="headerlink" title="Recurrent Autoencoder"></a>Recurrent Autoencoder</h2><p>对于时间序列数据，循环自动编码器特别有用。唯一的区别是编码器和解码器被诸如LSTM之类的RNN取代。将RNN视为随时间变化的for循环，以保持状态。它可以展开到前馈网络中。</p>
-<p>首先，将输入编码成不完备的隐向量h，然后由解码器对其进行解码。循环自动编码器是序列到序列（seq2seq）架构的一种特殊情况，它在机器翻译中非常强大，将一种语言序列映射到另一种语言序列。</p>
+<h2 id="Recurrent-Autoencoder"><a href="#Recurrent-Autoencoder" class="headerlink" title="Recurrent Autoencoder"></a>Recurrent Autoencoder</h2><p>对于时间序列数据，循环自编码器特别有用。唯一的区别是编码器和解码器被诸如LSTM之类的RNN取代。将RNN视为随时间变化的for循环，以保持状态。它可以展开到前馈网络中。</p>
+<p>首先，将输入编码成不完备的隐向量h，然后由解码器对其进行解码。循环自编码器是序列到序列（seq2seq）架构的一种特殊情况，它在机器翻译中非常强大，将一种语言序列映射到另一种语言序列。</p>
 <p><img src="https://i.imgur.com/nrNYjVD.jpg" alt=""></p>
 <pre><code>import tensorflow as tf
 import numpy as np
@@ -418,7 +418,7 @@ import matplotlib.pyplot as plt
 <li>买入价，卖出价，价差，成交量，RSI(Bid, Ask, Spread, Volume, RSI), 对于此设置，<em>input_dime</em>将为5</li>
 <li>Order book levels. We can rebin the order book along tick axis so each tick aggregates more liquidity. An example would be 10 levels that are 1 stdev apart. Then input_dim would be 10. ？？？</li>
 </ul>
-<p>这是艺术家对循环自动编码器的再现。</p>
+<p>对循环自编码器的再现。</p>
 <pre><code>plt.xkcd()
 
 x1 = np.linspace(-np.pi, np.pi)
@@ -466,7 +466,7 @@ def gen(batch_size):
 
     return batch_x, batch_x#batch_y
 </code></pre><h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><p>目标是使用两个数字来表示正弦函数. 通常，我们使用φ∈R来表示三角函数的相位角。<br>让我们看看神经网络是否可以学习这个相位角。这里的计划是将输入正弦函数压缩为两个数字，然后将它们解码回来。</p>
-<p>定义架构并让神经网络发挥作用。它是一个具有3层的模型，LSTM编码器将输入时间序列“编码”为固定长度矢量（在这种情况下为2）。RepeatVector将固定长度矢量重复10次，用作LSTM解码器的输入。对于解码器，我们可以用隐向量初始化隐藏状态（存储器）并使用时间t-1的输出作为时间t的输入，或者我们可以使用隐向量h作为每个时间步的输入。这些被称为条件和无条件解码器。</p>
+<p>定义架构并让神经网络发挥作用。它是一个具有3层的模型，LSTM编码器将输入时间序列“编码”为固定长度的向量（在这种情况下为2）。RepeatVector将固定长度的向量重复10次，用作LSTM解码器的输入。对于解码器，我们可以用隐向量初始化隐藏状态（存储器）并使用时间t-1的输出作为时间t的输入，或者我们可以使用隐向量h作为每个时间步的输入。分别被称为条件和无条件解码器。</p>
 <pre><code>from keras.models import Sequential, Model
 from keras.layers import LSTM, RepeatVector
 
@@ -487,7 +487,7 @@ plt.ylabel(&quot;loss&quot;)
 plt.xlabel(&quot;epoch&quot;)
 plt.show()
 </code></pre><p><img src="https://i.imgur.com/ZyT1a42.png" alt=""></p>
-<p>您可能认为神经网络在训练期间突然“得到它”，但这只是逃避鞍点的优化器。实际上，正如我们在下面演示的那样，神经网络（至少是解码器）根本不会学习它背后的数学。</p>
+<p>你可能认为神经网络在训练期间突然“得到它”，但这只是逃避鞍点的优化器。实际上，正如我们在下面演示的那样，神经网络（至少是解码器）根本不会学习它背后的数学表达式。</p>
 <pre><code>X_test, _ = gen(1)
 decoded_imgs = m.predict(X_test)
 
@@ -500,7 +500,7 @@ plt.show()
 </code></pre><p><img src="https://i.imgur.com/GLAX6Xn.png" alt=""></p>
 <p>通过更多的培训，它将更接近输入，但这不是本演示所必需的。</p>
 <p>可视化隐向量有时是有用的，但在这种情况下不是。<br><img src="https://i.imgur.com/Qr6zUrC.png" alt=""></p>
-<h3 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h3><p>该模型成功压缩了20点至2点。它从数据中学到了最显着的特征。然而，在这种情况下，模型是无用的，因为它已经成功地学习了g（f（x））= x。自动编码器设计为不完美复制。（？！为啥）与所有神经网络一样，自动编码器利用数据集中在低维流形或流形集合的思想。目标是学习一个在这个流形的数据点上表现正确的函数，并在这个流形的各处(其他各处)展现出异常的行为。(因此autoencoder可以用来进行异常诊断)在这种情况下，我们发现了一个与20D空间相切的二维流形。这里我们讨论一些可视化技术。</p>
+<h3 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h3><p>该模型成功从20维压缩至2维。它从数据中学到了最显着的特征。然而，在这种情况下，模型是无用的，因为它已经成功地学习了g（f（x））= x。自动编码器设计为不完美的复制（？！为啥）。与所有神经网络一样，自动编码器利用数据集中在低维流形或流形某一集合的思想。目标是学习一个在这个流形的数据点上表现正确的函数，并在这个流形的各处(其他各处)展现出异常的行为。(因此autoencoder可以用来进行异常诊断)在这种情况下，我们发现了一个与20D空间相切的二维流形。这里我们讨论一些可视化技术。</p>
 <p>下面我们将演示在用动画投影回20D时的流形图。理想情况下，这表明解码器的工作原理。</p>
 <pre><code>x = Input(shape=(2,))
 decoded = m.layers[1](x)
@@ -550,17 +550,17 @@ plt.show()
 </code></pre><p><img src="https://i.imgur.com/mzStw3R.png" alt=""></p>
 <p>在上面看到的这个圆是隐空间H中编码器f（x）下的图像。正如您可能从一开始就猜到的那样，因为trig图将笛卡尔坐标投影到极坐标。编码矢量是线性子空间。极坐标中的圆具有等式r = a。对于那些没有假设这个结果的人，我希望这是一个足够好的妙语。</p>
 <p>使用PCA，可以使用线性代数中的Gram-Schmidt算法将任何高维空间投影到多个线性子空间中。</p>
-<h2 id="Anomaly-Detection"><a href="#Anomaly-Detection" class="headerlink" title="Anomaly Detection"></a>Anomaly Detection</h2><p>如你所见，自动编码是数据可视化和探索中非常强大的技术。但除了创建漂亮的图形之外，还有更深的应用。一个应用是异常检测。</p>
+<h2 id="Anomaly-Detection"><a href="#Anomaly-Detection" class="headerlink" title="Anomaly Detection"></a>Anomaly Detection</h2><p>如你所见，自编码器是数据可视化和数据探索中非常强大的技术。但除了创建漂亮的图形之外，还有更深的应用。其中一个是异常检测。</p>
 <p>监管机构可以通过构建无监督的深度学习算法来识别非法交易策略。</p>
-<p>在数据挖掘中，异常检测（或异常值检测）是对不符合数据集中预期模式的观测值的识别。以无监督的方式训练神经网络的能力允许自动编码器在该区域中发光。自动编码器为传统的信号重建和时间序列异常检测方法提供了非常强大的替代方案。</p>
+<p>在数据挖掘中，异常检测（或异常值检测）是对不符合数据集中预期模式的观测值的识别。以无监督的方式训练神经网络的能力允许自动编码器在该区域中起作用。自动编码器为传统的信号重建和时间序列异常检测方法提供了非常强大的替代方案。</p>
 <p>训练自动编码器在概念上很简单：</p>
 <ol>
 <li>训练集训练Xtrain，with正则化</li>
 <li>评估Xeval并确定自动编码器的容量</li>
 <li>当我们在检查错误可视化后认为它足够好时，选择一个错误阈值（例如2σ）来确定数据点是否是异常。当然，由于我们正在处理时间序列，因此应该在滚动的基础上选择此阈值（滑动窗口）。</li>
 </ol>
-<p>在金融时间序列（和其他系列）中，我们经常想要检测制度变化，即在价格突然变化之前知道。在我的实验中，这在检测冰山订单方面特别有效，冰山订单是为了隐藏实际订单数量而分成几个较小订单的单个大订单。使用普通机器学习方法检测冰山订单很困难，但在人工检查时很明显。</p>
-<p>在下一部分中，我们将模拟异常检测如何工作。首先让我们绘制自动编码器输出的均方误差。</p>
+<p>在金融时间序列（和其他系列）中，我们经常想要检测区域变化(突变？），即在价格突然变化之前知道。在我的实验中，这在检测冰山订单方面特别有效，冰山订单是为了隐藏实际订单数量而分成几个较小订单的单个大订单。使用普通机器学习方法检测冰山订单很困难，但在人工检查时很明显。</p>
+<p>在下一部分中，我们将模拟异常检测如何工作。首先让我们绘制自编码器输出的均方误差。</p>
 <pre><code>X_test, _ = gen(1)
 decoded_imgs = m.predict(X_test)
 
