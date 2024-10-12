@@ -2,5 +2,6 @@
     "title":"John Chen's blog",
     "subTitle":"雁过留痕, 人生一世, 还是应该记录点什么, 一个爱折腾的程序员👨🏻‍💻",
     "avatarUrl":"https://github.githubassets.com/favicons/favicon.svg",
-    "GMEEK_VERSION":"last"
+    "GMEEK_VERSION":"last",
+    "allHead":"<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script>"
 }
