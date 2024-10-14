@@ -17,4 +17,4 @@
 
 当晚便尝试了一波，如下图，确实挺方便的。
 
-![image.png](https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/20241014202000.png)
+![image.png](https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/20241014202328.png)
