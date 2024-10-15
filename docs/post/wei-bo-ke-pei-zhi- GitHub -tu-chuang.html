@@ -10,13 +10,13 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="目标：不开通电视盒子或者 IPTV 服务，收看直播电视，并且稳定可持续。">
-<meta property="og:title" content="IPV6 电视 my-tv-0 直播配置">
-<meta property="og:description" content="目标：不开通电视盒子或者 IPTV 服务，收看直播电视，并且稳定可持续。">
+<meta name="description" content="博客采用 Gmeek 框架部署在 GitHub 上，首先本地在 Obsidian 中利用 Markdown 写，再复制粘贴到 GitHub 中 Issue 中，最后自动发布。">
+<meta property="og:title" content="为博客配置 GitHub 图床">
+<meta property="og:description" content="博客采用 Gmeek 框架部署在 GitHub 上，首先本地在 Obsidian 中利用 Markdown 写，再复制粘贴到 GitHub 中 Issue 中，最后自动发布。">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://Andy1314Chen.github.io/post/IPV6%20-dian-shi-%20my-tv-0%20-zhi-bo-pei-zhi.html">
+<meta property="og:url" content="https://Andy1314Chen.github.io/post/wei-bo-ke-pei-zhi-%20GitHub%20-tu-chuang.html">
 <meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
-<title>IPV6 电视 my-tv-0 直播配置</title>
+<title>为博客配置 GitHub 图床</title>
 
 
 
@@ -49,7 +49,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 <body>
     <div id="header">
-<h1 class="postTitle">IPV6 电视 my-tv-0 直播配置</h1>
+<h1 class="postTitle">为博客配置 GitHub 图床</h1>
 <div class="title-right">
     <a href="https://Andy1314Chen.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
         <svg class="octicon" width="16" height="16">
@@ -57,7 +57,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         </svg>
     </a>
     
-    <a href="https://github.com/Andy1314Chen/Andy1314Chen.github.io/issues/2" target="_blank" class="btn btn-invisible circle" title="Issue">
+    <a href="https://github.com/Andy1314Chen/Andy1314Chen.github.io/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue">
         <svg class="octicon" width="16" height="16">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
@@ -73,35 +73,14 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>目标：不开通电视盒子或者 IPTV 服务，收看直播电视，并且稳定可持续。</p>
-<p>抓手：打开路由器 ipv6 开关，在电视上安装 my-tv-0 ipv6 版本 apk，通过 ipv6 网络收看直播电视。</p>
-<p>涉及硬件：光猫、路由器、电视、手机/电脑。</p>
-<p>什么是光猫？光猫负责光信号到电信号的转换，运营商（电信、联通、移动等）将网络信号调制为光信号，通过光纤传输，用户端需要将网络信号从激光信号中解调出来。</p>
-<p>一般家里开通宽带时，运营商会送光猫，外形和路由器类似，可能具备 wifi 功能，也可能没有，杭州电信最近新办理的就没了。光纤会插在光猫上，完成光电信号转换。</p>
-<p>什么是路由器？专业上的概念理解较为复杂，一般家庭使用的多是小米、华为等路由器，可认为主要提供 wifi 功能，用于连接手机、电脑、pad、电视等设备。</p>
-<p>路由器和光猫之间通过网线连接，网线一端要插在路由器的 WAN 口上，另一端插在光猫上。</p>
-<p>什么是 WAN 口？和 LAN 口、WLAN 有啥区别？</p>
-<ul>
-<li>LAN: Local Area Network, 局域网，用于连接本地设备、如电脑、手机等</li>
-<li>WAN：Wide Area Network, 广域网，用于连接广域网</li>
-<li>WLAN: Wireless LAN, 无线局域网</li>
-</ul>
-<p>简单来说，WAN 口连接广域网，外部互联网，LAN 口连接局域网，自己家里的网，WLAN 则是 wifi 连接的局域网。</p>
-<p>运营商通过光纤将互联网接到光猫，光猫通过网线连接路由器，手机通过 wifi 连接路由器实现上网。</p>
-<p>现阶段社会主义国家上网还不是免费的，所以需要认证上网（专业上讲是拨号上网）。光猫的两种工作模式与此相关，路由（NAT，Network Address Translation）模式和桥接模式。</p>
-<p>光猫拨号是路由模式，路由器拨号则是桥接模式，好像有些绕，简单来说，第一种模式是：光猫完成光电信号转换后，再进行拨号认证；第二种模式是：光猫只完成光电信号转换，后续路由器完成拨号认证。</p>
-<blockquote>
-<p>用户接入互联网，一般需要进行 PPPoE 拨号，光猫可以完成拨号过程，这就是路由模式。拨号过程也可以在无线路由器上完成，此时光猫工作在桥接模式。</p>
-<p>PPPoE (Point-to-Point Protocol over Ethernet) 拨号是一种网络连接方式，常用于宽带接入技术，例如 DSL 和光纤接入。</p>
-</blockquote>
-<p>一般安装宽带时，默认都是路由模式，简单省事，用网线插上自己的路由器就能上网了。第二种模式，路由器拨号认证，需要我们知道宽带账号和密码，并登入路由器后台进行配置（如小米路由器后台 192.168.31.1），稍显麻烦，但给了我们更多的可操作性。</p>
-<p>至此，基础概念介绍完毕，开始实操。</p>
-<ol>
-<li>登入 192.168.1.1 光猫网关后台，确认是否开启 ipv6，存在 WAN IPv6 地址则开启；</li>
-<li>登入路由器后台，这里以小米路由器 192.168.31.1 为例，开启 IPV6 网络设置，并选择 NAT6 上网方式；</li>
-<li>安装 my-tv-0-ipv6 版本，可以通过手机传输安装包或者 U 盘拷贝安装；</li>
-</ol>
-<p><a href="https://github.com/lizongying/my-tv-0">lizongying/my-tv-0: 電視網絡視頻播放軟件，可以自定義視頻源 (github.com)</a></p></div>
+<div class="markdown-body" id="postBody"><p>博客采用 Gmeek 框架部署在 GitHub 上，首先本地在 Obsidian 中利用 Markdown 写，再复制粘贴到 GitHub 中 Issue 中，最后自动发布。</p>
+<p>因此，期望的工作流程:，图片在本地 Obsidian 写的时候，自动上传图床并生成链接，嵌入在 Markdown 文档中。</p>
+<p>参考链接: <a href="https://www.haoyep.com/posts/github-graph-beds/" rel="nofollow">使用 PicGo + GitHub 搭建 Obsidian 图床 | Leehow 的小站 (haoyep.com)</a> 配置，大概包括 3 个步骤：</p>
+<p>第一步: 创建 GitHub 公开仓库作为图床仓库。</p>
+<p>第二步: 下载并安装 PicGo，其支持 Windows、MacOS、Linux，配置 GitHub 图床。</p>
+<p>第三步: Obsidian 中安装第三方插件: <code class="notranslate">Image auto upload Plugin</code>.</p>
+<p>下图为配置后自动上传图床并生成链接的例子，链接中仓库即是第一步中创建的图床仓库。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/image/20241014164959.png"><img src="https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/image/20241014164959.png" alt="测试图床功能是否正常" style="max-width: 100%;"></a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
