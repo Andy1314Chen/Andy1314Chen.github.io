@@ -3,5 +3,7 @@
     "subTitle":"雁过留痕, 人生一世, 还是应该记录点什么, 一个爱折腾的程序员👨🏻‍💻",
     "avatarUrl":"https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/image/20241015155657.png",
     "GMEEK_VERSION":"last",
-    "allHead":"<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script>"
+    "allHead":"<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script>",
+    "bottomText":"转载请注明出处",
+    "needComment": 1
 }
