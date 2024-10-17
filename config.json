@@ -6,5 +6,5 @@
     "allHead":"<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekVercount.js'></script>",
     "bottomText":"转载请注明出处",
     "needComment": 1,
-    "script":"<script>const metaDescription = document.querySelector('meta[name='description']').content;  const descriptionElement = document.getElementById('description'); descriptionElement.textContent = metaDescription; </script>"
+    "script":"<script>document.getElementById('content').innerHTML = `雁过留痕, 人生一世, 还是应该记录点什么<br><br>又菜又爱玩, 一个爱折腾的程序员👨🏻‍💻<br><br>`;</script>"
 }
