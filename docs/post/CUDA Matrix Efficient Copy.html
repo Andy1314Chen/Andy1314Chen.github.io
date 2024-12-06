@@ -210,7 +210,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-c">// launch kernel</span>
 <span class="pl-smi">dim3</span> <span class="pl-en">blockSize</span>(<span class="pl-smi">TILE_DIM</span>, <span class="pl-smi">TILE_DIM</span>);
 <span class="pl-smi">dim3</span> <span class="pl-s1">gridSize</span>((<span class="pl-s1">nx</span> <span class="pl-c1">+</span> <span class="pl-c1">TILE_DIM</span> <span class="pl-c1">-</span> <span class="pl-c1">1</span>)/<span class="pl-c1">TILE_DIM</span>, (<span class="pl-s1">ny</span> <span class="pl-c1">+</span> <span class="pl-c1">TILE_DIM</span> <span class="pl-c1">-</span> <span class="pl-c1">1</span>)/<span class="pl-c1">TILE_DIM</span>);
-<span class="pl-s1">copy_simple</span>&lt;&lt;<span class="pl-c1">&lt;</span><span class="pl-s1">gridSize</span>, <span class="pl-s1">blockSize</span>&gt;&gt;<span class="pl-s1"></span><span class="pl-c1">&gt;</span>(<span class="pl-s1">d_cdata</span>, <span class="pl-s1">d_idata</span>, <span class="pl-s1">nx</span>, <span class="pl-s1">ny</span>);</pre></div>
+<span class="pl-s1">copy_simple</span>&lt;&lt;<span class="pl-c1">&lt;</span><span class="pl-s1">gridSize</span>, <span class="pl-s1">blockSize</span>&gt;&gt;<span class="pl-s1"></span><span class="pl-c1">&gt;</span>(<span class="pl-s1">d_cdata</span>, <span class="pl-s1">d_idata</span>, <span class="pl-s1">nx</span>, <span class="pl-s1">ny</span>)<span class="pl-c1"></span>;</pre></div>
 <p>但博客中的 simple copy kernel 是这样的：</p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-smi">int</span> <span class="pl-c1">TILE_DIM</span> <span class="pl-c1">=</span> <span class="pl-c1">32</span>;
 <span class="pl-k">const</span> <span class="pl-smi">int</span> <span class="pl-c1">BLOCK_ROWS</span> <span class="pl-c1">=</span> <span class="pl-c1">8</span>;
@@ -227,8 +227,8 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 <span class="pl-c">// launch kernel</span>
 <span class="pl-smi">dim3</span> <span class="pl-en">dimGrid</span>(<span class="pl-smi">nx</span> / <span class="pl-c1">TILE_DIM</span>, <span class="pl-smi">ny</span> / <span class="pl-c1">TILE_DIM</span>, <span class="pl-c1">1</span>);
-<span class="pl-smi">dim3</span> <span class="pl-en">dimBlock</span>(<span class="pl-smi">TILE_DIM</span>, <span class="pl-smi">BLOCK_ROWS</span>, <span class="pl-c1">1</span>);
-<span class="pl-s1">copy</span>&lt;&lt;<span class="pl-c1">&lt;</span><span class="pl-s1">dimGrid</span>, <span class="pl-s1">dimBlock</span>&gt;&gt;<span class="pl-s1"></span><span class="pl-c1">&gt;</span>(<span class="pl-s1">d_cdata</span>, <span class="pl-s1">d_idata</span>);</pre></div>
+<span class="pl-smi">dim3</span> <span class="pl-en">dimBlock</span>(<span class="pl-c1">TILE_DIM</span>, <span class="pl-c1">BLOCK_ROWS</span>, <span class="pl-c1">1</span>);
+<span class="pl-s1">copy</span>&lt;&lt;<span class="pl-c1">&lt;</span><span class="pl-s1">dimGrid</span>, <span class="pl-s1">dimBlock</span>&gt;&gt;<span class="pl-c1">&gt;</span>(<span class="pl-s1">d_cdata</span>, <span class="pl-s1">d_idata</span>);</pre></div>
 <p>在 Jetson AGX Orin 64G 上，测试 8192 x 8192 的矩阵，运行结果如下：</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate">copy_simple kernel execution time: 6.834688 ms
 copy kernel execution time: 3.384800 ms
@@ -240,7 +240,7 @@ cudaMemcpyDeviceToDevice execution time: 3.246016 ms</pre></div>
 <p>copy kernel 将 8192 x 8192 拆分为多个元素数为 32 x 32 个的小 tile，每个 tile 包括 32 x 32 个数据，因此 grid size 为:</p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">dim3</span> <span class="pl-en">dimGrid</span>(<span class="pl-smi">nx</span>/<span class="pl-c1">TILE_DIM</span>, <span class="pl-smi">ny</span>/<span class="pl-c1">TILE_DIM</span>, <span class="pl-c1">1</span>);</pre></div>
 <p>而在 copy kernel 代码中，每个 thread 要处理 4 个数据（也可以视为又将 tile 分成了 4 个 subtiles），因此 block size 为：</p>
-<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">dim3</span> <span class="pl-en">dimBlock</span>(<span class="pl-smi">TILE_DIM</span>, <span class="pl-smi">BLOCK_ROWS</span>, <span class="pl-c1">1</span>);</pre></div>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">dim3</span> <span class="pl-s1">dimBlock</span>(<span class="pl-c1">TILE_DIM</span>, <span class="pl-c1">BLOCK_ROWS</span>, <span class="pl-c1">1</span>);</pre></div>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-c">// gridDim.x = 32</span>
 
 <span class="pl-c">// blockIdx.x 范围在 (0, TILE_DIM) -- (0, 32)</span>

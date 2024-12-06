@@ -101,21 +101,21 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">triton</span>
 <span class="pl-k">import</span> <span class="pl-s1">triton</span>.<span class="pl-s1">language</span> <span class="pl-k">as</span> <span class="pl-s1">tl</span>
 
-<span class="pl-en">@<span class="pl-s1">triton</span>.<span class="pl-en">jit</span>()</span>
+<span class="pl-en">@<span class="pl-s1">triton</span>.<span class="pl-c1">jit</span>()</span>
 <span class="pl-k">def</span> <span class="pl-en">add_kernel</span>(<span class="pl-s1">x_ptr</span>,
 			   <span class="pl-s1">y_ptr</span>,
 			   <span class="pl-s1">output_ptr</span>,
 			   <span class="pl-s1">n_elements</span>,
-			   <span class="pl-v">BLOCK_SIZE</span>: <span class="pl-s1">tl</span>.<span class="pl-s1">constexpr</span>,
+			   <span class="pl-c1">BLOCK_SIZE</span>: <span class="pl-s1">tl</span>.<span class="pl-c1">constexpr</span>,
 			   ):
-	<span class="pl-s1">pid</span> <span class="pl-c1">=</span> <span class="pl-s1">tl</span>.<span class="pl-en">program_id</span>(<span class="pl-s1">axis</span><span class="pl-c1">=</span><span class="pl-c1">0</span>)
-	<span class="pl-s1">block_start</span> <span class="pl-c1">=</span> <span class="pl-s1">pid</span> <span class="pl-c1">*</span> <span class="pl-v">BLOCK_SIZE</span>
-	<span class="pl-s1">offsets</span> <span class="pl-c1">=</span> <span class="pl-s1">block_start</span> <span class="pl-c1">+</span> <span class="pl-s1">tl</span>.<span class="pl-en">arange</span>(<span class="pl-c1">0</span>, <span class="pl-v">BLOCK_SIZE</span>)
+	<span class="pl-s1">pid</span> <span class="pl-c1">=</span> <span class="pl-s1">tl</span>.<span class="pl-c1">program_id</span>(<span class="pl-s1">axis</span><span class="pl-c1">=</span><span class="pl-c1">0</span>)
+	<span class="pl-s1">block_start</span> <span class="pl-c1">=</span> <span class="pl-s1">pid</span> <span class="pl-c1">*</span> <span class="pl-c1">BLOCK_SIZE</span>
+	<span class="pl-s1">offsets</span> <span class="pl-c1">=</span> <span class="pl-s1">block_start</span> <span class="pl-c1">+</span> <span class="pl-s1">tl</span>.<span class="pl-c1">arange</span>(<span class="pl-c1">0</span>, <span class="pl-c1">BLOCK_SIZE</span>)
 	<span class="pl-s1">mask</span> <span class="pl-c1">=</span> <span class="pl-s1">offsets</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">n_elements</span>
-	<span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">tl</span>.<span class="pl-en">load</span>(<span class="pl-s1">x_ptr</span> <span class="pl-c1">+</span> <span class="pl-s1">offsets</span>, <span class="pl-s1">mask</span><span class="pl-c1">=</span><span class="pl-s1">mask</span>)
-	<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">tl</span>.<span class="pl-en">load</span>(<span class="pl-s1">y_ptr</span> <span class="pl-c1">+</span> <span class="pl-s1">offsets</span>, <span class="pl-s1">mask</span><span class="pl-c1">=</span><span class="pl-s1">mask</span>)
+	<span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">tl</span>.<span class="pl-c1">load</span>(<span class="pl-s1">x_ptr</span> <span class="pl-c1">+</span> <span class="pl-s1">offsets</span>, <span class="pl-s1">mask</span><span class="pl-c1">=</span><span class="pl-s1">mask</span>)
+	<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">tl</span>.<span class="pl-c1">load</span>(<span class="pl-s1">y_ptr</span> <span class="pl-c1">+</span> <span class="pl-s1">offsets</span>, <span class="pl-s1">mask</span><span class="pl-c1">=</span><span class="pl-s1">mask</span>)
 	<span class="pl-s1">output</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span> <span class="pl-c1">+</span> <span class="pl-s1">y</span>
-	<span class="pl-s1">tl</span>.<span class="pl-en">store</span>(<span class="pl-s1">output_ptr</span> <span class="pl-c1">+</span> <span class="pl-s1">offsets</span>, <span class="pl-s1">output</span>, <span class="pl-s1">mask</span><span class="pl-c1">=</span><span class="pl-s1">mask</span>)</pre></div>
+	<span class="pl-s1">tl</span>.<span class="pl-c1">store</span>(<span class="pl-s1">output_ptr</span> <span class="pl-c1">+</span> <span class="pl-s1">offsets</span>, <span class="pl-s1">output</span>, <span class="pl-s1">mask</span><span class="pl-c1">=</span><span class="pl-s1">mask</span>)</pre></div>
 <p>triton 通过线程块和线程索引计算每个线程应该处理的元素索引，并使用 mask 掩码来确保不会越界访问。CUDA 以线程为粒度，开发者需要手动管理线程块和线程，而 Triton 以线程块为粒度，自动处理线程调度。</p>
 <p><a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/image/20241115095426.png"><img src="https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/image/20241115095426.png" alt="image.png" style="max-width: 100%;"></a></p>
 <p>使用 OpenAI Triton 进行编程，效率相对较高，但当前缺少 profile、debug 等工具，也缺失相关调优文档。</p>
