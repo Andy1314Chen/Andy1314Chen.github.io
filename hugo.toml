@@ -1,0 +1,90 @@
+baseURL = "https://Andy1314Chen.github.io/"
+title   = "John Chen's blog"
+languageCode = "zh-cn"
+defaultContentLanguage = "zh-cn"
+theme = "hello-friend-ng"
+
+enableRobotsTXT = true
+enableEmoji     = true
+disableRSS      = false
+
+[pagination]
+  pagerSize = 15
+
+[permalinks]
+  posts = "/posts/:year/:month/:slug/"
+
+[taxonomies]
+  tag      = "tags"
+  category = "categories"
+
+[markup]
+  [markup.highlight]
+    style = "monokai"
+    lineNos = false
+    codeFences = true
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block  = [["$$", "$$"]]
+          inline = [["$", "$"]]
+
+[params]
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04"
+  homeSubtitle    = "雁过留痕，人生一世，还是应该记录点什么"
+  description     = "John Chen's personal blog - CUDA, Triton, 日常折腾"
+  keywords        = "CUDA, Triton, GPU, 博客"
+
+  enableThemeToggle    = true
+  enableReadingTime    = true
+  enableSharingButtons = false
+  disableReadOtherPosts = false
+
+  math = true
+
+  [params.author]
+    name = "John Chen"
+
+  [params.logo]
+    logoMark     = ">"
+    logoText     = "John Chen's blog"
+    logoHomeLink = "/"
+
+  [params.footer]
+    trademark = 2024
+    rss       = true
+    copyright = true
+    author    = true
+    bottomText = [
+      "Powered by <a href=\"http://gohugo.io\">Hugo</a>",
+      "Theme <a href=\"https://github.com/rhazdon/hugo-theme-hello-friend-ng\">Hello Friend NG</a>"
+    ]
+
+  [[params.social]]
+    name = "github"
+    url  = "https://github.com/Andy1314Chen"
+
+[languages]
+  [languages.zh-cn]
+    weight    = 1
+    copyright = "转载请注明出处"
+  [languages.zh-cn.params]
+    subtitle = "雁过留痕，人生一世，还是应该记录点什么"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name       = "文章"
+    url        = "posts/"
+    weight     = 1
+
+  [[menu.main]]
+    identifier = "tags"
+    name       = "标签"
+    url        = "tags/"
+    weight     = 2
