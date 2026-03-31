@@ -6,7 +6,6 @@ theme = "hello-friend-ng"
 
 enableRobotsTXT = true
 enableEmoji     = true
-disableRSS      = false
 
 [pagination]
   pagerSize = 15
@@ -15,8 +14,7 @@ disableRSS      = false
   posts = "/posts/:year/:month/:slug/"
 
 [taxonomies]
-  tag      = "tags"
-  category = "categories"
+  tag = "tags"
 
 [markup]
   [markup.highlight]
@@ -56,7 +54,7 @@ disableRSS      = false
     logoHomeLink = "/"
 
   [params.footer]
-    trademark = 2024
+    trademark = "2024-2026"
     rss       = true
     copyright = true
     author    = true
@@ -68,6 +66,14 @@ disableRSS      = false
   [[params.social]]
     name = "github"
     url  = "https://github.com/Andy1314Chen"
+
+  [[params.social]]
+    name = "email"
+    url  = "mailto:john.chen93@outlook.com"
+
+  [[params.social]]
+    name = "rss"
+    url  = "/index.xml"
 
 [languages]
   [languages.zh-cn]

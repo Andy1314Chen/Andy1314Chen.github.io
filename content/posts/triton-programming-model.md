@@ -4,7 +4,7 @@ date: 2024-11-19
 tags:
   - "cuda"
   - "triton"
-description: "Triton 编程模型与 CUDA 编程模型  ![image.png](https://raw.githubusercontent.com/Andy1314Chen/obsidian-pic/main/image/20241115110511.png)  Scalar Program，Blocked Threads 和 Blocked Program，Scalar Threads 编程模型区别：  上图左侧是 CUDA kernel，右侧是 Triton kernel。"
+description: "对比 CUDA 与 Triton 的编程模型差异，理解 Blocked Program 和 Scalar Threads 的设计思路"
 draft: false
 ---
 

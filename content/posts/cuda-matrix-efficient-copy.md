@@ -3,7 +3,8 @@ title: "CUDA Matrix Efficient Copy"
 date: 2024-10-16
 tags:
   - "cuda"
-description: "看 [CUDA Efficient Matrix Transpose 博客](https://developer.nvidia.com/blog/efficient-matrix-transpose-cuda-cc/)的时候，我理解的 simple copy kernel 应该是下面这样的：  ```c __global__ void copy_simple(float *output, const float *input, const int rows, const int cols) {     int x = blockIdx.x * blockDim.x + threadIdx.x;     int y = blockIdx.y * blockDim.y + threadIdx.y;      if (x < cols && y < rows)     {         output[y * cols + x] = input[y * cols + x];     } }  // launch kernel dim3 blockSize(TILE_DIM, TILE_DIM); dim3 gridSize((nx + TILE_DIM - 1)/TILE_DIM, (ny + TILE_DIM - 1)/TILE_DIM); copy_simple<<<gridSize, blockSize>>>(d_cdata, d_idata, nx, ny); ```  但博客中的 simple copy kernel 是这样的：  ```c  const int TILE_DIM = 32; const int BLOCK_ROWS = 8;  __global__ void copy(float *odata, const float *idata) {     int x = blockIdx.x * TILE_DIM + threadIdx.x;     int y = blockIdx.y * TILE_DIM + threadIdx.y;     int width = gridDim.x * TILE_DIM;      for (int j = 0; j < TILE_DIM; j += BLOCK_ROWS)         odata[(y + j) * width + x] = idata[(y + j) * width + x]; }  // launch kernel dim3 dimGrid(nx / TILE_DIM, ny / TILE_DIM, 1); dim3 dimBlock(TILE_DIM, BLOCK_ROWS, 1); copy<<<dimGrid, dimBlock>>>(d_cdata, d_idata); ```  在 Jetson AGX Orin 64G 上，测试 8192 x 8192 的矩阵，运行结果如下：  ```shell copy_simple kernel execution time: 6.834688 ms copy kernel execution time: 3.384800 ms copy shared mem kernel execution time: 3.118784 ms cudaMemcpyDeviceToDevice execution time: 3.246016 ms ```  速度比我理解的 simple copy kernel 快一倍...，加上 shared memory 优化还能再快一些...  但这里只测了 8192x8192 一个 case，带有 shared memory 优化的 copy kernel 可能性能最好，但大多数情况下应该是官方 `cudaMemcpyDeviceToDevice` 性能要好些，所以一般情况不用自己写 copy kernel。"
+description: "CUDA 高效矩阵拷贝的实现与优化，分析 simple copy kernel 和 shared memory copy kernel 的性能差异"
+toc: true
 draft: false
 ---
 

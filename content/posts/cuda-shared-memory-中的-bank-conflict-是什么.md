@@ -3,7 +3,8 @@ title: "CUDA shared memory 中的 bank conflict 是什么？"
 date: 2024-10-19
 tags:
   - "cuda"
-description: "#### 问题  跨步全局内存访问对性能影响很大，且难以避免，特别是沿着多维数组的第二维度或更高维度进行数据访问时。"
+description: "解释 CUDA shared memory 中的 bank conflict 问题及其对性能的影响"
+toc: true
 draft: false
 ---
 

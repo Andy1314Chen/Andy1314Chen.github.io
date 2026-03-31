@@ -4,7 +4,8 @@ date: 2024-11-15
 tags:
   - "cuda"
   - "triton"
-description: "##### 什么是 Triton  Triton 可以通过相对较少的努力达到峰值硬件性能，例如，Triton 可用于在 25 行代码内编写与 cuBLAS 性能相匹配的 FP16 矩阵乘 Kernel（这是许多 GPU 程序员都无法做到的）。"
+description: "Triton 简介：一种面向 GPU 的 DSL 语言，可用较少代码编写高性能 Kernel"
+toc: true
 draft: false
 ---
 

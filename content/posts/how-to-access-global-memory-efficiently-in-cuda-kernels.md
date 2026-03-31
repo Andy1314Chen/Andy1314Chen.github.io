@@ -3,7 +3,8 @@ title: "How to Access Global Memory Efficiently in CUDA Kernels"
 date: 2024-10-17
 tags:
   - "cuda"
-description: "Avoid the large strides through global memory, 尽可能 Global Memory Coalescing 全局内存合并  将 threads 分组为 warps 不仅与计算相关，还与全局内存访问相关。"
+description: "如何在 CUDA Kernel 中高效访问全局内存，理解 Global Memory Coalescing 合并访存机制"
+toc: true
 draft: false
 ---
 
