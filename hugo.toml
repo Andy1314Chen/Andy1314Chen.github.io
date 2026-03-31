@@ -88,3 +88,9 @@ disableRSS      = false
     name       = "标签"
     url        = "tags/"
     weight     = 2
+
+  [[menu.main]]
+    identifier = "about"
+    name       = "关于"
+    url        = "about/"
+    weight     = 3
