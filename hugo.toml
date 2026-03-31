@@ -36,7 +36,7 @@ disableRSS      = false
 [params]
   dateformNum     = "2006-01-02"
   dateformNumTime = "2006-01-02 15:04"
-  homeSubtitle    = "雁过留痕，人生一世，还是应该记录点什么"
+  homeSubtitle    = "慢慢写，慢慢活"
   description     = "John Chen's personal blog - CUDA, Triton, 日常折腾"
   keywords        = "CUDA, Triton, GPU, 博客"
 
@@ -74,7 +74,7 @@ disableRSS      = false
     weight    = 1
     copyright = "转载请注明出处"
   [languages.zh-cn.params]
-    subtitle = "雁过留痕，人生一世，还是应该记录点什么"
+    subtitle = "慢慢写，慢慢活"
 
 [menu]
   [[menu.main]]
