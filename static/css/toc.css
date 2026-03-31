@@ -62,6 +62,10 @@
     }
 }
 
+blockquote {
+    position: relative;
+}
+
 @media (max-width: 900px) {
     .post-wrapper {
         flex-direction: column;
