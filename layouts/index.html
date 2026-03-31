@@ -3,15 +3,7 @@
 
     <div class="content">
         <main class="posts">
-            <div style="margin-bottom: 2rem;">
-                <h1>{{ .Site.Title }}</h1>
-                {{ partial "subtitle.html" . }}
-                {{- with .Site.Params.social }}
-                    <div>{{ partial "social-icons.html" . }}</div>
-                {{- end }}
-            </div>
-
-            {{ range $paginator.GroupByDate "2006" }}
+                    {{ range $paginator.GroupByDate "2006" }}
                 <div class="posts-group">
                     <div class="post-year">{{ .Key }}</div>
                     <ul class="posts-list">
