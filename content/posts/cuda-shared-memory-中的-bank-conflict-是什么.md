@@ -8,7 +8,7 @@ toc: true
 draft: false
 ---
 
-#### 问题
+## 问题
 
 跨步全局内存访问对性能影响很大，且难以避免，特别是沿着多维数组的第二维度或更高维度进行数据访问时。Shared memory 可以合并全局内存访问，缓解跨步访存带来的性能下降。但 Shared memory 也会导致 bank conflict，使用时需要注意。
 
@@ -18,11 +18,11 @@ draft: false
 
 第一个问题上一个博客中解释了，剩余两个问题在本博客中解释。
 
-#### Shared Memory
+## Shared Memory
 
 Shared memory 也是 CUDA 编程中的一类内存模式，Shared memory 物理存储在片内，要比 global memory 快得多。同时，shared memory 会被分配给 thread block，该 block 中的所有 threads 均可访问。结合 thread synchronization，shared memory 有很多用途，如 user-managed data caches、high-performance cooperative parallel algorithms and to facilitate global memory coalescing.
 
-#### Thread Synchronization
+## Thread Synchronization
 
 线程间进行数据共享时，要特别注意避免 race conditions，可能导致未知问题。因为不同线程概念上是同一时刻并发的，但分配到不同 warp 中的 thread 仍然存在先后顺序，可能碰到提前 read 某个还未 write 的数据。
 
@@ -33,7 +33,7 @@ Shared memory 常见使用场景是，先由各个线程从 global memory 中 lo
 > [!WARNING]
 > 但要注意，不要在 divergent 代码中调用 `__syncthreads()`，会导致死锁，因为某些逻辑分支不是所有 thread 都能执行到的。尽量保证 thread block 中的所有 thread 在同一点调用 `__syncthreads()`.
 
-#### Example
+## Example
 
 ```c
 #include <stdio.h>
@@ -93,7 +93,7 @@ int main(void)
 }
 ```
 
-#### Shared memory bank conflicts
+## Shared memory bank conflicts
 
 为了实现并发高访问的高内存带宽，Shared memory 被划分为大小相等的内存模块 bank，以便可以同时访问。因此，可以同时处理跨 b 个不同内存 bank 的任何 n 个地址的 load 和 store，从而产生比单个 bank 带宽高 b 倍的有效带宽。
 
@@ -126,11 +126,11 @@ __shared__ float sData[32][32];
 
 ![](https://picx.zhimg.com/80/v2-4c0b09478e4b8ea4e11017cf9984ec9b_720w.webp)
 
-#### 总结
+## 总结
 
 Shared memory 存储在片内，读写速度远高于 global memory，因此可以用来优化全局内存访问合并，但会引入 bank conflict 问题。bank conflict 是指，在访问 Shared memory 时，因多个 threads 访存同一个 bank 中不同地址时，导致并发访问退化为序列化访存，有效带宽下降。
 
-#### 参考
+## 参考
 
 1. https://developer.nvidia.com/blog/using-shared-memory-cuda-cc/
 2. https://leimao.github.io/blog/CUDA-Shared-Memory-Bank/

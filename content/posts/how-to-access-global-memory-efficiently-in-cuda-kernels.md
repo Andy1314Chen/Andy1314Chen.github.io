@@ -4,7 +4,7 @@ date: 2024-10-17
 tags:
   - "cuda"
 description: "如何在 CUDA Kernel 中高效访问全局内存，理解 Global Memory Coalescing 合并访存机制"
-toc: true
+toc: false
 draft: false
 ---
 

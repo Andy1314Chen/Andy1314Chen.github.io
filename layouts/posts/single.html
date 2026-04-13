@@ -1,6 +1,6 @@
 {{ define "main" }}
   <div class="content">
-    <main class="post">
+    <main class="post{{- if .Params.toc }} post--with-toc{{- end }}">
 
       <div class="post-info">
         <p>

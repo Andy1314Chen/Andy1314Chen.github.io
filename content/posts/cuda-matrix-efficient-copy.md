@@ -4,7 +4,7 @@ date: 2024-10-16
 tags:
   - "cuda"
 description: "CUDA 高效矩阵拷贝的实现与优化，分析 simple copy kernel 和 shared memory copy kernel 的性能差异"
-toc: true
+toc: false
 draft: false
 ---
 
