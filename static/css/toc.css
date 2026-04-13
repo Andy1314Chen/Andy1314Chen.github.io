@@ -6,7 +6,7 @@
 }
 
 .post-wrapper > article {
-    flex: 0 1 800px;
+    flex: 0 1 1100px;
     min-width: 0;
 }
 
@@ -80,13 +80,13 @@ blockquote {
 
 /* 有 TOC 时放宽外层容器，避免 TOC 挤占正文空间 */
 .post--with-toc {
-    max-width: 1100px;
+    max-width: 1400px;
 }
 
 @media (max-width: 1200px) {
     /* TOC 隐藏时恢复正常宽度 */
     .post--with-toc {
-        max-width: 800px;
+        max-width: 1100px;
     }
 }
 
