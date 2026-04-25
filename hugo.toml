@@ -45,7 +45,7 @@ enableEmoji     = true
 
   math = true
 
-  customCSS = ["/css/toc.css"]
+  customCSS = ["/css/toc.css", "/css/theme.css"]
 
   [params.author]
     name = "John Chen"

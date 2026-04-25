@@ -15,6 +15,9 @@
                                         {{ time.Format "Jan 2" .Date }}
                                     </span>
                                 </a>
+                                {{ with .Params.description }}
+                                    <span class="post-desc">{{ . }}</span>
+                                {{ end }}
                             </li>
                         {{ end }}
                     </ul>
